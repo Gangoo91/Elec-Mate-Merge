@@ -66,7 +66,8 @@ const faqs = [
       'String inverters typically have a rated lifespan of 10–15 years, with most manufacturers offering a 5–10 year warranty extendable to 15–25 years for an additional cost. The inverter is the most likely component to require replacement during a 25-year system lifetime. Replacement cost for a residential string inverter (3–5 kW) is typically £500–£1,000 for the unit plus £150–£300 for installation and commissioning. Like-for-like replacements require DNO re-notification. Upgrading to a hybrid inverter during replacement (to add battery capability) typically costs £800–£1,500 for the unit plus installation.',
   },
   {
-    question: 'My solar panels seem to be producing less energy than expected. What should I check?',
+    question:
+      'My solar panels seem to be producing less energy than expected. What should I check?',
     answer:
       'First check the obvious: is it a particularly cloudy period? Compare against historical generation data for the same time of year. If generation is persistently below expectations, check the inverter display or monitoring portal for fault codes. Common causes include: soiled panels (check visually — bird droppings, moss, and leaf debris cause significant shading losses); inverter fault (error code will indicate the issue); a failed string or individual panel (visible on optimiser/microinverter monitoring); a failed DC isolator causing the string to be disconnected; or grid voltage issues preventing export (check for "grid fault" codes). If you cannot identify the cause from the monitoring data, commission a professional inspection with thermal imaging.',
   },
@@ -78,7 +79,7 @@ const faqs = [
   {
     question: 'Can I monitor my solar panels remotely?',
     answer:
-      'Yes — most modern inverters include integrated Wi-Fi and connect to the manufacturer\'s monitoring platform (e.g., SolarEdge mySolarEdge, Fronius Solar.web, Solis Cloud, Givenergy App). These platforms display real-time and historical generation data, energy self-consumption vs export, and battery state of charge (where applicable). Most platforms provide email or push notification alerts if the system stops generating. For systems with older inverters without built-in monitoring, third-party monitoring devices such as the Efergy or Solar Analytics systems can be retrofitted. A generation meter reading logged weekly or monthly provides a simple baseline check.',
+      "Yes — most modern inverters include integrated Wi-Fi and connect to the manufacturer's monitoring platform (e.g., SolarEdge mySolarEdge, Fronius Solar.web, Solis Cloud, Givenergy App). These platforms display real-time and historical generation data, energy self-consumption vs export, and battery state of charge (where applicable). Most platforms provide email or push notification alerts if the system stops generating. For systems with older inverters without built-in monitoring, third-party monitoring devices such as the Efergy or Solar Analytics systems can be retrofitted. A generation meter reading logged weekly or monthly provides a simple baseline check.",
   },
 ];
 
@@ -86,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-system-design',
     title: 'Solar PV System Design',
-    description: 'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
+    description:
+      'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/solar-battery-storage-installation',
     title: 'Solar Battery Storage Installation',
-    description: 'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
+    description:
+      'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
     icon: Zap,
     category: 'Guide',
   },
@@ -158,18 +161,18 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>DC cabling and connectors:</strong> Inspect accessible DC cables for UV
-                degradation, chafing, and connector integrity. MC4 connectors should be checked
-                for secure engagement and signs of arcing or discolouration. Any damaged cable
-                must be replaced immediately — do not use insulating tape as a repair on DC
-                PV cables.
+                degradation, chafing, and connector integrity. MC4 connectors should be checked for
+                secure engagement and signs of arcing or discolouration. Any damaged cable must be
+                replaced immediately — do not use insulating tape as a repair on DC PV cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>DC and AC isolators:</strong> Test operation of the roof-level DC isolator,
-                inverter DC isolator, and AC isolator. Check for signs of overheating (discolouration,
-                melting) around isolator terminals. Replace if any doubt about condition.
+                inverter DC isolator, and AC isolator. Check for signs of overheating
+                (discolouration, melting) around isolator terminals. Replace if any doubt about
+                condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -192,8 +195,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Generation review:</strong> Compare actual annual generation (from the meter
-                or monitoring portal) against the predicted yield from the original MCS design.
-                A shortfall of more than 20% warrants further investigation.
+                or monitoring portal) against the predicted yield from the original MCS design. A
+                shortfall of more than 20% warrants further investigation.
               </span>
             </li>
           </ul>
@@ -220,9 +223,9 @@ const sections = [
                 <strong>Professional cleaning — £100–£200:</strong> A professional service uses
                 purified (deionised) water with a soft-bristle brush or water-fed pole system.
                 Deionised water leaves no mineral residue on drying, preventing streaking. Annual
-                professional cleaning is recommended for systems in urban areas, near trees, or
-                with persistent bird activity. The cost is typically recovered in improved
-                generation within one season.
+                professional cleaning is recommended for systems in urban areas, near trees, or with
+                persistent bird activity. The cost is typically recovered in improved generation
+                within one season.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -233,7 +236,8 @@ const sections = [
                 ground level or with appropriate fall protection, is effective for light soiling.
                 Never use abrasive materials, high-pressure washers (which can damage inter-cell
                 connections), or detergents that can leave residue. Clean in the morning before
-                panels become hot — thermal shock from cold water on hot panels can cause micro-cracking.
+                panels become hot — thermal shock from cold water on hot panels can cause
+                micro-cracking.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -266,10 +270,10 @@ const sections = [
               <Zap className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>When to replace:</strong> Signs that an inverter is failing include
-                increasing frequency of fault codes, reduced generation during good weather,
-                audible rattling or buzzing from internal fans, overheating shutdowns, and
-                display failure. Inverters more than 12 years old should be proactively assessed
-                for replacement to prevent unexpected failure and generation loss.
+                increasing frequency of fault codes, reduced generation during good weather, audible
+                rattling or buzzing from internal fans, overheating shutdowns, and display failure.
+                Inverters more than 12 years old should be proactively assessed for replacement to
+                prevent unexpected failure and generation loss.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,9 +305,9 @@ const sections = [
     content: (
       <>
         <p>
-          Systems fitted with DC power optimisers (e.g., SolarEdge, Tigo) or microinverters
-          (e.g., Enphase) benefit from per-panel monitoring that makes fault diagnosis much easier.
-          Annual checks should include:
+          Systems fitted with DC power optimisers (e.g., SolarEdge, Tigo) or microinverters (e.g.,
+          Enphase) benefit from per-panel monitoring that makes fault diagnosis much easier. Annual
+          checks should include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -319,20 +323,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failed unit replacement:</strong> Individual optimiser failure is
-                relatively rare (failure rates of less than 1% per year are typical) but the
-                impact on a single panel is significant. Replacement of a failed SolarEdge P401
-                optimiser costs approximately £70–£120 for the unit plus labour. Microinverter
-                replacement costs £100–£200 per unit.
+                <strong>Failed unit replacement:</strong> Individual optimiser failure is relatively
+                rare (failure rates of less than 1% per year are typical) but the impact on a single
+                panel is significant. Replacement of a failed SolarEdge P401 optimiser costs
+                approximately £70–£120 for the unit plus labour. Microinverter replacement costs
+                £100–£200 per unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Communication issues:</strong> Optimiser monitoring systems use
-                power-line communication (PLC) or RF. If units show as offline in the portal
-                but are physically operational, check the gateway/hub firmware and Wi-Fi
-                connection before assuming hardware failure.
+                <strong>Communication issues:</strong> Optimiser monitoring systems use power-line
+                communication (PLC) or RF. If units show as offline in the portal but are physically
+                operational, check the gateway/hub firmware and Wi-Fi connection before assuming
+                hardware failure.
               </span>
             </li>
           </ul>
@@ -355,30 +359,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inverter manufacturer portals:</strong> Most inverters (SolarEdge,
-                Fronius, Growatt, Givenergy, Solis) provide free cloud monitoring via a dedicated
-                app. The installer should commission and configure the monitoring at handover,
-                with the customer set up on the app with their own login credentials.
+                <strong>Inverter manufacturer portals:</strong> Most inverters (SolarEdge, Fronius,
+                Growatt, Givenergy, Solis) provide free cloud monitoring via a dedicated app. The
+                installer should commission and configure the monitoring at handover, with the
+                customer set up on the app with their own login credentials.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Alert configuration:</strong> Enable email or push notification alerts
-                for generation failure. A well-configured monitoring system should alert within
-                24 hours if the system has not generated during normal daylight hours. Some
-                platforms (e.g., SolarEdge, Fronius) offer automated fault detection with
-                diagnostic reports.
+                <strong>Alert configuration:</strong> Enable email or push notification alerts for
+                generation failure. A well-configured monitoring system should alert within 24 hours
+                if the system has not generated during normal daylight hours. Some platforms (e.g.,
+                SolarEdge, Fronius) offer automated fault detection with diagnostic reports.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Third-party monitoring:</strong> For older systems without built-in
-                monitoring, clamp-based monitors (e.g., Emporia, Solar Analytics, or a smart
-                home energy monitor) can be retrofitted to the AC generation circuit. These
-                measure AC output and cannot provide panel-level data, but are sufficient to
-                detect system-level faults.
+                monitoring, clamp-based monitors (e.g., Emporia, Solar Analytics, or a smart home
+                energy monitor) can be retrofitted to the AC generation circuit. These measure AC
+                output and cannot provide panel-level data, but are sufficient to detect
+                system-level faults.
               </span>
             </li>
           </ul>
@@ -392,8 +395,8 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding which maintenance tasks require a qualified professional and which
-          can be handled by the system owner is important for both safety and cost management.
+          Understanding which maintenance tasks require a qualified professional and which can be
+          handled by the system owner is important for both safety and cost management.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -401,11 +404,11 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installer required:</strong> Any work on DC circuits (replacing
-                connectors, isolators, string fuses, or DC cabling); inverter replacement;
-                adding battery storage; modifying the string configuration; carrying out periodic
+                connectors, isolators, string fuses, or DC cabling); inverter replacement; adding
+                battery storage; modifying the string configuration; carrying out periodic
                 electrical inspection and testing in accordance with BS 7671; and any work that
-                triggers Part P notification. DC voltages on a solar array are live during
-                daylight hours and cannot be isolated without specialist equipment.
+                triggers Part P notification. DC voltages on a solar array are live during daylight
+                hours and cannot be isolated without specialist equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -414,8 +417,8 @@ const sections = [
                 <strong>System owner can do:</strong> Panel cleaning (with appropriate access
                 safety); monitoring portal review and alert configuration; resetting the inverter
                 after a grid fault (following manufacturer guidance — typically switching the AC
-                isolator off and on); logging generation meter readings; and reporting faults to
-                the installer.
+                isolator off and on); logging generation meter readings; and reporting faults to the
+                installer.
               </span>
             </li>
           </ul>
@@ -437,10 +440,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Weather comparison:</strong> Compare against the same period last year
-                using the monitoring portal's historical data. UK irradiance varies significantly
-                — a 30% generation shortfall is normal during an overcast fortnight compared to
-                a sunny one.
+                <strong>Weather comparison:</strong> Compare against the same period last year using
+                the monitoring portal's historical data. UK irradiance varies significantly — a 30%
+                generation shortfall is normal during an overcast fortnight compared to a sunny one.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -457,18 +459,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Visual panel check:</strong> From ground level, check for obvious soiling,
-                bird debris, or new shading sources (a tree that has grown, a new structure
-                nearby). A single dirty or shaded panel on a standard string configuration can
-                reduce the whole string's output significantly.
+                bird debris, or new shading sources (a tree that has grown, a new structure nearby).
+                A single dirty or shaded panel on a standard string configuration can reduce the
+                whole string's output significantly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Call an engineer if:</strong> The inverter shows a persistent fault code,
-                the system has not generated for more than two consecutive sunny days, you can
-                smell burning near the inverter, or your monitoring data shows a sudden step-change
-                in output that is not weather-related.
+                the system has not generated for more than two consecutive sunny days, you can smell
+                burning near the inverter, or your monitoring data shows a sudden step-change in
+                output that is not weather-related.
               </span>
             </li>
           </ul>
@@ -489,7 +491,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage solar maintenance jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for job management, quoting, and certification. Issue inspection reports and EICs on your phone. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -526,7 +528,7 @@ export default function SolarPVMaintenancePage() {
       faqHeading="Frequently Asked Questions About Solar Panel Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Maintenance with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job management, certification, and quoting. Issue solar maintenance reports on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -88,7 +88,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
     description:
-      'Complete guide to all 8 certificate types: EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, PAT, EV, and Solar PV.',
+      'Complete guide to all 16 certificate types: EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, PAT, EV, and Solar PV.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -577,8 +577,9 @@ const sections = [
           </div>
         </div>
         <p>
-          The result: 8 certificate types, all completed on your phone, all exported as professional
-          PDFs, all delivered to the client instantly. No paper, no desk time, no delays.
+          The result: 16 certificate types, all completed on your phone, all exported as
+          professional PDFs, all delivered to the client instantly. No paper, no desk time, no
+          delays.
         </p>
         <SEOAppBridge
           title="Switch from paper to digital in minutes"
@@ -619,7 +620,7 @@ export default function DigitalVsPaperCertificatesPage() {
       faqHeading="Frequently Asked Questions About Digital Electrical Certificates"
       relatedPages={relatedPages}
       ctaHeading="Go Digital with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians producing professional digital certificates with AI board scanning, voice test entry, and instant PDF delivery. 7-day free trial, cancel anytime."
     />
   );
 }

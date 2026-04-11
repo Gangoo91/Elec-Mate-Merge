@@ -529,7 +529,7 @@ export default function CableDeratingCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate derating factors in seconds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for BS 7671 cable sizing and derating. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for BS 7671 cable sizing and derating. 7-day free trial, cancel anytime."
       toolPath="/tools/cable-derating-calculator"
     />
   );

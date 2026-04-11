@@ -528,7 +528,7 @@ const sections = [
           communication skills, teamwork, problem-solving, and safety awareness.
         </p>
         <p>
-          <strong>Learning community:</strong> Join 430+ UK apprentices who are going through the
+          <strong>Learning community:</strong> Join 1,000+ UK apprentices who are going through the
           same experience. Knowing that others face the same challenges, the same nerves, and the
           same workplace dynamics makes the apprenticeship feel less isolating. You are not alone in
           this.
@@ -567,7 +567,7 @@ export default function ApprenticeWorkplaceCulturePage() {
       faqHeading="Frequently Asked Questions About Workplace Culture"
       relatedPages={relatedPages}
       ctaHeading="Navigate your apprenticeship with confidence"
-      ctaSubheading="Join 430+ UK apprentices building technical skills and professional confidence with Elec-Mate. Site diary, mental health hub, professional development tracking, and structured courses. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices building technical skills and professional confidence with Elec-Mate. Site diary, mental health hub, professional development tracking, and structured courses. 7-day free trial, cancel anytime."
     />
   );
 }

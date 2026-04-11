@@ -846,7 +846,7 @@ export default function ThreePhaseCalculationsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase calculations, one tap away"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70 calculators, 8 certificate types — all BS 7671:2018+A3:2024. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for three-phase power, cable sizing, and voltage drop calculations. 70+ calculators, 16 certificate types — all BS 7671:2018+A3:2024. 7-day free trial."
     />
   );
 }

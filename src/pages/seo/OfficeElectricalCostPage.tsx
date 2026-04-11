@@ -87,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/retail-electrical-cost',
     title: 'Retail Shop Electrical Fit-Out Cost',
-    description: 'Electrical costs for retail shop fit-outs, display lighting, till points, and CCTV.',
+    description:
+      'Electrical costs for retail shop fit-outs, display lighting, till points, and CCTV.',
     icon: Building2,
     category: 'Cost Guide',
   },
   {
     href: '/guides/emergency-lighting-cost',
     title: 'Emergency Lighting Installation Cost',
-    description: 'Emergency lighting installation costs, BS 5266 requirements, and testing obligations.',
+    description:
+      'Emergency lighting installation costs, BS 5266 requirements, and testing obligations.',
     icon: Lightbulb,
     category: 'Cost Guide',
   },
   {
     href: '/guides/fire-alarm-installation-cost',
     title: 'Fire Alarm Installation Cost',
-    description: 'Fire alarm system installation costs for commercial premises, BS 5839 compliance.',
+    description:
+      'Fire alarm system installation costs for commercial premises, BS 5839 compliance.',
     icon: AlertTriangle,
     category: 'Cost Guide',
   },
@@ -125,8 +128,8 @@ const sections = [
     content: (
       <>
         <p>
-          Fitting out an office for commercial occupation involves a broad range of electrical
-          work beyond simply installing sockets and lights. Power distribution, data infrastructure,
+          Fitting out an office for commercial occupation involves a broad range of electrical work
+          beyond simply installing sockets and lights. Power distribution, data infrastructure,
           emergency lighting, and fire alarm integration must all be coordinated and installed to
           the relevant standards. The cost varies considerably with office size, specification
           level, and location.
@@ -136,8 +139,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small office (up to 10 desks)</strong> — £2,000 to £8,000. Power
-                circuits, data points, emergency lighting, and fire alarm integration.
+                <strong>Small office (up to 10 desks)</strong> — £2,000 to £8,000. Power circuits,
+                data points, emergency lighting, and fire alarm integration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -151,8 +154,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Large office (30+ desks)</strong> — £25,000 to £80,000+. Three-phase
-                distribution, raised access flooring power, BMS integration, full emergency
-                lighting and Grade A fire alarm system.
+                distribution, raised access flooring power, BMS integration, full emergency lighting
+                and Grade A fire alarm system.
               </span>
             </li>
           </ul>
@@ -169,9 +172,7 @@ const sections = [
     heading: 'Office Electrical Cost Breakdown',
     content: (
       <>
-        <p>
-          Understanding where the money goes helps with budgeting and scope decisions.
-        </p>
+        <p>Understanding where the money goes helps with budgeting and scope decisions.</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -185,24 +186,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power circuits and socket outlets</strong> — £80 to £200 per outlet.
-                Desktop power modules, under-desk power, and floor boxes in open plan areas.
+                <strong>Power circuits and socket outlets</strong> — £80 to £200 per outlet. Desktop
+                power modules, under-desk power, and floor boxes in open plan areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data cabling</strong> — £80 to £150 per data point. Cat6 or Cat6A
-                structured cabling to every desk, conference room, and Wi-Fi access point.
-                Patch panel and comms cabinet additional.
+                <strong>Data cabling</strong> — £80 to £150 per data point. Cat6 or Cat6A structured
+                cabling to every desk, conference room, and Wi-Fi access point. Patch panel and
+                comms cabinet additional.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Office lighting</strong> — £100 to £350 per luminaire fitted. Recessed
-                LED panels with DALI or 0-10V dimming, occupancy sensors, and daylight
-                sensors for Part L compliance.
+                <strong>Office lighting</strong> — £100 to £350 per luminaire fitted. Recessed LED
+                panels with DALI or 0-10V dimming, occupancy sensors, and daylight sensors for Part
+                L compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -236,8 +237,8 @@ const sections = [
     content: (
       <>
         <p>
-          A useful budgeting tool for office fit-outs is the per-desk electrical cost. This
-          figure covers the power and data points at each workstation position.
+          A useful budgeting tool for office fit-outs is the per-desk electrical cost. This figure
+          covers the power and data points at each workstation position.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,24 +246,24 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Basic specification (4 power outlets, 2 data points per desk)</strong> —
-                £400 to £600 per desk. Standard 13A socket outlets at desk height or in a
-                desktop power module, and two Cat6 data outlets.
+                £400 to £600 per desk. Standard 13A socket outlets at desk height or in a desktop
+                power module, and two Cat6 data outlets.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mid-range specification (6 power, 4 data per desk)</strong> — £700 to
-                £1,000 per desk. Includes USB-A and USB-C charging outlets, four Cat6 data
-                points, and a floor box or under-desk cable trunking.
+                <strong>Mid-range specification (6 power, 4 data per desk)</strong> — £700 to £1,000
+                per desk. Includes USB-A and USB-C charging outlets, four Cat6 data points, and a
+                floor box or under-desk cable trunking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High specification (hot-desk or multi-monitor)</strong> — £1,000 to
-                £1,500 per desk. Floor boxes with 8 power outlets, 4 Cat6 data, and integrated
-                HDMI and USB connections. Raised access flooring assumed.
+                <strong>High specification (hot-desk or multi-monitor)</strong> — £1,000 to £1,500
+                per desk. Floor boxes with 8 power outlets, 4 Cat6 data, and integrated HDMI and USB
+                connections. Raised access flooring assumed.
               </span>
             </li>
           </ul>
@@ -290,33 +291,33 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>General power circuits</strong> — 20A radial or 32A ring final circuits
-                serving desktop outlets. Size the number of circuits to avoid exceeding 50%
-                of the circuit capacity under simultaneous load.
+                serving desktop outlets. Size the number of circuits to avoid exceeding 50% of the
+                circuit capacity under simultaneous load.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated IT circuits</strong> — server racks, network switches, and
-                UPS units need a dedicated circuit sized for their full load, ideally with a
-                UPS on the critical IT supplies.
+                <strong>Dedicated IT circuits</strong> — server racks, network switches, and UPS
+                units need a dedicated circuit sized for their full load, ideally with a UPS on the
+                critical IT supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Structured data cabling</strong> — Cat6 or Cat6A to TIA-568 or ISO
-                11801 standards. Every desk, conference room, and Wi-Fi access point requires
-                at least two data points. PoE (Power over Ethernet) access points also need
-                data cabling rather than separate power.
+                <strong>Structured data cabling</strong> — Cat6 or Cat6A to TIA-568 or ISO 11801
+                standards. Every desk, conference room, and Wi-Fi access point requires at least two
+                data points. PoE (Power over Ethernet) access points also need data cabling rather
+                than separate power.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>AV and conferencing power</strong> — dedicated circuits for projectors,
-                displays, and video conferencing equipment. HDMI, USB, and power in conference
-                room tables require planning at the first-fix stage.
+                displays, and video conferencing equipment. HDMI, USB, and power in conference room
+                tables require planning at the first-fix stage.
               </span>
             </li>
           </ul>
@@ -330,9 +331,9 @@ const sections = [
     content: (
       <>
         <p>
-          Office lighting must meet the lux levels recommended by CIBSE LG7 and comply with
-          Building Regulations Part L (conservation of fuel and power), which requires lighting
-          controls including occupancy sensors and daylight linking in new commercial fit-outs.
+          Office lighting must meet the lux levels recommended by CIBSE LG7 and comply with Building
+          Regulations Part L (conservation of fuel and power), which requires lighting controls
+          including occupancy sensors and daylight linking in new commercial fit-outs.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -355,9 +356,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reception and common areas</strong> — feature lighting, indirect coves,
-                and decorative pendants. Higher specification materials. Budget £300 to £700 per
-                feature light point plus wiring.
+                <strong>Reception and common areas</strong> — feature lighting, indirect coves, and
+                decorative pendants. Higher specification materials. Budget £300 to £700 per feature
+                light point plus wiring.
               </span>
             </li>
           </ul>
@@ -371,9 +372,9 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting and fire alarm systems are mandatory in commercial offices and must
-          be designed, installed, and commissioned by a qualified person. They are a significant
-          cost element that is sometimes underestimated in office fit-out budgets.
+          Emergency lighting and fire alarm systems are mandatory in commercial offices and must be
+          designed, installed, and commissioned by a qualified person. They are a significant cost
+          element that is sometimes underestimated in office fit-out budgets.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -389,27 +390,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm system (BS 5839-1)</strong> — an L2 or M (manual only) system
-                for a small office costs £1,500 to £4,000 supply and install. Includes panel,
-                manual call points, smoke detectors, sounders, and a commissioning certificate.
-                Larger offices require an L1 system with full coverage.
+                <strong>Fire alarm system (BS 5839-1)</strong> — an L2 or M (manual only) system for
+                a small office costs £1,500 to £4,000 supply and install. Includes panel, manual
+                call points, smoke detectors, sounders, and a commissioning certificate. Larger
+                offices require an L1 system with full coverage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Integration with building systems</strong> — if the office is in a
-                multi-tenant building, the fire alarm may need to interface with the building's
-                main fire alarm panel. This adds complexity and cost — allow £500 to £2,000
-                for integration work.
+                multi-tenant building, the fire alarm may need to interface with the building's main
+                fire alarm panel. This adds complexity and cost — allow £500 to £2,000 for
+                integration work.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Emergency lighting and fire alarm commissioning certificates must be kept by the
-          employer or building manager. Annual testing of the emergency lighting system is a
-          legal requirement under the Regulatory Reform (Fire Safety) Order 2005.
+          Emergency lighting and fire alarm commissioning certificates must be kept by the employer
+          or building manager. Annual testing of the emergency lighting system is a legal
+          requirement under the Regulatory Reform (Fire Safety) Order 2005.
         </p>
       </>
     ),
@@ -444,9 +445,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Part L (Energy Efficiency)</strong> — requires
-                energy-efficient lighting and controls in commercial buildings. LED luminaires
-                with occupancy sensors and daylight linking are required in most new commercial
-                fit-outs.
+                energy-efficient lighting and controls in commercial buildings. LED luminaires with
+                occupancy sensors and daylight linking are required in most new commercial fit-outs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -470,10 +470,10 @@ const sections = [
     content: (
       <>
         <p>
-          Office fit-out projects are high-value, multi-phase jobs that reward electricians who
-          can manage a programme, co-ordinate with other trades, and deliver accurate costings.
-          The main failure modes are underquoting data cabling and underestimating the emergency
-          lighting and fire alarm scope.
+          Office fit-out projects are high-value, multi-phase jobs that reward electricians who can
+          manage a programme, co-ordinate with other trades, and deliver accurate costings. The main
+          failure modes are underquoting data cabling and underestimating the emergency lighting and
+          fire alarm scope.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -483,8 +483,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Data Cabling Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Data cabling is often underquoted in commercial fit-outs. Count every data point,
-                  measure every cable run, and price the patch panel, comms cabinet, and
-                  termination time separately. Use the{' '}
+                  measure every cable run, and price the patch panel, comms cabinet, and termination
+                  time separately. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -501,9 +501,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Commercial clients expect full documentation — EIC, emergency lighting
                   commissioning certificate, and fire alarm commissioning certificate. Issue the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on site
-                  after testing. Follow up with the emergency lighting and fire alarm certificates
-                  within 48 hours. This is the professional standard that wins repeat business.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on site after
+                  testing. Follow up with the emergency lighting and fire alarm certificates within
+                  48 hours. This is the professional standard that wins repeat business.
                 </p>
               </div>
             </div>
@@ -511,7 +511,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial office electrical fit-outs with Elec-Mate"
-          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 430+ UK electricians. 7-day free trial."
+          description="Create professional itemised electrical fit-out quotes, issue EICs on site, and manage multi-phase commercial projects. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -548,7 +548,7 @@ export default function OfficeElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Office Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Office Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional commercial electrical fit-out quotes with itemised power, data, emergency lighting, and fire alarm costs. 7-day free trial, cancel anytime."
     />
   );
 }

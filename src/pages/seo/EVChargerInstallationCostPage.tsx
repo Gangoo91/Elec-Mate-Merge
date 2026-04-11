@@ -105,8 +105,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description:
-      'Check voltage drop on long EV charger cable runs to garages and driveways.',
+    description: 'Check voltage drop on long EV charger cable runs to garages and driveways.',
     icon: Zap,
     category: 'Tool',
   },
@@ -148,17 +147,19 @@ const sections = [
       <>
         <p>
           Electric vehicle ownership in the UK is growing rapidly. With petrol and diesel car sales
-          declining and the 2035 ban on new combustion engine vehicles approaching, installing a home
-          EV charger is one of the most in-demand electrical jobs in the country. For homeowners, it
-          is a practical necessity. For electricians, it is a reliable and growing revenue stream.
+          declining and the 2035 ban on new combustion engine vehicles approaching, installing a
+          home EV charger is one of the most in-demand electrical jobs in the country. For
+          homeowners, it is a practical necessity. For electricians, it is a reliable and growing
+          revenue stream.
         </p>
         <p>
           But EV charger installation is not a simple plug-and-play job. It requires compliance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          Section 722 (which specifically governs EV charging equipment), correct RCD type selection,
-          appropriate earthing arrangements, DNO notification, and proper testing and certification.
+          Section 722 (which specifically governs EV charging equipment), correct RCD type
+          selection, appropriate earthing arrangements, DNO notification, and proper testing and
+          certification.
         </p>
         <p>
           This guide breaks down every cost element — from the charger unit itself to the cable,
@@ -180,7 +181,9 @@ const sections = [
           prices:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Domestic Charger Units (7kW Single-Phase)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Domestic Charger Units (7kW Single-Phase)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -232,8 +235,8 @@ const sections = [
         <p>
           For most domestic installations, a mid-range 7kW charger in the £400 to £700 range
           provides the best balance of features, reliability, and value. Always check that the
-          charger unit has integrated DC fault detection (6mA DC RDC-DD) — this allows use of a
-          Type A RCBO instead of the more expensive Type B RCD.
+          charger unit has integrated DC fault detection (6mA DC RDC-DD) — this allows use of a Type
+          A RCBO instead of the more expensive Type B RCD.
         </p>
       </>
     ),
@@ -255,8 +258,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Charger mounted on the garage wall or house exterior, within 5 metres of the consumer
               unit. Cable run through the wall or along the surface. No consumer unit upgrade
-              needed. Labour: £250 to £400. Cable and accessories: £50 to £100. Testing and EIC:
-              £50 to £80.
+              needed. Labour: £250 to £400. Cable and accessories: £50 to £100. Testing and EIC: £50
+              to £80.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -326,8 +329,8 @@ const sections = [
               <span>
                 <strong>Multi-point commercial installation</strong> — £3,000 to £8,000+ per charge
                 point depending on infrastructure requirements. Load balancing, back-office
-                software, payment systems, civil works for cable routing, and potentially DNO
-                supply upgrade.
+                software, payment systems, civil works for cable routing, and potentially DNO supply
+                upgrade.
               </span>
             </li>
           </ul>
@@ -357,38 +360,38 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuit (Regulation 722.533.101)</strong> — each EV charger must
-                be supplied by a dedicated circuit from the consumer unit or distribution board.
-                The circuit protective device must be correctly rated for the charger's maximum
-                demand (typically 32A for a 7kW charger).
+                be supplied by a dedicated circuit from the consumer unit or distribution board. The
+                circuit protective device must be correctly rated for the charger's maximum demand
+                (typically 32A for a 7kW charger).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 722.531.101)</strong> — the EV charger circuit must be
-                protected by an appropriate RCD. Where the EVSE can produce DC residual currents, a
-                Type B RCD or a Type A RCD combined with a DC fault detection device (6mA DC
-                RDC-DD) is required. Most quality domestic chargers include integrated DC
+                <strong>RCD protection (Regulation 722.531.101)</strong> — the EV charger circuit
+                must be protected by an appropriate RCD. Where the EVSE can produce DC residual
+                currents, a Type B RCD or a Type A RCD combined with a DC fault detection device
+                (6mA DC RDC-DD) is required. Most quality domestic chargers include integrated DC
                 protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing (Regulation 722.411.4.1)</strong> — particular attention is required
-                for earthing arrangements. On PME (TN-C-S) supplies, a local earth electrode may be
-                required as a protective measure. Earth fault loop impedance must be verified to
-                ensure protective devices disconnect within the required time.
+                <strong>Earthing (Regulation 722.411.4.1)</strong> — particular attention is
+                required for earthing arrangements. On PME (TN-C-S) supplies, a local earth
+                electrode may be required as a protective measure. Earth fault loop impedance must
+                be verified to ensure protective devices disconnect within the required time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PME considerations</strong> — where the supply is PME (which is the
-                majority of UK domestic supplies), there are specific requirements for EV charging.
-                The IET Code of Practice for Electric Vehicle Charging Equipment Installation
-                provides detailed guidance on PME earthing options, including the use of a TT
-                arrangement at the charger with a local earth electrode.
+                <strong>PME considerations</strong> — where the supply is PME (which is the majority
+                of UK domestic supplies), there are specific requirements for EV charging. The IET
+                Code of Practice for Electric Vehicle Charging Equipment Installation provides
+                detailed guidance on PME earthing options, including the use of a TT arrangement at
+                the charger with a local earth electrode.
               </span>
             </li>
           </ul>
@@ -428,10 +431,10 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">G99 Application</h3>
             <p className="text-white text-sm leading-relaxed">
-              For three-phase chargers or installations exceeding 16A per phase, G99 requires
-              prior approval from the DNO before the charger can be connected. This process can
-              take 4 to 10 weeks and may involve a network capacity assessment. Plan ahead for
-              commercial and three-phase domestic installations.
+              For three-phase chargers or installations exceeding 16A per phase, G99 requires prior
+              approval from the DNO before the charger can be connected. This process can take 4 to
+              10 weeks and may involve a network capacity assessment. Plan ahead for commercial and
+              three-phase domestic installations.
             </p>
           </div>
         </div>
@@ -451,25 +454,23 @@ const sections = [
     heading: 'Factors That Affect EV Charger Installation Cost',
     content: (
       <>
-        <p>
-          The range in EV charger installation costs is driven by several variables:
-        </p>
+        <p>The range in EV charger installation costs is driven by several variables:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable run length</strong> — the single biggest variable. A 3-metre cable
-                run costs virtually nothing extra; a 25-metre underground SWA cable run can add
-                £300 to £500 in materials and labour.
+                <strong>Cable run length</strong> — the single biggest variable. A 3-metre cable run
+                costs virtually nothing extra; a 25-metre underground SWA cable run can add £300 to
+                £500 in materials and labour.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit capacity</strong> — if the existing consumer unit has no spare
-                ways or insufficient capacity for a 32A circuit, a board upgrade or replacement
-                adds £300 to £800.
+                ways or insufficient capacity for a 32A circuit, a board upgrade or replacement adds
+                £300 to £800.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -484,16 +485,16 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Civil works</strong> — underground cable runs require trenching (minimum
-                500mm depth with cable tiles or markers). If the trench crosses a driveway, the
-                cost of cutting and reinstating the surface can be significant.
+                500mm depth with cable tiles or markers). If the trench crosses a driveway, the cost
+                of cutting and reinstating the surface can be significant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Charger choice</strong> — the price difference between a budget and premium
-                charger unit is £400 to £600. Most electricians recommend mid-range units with
-                smart features and integrated DC protection.
+                charger unit is £400 to £600. Most electricians recommend mid-range units with smart
+                features and integrated DC protection.
               </span>
             </li>
           </ul>
@@ -566,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Quote EV installations accurately and deliver professional results. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Quote EV installations accurately and deliver professional results. 7-day free trial."
           icon={Car}
         />
       </>
@@ -603,7 +604,7 @@ export default function EVChargerInstallationCostPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates for EV charger installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates for EV charger installations. 7-day free trial, cancel anytime."
     />
   );
 }

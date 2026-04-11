@@ -165,8 +165,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          Section 722 and must be notified to{' '}
-          <strong>Northern Powergrid (NPG)</strong> before the charger is energised.
+          Section 722 and must be notified to <strong>Northern Powergrid (NPG)</strong> before the
+          charger is energised.
         </p>
       </>
     ),
@@ -338,8 +338,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Popular smart charger brands in the UK include Zappi, Ohme, Easee, and Wallbox. All
-          models sold through OZEV-approved installers meet the Smart Charge Points Regulations.
+          Popular smart charger brands in the UK include Zappi, Ohme, Easee, and Wallbox. All models
+          sold through OZEV-approved installers meet the Smart Charge Points Regulations.
         </p>
       </>
     ),
@@ -476,9 +476,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Leeds Clean Air Zone</strong> — Leeds operates a Clean Air Zone in the city
-                centre. Zero-emission vehicles are exempt from any charges that apply to non-compliant
-                vehicles, providing an ongoing financial incentive for EV ownership alongside home
-                charging.
+                centre. Zero-emission vehicles are exempt from any charges that apply to
+                non-compliant vehicles, providing an ongoing financial incentive for EV ownership
+                alongside home charging.
               </span>
             </li>
           </ul>
@@ -524,8 +524,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
-                  , NPG G98/G99 notification, and Building Regulations notification (Part P). Complete
-                  all documentation on your phone from the job.
+                  , NPG G98/G99 notification, and Building Regulations notification (Part P).
+                  Complete all documentation on your phone from the job.
                 </p>
               </div>
             </div>
@@ -533,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Leeds EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
           icon={Car}
         />
       </>
@@ -570,7 +570,7 @@ export default function EVChargerInstallationLeedsPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

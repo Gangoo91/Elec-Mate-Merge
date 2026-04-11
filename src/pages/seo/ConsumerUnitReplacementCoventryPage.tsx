@@ -85,7 +85,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Complete UK guide to consumer unit replacement — costs, regulations, and process.',
+    description:
+      'Complete UK guide to consumer unit replacement — costs, regulations, and process.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -113,7 +114,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-installation-certificate',
     title: 'Electrical Installation Certificate',
-    description: 'Issue EICs on site for new work and consumer unit replacements. BS 7671 compliant.',
+    description:
+      'Issue EICs on site for new work and consumer unit replacements. BS 7671 compliant.',
     icon: ShieldCheck,
     category: 'Certificate',
   },
@@ -148,16 +150,16 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — miniature circuit breakers protect individual circuits
-                against overcurrent. They are sized to the cable rating of each circuit (typically
-                6 A for lighting, 20 A or 32 A for sockets, 32 A or 40 A for cookers and showers).
+                against overcurrent. They are sized to the cable rating of each circuit (typically 6
+                A for lighting, 20 A or 32 A for sockets, 32 A or 40 A for cookers and showers).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCDs and RCBOs</strong> — residual current devices detect earth leakage
-                current and disconnect within milliseconds, protecting against electric shock.
-                Under Regulation 411.3.3 of{' '}
+                current and disconnect within milliseconds, protecting against electric shock. Under
+                Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>
@@ -215,15 +217,16 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Frequent tripping or burning smell</strong> — warning signs of deteriorated
-                components or overloaded circuits. An electrician should inspect the unit immediately.
+                components or overloaded circuits. An electrician should inspect the unit
+                immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient ways for modern demands</strong> — electric vehicle chargers,
-                heat pumps, and additional circuits require spare ways in the consumer unit.
-                Older boards often have no capacity for modern demands.
+                heat pumps, and additional circuits require spare ways in the consumer unit. Older
+                boards often have no capacity for modern demands.
               </span>
             </li>
           </ul>
@@ -240,8 +243,8 @@ const sections = [
           Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 on 1 January 2016,
           requires that consumer units and similar switchgear assemblies in domestic premises have
           an enclosure made of non-combustible material. The only practical option is a metal
-          enclosure. This requirement was carried through to BS 7671:2018 and remains in
-          BS 7671:2018+A3:2024.
+          enclosure. This requirement was carried through to BS 7671:2018 and remains in BS
+          7671:2018+A3:2024.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -259,18 +262,18 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Approved products</strong> — major UK manufacturers including Hager,
-                Schneider Electric, Wylex, ABB, and Crabtree all produce metal consumer units
-                that meet BS EN 61439-3 and carry the UKCA mark. Your electrician should supply
-                a recognised brand from a reputable wholesaler.
+                Schneider Electric, Wylex, ABB, and Crabtree all produce metal consumer units that
+                meet BS EN 61439-3 and carry the UKCA mark. Your electrician should supply a
+                recognised brand from a reputable wholesaler.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Retrospective requirement?</strong> — the 2016 requirement does not
-                force immediate replacement of plastic consumer units installed before January
-                2016. However, any replacement consumer unit in Coventry must use a metal
-                enclosure, regardless of what was there before.
+                <strong>Retrospective requirement?</strong> — the 2016 requirement does not force
+                immediate replacement of plastic consumer units installed before January 2016.
+                However, any replacement consumer unit in Coventry must use a metal enclosure,
+                regardless of what was there before.
               </span>
             </li>
           </ul>
@@ -295,16 +298,16 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1–2 bedroom flat or small house</strong> — £400 to £550. Typical Coventry
-                apartment or small terraced house. 8 to 12 circuits. Includes dual-RCD or RCBO
-                metal consumer unit.
+                apartment or small terraced house. 8 to 12 circuits. Includes dual-RCD or RCBO metal
+                consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £550 to £750. The most common
-                Coventry housing type. 12 to 18 circuits. Typically half a day to a full day.
-                Cost depends on circuit count and condition of existing wiring.
+                Coventry housing type. 12 to 18 circuits. Typically half a day to a full day. Cost
+                depends on circuit count and condition of existing wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -328,8 +331,8 @@ const sections = [
         </div>
         <p>
           Additional costs may apply if the electrician discovers that remedial work is required on
-          the existing installation — for example, damaged T&amp;E cable, missing main bonding,
-          or inadequate earthing. These should be identified and quoted separately before work
+          the existing installation — for example, damaged T&amp;E cable, missing main bonding, or
+          inadequate earthing. These should be identified and quoted separately before work
           proceeds.
         </p>
       </>
@@ -341,8 +344,8 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations requires that specified electrical work in dwellings
-          is designed and installed to protect people from fire and electric shock. Consumer unit
+          Part P of the Building Regulations requires that specified electrical work in dwellings is
+          designed and installed to protect people from fire and electric shock. Consumer unit
           replacement is listed electrical work under Part P and must be notified.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -350,20 +353,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person self-certification</strong> — the simplest route.
-                An electrician registered with NICEIC, NAPIT, ELECSA, or another approved scheme
+                <strong>Competent person self-certification</strong> — the simplest route. An
+                electrician registered with NICEIC, NAPIT, ELECSA, or another approved scheme
                 notifies Coventry City Council Building Control automatically on completion of the
-                work. You receive a Building Regulations Compliance Certificate from the scheme.
-                No additional fee to the council.
+                work. You receive a Building Regulations Compliance Certificate from the scheme. No
+                additional fee to the council.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Control notification</strong> — if using an unregistered electrician,
-                you must notify Coventry City Council Building Control before work begins and pay the
-                relevant fee. The council will arrange an inspection on completion and issue a
-                completion certificate.
+                <strong>Building Control notification</strong> — if using an unregistered
+                electrician, you must notify Coventry City Council Building Control before work
+                begins and pay the relevant fee. The council will arrange an inspection on
+                completion and issue a completion certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -395,8 +398,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Survey and circuit identification</strong> — the electrician identifies
-                all circuits, checks earthing and bonding, and inspects the condition of accessible
+                <strong>Survey and circuit identification</strong> — the electrician identifies all
+                circuits, checks earthing and bonding, and inspects the condition of accessible
                 wiring. Any additional defects are noted and quoted separately.
               </span>
             </li>
@@ -405,17 +408,17 @@ const sections = [
               <span>
                 <strong>Supply isolation and installation</strong> — the supply is isolated at the
                 DNO cut-out. The old consumer unit is removed and the new metal consumer unit
-                fitted. All circuits are reconnected. Main earthing and main bonding conductors
-                are verified and resized if necessary (Regulation 544.1.1).
+                fitted. All circuits are reconnected. Main earthing and main bonding conductors are
+                verified and resized if necessary (Regulation 544.1.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing</strong> — all circuits are tested to BS 7671 Chapter 61: continuity
-                of protective conductors, ring final circuit continuity (where applicable), insulation
-                resistance, polarity verification, earth fault loop impedance, and RCD operating
-                time tests.
+                of protective conductors, ring final circuit continuity (where applicable),
+                insulation resistance, polarity verification, earth fault loop impedance, and RCD
+                operating time tests.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -440,8 +443,8 @@ const sections = [
         <p>
           Coventry's mix of post-war housing, student lets, and a growing private rented sector
           (boosted by two universities) creates consistent demand for consumer unit replacement work
-          across the CV postcode area. EICR-identified remedial work and landlord upgrades are
-          the most common triggers for enquiries.
+          across the CV postcode area. EICR-identified remedial work and landlord upgrades are the
+          most common triggers for enquiries.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -479,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Coventry electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -516,7 +519,7 @@ export default function ConsumerUnitReplacementCoventryPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Coventry"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Coventry"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -150,7 +150,7 @@ const LandingPage = () => {
             featureList: [
               '46+ Electrical & Upskilling Courses',
               'BS 7671 AI Assistants',
-              '8 Certificate Types',
+              '16 Certificate Types',
               'Voice Quotes & Invoices',
               'Stripe Payment Integration',
               '50+ Electrical Calculators',
@@ -940,7 +940,7 @@ const LandingPage = () => {
                 'Everything in Apprentice',
                 '5 AI specialists',
                 'Voice quotes & invoices',
-                '8 certificate types',
+                '16 certificate types',
                 'Pre & post site visit reports',
                 'Photo documentation per job',
                 'Expenses & materials tracking',

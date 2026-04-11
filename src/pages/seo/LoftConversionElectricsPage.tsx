@@ -640,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify loft conversions faster"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting. Everything you need for loft conversion electrics in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EIC certificates, and professional quoting. Everything you need for loft conversion electrics in one app. 7-day free trial."
           icon={Home}
         />
       </>
@@ -677,7 +677,7 @@ export default function LoftConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Loft Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Loft Conversions on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing with automatic derating, EIC certificates with AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing with automatic derating, EIC certificates with AI board scanning, and professional quoting. 7-day free trial, cancel anytime."
     />
   );
 }

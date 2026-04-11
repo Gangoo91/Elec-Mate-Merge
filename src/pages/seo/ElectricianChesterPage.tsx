@@ -38,7 +38,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Chester is in England, so Part P of the Building Regulations applies. Notifiable electrical work must be carried out by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Cheshire West and Chester Council Building Control.',
-  'Chester has a remarkable concentration of listed buildings and a Roman and medieval street layout. The Rows — Chester\'s unique two-storey galleried shopping streets — present unusual electrical access and installation challenges.',
+  "Chester has a remarkable concentration of listed buildings and a Roman and medieval street layout. The Rows — Chester's unique two-storey galleried shopping streets — present unusual electrical access and installation challenges.",
   'The DNO for Chester is Electricity North West (ENW). All new connections, increased supplies, and G98/G99 generation notifications go through ENW.',
   'Chester has a significant rental and student property market alongside a heritage tourism economy. EICR demand is strong, driven by the Renters (Reform) Act requirements for landlords.',
   'Labour rates in Chester are mid-range for the North West — typically £40 to £58 per hour for a qualified, registered electrician in 2026.',
@@ -56,9 +56,9 @@ const faqs = [
       'Electricity North West (ENW) is the Distribution Network Operator for Chester and the wider North West region. For new connections, increased supply capacity (for example, upgrading for an EV charger or heat pump), and G98/G99 generation notifications for solar PV or battery storage, you deal with ENW. Their connections portal handles most application types online. G98 notifications for systems up to 16A per phase are straightforward; G99 applications for larger systems require prior approval and typically take 8 to 12 weeks.',
   },
   {
-    question: 'What are the electrical challenges of Chester\'s historic buildings?',
+    question: "What are the electrical challenges of Chester's historic buildings?",
     answer:
-      'Chester has one of the UK\'s highest concentrations of listed buildings and timber-framed properties, particularly in the city centre. The main challenges are: solid or timber-frame walls that cannot be chased in the conventional way, requiring surface-mounted trunking or conduit; the risk of discovering knob-and-tube or other obsolete wiring in older properties; listed building consent requirements for external electrical work including EV chargers, security lighting, and external cable routes; and asbestos in pre-1980s properties, which requires a survey before any invasive work. Always survey the property thoroughly before quoting.',
+      "Chester has one of the UK's highest concentrations of listed buildings and timber-framed properties, particularly in the city centre. The main challenges are: solid or timber-frame walls that cannot be chased in the conventional way, requiring surface-mounted trunking or conduit; the risk of discovering knob-and-tube or other obsolete wiring in older properties; listed building consent requirements for external electrical work including EV chargers, security lighting, and external cable routes; and asbestos in pre-1980s properties, which requires a survey before any invasive work. Always survey the property thoroughly before quoting.",
   },
   {
     question: 'How much does an EICR cost in Chester?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What is the typical cost of a full house rewire in Chester?',
     answer:
-      'A full house rewire in Chester typically costs £3,200 to £5,500 for a standard 3-bedroom semi-detached property, depending on the size, number of circuits, access difficulties, and whether the property is occupied or empty. Chester\'s older housing stock — particularly Victorian and Edwardian terraces in areas like Hoole and Newton — can add cost due to solid floors, limited floor void access, and the need for surface-mounted wiring in some areas. Properties with asbestos will also require a survey and potentially removal work before rewiring can proceed.',
+      "A full house rewire in Chester typically costs £3,200 to £5,500 for a standard 3-bedroom semi-detached property, depending on the size, number of circuits, access difficulties, and whether the property is occupied or empty. Chester's older housing stock — particularly Victorian and Edwardian terraces in areas like Hoole and Newton — can add cost due to solid floors, limited floor void access, and the need for surface-mounted wiring in some areas. Properties with asbestos will also require a survey and potentially removal work before rewiring can proceed.",
   },
 ];
 
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for rewires, new circuits, and long cable runs in Chester\'s period properties.',
+      "Size cables for rewires, new circuits, and long cable runs in Chester's period properties.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -148,8 +148,8 @@ const sections = [
           with a medieval street plan, a remarkable concentration of listed and timber-framed
           buildings, and a thriving tourist economy. For electricians, Chester offers a varied
           workload: heritage property rewires, landlord EICRs, new-build estates on the city's
-          edges, commercial work in the retail and hospitality sectors, and a growing demand for
-          EV chargers and renewable energy installations.
+          edges, commercial work in the retail and hospitality sectors, and a growing demand for EV
+          chargers and renewable energy installations.
         </p>
         <p>
           The city sits on the England–Wales border, which matters for regulatory purposes: Chester
@@ -159,8 +159,8 @@ const sections = [
           — but will deal with a different DNO (SP Manweb rather than Electricity North West).
         </p>
         <p>
-          This guide covers the regulatory requirements, DNO contacts, property types, typical
-          jobs, pricing, and practical advice for electricians working in and around Chester.
+          This guide covers the regulatory requirements, DNO contacts, property types, typical jobs,
+          pricing, and practical advice for electricians working in and around Chester.
         </p>
       </>
     ),
@@ -171,8 +171,8 @@ const sections = [
     content: (
       <>
         <p>
-          Chester is in England, so Part P of the Building Regulations 2010 applies to all
-          domestic electrical work. Part P requires that notifiable electrical work is either:
+          Chester is in England, so Part P of the Building Regulations 2010 applies to all domestic
+          electrical work. Part P requires that notifiable electrical work is either:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -209,8 +209,7 @@ const sections = [
                 <strong>BS 7671 compliance</strong> — all electrical work in Chester must comply
                 with BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations). This is mandatory
                 regardless of whether the work is notifiable. RCD protection is required for most
-                socket outlet circuits and for circuits in certain
-                locations.
+                socket outlet circuits and for circuits in certain locations.
               </span>
             </li>
           </ul>
@@ -236,13 +235,15 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Listed and Timber-Framed Buildings</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Listed and Timber-Framed Buildings
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Chester's city centre has a high concentration of listed buildings and genuine
               timber-framed properties dating from the 16th and 17th centuries. Rewiring requires
-              surface-mounted mini-trunking or conduit — you cannot chase into timber frames.
-              Listed building consent is required for external electrical work. Asbestos surveys
-              are essential in pre-1980s properties, including in insulation board and floor tiles.
+              surface-mounted mini-trunking or conduit — you cannot chase into timber frames. Listed
+              building consent is required for external electrical work. Asbestos surveys are
+              essential in pre-1980s properties, including in insulation board and floor tiles.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -261,18 +262,18 @@ const sections = [
               Chester's outskirts (Upton, Saughall, Rowton, Blacon) have significant new-build
               development. These properties are built to current standards with cavity walls and
               modern consumer units. Work is typically additions, EV charger installations, and
-              smart home upgrades rather than full rewires. EV charger demand is strong in
-              new-build estates.
+              smart home upgrades rather than full rewires. EV charger demand is strong in new-build
+              estates.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial and Retail</h3>
             <p className="text-white text-sm leading-relaxed">
               Chester's strong retail and tourism economy creates demand for commercial electrical
-              work in shops, restaurants, hotels, and visitor attractions. The Rows shopping
-              streets are architecturally unique — two-storey galleried streets with unusual
-              access and installation challenges. Commercial work requires appropriate qualifications
-              and understanding of BS 7671 Part 7 special locations.
+              work in shops, restaurants, hotels, and visitor attractions. The Rows shopping streets
+              are architecturally unique — two-storey galleried streets with unusual access and
+              installation challenges. Commercial work requires appropriate qualifications and
+              understanding of BS 7671 Part 7 special locations.
             </p>
           </div>
         </div>
@@ -312,18 +313,18 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — demand for home and commercial EV
-                chargers is growing across Chester. New-build estates are a particular growth
-                area. Many older Chester properties have sufficient supply capacity for a 7kW
-                charger without a DNO supply upgrade.
+                chargers is growing across Chester. New-build estates are a particular growth area.
+                Many older Chester properties have sufficient supply capacity for a 7kW charger
+                without a DNO supply upgrade.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full and partial rewires</strong> — Chester's Victorian and Edwardian
-                housing stock generates significant rewiring work. Partial rewires are common
-                where sections of wiring are condemned on an EICR. Full rewires are needed in
-                properties where the entire installation is beyond economic repair.
+                housing stock generates significant rewiring work. Partial rewires are common where
+                sections of wiring are condemned on an EICR. Full rewires are needed in properties
+                where the entire installation is beyond economic repair.
               </span>
             </li>
           </ul>
@@ -355,24 +356,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Part P compliance documentation</strong> — always ask for a Building
-                Regulations compliance certificate (issued by the scheme or by Building Control)
-                and a BS 7671 EIC for notifiable work. Keep these documents — you'll need them
-                when selling the property.
+                Regulations compliance certificate (issued by the scheme or by Building Control) and
+                a BS 7671 EIC for notifiable work. Keep these documents — you'll need them when
+                selling the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotations</strong> — always get a written quote before work
-                starts. A good electrician will survey the property and provide a detailed
-                breakdown of costs including materials, labour, and any certification fees.
+                <strong>Written quotations</strong> — always get a written quote before work starts.
+                A good electrician will survey the property and provide a detailed breakdown of
+                costs including materials, labour, and any certification fees.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public Liability Insurance</strong> — any electrician working in your
-                home should have public liability insurance. Ask to see proof before work starts.
+                <strong>Public Liability Insurance</strong> — any electrician working in your home
+                should have public liability insurance. Ask to see proof before work starts.
                 Reputable scheme members are required to hold adequate insurance as part of their
                 registration conditions.
               </span>
@@ -471,11 +472,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning and voice test entry. Part P compliance
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning and voice test entry. Part P compliance
                   requires professional documentation — deliver it from your phone before you leave
                   site.
                 </p>
@@ -508,8 +506,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Account for the additional time needed in listed and heritage properties.
-                  Send professional PDF quotes to Chester customers from the site survey.
+                  . Account for the additional time needed in listed and heritage properties. Send
+                  professional PDF quotes to Chester customers from the site survey.
                 </p>
               </div>
             </div>
@@ -517,7 +515,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chester electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of Chester's heritage properties and Part P compliance. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of Chester's heritage properties and Part P compliance. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -542,8 +540,7 @@ export default function ElectricianChesterPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Chester:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Chester: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Chester's unique mix of Roman walls, medieval timber-framed buildings, Victorian terraces, and modern new-builds demands electricians who understand Part P compliance, Electricity North West connections, and heritage property challenges."
@@ -554,7 +551,7 @@ export default function ElectricianChesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Chester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Chester Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the realities of Chester's heritage property stock. 7-day free trial."
     />
   );
 }

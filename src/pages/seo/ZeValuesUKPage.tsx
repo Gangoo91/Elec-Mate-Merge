@@ -331,7 +331,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Ze validation against earthing arrangement"
-          description="Elec-Mate validates your measured Ze against the expected maximum for the declared earthing arrangement (TN-S, TN-C-S, or TT). If Ze exceeds the maximum, the app flags it immediately. Combined with 50+ calculators and voice test entry, you complete the EICR faster and more accurately."
+          description="Elec-Mate validates your measured Ze against the expected maximum for the declared earthing arrangement (TN-S, TN-C-S, or TT). If Ze exceeds the maximum, the app flags it immediately. Combined with 70+ calculators and voice test entry, you complete the EICR faster and more accurately."
           icon={Calculator}
         />
       </>
@@ -591,7 +591,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Record Ze, PFC, and all supply characteristics digitally"
-          description="Elec-Mate captures the full supply characteristics section of the EICR — earthing arrangement, Ze, PFC, supply voltage, and supply type — with automatic validation against BS 7671 expected values. AI agents help with observation coding when Ze is out of range. 50+ calculators for every test."
+          description="Elec-Mate captures the full supply characteristics section of the EICR — earthing arrangement, Ze, PFC, supply voltage, and supply type — with automatic validation against BS 7671 expected values. AI agents help with observation coding when Ze is out of range. 70+ calculators for every test."
           icon={FileCheck2}
         />
       </>
@@ -628,7 +628,7 @@ export default function ZeValuesUKPage() {
       faqHeading="Frequently Asked Questions About Ze Values"
       relatedPages={relatedPages}
       ctaHeading="Validate Ze and Every Test Result Automatically"
-      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 50+ calculators built in. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate validates Ze against expected values, cross-checks Zs with Ze + R1+R2, and flags any discrepancies. Voice test entry records readings hands-free. 70+ calculators built in. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

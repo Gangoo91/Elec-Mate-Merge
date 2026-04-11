@@ -111,7 +111,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -481,10 +481,15 @@ export default function ElectricalQuotingAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Elec-Mate is not just a quoting app — it is the complete platform for running an
-              electrical business. Your subscription includes access to 70 calculators (56 technical
-              + 14 business), 8 Elec-AI agents and 12 AI tools, 36+ training courses with 8
-              certificate types, <SEOInternalLink href="/electrical-certification/eicr">digital EICR and EIC certification</SEOInternalLink>, and the full quoting,
-              <SEOInternalLink href="/electrician-invoice-app"> invoicing</SEOInternalLink>, and payment system described on this page.
+              electrical business. Your subscription includes access to 70+ calculators (56
+              technical + 14 business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with
+              8 certificate types,{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">
+                digital EICR and EIC certification
+              </SEOInternalLink>
+              , and the full quoting,
+              <SEOInternalLink href="/electrician-invoice-app"> invoicing</SEOInternalLink>, and
+              payment system described on this page.
             </p>
             <p>
               Everything is designed to work together. The calculator results feed into your quotes.
@@ -541,7 +546,7 @@ export default function ElectricalQuotingAppPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Quote Faster, Win More Work"
-        subheading="Join 430+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for professional quotes and invoices. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

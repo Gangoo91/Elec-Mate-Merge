@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Plymouth EICR costs are among the most affordable in England, reflecting lower South West labour rates outside of Bristol and Bath. Expect to pay between £90 and £170 for a two-bedroom flat and £140 to £260 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Plymouth City Council enforces the requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'Like Southampton and Coventry, Plymouth was heavily bombed during the Second World War and much of the city was rebuilt in the post-war period. The post-war and 1960s housing stock frequently returns C2 EICR findings for ageing wiring and absent RCD protection.',
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Plymouth?',
     answer:
-      'Plymouth EICR prices are among the most affordable in England. A one-bedroom flat typically costs £75 to £150. A two-bedroom flat costs £90 to £170. A three-bedroom house costs £140 to £260. Larger properties or HMOs with multiple consumer units cost more. Plymouth\'s post-war housing stock is generally more straightforward to inspect than the Victorian and Georgian properties found in Bath or London, which contributes to lower average prices. Obtain at least two or three quotes.',
+      "Plymouth EICR prices are among the most affordable in England. A one-bedroom flat typically costs £75 to £150. A two-bedroom flat costs £90 to £170. A three-bedroom house costs £140 to £260. Larger properties or HMOs with multiple consumer units cost more. Plymouth's post-war housing stock is generally more straightforward to inspect than the Victorian and Georgian properties found in Bath or London, which contributes to lower average prices. Obtain at least two or three quotes.",
   },
   {
     question: 'Is an EICR a legal requirement for Plymouth landlords?',
@@ -61,12 +61,12 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Plymouth properties?',
     answer:
-      'Plymouth\'s post-war rebuilt housing stock produces characteristic EICR findings. Absent RCD protection on socket circuits (a C2 finding under Regulation 411.3.3 of BS 7671) is the most common finding in pre-1990s properties. Ageing PVC wiring from the 1950s to 1970s with degraded insulation, inadequate earthing and bonding, and overloaded circuits in student HMOs are all common. Properties in Devonport and the waterfront areas that predate the wartime bombing and survived may have older wiring types requiring replacement. Damp ingress in coastal properties can cause insulation resistance failure.',
+      "Plymouth's post-war rebuilt housing stock produces characteristic EICR findings. Absent RCD protection on socket circuits (a C2 finding under Regulation 411.3.3 of BS 7671) is the most common finding in pre-1990s properties. Ageing PVC wiring from the 1950s to 1970s with degraded insulation, inadequate earthing and bonding, and overloaded circuits in student HMOs are all common. Properties in Devonport and the waterfront areas that predate the wartime bombing and survived may have older wiring types requiring replacement. Damp ingress in coastal properties can cause insulation resistance failure.",
   },
   {
     question: 'How long does an EICR take in Plymouth?',
     answer:
-      'A one-bedroom flat typically takes two to three hours. A three-bedroom house takes three to four hours. Student HMOs in Mutley, Greenbank, and Lipson with multiple consumer units and fire alarm systems may take a full day. Plymouth\'s post-war properties generally have more straightforward wiring layouts than Victorian and Georgian stock elsewhere, but 1950s and 1960s properties may still have poor circuit documentation. Ensure the inspector has clear access to all rooms, the consumer unit, and the meter.',
+      "A one-bedroom flat typically takes two to three hours. A three-bedroom house takes three to four hours. Student HMOs in Mutley, Greenbank, and Lipson with multiple consumer units and fire alarm systems may take a full day. Plymouth's post-war properties generally have more straightforward wiring layouts than Victorian and Georgian stock elsewhere, but 1950s and 1960s properties may still have poor circuit documentation. Ensure the inspector has clear access to all rooms, the consumer unit, and the meter.",
   },
   {
     question: 'Does Plymouth City Council actively enforce EICR requirements?',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Are there any Plymouth-specific considerations for EICR inspections?',
     answer:
-      'Plymouth\'s coastal location means that damp ingress is a more significant concern than in inland cities. Coastal properties, particularly those near the Hoe, Stonehouse, and Barbican areas, may experience moisture penetration into electrical installations that causes insulation resistance test failures. The inspector may identify this as an FI observation or, in severe cases, a C2. Properties with electric heating systems — more common in the South West than other regions — have additional circuits that must be included in the inspection sample.',
+      "Plymouth's coastal location means that damp ingress is a more significant concern than in inland cities. Coastal properties, particularly those near the Hoe, Stonehouse, and Barbican areas, may experience moisture penetration into electrical installations that causes insulation resistance test failures. The inspector may identify this as an FI observation or, in severe cases, a C2. Properties with electric heating systems — more common in the South West than other regions — have additional circuits that must be included in the inspection sample.",
   },
   {
     question: 'What happens after an Unsatisfactory EICR in Plymouth?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -124,7 +125,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -151,8 +153,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and
-          FI observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
+          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
+          observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
         </p>
       </>
     ),
@@ -171,31 +173,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio / one-bedroom flat</strong> — £75 to £150. Common in the city
-                centre and student areas near the University of Plymouth.
+                <strong>Studio / one-bedroom flat</strong> — £75 to £150. Common in the city centre
+                and student areas near the University of Plymouth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £90 to £170. Post-war purpose-built flats
-                are common across Plymouth.
+                <strong>Two-bedroom flat</strong> — £90 to £170. Post-war purpose-built flats are
+                common across Plymouth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £140 to £260. Post-war semi-detached
-                and terraced properties are the most common house type in Plymouth's private
-                rented sector.
+                <strong>Three-bedroom house</strong> — £140 to £260. Post-war semi-detached and
+                terraced properties are the most common house type in Plymouth's private rented
+                sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom+ house / HMO</strong> — £240 to £450+. Student HMOs in
-                Mutley and Greenbank have a broader inspection scope including fire alarm and
-                emergency lighting systems.
+                <strong>Four-bedroom+ house / HMO</strong> — £240 to £450+. Student HMOs in Mutley
+                and Greenbank have a broader inspection scope including fire alarm and emergency
+                lighting systems.
               </span>
             </li>
           </ul>
@@ -222,9 +224,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This has applied to all new tenancies from 1 July 2020 and
-                all existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This has applied to all new tenancies from 1 July 2020 and all
+                existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -237,23 +239,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant notification</strong> — a copy must be provided to tenants within
-                28 days. New tenants must receive it before moving in.
+                <strong>Tenant notification</strong> — a copy must be provided to tenants within 28
+                days. New tenants must receive it before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days. Written confirmation must be provided to the tenant and to Plymouth City
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days. Written confirmation must be provided to the tenant and to Plymouth City
                 Council if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties</strong> — Plymouth City Council can issue civil penalties of
-                up to £30,000 per breach and may revoke HMO licences.
+                <strong>Penalties</strong> — Plymouth City Council can issue civil penalties of up
+                to £30,000 per breach and may revoke HMO licences.
               </span>
             </li>
           </ul>
@@ -277,35 +279,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                RCD protection on socket circuits not exceeding 20A. This is the most common C2
-                finding across Plymouth's pre-1990s housing stock, both post-war rebuilds and
-                Victorian survivals.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
+                protection on socket circuits not exceeding 20A. This is the most common C2 finding
+                across Plymouth's pre-1990s housing stock, both post-war rebuilds and Victorian
+                survivals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ageing post-war wiring</strong> — Plymouth's 1950s and 1960s rebuilt
-                properties have wiring that is now 60 to 70 years old. Degraded insulation,
-                brittle PVC sheathing, and overloaded circuits are common findings.
+                properties have wiring that is now 60 to 70 years old. Degraded insulation, brittle
+                PVC sheathing, and overloaded circuits are common findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Coastal damp ingress</strong> — Plymouth's maritime location means that
-                coastal properties near the Hoe, Stonehouse Creek, and Sutton Harbour can
-                experience damp ingress affecting electrical installations. This may cause
-                insulation resistance failures recorded as FI or C2 observations.
+                coastal properties near the Hoe, Stonehouse Creek, and Sutton Harbour can experience
+                damp ingress affecting electrical installations. This may cause insulation
+                resistance failures recorded as FI or C2 observations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inadequate earthing and bonding</strong> — post-war properties in
-                Plymouth commonly have undersized main protective bonding conductors and absent
-                bonding to gas and water services. These are frequent C2 findings.
+                <strong>Inadequate earthing and bonding</strong> — post-war properties in Plymouth
+                commonly have undersized main protective bonding conductors and absent bonding to
+                gas and water services. These are frequent C2 findings.
               </span>
             </li>
           </ul>
@@ -338,23 +340,23 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action required. Absent RCD protection
-              (Regulation 411.3.3) and ageing wiring insulation are the most common C2 findings
-              in Plymouth.
+              (Regulation 411.3.3) and ageing wiring insulation are the most common C2 findings in
+              Plymouth.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
-              Not immediately dangerous. C3 alone does not make the EICR Unsatisfactory. Common
-              in Plymouth properties where accessories are older but still functional.
+              Not immediately dangerous. C3 alone does not make the EICR Unsatisfactory. Common in
+              Plymouth properties where accessories are older but still functional.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
               The inspector could not fully assess a part of the installation. Common in Plymouth
-              where coastal damp may have affected concealed cables that cannot be accessed
-              during the inspection.
+              where coastal damp may have affected concealed cables that cannot be accessed during
+              the inspection.
             </p>
           </div>
         </div>
@@ -412,16 +414,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property</strong> — at least every 5 years (legal
-                requirement under the 2020 Regulations).
+                <strong>Private rented property</strong> — at least every 5 years (legal requirement
+                under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years recommended. Plymouth's
-                post-war housing stock is now over 60 years old — the 5-year interval is
-                appropriate for these properties.
+                post-war housing stock is now over 60 years old — the 5-year interval is appropriate
+                for these properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -435,8 +437,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Change of tenancy</strong> — a new EICR is required before a new tenant
-                moves into any privately rented Plymouth property, even if the current EICR has
-                not expired.
+                moves into any privately rented Plymouth property, even if the current EICR has not
+                expired.
               </span>
             </li>
           </ul>
@@ -485,9 +487,9 @@ const sections = [
       <>
         <p>
           Plymouth's large private rented sector, University of Plymouth student population, and
-          substantial stock of aging post-war housing create consistent demand for EICR work.
-          The city's relatively low EICR prices mean that efficiency matters — completing reports
-          on site rather than back in the office makes a significant difference to profitability.
+          substantial stock of aging post-war housing create consistent demand for EICR work. The
+          city's relatively low EICR prices mean that efficiency matters — completing reports on
+          site rather than back in the office makes a significant difference to profitability.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -513,13 +515,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Instantly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When the EICR identifies C1 or C2 observations, quote the remedial work on
-                  the day using the{' '}
+                  When the EICR identifies C1 or C2 observations, quote the remedial work on the day
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Plymouth landlords face a 28-day deadline — quoting immediately is the
-                  most effective way to win the follow-on work.
+                  . Plymouth landlords face a 28-day deadline — quoting immediately is the most
+                  effective way to win the follow-on work.
                 </p>
               </div>
             </div>
@@ -527,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -564,7 +566,7 @@ export default function EICRPlymouthPage() {
       faqHeading="Frequently Asked Questions About EICRs in Plymouth"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -11,7 +11,7 @@ interface SEOCTASectionProps {
 
 export function SEOCTASection({
   heading = 'Ready to work smarter?',
-  subheading = `Join ${USER_COUNT_LABEL} saving hours every week with 70+ calculators, 8 certificate types, AI agents, and 36+ training courses.`,
+  subheading = `Join ${USER_COUNT_LABEL} saving hours every week with 16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses.`,
 }: SEOCTASectionProps) {
   // Pick a testimonial for the CTA
   const t = TESTIMONIALS[0];

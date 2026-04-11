@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/pat-testing-guide',
     title: 'PAT Testing Guide',
-    description: 'Complete guide to portable appliance testing for commercial and domestic settings.',
+    description:
+      'Complete guide to portable appliance testing for commercial and domestic settings.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -142,8 +143,8 @@ const sections = [
       <>
         <p>
           Every December, UK fire and rescue services respond to hundreds of electrical fires linked
-          to Christmas lighting. Overloaded sockets, damaged cables, indoor lights used outdoors, and
-          lights left running all night on dry Christmas trees are the most common causes.
+          to Christmas lighting. Overloaded sockets, damaged cables, indoor lights used outdoors,
+          and lights left running all night on dry Christmas trees are the most common causes.
         </p>
         <p>
           Most of these incidents are entirely preventable. This guide covers the key safety
@@ -222,8 +223,8 @@ const sections = [
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP44</strong> — Protected against solid objects larger than 1mm and
-                splashing water from any direction. This is the minimum for outdoor Christmas
-                lights hung under eaves or in sheltered positions.
+                splashing water from any direction. This is the minimum for outdoor Christmas lights
+                hung under eaves or in sheltered positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -291,8 +292,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Uncoil extension reels fully</strong> — a coiled extension reel generates
-                heat in the coil under load. If you must use a cable reel, unwind it completely
-                even if you do not need the full length.
+                heat in the coil under load. If you must use a cable reel, unwind it completely even
+                if you do not need the full length.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -372,8 +373,8 @@ const sections = [
       <>
         <p>
           Leaving Christmas lights on continuously — especially overnight or when the property is
-          unoccupied — increases the fire risk and wastes electricity. Timer switches and smart plugs
-          offer a simple, low-cost solution.
+          unoccupied — increases the fire risk and wastes electricity. Timer switches and smart
+          plugs offer a simple, low-cost solution.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -381,9 +382,9 @@ const sections = [
               <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical timer switches</strong> — plug-in timers with a 24-hour dial
-                allow setting on/off times in 15-minute increments. Cheap, reliable, and no
-                internet connection required. Set lights to come on at dusk (around 4pm in December)
-                and switch off at 10pm or 11pm.
+                allow setting on/off times in 15-minute increments. Cheap, reliable, and no internet
+                connection required. Set lights to come on at dusk (around 4pm in December) and
+                switch off at 10pm or 11pm.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,18 +429,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Modern consumer units</strong> — if the property has a consumer unit installed
-                after January 2016, all circuits should already have RCD protection (split-load or
-                RCBO configuration). The sockets used for Christmas lights will be protected.
+                <strong>Modern consumer units</strong> — if the property has a consumer unit
+                installed after January 2016, all circuits should already have RCD protection
+                (split-load or RCBO configuration). The sockets used for Christmas lights will be
+                protected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Older installations</strong> — properties with older consumer units (rewireable
-                fuses, no RCDs) lack this protection. A plug-in RCD adaptor provides 30mA RCD
-                protection at the socket. This is an essential precaution for outdoor Christmas
-                lights on older installations.
+                <strong>Older installations</strong> — properties with older consumer units
+                (rewireable fuses, no RCDs) lack this protection. A plug-in RCD adaptor provides
+                30mA RCD protection at the socket. This is an essential precaution for outdoor
+                Christmas lights on older installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,9 +504,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Consumer Unit Upgrade</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  For properties without RCD protection, a consumer unit upgrade provides whole-house
-                  protection — not just for Christmas lights but for all circuits. This is a high-value
-                  job that delivers genuine safety improvement.
+                  For properties without RCD protection, a consumer unit upgrade provides
+                  whole-house protection — not just for Christmas lights but for all circuits. This
+                  is a high-value job that delivers genuine safety improvement.
                 </p>
               </div>
             </div>
@@ -549,7 +551,7 @@ export default function ChristmasLightingSafetyPage() {
       faqHeading="Frequently Asked Questions About Christmas Lighting Safety"
       relatedPages={relatedPages}
       ctaHeading="Keep Your Customers Safe This Christmas"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for PAT testing records, quoting outdoor installations, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

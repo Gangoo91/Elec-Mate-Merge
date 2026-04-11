@@ -100,7 +100,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size the dedicated circuit cable for heat pump installations with automatic derating.',
+    description:
+      'Size the dedicated circuit cable for heat pump installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -148,17 +149,17 @@ const sections = [
     content: (
       <>
         <p>
-          Air source heat pumps (ASHPs) are the leading low-carbon heating technology in the UK. With
-          the government phasing out new gas boiler installations and providing grants of up to £7,500
-          through the Boiler Upgrade Scheme, ASHP installations are growing rapidly — and every one
-          of them needs electrical work.
+          Air source heat pumps (ASHPs) are the leading low-carbon heating technology in the UK.
+          With the government phasing out new gas boiler installations and providing grants of up to
+          £7,500 through the Boiler Upgrade Scheme, ASHP installations are growing rapidly — and
+          every one of them needs electrical work.
         </p>
         <p>
-          The electrical scope of an ASHP installation typically includes a dedicated circuit from the
-          consumer unit to the outdoor unit, cable routing through the property, a local isolator
-          adjacent to the outdoor unit, controller wiring, and often a backup immersion heater
-          circuit. This is distinct from the heating and plumbing work (which is carried out by the
-          MCS-certified heating installer) and represents a significant revenue stream for
+          The electrical scope of an ASHP installation typically includes a dedicated circuit from
+          the consumer unit to the outdoor unit, cable routing through the property, a local
+          isolator adjacent to the outdoor unit, controller wiring, and often a backup immersion
+          heater circuit. This is distinct from the heating and plumbing work (which is carried out
+          by the MCS-certified heating installer) and represents a significant revenue stream for
           electricians.
         </p>
         <p>
@@ -182,11 +183,11 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Single Phase (Most Homes)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Suitable for ASHPs up to approximately 8kW. The existing single-phase supply must
-              have sufficient spare capacity — check the main fuse rating (typically 60A, 80A, or
-              100A) and the peak demand of the existing installation. A 5kW ASHP on a 100A supply
-              with moderate existing demand is straightforward. On a 60A supply with an electric
-              shower and EV charger already installed, a supply upgrade may be needed.
+              Suitable for ASHPs up to approximately 8kW. The existing single-phase supply must have
+              sufficient spare capacity — check the main fuse rating (typically 60A, 80A, or 100A)
+              and the peak demand of the existing installation. A 5kW ASHP on a 100A supply with
+              moderate existing demand is straightforward. On a 60A supply with an electric shower
+              and EV charger already installed, a supply upgrade may be needed.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -217,8 +218,8 @@ const sections = [
     content: (
       <>
         <p>
-          The heat pump outdoor unit requires a dedicated radial circuit from the consumer unit.
-          The circuit design must account for:
+          The heat pump outdoor unit requires a dedicated radial circuit from the consumer unit. The
+          circuit design must account for:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -243,8 +244,8 @@ const sections = [
               <span>
                 <strong>Cable sizing</strong> — size the cable for the FLC, applying correction
                 factors for ambient temperature, grouping, and installation method per BS 7671
-                Appendix 4. A typical 5kW ASHP on a 15m cable run requires 4.0mm or 6.0mm SWA.
-                Check voltage drop does not exceed 5% (or the manufacturer specified maximum).
+                Appendix 4. A typical 5kW ASHP on a 15m cable run requires 4.0mm or 6.0mm SWA. Check
+                voltage drop does not exceed 5% (or the manufacturer specified maximum).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -291,9 +292,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable type</strong> — SWA (Steel Wire Armoured) cable is the standard
-                choice for runs that pass through external walls or are exposed externally. The
-                armour provides mechanical protection and the cable is UV-resistant. For short runs
+                <strong>Cable type</strong> — SWA (Steel Wire Armoured) cable is the standard choice
+                for runs that pass through external walls or are exposed externally. The armour
+                provides mechanical protection and the cable is UV-resistant. For short runs
                 entirely within the building, standard twin and earth in conduit may be acceptable.
               </span>
             </li>
@@ -352,17 +353,18 @@ const sections = [
               <span>
                 <strong>Zone valves</strong> — motorised zone valves (typically 230V) control the
                 flow of hot water to different heating zones. The electrician wires the zone valves
-                to the ASHP controller wiring centre. Follow the manufacturer wiring diagram
-                exactly — incorrect zone valve wiring is one of the most common commissioning faults.
+                to the ASHP controller wiring centre. Follow the manufacturer wiring diagram exactly
+                — incorrect zone valve wiring is one of the most common commissioning faults.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor temperature sensor</strong> — mounted on a north-facing wall
-                (shaded from direct sunlight) and wired back to the controller. This enables weather
+                <strong>Outdoor temperature sensor</strong> — mounted on a north-facing wall (shaded
+                from direct sunlight) and wired back to the controller. This enables weather
                 compensation — the system adjusts the flow temperature based on the outdoor
-                temperature for maximum efficiency. The sensor cable is typically 2-core signal cable.
+                temperature for maximum efficiency. The sensor cable is typically 2-core signal
+                cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -395,8 +397,8 @@ const sections = [
               <span>
                 <strong>Immersion heater rating</strong> — standard domestic immersion heaters are
                 3kW (13A at 230V). Some cylinders have two immersion heaters — an upper (for quick
-                boost) and a lower (for full cylinder heating). Each requires its own circuit if they
-                can operate simultaneously, or a single circuit if interlocked.
+                boost) and a lower (for full cylinder heating). Each requires its own circuit if
+                they can operate simultaneously, or a single circuit if interlocked.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -412,9 +414,9 @@ const sections = [
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Timer control</strong> — the immersion heater is typically controlled by the
-                ASHP controller (which energises it only when the heat pump cannot meet demand) or by
-                a separate time clock. If the customer has a smart tariff, the immersion heater can
-                be scheduled to run during off-peak hours for additional savings.
+                ASHP controller (which energises it only when the heat pump cannot meet demand) or
+                by a separate time clock. If the customer has a smart tariff, the immersion heater
+                can be scheduled to run during off-peak hours for additional savings.
               </span>
             </li>
           </ul>
@@ -506,7 +508,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 704.537</strong> — requires local service isolators for heating
-                circuits and heat pumps to permit safe servicing without isolating unrelated circuits.
+                circuits and heat pumps to permit safe servicing without isolating unrelated
+                circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -637,9 +640,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EIC Certificate on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the Electrical Installation Certificate for the ASHP circuits on site.
-                  AI board scanning, voice test entry, and instant PDF export for the MCS
-                  documentation package.
+                  Complete the Electrical Installation Certificate for the ASHP circuits on site. AI
+                  board scanning, voice test entry, and instant PDF export for the MCS documentation
+                  package.
                 </p>
               </div>
             </div>
@@ -647,7 +650,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify heat pump electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for heat pump electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for heat pump electrical installations. 7-day free trial."
           icon={Wind}
         />
       </>
@@ -684,7 +687,7 @@ export default function AirSourceHeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Heat Pump Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for heat pump installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for heat pump installations. 7-day free trial, cancel anytime."
     />
   );
 }

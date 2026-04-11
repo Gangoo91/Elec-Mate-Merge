@@ -54,14 +54,14 @@ const faqs = [
   {
     question: 'Can Elec-Mate manage quoting and invoicing as well as certificates?',
     answer:
-      'Yes. Elec-Mate includes built-in quoting and invoicing tools that let you create professional quotes, convert accepted quotes to invoices, record payments, and track outstanding balances — all within the same app as your certificates and calculators. This means you can go from generating a quote on site to issuing the certificate and invoice without switching between different software packages. iCertifi focuses on certification and does not include quoting or invoicing features. For electricians who want to reduce the number of apps and subscriptions they manage, Elec-Mate\'s all-in-one approach is a significant time and cost saving.',
+      "Yes. Elec-Mate includes built-in quoting and invoicing tools that let you create professional quotes, convert accepted quotes to invoices, record payments, and track outstanding balances — all within the same app as your certificates and calculators. This means you can go from generating a quote on site to issuing the certificate and invoice without switching between different software packages. iCertifi focuses on certification and does not include quoting or invoicing features. For electricians who want to reduce the number of apps and subscriptions they manage, Elec-Mate's all-in-one approach is a significant time and cost saving.",
   },
 ];
 
 const features = [
   {
     icon: FileCheck2,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. Elec-Mate covers specialist certificates that iCertifi does not include.',
   },
@@ -103,7 +103,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description:
-    'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
+    'All-in-one platform for UK electricians: 8 certificates, 70+ calculators, 8 Elec-AI tools, training courses, and business management.',
   url: 'https://elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
@@ -232,12 +232,12 @@ export default function ElecMateVsICertifiPage() {
               management into a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR,{' '}
+              The platform includes 16 certificate types (EICR,{' '}
               <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">EV Charger</SEOInternalLink>, Solar
-              PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
-              calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide,
-              Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
+              <SEOInternalLink href="/tools/ev-charger-certificate">EV Charger</SEOInternalLink>,
+              Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
+              electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation
+              Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
               Regulation Lookup), full training courses (18th Edition, Level 2/3 Electrical
               Installation, AM2, EPA simulator), and business management features (job scheduling,
               quoting, invoicing, Stripe payments, Xero integration).
@@ -274,7 +274,7 @@ export default function ElecMateVsICertifiPage() {
                 platforms deliver a professional result.
               </p>
               <p>
-                Where they differ is in scope. Elec-Mate includes 8 certificate types in total,
+                Where they differ is in scope. Elec-Mate includes 16 certificate types in total,
                 adding EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency
                 Lighting, and PAT Testing certificates. As the electrical industry expands into EV
                 charging, renewable energy, and fire safety, having these specialist certificate
@@ -503,7 +503,7 @@ export default function ElecMateVsICertifiPage() {
               </p>
               <p>
                 Elec-Mate uses a flat monthly subscription starting from £5.99 per month. All
-                features are included at every tier — all 8 certificate types, all 70 calculators,
+                features are included at every tier — all 16 certificate types, all 70+ calculators,
                 all 8 Elec-AI tools, all training courses, and all business management features.
                 There are no per-certificate charges and no feature gating. Every plan includes a
                 7-day free trial with full access.
@@ -600,7 +600,7 @@ export default function ElecMateVsICertifiPage() {
                 <li className="flex items-start gap-3">
                   <ArrowRight className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                   <span>
-                    You regularly perform BS 7671 calculations and want 70 calculators at your
+                    You regularly perform BS 7671 calculations and want 70+ calculators at your
                     fingertips
                   </span>
                 </li>
@@ -638,7 +638,7 @@ export default function ElecMateVsICertifiPage() {
               are your only need, it is a perfectly reasonable choice.
             </p>
             <p>
-              Elec-Mate offers significantly more. By combining certificates with 70 calculators, 8
+              Elec-Mate offers significantly more. By combining certificates with 70+ calculators, 8
               Elec-AI specialist tools, full training courses, and business management features, it
               eliminates the need for multiple separate apps and subscriptions. For the majority of
               UK electricians — whether sole traders, small contractors, or apprentices — the

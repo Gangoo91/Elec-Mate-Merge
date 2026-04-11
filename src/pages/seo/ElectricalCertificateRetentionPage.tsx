@@ -515,7 +515,7 @@ export default function ElectricalCertificateRetentionPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Store Every Certificate in the Cloud"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for permanent, searchable cloud storage of all certificates. No paper filing, no lost certificates. Search by property, date, or client. Download PDFs any time. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for permanent, searchable cloud storage of all certificates. No paper filing, no lost certificates. Search by property, date, or client. Download PDFs any time. 7-day free trial."
     />
   );
 }

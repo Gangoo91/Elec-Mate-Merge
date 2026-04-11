@@ -148,8 +148,8 @@ const sections = [
         <p>
           The short answer: as an electrician, you need the ECS card. It is accepted everywhere a
           CSCS card would be, and it shows your specific electrical qualifications. But
-          understanding the relationship between the two helps you navigate site requirements
-          and avoid unnecessary costs.
+          understanding the relationship between the two helps you navigate site requirements and
+          avoid unnecessary costs.
         </p>
       </>
     ),
@@ -183,8 +183,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Card types:</strong> Labourer (green), Skilled Worker (blue), Advanced
-                Craft (gold), Supervisor (gold), Manager (black), and others.
+                <strong>Card types:</strong> Labourer (green), Skilled Worker (blue), Advanced Craft
+                (gold), Supervisor (gold), Manager (black), and others.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,8 +205,8 @@ const sections = [
       <>
         <p>
           The ECS (Electrotechnical Certification Scheme) card is the sector-specific card for
-          electrical workers. It is managed by the JIB (Joint Industry Board) and is part of
-          the CSCS partnership scheme.
+          electrical workers. It is managed by the JIB (Joint Industry Board) and is part of the
+          CSCS partnership scheme.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -413,9 +413,8 @@ const sections = [
         </div>
         <p>
           Both cards are valid for 5 years. Renewal requires a current health and safety test and
-          up-to-date qualifications. Set a reminder 3 months before your card expires to ensure
-          you renew in time — working on site with an expired card will result in being refused
-          access.
+          up-to-date qualifications. Set a reminder 3 months before your card expires to ensure you
+          renew in time — working on site with an expired card will result in being refused access.
         </p>
       </>
     ),
@@ -500,8 +499,7 @@ export default function CSCSvsECSCardPage() {
       badgeIcon={Scale}
       heroTitle={
         <>
-          CSCS vs ECS Card:{' '}
-          <span className="text-yellow-400">Which Card Do You Need?</span>
+          CSCS vs ECS Card: <span className="text-yellow-400">Which Card Do You Need?</span>
         </>
       }
       heroSubtitle="Electricians hear about both CSCS and ECS cards — but which one do you actually need? This guide explains the difference, site acceptance, costs, and the clear answer for electricians."
@@ -512,7 +510,7 @@ export default function CSCSvsECSCardPage() {
       faqHeading="Frequently Asked Questions About CSCS and ECS Cards"
       relatedPages={relatedPages}
       ctaHeading="Track Your Cards and Qualifications"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for qualification tracking, professional certificates, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

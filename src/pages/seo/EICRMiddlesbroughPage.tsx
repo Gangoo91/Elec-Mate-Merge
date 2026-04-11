@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Who can carry out an EICR in Middlesbrough?',
     answer:
-      'The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme. They should hold City and Guilds 2391 (Inspection and Testing) or equivalent, and a current BS 7671 18th Edition qualification (C&G 2382). Always verify the electrician\'s registration on the scheme\'s public register before booking.',
+      "The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme. They should hold City and Guilds 2391 (Inspection and Testing) or equivalent, and a current BS 7671 18th Edition qualification (C&G 2382). Always verify the electrician's registration on the scheme's public register before booking.",
   },
 ];
 
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -129,8 +130,7 @@ const sections = [
           An Electrical Installation Condition Report (EICR) is a formal document produced by a
           qualified electrician following a thorough inspection and test of a property's fixed
           electrical installation. The inspection assesses wiring, consumer units, earthing and
-          bonding, sockets, switches, and all fixed electrical equipment against the requirements
-          of{' '}
+          bonding, sockets, switches, and all fixed electrical equipment against the requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
@@ -150,8 +150,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory</strong> — the inspection has found C1 (danger present) or
-                C2 (potentially dangerous) observations. Landlords must arrange all remedial work
+                <strong>Unsatisfactory</strong> — the inspection has found C1 (danger present) or C2
+                (potentially dangerous) observations. Landlords must arrange all remedial work
                 within 28 days. The property cannot be let, or a new tenancy cannot continue,
                 without evidence that the necessary work is underway or complete.
               </span>
@@ -174,9 +174,9 @@ const sections = [
         <p>
           Middlesbrough is an English local authority and is subject to the Electrical Safety
           Standards in the Private Rented Sector (England) Regulations 2020. Middlesbrough Council
-          is the local housing authority responsible for enforcement across the borough, which covers
-          the town and surrounding areas including Acklam, Marton, Nunthorpe, and the Teesside
-          University district.
+          is the local housing authority responsible for enforcement across the borough, which
+          covers the town and surrounding areas including Acklam, Marton, Nunthorpe, and the
+          Teesside University district.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -224,18 +224,18 @@ const sections = [
     content: (
       <>
         <p>
-          The 2020 Regulations impose clear, actionable duties on Middlesbrough landlords. Compliance
-          is straightforward for landlords who plan ahead and maintain a relationship with a
-          qualified local electrician.
+          The 2020 Regulations impose clear, actionable duties on Middlesbrough landlords.
+          Compliance is straightforward for landlords who plan ahead and maintain a relationship
+          with a qualified local electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Obtain a valid EICR</strong> from a qualified and competent person. Commission
-                the inspection before each new tenancy begins and ensure the existing EICR does not
-                expire during the tenancy.
+                <strong>Obtain a valid EICR</strong> from a qualified and competent person.
+                Commission the inspection before each new tenancy begins and ensure the existing
+                EICR does not expire during the tenancy.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,8 +250,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complete remedial work within 28 days</strong> — if the EICR is
-                Unsatisfactory. C1 findings may require immediate action. All remedial work must
-                be carried out by a competent electrician.
+                Unsatisfactory. C1 findings may require immediate action. All remedial work must be
+                carried out by a competent electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,9 +264,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Middlesbrough landlords who have not provided an EICR to their tenant cannot serve a
-          valid Section 21 (no-fault eviction) notice. This is a practical compliance incentive
-          in addition to the risk of civil penalties.
+          Middlesbrough landlords who have not provided an EICR to their tenant cannot serve a valid
+          Section 21 (no-fault eviction) notice. This is a practical compliance incentive in
+          addition to the risk of civil penalties.
         </p>
       </>
     ),
@@ -288,10 +288,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                30mA RCD protection on all socket-outlet circuits rated up to 32A. Consumer units
-                replaced without RCD-protected ways are common in older Middlesbrough terraces.
-                This is typically coded C2.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA
+                RCD protection on all socket-outlet circuits rated up to 32A. Consumer units
+                replaced without RCD-protected ways are common in older Middlesbrough terraces. This
+                is typically coded C2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -307,9 +307,9 @@ const sections = [
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Deteriorated wiring insulation</strong> — properties with rubber-sheathed
-                wiring from the 1940s and 1950s, or early PVC wiring from the 1960s, frequently
-                fail insulation resistance testing (minimum 1MΩ per BS 7671 Section 612). Hardened
-                or cracked insulation represents a shock and fire risk.
+                wiring from the 1940s and 1950s, or early PVC wiring from the 1960s, frequently fail
+                insulation resistance testing (minimum 1MΩ per BS 7671 Section 612). Hardened or
+                cracked insulation represents a shock and fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -317,8 +317,8 @@ const sections = [
               <span>
                 <strong>Non-compliant consumer unit enclosures</strong> — consumer units installed
                 in combustible plastic enclosures after 2016 do not meet the requirements
-                incorporated into BS 7671:2018 (derived from Amendment 3 to the 17th Edition).
-                These are recorded as C2 where the enclosure presents a fire risk.
+                incorporated into BS 7671:2018 (derived from Amendment 3 to the 17th Edition). These
+                are recorded as C2 where the enclosure presents a fire risk.
               </span>
             </li>
           </ul>
@@ -341,8 +341,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>28 days from the inspection date</strong> — all remedial work must be
-                completed within 28 days of the EICR. The clock starts from the inspection date,
-                not when the landlord receives the written report.
+                completed within 28 days of the EICR. The clock starts from the inspection date, not
+                when the landlord receives the written report.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -382,8 +382,8 @@ const sections = [
       <>
         <p>
           Middlesbrough and the wider Tees Valley area offer some of the most competitive EICR
-          prices in England. Low local labour rates and the compact geography of the town keep
-          costs significantly below those in London and the South East.
+          prices in England. Low local labour rates and the compact geography of the town keep costs
+          significantly below those in London and the South East.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -414,8 +414,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO / large property</strong> — £250 to £420 or more. Multiple consumer
-                units, fire alarm systems, and emergency lighting increase the inspection scope
-                and price.
+                units, fire alarm systems, and emergency lighting increase the inspection scope and
+                price.
               </span>
             </li>
           </ul>
@@ -423,8 +423,8 @@ const sections = [
         <p>
           These prices cover the inspection and report only. Remedial work identified during the
           EICR (consumer unit upgrades, RCD installation, rewiring) is quoted and charged
-          separately. Some Middlesbrough electricians offer a package rate when they can see remedial
-          work will be required.
+          separately. Some Middlesbrough electricians offer a package rate when they can see
+          remedial work will be required.
         </p>
       </>
     ),
@@ -444,9 +444,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Search official registers</strong> — use the NICEIC, NAPIT, or ELECSA
-                online registers to find qualified electricians operating in Middlesbrough and the
-                Tees Valley. Registration confirms qualifications, insurance, and regular quality
+                <strong>Search official registers</strong> — use the NICEIC, NAPIT, or ELECSA online
+                registers to find qualified electricians operating in Middlesbrough and the Tees
+                Valley. Registration confirms qualifications, insurance, and regular quality
                 assessment by the scheme.
               </span>
             </li>
@@ -463,9 +463,9 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Professional indemnity insurance</strong> — always confirm that the
-                electrician holds professional indemnity insurance. This is a condition of
-                competent person scheme membership and protects both parties in the event of
-                an error on the report.
+                electrician holds professional indemnity insurance. This is a condition of competent
+                person scheme membership and protects both parties in the event of an error on the
+                report.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -473,7 +473,8 @@ const sections = [
               <span>
                 <strong>Calibrated test instruments</strong> — a valid EICR requires calibrated
                 multifunction testers. Ask when the electrician's equipment was last calibrated.
-                Reputable inspectors will have current calibration certificates available on request.
+                Reputable inspectors will have current calibration certificates available on
+                request.
               </span>
             </li>
           </ul>
@@ -517,13 +518,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, raise a remedial quote immediately using
-                  the{' '}
+                  When C1 or C2 observations are found, raise a remedial quote immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Middlesbrough landlords must act within 28 days — the electrician who quotes
-                  on inspection day wins the remedial contract.
+                  . Middlesbrough landlords must act within 28 days — the electrician who quotes on
+                  inspection day wins the remedial contract.
                 </p>
               </div>
             </div>
@@ -531,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Middlesbrough with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -568,7 +568,7 @@ export default function EICRMiddlesbroughPage() {
       faqHeading="Frequently Asked Questions About EICRs in Middlesbrough"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Middlesbrough"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

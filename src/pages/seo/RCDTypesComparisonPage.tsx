@@ -128,7 +128,8 @@ const sections = [
         <p>
           RCDs (residual current devices) are classified by the type of earth fault current they can
           detect. The four main types — AC, A, F, and B — each detect progressively more waveforms.
-          Using the wrong type means the RCD may not trip during a fault, leaving people unprotected.
+          Using the wrong type means the RCD may not trip during a fault, leaving people
+          unprotected.
         </p>
         <p>
           Modern homes are full of electronic loads that produce non-sinusoidal fault currents — LED
@@ -154,8 +155,8 @@ const sections = [
         <p>
           Type AC is the simplest and cheapest RCD type. It detects sinusoidal (pure sine wave) AC
           earth fault currents only. This was adequate when domestic loads were predominantly
-          resistive (heaters, incandescent lighting, kettles) or simple inductive (motors with direct
-          mains connection).
+          resistive (heaters, incandescent lighting, kettles) or simple inductive (motors with
+          direct mains connection).
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Type AC Limitations</h3>
@@ -183,8 +184,8 @@ const sections = [
     content: (
       <>
         <p>
-          Type A detects sinusoidal AC earth fault currents and pulsating DC earth fault currents. It
-          is designed to handle the fault characteristics of single-phase rectifier loads — which
+          Type A detects sinusoidal AC earth fault currents and pulsating DC earth fault currents.
+          It is designed to handle the fault characteristics of single-phase rectifier loads — which
           covers the vast majority of modern domestic appliances.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
@@ -214,8 +215,8 @@ const sections = [
       <>
         <p>
           Type F detects everything Type A detects plus composite fault currents — complex waveforms
-          produced by single-phase frequency converters (variable speed drives). These generate fault
-          currents that combine multiple frequencies, which Type A may not reliably detect.
+          produced by single-phase frequency converters (variable speed drives). These generate
+          fault currents that combine multiple frequencies, which Type A may not reliably detect.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">When Type F Is Needed</h3>
@@ -284,12 +285,48 @@ const sections = [
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              <tr><td className="py-3 pr-4">Sinusoidal AC</td><td className="py-3 pr-4">Yes</td><td className="py-3 pr-4">Yes</td><td className="py-3 pr-4">Yes</td><td className="py-3">Yes</td></tr>
-              <tr><td className="py-3 pr-4">Pulsating DC</td><td className="py-3 pr-4">No</td><td className="py-3 pr-4">Yes</td><td className="py-3 pr-4">Yes</td><td className="py-3">Yes</td></tr>
-              <tr><td className="py-3 pr-4">Composite</td><td className="py-3 pr-4">No</td><td className="py-3 pr-4">No</td><td className="py-3 pr-4">Yes</td><td className="py-3">Yes</td></tr>
-              <tr><td className="py-3 pr-4">Smooth DC</td><td className="py-3 pr-4">No</td><td className="py-3 pr-4">No</td><td className="py-3 pr-4">No</td><td className="py-3">Yes</td></tr>
-              <tr><td className="py-3 pr-4">RCBO cost (typical)</td><td className="py-3 pr-4">£8 to £15</td><td className="py-3 pr-4">£15 to £30</td><td className="py-3 pr-4">£25 to £50</td><td className="py-3">£80 to £200</td></tr>
-              <tr><td className="py-3 pr-4">Domestic use</td><td className="py-3 pr-4">Legacy only</td><td className="py-3 pr-4">Standard</td><td className="py-3 pr-4">Specific loads</td><td className="py-3">Rare</td></tr>
+              <tr>
+                <td className="py-3 pr-4">Sinusoidal AC</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3">Yes</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">Pulsating DC</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3">Yes</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">Composite</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3 pr-4">Yes</td>
+                <td className="py-3">Yes</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">Smooth DC</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3 pr-4">No</td>
+                <td className="py-3">Yes</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">RCBO cost (typical)</td>
+                <td className="py-3 pr-4">£8 to £15</td>
+                <td className="py-3 pr-4">£15 to £30</td>
+                <td className="py-3 pr-4">£25 to £50</td>
+                <td className="py-3">£80 to £200</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">Domestic use</td>
+                <td className="py-3 pr-4">Legacy only</td>
+                <td className="py-3 pr-4">Standard</td>
+                <td className="py-3 pr-4">Specific loads</td>
+                <td className="py-3">Rare</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -306,9 +343,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type A — default for new domestic installations:</strong> All socket circuits,
-                lighting circuits, kitchen appliances, and general domestic loads. Meets BS 7671
-                Regulation 531.3.3 for the vast majority of domestic circuits.
+                <strong>Type A — default for new domestic installations:</strong> All socket
+                circuits, lighting circuits, kitchen appliances, and general domestic loads. Meets
+                BS 7671 Regulation 531.3.3 for the vast majority of domestic circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,9 +426,9 @@ const sections = [
               <span>
                 <strong>Regulation 531.3.3:</strong> The characteristics of an RCD shall be selected
                 in accordance with the duty the device is required to perform. Where the load may
-                produce DC components in the earth fault current, the type of RCD must be appropriate
-                for those characteristics. This is the key regulation driving Type A as the minimum
-                domestic standard.
+                produce DC components in the earth fault current, the type of RCD must be
+                appropriate for those characteristics. This is the key regulation driving Type A as
+                the minimum domestic standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -399,16 +436,16 @@ const sections = [
               <span>
                 <strong>Regulation 411.3.3:</strong> Additional protection by an RCD with a rated
                 residual operating current not exceeding 30mA. This regulation specifies where RCD
-                protection is required (sockets, outdoor mobile equipment, etc.) but does not specify
-                the type — that is covered by Regulation 531.3.3.
+                protection is required (sockets, outdoor mobile equipment, etc.) but does not
+                specify the type — that is covered by Regulation 531.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.531.3.101 (EV charging):</strong> The supply to EV charging
-                equipment shall be protected by an RCD that can detect DC fault currents. This can be
-                Type B, or Type A where the equipment incorporates DC fault detection.
+                equipment shall be protected by an RCD that can detect DC fault currents. This can
+                be Type B, or Type A where the equipment incorporates DC fault detection.
               </span>
             </li>
           </ul>
@@ -453,8 +490,7 @@ export default function RCDTypesComparisonPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          RCD Types:{' '}
-          <span className="text-yellow-400">AC, A, F, and B Explained</span>
+          RCD Types: <span className="text-yellow-400">AC, A, F, and B Explained</span>
         </>
       }
       heroSubtitle="Using the wrong RCD type means it may not trip during a fault. This guide explains what each type detects, when each is required under BS 7671, the cost differences, and practical specification guidance for UK electricians."
@@ -465,7 +501,7 @@ export default function RCDTypesComparisonPage() {
       faqHeading="Frequently Asked Questions About RCD Types"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Types and Test Results on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification with RCD type recording and compliance checking. 7-day free trial, cancel anytime."
     />
   );
 }

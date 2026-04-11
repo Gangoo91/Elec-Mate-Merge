@@ -611,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Handle callouts faster with Elec-Mate"
-          description="Diagnose faults, record test results, generate certificates, and invoice the customer — all from your phone, all in one visit. Join 430+ UK electricians. 7-day free trial."
+          description="Diagnose faults, record test results, generate certificates, and invoice the customer — all from your phone, all in one visit. Join 1,000+ UK electricians. 7-day free trial."
           icon={Power}
         />
       </>

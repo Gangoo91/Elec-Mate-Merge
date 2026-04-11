@@ -140,7 +140,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -197,7 +197,7 @@ export default function EICCertificatePage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <FileText className="w-4 h-4" />
-            Part of 8 Certificate Types
+            Part of 16 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             EIC Certificate App
@@ -242,10 +242,9 @@ export default function EICCertificatePage() {
             <p>
               An Electrical Installation Certificate (EIC) is the formal document issued upon
               completion of a new electrical installation or the installation of new circuits. It is
-              required by BS 7671 Section 631, which states that upon completion of the
-              verification of a new installation or an addition or alteration to an existing
-              installation which includes new circuits, an Electrical Installation Certificate shall
-              be provided.
+              required by BS 7671 Section 631, which states that upon completion of the verification
+              of a new installation or an addition or alteration to an existing installation which
+              includes new circuits, an Electrical Installation Certificate shall be provided.
             </p>
             <p>
               The EIC serves as a declaration that the electrical installation work has been
@@ -639,7 +638,7 @@ export default function EICCertificatePage() {
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              All 8 Certificate Types in Elec-Mate
+              All 16 Certificate Types in Elec-Mate
             </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
@@ -850,7 +849,7 @@ export default function EICCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Create Professional EIC Certificates in Minutes"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

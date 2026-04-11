@@ -164,8 +164,9 @@ const sections = [
         </p>
         <p>
           Tool insurance is a separate policy (or a specific add-on) that covers your tools and
-          equipment against theft, accidental damage, and sometimes breakdown. For most electricians,
-          it costs £100 to £400 per year — a fraction of what a single theft would cost you.
+          equipment against theft, accidental damage, and sometimes breakdown. For most
+          electricians, it costs £100 to £400 per year — a fraction of what a single theft would
+          cost you.
         </p>
       </>
     ),
@@ -176,9 +177,9 @@ const sections = [
     content: (
       <>
         <p>
-          Most electricians significantly underestimate the total replacement value of their kit. When
-          you add up every hand tool, power tool, test instrument, and consumable, the numbers are
-          higher than you think.
+          Most electricians significantly underestimate the total replacement value of their kit.
+          When you add up every hand tool, power tool, test instrument, and consumable, the numbers
+          are higher than you think.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2 text-white text-sm">
@@ -187,11 +188,23 @@ const sections = [
                 <Wrench className="w-4 h-4 text-blue-400" /> Test Equipment
               </h4>
               <ul className="space-y-2">
-                <li>Multifunction tester (Fluke/Megger): <strong className="text-yellow-400">£800–£1,500</strong></li>
-                <li>PAT tester: <strong className="text-yellow-400">£200–£600</strong></li>
-                <li>Thermal imaging camera: <strong className="text-yellow-400">£200–£1,000</strong></li>
-                <li>Voltage indicators, proving units: <strong className="text-yellow-400">£100–£300</strong></li>
-                <li>Clamp meter, multimeter: <strong className="text-yellow-400">£50–£300</strong></li>
+                <li>
+                  Multifunction tester (Fluke/Megger):{' '}
+                  <strong className="text-yellow-400">£800–£1,500</strong>
+                </li>
+                <li>
+                  PAT tester: <strong className="text-yellow-400">£200–£600</strong>
+                </li>
+                <li>
+                  Thermal imaging camera: <strong className="text-yellow-400">£200–£1,000</strong>
+                </li>
+                <li>
+                  Voltage indicators, proving units:{' '}
+                  <strong className="text-yellow-400">£100–£300</strong>
+                </li>
+                <li>
+                  Clamp meter, multimeter: <strong className="text-yellow-400">£50–£300</strong>
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
@@ -199,11 +212,23 @@ const sections = [
                 <Wrench className="w-4 h-4 text-green-400" /> Power Tools and Hand Tools
               </h4>
               <ul className="space-y-2">
-                <li>Cordless drill set (DeWalt/Makita): <strong className="text-yellow-400">£200–£600</strong></li>
-                <li>SDS drill: <strong className="text-yellow-400">£150–£400</strong></li>
-                <li>Full hand tool set: <strong className="text-yellow-400">£500–£1,500</strong></li>
-                <li>Cable rods, fish tapes: <strong className="text-yellow-400">£100–£300</strong></li>
-                <li>Access equipment (steps, ladders): <strong className="text-yellow-400">£100–£400</strong></li>
+                <li>
+                  Cordless drill set (DeWalt/Makita):{' '}
+                  <strong className="text-yellow-400">£200–£600</strong>
+                </li>
+                <li>
+                  SDS drill: <strong className="text-yellow-400">£150–£400</strong>
+                </li>
+                <li>
+                  Full hand tool set: <strong className="text-yellow-400">£500–£1,500</strong>
+                </li>
+                <li>
+                  Cable rods, fish tapes: <strong className="text-yellow-400">£100–£300</strong>
+                </li>
+                <li>
+                  Access equipment (steps, ladders):{' '}
+                  <strong className="text-yellow-400">£100–£400</strong>
+                </li>
               </ul>
             </div>
           </div>
@@ -266,8 +291,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Covers tools stolen from a customer's property or a building site while you are
                   working. This is important for first and second fix work where tools are left on
-                  site between visits. Some policies require tools to be in a locked room or container
-                  when you are not present.
+                  site between visits. Some policies require tools to be in a locked room or
+                  container when you are not present.
                 </p>
               </div>
             </div>
@@ -292,9 +317,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Tool Breakdown / Mechanical Failure</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Some policies cover the cost of repairing or replacing tools that fail mechanically
-                  outside of the manufacturer's warranty period. This is useful for expensive power
-                  tools and test instruments. Not all policies offer this — it is typically an add-on.
+                  Some policies cover the cost of repairing or replacing tools that fail
+                  mechanically outside of the manufacturer's warranty period. This is useful for
+                  expensive power tools and test instruments. Not all policies offer this — it is
+                  typically an add-on.
                 </p>
               </div>
             </div>
@@ -336,9 +362,9 @@ const sections = [
               <h4 className="font-bold text-white mb-2">Business Insurance Bundles</h4>
               <p className="text-white leading-relaxed">
                 Some business insurance providers (Hiscox, Simply Business, PolicyBee) bundle tool
-                cover with public liability and professional indemnity. This can be cost-effective if
-                you need all three. Check the tool cover limits and per-item limits carefully — they
-                may be lower than a specialist policy.
+                cover with public liability and professional indemnity. This can be cost-effective
+                if you need all three. Check the tool cover limits and per-item limits carefully —
+                they may be lower than a specialist policy.
               </p>
             </div>
           </div>
@@ -348,23 +374,34 @@ const sections = [
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>New-for-old vs indemnity</strong> — always choose new-for-old if available</span>
+              <span>
+                <strong>New-for-old vs indemnity</strong> — always choose new-for-old if available
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Excess amount</strong> — typically £100 to £250, lower is better</span>
+              <span>
+                <strong>Excess amount</strong> — typically £100 to £250, lower is better
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Per-item limit</strong> — must be high enough for your most expensive test instrument</span>
+              <span>
+                <strong>Per-item limit</strong> — must be high enough for your most expensive test
+                instrument
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Cover location</strong> — van only, or van + site + home workshop</span>
+              <span>
+                <strong>Cover location</strong> — van only, or van + site + home workshop
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Overnight cover</strong> — some policies exclude overnight theft from van</span>
+              <span>
+                <strong>Overnight cover</strong> — some policies exclude overnight theft from van
+              </span>
             </li>
           </ul>
         </div>
@@ -401,8 +438,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tools left unattended in the open</strong> — tools left on the pavement,
-                in an open van, or in an unlocked room on site are not covered. They must be in a
+                <strong>Tools left unattended in the open</strong> — tools left on the pavement, in
+                an open van, or in an unlocked room on site are not covered. They must be in a
                 locked vehicle or locked container.
               </span>
             </li>
@@ -442,19 +479,27 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span><strong>Deadlocks</strong> on all doors — £80–£200 per door, fitted</span>
+                <span>
+                  <strong>Deadlocks</strong> on all doors — £80–£200 per door, fitted
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span><strong>Slam lock</strong> on rear/side loading door — £150–£300 fitted</span>
+                <span>
+                  <strong>Slam lock</strong> on rear/side loading door — £150–£300 fitted
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span><strong>Steel bulkhead</strong> between cab and load area — often factory fitted</span>
+                <span>
+                  <strong>Steel bulkhead</strong> between cab and load area — often factory fitted
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span><strong>Blank windows</strong> or window guards on load area — prevents visibility</span>
+                <span>
+                  <strong>Blank windows</strong> or window guards on load area — prevents visibility
+                </span>
               </li>
             </ul>
           </div>
@@ -463,19 +508,27 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span><strong>Tool vault / safe</strong> bolted to van floor — £200–£500</span>
+                <span>
+                  <strong>Tool vault / safe</strong> bolted to van floor — £200–£500
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span><strong>GPS tracker</strong> (Thatcham approved) — £100–£300 + subscription</span>
+                <span>
+                  <strong>GPS tracker</strong> (Thatcham approved) — £100–£300 + subscription
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span><strong>Alarm system</strong> with movement sensors — £150–£400 fitted</span>
+                <span>
+                  <strong>Alarm system</strong> with movement sensors — £150–£400 fitted
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <Lock className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span><strong>CCTV / dashcam</strong> covering load area — £50–£200</span>
+                <span>
+                  <strong>CCTV / dashcam</strong> covering load area — £50–£200
+                </span>
               </li>
             </ul>
           </div>
@@ -494,9 +547,9 @@ const sections = [
     content: (
       <>
         <p>
-          The single biggest reason tool insurance claims are reduced or rejected is lack of evidence.
-          If you cannot prove what you had, the insurer will not pay for it. Build your tool inventory
-          now — before you need it.
+          The single biggest reason tool insurance claims are reduced or rejected is lack of
+          evidence. If you cannot prove what you had, the insurer will not pay for it. Build your
+          tool inventory now — before you need it.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -507,9 +560,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Take individual photos of each tool showing the brand, model, and serial number.
                   For hand tool sets, photograph the complete set laid out. For test equipment,
-                  photograph the instrument, its case, and any accessories. Store these photos in the
-                  cloud — Google Photos, iCloud, or Dropbox — so they are not lost if your phone is
-                  stolen with your tools.
+                  photograph the instrument, its case, and any accessories. Store these photos in
+                  the cloud — Google Photos, iCloud, or Dropbox — so they are not lost if your phone
+                  is stolen with your tools.
                 </p>
               </div>
             </div>
@@ -534,10 +587,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Create a Tool Register</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Maintain a spreadsheet or use a tool tracking app listing: tool name, brand, model,
-                  serial number, purchase date, purchase price, and estimated replacement value.
-                  Update it whenever you buy, sell, or replace a tool. This is your primary evidence
-                  for any insurance claim and also useful for calculating the correct cover level.
+                  Maintain a spreadsheet or use a tool tracking app listing: tool name, brand,
+                  model, serial number, purchase date, purchase price, and estimated replacement
+                  value. Update it whenever you buy, sell, or replace a tool. This is your primary
+                  evidence for any insurance claim and also useful for calculating the correct cover
+                  level.
                 </p>
               </div>
             </div>
@@ -572,9 +626,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>2. Photograph the damage.</strong> Take photos of forced entry (broken locks,
-                damaged doors, smashed windows). This proves the theft was forcible and your van was
-                secured.
+                <strong>2. Photograph the damage.</strong> Take photos of forced entry (broken
+                locks, damaged doors, smashed windows). This proves the theft was forcible and your
+                van was secured.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -635,7 +689,7 @@ export default function ElectricianToolInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect Your Business With the Right Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Manage your business professionally from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

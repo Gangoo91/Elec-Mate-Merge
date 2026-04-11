@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What are the challenges of electrical work in Aberdeen granite properties?',
     answer:
-      'Aberdeen\'s granite-built properties — terraces and semis built between 1870 and 1940 — have solid stone walls with no cavity. Running cables through solid granite is impractical, so surface-mounted trunking (mini-trunking or dado trunking) is standard for rewires. Cable runs tend to be longer than in cavity-wall properties, requiring careful voltage drop calculations. Pre-1980s granite properties may also contain asbestos in textured ceiling coatings, floor tiles, and pipe lagging — an asbestos survey is advisable before invasive work.',
+      "Aberdeen's granite-built properties — terraces and semis built between 1870 and 1940 — have solid stone walls with no cavity. Running cables through solid granite is impractical, so surface-mounted trunking (mini-trunking or dado trunking) is standard for rewires. Cable runs tend to be longer than in cavity-wall properties, requiring careful voltage drop calculations. Pre-1980s granite properties may also contain asbestos in textured ceiling coatings, floor tiles, and pipe lagging — an asbestos survey is advisable before invasive work.",
   },
   {
     question: 'Do Aberdeen electricians need SELECT registration?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What is CompEx certification and do Aberdeen electricians need it?',
     answer:
-      'CompEx is a certification scheme for those working in explosive atmospheres — environments where flammable gases, vapours, dusts, or fibres may be present. Aberdeen\'s offshore oil and gas industry creates significant demand for CompEx-certified electricians, both for onshore fabrication yards and support facilities. CompEx units cover Ex equipment inspection, maintenance, and installation. While CompEx is not required for standard domestic and commercial work, it significantly increases earning potential for Aberdeen electricians working in the energy sector.',
+      "CompEx is a certification scheme for those working in explosive atmospheres — environments where flammable gases, vapours, dusts, or fibres may be present. Aberdeen's offshore oil and gas industry creates significant demand for CompEx-certified electricians, both for onshore fabrication yards and support facilities. CompEx units cover Ex equipment inspection, maintenance, and installation. While CompEx is not required for standard domestic and commercial work, it significantly increases earning potential for Aberdeen electricians working in the energy sector.",
   },
   {
     question: 'How does the SELECT building warrant process work in Aberdeen?',
@@ -143,17 +143,17 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen is Scotland's third-largest city and the centre of the UK's offshore oil and
-          gas industry. With a population of around 230,000 and a strong economy driven by energy,
-          universities, and a growing tech and life sciences sector, Aberdeen offers electricians
-          a diverse and well-paid market.
+          Aberdeen is Scotland's third-largest city and the centre of the UK's offshore oil and gas
+          industry. With a population of around 230,000 and a strong economy driven by energy,
+          universities, and a growing tech and life sciences sector, Aberdeen offers electricians a
+          diverse and well-paid market.
         </p>
         <p>
           The city's housing stock is dominated by granite-built properties — solid stone terraces
           and semis from the Victorian and Edwardian eras, alongside interwar council housing and
           modern new-build estates in the suburbs. The offshore industry creates specialist demand
-          for CompEx-certified electricians in onshore fabrication facilities, and the city's
-          strong economy drives healthy demand for domestic and commercial electrical services.
+          for CompEx-certified electricians in onshore fabrication facilities, and the city's strong
+          economy drives healthy demand for domestic and commercial electrical services.
         </p>
         <p>
           This guide covers Scottish Building Standards (not Part P), the local DNO (SSEN), the
@@ -169,19 +169,19 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen electricians work under Scottish Building Standards, not the Building
-          Regulations for England and Wales. This is a critical distinction for any electrician
-          moving from south of the border or taking on Scottish work:
+          Aberdeen electricians work under Scottish Building Standards, not the Building Regulations
+          for England and Wales. This is a critical distinction for any electrician moving from
+          south of the border or taking on Scottish work:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Technical Handbook Section 4 (Safety)</strong> — the Scottish equivalent
-                of Part P. Requires electrical installations to comply with BS 7671 and to be
-                designed, installed, inspected, and tested by a competent person. The electrical
-                standard (BS 7671:2018+A3:2024) is identical — only the compliance route differs.
+                <strong>Technical Handbook Section 4 (Safety)</strong> — the Scottish equivalent of
+                Part P. Requires electrical installations to comply with BS 7671 and to be designed,
+                installed, inspected, and tested by a competent person. The electrical standard (BS
+                7671:2018+A3:2024) is identical — only the compliance route differs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -198,8 +198,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Completion certificates</strong> — submitted to the council after work is
-                finished, with the EIC attached as evidence of BS 7671 compliance. The council
-                may inspect before accepting the certificate.
+                finished, with the EIC attached as evidence of BS 7671 compliance. The council may
+                inspect before accepting the certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -207,8 +207,8 @@ const sections = [
               <span>
                 <strong>SELECT registration</strong> — strongly recommended for Aberdeen
                 electricians. SELECT's Certification Services scheme streamlines the building
-                warrant process and is well recognised by Aberdeen customers, letting agents,
-                and local authorities.
+                warrant process and is well recognised by Aberdeen customers, letting agents, and
+                local authorities.
               </span>
             </li>
           </ul>
@@ -222,17 +222,17 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>SSEN (Scottish and Southern Electricity Networks)</strong> is the DNO for
-          Aberdeen and the north of Scotland. All DNO-related work in Aberdeen goes through SSEN:
+          <strong>SSEN (Scottish and Southern Electricity Networks)</strong> is the DNO for Aberdeen
+          and the north of Scotland. All DNO-related work in Aberdeen goes through SSEN:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and capacity upgrades</strong> — SSEN handles all new
-                supply connections, service upgrades (e.g., from 60A to 100A for EV charger or
-                heat pump), and diversity of supply questions for multi-occupancy buildings.
+                <strong>New connections and capacity upgrades</strong> — SSEN handles all new supply
+                connections, service upgrades (e.g., from 60A to 100A for EV charger or heat pump),
+                and diversity of supply questions for multi-occupancy buildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -249,9 +249,9 @@ const sections = [
               <span>
                 <strong>Earthing arrangements</strong> — Aberdeen properties are predominantly
                 TN-C-S (PME) or TN-S. Older granite properties with original lead-sheathed service
-                cables may have TN-S earthing. Always confirm the earthing arrangement at the
-                intake before specifying protective devices and before adding PME-incompatible
-                equipment such as outdoor installations.
+                cables may have TN-S earthing. Always confirm the earthing arrangement at the intake
+                before specifying protective devices and before adding PME-incompatible equipment
+                such as outdoor installations.
               </span>
             </li>
           </ul>
@@ -265,17 +265,17 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen's housing is defined by granite — dense, grey, and beautiful, but challenging
-          for electricians. Here are the main property types and their electrical characteristics:
+          Aberdeen's housing is defined by granite — dense, grey, and beautiful, but challenging for
+          electricians. Here are the main property types and their electrical characteristics:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Granite Terraces and Semis</h3>
             <p className="text-white text-sm leading-relaxed">
-              Built between 1870 and 1940, these solid granite properties dominate the west end
-              and inner suburbs. Solid stone walls mean no cavity for cables — surface-mounted
-              mini-trunking is standard. Asbestos surveys recommended in pre-1985 properties.
-              Areas: West End, Rosemount, Torry, Kittybrewster.
+              Built between 1870 and 1940, these solid granite properties dominate the west end and
+              inner suburbs. Solid stone walls mean no cavity for cables — surface-mounted
+              mini-trunking is standard. Asbestos surveys recommended in pre-1985 properties. Areas:
+              West End, Rosemount, Torry, Kittybrewster.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -290,8 +290,8 @@ const sections = [
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War and Modern Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Post-war estates in Bridge of Don, Dyce, and Portlethen (south of Aberdeen) are
-              built with cavity walls and standard cable routing. Modern new-builds feature current
+              Post-war estates in Bridge of Don, Dyce, and Portlethen (south of Aberdeen) are built
+              with cavity walls and standard cable routing. Modern new-builds feature current
               consumer units and EV charger provisions. Work is typically additions, modifications,
               and EV charger installations.
             </p>
@@ -325,10 +325,10 @@ const sections = [
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CompEx certification</strong> — required for working in explosive
-                atmospheres. CompEx covers inspection, maintenance, and installation of
-                Ex-rated electrical equipment in Zone 0, Zone 1, and Zone 2 hazardous areas.
-                CompEx units are assessed through practical examination at approved centres.
-                Aberdeen has several CompEx training providers due to local demand.
+                atmospheres. CompEx covers inspection, maintenance, and installation of Ex-rated
+                electrical equipment in Zone 0, Zone 1, and Zone 2 hazardous areas. CompEx units are
+                assessed through practical examination at approved centres. Aberdeen has several
+                CompEx training providers due to local demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -343,18 +343,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Day rates</strong> — offshore and specialist onshore rates are
-                significantly higher than standard domestic work. Offshore electricians typically
-                earn £400 to £700 per day depending on the platform and contract type. Onshore
-                fabrication yard rates are £45 to £80 per hour.
+                <strong>Day rates</strong> — offshore and specialist onshore rates are significantly
+                higher than standard domestic work. Offshore electricians typically earn £400 to
+                £700 per day depending on the platform and contract type. Onshore fabrication yard
+                rates are £45 to £80 per hour.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Even for domestically-focused electricians, Aberdeen's oil industry connection means
-          customers with high disposable incomes who value quality and are less price-sensitive
-          than in many UK cities.
+          customers with high disposable incomes who value quality and are less price-sensitive than
+          in many UK cities.
         </p>
       </>
     ),
@@ -365,8 +365,8 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen commands the highest electrician rates in Scotland, reflecting competition
-          for skilled labour with the offshore sector. Typical rates in 2026:
+          Aberdeen commands the highest electrician rates in Scotland, reflecting competition for
+          skilled labour with the offshore sector. Typical rates in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -412,8 +412,8 @@ const sections = [
         </div>
         <p>
           Granite property rewires command a premium over standard cavity-wall rewires due to the
-          need for surface-mounted trunking, longer cable runs, and the time required to plan
-          and execute tidy trunking routes in period properties.
+          need for surface-mounted trunking, longer cable runs, and the time required to plan and
+          execute tidy trunking routes in period properties.
         </p>
       </>
     ),
@@ -440,12 +440,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site for Scottish building warrant compliance. Issue professional
-                  documentation before you leave the property.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site for Scottish building warrant compliance. Issue professional documentation
+                  before you leave the property.
                 </p>
               </div>
             </div>
@@ -460,8 +457,8 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  to size cables correctly for the longer trunking routes common in Aberdeen
-                  granite properties. Voltage drop compliance is critical on extended surface routes.
+                  to size cables correctly for the longer trunking routes common in Aberdeen granite
+                  properties. Voltage drop compliance is critical on extended surface routes.
                 </p>
               </div>
             </div>
@@ -485,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Aberdeen electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance and granite property challenges. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance and granite property challenges. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -510,8 +507,7 @@ export default function ElectricianAberdeenPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Aberdeen:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Aberdeen: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Aberdeen's granite-built properties, Scottish Building Standards, and proximity to the offshore oil and gas industry create a unique electrical market. Find SELECT and NICEIC registered electricians with local expertise."
@@ -522,7 +518,7 @@ export default function ElectricianAberdeenPage() {
       faqHeading="Frequently Asked Questions About Electricians in Aberdeen"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Aberdeen Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish regulations and the challenges of granite property work. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish regulations and the challenges of granite property work. 7-day free trial."
     />
   );
 }

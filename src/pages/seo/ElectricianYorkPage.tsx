@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Which competent person scheme is best for electricians working in York?',
     answer:
-      'All the major competent person schemes — NICEIC, NAPIT, and ELECSA — are equally recognised in York and across England. The choice comes down to cost, assessment style, and the markets you serve. NICEIC is the most widely recognised brand, which can be helpful when marketing to York\'s landlords, estate agents, and commercial clients. NAPIT tends to be more cost-effective for smaller businesses and sole traders. ELECSA (operated by NICEIC Group) is also well regarded. Whichever scheme you choose, registration is essential for self-certifying notifiable electrical work under Part P of the Building Regulations. York City Council Building Control does not accept self-certification from unregistered electricians. For electricians targeting the York commercial market, check that your scheme covers the full range of electrical work you undertake, including specialist categories such as EV charging installations if relevant to your business.',
+      "All the major competent person schemes — NICEIC, NAPIT, and ELECSA — are equally recognised in York and across England. The choice comes down to cost, assessment style, and the markets you serve. NICEIC is the most widely recognised brand, which can be helpful when marketing to York's landlords, estate agents, and commercial clients. NAPIT tends to be more cost-effective for smaller businesses and sole traders. ELECSA (operated by NICEIC Group) is also well regarded. Whichever scheme you choose, registration is essential for self-certifying notifiable electrical work under Part P of the Building Regulations. York City Council Building Control does not accept self-certification from unregistered electricians. For electricians targeting the York commercial market, check that your scheme covers the full range of electrical work you undertake, including specialist categories such as EV charging installations if relevant to your business.",
   },
 ];
 
@@ -150,8 +150,8 @@ const sections = [
         <p>
           The city sits at the confluence of the River Ouse and River Foss, making flooding a
           recurring risk that directly affects electrical installations. The devastating floods of
-          2015 submerged hundreds of properties and created months of remedial electrical work across
-          the city.
+          2015 submerged hundreds of properties and created months of remedial electrical work
+          across the city.
         </p>
         <p>
           Tourism is a major economic driver — York attracts over 8 million visitors per year,
@@ -161,8 +161,8 @@ const sections = [
         </p>
         <p>
           This guide covers the DNO arrangements, listed building requirements, flood risk
-          considerations, commercial opportunities, and realistic pricing for electricians working in
-          York and the surrounding area.
+          considerations, commercial opportunities, and realistic pricing for electricians working
+          in York and the surrounding area.
         </p>
       </>
     ),
@@ -173,10 +173,9 @@ const sections = [
     content: (
       <>
         <p>
-          York and the wider Yorkshire region are served by{' '}
-          <strong>Northern Powergrid</strong> as the Distribution Network Operator. Northern
-          Powergrid manages the electricity network from 132kV substations down to the 230V supply
-          entering domestic and commercial premises.
+          York and the wider Yorkshire region are served by <strong>Northern Powergrid</strong> as
+          the Distribution Network Operator. Northern Powergrid manages the electricity network from
+          132kV substations down to the 230V supply entering domestic and commercial premises.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Key DNO Information for York</h3>
@@ -194,8 +193,8 @@ const sections = [
             </p>
             <p>
               <strong>G98/G99 notifications:</strong> Solar PV, battery storage, and EV charger
-              installations that export to the grid require G98 (up to 16A per phase) or G99
-              (larger systems) notification to Northern Powergrid before energisation.
+              installations that export to the grid require G98 (up to 16A per phase) or G99 (larger
+              systems) notification to Northern Powergrid before energisation.
             </p>
             <p>
               <strong>Earthing:</strong> Most of York is PME (TN-C-S) earthing. Some older
@@ -207,9 +206,9 @@ const sections = [
         </div>
         <p>
           When working on properties in York, always confirm the DNO earthing arrangement at the
-          intake position. PME restrictions apply for certain installations — particularly outbuildings,
-          caravan supplies, and swimming pools — where a TT earthing arrangement with an earth
-          electrode may be required regardless of the incoming supply type.
+          intake position. PME restrictions apply for certain installations — particularly
+          outbuildings, caravan supplies, and swimming pools — where a TT earthing arrangement with
+          an earth electrode may be required regardless of the incoming supply type.
         </p>
       </>
     ),
@@ -231,11 +230,11 @@ const sections = [
               <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Listed Building Consent (LBC)</strong> — required for any work that alters
-                the character of a listed building. For electrical work, this includes surface-mounted
-                trunking or conduit on original walls, chasing into original plaster or masonry,
-                relocating meters or consumer units, external lighting, and any work affecting
-                original features. Apply through City of York Council. Allow 8 to 12 weeks for
-                determination — factor this into project timelines.
+                the character of a listed building. For electrical work, this includes
+                surface-mounted trunking or conduit on original walls, chasing into original plaster
+                or masonry, relocating meters or consumer units, external lighting, and any work
+                affecting original features. Apply through City of York Council. Allow 8 to 12 weeks
+                for determination — factor this into project timelines.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -252,22 +251,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>York Minster close</strong> — properties within the Minster close are subject
-                to additional oversight from the Minster Chapter. External works (satellite dishes,
-                external lighting, cable routes) are typically refused. Internal works require
-                particular sensitivity to the historic fabric. Some properties in this area date to
-                the 14th and 15th centuries and have timber-framed construction where fire safety and
-                cable routing require specialist attention.
+                <strong>York Minster close</strong> — properties within the Minster close are
+                subject to additional oversight from the Minster Chapter. External works (satellite
+                dishes, external lighting, cable routes) are typically refused. Internal works
+                require particular sensitivity to the historic fabric. Some properties in this area
+                date to the 14th and 15th centuries and have timber-framed construction where fire
+                safety and cable routing require specialist attention.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Specialist fixings</strong> — in listed buildings, avoid plastic trunking
-                where possible. Heritage-style metal conduit, brass accessories, and period-appropriate
-                light fittings are often required by the conservation officer. Use brass screws rather
-                than steel in visible locations. These specialist materials add cost but are essential
-                for LBC compliance.
+                where possible. Heritage-style metal conduit, brass accessories, and
+                period-appropriate light fittings are often required by the conservation officer.
+                Use brass screws rather than steel in visible locations. These specialist materials
+                add cost but are essential for LBC compliance.
               </span>
             </li>
           </ul>
@@ -279,8 +278,8 @@ const sections = [
           <SEOInternalLink href="/guides/electrical-certificate-types-uk">
             correct certification
           </SEOInternalLink>{' '}
-          is essential, and your documentation should note any heritage constraints that affected the
-          installation method.
+          is essential, and your documentation should note any heritage constraints that affected
+          the installation method.
         </p>
       </>
     ),
@@ -304,7 +303,8 @@ const sections = [
                 <strong>Post-flood inspection</strong> — after floodwater recedes and the property
                 has dried out, the full electrical installation must be inspected and tested before
                 re-energisation. This is not optional — it is a safety requirement. Any equipment
-                that has been submerged must be assumed compromised until proven otherwise by testing.
+                that has been submerged must be assumed compromised until proven otherwise by
+                testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -341,10 +341,7 @@ const sections = [
         <p>
           Post-flood electrical work is a significant market in York. Register with local insurance
           companies and loss adjusters as an approved electrical contractor for flood remediation.
-          The{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            EICR certificate app
-          </SEOInternalLink>{' '}
+          The <SEOInternalLink href="/tools/eicr-certificate">EICR certificate app</SEOInternalLink>{' '}
           is essential for documenting the condition of flood-affected installations and recording
           your test results.
         </p>
@@ -379,18 +376,18 @@ const sections = [
                 <strong>Emergency lighting</strong> — all commercial premises with public access
                 require emergency lighting that complies with BS 5266. Monthly functional tests and
                 annual 3-hour duration tests must be documented. Hotels, restaurants, and visitor
-                attractions in York need maintained emergency lighting systems with a clear servicing
-                contract.
+                attractions in York need maintained emergency lighting systems with a clear
+                servicing contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm systems</strong> — commercial premises require fire alarm systems
-                designed and installed to BS 5839. The system category (L1 to L5 for life protection,
-                P1 to P2 for property protection) depends on the building use and risk assessment.
-                Hotels and guest houses typically require Category L1 (full coverage). Weekly testing
-                and quarterly servicing must be documented.
+                designed and installed to BS 5839. The system category (L1 to L5 for life
+                protection, P1 to P2 for property protection) depends on the building use and risk
+                assessment. Hotels and guest houses typically require Category L1 (full coverage).
+                Weekly testing and quarterly servicing must be documented.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,9 +474,9 @@ const sections = [
     content: (
       <>
         <p>
-          York is a strong market for electricians who position themselves correctly. The combination
-          of heritage work, flood remediation, tourism and hospitality maintenance, and new-build
-          development at York Central and Monks Cross provides diverse revenue streams.
+          York is a strong market for electricians who position themselves correctly. The
+          combination of heritage work, flood remediation, tourism and hospitality maintenance, and
+          new-build development at York Central and Monks Cross provides diverse revenue streams.
         </p>
         <p>
           To succeed in the York market, you need to quote accurately, certify professionally, and
@@ -536,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for York electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Everything you need for domestic, commercial, and heritage electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Everything you need for domestic, commercial, and heritage electrical work. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -573,7 +570,7 @@ export default function ElectricianYorkPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in York"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in York — On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage work, flood remediation, or new builds — certify it all on site. 7-day free trial."
     />
   );
 }

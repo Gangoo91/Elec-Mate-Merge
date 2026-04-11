@@ -43,7 +43,7 @@ const tocItems = [
 const keyTakeaways = [
   'Manchester receives approximately 850–950 kWh of solar irradiation per kWp per year — lower than the South East but sufficient to make solar PV economically viable at current electricity prices above 24p per kWh.',
   'A typical 4kW residential solar PV system in Manchester costs £5,000 to £7,500 fully installed and generates approximately 2,900–3,600 kWh per year.',
-  'Manchester\'s higher rainfall and cloud cover do not prevent solar generation — panels generate electricity from daylight, not just direct sunshine, and modern high-efficiency panels perform better in diffuse light than older technology.',
+  "Manchester's higher rainfall and cloud cover do not prevent solar generation — panels generate electricity from daylight, not just direct sunshine, and modern high-efficiency panels perform better in diffuse light than older technology.",
   'MCS certification is mandatory to qualify for Smart Export Guarantee (SEG) payments. Without an MCS-certified installer and MCS-certified products, your system will not be eligible for export payments.',
   'BS 7671 Section 712 (Solar Photovoltaic Power Supply Systems) applies to all PV installations in Manchester, requiring appropriate DC isolation, surge protection, earthing, and labelling.',
 ];
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Does solar actually work in Manchester given the weather?',
     answer:
-      'Yes. Solar panels generate electricity from daylight, not just direct sunshine. Manchester receives approximately 850–950 kWh of solar irradiation per kWp per year — around 15–20% less than London and around 30% less than the South West. However, at current electricity prices of 24p+ per kWh, even Manchester\'s lower irradiance delivers meaningful savings. Modern high-efficiency monocrystalline panels also perform better in the diffuse light conditions common in the North West. Solar PV is well-established across Greater Manchester, Lancashire, and Cheshire with thousands of successful residential installations.',
+      "Yes. Solar panels generate electricity from daylight, not just direct sunshine. Manchester receives approximately 850–950 kWh of solar irradiation per kWp per year — around 15–20% less than London and around 30% less than the South West. However, at current electricity prices of 24p+ per kWh, even Manchester's lower irradiance delivers meaningful savings. Modern high-efficiency monocrystalline panels also perform better in the diffuse light conditions common in the North West. Solar PV is well-established across Greater Manchester, Lancashire, and Cheshire with thousands of successful residential installations.",
   },
   {
     question: 'How much does solar panel installation cost in Manchester in 2025?',
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What is the Smart Export Guarantee and how do I claim it in Manchester?',
     answer:
-      'The Smart Export Guarantee (SEG) requires major electricity suppliers to pay you for electricity you export to the grid. There is no regional difference between Manchester and the rest of England — the scheme applies equally nationwide. To claim SEG, your system must be installed by an MCS-certified installer using MCS-certified equipment, you must have (or get) a smart meter, and you must register with an eligible supplier\'s SEG tariff. Rates currently range from 3p to 20p per kWh. You can switch SEG provider at any time.',
+      "The Smart Export Guarantee (SEG) requires major electricity suppliers to pay you for electricity you export to the grid. There is no regional difference between Manchester and the rest of England — the scheme applies equally nationwide. To claim SEG, your system must be installed by an MCS-certified installer using MCS-certified equipment, you must have (or get) a smart meter, and you must register with an eligible supplier's SEG tariff. Rates currently range from 3p to 20p per kWh. You can switch SEG provider at any time.",
   },
   {
     question: 'Do I need planning permission for solar panels on my Manchester home?',
@@ -137,10 +137,10 @@ const sections = [
         <p>
           The most common question Manchester homeowners ask about solar is whether the North West
           weather makes it worth the investment. The answer is yes — with an important caveat.
-          Manchester receives less solar irradiation than the South East, but it receives enough
-          to make solar PV economically viable when electricity prices are above 24p per kWh. Solar
-          panels do not need sunshine to generate electricity. They generate from daylight, and
-          even overcast Manchester days produce meaningful output.
+          Manchester receives less solar irradiation than the South East, but it receives enough to
+          make solar PV economically viable when electricity prices are above 24p per kWh. Solar
+          panels do not need sunshine to generate electricity. They generate from daylight, and even
+          overcast Manchester days produce meaningful output.
         </p>
         <p>
           Thousands of solar PV systems are already installed across Greater Manchester, Lancashire,
@@ -154,9 +154,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CloudRain className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manchester irradiance:</strong> ~850–950 kWh/kWp/year — around 10–15%
-                less than London, 25–30% less than the South West. Still sufficient for viable
-                solar economics.
+                <strong>Manchester irradiance:</strong> ~850–950 kWh/kWp/year — around 10–15% less
+                than London, 25–30% less than the South West. Still sufficient for viable solar
+                economics.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -170,9 +170,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity price effect:</strong> At 24p+/kWh, every kWh generated by
-                your panels saves real money. The higher the electricity price, the shorter the
-                payback period — regardless of location.
+                <strong>Electricity price effect:</strong> At 24p+/kWh, every kWh generated by your
+                panels saves real money. The higher the electricity price, the shorter the payback
+                period — regardless of location.
               </span>
             </li>
           </ul>
@@ -212,8 +212,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shading assessment:</strong> Tree shading and surrounding buildings are
-                more impactful in Manchester's terraced housing stock than orientation. A reputable
+                <strong>Shading assessment:</strong> Tree shading and surrounding buildings are more
+                impactful in Manchester's terraced housing stock than orientation. A reputable
                 installer should perform a shading analysis using the installer's survey.
               </span>
             </li>
@@ -246,14 +246,15 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3kW system:</strong> Suits terraced houses and flats with limited roof
-                space. Output: approximately 2,200–2,850 kWh/year in Manchester. Cost: £4,000–£5,500.
+                space. Output: approximately 2,200–2,850 kWh/year in Manchester. Cost:
+                £4,000–£5,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4kW system:</strong> Most popular for 3-bedroom semis and terraces.
-                Output: approximately 2,900–3,600 kWh/year. Cost: £5,000–£7,500.
+                <strong>4kW system:</strong> Most popular for 3-bedroom semis and terraces. Output:
+                approximately 2,900–3,600 kWh/year. Cost: £5,000–£7,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,8 +269,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Roof space:</strong> Modern 400–450W panels require approximately 2m² each.
-                A 4kW system needs roughly 20–25m² of suitable roof space. Many Manchester semis
-                and detached homes can accommodate 6kW+ with east-west arrays.
+                A 4kW system needs roughly 20–25m² of suitable roof space. Many Manchester semis and
+                detached homes can accommodate 6kW+ with east-west arrays.
               </span>
             </li>
           </ul>
@@ -299,8 +300,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4kW system:</strong> £5,000–£7,500 installed. The most popular choice
-                for Manchester residential properties.
+                <strong>4kW system:</strong> £5,000–£7,500 installed. The most popular choice for
+                Manchester residential properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -312,8 +313,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage addition:</strong> £2,500–£5,000 for a 5–10kWh system.
-                Solar panels and batteries installed together attract 0% VAT.
+                <strong>Battery storage addition:</strong> £2,500–£5,000 for a 5–10kWh system. Solar
+                panels and batteries installed together attract 0% VAT.
               </span>
             </li>
           </ul>
@@ -332,8 +333,8 @@ const sections = [
     content: (
       <>
         <p>
-          The Smart Export Guarantee applies equally across England, Scotland, and Wales — there
-          is no regional variation. Manchester homeowners are eligible for the same SEG rates as
+          The Smart Export Guarantee applies equally across England, Scotland, and Wales — there is
+          no regional variation. Manchester homeowners are eligible for the same SEG rates as
           anywhere in the country, provided their system meets the MCS requirements.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -391,8 +392,8 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development:</strong> Applies to most domestic rooftop
-                installations where panels do not protrude more than 200mm from the roof surface
-                and are not on a front wall or roof slope visible from a highway.
+                installations where panels do not protrude more than 200mm from the roof surface and
+                are not on a front wall or roof slope visible from a highway.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -432,8 +433,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify at mcscertified.com:</strong> Check that your installer holds a
-                current (not lapsed) MCS certificate. The MCS register shows certified installers
-                by postcode area.
+                current (not lapsed) MCS certificate. The MCS register shows certified installers by
+                postcode area.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,9 +478,9 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption uplift:</strong> Without battery, typical Manchester
-                household self-consumes 25–35% of solar generation. With a 5–10kWh battery:
-                60–80% self-consumption. This significantly improves the economics in a lower
-                irradiance location.
+                household self-consumes 25–35% of solar generation. With a 5–10kWh battery: 60–80%
+                self-consumption. This significantly improves the economics in a lower irradiance
+                location.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -494,8 +495,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cost:</strong> £2,500–£5,000 additional. 0% VAT when installed at the
-                same time as panels.
+                <strong>Cost:</strong> £2,500–£5,000 additional. 0% VAT when installed at the same
+                time as panels.
               </span>
             </li>
           </ul>
@@ -509,8 +510,8 @@ const sections = [
     content: (
       <>
         <p>
-          Manchester's lower irradiance means the payback period is typically 1–3 years longer
-          than equivalent systems in southern England. However, rising electricity prices have
+          Manchester's lower irradiance means the payback period is typically 1–3 years longer than
+          equivalent systems in southern England. However, rising electricity prices have
           significantly improved the economics in recent years.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
@@ -518,9 +519,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual savings estimate:</strong> 4kW system generating 3,200 kWh/year
-                with 40% self-consumption at 24p/kWh = £307/year electricity savings. SEG income
-                at 8p/kWh on 1,920 kWh exported = ~£154/year. Total annual benefit: ~£461/year.
+                <strong>Annual savings estimate:</strong> 4kW system generating 3,200 kWh/year with
+                40% self-consumption at 24p/kWh = £307/year electricity savings. SEG income at
+                8p/kWh on 1,920 kWh exported = ~£154/year. Total annual benefit: ~£461/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -536,8 +537,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Long-term returns:</strong> A system installed in 2025 will continue
-                generating past 2050. With 25-year panel warranties and inverter replacements
-                every 10–15 years, the long-term return on investment is substantial.
+                generating past 2050. With 25-year panel warranties and inverter replacements every
+                10–15 years, the long-term return on investment is substantial.
               </span>
             </li>
           </ul>
@@ -551,8 +552,8 @@ const sections = [
     content: (
       <>
         <p>
-          Greater Manchester has a healthy pool of MCS-certified solar installers. Use the
-          following criteria to select a trustworthy contractor.
+          Greater Manchester has a healthy pool of MCS-certified solar installers. Use the following
+          criteria to select a trustworthy contractor.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -583,8 +584,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>System design document:</strong> Require a written system design report
-                using PVGIS or equivalent, showing modelled annual generation for your specific
-                roof before you sign any contract.
+                using PVGIS or equivalent, showing modelled annual generation for your specific roof
+                before you sign any contract.
               </span>
             </li>
           </ul>
@@ -614,8 +615,8 @@ const sections = [
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate for your PV installation
-                  wiring on site. Generate a professional PDF and email it to the client on the
-                  day of commissioning.
+                  wiring on site. Generate a professional PDF and email it to the client on the day
+                  of commissioning.
                 </p>
               </div>
             </div>
@@ -640,7 +641,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -677,7 +678,7 @@ export default function SolarPanelInstallationManchesterPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

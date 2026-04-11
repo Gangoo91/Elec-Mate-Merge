@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Landlord electrical safety inspections — identifying fire risks before they occur.',
+    description:
+      'Landlord electrical safety inspections — identifying fire risks before they occur.',
     icon: Home,
     category: 'Guide',
   },
@@ -100,7 +101,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/lockout-tagout-guide',
     title: 'Lockout Tagout Guide',
-    description: 'Safe electrical isolation — essential before investigating a fire-damaged installation.',
+    description:
+      'Safe electrical isolation — essential before investigating a fire-damaged installation.',
     icon: ShieldCheck,
     category: 'Safety',
   },
@@ -114,7 +116,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete EICRs on your phone with AI board scanning — identify fire risks on site.',
+    description:
+      'Complete EICRs on your phone with AI board scanning — identify fire risks on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -140,11 +143,11 @@ const sections = [
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Faulty or misused appliances</strong> — the leading cause. White goods
-                (tumble dryers, dishwashers, washing machines) are disproportionately represented
-                in fire statistics due to their high power consumption, heat generation, and the
-                fact that they are often left running unattended overnight. Manufacturers issue
-                product safety recalls for appliances with known fire risks — register your
-                appliances to receive recall notices.
+                (tumble dryers, dishwashers, washing machines) are disproportionately represented in
+                fire statistics due to their high power consumption, heat generation, and the fact
+                that they are often left running unattended overnight. Manufacturers issue product
+                safety recalls for appliances with known fire risks — register your appliances to
+                receive recall notices.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -152,8 +155,8 @@ const sections = [
               <span>
                 <strong>Wiring and electrical supply faults</strong> — includes arcing from damaged
                 or degraded wiring, loose connections generating resistance heat, and overloaded
-                circuits. Older properties with rubber-insulated wiring are at substantially
-                greater risk.
+                circuits. Older properties with rubber-insulated wiring are at substantially greater
+                risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -168,8 +171,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting</strong> — halogen downlighters installed in thermal insulation
-                (a common source of fire in loft conversions and extensions), damaged light fittings,
+                <strong>Lighting</strong> — halogen downlighters installed in thermal insulation (a
+                common source of fire in loft conversions and extensions), damaged light fittings,
                 and using bulbs of the wrong wattage can all cause fires. LED replacements eliminate
                 the heat buildup associated with halogen lamps.
               </span>
@@ -185,9 +188,9 @@ const sections = [
     content: (
       <>
         <p>
-          Arcing faults are one of the most dangerous electrical fire hazards because they can
-          occur at fault current levels too low to trip a standard circuit breaker or fuse, yet
-          generate enough heat at the arc point to ignite adjacent materials.
+          Arcing faults are one of the most dangerous electrical fire hazards because they can occur
+          at fault current levels too low to trip a standard circuit breaker or fuse, yet generate
+          enough heat at the arc point to ignite adjacent materials.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -196,18 +199,18 @@ const sections = [
               <span>
                 <strong>What causes arcing</strong> — damaged cable insulation (from nail/screw
                 penetration, crushing, or animal damage), loose or poorly terminated connections,
-                damaged plugs, and degraded wiring. The arc between conductors generates a
-                plasma at temperatures exceeding 3,000°C — hot enough to ignite wood, insulation,
-                and dust immediately.
+                damaged plugs, and degraded wiring. The arc between conductors generates a plasma at
+                temperatures exceeding 3,000°C — hot enough to ignite wood, insulation, and dust
+                immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How AFDDs work</strong> — an AFDD monitors the current waveform on a
-                circuit for the distinctive signature of arc faults — rapid current oscillations
-                that differ from normal load characteristics. When it detects an arc fault
-                signature, it trips the circuit within milliseconds, before ignition can occur.
+                <strong>How AFDDs work</strong> — an AFDD monitors the current waveform on a circuit
+                for the distinctive signature of arc faults — rapid current oscillations that differ
+                from normal load characteristics. When it detects an arc fault signature, it trips
+                the circuit within milliseconds, before ignition can occur.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -224,10 +227,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fitting AFDDs</strong> — AFDDs are fitted at the consumer unit in place
-                of (or in combination with) the standard MCB. They are available as combined
-                AFDD/RCBOs from manufacturers including Hager, ABB, Eaton, Schneider, and Siemens.
-                An EICR can identify circuits most in need of AFDD protection.
+                <strong>Fitting AFDDs</strong> — AFDDs are fitted at the consumer unit in place of
+                (or in combination with) the standard MCB. They are available as combined AFDD/RCBOs
+                from manufacturers including Hager, ABB, Eaton, Schneider, and Siemens. An EICR can
+                identify circuits most in need of AFDD protection.
               </span>
             </li>
           </ul>
@@ -241,47 +244,47 @@ const sections = [
     content: (
       <>
         <p>
-          Overloading occurs when more current is drawn through a cable, socket, or connection
-          than it is designed to carry. The excess current generates heat at the point of
-          highest resistance — typically a poor connection — which can ignite surrounding materials.
+          Overloading occurs when more current is drawn through a cable, socket, or connection than
+          it is designed to carry. The excess current generates heat at the point of highest
+          resistance — typically a poor connection — which can ignite surrounding materials.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>13A socket maximum</strong> — a 13A socket or plug-in adaptor has a
-                maximum rating of 13A (approximately 3kW). Adaptors multiplying sockets do not
-                increase the current capacity of the original socket outlet — they simply allow
-                more appliances to share the same 13A rating.
+                <strong>13A socket maximum</strong> — a 13A socket or plug-in adaptor has a maximum
+                rating of 13A (approximately 3kW). Adaptors multiplying sockets do not increase the
+                current capacity of the original socket outlet — they simply allow more appliances
+                to share the same 13A rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High-power appliances</strong> — electric kettles (up to 3kW), fan heaters
-                (1–3kW), tumble dryers (2–3kW), and electric showers (7–10kW) should each have
-                their own dedicated circuit or socket. Never share a socket between two high-power
+                (1–3kW), tumble dryers (2–3kW), and electric showers (7–10kW) should each have their
+                own dedicated circuit or socket. Never share a socket between two high-power
                 appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loose connections generate heat</strong> — a loose connection at a
-                terminal, socket outlet, or plug top creates a point of increased resistance.
-                Current flows through this resistance and generates heat proportional to the
-                current squared multiplied by the resistance (P=I²R). This heat can carbonise
-                surrounding plastic and eventually cause ignition.
+                <strong>Loose connections generate heat</strong> — a loose connection at a terminal,
+                socket outlet, or plug top creates a point of increased resistance. Current flows
+                through this resistance and generates heat proportional to the current squared
+                multiplied by the resistance (P=I²R). This heat can carbonise surrounding plastic
+                and eventually cause ignition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fit additional socket outlets</strong> — the proper solution to a lack
-                of socket outlets is to install additional sockets, not to use adaptors and
-                extension leads indefinitely. A qualified electrician can add socket outlets to
-                an existing ring main or install additional circuits from the consumer unit.
+                <strong>Fit additional socket outlets</strong> — the proper solution to a lack of
+                socket outlets is to install additional sockets, not to use adaptors and extension
+                leads indefinitely. A qualified electrician can add socket outlets to an existing
+                ring main or install additional circuits from the consumer unit.
               </span>
             </li>
           </ul>
@@ -295,26 +298,25 @@ const sections = [
     content: (
       <>
         <p>
-          The UK has a large stock of older housing, and many properties still contain wiring
-          that is decades past its recommended service life. Old wiring presents a significant
-          fire risk.
+          The UK has a large stock of older housing, and many properties still contain wiring that
+          is decades past its recommended service life. Old wiring presents a significant fire risk.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rubber-insulated wiring (pre-1966)</strong> — rubber insulation
-                degrades with age, heat, and exposure to light. It becomes brittle, cracks, and
-                crumbles, exposing live conductors. This is particularly common in loft spaces
-                and roof voids where temperature extremes accelerate degradation.
+                <strong>Rubber-insulated wiring (pre-1966)</strong> — rubber insulation degrades
+                with age, heat, and exposure to light. It becomes brittle, cracks, and crumbles,
+                exposing live conductors. This is particularly common in loft spaces and roof voids
+                where temperature extremes accelerate degradation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lead-sheathed wiring (pre-1955)</strong> — lead sheathing was used in
-                the earliest domestic wiring. Where it survives, it is likely to have degraded
+                <strong>Lead-sheathed wiring (pre-1955)</strong> — lead sheathing was used in the
+                earliest domestic wiring. Where it survives, it is likely to have degraded
                 insulation. The sheath may appear intact externally while the internal insulation
                 has failed completely.
               </span>
@@ -322,10 +324,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wooden fuse boards and rewirable fuses</strong> — rewirable fuses in
-                wooden consumer units provide poor overload protection. The correct fuse wire
-                rating is rarely maintained — oversized fuse wire allows excessive current before
-                blowing, increasing the risk of cable overheating and fire.
+                <strong>Wooden fuse boards and rewirable fuses</strong> — rewirable fuses in wooden
+                consumer units provide poor overload protection. The correct fuse wire rating is
+                rarely maintained — oversized fuse wire allows excessive current before blowing,
+                increasing the risk of cable overheating and fire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -350,50 +352,48 @@ const sections = [
     content: (
       <>
         <p>
-          A working smoke alarm gives occupants the time to escape a building before a fire
-          becomes unsurvivable. Electrical fires can start slowly — smouldering for hours before
-          breaking into flame — or almost instantaneously from a major arc flash. Either way,
-          early detection is critical.
+          A working smoke alarm gives occupants the time to escape a building before a fire becomes
+          unsurvivable. Electrical fires can start slowly — smouldering for hours before breaking
+          into flame — or almost instantaneously from a major arc flash. Either way, early detection
+          is critical.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Optical vs ionisation alarms</strong> — optical (photoelectric) smoke
-                alarms are better at detecting slow, smouldering fires — the type most commonly
-                produced by electrical faults in wiring and appliances. Ionisation alarms are
-                better at detecting fast, flaming fires. A combination alarm or fitting both types
-                provides the best coverage.
+                <strong>Optical vs ionisation alarms</strong> — optical (photoelectric) smoke alarms
+                are better at detecting slow, smouldering fires — the type most commonly produced by
+                electrical faults in wiring and appliances. Ionisation alarms are better at
+                detecting fast, flaming fires. A combination alarm or fitting both types provides
+                the best coverage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Placement</strong> — fit a smoke alarm in the hallway at each level of
-                the property (the escape route), in the living room, and on the landing outside
-                each bedroom. Do not fit smoke alarms in kitchens or bathrooms — cooking fumes
-                and steam cause false alarms. Heat alarms (not smoke alarms) are appropriate for
-                kitchens.
+                <strong>Placement</strong> — fit a smoke alarm in the hallway at each level of the
+                property (the escape route), in the living room, and on the landing outside each
+                bedroom. Do not fit smoke alarms in kitchens or bathrooms — cooking fumes and steam
+                cause false alarms. Heat alarms (not smoke alarms) are appropriate for kitchens.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Interlinked alarms</strong> — BS 5839-6 recommends interlinked smoke
-                alarms in new and significantly refurbished dwellings, so that when one alarm
-                activates, all alarms sound simultaneously. This is particularly important in
-                larger properties where an alarm at the other end of the building might not
-                be heard.
+                <strong>Interlinked alarms</strong> — BS 5839-6 recommends interlinked smoke alarms
+                in new and significantly refurbished dwellings, so that when one alarm activates,
+                all alarms sound simultaneously. This is particularly important in larger properties
+                where an alarm at the other end of the building might not be heard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test monthly, replace at 10 years</strong> — test smoke alarms monthly
-                using the test button. Replace the battery annually (unless the alarm has a
-                sealed 10-year battery). Replace the entire unit after 10 years from the date
-                of manufacture (printed on the alarm).
+                <strong>Test monthly, replace at 10 years</strong> — test smoke alarms monthly using
+                the test button. Replace the battery annually (unless the alarm has a sealed 10-year
+                battery). Replace the entire unit after 10 years from the date of manufacture
+                (printed on the alarm).
               </span>
             </li>
           </ul>
@@ -407,18 +407,17 @@ const sections = [
     content: (
       <>
         <p>
-          Extension leads are found in almost every home and workplace, but they are also a
-          frequent source of fire when misused or damaged.
+          Extension leads are found in almost every home and workplace, but they are also a frequent
+          source of fire when misused or damaged.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always fully unroll before use</strong> — a coiled extension lead
-                in use dissipates heat poorly. The inductance of the coil can also cause
-                overheating at high currents. Unroll the lead completely before connecting
-                high-power appliances.
+                <strong>Always fully unroll before use</strong> — a coiled extension lead in use
+                dissipates heat poorly. The inductance of the coil can also cause overheating at
+                high currents. Unroll the lead completely before connecting high-power appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -426,17 +425,17 @@ const sections = [
               <span>
                 <strong>Check the current rating of the lead</strong> — most domestic extension
                 leads are rated at 13A for their socket outlets but the cable itself may have a
-                lower current rating — particularly thin flat "figure-8" leads which may be rated
-                at 6A or less. Never connect a high-power appliance to an undersized lead.
+                lower current rating — particularly thin flat "figure-8" leads which may be rated at
+                6A or less. Never connect a high-power appliance to an undersized lead.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Do not run under carpets or rugs</strong> — cables under floor coverings
-                cannot dissipate heat, and any damage to the cable (from foot traffic) will not
-                be visible. Running electrical cables under carpets is a fire risk and contravenes
-                BS 7671 wiring requirements.
+                cannot dissipate heat, and any damage to the cable (from foot traffic) will not be
+                visible. Running electrical cables under carpets is a fire risk and contravenes BS
+                7671 wiring requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -459,20 +458,20 @@ const sections = [
     content: (
       <>
         <p>
-          Rental properties carry specific electrical fire risks. Tenants may have limited
-          awareness of electrical safety, may have multiple appliances and extension leads,
-          and the property may have older wiring that has not been recently inspected.
+          Rental properties carry specific electrical fire risks. Tenants may have limited awareness
+          of electrical safety, may have multiple appliances and extension leads, and the property
+          may have older wiring that has not been recently inspected.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR obligation</strong> — the Electrical Safety Standards in
-                the Private Rented Sector (England) Regulations 2020 require landlords to obtain
-                an EICR every five years or at change of tenancy, and to complete any C1 or C2
-                remedial work within 28 days. An EICR identifies aged wiring, lack of RCD
-                protection, and other fire risks.{' '}
+                <strong>Landlord EICR obligation</strong> — the Electrical Safety Standards in the
+                Private Rented Sector (England) Regulations 2020 require landlords to obtain an EICR
+                every five years or at change of tenancy, and to complete any C1 or C2 remedial work
+                within 28 days. An EICR identifies aged wiring, lack of RCD protection, and other
+                fire risks.{' '}
                 <SEOInternalLink href="/guides/eicr-for-landlords">
                   Full landlord EICR guidance here.
                 </SEOInternalLink>
@@ -518,22 +517,28 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                1
+              </span>
               <span>
-                <strong>Switch off the power</strong> — if it is safe to do so and the consumer
-                unit is accessible, switch off the main switch. This removes the electrical energy
+                <strong>Switch off the power</strong> — if it is safe to do so and the consumer unit
+                is accessible, switch off the main switch. This removes the electrical energy
                 feeding the fire and makes extinguishing it safer.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                2
+              </span>
               <span>
-                <strong>Call 999</strong> — call the fire brigade immediately. Do not wait to see
-                if you can extinguish it yourself — electrical fires can spread very rapidly.
+                <strong>Call 999</strong> — call the fire brigade immediately. Do not wait to see if
+                you can extinguish it yourself — electrical fires can spread very rapidly.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                3
+              </span>
               <span>
                 <strong>Evacuate</strong> — if the fire is more than a waste bin in size, do not
                 attempt to fight it. Close doors to slow the spread of fire, sound the fire alarm,
@@ -541,11 +546,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                4
+              </span>
               <span>
-                <strong>CO2 extinguisher only</strong> — if the fire is small, contained, you
-                have a clear escape route, and the power is off, a CO2 or dry powder extinguisher
-                may be used. Aim at the base of the flames. Never use water or foam.
+                <strong>CO2 extinguisher only</strong> — if the fire is small, contained, you have a
+                clear escape route, and the power is off, a CO2 or dry powder extinguisher may be
+                used. Aim at the base of the flames. Never use water or foam.
               </span>
             </li>
           </ul>
@@ -559,22 +566,22 @@ const sections = [
     content: (
       <>
         <p>
-          As a qualified electrician, you are often the first to identify electrical fire risks
-          in properties. Documenting your findings clearly and providing clients with actionable
+          As a qualified electrician, you are often the first to identify electrical fire risks in
+          properties. Documenting your findings clearly and providing clients with actionable
           remedial advice is part of your professional responsibility.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-4">
             <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-bold text-white mb-1">Complete EICRs Identifying Fire Risks On Site</h4>
+              <h4 className="font-bold text-white mb-1">
+                Complete EICRs Identifying Fire Risks On Site
+              </h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">
-                  Elec-Mate EICR app
-                </SEOInternalLink>{' '}
-                to complete condition reports on your phone, with AI board scanning and instant
-                PDF export. Record C1 and C2 observations related to fire risks — arcing damage,
+                <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate EICR app</SEOInternalLink>{' '}
+                to complete condition reports on your phone, with AI board scanning and instant PDF
+                export. Record C1 and C2 observations related to fire risks — arcing damage,
                 degraded wiring, lack of RCD protection, and overloaded circuits — and send the
                 report to your client before you leave the property.
               </p>
@@ -583,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs on your phone with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Identify electrical fire risks and send reports to clients immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Identify electrical fire risks and send reports to clients immediately. 7-day free trial."
           icon={Flame}
         />
       </>

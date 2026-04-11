@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'What are the most common EICR failures in Wolverhampton?',
     answer:
-      'In Wolverhampton\'s older housing stock the most common C2 findings are: absence of RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate main protective bonding to gas and water services (Regulation 544.1), aged rubber or cloth-insulated wiring presenting insulation breakdown risks, and deteriorated or non-compliant consumer units. Properties built before 1966 are particularly likely to contain aluminium wiring or single-core PVC cables without an earth.',
+      "In Wolverhampton's older housing stock the most common C2 findings are: absence of RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate main protective bonding to gas and water services (Regulation 544.1), aged rubber or cloth-insulated wiring presenting insulation breakdown risks, and deteriorated or non-compliant consumer units. Properties built before 1966 are particularly likely to contain aluminium wiring or single-core PVC cables without an earth.",
   },
   {
     question: 'How long does an EICR take in Wolverhampton?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Who can carry out an EICR in Wolverhampton?',
     answer:
-      'The inspector must be a qualified and competent person. For landlord compliance this means a person registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme, holding City and Guilds 2391 (Inspection and Testing) or equivalent and a current BS 7671 qualification (C&G 2382 18th Edition). Always verify registration on the scheme\'s online register before commissioning work.',
+      "The inspector must be a qualified and competent person. For landlord compliance this means a person registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme, holding City and Guilds 2391 (Inspection and Testing) or equivalent and a current BS 7671 qualification (C&G 2382 18th Edition). Always verify registration on the scheme's online register before commissioning work.",
   },
 ];
 
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -150,9 +151,9 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Unsatisfactory</strong> — the installation contains C1 (danger present) or
-                C2 (potentially dangerous) observations. Remedial work is legally required within
-                28 days. The landlord must not begin or continue a tenancy without confirming
-                remedial work is completed.
+                C2 (potentially dangerous) observations. Remedial work is legally required within 28
+                days. The landlord must not begin or continue a tenancy without confirming remedial
+                work is completed.
               </span>
             </li>
           </ul>
@@ -202,7 +203,8 @@ const sections = [
               <span>
                 <strong>Tenant and authority copies</strong> — a copy of the EICR must be provided
                 to existing tenants within 28 days and to new tenants before they move in. The
-                council can request a copy at any time; the landlord must supply it within seven days.
+                council can request a copy at any time; the landlord must supply it within seven
+                days.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -247,8 +249,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complete remedial work</strong> — if the EICR is Unsatisfactory, arrange
-                all remedial work by a competent electrician within 28 days (or the shorter period
+                <strong>Complete remedial work</strong> — if the EICR is Unsatisfactory, arrange all
+                remedial work by a competent electrician within 28 days (or the shorter period
                 specified by the inspector for C1 findings).
               </span>
             </li>
@@ -289,17 +291,17 @@ const sections = [
               <span>
                 <strong>Absence of RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
                 RCD protection (≤30mA) on all socket-outlet circuits rated up to 32A. Older
-                properties with consumer units replaced piecemeal but without RCD-protected ways
-                are common in Wolverhampton. This is typically a C2 finding.
+                properties with consumer units replaced piecemeal but without RCD-protected ways are
+                common in Wolverhampton. This is typically a C2 finding.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inadequate main protective bonding</strong> — Regulation 544.1 requires
-                main protective bonding conductors to connect gas, water, and other extraneous
-                conductive parts to the main earthing terminal. Older properties often have missing
-                or undersized bonding conductors.
+                <strong>Inadequate main protective bonding</strong> — Regulation 544.1 requires main
+                protective bonding conductors to connect gas, water, and other extraneous conductive
+                parts to the main earthing terminal. Older properties often have missing or
+                undersized bonding conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,9 +333,9 @@ const sections = [
     content: (
       <>
         <p>
-          Every observation recorded on a Wolverhampton EICR is assigned a classification code
-          under BS 7671 Section 631. Understanding these codes helps landlords, tenants, and
-          electricians assess the urgency of remedial action.
+          Every observation recorded on a Wolverhampton EICR is assigned a classification code under
+          BS 7671 Section 631. Understanding these codes helps landlords, tenants, and electricians
+          assess the urgency of remedial action.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -348,9 +350,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Potentially Dangerous</strong>: A fault or deficiency exists that
-                could become dangerous. Urgent remedial action is required. The overall EICR
-                outcome is Unsatisfactory. Landlords must complete all C2 work within 28 days.
+                <strong>C2 — Potentially Dangerous</strong>: A fault or deficiency exists that could
+                become dangerous. Urgent remedial action is required. The overall EICR outcome is
+                Unsatisfactory. Landlords must complete all C2 work within 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -400,8 +402,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £120 to £200. Typically 3 to 5 circuits with
-                a single consumer unit. Allow 2 to 3 hours inspection time.
+                <strong>One-bedroom flat</strong> — £120 to £200. Typically 3 to 5 circuits with a
+                single consumer unit. Allow 2 to 3 hours inspection time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -422,17 +424,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO / large house</strong> — £300 to £500 or more. Multiple consumer
-                units, fire alarm circuits, and emergency lighting increase inspection time
-                and cost.
+                <strong>HMO / large house</strong> — £300 to £500 or more. Multiple consumer units,
+                fire alarm circuits, and emergency lighting increase inspection time and cost.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices cover the inspection and report only. Any remedial work identified during
-          the EICR (upgrading consumer units, fitting RCD protection, replacing wiring) is quoted
-          and charged separately. Some Wolverhampton electricians offer a combined EICR and remedial
+          These prices cover the inspection and report only. Any remedial work identified during the
+          EICR (upgrading consumer units, fitting RCD protection, replacing wiring) is quoted and
+          charged separately. Some Wolverhampton electricians offer a combined EICR and remedial
           package at a reduced total cost.
         </p>
       </>
@@ -453,8 +454,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA
-                online registers to find Wolverhampton-based electricians. Registration confirms
+                <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA online
+                registers to find Wolverhampton-based electricians. Registration confirms
                 qualifications, insurance, and regular third-party assessment.
               </span>
             </li>
@@ -479,7 +480,8 @@ const sections = [
               <span>
                 <strong>Calibrated test equipment</strong> — a valid EICR requires calibrated
                 instruments. Ask the electrician when their equipment was last calibrated. Reputable
-                inspectors will have current calibration certificates for their multifunction testers.
+                inspectors will have current calibration certificates for their multifunction
+                testers.
               </span>
             </li>
           </ul>
@@ -494,9 +496,9 @@ const sections = [
       <>
         <p>
           Wolverhampton's large private rented sector — particularly the concentration of older
-          terraced housing across Bilston, Wednesfield, Whitmore Reans, and the town centre — creates
-          strong, consistent demand for landlord EICRs. Electricians who build a reputation for
-          thorough, reliable inspection work can develop a substantial repeat-client base.
+          terraced housing across Bilston, Wednesfield, Whitmore Reans, and the town centre —
+          creates strong, consistent demand for landlord EICRs. Electricians who build a reputation
+          for thorough, reliable inspection work can develop a substantial repeat-client base.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -522,13 +524,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are recorded, quote the remedial work on the day
-                  using the{' '}
+                  When C1 or C2 observations are recorded, quote the remedial work on the day using
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Wolverhampton landlords must act within 28 days — the electrician who quotes
-                  on the inspection day wins the remedial contract.
+                  . Wolverhampton landlords must act within 28 days — the electrician who quotes on
+                  the inspection day wins the remedial contract.
                 </p>
               </div>
             </div>
@@ -536,7 +538,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work in Wolverhampton with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and convert findings to remedial quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -573,7 +575,7 @@ export default function EICRWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Wolverhampton"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

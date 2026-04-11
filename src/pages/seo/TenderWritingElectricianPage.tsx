@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A winning electrical tender is won on preliminaries, programme credibility, and health and safety documentation — not just on the lowest price.',
-  'Always read the Employer\'s Requirements (ERs) and contract conditions in full before pricing. Onerous conditions and unlimited liability clauses can make a low-price tender financially catastrophic.',
+  "Always read the Employer's Requirements (ERs) and contract conditions in full before pricing. Onerous conditions and unlimited liability clauses can make a low-price tender financially catastrophic.",
   'Prelims typically account for 8 to 15 per cent of contract value on commercial electrical jobs. Under-pricing prelims is one of the most common reasons electrical contractors lose money on tender.',
   'NEC4 Engineering and Construction Subcontract (ECS) and JCT Design and Build are the two most common contract forms in commercial electrical work. Understanding compensation events (NEC) and loss and expense (JCT) is essential to recovering cost on site.',
   'The Housing Grants, Construction and Regeneration Act 1996 (as amended by the Local Democracy, Economic Development and Construction Act 2009) gives subcontractors statutory rights to interim payments and adjudication — know these rights before you sign any subcontract.',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'What labour rate should I use in my electrical tender?',
     answer:
-      'Your all-in labour rate must cover the electrician\'s base hourly rate, National Insurance contributions (13.8 per cent employer\'s NI), holiday pay (12.07 per cent of pay for workers on zero-hours or pro-rata for salaried), pension contributions (minimum 3 per cent employer under auto-enrolment), industry sick pay (if JIB-registered), travel time and allowances if applicable, and your overhead recovery rate. In 2026 a realistic all-in rate for a qualified electrician in London is £55 to £75 per hour, and £42 to £55 outside London. Do not use apprentice labour rates in your tender unless you have confirmed the programme allows for supervision.',
+      "Your all-in labour rate must cover the electrician's base hourly rate, National Insurance contributions (13.8 per cent employer's NI), holiday pay (12.07 per cent of pay for workers on zero-hours or pro-rata for salaried), pension contributions (minimum 3 per cent employer under auto-enrolment), industry sick pay (if JIB-registered), travel time and allowances if applicable, and your overhead recovery rate. In 2026 a realistic all-in rate for a qualified electrician in London is £55 to £75 per hour, and £42 to £55 outside London. Do not use apprentice labour rates in your tender unless you have confirmed the programme allows for supervision.",
   },
   {
     question: 'How much should I mark up materials in an electrical tender?',
@@ -66,12 +66,12 @@ const faqs = [
   {
     question: 'What is the difference between NEC and JCT contracts for electricians?',
     answer:
-      'NEC4 (particularly the Engineering and Construction Subcontract) uses a compensation event mechanism: any change to scope, delay caused by the main contractor, or event not at the subcontractor\'s risk is a compensation event that must be notified within eight weeks. Failing to notify in time can forfeit your entitlement. JCT uses loss and expense claims and extension of time (EOT) applications. JCT design and build contracts are common in housing and commercial fit-out. NEC3/NEC4 is dominant in infrastructure, rail, utilities, and public sector work. Whichever form you use, read the Z clauses (NEC) or amendments (JCT) carefully — these are where onerous bespoke terms are inserted.',
+      "NEC4 (particularly the Engineering and Construction Subcontract) uses a compensation event mechanism: any change to scope, delay caused by the main contractor, or event not at the subcontractor's risk is a compensation event that must be notified within eight weeks. Failing to notify in time can forfeit your entitlement. JCT uses loss and expense claims and extension of time (EOT) applications. JCT design and build contracts are common in housing and commercial fit-out. NEC3/NEC4 is dominant in infrastructure, rail, utilities, and public sector work. Whichever form you use, read the Z clauses (NEC) or amendments (JCT) carefully — these are where onerous bespoke terms are inserted.",
   },
   {
     question: 'What H&S documents do I need to include with my electrical tender?',
     answer:
-      'A tender submission for commercial electrical work typically requires: a company health and safety policy, method statements for key activities (cable installation, containment, termination, testing), risk assessment index, evidence of CDM 2015 competence (CDM coordinator appointment if principal contractor, or pre-construction information acknowledgement as a contractor), CHAS or equivalent accreditation certificate, public and employers\' liability insurance certificates, and relevant staff qualification records (C&G 2382, 2391, IPAF, PASMA, asbestos awareness). Large clients may also require ISO 45001 certification or Safe Contractor approval.',
+      "A tender submission for commercial electrical work typically requires: a company health and safety policy, method statements for key activities (cable installation, containment, termination, testing), risk assessment index, evidence of CDM 2015 competence (CDM coordinator appointment if principal contractor, or pre-construction information acknowledgement as a contractor), CHAS or equivalent accreditation certificate, public and employers' liability insurance certificates, and relevant staff qualification records (C&G 2382, 2391, IPAF, PASMA, asbestos awareness). Large clients may also require ISO 45001 certification or Safe Contractor approval.",
   },
   {
     question: 'How do I price a programme for an electrical tender?',
@@ -171,9 +171,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Before committing to a tender, assess your bid/no-bid criteria. Tendering costs real
-          money — estimator time, drawing take-off, supplier enquiries. Only tender for work you
-          can genuinely deliver and have a realistic chance of winning.
+          Before committing to a tender, assess your bid/no-bid criteria. Tendering costs real money
+          — estimator time, drawing take-off, supplier enquiries. Only tender for work you can
+          genuinely deliver and have a realistic chance of winning.
         </p>
       </>
     ),
@@ -184,10 +184,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Employer's Requirements (ERs) are the technical heart of any tender. They define
-          what the client wants built, to what standard, and with what level of performance.
-          Failing to read them in full before pricing is one of the most expensive mistakes an
-          electrical contractor can make.
+          The Employer's Requirements (ERs) are the technical heart of any tender. They define what
+          the client wants built, to what standard, and with what level of performance. Failing to
+          read them in full before pricing is one of the most expensive mistakes an electrical
+          contractor can make.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,9 +195,9 @@ const sections = [
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technical specification</strong> — defines system types (small power,
-                lighting, containment, fire detection, emergency lighting, BMS interface),
-                materials standards, cable types and ratings, containment specification, and
-                commissioning requirements. Price to the specification, not to a lesser standard.
+                lighting, containment, fire detection, emergency lighting, BMS interface), materials
+                standards, cable types and ratings, containment specification, and commissioning
+                requirements. Price to the specification, not to a lesser standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,17 +214,17 @@ const sections = [
               <span>
                 <strong>O&amp;M and commissioning</strong> — many ERs require full O&amp;M manuals,
                 as-installed drawings (CAD or Revit), commissioning witnessed by the client's
-                engineer, and extended defects liability periods (12 to 24 months is common).
-                These all have a cost — include them.
+                engineer, and extended defects liability periods (12 to 24 months is common). These
+                all have a cost — include them.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tender queries</strong> — raise all ambiguities in writing before the
-                tender submission deadline. Clarification questions and answers (Q&amp;As) are
-                usually issued to all tenderers and become part of the contract documents.
-                Never make assumptions on ambiguous scope — query it.
+                <strong>Tender queries</strong> — raise all ambiguities in writing before the tender
+                submission deadline. Clarification questions and answers (Q&amp;As) are usually
+                issued to all tenderers and become part of the contract documents. Never make
+                assumptions on ambiguous scope — query it.
               </span>
             </li>
           </ul>
@@ -280,10 +280,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overhead and profit</strong> — your company overhead recovery (typically
-                10 to 15 per cent of turnover) plus your target profit margin (5 to 10 per cent
-                on commercial subcontract work). State these as separate line items where the
-                tender format allows.
+                <strong>Overhead and profit</strong> — your company overhead recovery (typically 10
+                to 15 per cent of turnover) plus your target profit margin (5 to 10 per cent on
+                commercial subcontract work). State these as separate line items where the tender
+                format allows.
               </span>
             </li>
           </ul>
@@ -297,9 +297,9 @@ const sections = [
     content: (
       <>
         <p>
-          Your all-in labour rate is the foundation of your tender pricing. An incorrect rate —
-          even by a few pounds per hour — will result in a significant pricing error across a
-          contract with thousands of man-hours.
+          Your all-in labour rate is the foundation of your tender pricing. An incorrect rate — even
+          by a few pounds per hour — will result in a significant pricing error across a contract
+          with thousands of man-hours.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -307,10 +307,10 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Base hourly rate</strong> — either JIB rates (published annually) or your
-                own employment contracts. The JIB 2026 rate for an Approved Electrician is
-                £20.12 per hour. For self-employed labour-only subcontractors, agree the rate
-                before the job, ensure CIS deductions are applied (20 per cent for registered,
-                30 per cent for unregistered), and issue a subcontract agreement.
+                own employment contracts. The JIB 2026 rate for an Approved Electrician is £20.12
+                per hour. For self-employed labour-only subcontractors, agree the rate before the
+                job, ensure CIS deductions are applied (20 per cent for registered, 30 per cent for
+                unregistered), and issue a subcontract agreement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -318,8 +318,8 @@ const sections = [
               <span>
                 <strong>Oncosts</strong> — add employers' NI (13.8 per cent above the secondary
                 threshold), holiday pay (12.07 per cent for workers without fixed holiday
-                entitlement), pension (minimum 3 per cent employer contribution), JIB
-                contributions if applicable, and any enhanced sick pay.
+                entitlement), pension (minimum 3 per cent employer contribution), JIB contributions
+                if applicable, and any enhanced sick pay.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,16 +327,16 @@ const sections = [
               <span>
                 <strong>Productivity allowance</strong> — experienced estimators apply a
                 productivity factor to account for non-productive time (travel between floors,
-                waiting for lifts, tool collection, safety briefings). A factor of 0.85 to 0.90
-                is typical for commercial site work.
+                waiting for lifts, tool collection, safety briefings). A factor of 0.85 to 0.90 is
+                typical for commercial site work.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Build a labour rate spreadsheet template and update it at least twice per year to reflect
-          NI thresholds, JIB rate changes, and National Minimum Wage uplifts (effective April
-          each year).
+          NI thresholds, JIB rate changes, and National Minimum Wage uplifts (effective April each
+          year).
         </p>
       </>
     ),
@@ -347,8 +347,8 @@ const sections = [
     content: (
       <>
         <p>
-          Materials pricing in a tender must account not just for the cost of materials, but for
-          the risk of price increases between tender and delivery, procurement cost, and waste.
+          Materials pricing in a tender must account not just for the cost of materials, but for the
+          risk of price increases between tender and delivery, procurement cost, and waste.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -365,8 +365,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Price fluctuation</strong> — on contracts longer than six months, include
-                a price fluctuation clause in your tender or add a contingency for material price
+                <strong>Price fluctuation</strong> — on contracts longer than six months, include a
+                price fluctuation clause in your tender or add a contingency for material price
                 increases. Copper cable prices are particularly volatile and can move 15 to 20 per
                 cent in a year. The NEC4 Option X1 price adjustment mechanism exists for this
                 purpose.
@@ -401,25 +401,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Resource loading</strong> — allocate labour to each activity so the
-                reviewer can verify you have sufficient resource to achieve the programme. Show
-                the number of electricians on site per phase.
+                <strong>Resource loading</strong> — allocate labour to each activity so the reviewer
+                can verify you have sufficient resource to achieve the programme. Show the number of
+                electricians on site per phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Trade interfaces</strong> — show dependencies with other trades: when
-                first-fix containment must be complete for plasterboard, when second-fix can
-                begin after decorating, when power-on is needed for commissioning. Demonstrating
-                awareness of trade interfaces impresses clients.
+                first-fix containment must be complete for plasterboard, when second-fix can begin
+                after decorating, when power-on is needed for commissioning. Demonstrating awareness
+                of trade interfaces impresses clients.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Float</strong> — include 10 to 15 per cent programme float to reflect
-                real site conditions. Under NEC4, total float belongs to the project (not the
+                <strong>Float</strong> — include 10 to 15 per cent programme float to reflect real
+                site conditions. Under NEC4, total float belongs to the project (not the
                 contractor), but terminal float (at the end of your programme) is yours. Protect
                 your terminal float carefully.
               </span>
@@ -427,9 +427,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long-lead milestones</strong> — mark the order date for switchgear and
-                other long-lead items as a programme milestone. This creates a contractual record
-                that delay in award or access will affect the programme.
+                <strong>Long-lead milestones</strong> — mark the order date for switchgear and other
+                long-lead items as a programme milestone. This creates a contractual record that
+                delay in award or access will affect the programme.
               </span>
             </li>
           </ul>
@@ -454,16 +454,16 @@ const sections = [
               <span>
                 <strong>Company H&amp;S policy</strong> — must be signed and dated within the last
                 12 months. State your health and safety objectives and arrangements. For companies
-                of five or more employees this is a legal requirement under the Health and Safety
-                at Work etc. Act 1974.
+                of five or more employees this is a legal requirement under the Health and Safety at
+                Work etc. Act 1974.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RAMS (Risk Assessment and Method Statement)</strong> — produce RAMS for
-                each key electrical activity: cable installation and termination, working at
-                height, work on or near live conductors, and use of power tools. The{' '}
+                <strong>RAMS (Risk Assessment and Method Statement)</strong> — produce RAMS for each
+                key electrical activity: cable installation and termination, working at height, work
+                on or near live conductors, and use of power tools. The{' '}
                 <SEOInternalLink href="/health-safety-audit-electrician">
                   H&amp;S audit guide
                 </SEOInternalLink>{' '}
@@ -474,9 +474,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Accreditation</strong> — CHAS (Contractors Health and Safety Assessment
-                Scheme) or Constructionline Gold are accepted as pre-qualification evidence by
-                most main contractors. Renew these annually and include the current certificate
-                in every tender.
+                Scheme) or Constructionline Gold are accepted as pre-qualification evidence by most
+                main contractors. Renew these annually and include the current certificate in every
+                tender.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -491,9 +491,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/rams-generator">
-            Elec-Mate RAMS generator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
           to produce professional RAMS documents that meet commercial tender requirements. Having
           well-structured RAMS ready to customise saves hours per tender.
         </p>
@@ -506,9 +504,9 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the contract form is not optional — it governs how you get paid, how
-          changes are valued, and what happens when things go wrong. The two most common forms
-          in UK commercial electrical work are NEC4 and JCT.
+          Understanding the contract form is not optional — it governs how you get paid, how changes
+          are valued, and what happens when things go wrong. The two most common forms in UK
+          commercial electrical work are NEC4 and JCT.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -525,11 +523,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>JCT Design and Build 2016</strong> — common in commercial fit-out,
-                housing, and education. Changes are valued as variations. Loss and expense is
-                recoverable for regular progress matters (access, late information, disruption).
-                Extension of time applications must be made in writing as soon as delay is
-                reasonably apparent.
+                <strong>JCT Design and Build 2016</strong> — common in commercial fit-out, housing,
+                and education. Changes are valued as variations. Loss and expense is recoverable for
+                regular progress matters (access, late information, disruption). Extension of time
+                applications must be made in writing as soon as delay is reasonably apparent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -546,9 +543,8 @@ const sections = [
         </div>
         <p>
           Always read the Z clauses in NEC4 contracts and the amendments schedule in JCT contracts.
-          These are where main contractors insert conditions that modify standard terms —
-          sometimes dramatically increasing your risk exposure. If in doubt, seek legal advice
-          before signing.
+          These are where main contractors insert conditions that modify standard terms — sometimes
+          dramatically increasing your risk exposure. If in doubt, seek legal advice before signing.
         </p>
       </>
     ),
@@ -559,8 +555,8 @@ const sections = [
     content: (
       <>
         <p>
-          Most electrical tenders are not lost on price alone. They are lost on the quality of
-          the submission, the credibility of the programme, the completeness of the H&amp;S
+          Most electrical tenders are not lost on price alone. They are lost on the quality of the
+          submission, the credibility of the programme, the completeness of the H&amp;S
           documentation, and sometimes on pricing errors that make the tender uncompetitive or
           financially unviable.
         </p>
@@ -569,42 +565,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not reading the full specification</strong> — pricing to drawings alone
-                and missing specification requirements (cable ratings, containment type,
-                commissioning obligations) results in scope gaps that cost money post-award.
+                <strong>Not reading the full specification</strong> — pricing to drawings alone and
+                missing specification requirements (cable ratings, containment type, commissioning
+                obligations) results in scope gaps that cost money post-award.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Under-pricing prelims</strong> — forgetting to include site management,
-                testing equipment, site meetings, insurance uplift, and overhead recovery in
-                the prelims section is one of the most common and costly errors.
+                testing equipment, site meetings, insurance uplift, and overhead recovery in the
+                prelims section is one of the most common and costly errors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not pricing design risk</strong> — on design and build contracts, if
-                you are accepting design responsibility for any part of the electrical works,
-                you need professional indemnity insurance and a design allowance in your price.
+                <strong>Not pricing design risk</strong> — on design and build contracts, if you are
+                accepting design responsibility for any part of the electrical works, you need
+                professional indemnity insurance and a design allowance in your price.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Submitting late</strong> — most tender systems are electronic and close
-                at a precise time. A submission received one minute after the deadline is
-                typically rejected automatically. Allow time for upload, checking, and
-                confirmation.
+                <strong>Submitting late</strong> — most tender systems are electronic and close at a
+                precise time. A submission received one minute after the deadline is typically
+                rejected automatically. Allow time for upload, checking, and confirmation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unqualified clarifications</strong> — stating "price excludes X" in
-                your submission without formal tender query confirmation can lead to disputes.
-                Raise exclusions formally during the tender period and get written responses.
+                <strong>Unqualified clarifications</strong> — stating "price excludes X" in your
+                submission without formal tender query confirmation can lead to disputes. Raise
+                exclusions formally during the tender period and get written responses.
               </span>
             </li>
           </ul>
@@ -618,9 +613,9 @@ const sections = [
     content: (
       <>
         <p>
-          Winning commercial electrical tenders consistently requires a system — for pricing,
-          for documentation, and for tracking what works. The right tools reduce the time
-          cost of tendering and improve the quality of your submissions.
+          Winning commercial electrical tenders consistently requires a system — for pricing, for
+          documentation, and for tracking what works. The right tools reduce the time cost of
+          tendering and improve the quality of your submissions.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -635,9 +630,7 @@ const sections = [
                   </SEOInternalLink>{' '}
                   to build structured price submissions with materials and labour breakdown. Export
                   to PDF for professional tender submissions. See also the{' '}
-                  <SEOInternalLink href="/quote-writing-guide">
-                    quote writing guide
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/quote-writing-guide">quote writing guide</SEOInternalLink>{' '}
                   for domestic and smaller commercial jobs.
                 </p>
               </div>
@@ -659,7 +652,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more commercial electrical tenders with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build better tender submissions in less time. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and business management. Build better tender submissions in less time. 7-day free trial."
           icon={Briefcase}
         />
       </>
@@ -696,7 +689,7 @@ export default function TenderWritingElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Tender Writing"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Electrical Tenders with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for structured quoting, RAMS generation, and business management tools. 7-day free trial, cancel anytime."
     />
   );
 }

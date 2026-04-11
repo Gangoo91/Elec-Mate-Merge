@@ -41,18 +41,18 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A domestic 7kW EV charger installation in Edinburgh typically costs between £800 and £1,500, reflecting the city\'s higher labour rates compared with other Scottish cities and the complexity of its Georgian and Victorian stone-built tenement housing stock.',
+  "A domestic 7kW EV charger installation in Edinburgh typically costs between £800 and £1,500, reflecting the city's higher labour rates compared with other Scottish cities and the complexity of its Georgian and Victorian stone-built tenement housing stock.",
   'Edinburgh is served by SP Energy Networks (SPEN) as the Distribution Network Operator. All EV charger installations must be notified under G98 before the charger is energised.',
   'Scotland uses the Building Standards system — not Part P. In Edinburgh, EV charger installations must comply with City of Edinburgh Council Building Standards requirements.',
   'Edinburgh has a high proportion of conservation areas and listed buildings. Charger mounting and cable routing in the New Town, Old Town, and other conservation areas requires careful planning to avoid the need for Listed Building Consent.',
-  'The OZEV EV chargepoint grant (up to £350) is available to Edinburgh flat owners and tenants, including those in the city\'s extensive tenement stock.',
+  "The OZEV EV chargepoint grant (up to £350) is available to Edinburgh flat owners and tenants, including those in the city's extensive tenement stock.",
 ];
 
 const faqs = [
   {
     question: 'How much does it cost to install an EV charger in Edinburgh in 2026?',
     answer:
-      'A standard 7kW home EV charger installation in Edinburgh costs between £800 and £1,500 in 2026. Edinburgh has slightly higher labour rates than Glasgow, reflecting the city\'s higher cost of living. Straightforward installations on modern semis in areas such as Corstorphine, Morningside, and Liberton sit at the lower end. Georgian and Victorian tenement properties in the New Town, Marchmont, and Bruntsfield — with their stone walls, sash windows, and communal parking constraints — are more complex and sit at the higher end. Electrician day rates in Edinburgh are typically £320 to £420.',
+      "A standard 7kW home EV charger installation in Edinburgh costs between £800 and £1,500 in 2026. Edinburgh has slightly higher labour rates than Glasgow, reflecting the city's higher cost of living. Straightforward installations on modern semis in areas such as Corstorphine, Morningside, and Liberton sit at the lower end. Georgian and Victorian tenement properties in the New Town, Marchmont, and Bruntsfield — with their stone walls, sash windows, and communal parking constraints — are more complex and sit at the higher end. Electrician day rates in Edinburgh are typically £320 to £420.",
   },
   {
     question: 'Which DNO covers Edinburgh for EV charger notification?',
@@ -60,14 +60,15 @@ const faqs = [
       'SP Energy Networks (SPEN) is the Distribution Network Operator for Edinburgh and the wider central Scotland and south Scotland area. All domestic EV charger installations must be notified to SPEN under G98 before the charger is connected. For standard 7kW single-phase chargers (up to 16A per phase), G98 is a notification — no prior approval is required. Three-phase 22kW chargers require G99 prior approval from SPEN, which can take 4 to 10 weeks.',
   },
   {
-    question: 'Do I need special permission to install an EV charger in an Edinburgh conservation area?',
+    question:
+      'Do I need special permission to install an EV charger in an Edinburgh conservation area?',
     answer:
       'Potentially, yes. Edinburgh has extensive conservation areas, including the World Heritage Site encompassing the Old Town and New Town. Installing external equipment such as an EV charger on the front elevation of a listed building may require Listed Building Consent from the City of Edinburgh Council. Even in conservation areas where the building is not listed, permitted development rights may be restricted. It is essential to check with the City of Edinburgh Council Planning department before installing any external equipment or routing cables through the fabric of a listed building.',
   },
   {
     question: 'Can I install an EV charger in an Edinburgh tenement flat?',
     answer:
-      'It is possible where a private parking space is available. Edinburgh tenement flats frequently have communal drying greens or shared rear courts rather than individual parking spaces. Where a private or allocated parking space exists (in basement garages or rear yards), a charger can be installed with consent from the property managers or other owners in the tenement. The OZEV EV chargepoint grant (up to £350) is available to Edinburgh tenement flat owners. In many Edinburgh locations, reliance on the city\'s public ChargePlace Scotland network is the practical alternative.',
+      "It is possible where a private parking space is available. Edinburgh tenement flats frequently have communal drying greens or shared rear courts rather than individual parking spaces. Where a private or allocated parking space exists (in basement garages or rear yards), a charger can be installed with consent from the property managers or other owners in the tenement. The OZEV EV chargepoint grant (up to £350) is available to Edinburgh tenement flat owners. In many Edinburgh locations, reliance on the city's public ChargePlace Scotland network is the practical alternative.",
   },
   {
     question: 'Is the OZEV grant available for EV charger installation in Edinburgh?',
@@ -175,9 +176,9 @@ const sections = [
     content: (
       <>
         <p>
-          Edinburgh commands slightly higher electrician rates than other Scottish cities, reflecting
-          the city's overall higher cost of living. Day rates typically run from £320 to £420 for a
-          qualified electrician in Edinburgh.
+          Edinburgh commands slightly higher electrician rates than other Scottish cities,
+          reflecting the city's overall higher cost of living. Day rates typically run from £320 to
+          £420 for a qualified electrician in Edinburgh.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -187,24 +188,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (modern semi/detached, short cable run)</strong> —
-                £800 to £1,100. Suburban Edinburgh: Corstorphine, Liberton, Morningside newer-build
+                <strong>Simple installation (modern semi/detached, short cable run)</strong> — £800
+                to £1,100. Suburban Edinburgh: Corstorphine, Liberton, Morningside newer-build
                 areas, South Gyle, Craigmillar.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (inter-war semi, 8–15m cable run)</strong> — £1,050
-                to £1,300. Common across south Edinburgh suburbs: Marchmont, Bruntsfield, Morningside
+                <strong>Standard installation (inter-war semi, 8–15m cable run)</strong> — £1,050 to
+                £1,300. Common across south Edinburgh suburbs: Marchmont, Bruntsfield, Morningside
                 inter-war, Newington.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (tenement, long run, stone walls, earth rod)</strong>{' '}
-                — £1,300 to £1,800+. Georgian and Victorian properties in the New Town, Old Town,
+                <strong>Complex installation (tenement, long run, stone walls, earth rod)</strong> —
+                £1,300 to £1,800+. Georgian and Victorian properties in the New Town, Old Town,
                 Stockbridge, and Dean Village. Stone wall cable routing, PME earthing works, and
                 factor consent add cost and lead time.
               </span>
@@ -221,11 +222,10 @@ const sections = [
       <>
         <p>
           A 7kW single-phase charger is the right choice for virtually all Edinburgh domestic
-          properties. Three-phase 22kW chargers require a three-phase supply — uncommon in
-          Edinburgh residential properties — and G99 prior approval from SPEN (4 to 10 weeks).
-          For a household that drives typical daily distances, a 7kW charger charging overnight
-          provides ample range restoration. Only commercial premises or ultra-high-mileage users
-          should consider 22kW.
+          properties. Three-phase 22kW chargers require a three-phase supply — uncommon in Edinburgh
+          residential properties — and G99 prior approval from SPEN (4 to 10 weeks). For a household
+          that drives typical daily distances, a 7kW charger charging overnight provides ample range
+          restoration. Only commercial premises or ultra-high-mileage users should consider 22kW.
         </p>
       </>
     ),
@@ -281,9 +281,7 @@ const sections = [
           requirements — dedicated circuit, appropriate RCD protection, and earthing on PME supplies
           — are identical to those in England and Wales.
         </p>
-        <p>
-          The regulatory notification framework differs:
-        </p>
+        <p>The regulatory notification framework differs:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -299,9 +297,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>City of Edinburgh Council Building Standards</strong> — the relevant
-                authority for building standards notifications in Edinburgh. Confirm your electrician's
-                registration covers Scottish Building Standards self-certification before commissioning
-                work.
+                authority for building standards notifications in Edinburgh. Confirm your
+                electrician's registration covers Scottish Building Standards self-certification
+                before commissioning work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,25 +333,25 @@ const sections = [
               <span>
                 <strong>Listed Building Consent</strong> — installing a charger on the external wall
                 of a listed building, or routing cables through the fabric of a listed building, may
-                require Listed Building Consent from the City of Edinburgh Council. Failure to obtain
-                consent is a criminal offence. Check listing status before proceeding.
+                require Listed Building Consent from the City of Edinburgh Council. Failure to
+                obtain consent is a criminal offence. Check listing status before proceeding.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area restrictions</strong> — even in conservation areas where
-                the building is not individually listed, permitted development rights may be limited.
-                The City of Edinburgh Council planning team can advise on what is permissible without
-                a planning application.
+                the building is not individually listed, permitted development rights may be
+                limited. The City of Edinburgh Council planning team can advise on what is
+                permissible without a planning application.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Internal routing</strong> — where external mounting is restricted, internal
-                cable routing from the consumer unit to a garage or rear parking area may be the only
-                option. This adds cost but avoids planning complications.
+                cable routing from the consumer unit to a garage or rear parking area may be the
+                only option. This adds cost but avoids planning complications.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -412,17 +410,15 @@ const sections = [
     heading: 'OZEV Grant and Edinburgh Incentives',
     content: (
       <>
-        <p>
-          Edinburgh residents can access the following funding for EV charger installation:
-        </p>
+        <p>Edinburgh residents can access the following funding for EV charger installation:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and
-                tenants. Available to Edinburgh tenement flat owners. The OZEV-approved installer
-                applies on your behalf.
+                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
+                Available to Edinburgh tenement flat owners. The OZEV-approved installer applies on
+                your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,8 +426,8 @@ const sections = [
               <span>
                 <strong>ChargePlace Scotland</strong> — Transport Scotland's public charging network
                 provides an alternative for Edinburgh residents who cannot install a home charger.
-                Edinburgh has good ChargePlace Scotland coverage, particularly in the city centre and
-                major car parks.
+                Edinburgh has good ChargePlace Scotland coverage, particularly in the city centre
+                and major car parks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,8 +451,8 @@ const sections = [
         <p>
           Edinburgh is a strong and growing market for EV charger installation. High EV ownership
           rates and a mix of property types create consistent demand. Electricians working in
-          Edinburgh should hold SELECT registration or equivalent recognition under Scottish Building
-          Standards, and should be familiar with the city's conservation area requirements.
+          Edinburgh should hold SELECT registration or equivalent recognition under Scottish
+          Building Standards, and should be familiar with the city's conservation area requirements.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -465,9 +461,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Edinburgh Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Factor in Edinburgh day rates (£320 to £420), stone wall routing challenges, listed
-                  building and conservation area constraints, PME earthing requirements, and factor
-                  consent timescales for tenement installations. Use Elec-Mate's{' '}
+                  Factor in Edinburgh day rates (£320 to £420), stone wall routing challenges,
+                  listed building and conservation area constraints, PME earthing requirements, and
+                  factor consent timescales for tenement installations. Use Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -495,7 +491,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Edinburgh EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
           icon={Car}
         />
       </>
@@ -532,7 +528,7 @@ export default function EVChargerInstallationEdinburghPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -23,7 +23,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Wolverhampton', href: '/landlord-electrical-safety-wolverhampton' },
+  {
+    label: 'Landlord Electrical Safety Wolverhampton',
+    href: '/landlord-electrical-safety-wolverhampton',
+  },
 ];
 
 const tocItems = [
@@ -82,7 +85,7 @@ const faqs = [
   {
     question: 'Can a Wolverhampton tenant request an EICR?',
     answer:
-      'Yes. Tenants have the right to request a copy of the current EICR from their landlord. If the landlord cannot provide one, the tenant can report this to City of Wolverhampton Council\'s environmental health or private rented sector team. The council can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange for the work to be done and recover costs from the landlord.',
+      "Yes. Tenants have the right to request a copy of the current EICR from their landlord. If the landlord cannot provide one, the tenant can report this to City of Wolverhampton Council's environmental health or private rented sector team. The council can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange for the work to be done and recover costs from the landlord.",
   },
   {
     question: 'What qualifications must an EICR inspector have in Wolverhampton?',
@@ -95,7 +98,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -136,14 +140,15 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
           The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
           are the primary legislation governing landlord electrical safety obligations in
-          Wolverhampton. These regulations came into force on 1 June 2020 for new tenancies and
-          1 April 2021 for all existing tenancies. Every private landlord in Wolverhampton must
+          Wolverhampton. These regulations came into force on 1 June 2020 for new tenancies and 1
+          April 2021 for all existing tenancies. Every private landlord in Wolverhampton must
           comply, regardless of when the tenancy began.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -166,8 +171,8 @@ const sections = [
               <span>
                 <strong>Tenant notification</strong> — a copy of the EICR must be provided to
                 existing tenants within 28 days of the inspection. New tenants must receive a copy
-                before they move in. Prospective tenants can request a copy within 28 days of
-                making that request.
+                before they move in. Prospective tenants can request a copy within 28 days of making
+                that request.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -180,9 +185,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualified person</strong> — the EICR must be carried out by a person who
-                is qualified and competent. For practical purposes this means a person registered
-                with a competent person scheme (NICEIC, NAPIT, ELECSA, or equivalent).
+                <strong>Qualified person</strong> — the EICR must be carried out by a person who is
+                qualified and competent. For practical purposes this means a person registered with
+                a competent person scheme (NICEIC, NAPIT, ELECSA, or equivalent).
               </span>
             </li>
           </ul>
@@ -201,9 +206,9 @@ const sections = [
     content: (
       <>
         <p>
-          City of Wolverhampton Council is the local housing authority responsible for enforcing
-          the 2020 Regulations across the city. The council's housing and environmental health
-          teams handle complaints about private rented sector conditions and have the power to
+          City of Wolverhampton Council is the local housing authority responsible for enforcing the
+          2020 Regulations across the city. The council's housing and environmental health teams
+          handle complaints about private rented sector conditions and have the power to
           investigate, issue remedial notices, and impose civil financial penalties.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -214,25 +219,25 @@ const sections = [
                 <strong>Complaint-driven enforcement</strong> — enforcement in Wolverhampton is
                 primarily triggered by tenant complaints. When a tenant raises concerns about
                 electrical safety, the council can request the EICR from the landlord. If the
-                landlord cannot produce a valid report within the required period, the council
-                can issue a remedial notice.
+                landlord cannot produce a valid report within the required period, the council can
+                issue a remedial notice.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO licensing checks</strong> — EICR compliance is checked as part of
-                HMO licence applications and renewals. A landlord applying for a new or renewed
-                HMO licence without a valid EICR will not meet the mandatory licence conditions.
+                <strong>HMO licensing checks</strong> — EICR compliance is checked as part of HMO
+                licence applications and renewals. A landlord applying for a new or renewed HMO
+                licence without a valid EICR will not meet the mandatory licence conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action powers</strong> — if a landlord fails to comply with a
-                remedial notice, the council can arrange for the work to be carried out and
-                recover costs from the landlord. This power exists alongside the power to impose
-                civil financial penalties.
+                remedial notice, the council can arrange for the work to be carried out and recover
+                costs from the landlord. This power exists alongside the power to impose civil
+                financial penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -247,10 +252,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Wolverhampton landlords should note that the West Midlands Combined Authority and
-          national government have both signalled an intention to increase enforcement activity
-          in the private rented sector. Proactive compliance is significantly less costly than
-          responding to enforcement action.
+          Wolverhampton landlords should note that the West Midlands Combined Authority and national
+          government have both signalled an intention to increase enforcement activity in the
+          private rented sector. Proactive compliance is significantly less costly than responding
+          to enforcement action.
         </p>
       </>
     ),
@@ -281,8 +286,8 @@ const sections = [
               <span>
                 <strong>Additional licensing</strong> — City of Wolverhampton Council may operate
                 additional HMO licensing schemes covering smaller HMOs not caught by mandatory
-                licensing. Check with the council whether your property requires a licence under
-                any additional scheme.
+                licensing. Check with the council whether your property requires a licence under any
+                additional scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,9 +303,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection frequency</strong> — HMO licence conditions in Wolverhampton
-                may require EICRs more frequently than the standard five-year maximum. Review
-                your specific licence conditions for the required interval.
+                <strong>Inspection frequency</strong> — HMO licence conditions in Wolverhampton may
+                require EICRs more frequently than the standard five-year maximum. Review your
+                specific licence conditions for the required interval.
               </span>
             </li>
           </ul>
@@ -308,8 +313,8 @@ const sections = [
         <p>
           Operating an unlicensed HMO in Wolverhampton is a criminal offence that can result in
           prosecution and an unlimited fine, in addition to civil penalties for breach of the
-          electrical safety regulations. The council has powers to inspect properties suspected
-          of operating without a licence.
+          electrical safety regulations. The council has powers to inspect properties suspected of
+          operating without a licence.
         </p>
       </>
     ),
@@ -321,8 +326,8 @@ const sections = [
       <>
         <p>
           The 2020 Regulations give City of Wolverhampton Council the power to impose civil
-          financial penalties for non-compliance. The maximum penalty is £30,000 per breach,
-          and each failure to comply constitutes a separate breach.
+          financial penalties for non-compliance. The maximum penalty is £30,000 per breach, and
+          each failure to comply constitutes a separate breach.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -349,17 +354,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action costs</strong> — where the council arranges remedial work
-                after a landlord's failure to comply, it can recover the full cost of that work
-                from the landlord. This is in addition to any civil penalty imposed.
+                after a landlord's failure to comply, it can recover the full cost of that work from
+                the landlord. This is in addition to any civil penalty imposed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance implications</strong> — many landlord insurance policies require
-                the property to meet current statutory requirements. A property without a valid
-                EICR may not be covered by the landlord's buildings or contents insurance in the
-                event of an electrical fire or fault.
+                the property to meet current statutory requirements. A property without a valid EICR
+                may not be covered by the landlord's buildings or contents insurance in the event of
+                an electrical fire or fault.
               </span>
             </li>
           </ul>
@@ -388,10 +393,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days of the inspection. New tenants must receive a copy before
-                moving in. If you have not received one, request it in writing from your landlord
-                or letting agent.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days of the inspection. New tenants must receive a copy before moving in.
+                If you have not received one, request it in writing from your landlord or letting
+                agent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -408,8 +413,8 @@ const sections = [
               <span>
                 <strong>Right to safe electrics</strong> — if the EICR identifies urgent safety
                 issues (C1 or C2 observations), the landlord must arrange remedial work within 28
-                days. If the landlord fails to act, the council can arrange for the work to be
-                done. The tenant must not be charged for this work.
+                days. If the landlord fails to act, the council can arrange for the work to be done.
+                The tenant must not be charged for this work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -425,8 +430,8 @@ const sections = [
         </div>
         <p>
           Wolverhampton tenants can contact the council's environmental health team, Shelter, or
-          Citizens Advice for guidance on exercising these rights. The council's housing
-          enforcement team can be contacted directly to report non-compliant landlords.
+          Citizens Advice for guidance on exercising these rights. The council's housing enforcement
+          team can be contacted directly to report non-compliant landlords.
         </p>
       </>
     ),
@@ -437,9 +442,9 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
-          the landlord is legally required to complete remedial work within strict timescales under
-          the 2020 Regulations.
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          landlord is legally required to complete remedial work within strict timescales under the
+          2020 Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -456,18 +461,18 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate action</strong> — where a C1 (danger present)
-                observation is recorded, the inspector may recommend immediate disconnection of
-                the affected circuit. Landlords should arrange emergency remedial work immediately
+                observation is recorded, the inspector may recommend immediate disconnection of the
+                affected circuit. Landlords should arrange emergency remedial work immediately
                 rather than waiting the full 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation required</strong> — once remedial work is complete,
-                the landlord must obtain written confirmation from a qualified person that the work
-                has been done satisfactorily. This confirmation must be provided to the tenant and
-                to the council within 28 days of completion.
+                <strong>Written confirmation required</strong> — once remedial work is complete, the
+                landlord must obtain written confirmation from a qualified person that the work has
+                been done satisfactorily. This confirmation must be provided to the tenant and to
+                the council within 28 days of completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -515,18 +520,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Required qualifications</strong> — the inspector should hold City and
-                Guilds 2391 (Inspection and Testing) or equivalent, plus a current BS 7671
-                qualification (C&G 2382 18th Edition). Experience with pre-1970s wiring systems
-                common in Wolverhampton properties is important for accurate reporting.
+                <strong>Required qualifications</strong> — the inspector should hold City and Guilds
+                2391 (Inspection and Testing) or equivalent, plus a current BS 7671 qualification
+                (C&G 2382 18th Edition). Experience with pre-1970s wiring systems common in
+                Wolverhampton properties is important for accurate reporting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — verify that the inspector carries professional
-                indemnity insurance. This is a requirement of competent person scheme membership
-                and protects both parties if an error is identified on the report.
+                indemnity insurance. This is a requirement of competent person scheme membership and
+                protects both parties if an error is identified on the report.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -558,16 +563,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £100 to £180. Typically 3 to 5 circuits with
-                a single consumer unit. Modern purpose-built flats are quicker to inspect.
+                <strong>One-bedroom flat</strong> — £100 to £180. Typically 3 to 5 circuits with a
+                single consumer unit. Modern purpose-built flats are quicker to inspect.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £150 to £250. Pre-war and post-war
-                terraced houses are common in Wolverhampton and may take longer due to older
-                wiring and earthing systems.
+                <strong>Two-bedroom property</strong> — £150 to £250. Pre-war and post-war terraced
+                houses are common in Wolverhampton and may take longer due to older wiring and
+                earthing systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -581,16 +586,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — £300 to £600+. Multiple consumer units, fire alarm systems,
-                and emergency lighting circuits significantly increase the inspection scope and cost.
+                and emergency lighting circuits significantly increase the inspection scope and
+                cost.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices cover the inspection and report only. Any remedial work identified during
-          the EICR is quoted and charged separately. Some Wolverhampton electricians offer combined
-          EICR and remedial packages at a reduced total cost for landlords, particularly where
-          consumer unit replacement is anticipated.
+          These prices cover the inspection and report only. Any remedial work identified during the
+          EICR is quoted and charged separately. Some Wolverhampton electricians offer combined EICR
+          and remedial packages at a reduced total cost for landlords, particularly where consumer
+          unit replacement is anticipated.
         </p>
       </>
     ),
@@ -601,11 +607,11 @@ const sections = [
     content: (
       <>
         <p>
-          Wolverhampton's private rented sector — which accounts for a substantial proportion of
-          the city's housing — creates steady demand for landlord EICRs. Electricians who
-          specialise in inspection and testing can build a reliable pipeline of work from landlord
-          contracts, particularly given the volume of older properties requiring consumer unit
-          upgrades alongside the initial EICR.
+          Wolverhampton's private rented sector — which accounts for a substantial proportion of the
+          city's housing — creates steady demand for landlord EICRs. Electricians who specialise in
+          inspection and testing can build a reliable pipeline of work from landlord contracts,
+          particularly given the volume of older properties requiring consumer unit upgrades
+          alongside the initial EICR.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -618,9 +624,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork. Send the
-                  report to the landlord before you leave the property.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork. Send the report to
+                  the landlord before you leave the property.
                 </p>
               </div>
             </div>
@@ -631,13 +637,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found — and in Wolverhampton's older housing
-                  stock this is common — quote the remedial work immediately using the{' '}
+                  When C1 or C2 observations are found — and in Wolverhampton's older housing stock
+                  this is common — quote the remedial work immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Landlords must act within 28 days. The electrician who quotes on the day of
-                  the EICR almost always wins the work.
+                  . Landlords must act within 28 days. The electrician who quotes on the day of the
+                  EICR almost always wins the work.
                 </p>
               </div>
             </div>
@@ -645,7 +651,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -682,7 +688,7 @@ export default function LandlordElectricalSafetyWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

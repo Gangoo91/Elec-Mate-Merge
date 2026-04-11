@@ -133,10 +133,10 @@ const sections = [
       <>
         <p>
           A consumer unit — also called a fuse box or distribution board — is the electrical
-          distribution centre for your Brighton property. It receives the mains supply from the
-          DNO (UK Power Networks in the South East) and distributes it to all individual circuits,
-          while housing the main switch and all protective devices that disconnect circuits in the
-          event of a fault.
+          distribution centre for your Brighton property. It receives the mains supply from the DNO
+          (UK Power Networks in the South East) and distributes it to all individual circuits, while
+          housing the main switch and all protective devices that disconnect circuits in the event
+          of a fault.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -144,7 +144,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main switch</strong> — isolates the entire installation from the supply.
-                Modern installations use a double pole main switch (isolating both live and neutral).
+                Modern installations use a double pole main switch (isolating both live and
+                neutral).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -164,8 +165,8 @@ const sections = [
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>
                 , 30 mA RCD protection is mandatory on socket-outlet circuits rated up to 32 A in
-                domestic premises. An RCBO consumer unit provides individual RCD protection for
-                each circuit — a fault on one circuit does not affect the rest.
+                domestic premises. An RCBO consumer unit provides individual RCD protection for each
+                circuit — a fault on one circuit does not affect the rest.
               </span>
             </li>
           </ul>
@@ -182,8 +183,8 @@ const sections = [
           Brighton &amp; Hove has one of the most distinctive housing stocks in England. The city
           contains an exceptionally high proportion of Victorian and Edwardian terraced properties,
           many of which have been converted into flats, bedsits, and HMOs. Areas such as Hanover,
-          Kemptown, Preston Park, Seven Dials, Fiveways, and Brunswick are characterised by
-          large terraces with multiple occupants and shared services.
+          Kemptown, Preston Park, Seven Dials, Fiveways, and Brunswick are characterised by large
+          terraces with multiple occupants and shared services.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -209,8 +210,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Large private rented sector</strong> — Brighton &amp; Hove has one of the
-                largest private rented sectors in Sussex and one of the highest HMO densities in
-                the South East. Landlords require valid EICRs every five years, and consumer unit
+                largest private rented sectors in Sussex and one of the highest HMO densities in the
+                South East. Landlords require valid EICRs every five years, and consumer unit
                 replacement is among the most frequently required remedial items.
               </span>
             </li>
@@ -235,25 +236,25 @@ const sections = [
       <>
         <p>
           The following indicators suggest your Brighton property may require a consumer unit
-          replacement. For rental properties, C2 EICR observations create a legal duty to carry
-          out remedial work within 28 days.
+          replacement. For rental properties, C2 EICR observations create a legal duty to carry out
+          remedial work within 28 days.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewireable or cartridge fuses</strong> — no RCD protection, associated
-                with wiring that is typically 30 or more years old. Very common in Brighton
-                Victorian conversions.
+                <strong>Rewireable or cartridge fuses</strong> — no RCD protection, associated with
+                wiring that is typically 30 or more years old. Very common in Brighton Victorian
+                conversions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection on socket circuits</strong> — C2 EICR observation
-                under Regulation 411.3.3 of BS 7671. Requires remedial action (consumer unit
-                replacement) within 28 days for rental properties.
+                <strong>No RCD protection on socket circuits</strong> — C2 EICR observation under
+                Regulation 411.3.3 of BS 7671. Requires remedial action (consumer unit replacement)
+                within 28 days for rental properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -266,8 +267,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insufficient ways for modern demands</strong> — no spare capacity for
-                EV chargers, heat pumps, additional circuits, or smart home systems.
+                <strong>Insufficient ways for modern demands</strong> — no spare capacity for EV
+                chargers, heat pumps, additional circuits, or smart home systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,20 +289,20 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from
-          1 January 2016, requires all consumer units and similar switchgear in domestic premises
-          to have a non-combustible (metal) enclosure. This requirement is unchanged in
-          BS 7671:2018+A3:2024 — the current edition of the wiring regulations. Every consumer
-          unit replacement in Brighton must comply.
+          Regulation 421.1.201, introduced by Amendment 3 to BS 7671:2008 and effective from 1
+          January 2016, requires all consumer units and similar switchgear in domestic premises to
+          have a non-combustible (metal) enclosure. This requirement is unchanged in BS
+          7671:2018+A3:2024 — the current edition of the wiring regulations. Every consumer unit
+          replacement in Brighton must comply.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why metal is required</strong> — arc faults within a consumer unit
-                generate intense heat capable of igniting a plastic enclosure and spreading fire
-                to surrounding material. A metal enclosure contains the arc, preventing fire
+                <strong>Why metal is required</strong> — arc faults within a consumer unit generate
+                intense heat capable of igniting a plastic enclosure and spreading fire to
+                surrounding material. A metal enclosure contains the arc, preventing fire
                 propagation. A series of fatal consumer unit fires in the UK prompted this change.
               </span>
             </li>
@@ -326,9 +327,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Any qualified Brighton electrician will supply and install a compliant metal consumer unit.
-          If a quote specifies a plastic unit, reject it — the electrician is not complying with the
-          current edition of BS 7671.
+          Any qualified Brighton electrician will supply and install a compliant metal consumer
+          unit. If a quote specifies a plastic unit, reject it — the electrician is not complying
+          with the current edition of BS 7671.
         </p>
       </>
     ),
@@ -394,8 +395,8 @@ const sections = [
     content: (
       <>
         <p>
-          A compliant consumer unit replacement in Brighton follows a structured, documented
-          process ensuring full compliance with BS 7671 and Part P of the Building Regulations.
+          A compliant consumer unit replacement in Brighton follows a structured, documented process
+          ensuring full compliance with BS 7671 and Part P of the Building Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -412,8 +413,8 @@ const sections = [
               <span>
                 <strong>Isolation and installation</strong> — supply isolated at the UK Power
                 Networks DNO cut-out. Old unit removed, new metal consumer unit installed. All
-                circuits reconnected to MCBs or RCBOs. Main earthing conductor size verified
-                against Regulation 544.1.1.
+                circuits reconnected to MCBs or RCBOs. Main earthing conductor size verified against
+                Regulation 544.1.1.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,8 +431,9 @@ const sections = [
               <span>
                 <strong>EIC and notification</strong> — Electrical Installation Certificate issued
                 per Appendix 6 of BS 7671. Brighton &amp; Hove City Council Building Control
-                notified via the competent person scheme. Building Regulations Compliance Certificate
-                sent to you. Keep both documents safely — required on sale of the property.
+                notified via the competent person scheme. Building Regulations Compliance
+                Certificate sent to you. Keep both documents safely — required on sale of the
+                property.
               </span>
             </li>
           </ul>
@@ -447,35 +449,36 @@ const sections = [
         <p>
           Brighton has a large number of electrical contractors, but standards vary. Consumer unit
           replacement requires a qualified and competent electrician registered with an approved
-          competent person scheme. Use the following guidance to find a reliable Brighton electrician.
+          competent person scheme. Use the following guidance to find a reliable Brighton
+          electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA
-                online contractor search to find registered Brighton electricians. Registration
-                requires evidence of qualifications, insurance, and regular technical assessment
-                by the scheme.
+                <strong>Check scheme registration</strong> — use the NICEIC, NAPIT, or ELECSA online
+                contractor search to find registered Brighton electricians. Registration requires
+                evidence of qualifications, insurance, and regular technical assessment by the
+                scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify qualifications</strong> — the electrician should hold Level 3 NVQ
-                in Electrical Installations (or equivalent) and a current BS 7671 qualification
-                (City and Guilds 2382 18th Edition). They should also carry professional indemnity
-                and public liability insurance.
+                <strong>Verify qualifications</strong> — the electrician should hold Level 3 NVQ in
+                Electrical Installations (or equivalent) and a current BS 7671 qualification (City
+                and Guilds 2382 18th Edition). They should also carry professional indemnity and
+                public liability insurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Written quotes specifying materials</strong> — insist on a written quote
-                specifying the make, model, and configuration of the consumer unit. Compare at
-                least two quotes. Brighton property prices mean that electrical work is not an area
-                to compromise on quality for a marginal cost saving.
+                specifying the make, model, and configuration of the consumer unit. Compare at least
+                two quotes. Brighton property prices mean that electrical work is not an area to
+                compromise on quality for a marginal cost saving.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -499,8 +502,8 @@ const sections = [
         <p>
           Brighton's combination of Victorian conversions, a very large HMO and student rental
           market, and active local authority enforcement of the Electrical Safety Standards
-          Regulations 2020 creates consistent high demand for consumer unit replacement work
-          across BN postcodes.
+          Regulations 2020 creates consistent high demand for consumer unit replacement work across
+          BN postcodes.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -513,9 +516,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-installation-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
-                  to complete the certificate and schedule of test results on your phone while
-                  still at the Brighton property. Send the PDF to the client before you leave —
-                  no evening admin, no chasing paperwork.
+                  to complete the certificate and schedule of test results on your phone while still
+                  at the Brighton property. Send the PDF to the client before you leave — no evening
+                  admin, no chasing paperwork.
                 </p>
               </div>
             </div>
@@ -539,7 +542,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Brighton electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -576,7 +579,7 @@ export default function ConsumerUnitReplacementBrightonPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Brighton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Brighton"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

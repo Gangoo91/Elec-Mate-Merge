@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/warm-plug-or-socket',
     title: 'Warm Plug or Socket',
-    description: 'What to do if a plug or socket is warm — causes, fire risk, and when to call an electrician.',
+    description:
+      'What to do if a plug or socket is warm — causes, fire risk, and when to call an electrician.',
     icon: Thermometer,
     category: 'Guide',
   },
@@ -150,8 +151,8 @@ const sections = [
         <p>
           This guide explains why USB sockets stop charging, the difference between USB-A and USB-C
           power delivery, why quality matters, and when replacement is needed. If you are an
-          electrician, the later sections cover what to advise customers and the technical details of
-          USB socket replacement.
+          electrician, the later sections cover what to advise customers and the technical details
+          of USB socket replacement.
         </p>
       </>
     ),
@@ -172,11 +173,11 @@ const sections = [
               <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>USB module internal failure</strong> — this is by far the most common cause.
-                The internal power supply module contains electrolytic capacitors, voltage regulators,
-                and other electronic components that degrade over time. Budget units are particularly
-                prone to early failure (1 to 2 years), while quality units typically last 5 to 8
-                years. When the module fails, the USB ports stop working entirely — the mains socket
-                part usually continues to work.
+                The internal power supply module contains electrolytic capacitors, voltage
+                regulators, and other electronic components that degrade over time. Budget units are
+                particularly prone to early failure (1 to 2 years), while quality units typically
+                last 5 to 8 years. When the module fails, the USB ports stop working entirely — the
+                mains socket part usually continues to work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -194,8 +195,8 @@ const sections = [
               <span>
                 <strong>Damaged USB port</strong> — the physical USB-A or USB-C port can be damaged
                 by inserting the cable at an angle, forcing the wrong connector, or general wear and
-                tear. A damaged port may not make proper contact with the cable, preventing charging.
-                Check for bent pins (USB-A) or debris in the port (USB-C).
+                tear. A damaged port may not make proper contact with the cable, preventing
+                charging. Check for bent pins (USB-A) or debris in the port (USB-C).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -211,9 +212,9 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Incompatible device or cable</strong> — some older USB sockets do not
-                properly negotiate charging with newer devices, particularly those requiring USB Power
-                Delivery protocols. The device may not recognise the socket as a charger and refuse to
-                draw current. This is a compatibility limitation rather than a fault.
+                properly negotiate charging with newer devices, particularly those requiring USB
+                Power Delivery protocols. The device may not recognise the socket as a charger and
+                refuse to draw current. This is a compatibility limitation rather than a fault.
               </span>
             </li>
           </ul>
@@ -239,11 +240,15 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Typical output: 5V at 2.1A (10.5W) — shared between ports if both are used</span>
+                <span>
+                  Typical output: 5V at 2.1A (10.5W) — shared between ports if both are used
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Budget units may deliver only 1A (5W) — painfully slow for modern phones</span>
+                <span>
+                  Budget units may deliver only 1A (5W) — painfully slow for modern phones
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
@@ -283,15 +288,17 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>The connector is reversible — no more trying to insert it the wrong way up</span>
+                <span>
+                  The connector is reversible — no more trying to insert it the wrong way up
+                </span>
               </li>
             </ul>
           </div>
         </div>
         <p>
           If your device charges slowly from a USB wall socket but charges quickly from the charger
-          that came with it, the wall socket is not faulty — it simply does not deliver as much power
-          as the dedicated charger. This is a very common misunderstanding.
+          that came with it, the wall socket is not faulty — it simply does not deliver as much
+          power as the dedicated charger. This is a very common misunderstanding.
         </p>
       </>
     ),
@@ -344,8 +351,8 @@ const sections = [
         <p>
           If your USB socket stops charging after a period of use but works again after being left
           idle for a while, thermal shutdown is likely the cause. Consider upgrading to a
-          better-quality socket with improved thermal management, or reduce the simultaneous load
-          on the socket.
+          better-quality socket with improved thermal management, or reduce the simultaneous load on
+          the socket.
         </p>
       </>
     ),
@@ -356,8 +363,8 @@ const sections = [
     content: (
       <>
         <p>
-          When the USB module fails, the entire socket outlet usually needs replacing (the USB module
-          is not separately replaceable in most designs). Here is what you need to know:
+          When the USB module fails, the entire socket outlet usually needs replacing (the USB
+          module is not separately replaceable in most designs). Here is what you need to know:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -384,16 +391,16 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit isolation is essential</strong> — always isolate the circuit at the
-                consumer unit before removing the socket faceplate. Verify the circuit is dead using a
-                voltage tester before touching any wiring. Mains voltage (230V) can be lethal.
+                consumer unit before removing the socket faceplate. Verify the circuit is dead using
+                a voltage tester before touching any wiring. Mains voltage (230V) can be lethal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wiring connections</strong> — USB sockets have the same terminal layout as
-                standard sockets (L, N, E). Simply reconnect the cables in the same arrangement.
-                On ring circuits, there will be two sets of cables (two lives, two neutrals, two
+                standard sockets (L, N, E). Simply reconnect the cables in the same arrangement. On
+                ring circuits, there will be two sets of cables (two lives, two neutrals, two
                 earths). Ensure all terminals are tight.
               </span>
             </li>
@@ -409,15 +416,15 @@ const sections = [
       <>
         <p>
           The quality of USB wall sockets varies enormously, and this directly affects reliability,
-          safety, and charging performance. This is one area where buying cheap really does cost more
-          in the long run:
+          safety, and charging performance. This is one area where buying cheap really does cost
+          more in the long run:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Quality Brands</h4>
             <p className="text-white text-sm leading-relaxed mb-3">
-              Manufacturers such as British General (BG), MK, Schneider Electric, Knightsbridge,
-              and Hamilton produce USB sockets that meet full UK safety standards:
+              Manufacturers such as British General (BG), MK, Schneider Electric, Knightsbridge, and
+              Hamilton produce USB sockets that meet full UK safety standards:
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -426,11 +433,15 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <BadgeCheck className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span>Quality electrolytic capacitors rated for long life at elevated temperatures</span>
+                <span>
+                  Quality electrolytic capacitors rated for long life at elevated temperatures
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <BadgeCheck className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                <span>Overcurrent, overvoltage, short circuit, and thermal shutdown protection</span>
+                <span>
+                  Overcurrent, overvoltage, short circuit, and thermal shutdown protection
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <BadgeCheck className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
@@ -451,7 +462,9 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span>Low-quality capacitors that fail prematurely (often within 1 to 2 years)</span>
+                <span>
+                  Low-quality capacitors that fail prematurely (often within 1 to 2 years)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
@@ -463,7 +476,9 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                <span>Insufficient creepage and clearance distances (electrical safety standards)</span>
+                <span>
+                  Insufficient creepage and clearance distances (electrical safety standards)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
@@ -486,8 +501,8 @@ const sections = [
     content: (
       <>
         <p>
-          Most USB socket failures are straightforward — the USB module has died and the socket needs
-          replacing. Here is when to call a professional:
+          Most USB socket failures are straightforward — the USB module has died and the socket
+          needs replacing. Here is when to call a professional:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -543,10 +558,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">1. Back Box Depth</h4>
                 <p className="text-white text-sm leading-relaxed">
                   USB sockets are deeper than standard socket outlets due to the USB module mounted
-                  behind the faceplate. Most require a 35mm deep back box (standard sockets use 25mm).
-                  If replacing a standard socket with a USB socket for the first time, you may need
-                  to chase the back box hole deeper or use a surface-mounted pattress. Some slimline
-                  USB sockets are designed to fit 25mm back boxes — check the product specifications.
+                  behind the faceplate. Most require a 35mm deep back box (standard sockets use
+                  25mm). If replacing a standard socket with a USB socket for the first time, you
+                  may need to chase the back box hole deeper or use a surface-mounted pattress. Some
+                  slimline USB sockets are designed to fit 25mm back boxes — check the product
+                  specifications.
                 </p>
               </div>
             </div>
@@ -560,8 +576,8 @@ const sections = [
                   After replacement, verify the connections are correct and tight. Test insulation
                   resistance (particularly L-E, which can be affected if the USB module has a fault
                   to earth). Check earth continuity (R1+R2) at the socket. Test the RCD operates
-                  correctly with a socket tester. Verify the USB output is functional by connecting a
-                  device.
+                  correctly with a socket tester. Verify the USB output is functional by connecting
+                  a device.
                 </p>
               </div>
             </div>
@@ -602,7 +618,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue socket replacement certificates in minutes"
-          description="Elec-Mate lets you complete Minor Works Certificates on your phone with pre-filled templates. Add test results, observations, and export professional PDFs on site. Join 430+ UK electricians."
+          description="Elec-Mate lets you complete Minor Works Certificates on your phone with pre-filled templates. Add test results, observations, and export professional PDFs on site. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -627,8 +643,7 @@ export default function USBSocketNotChargingPage() {
       badgeIcon={Usb}
       heroTitle={
         <>
-          USB Socket Not Charging:{' '}
-          <span className="text-yellow-400">Why and What to Do</span>
+          USB Socket Not Charging: <span className="text-yellow-400">Why and What to Do</span>
         </>
       }
       heroSubtitle="Your USB wall socket has stopped charging. This guide explains the most common causes — internal module failure, power delivery limits, thermal shutdown — covers quality brands vs cheap imports, and tells you when to replace it or call an electrician."
@@ -639,7 +654,7 @@ export default function USBSocketNotChargingPage() {
       faqHeading="Frequently Asked Questions About USB Socket Problems"
       relatedPages={relatedPages}
       ctaHeading="Document Socket Work with Professional Certificates"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered tools. 7-day free trial, cancel anytime."
     />
   );
 }

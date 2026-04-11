@@ -142,10 +142,10 @@ const sections = [
     content: (
       <>
         <p>
-          Norwich is the largest city in Norfolk and serves as the economic hub for the whole of East
-          Anglia. With a population of around 215,000 in the urban area and a wider catchment of over
-          400,000, there is steady demand for domestic and commercial electrical work across the city
-          and surrounding villages.
+          Norwich is the largest city in Norfolk and serves as the economic hub for the whole of
+          East Anglia. With a population of around 215,000 in the urban area and a wider catchment
+          of over 400,000, there is steady demand for domestic and commercial electrical work across
+          the city and surrounding villages.
         </p>
         <p>
           The Norwich electrical market is predominantly made up of sole traders and small firms (2
@@ -161,17 +161,16 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
-          signed off by local authority building control. The most recognised competent person schemes
-          are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          signed off by local authority building control. The most recognised competent person
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -250,7 +249,8 @@ const sections = [
               <span>
                 <strong>EICR (Electrical Installation Condition Report)</strong> — £180 to £300 for
                 a 2 to 3 bedroom house. Required every 5 years for rented properties. Older Norwich
-                properties often take longer to inspect due to the complexity of period installations.
+                properties often take longer to inspect due to the complexity of period
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,9 +292,9 @@ const sections = [
     content: (
       <>
         <p>
-          Norwich has an exceptionally diverse property stock spanning nearly 1,000 years of building
-          history. This creates specific challenges that electricians working in the city need to
-          understand.
+          Norwich has an exceptionally diverse property stock spanning nearly 1,000 years of
+          building history. This creates specific challenges that electricians working in the city
+          need to understand.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -313,8 +313,8 @@ const sections = [
               The Golden Triangle and Unthank Road areas feature dense Victorian and Edwardian
               terraced housing. These properties have the typical challenges of lath-and-plaster
               walls, high ceilings, and often multiple previous partial rewires. Many have been
-              converted into HMOs for the university market, which adds complexity around
-              fire detection and emergency lighting requirements.
+              converted into HMOs for the university market, which adds complexity around fire
+              detection and emergency lighting requirements.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -322,8 +322,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Properties built with Norfolk flint (common in Norwich and surrounding villages) have
               extremely hard walls that are difficult and slow to chase. Cable routes through flint
-              walls often require diamond-core drilling, adding time and cost. Surface-mounted wiring
-              or routing through floor and ceiling voids is often the more practical approach.
+              walls often require diamond-core drilling, adding time and cost. Surface-mounted
+              wiring or routing through floor and ceiling voids is often the more practical
+              approach.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -345,8 +346,8 @@ const sections = [
     content: (
       <>
         <p>
-          UKPN (UK Power Networks) is the Distribution Network Operator for Norwich and the whole
-          of East Anglia. Any work affecting the electricity supply to your property involves UKPN.
+          UKPN (UK Power Networks) is the Distribution Network Operator for Norwich and the whole of
+          East Anglia. Any work affecting the electricity supply to your property involves UKPN.
           This includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -381,8 +382,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Norwich is overseen by Norwich City Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf.
@@ -424,10 +424,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Elm Hill and the Lanes</strong> — these areas of medieval and Tudor buildings
-                are both visually sensitive and structurally fragile. Electricians working here need
-                experience with heritage properties and a sympathetic approach to cable routing that
-                preserves the character of these unique buildings.
+                <strong>Elm Hill and the Lanes</strong> — these areas of medieval and Tudor
+                buildings are both visually sensitive and structurally fragile. Electricians working
+                here need experience with heritage properties and a sympathetic approach to cable
+                routing that preserves the character of these unique buildings.
               </span>
             </li>
           </ul>
@@ -525,7 +525,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Norwich electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -562,7 +562,7 @@ export default function ElectricianNorwichPage() {
       faqHeading="Frequently Asked Questions About Electricians in Norwich"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Norwich and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Norwich and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

@@ -618,7 +618,7 @@ export default function EarthLoopTooHighPage() {
       faqHeading="Frequently Asked Questions About High Earth Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Check Zs Limits Instantly on Site"
-      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs calculator, voice test entry, AI fault diagnosis, and digital EICR certificates. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

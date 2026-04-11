@@ -481,7 +481,7 @@ export default function AIFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About AI Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Faults Faster with AI"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Fault Diagnosis agent. Describe symptoms, get a ranked diagnosis with test sequences. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-fault-diagnosis"
     />
   );

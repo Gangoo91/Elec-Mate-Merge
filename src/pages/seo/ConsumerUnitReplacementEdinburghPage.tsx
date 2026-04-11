@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Are building regulations different for consumer unit replacement in Edinburgh?',
     answer:
-      'Yes. Scotland uses the Building (Scotland) Regulations 2004, which is separate from the Part P regime in England and Wales. Consumer unit replacement is notifiable work. The work must be carried out by a registered certifier under the Scottish Certifier of Construction (Electrical Installations) scheme, or notified to City of Edinburgh Council\'s Building Standards department before work begins. City of Edinburgh Council is the local authority verifier for Edinburgh properties.',
+      "Yes. Scotland uses the Building (Scotland) Regulations 2004, which is separate from the Part P regime in England and Wales. Consumer unit replacement is notifiable work. The work must be carried out by a registered certifier under the Scottish Certifier of Construction (Electrical Installations) scheme, or notified to City of Edinburgh Council's Building Standards department before work begins. City of Edinburgh Council is the local authority verifier for Edinburgh properties.",
   },
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Edinburgh?',
@@ -67,12 +67,12 @@ const faqs = [
   {
     question: 'What Scottish certifier registration should an Edinburgh electrician hold?',
     answer:
-      'For notifiable work such as consumer unit replacement, the electrician must be registered under the Scottish Certifier of Construction (Electrical Installations) scheme to self-certify the work. SELECT (the Electrical Contractors\' Association of Scotland) members may hold this certification, as may NICEIC and NAPIT registered electricians who have specifically registered under the Scottish scheme. Always ask the electrician to confirm their specific Scottish certification before booking.',
+      "For notifiable work such as consumer unit replacement, the electrician must be registered under the Scottish Certifier of Construction (Electrical Installations) scheme to self-certify the work. SELECT (the Electrical Contractors' Association of Scotland) members may hold this certification, as may NICEIC and NAPIT registered electricians who have specifically registered under the Scottish scheme. Always ask the electrician to confirm their specific Scottish certification before booking.",
   },
   {
     question: 'How long does a consumer unit replacement take in an Edinburgh tenement?',
     answer:
-      'A like-for-like consumer unit replacement in a standard Edinburgh tenement flat typically takes 4 to 6 hours. Edinburgh\'s Georgian and Victorian tenements can present additional challenges including original rubber-insulated wiring, inadequate earthing, and limited access to consumer unit locations within shared cupboards. Properties requiring earthing upgrades or cable extensions may take a full day.',
+      "A like-for-like consumer unit replacement in a standard Edinburgh tenement flat typically takes 4 to 6 hours. Edinburgh's Georgian and Victorian tenements can present additional challenges including original rubber-insulated wiring, inadequate earthing, and limited access to consumer unit locations within shared cupboards. Properties requiring earthing upgrades or cable extensions may take a full day.",
   },
   {
     question: 'Can an Edinburgh landlord be required to upgrade a consumer unit?',
@@ -85,8 +85,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -125,8 +124,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -143,11 +141,11 @@ const sections = [
     content: (
       <>
         <p>
-          Edinburgh is Scotland's capital city and one of the UK's most popular places to live,
-          with a housing stock dominated by Georgian and Victorian tenements in areas such as
-          Marchmont, Morningside, Leith, and Stockbridge. Many of these properties still have
-          electrical installations that predate current regulations, with rewirable fuse boards or
-          early plastic consumer units common in the older private rented sector.
+          Edinburgh is Scotland's capital city and one of the UK's most popular places to live, with
+          a housing stock dominated by Georgian and Victorian tenements in areas such as Marchmont,
+          Morningside, Leith, and Stockbridge. Many of these properties still have electrical
+          installations that predate current regulations, with rewirable fuse boards or early
+          plastic consumer units common in the older private rented sector.
         </p>
         <p>
           Under{' '}
@@ -177,8 +175,8 @@ const sections = [
           Edinburgh electricians typically charge day rates of £250 to £330 — higher than Glasgow
           due to elevated costs in the Scottish capital, but significantly lower than London.
           Edinburgh's high concentration of tenement flats means that many consumer unit
-          replacements are relatively straightforward, but older properties with ageing wiring
-          can add to the overall cost.
+          replacements are relatively straightforward, but older properties with ageing wiring can
+          add to the overall cost.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Edinburgh Pricing Breakdown (2026)</h3>
@@ -203,16 +201,16 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached (14-way high-integrity with SPD)</strong> — £540 to £820
-                total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £340
-                to £500. Labour: £260 to £320. EIC and certification: £30 to £50.
+                total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £340 to
+                £500. Labour: £260 to £320. EIC and certification: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,100 to £1,700+ total. Required for
-                larger homes or commercial properties. Materials: £440 to £720. Labour: £390 to
-                £520. EIC and certification: £50 to £80.
+                <strong>Three-phase property</strong> — £1,100 to £1,700+ total. Required for larger
+                homes or commercial properties. Materials: £440 to £720. Labour: £390 to £520. EIC
+                and certification: £50 to £80.
               </span>
             </li>
           </ul>
@@ -220,8 +218,8 @@ const sections = [
         <p>
           Properties in the Old Town and New Town conservation areas may carry additional
           considerations for accessing the property and locating consumer units within listed
-          buildings. Always discuss any conservation area implications with your electrician
-          before work begins.
+          buildings. Always discuss any conservation area implications with your electrician before
+          work begins.
         </p>
       </>
     ),
@@ -240,8 +238,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuses (BS 3036)</strong> — still found in many pre-1970s
-                Edinburgh tenements. These provide no RCD protection.
+                <strong>Rewirable fuses (BS 3036)</strong> — still found in many pre-1970s Edinburgh
+                tenements. These provide no RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -255,8 +253,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
-                socket circuits and concealed cables. A board without RCDs or RCBOs is a significant
+                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
+                circuits and concealed cables. A board without RCDs or RCBOs is a significant
                 electric shock risk.
               </span>
             </li>
@@ -296,9 +294,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Notifiable work in Edinburgh</strong> — consumer unit replacement is
-                notifiable work. City of Edinburgh Council's Building Standards department is
-                the local authority verifier. The work must be certified by a registered certifier
-                or notified before work begins.
+                notifiable work. City of Edinburgh Council's Building Standards department is the
+                local authority verifier. The work must be certified by a registered certifier or
+                notified before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -354,15 +352,15 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2: Remove old board</strong> — the existing consumer unit is
-                disconnected and removed. Ageing cables or earthing issues may be found at
-                this stage.
+                disconnected and removed. Ageing cables or earthing issues may be found at this
+                stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit
-                is mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
+                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
+                mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -400,16 +398,16 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common
-              in post-1970s Edinburgh housing and modern developments.
+              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common in
+              post-1970s Edinburgh housing and modern developments.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Complex Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
               Where earthing requires upgrading, meter tails need replacing, or cables require
-              extending. 6 to 10 hours. Common in Edinburgh's Georgian and Victorian tenements
-              with original rubber-insulated wiring.
+              extending. 6 to 10 hours. Common in Edinburgh's Georgian and Victorian tenements with
+              original rubber-insulated wiring.
             </p>
           </div>
         </div>
@@ -422,39 +420,39 @@ const sections = [
     content: (
       <>
         <p>
-          Edinburgh has a strong local electrical contracting sector. Here is what to look for
-          when selecting an electrician for a consumer unit replacement:
+          Edinburgh has a strong local electrical contracting sector. Here is what to look for when
+          selecting an electrician for a consumer unit replacement:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scottish certifier registration</strong> — verify the electrician holds
-                the Scottish Certifier of Construction (Electrical Installations) registration
-                to self-certify the work in Edinburgh.
+                <strong>Scottish certifier registration</strong> — verify the electrician holds the
+                Scottish Certifier of Construction (Electrical Installations) registration to
+                self-certify the work in Edinburgh.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Itemised quote</strong> — materials, labour, certification, and VAT
-                should all be listed separately. Avoid vague single-figure quotes.
+                <strong>Itemised quote</strong> — materials, labour, certification, and VAT should
+                all be listed separately. Avoid vague single-figure quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC and building regulations notification included</strong> — confirm
-                both are included in the quoted price before work begins.
+                <strong>EIC and building regulations notification included</strong> — confirm both
+                are included in the quoted price before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with Edinburgh tenements</strong> — Edinburgh's tenement
-                properties have specific characteristics. Choose an electrician familiar with
-                the local housing stock.
+                properties have specific characteristics. Choose an electrician familiar with the
+                local housing stock.
               </span>
             </li>
           </ul>
@@ -498,7 +496,7 @@ export default function ConsumerUnitReplacementEdinburghPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Edinburgh"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

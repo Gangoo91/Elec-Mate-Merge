@@ -576,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start completing surveys faster"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects, and send everything to the client before leaving. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICR certificates on site, generate remedial quotes from defects, and send everything to the client before leaving. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -613,7 +613,7 @@ export default function ElectricalSurveyCostPage() {
       faqHeading="Frequently Asked Questions About Electrical Survey Costs"
       relatedPages={relatedPages}
       ctaHeading="Complete Surveys Faster with Elec-Mate"
-      ctaSubheading="AI board scanner, voice test entry, defect-to-quote pipeline, and instant delivery. Join 430+ UK electricians completing professional EICR certificates on their phones. 7-day free trial."
+      ctaSubheading="AI board scanner, voice test entry, defect-to-quote pipeline, and instant delivery. Join 1,000+ UK electricians completing professional EICR certificates on their phones. 7-day free trial."
     />
   );
 }

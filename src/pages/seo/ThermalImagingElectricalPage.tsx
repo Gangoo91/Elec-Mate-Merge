@@ -20,7 +20,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Thermal Imaging for Electrical Inspections', href: '/guides/thermal-imaging-electrical-inspections' },
+  {
+    label: 'Thermal Imaging for Electrical Inspections',
+    href: '/guides/thermal-imaging-electrical-inspections',
+  },
 ];
 
 const tocItems = [
@@ -99,7 +102,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificate App',
-    description: 'Complete solar PV commissioning certificates including IEC 62446-3 documentation.',
+    description:
+      'Complete solar PV commissioning certificates including IEC 62446-3 documentation.',
     icon: Sun,
     category: 'Certificate',
   },
@@ -147,11 +151,11 @@ const sections = [
           visible and before the component fails.
         </p>
         <p>
-          In electrical inspection work, thermal imaging is a non-contact, non-destructive
-          technique that can survey large quantities of equipment quickly without requiring circuit
-          isolation. A thermal survey of a large distribution board that would take hours to
-          physically inspect can be completed in minutes, identifying the specific areas where
-          further investigation is warranted.
+          In electrical inspection work, thermal imaging is a non-contact, non-destructive technique
+          that can survey large quantities of equipment quickly without requiring circuit isolation.
+          A thermal survey of a large distribution board that would take hours to physically inspect
+          can be completed in minutes, identifying the specific areas where further investigation is
+          warranted.
         </p>
         <p>
           Thermal imaging is particularly valuable in commercial and industrial installations where
@@ -195,9 +199,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Motor control centres</strong> — contactor coils, overload relays, and
-                motor terminals can develop high-resistance connections that are detected by
-                thermal imaging before motor failure occurs.
+                <strong>Motor control centres</strong> — contactor coils, overload relays, and motor
+                terminals can develop high-resistance connections that are detected by thermal
+                imaging before motor failure occurs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -223,20 +227,18 @@ const sections = [
     heading: 'Identifying Hotspots — Loose Connections and Overloaded Neutrals',
     content: (
       <>
-        <p>
-          The two most common electrical fault patterns identified by thermal imaging are:
-        </p>
+        <p>The two most common electrical fault patterns identified by thermal imaging are:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Loose Connections</h3>
             <p className="text-white text-sm leading-relaxed">
               A loose terminal screw or poor crimp joint creates an air gap that increases contact
               resistance. Under load current, this resistance generates heat: P = I²R. The affected
-              terminal appears significantly hotter than adjacent terminals carrying the same current.
-              On a thermal image, a loose terminal in a 100A distribution board may show 80°C while
-              adjacent terminals are at 30°C. This differential is unmistakeable and would cause
-              failure if not corrected. Common locations: MCB terminals, busbar connections, cable
-              gland terminals, and socket outlet faceplates.
+              terminal appears significantly hotter than adjacent terminals carrying the same
+              current. On a thermal image, a loose terminal in a 100A distribution board may show
+              80°C while adjacent terminals are at 30°C. This differential is unmistakeable and
+              would cause failure if not corrected. Common locations: MCB terminals, busbar
+              connections, cable gland terminals, and socket outlet faceplates.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -246,14 +248,14 @@ const sections = [
               other non-linear loads, third-harmonic currents in the neutral conductor can exceed
               phase currents. The neutral busbar appears significantly hotter than the phase busbars
               even though load balancing appears correct by phase measurement. This is a common
-              finding in open-plan offices converted to LED lighting with DALI controls, and in
-              data centres. The solution is to upsize the neutral or install K-rated transformers.
+              finding in open-plan offices converted to LED lighting with DALI controls, and in data
+              centres. The solution is to upsize the neutral or install K-rated transformers.
             </p>
           </div>
         </div>
         <p>
-          When a hotspot is identified by thermal imaging, follow up with electrical tests to confirm
-          the cause. A loose connection can be confirmed by{' '}
+          When a hotspot is identified by thermal imaging, follow up with electrical tests to
+          confirm the cause. A loose connection can be confirmed by{' '}
           <SEOInternalLink href="/guides/continuity-testing-electricians-guide">
             resistance measurement
           </SEOInternalLink>{' '}
@@ -300,8 +302,8 @@ const sections = [
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Classification</strong> — IEC 62446-3 classifies anomalies by temperature
-                differential: Class 1 (minor, ΔT less than 10°C) to Class 3 (severe, ΔT over 40°C
-                or absolute temperature risk). Class 3 anomalies require immediate investigation.
+                differential: Class 1 (minor, ΔT less than 10°C) to Class 3 (severe, ΔT over 40°C or
+                absolute temperature risk). Class 3 anomalies require immediate investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -333,18 +335,19 @@ const sections = [
               <span>
                 <strong>Thermal resolution</strong> — minimum 320×240 pixels (76,800 pixels) for
                 distribution board inspection. Higher resolution (640×480, 307,200 pixels) is
-                preferable for large panel surveys and for detecting small components. Consumer-grade
-                cameras with resolutions below 80×60 pixels are not suitable for electrical work.
+                preferable for large panel surveys and for detecting small components.
+                Consumer-grade cameras with resolutions below 80×60 pixels are not suitable for
+                electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NETD (Noise Equivalent Temperature Difference)</strong> — below 50mK (0.05°C).
-                This is the smallest temperature difference the camera can detect reliably. Lower NETD
-                values give cleaner images and allow detection of smaller temperature differentials
-                indicating developing faults. Most professional inspection cameras specify NETD of
-                30mK to 50mK.
+                <strong>NETD (Noise Equivalent Temperature Difference)</strong> — below 50mK
+                (0.05°C). This is the smallest temperature difference the camera can detect
+                reliably. Lower NETD values give cleaner images and allow detection of smaller
+                temperature differentials indicating developing faults. Most professional inspection
+                cameras specify NETD of 30mK to 50mK.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -360,8 +363,8 @@ const sections = [
               <span>
                 <strong>D:S (distance to spot size) ratio</strong> — at least 100:1. This means the
                 camera can measure a 1cm spot from 100cm distance. For working at practical
-                distances from distribution boards (0.5m to 2m), a 100:1 D:S ratio provides
-                adequate spatial resolution.
+                distances from distribution boards (0.5m to 2m), a 100:1 D:S ratio provides adequate
+                spatial resolution.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -392,18 +395,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NETA ATS-2019</strong> (ANSI/NETA Acceptance Testing Specifications) —
-                the American standard widely used as a reference for electrical commissioning
-                and maintenance testing, including thermal imaging criteria and temperature
-                differential classification.
+                <strong>NETA ATS-2019</strong> (ANSI/NETA Acceptance Testing Specifications) — the
+                American standard widely used as a reference for electrical commissioning and
+                maintenance testing, including thermal imaging criteria and temperature differential
+                classification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IEC 62446-3</strong> — the specific standard for PV system thermal imaging,
-                applicable to all PV installations in the UK when thermal imaging is used as part
-                of commissioning or maintenance.
+                applicable to all PV installations in the UK when thermal imaging is used as part of
+                commissioning or maintenance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -416,8 +419,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ISO 18434-1</strong> (Condition monitoring of machines — thermography) —
-                the general international standard for thermographic inspection, applicable to
+                <strong>ISO 18434-1</strong> (Condition monitoring of machines — thermography) — the
+                general international standard for thermographic inspection, applicable to
                 electrical machinery.
               </span>
             </li>
@@ -443,10 +446,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Start with a Mid-Range Camera</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A mid-range thermal camera in the £1,500 to £3,000 range (such as a FLIR E6 Pro
-                  or Testo 871) meets the minimum specifications for distribution board inspection.
-                  This is sufficient to start offering thermal surveys as an EICR add-on. Upgrade
-                  to a higher-resolution camera as the service grows.
+                  A mid-range thermal camera in the £1,500 to £3,000 range (such as a FLIR E6 Pro or
+                  Testo 871) meets the minimum specifications for distribution board inspection.
+                  This is sufficient to start offering thermal surveys as an EICR add-on. Upgrade to
+                  a higher-resolution camera as the service grows.
                 </p>
               </div>
             </div>
@@ -463,8 +466,8 @@ const sections = [
                   </SEOInternalLink>{' '}
                   to attach thermal images directly to coded observations. Clients value the visual
                   evidence — a thermal image of a glowing terminal in their distribution board is
-                  far more compelling than a written description. It also protects you if the
-                  fault develops further after your inspection.
+                  far more compelling than a written description. It also protects you if the fault
+                  develops further after your inspection.
                 </p>
               </div>
             </div>
@@ -504,7 +507,7 @@ export default function ThermalImagingElectricalPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging in Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Attach Thermal Images to EICR Reports on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app lets you attach thermal and optical images directly to coded observations for professional client reports. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

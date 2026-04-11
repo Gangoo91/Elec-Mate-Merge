@@ -608,7 +608,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design and certify garden lighting faster"
-          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, voltage drop checks, AI regulations lookup, and digital certificates — all on your phone. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Sun}
         />
       </>

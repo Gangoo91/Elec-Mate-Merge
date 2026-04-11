@@ -19,7 +19,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'High Earth Leakage Troubleshooting', href: '/guides/troubleshooting-high-earth-leakage' },
+  {
+    label: 'High Earth Leakage Troubleshooting',
+    href: '/guides/troubleshooting-high-earth-leakage',
+  },
 ];
 
 const tocItems = [
@@ -91,7 +94,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-fault-finding-methodology',
     title: 'Electrical Fault Finding Methodology',
-    description: 'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',
+    description:
+      'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -139,9 +143,9 @@ const sections = [
           A residual current device (RCD) operates by detecting an imbalance between the current
           flowing in the line conductor and the current returning in the neutral conductor. In a
           healthy installation with no earth leakage, these currents are equal and the RCD does not
-          trip. When current leaks from a live conductor to earth — via degraded insulation, moisture
-          ingress, a capacitive path through electronic equipment, or a genuine fault — the imbalance
-          causes the RCD to operate.
+          trip. When current leaks from a live conductor to earth — via degraded insulation,
+          moisture ingress, a capacitive path through electronic equipment, or a genuine fault — the
+          imbalance causes the RCD to operate.
         </p>
         <p>
           The problem for electricians is that earth leakage from perfectly healthy equipment is an
@@ -174,15 +178,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
-                <strong>Reset the RCD</strong> — restore power to the affected circuits. The
-                leakage must be present (and below the trip threshold) during measurement for this
-                method to work.
+                <strong>Reset the RCD</strong> — restore power to the affected circuits. The leakage
+                must be present (and below the trip threshold) during measurement for this method to
+                work.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Clamp around L+N together</strong> — open the distribution board and clamp
                 around both the line and neutral conductors of the circuit you are investigating.
@@ -190,7 +198,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
                 <strong>Read the leakage</strong> — the display shows the residual current (earth
                 leakage). Values above 10mA on a circuit protected by a 30mA RCD indicate a
@@ -198,10 +208,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
               <span>
-                <strong>Isolate items one by one</strong> — switch off or unplug individual items
-                on the circuit and watch the leakage reading fall. The item that causes the largest
+                <strong>Isolate items one by one</strong> — switch off or unplug individual items on
+                the circuit and watch the leakage reading fall. The item that causes the largest
                 drop when removed is the main leakage source.
               </span>
             </li>
@@ -228,7 +240,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
                 <strong>Switch off all MCBs on the affected RCD</strong> — with all circuits
                 disconnected, reset the RCD. If it trips immediately, the RCD itself is faulty or
@@ -236,15 +250,19 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Reconnect circuits one by one</strong> — with the RCD reset and all MCBs
-                off, switch on one MCB at a time and check if the RCD trips. The circuit that
-                causes tripping is the problematic one.
+                off, switch on one MCB at a time and check if the RCD trips. The circuit that causes
+                tripping is the problematic one.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
                 <strong>Disconnect loads on the offending circuit</strong> — unplug or isolate all
                 equipment from the identified circuit. If the RCD now holds, an appliance is the
@@ -252,7 +270,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
               <span>
                 <strong>IR test the wiring</strong> — if the RCD still trips with all loads removed,
                 the fault is in the fixed wiring. Carry out safe isolation and an{' '}
@@ -342,18 +362,19 @@ const sections = [
               Magnetic ballasts and starter circuits in fluorescent fittings from the 1990s and
               early 2000s have power factor correction capacitors that develop internal leakage as
               they age. Each fitting may leak 1mA to 5mA. A circuit with 40 old fluorescent fittings
-              can generate 40mA to 200mA of leakage — far exceeding any RCD trip threshold. Replacing
-              with modern LED panels dramatically reduces leakage if quality drivers are specified.
+              can generate 40mA to 200mA of leakage — far exceeding any RCD trip threshold.
+              Replacing with modern LED panels dramatically reduces leakage if quality drivers are
+              specified.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">DALI LED Drivers</h3>
             <p className="text-white text-sm leading-relaxed">
               DALI-compatible LED drivers have mains-connected communications circuitry with
-              capacitive coupling to the DALI bus. Budget DALI drivers can leak 3mA to 10mA each.
-              On a large DALI lighting installation with 50 or more drivers on a circuit, the
-              cumulative leakage can be substantial. Specify low-leakage drivers (typically
-              below 1mA each) for any DALI installation that will be RCD protected.
+              capacitive coupling to the DALI bus. Budget DALI drivers can leak 3mA to 10mA each. On
+              a large DALI lighting installation with 50 or more drivers on a circuit, the
+              cumulative leakage can be substantial. Specify low-leakage drivers (typically below
+              1mA each) for any DALI installation that will be RCD protected.
             </p>
           </div>
         </div>
@@ -393,8 +414,8 @@ const sections = [
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase</strong> — clamp all three phase conductors and the neutral
-                conductor through the jaw simultaneously. The reading is the total earth leakage.
-                If the instrument cannot accommodate four conductors, use a three-phase specific
+                conductor through the jaw simultaneously. The reading is the total earth leakage. If
+                the instrument cannot accommodate four conductors, use a three-phase specific
                 leakage clamp.
               </span>
             </li>
@@ -417,20 +438,22 @@ const sections = [
     content: (
       <>
         <p>
-          Nuisance RCD tripping is one of the most common electrical complaints from commercial
-          and domestic customers. Here is a practical strategy for resolving it efficiently:
+          Nuisance RCD tripping is one of the most common electrical complaints from commercial and
+          domestic customers. Here is a practical strategy for resolving it efficiently:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Split Circuits to Reduce Cumulative Leakage</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Split Circuits to Reduce Cumulative Leakage
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   The most reliable long-term solution for high-leakage commercial installations is
-                  to replace main RCDs with individual RCBOs per circuit. This ensures that a leakage
-                  fault on one circuit does not affect other circuits, and the cumulative leakage
-                  on each RCBO is limited to one circuit's worth of equipment.
+                  to replace main RCDs with individual RCBOs per circuit. This ensures that a
+                  leakage fault on one circuit does not affect other circuits, and the cumulative
+                  leakage on each RCBO is limited to one circuit's worth of equipment.
                 </p>
               </div>
             </div>
@@ -484,7 +507,7 @@ export default function TroubleshootingHighEarthLeakagePage() {
       faqHeading="Frequently Asked Questions About High Earth Leakage and RCD Tripping"
       relatedPages={relatedPages}
       ctaHeading="Document Earth Leakage Investigations and EICRs on Your Phone"
-      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's EICR app captures leakage findings, adds photos, and generates professional reports with coded observations. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

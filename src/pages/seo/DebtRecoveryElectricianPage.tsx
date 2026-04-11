@@ -653,7 +653,7 @@ export default function DebtRecoveryElectricianPage() {
       faqHeading="Frequently Asked Questions About Debt Recovery for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Send Professional Invoices and Get Paid Faster"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to send professional invoices on site, track payments in real time, and manage cash flow. Stop losing money to late payment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to send professional invoices on site, track payments in real time, and manage cash flow. Stop losing money to late payment. 7-day free trial, cancel anytime."
     />
   );
 }

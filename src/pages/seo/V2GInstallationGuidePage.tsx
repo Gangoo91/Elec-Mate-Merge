@@ -108,7 +108,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size the dedicated circuit cable for V2G charger installations with automatic derating.',
+    description:
+      'Size the dedicated circuit cable for V2G charger installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -150,8 +151,8 @@ const sections = [
         <p>
           Vehicle to Grid — commonly referred to as V2G — is a technology that allows electric
           vehicles to feed stored energy back into the home electrical installation or the wider
-          electricity grid. Instead of an EV being a passive load that only consumes electricity, V2G
-          turns it into a distributed energy storage asset.
+          electricity grid. Instead of an EV being a passive load that only consumes electricity,
+          V2G turns it into a distributed energy storage asset.
         </p>
         <p>
           A typical electric vehicle has a battery capacity of 60 to 80kWh — significantly larger
@@ -168,8 +169,8 @@ const sections = [
         <p>
           For electricians, V2G represents a significant upskilling opportunity. The installation is
           more complex than a standard EV charger, commands a higher price point, and positions you
-          in a rapidly growing market. This guide covers the regulations, DNO requirements, compatible
-          vehicles, installation process, and certification requirements.
+          in a rapidly growing market. This guide covers the regulations, DNO requirements,
+          compatible vehicles, installation process, and certification requirements.
         </p>
       </>
     ),
@@ -180,10 +181,10 @@ const sections = [
     content: (
       <>
         <p>
-          A bidirectional charger contains an inverter that can operate in two directions. In charging
-          mode, it converts grid AC to DC and pushes it into the vehicle battery. In discharging mode,
-          it draws DC from the vehicle battery, converts it to AC, and feeds it into the home circuits
-          or exports it to the grid.
+          A bidirectional charger contains an inverter that can operate in two directions. In
+          charging mode, it converts grid AC to DC and pushes it into the vehicle battery. In
+          discharging mode, it draws DC from the vehicle battery, converts it to AC, and feeds it
+          into the home circuits or exports it to the grid.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -191,18 +192,18 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The EV battery powers the home circuits directly. The charger island-disconnects from
               the grid (if the grid is down) or supplements grid supply (if the grid is live).
-              Useful for peak shaving — running the home from the EV during expensive peak hours
-              and recharging overnight at off-peak rates. Also provides emergency backup power
-              during grid outages.
+              Useful for peak shaving — running the home from the EV during expensive peak hours and
+              recharging overnight at off-peak rates. Also provides emergency backup power during
+              grid outages.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Vehicle to Grid (V2G)</h3>
             <p className="text-white text-sm leading-relaxed">
               The EV battery exports power beyond the home and into the distribution network. This
-              enables participation in grid services — frequency response, demand-side response,
-              and capacity market programmes. An aggregator platform manages the export scheduling
-              and revenue. V2G requires G99 DNO approval because power is being exported.
+              enables participation in grid services — frequency response, demand-side response, and
+              capacity market programmes. An aggregator platform manages the export scheduling and
+              revenue. V2G requires G99 DNO approval because power is being exported.
             </p>
           </div>
         </div>
@@ -224,8 +225,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          including several regulations specifically relevant to bidirectional energy flows and energy
-          management systems:
+          including several regulations specifically relevant to bidirectional energy flows and
+          energy management systems:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -267,8 +268,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 740.415.1</strong> — covers cable selection where reverse feeding
-                may alter fault currents and thermal stresses, requiring correct conductor sizing for
-                bidirectional currents.
+                may alter fault currents and thermal stresses, requiring correct conductor sizing
+                for bidirectional currents.
               </span>
             </li>
           </ul>
@@ -291,8 +292,8 @@ const sections = [
       <>
         <p>
           Because a V2G charger can export power to the distribution network, it falls under
-          Engineering Recommendation G99 — not G98. This is a critical distinction from standard
-          EV charger installations.
+          Engineering Recommendation G99 — not G98. This is a critical distinction from standard EV
+          charger installations.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -310,26 +311,27 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Approval timeline</strong> — G99 applications typically take 4 to 12 weeks.
-                For systems up to 3.68kW single-phase export, the process is usually straightforward.
-                Larger export capacities or areas with network constraints may require a network
-                study, which can extend the timeline. Start the application early.
+                For systems up to 3.68kW single-phase export, the process is usually
+                straightforward. Larger export capacities or areas with network constraints may
+                require a network study, which can extend the timeline. Start the application early.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Anti-islanding protection</strong> — the V2G charger must include type-tested
-                anti-islanding protection that disconnects from the grid within the time limits
-                specified by G99. This protects DNO engineers and prevents uncontrolled export.
+                <strong>Anti-islanding protection</strong> — the V2G charger must include
+                type-tested anti-islanding protection that disconnects from the grid within the time
+                limits specified by G99. This protects DNO engineers and prevents uncontrolled
+                export.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commissioning notification</strong> — after installation, a G99 commissioning
-                confirmation form must be submitted to the DNO with the test results and the
-                installer details. The system must not be energised for export until the DNO has
-                been notified.
+                <strong>Commissioning notification</strong> — after installation, a G99
+                commissioning confirmation form must be submitted to the DNO with the test results
+                and the installer details. The system must not be energised for export until the DNO
+                has been notified.
               </span>
             </li>
           </ul>
@@ -367,9 +369,9 @@ const sections = [
               <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CCS bidirectional</strong> — the Combined Charging System (CCS) now supports
-                bidirectional power flow via ISO 15118-20. Hyundai Ioniq 5, Kia EV6, BYD Atto 3,
-                and several other models support CCS V2G (or are receiving firmware updates to
-                enable it). CCS is the future standard for V2G in the UK and Europe.
+                bidirectional power flow via ISO 15118-20. Hyundai Ioniq 5, Kia EV6, BYD Atto 3, and
+                several other models support CCS V2G (or are receiving firmware updates to enable
+                it). CCS is the future standard for V2G in the UK and Europe.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -504,22 +506,20 @@ const sections = [
       <>
         <p>
           The electrical installation must be tested and certified in accordance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>
-          . The scope includes:
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>. The
+          scope includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Continuity of protective conductors (charger enclosure to MET)
-              </span>
+              <span>Continuity of protective conductors (charger enclosure to MET)</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance on the dedicated charger circuit (500V DC, minimum 1 megohm)</span>
+              <span>
+                Insulation resistance on the dedicated charger circuit (500V DC, minimum 1 megohm)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -618,7 +618,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify V2G charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for V2G installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for V2G installations. 7-day free trial."
           icon={Car}
         />
       </>
@@ -655,7 +655,7 @@ export default function V2GInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About V2G Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify V2G Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for V2G charger installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for V2G charger installations. 7-day free trial, cancel anytime."
     />
   );
 }

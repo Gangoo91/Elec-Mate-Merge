@@ -65,7 +65,8 @@ const faqs = [
       'Each partner must register with HMRC as self-employed by 5 October following the end of the first tax year in which they had self-employment income. The partnership itself must also register a nominated partner to file the annual Partnership Tax Return (SA800). The SA800 shows the total income and expenses of the partnership; each partner then includes their share of the profit on their individual Self Assessment return (SA100). There is no separate partnership tax — each partner pays income tax and Class 4 National Insurance on their share of profit via Self Assessment.',
   },
   {
-    question: 'What happens to scheme registrations (NICEIC/NAPIT) when two electricians partner up?',
+    question:
+      'What happens to scheme registrations (NICEIC/NAPIT) when two electricians partner up?',
     answer:
       'Scheme registrations are typically held by the business (as an entity) rather than just an individual. When you form a partnership, you will generally need to notify your scheme body of the change in business structure and re-register the partnership. This usually involves an assessment of the new business, confirmation that all responsible persons (partners) are competent, and payment of the registration fee. Do not assume your existing sole trader registration automatically transfers — check with your scheme body before starting trading as a partnership.',
   },
@@ -77,7 +78,7 @@ const faqs = [
   {
     question: 'Is a limited company better than a partnership for electricians?',
     answer:
-      'A limited company (Ltd) offers limited liability, potential tax efficiencies (corporation tax at 25%, ability to pay dividends, and pension contributions through the company), and a more professional image for commercial clients. However, it requires more administration (Companies House filings, annual accounts, directors\' responsibilities) and has less flexibility in profit distribution. Many electricians start as a partnership and convert to a limited company as the business grows. The right answer depends on your risk profile, projected profits, and how much administrative overhead you are willing to manage.',
+      "A limited company (Ltd) offers limited liability, potential tax efficiencies (corporation tax at 25%, ability to pay dividends, and pension contributions through the company), and a more professional image for commercial clients. However, it requires more administration (Companies House filings, annual accounts, directors' responsibilities) and has less flexibility in profit distribution. Many electricians start as a partnership and convert to a limited company as the business grows. The right answer depends on your risk profile, projected profits, and how much administrative overhead you are willing to manage.",
   },
 ];
 
@@ -148,8 +149,8 @@ const sections = [
                 are not personally liable for the other partner's negligence or debts beyond their
                 agreed contribution. Must file accounts and a confirmation statement at Companies
                 House annually (publicly visible). Tax treatment is the same as a general
-                partnership. Preferred for professional practices where one partner may not want
-                to bear responsibility for the other's errors.
+                partnership. Preferred for professional practices where one partner may not want to
+                bear responsibility for the other's errors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -166,8 +167,8 @@ const sections = [
         </div>
         <p>
           For most electricians starting a working partnership, a general partnership with a good
-          written agreement is the simplest starting point. If the business becomes more complex
-          or turnover grows significantly, conversion to an LLP or limited company is straightforward.
+          written agreement is the simplest starting point. If the business becomes more complex or
+          turnover grows significantly, conversion to an LLP or limited company is straightforward.
         </p>
       </>
     ),
@@ -178,10 +179,10 @@ const sections = [
     content: (
       <>
         <p>
-          A partnership agreement is the foundational document of your business relationship. Even
-          a simple one covering the key points is far better than no agreement at all. Have a
-          solicitor draft or review it — a few hundred pounds now can prevent tens of thousands
-          of pounds in disputes later.
+          A partnership agreement is the foundational document of your business relationship. Even a
+          simple one covering the key points is far better than no agreement at all. Have a
+          solicitor draft or review it — a few hundred pounds now can prevent tens of thousands of
+          pounds in disputes later.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,8 +196,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Capital contributions</strong> — how much each partner is contributing
-                at the outset (cash, tools, vehicles) and whether interest is payable on capital
+                <strong>Capital contributions</strong> — how much each partner is contributing at
+                the outset (cash, tools, vehicles) and whether interest is payable on capital
                 accounts.
               </span>
             </li>
@@ -277,9 +278,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Revenue-weighted split</strong> — each partner earns a commission on the
-                revenue they bring in, with overheads shared equally. Works well when partners
-                have very different client bases or specialisms (e.g., one focuses on domestic
-                work, the other on commercial).
+                revenue they bring in, with overheads shared equally. Works well when partners have
+                very different client bases or specialisms (e.g., one focuses on domestic work, the
+                other on commercial).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -287,8 +288,8 @@ const sections = [
               <span>
                 <strong>Annual review</strong> — build in a formal annual review of the profit
                 split. As the business grows and roles evolve, the original arrangement may no
-                longer reflect each partner's contribution. An agreed review mechanism prevents
-                the conversation becoming confrontational.
+                longer reflect each partner's contribution. An agreed review mechanism prevents the
+                conversation becoming confrontational.
               </span>
             </li>
           </ul>
@@ -311,10 +312,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Joint and several liability</strong> — if the partnership cannot pay a
-                debt, the creditor can pursue either or both partners individually for the full
-                amount. You can be held liable for work your partner did badly, materials they
-                ordered, or a loan they took in the partnership name.
+                <strong>Joint and several liability</strong> — if the partnership cannot pay a debt,
+                the creditor can pursue either or both partners individually for the full amount.
+                You can be held liable for work your partner did badly, materials they ordered, or a
+                loan they took in the partnership name.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,11 +330,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LLP as the solution</strong> — if unlimited liability is a concern, an
-                LLP is the obvious solution. Each partner is liable only for their own acts of
-                negligence or fraud, not those of the other partner. An LLP also provides a
-                cleaner structure if the partnership takes on employees or takes on more complex
-                commercial work.
+                <strong>LLP as the solution</strong> — if unlimited liability is a concern, an LLP
+                is the obvious solution. Each partner is liable only for their own acts of
+                negligence or fraud, not those of the other partner. An LLP also provides a cleaner
+                structure if the partnership takes on employees or takes on more complex commercial
+                work.
               </span>
             </li>
           </ul>
@@ -356,18 +357,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Register by 5 October</strong> — each partner must register with HMRC by
-                5 October following the end of the first tax year in which they started trading.
-                Use the SA400 form to register the partnership and SA401 to register as a partner.
-                You can register online via your Government Gateway account.
+                <strong>Register by 5 October</strong> — each partner must register with HMRC by 5
+                October following the end of the first tax year in which they started trading. Use
+                the SA400 form to register the partnership and SA401 to register as a partner. You
+                can register online via your Government Gateway account.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unique Taxpayer Reference (UTR)</strong> — the partnership gets its own
-                UTR, separate from the individual partners' UTRs. The nominated partner files the
-                SA800 Partnership Return using the partnership UTR.
+                <strong>Unique Taxpayer Reference (UTR)</strong> — the partnership gets its own UTR,
+                separate from the individual partners' UTRs. The nominated partner files the SA800
+                Partnership Return using the partnership UTR.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -394,19 +395,31 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Shared workload — two electricians can take on more work and cover each other's holidays and sickness.</span>
+              <span>
+                Shared workload — two electricians can take on more work and cover each other's
+                holidays and sickness.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Complementary skills — one partner may excel at commercial work, the other at domestic, creating a more versatile business.</span>
+              <span>
+                Complementary skills — one partner may excel at commercial work, the other at
+                domestic, creating a more versatile business.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Shared capital — combined resources can fund larger tool purchases, a van, or a workshop without either partner overextending.</span>
+              <span>
+                Shared capital — combined resources can fund larger tool purchases, a van, or a
+                workshop without either partner overextending.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Simple setup — no Companies House registration required for a general partnership; HMRC registration only.</span>
+              <span>
+                Simple setup — no Companies House registration required for a general partnership;
+                HMRC registration only.
+              </span>
             </li>
           </ul>
         </div>
@@ -415,15 +428,24 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Unlimited liability — each partner is personally liable for all business debts, including those incurred by the other partner.</span>
+              <span>
+                Unlimited liability — each partner is personally liable for all business debts,
+                including those incurred by the other partner.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Shared decision-making — disputes can arise if partners have different views on pricing, growth, or work standards.</span>
+              <span>
+                Shared decision-making — disputes can arise if partners have different views on
+                pricing, growth, or work standards.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Exit complexity — dissolving a partnership without a pre-agreed exit arrangement can be protracted and costly.</span>
+              <span>
+                Exit complexity — dissolving a partnership without a pre-agreed exit arrangement can
+                be protracted and costly.
+              </span>
             </li>
           </ul>
         </div>
@@ -456,24 +478,24 @@ const sections = [
               <span>
                 <strong>Notifying HMRC</strong> — when the partnership ends, notify HMRC, file a
                 final partnership tax return (SA800), and each partner files their individual Self
-                Assessment return for the final trading period. Do not forget to de-register for
-                VAT if applicable.
+                Assessment return for the final trading period. Do not forget to de-register for VAT
+                if applicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scheme registration</strong> — notify your scheme body (NICEIC, NAPIT,
-                etc.) of the dissolution. The remaining electrician can re-register as a sole
-                trader, or the new business structure can apply for registration in its own right.
+                <strong>Scheme registration</strong> — notify your scheme body (NICEIC, NAPIT, etc.)
+                of the dissolution. The remaining electrician can re-register as a sole trader, or
+                the new business structure can apply for registration in its own right.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Client notification</strong> — inform clients of the change in business
-                structure, particularly those with ongoing contracts. Confirm which partner (or
-                the new entity) will be responsible for fulfilling existing obligations.
+                structure, particularly those with ongoing contracts. Confirm which partner (or the
+                new entity) will be responsible for fulfilling existing obligations.
               </span>
             </li>
           </ul>
@@ -491,8 +513,8 @@ const sections = [
           finances is essential. Elec-Mate's{' '}
           <SEOInternalLink href="/tools/job-scheduling">job scheduling</SEOInternalLink>,{' '}
           <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>, and
-          certificate tools give both partners real-time visibility of the business from their
-          own phones.
+          certificate tools give both partners real-time visibility of the business from their own
+          phones.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -502,11 +524,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Both Partners, One Business Account</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Both partners can access the same{' '}
-                  <SEOInternalLink href="/tools/job-scheduling">
-                    Elec-Mate account
-                  </SEOInternalLink>
-                  , see each other's scheduled jobs, issue certificates, and track invoices.
-                  No more emailing each other spreadsheets.
+                  <SEOInternalLink href="/tools/job-scheduling">Elec-Mate account</SEOInternalLink>,
+                  see each other's scheduled jobs, issue certificates, and track invoices. No more
+                  emailing each other spreadsheets.
                 </p>
               </div>
             </div>
@@ -527,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical partnership with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Job scheduling, electrical certificates, quoting, and invoicing for two-person electrical partnerships. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Building2}
         />
       </>
@@ -564,7 +584,7 @@ export default function ElectricalBusinessPartnershipPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Partnerships"
       relatedPages={relatedPages}
       ctaHeading="Manage your electrical partnership with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

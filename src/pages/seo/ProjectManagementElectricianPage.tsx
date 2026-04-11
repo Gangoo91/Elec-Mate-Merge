@@ -434,7 +434,7 @@ export default function ProjectManagementElectricianPage() {
         },
       ]}
       ctaHeading="Manage Every Job Like a Professional"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to schedule jobs, track materials, manage staff, and keep clients happy. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to schedule jobs, track materials, manage staff, and keep clients happy. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',
@@ -453,7 +453,7 @@ export default function ProjectManagementElectricianPage() {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
-            ratingCount: '430',
+            ratingCount: '1000',
             bestRating: '5',
           },
         },

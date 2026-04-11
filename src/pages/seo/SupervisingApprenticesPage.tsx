@@ -22,7 +22,10 @@ import {
 const breadcrumbs = [
   { label: 'Training', href: '/guides/electrical-qualifications-pathway' },
   { label: 'Employer Guides', href: '/guides/city-guilds-2365-electrical' },
-  { label: 'Supervising Electrical Apprentices', href: '/guides/supervising-electrical-apprentices' },
+  {
+    label: 'Supervising Electrical Apprentices',
+    href: '/guides/supervising-electrical-apprentices',
+  },
 ];
 
 const tocItems = [
@@ -40,7 +43,7 @@ const tocItems = [
 const keyTakeaways = [
   'Employers who take on electrical apprentices have specific legal obligations under the Health and Safety at Work etc. Act 1974 and the Management of Health and Safety at Work Regulations 1999, particularly around adequate supervision and risk assessment for young workers.',
   'Electrical apprentices must never work unsupervised near live conductors. The JIB (Joint Industry Board) code of conduct and BS 7671 both support this — unlicensed persons must not carry out live working. Apprentices are not competent persons under the Electricity at Work Regulations 1989.',
-  'The JIB apprenticeship wage schedule sets mandatory minimum hourly rates for electrical apprentices at each year of apprenticeship. Rates increase annually and upon achieving AM2 qualification. Failure to pay JIB rates is a breach of the employer\'s JIB registration agreement.',
+  "The JIB apprenticeship wage schedule sets mandatory minimum hourly rates for electrical apprentices at each year of apprenticeship. Rates increase annually and upon achieving AM2 qualification. Failure to pay JIB rates is a breach of the employer's JIB registration agreement.",
   'The End Point Assessment Organisation (EPAO) for the electrical installation apprenticeship standard is EMTA (Engineering and Manufacturing Training Association). The employer and training provider must complete a gateway review confirming the apprentice is ready before EMTA schedules the AM2.',
   'A structured training plan — covering the full range of NVQ units across the apprenticeship duration — benefits both the apprentice and the employer by ensuring the NVQ portfolio is completed systematically rather than in a last-minute rush.',
 ];
@@ -62,19 +65,19 @@ const faqs = [
       'JIB (Joint Industry Board for the Electrical Contracting Industry) sets mandatory minimum hourly rates for apprentices employed by JIB-registered employers. The rates are structured by year of apprenticeship and are updated annually, typically in January. For 2026, the approximate rates (confirm current rates at jib.org.uk) are: Year 1 — approximately £7.80–£8.20/hour; Year 2 — approximately £9.00–£9.50/hour; Year 3 — approximately £10.50–£11.00/hour; Year 4 (if applicable) — approximately £12.00–£12.50/hour. Upon passing the AM2 and achieving the AM2 certificate, the apprentice transitions to the Electrician rate, which is significantly higher than the Year 4 rate. Exact current rates must be confirmed with the JIB directly at jib.org.uk. Employers must pay at least the JIB rate — paying below the JIB rate is a breach of the registration agreement and can result in JIB membership suspension.',
   },
   {
-    question: 'What is the employer\'s role in the EPAO process?',
+    question: "What is the employer's role in the EPAO process?",
     answer:
       'The employer plays a central role in the End Point Assessment gateway process. Before the apprentice can attempt the AM2, the employer must: confirm that the apprentice has demonstrated the required on-the-job competence across the Knowledge, Skills, and Behaviours (KSBs) defined in the apprenticeship standard; sign off the gateway review (jointly with the training provider) certifying that the apprentice is ready for End Point Assessment; confirm that the apprentice has completed their NVQ portfolio to the required standard; and confirm that the apprentice has achieved the required Maths and English level (typically Functional Skills Level 2 or GCSE grade 4/C). The employer cannot withhold gateway sign-off unreasonably — if the apprentice has met all the requirements, the employer must support them in progressing to the AM2. Withholding gateway sign-off as a way of retaining a productive apprentice on lower wages is a breach of the apprenticeship agreement.',
   },
   {
     question: 'What happens if an apprentice fails the AM2?',
     answer:
-      'If an apprentice fails the AM2 on their first attempt, they can resit after a suitable preparation period. There is no statutory limit on the number of AM2 attempts, but apprenticeship funding (from the Education and Skills Funding Agency or the employer\'s Apprenticeship Levy account) may limit the number of funded resit attempts. The employer should review the assessor feedback with the apprentice and identify the specific areas where additional preparation is needed. The training provider should offer additional mock AM2 sessions targeting the failure areas. The most common failure causes are time management and testing sequence — both are addressable with focused practice. Employers should avoid pressuring apprentices to resit before they are genuinely ready — a second failure compounds the apprentice\'s loss of confidence and delays qualification.',
+      "If an apprentice fails the AM2 on their first attempt, they can resit after a suitable preparation period. There is no statutory limit on the number of AM2 attempts, but apprenticeship funding (from the Education and Skills Funding Agency or the employer's Apprenticeship Levy account) may limit the number of funded resit attempts. The employer should review the assessor feedback with the apprentice and identify the specific areas where additional preparation is needed. The training provider should offer additional mock AM2 sessions targeting the failure areas. The most common failure causes are time management and testing sequence — both are addressable with focused practice. Employers should avoid pressuring apprentices to resit before they are genuinely ready — a second failure compounds the apprentice's loss of confidence and delays qualification.",
   },
   {
-    question: 'Do apprentices count towards the supervisor\'s workload on a job?',
+    question: "Do apprentices count towards the supervisor's workload on a job?",
     answer:
-      'An apprentice under active supervision adds to rather than reduces the supervisor\'s workload — the supervisor must divide their attention between their own work and monitoring and instructing the apprentice. Employers should factor this into job pricing and task allocation. As the apprentice gains experience and competence (in their third and fourth year), they can take on more independent tasks under general (rather than close) supervision — at this point they do begin to add productive capacity to the job. The correct view of an apprentice is as a long-term investment: the cost of supervision in years 1–2 is offset by the value of a qualified electrician who knows the employer\'s methods, systems, and clients in years 5 and beyond.',
+      "An apprentice under active supervision adds to rather than reduces the supervisor's workload — the supervisor must divide their attention between their own work and monitoring and instructing the apprentice. Employers should factor this into job pricing and task allocation. As the apprentice gains experience and competence (in their third and fourth year), they can take on more independent tasks under general (rather than close) supervision — at this point they do begin to add productive capacity to the job. The correct view of an apprentice is as a long-term investment: the cost of supervision in years 1–2 is offset by the value of a qualified electrician who knows the employer's methods, systems, and clients in years 5 and beyond.",
   },
   {
     question: 'What training plan should I provide for an electrical apprentice?',
@@ -147,10 +150,10 @@ const sections = [
         </p>
         <p>
           The primary legislative framework for apprentice supervision comes from the Health and
-          Safety at Work etc. Act 1974, the Management of Health and Safety at Work Regulations
-          1999 (particularly Regulation 19 on young persons), and the Electricity at Work
-          Regulations 1989. These place duties on the employer that cannot be contracted away —
-          they apply regardless of what the apprenticeship agreement says.
+          Safety at Work etc. Act 1974, the Management of Health and Safety at Work Regulations 1999
+          (particularly Regulation 19 on young persons), and the Electricity at Work Regulations
+          1989. These place duties on the employer that cannot be contracted away — they apply
+          regardless of what the apprenticeship agreement says.
         </p>
         <p>
           Beyond legal compliance, the quality of on-the-job supervision and training directly
@@ -168,10 +171,10 @@ const sections = [
     content: (
       <>
         <p>
-          The most important supervision rule for electrical apprentices is simple: apprentices
-          must never work unsupervised near live conductors. This is not just a JIB preference —
-          it is a legal requirement under the Electricity at Work Regulations 1989 and a fundamental
-          safety principle.
+          The most important supervision rule for electrical apprentices is simple: apprentices must
+          never work unsupervised near live conductors. This is not just a JIB preference — it is a
+          legal requirement under the Electricity at Work Regulations 1989 and a fundamental safety
+          principle.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -179,20 +182,21 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EWR Regulation 16:</strong> No one shall engage in work activity in such
-                circumstances that danger may arise unless they are competent to prevent that danger,
-                or are under appropriate supervision. An apprentice is not a competent person under
-                EWR. Appropriate supervision near live conductors means the supervisor is physically
-                present and actively monitoring — not in a different room or on a separate floor.
+                circumstances that danger may arise unless they are competent to prevent that
+                danger, or are under appropriate supervision. An apprentice is not a competent
+                person under EWR. Appropriate supervision near live conductors means the supervisor
+                is physically present and actively monitoring — not in a different room or on a
+                separate floor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe isolation:</strong> Only a competent person can carry out safe isolation.
-                An apprentice should not isolate a circuit and leave it isolated as the last person
-                accountable for that isolation. They can participate in safe isolation under direct
-                supervision and as part of learning the procedure — but the competent supervisor
-                carries responsibility.
+                <strong>Safe isolation:</strong> Only a competent person can carry out safe
+                isolation. An apprentice should not isolate a circuit and leave it isolated as the
+                last person accountable for that isolation. They can participate in safe isolation
+                under direct supervision and as part of learning the procedure — but the competent
+                supervisor carries responsibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,7 +230,8 @@ const sections = [
         <p>
           A structured training plan is not just good practice — it is a requirement of the
           apprenticeship funding rules. The plan should be agreed at the start of the apprenticeship
-          between the employer, apprentice, and training provider, and reviewed at regular intervals.
+          between the employer, apprentice, and training provider, and reviewed at regular
+          intervals.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-4">
           <div>
@@ -237,10 +242,10 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Map the NVQ units against the types of work the employer carries out. Identify any
               unit areas where the employer cannot provide on-the-job experience (for example, an
-              employer who only does domestic work may not be able to provide evidence for commercial
-              or industrial units). Agree a plan with the training provider for how these gaps will
-              be addressed — through day release at college, block release at a training centre, or
-              work experience with another employer.
+              employer who only does domestic work may not be able to provide evidence for
+              commercial or industrial units). Agree a plan with the training provider for how these
+              gaps will be addressed — through day release at college, block release at a training
+              centre, or work experience with another employer.
             </p>
           </div>
           <div>
@@ -281,20 +286,37 @@ const sections = [
           The Joint Industry Board for the Electrical Contracting Industry (JIB) sets mandatory
           minimum wage rates for electricians and apprentices employed by JIB-registered employers.
           JIB registration is a requirement for membership of the major electrical contracting
-          employer associations (ECA, SELECT) and for many public sector and main contractor
-          supply chains.
+          employer associations (ECA, SELECT) and for many public sector and main contractor supply
+          chains.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white mb-4">Apprentice Wage Structure (2026 — Confirm at jib.org.uk)</h3>
+          <h3 className="font-bold text-white mb-4">
+            Apprentice Wage Structure (2026 — Confirm at jib.org.uk)
+          </h3>
           <div className="space-y-3">
             {[
               { period: 'Year 1', rate: '~£8.00/hour', note: 'Starting rate, maximum supervision' },
-              { period: 'Year 2', rate: '~£9.25/hour', note: 'Increasing independence on safe tasks' },
+              {
+                period: 'Year 2',
+                rate: '~£9.25/hour',
+                note: 'Increasing independence on safe tasks',
+              },
               { period: 'Year 3', rate: '~£10.75/hour', note: 'Significant competence expected' },
-              { period: 'Year 4 / Pre-AM2', rate: '~£12.25/hour', note: 'Near-qualified, minimal supervision on most tasks' },
-              { period: 'Post-AM2 (Electrician)', rate: 'JIB Electrician rate (significantly higher)', note: 'Full qualified electrician rate' },
+              {
+                period: 'Year 4 / Pre-AM2',
+                rate: '~£12.25/hour',
+                note: 'Near-qualified, minimal supervision on most tasks',
+              },
+              {
+                period: 'Post-AM2 (Electrician)',
+                rate: 'JIB Electrician rate (significantly higher)',
+                note: 'Full qualified electrician rate',
+              },
             ].map((row) => (
-              <div key={row.period} className="flex items-start gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/5">
+              <div
+                key={row.period}
+                className="flex items-start gap-4 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+              >
                 <div className="w-28 shrink-0">
                   <p className="text-yellow-400 font-semibold text-sm">{row.period}</p>
                 </div>
@@ -310,7 +332,9 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-bold text-white mb-1">Always confirm current rates with the JIB</h4>
+              <h4 className="font-bold text-white mb-1">
+                Always confirm current rates with the JIB
+              </h4>
               <p className="text-white text-sm leading-relaxed">
                 JIB rates are updated annually. The figures above are approximate 2026 values for
                 reference only. Always check the current JIB Working Rule Agreement at jib.org.uk
@@ -321,8 +345,8 @@ const sections = [
           </div>
         </div>
         <p>
-          Beyond the minimum JIB rates, many employers pay enhanced rates to attract and retain
-          good apprentices — particularly in areas with high competition for electrical apprentices.
+          Beyond the minimum JIB rates, many employers pay enhanced rates to attract and retain good
+          apprentices — particularly in areas with high competition for electrical apprentices.
           Travel expenses, tool allowances, and enhanced rates for lodging away from home are also
           common in the industry.
         </p>
@@ -370,10 +394,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Submit the gateway review promptly:</strong> Once the apprentice is genuinely
-                ready, submit the gateway review without delay. EMTA assessment centres have waiting
-                lists — the earlier the gateway is submitted, the earlier the AM2 can be scheduled
-                and the sooner the apprentice qualifies.
+                <strong>Submit the gateway review promptly:</strong> Once the apprentice is
+                genuinely ready, submit the gateway review without delay. EMTA assessment centres
+                have waiting lists — the earlier the gateway is submitted, the earlier the AM2 can
+                be scheduled and the sooner the apprentice qualifies.
               </span>
             </li>
           </ul>
@@ -387,32 +411,32 @@ const sections = [
     content: (
       <>
         <p>
-          The End Point Assessment Organisation (EPAO) for the electrical installation apprenticeship
-          standard (ST0215) is EMTA (Engineering and Manufacturing Training Association). EMTA
-          manages the AM2 assessment process, appoints and trains AM2 assessors, and issues the
-          End Point Assessment certificates.
+          The End Point Assessment Organisation (EPAO) for the electrical installation
+          apprenticeship standard (ST0215) is EMTA (Engineering and Manufacturing Training
+          Association). EMTA manages the AM2 assessment process, appoints and trains AM2 assessors,
+          and issues the End Point Assessment certificates.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-4">
           <div>
             <h3 className="font-bold text-white mb-2">The Gateway Process</h3>
             <p className="text-white text-sm leading-relaxed">
               Before the AM2 can be scheduled, the employer and training provider must complete a
-              gateway review confirming: the NVQ portfolio is complete and internally verified;
-              the apprenticeship standard KSBs are evidenced; Maths and English requirements are
-              met; and the employer confirms the apprentice is ready for End Point Assessment.
-              The gateway review is submitted to EMTA, who then schedules the AM2 at an approved
+              gateway review confirming: the NVQ portfolio is complete and internally verified; the
+              apprenticeship standard KSBs are evidenced; Maths and English requirements are met;
+              and the employer confirms the apprentice is ready for End Point Assessment. The
+              gateway review is submitted to EMTA, who then schedules the AM2 at an approved
               assessment centre.
             </p>
           </div>
           <div>
             <h3 className="font-bold text-white mb-2">After the AM2</h3>
             <p className="text-white text-sm leading-relaxed">
-              Following a successful AM2, EMTA issues the End Point Assessment certificate.
-              The apprentice can then apply for a JIB ECS Gold Card (Electrician grade), which
-              requires: the AM2 certificate, the Level 3 NVQ Diploma, and a valid ECS health and
-              safety test pass. The JIB Gold Card is the industry standard proof of electrical
-              qualification — most contractors and employers require it for site access and
-              employment as a qualified electrician.
+              Following a successful AM2, EMTA issues the End Point Assessment certificate. The
+              apprentice can then apply for a JIB ECS Gold Card (Electrician grade), which requires:
+              the AM2 certificate, the Level 3 NVQ Diploma, and a valid ECS health and safety test
+              pass. The JIB Gold Card is the industry standard proof of electrical qualification —
+              most contractors and employers require it for site access and employment as a
+              qualified electrician.
             </p>
           </div>
         </div>
@@ -456,8 +480,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Apprentice Training Hub</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The Elec-Mate apprentice training hub covers all City & Guilds 2365 units with
-                  AI practice questions, worked examples, and flashcards for revision on the go.
+                  The Elec-Mate apprentice training hub covers all City & Guilds 2365 units with AI
+                  practice questions, worked examples, and flashcards for revision on the go.
                   Complement the college day release with structured on-the-job revision.
                 </p>
               </div>
@@ -467,7 +491,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <ShieldCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">AI Risk Assessment and Method Statements</h4>
+                <h4 className="font-bold text-white mb-1">
+                  AI Risk Assessment and Method Statements
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate site-specific risk assessments and method statements that the apprentice
                   can learn from and contribute to. The process of creating a method statement
@@ -480,7 +506,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Support your apprentice with the tools qualified electricians use every day"
-          description="Join 430+ UK electrical contractors using Elec-Mate for quoting, certification, and AI site support. Give your apprentice access to the same professional tools — building real competence alongside real work. 7-day free trial."
+          description="Join 1,000+ UK electrical contractors using Elec-Mate for quoting, certification, and AI site support. Give your apprentice access to the same professional tools — building real competence alongside real work. 7-day free trial."
           icon={Users}
         />
       </>
@@ -517,7 +543,7 @@ export default function SupervisingApprenticesPage() {
       faqHeading="Frequently Asked Questions About Supervising Electrical Apprentices"
       relatedPages={relatedPages}
       ctaHeading="Support Your Apprentice with Professional Electrical Tools"
-      ctaSubheading="Give your apprentice access to the EIC certification app, AI training hub, and fault-finding tools used by 430+ UK electrical contractors. Build real portfolio evidence on real jobs. 7-day free trial."
+      ctaSubheading="Give your apprentice access to the EIC certification app, AI training hub, and fault-finding tools used by 1,000+ UK electrical contractors. Build real portfolio evidence on real jobs. 7-day free trial."
     />
   );
 }

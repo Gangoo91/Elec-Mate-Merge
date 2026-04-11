@@ -657,7 +657,7 @@ export default function CISForElectriciansPage() {
       faqHeading="Frequently Asked Questions About CIS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Get Your CIS Invoicing Right Every Time"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional CIS invoices with correct labour and materials split, track deductions, and export everything for Self-Assessment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional CIS invoices with correct labour and materials split, track deductions, and export everything for Self-Assessment. 7-day free trial, cancel anytime."
     />
   );
 }

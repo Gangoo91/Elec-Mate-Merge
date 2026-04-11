@@ -49,7 +49,8 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'What is the most tax-efficient salary to pay myself as a limited company electrician?',
+    question:
+      'What is the most tax-efficient salary to pay myself as a limited company electrician?',
     answer:
       'For the 2026/27 tax year, the most common recommendation is a salary of £12,570 — the personal allowance. At this level, you pay no income tax on the salary (it falls within your tax-free personal allowance), no employee National Insurance (the primary threshold is £12,570), and the company pays no employer National Insurance (the secondary threshold is £9,100, so there IS a small employer NI cost of approximately £480 at this salary level). The salary is deducted as a business expense, reducing your corporation tax bill. Some accountants recommend a lower salary of £9,100 (the secondary NI threshold) to avoid employer NI entirely, but this means you lose the tax-free benefit of the personal allowance on the remaining £3,470. For most electricians, £12,570 is the optimal figure.',
   },
@@ -94,8 +95,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrician-pension-self-employed',
     title: 'Self-Employed Pension Guide',
-    description:
-      'NEST, SIPP, tax relief, and retirement planning for self-employed electricians.',
+    description: 'NEST, SIPP, tax relief, and retirement planning for self-employed electricians.',
     icon: PiggyBank,
     category: 'Guide',
   },
@@ -134,8 +134,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/hiring-first-employee-electrician',
     title: 'Hiring Your First Employee',
-    description:
-      'PAYE, employers liability, pensions, and the true cost of bringing on staff.',
+    description: 'PAYE, employers liability, pensions, and the true cost of bringing on staff.',
     icon: Users,
     category: 'Guide',
   },
@@ -158,10 +157,10 @@ const sections = [
           on your personal allowance and state pension credits.
         </p>
         <p>
-          The optimal strategy is to pay yourself a carefully calculated salary (to use your personal
-          allowance and qualify for state pension) and take the rest as dividends (which are taxed at
-          lower rates and attract no National Insurance). Getting this split right can save you
-          £3,000 to £6,000+ per year compared to being a sole trader on the same income.
+          The optimal strategy is to pay yourself a carefully calculated salary (to use your
+          personal allowance and qualify for state pension) and take the rest as dividends (which
+          are taxed at lower rates and attract no National Insurance). Getting this split right can
+          save you £3,000 to £6,000+ per year compared to being a sole trader on the same income.
         </p>
         <p>
           This guide uses 2026/27 tax year figures and explains the optimal split for electricians
@@ -186,11 +185,25 @@ const sections = [
                 <Calculator className="w-4 h-4 text-blue-400" /> Option A: £12,570 Salary
               </h4>
               <ul className="space-y-2">
-                <li>Income tax: <strong className="text-yellow-400">£0</strong> (within personal allowance)</li>
-                <li>Employee NI: <strong className="text-yellow-400">£0</strong> (below primary threshold)</li>
-                <li>Employer NI: <strong className="text-yellow-400">~£480</strong> (13.8% above £9,100)</li>
-                <li>State pension: <strong className="text-green-400">Qualifying year</strong></li>
-                <li>Corp tax saving: <strong className="text-yellow-400">£2,390</strong> (19% of £12,570)</li>
+                <li>
+                  Income tax: <strong className="text-yellow-400">£0</strong> (within personal
+                  allowance)
+                </li>
+                <li>
+                  Employee NI: <strong className="text-yellow-400">£0</strong> (below primary
+                  threshold)
+                </li>
+                <li>
+                  Employer NI: <strong className="text-yellow-400">~£480</strong> (13.8% above
+                  £9,100)
+                </li>
+                <li>
+                  State pension: <strong className="text-green-400">Qualifying year</strong>
+                </li>
+                <li>
+                  Corp tax saving: <strong className="text-yellow-400">£2,390</strong> (19% of
+                  £12,570)
+                </li>
               </ul>
               <p className="text-white text-xs mt-3">Most accountants recommend this option</p>
             </div>
@@ -199,21 +212,38 @@ const sections = [
                 <Calculator className="w-4 h-4 text-green-400" /> Option B: £9,100 Salary
               </h4>
               <ul className="space-y-2">
-                <li>Income tax: <strong className="text-yellow-400">£0</strong> (within personal allowance)</li>
-                <li>Employee NI: <strong className="text-yellow-400">£0</strong> (below primary threshold)</li>
-                <li>Employer NI: <strong className="text-yellow-400">£0</strong> (at secondary threshold)</li>
-                <li>State pension: <strong className="text-green-400">Qualifying year</strong> (above LEL)</li>
-                <li>Corp tax saving: <strong className="text-yellow-400">£1,729</strong> (19% of £9,100)</li>
+                <li>
+                  Income tax: <strong className="text-yellow-400">£0</strong> (within personal
+                  allowance)
+                </li>
+                <li>
+                  Employee NI: <strong className="text-yellow-400">£0</strong> (below primary
+                  threshold)
+                </li>
+                <li>
+                  Employer NI: <strong className="text-yellow-400">£0</strong> (at secondary
+                  threshold)
+                </li>
+                <li>
+                  State pension: <strong className="text-green-400">Qualifying year</strong> (above
+                  LEL)
+                </li>
+                <li>
+                  Corp tax saving: <strong className="text-yellow-400">£1,729</strong> (19% of
+                  £9,100)
+                </li>
               </ul>
-              <p className="text-white text-xs mt-3">Avoids employer NI but wastes £3,470 of personal allowance</p>
+              <p className="text-white text-xs mt-3">
+                Avoids employer NI but wastes £3,470 of personal allowance
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Our recommendation:</strong> £12,570 salary. The £480 of employer NI is more than
           offset by the corporation tax saving of £2,390 on the salary, plus you fully utilise your
-          personal allowance. The net benefit over the £9,100 option is approximately £180 per year —
-          small, but there is no reason to leave it on the table.
+          personal allowance. The net benefit over the £9,100 option is approximately £180 per year
+          — small, but there is no reason to leave it on the table.
         </p>
       </>
     ),
@@ -233,12 +263,16 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-2">Basic Rate</h4>
               <p className="text-yellow-400 text-2xl font-bold">8.75%</p>
-              <p className="text-white text-xs mt-2">On dividends within the basic rate band (income up to £50,270)</p>
+              <p className="text-white text-xs mt-2">
+                On dividends within the basic rate band (income up to £50,270)
+              </p>
             </div>
             <div className="rounded-xl bg-yellow-500/10 border border-yellow-500/20 p-4">
               <h4 className="font-bold text-white mb-2">Higher Rate</h4>
               <p className="text-yellow-400 text-2xl font-bold">33.75%</p>
-              <p className="text-white text-xs mt-2">On dividends within the higher rate band (£50,270–£125,140)</p>
+              <p className="text-white text-xs mt-2">
+                On dividends within the higher rate band (£50,270–£125,140)
+              </p>
             </div>
             <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-4">
               <h4 className="font-bold text-white mb-2">Additional Rate</h4>
@@ -296,9 +330,9 @@ const sections = [
         <p>
           <strong>Important:</strong> Corporation tax is calculated on profits AFTER deducting your
           director salary, employer NI contributions, pension contributions, and all other allowable
-          business expenses. If your company has £60,000 of profit before salary and you pay yourself
-          £12,570, corporation tax is calculated on £60,000 - £12,570 - £480 (employer NI) =
-          £46,950. At 19%, that is £8,921 of corporation tax.
+          business expenses. If your company has £60,000 of profit before salary and you pay
+          yourself £12,570, corporation tax is calculated on £60,000 - £12,570 - £480 (employer NI)
+          = £46,950. At 19%, that is £8,921 of corporation tax.
         </p>
       </>
     ),
@@ -370,15 +404,20 @@ const sections = [
             <p>Income tax: £9,486 (20% on £37,700 + 40% on £9,730)</p>
             <p>Class 2 NI: £179</p>
             <p>Class 4 NI: £2,262 + £195 = £2,457</p>
-            <p>Total tax and NI: <strong className="text-red-400">£12,122</strong></p>
-            <p>Take-home: <strong>£47,878</strong></p>
+            <p>
+              Total tax and NI: <strong className="text-red-400">£12,122</strong>
+            </p>
+            <p>
+              Take-home: <strong>£47,878</strong>
+            </p>
             <p className="pt-2 font-bold">
-              Ltd company saving: approximately <span className="text-yellow-400">-£518/year</span> at this profit level
+              Ltd company saving: approximately <span className="text-yellow-400">-£518/year</span>{' '}
+              at this profit level
             </p>
             <p className="text-xs mt-2">
-              Note: At £60k profit, the Ltd company advantage is modest. The saving increases significantly
-              above £60k and once you factor in pension contributions through the company. Accountancy
-              fees (£800-£1,500/year) may offset the saving at this level.
+              Note: At £60k profit, the Ltd company advantage is modest. The saving increases
+              significantly above £60k and once you factor in pension contributions through the
+              company. Accountancy fees (£800-£1,500/year) may offset the saving at this level.
             </p>
           </div>
         </div>
@@ -399,22 +438,38 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Employee NI (Class 1 Primary)</h4>
               <ul className="space-y-2">
-                <li>Lower earnings limit: <strong className="text-yellow-400">£6,396/year</strong></li>
-                <li>Primary threshold: <strong className="text-yellow-400">£12,570/year</strong></li>
-                <li>Upper earnings limit: <strong className="text-yellow-400">£50,270/year</strong></li>
-                <li>Rate: <strong className="text-yellow-400">8%</strong> (threshold to UEL)</li>
-                <li>Rate above UEL: <strong className="text-yellow-400">2%</strong></li>
+                <li>
+                  Lower earnings limit: <strong className="text-yellow-400">£6,396/year</strong>
+                </li>
+                <li>
+                  Primary threshold: <strong className="text-yellow-400">£12,570/year</strong>
+                </li>
+                <li>
+                  Upper earnings limit: <strong className="text-yellow-400">£50,270/year</strong>
+                </li>
+                <li>
+                  Rate: <strong className="text-yellow-400">8%</strong> (threshold to UEL)
+                </li>
+                <li>
+                  Rate above UEL: <strong className="text-yellow-400">2%</strong>
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Employer NI (Class 1 Secondary)</h4>
               <ul className="space-y-2">
-                <li>Secondary threshold: <strong className="text-yellow-400">£9,100/year</strong></li>
-                <li>Rate: <strong className="text-yellow-400">13.8%</strong> (above threshold)</li>
-                <li>Employment allowance: <strong className="text-yellow-400">£10,500</strong></li>
+                <li>
+                  Secondary threshold: <strong className="text-yellow-400">£9,100/year</strong>
+                </li>
+                <li>
+                  Rate: <strong className="text-yellow-400">13.8%</strong> (above threshold)
+                </li>
+                <li>
+                  Employment allowance: <strong className="text-yellow-400">£10,500</strong>
+                </li>
                 <li className="text-white text-xs mt-2">
-                  Note: Single-director companies with no other employees
-                  cannot claim the employment allowance
+                  Note: Single-director companies with no other employees cannot claim the
+                  employment allowance
                 </li>
               </ul>
             </div>
@@ -423,8 +478,8 @@ const sections = [
         <p>
           <strong>Key insight:</strong> At a salary of £12,570, you are above the lower earnings
           limit (£6,396) which means the year counts for state pension, but below the primary
-          threshold so employee NI is £0. Employer NI is payable on the amount above £9,100
-          (= £3,470 at 13.8% = approximately £479), but this is a tax-deductible business expense.
+          threshold so employee NI is £0. Employer NI is payable on the amount above £9,100 (=
+          £3,470 at 13.8% = approximately £479), but this is a tax-deductible business expense.
         </p>
       </>
     ),
@@ -496,8 +551,9 @@ const sections = [
         </div>
         <p>
           <strong>For domestic electricians</strong> with a broad customer base, IR35 is rarely an
-          issue. <strong>For electricians subcontracting to one or two main contractors
-          full-time</strong>, IR35 is a genuine risk that should be assessed by a specialist.
+          issue.{' '}
+          <strong>For electricians subcontracting to one or two main contractors full-time</strong>,
+          IR35 is a genuine risk that should be assessed by a specialist.
         </p>
       </>
     ),
@@ -508,8 +564,8 @@ const sections = [
     content: (
       <>
         <p>
-          Running a limited company involves more filing and compliance than being a sole trader. You
-          need to decide whether to handle it yourself or use an accountant.
+          Running a limited company involves more filing and compliance than being a sole trader.
+          You need to decide whether to handle it yourself or use an accountant.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -607,7 +663,7 @@ export default function DividendVsSalaryElectricianPage() {
       faqHeading="Frequently Asked Questions About Dividend vs Salary"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Limited Company Revenue"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that help your limited company earn more. 7-day free trial, cancel anytime."
     />
   );
 }

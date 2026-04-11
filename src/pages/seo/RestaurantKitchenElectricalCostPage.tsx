@@ -21,7 +21,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Restaurant Kitchen Electrical Cost', href: '/guides/restaurant-kitchen-electrical-cost' },
+  {
+    label: 'Restaurant Kitchen Electrical Cost',
+    href: '/guides/restaurant-kitchen-electrical-cost',
+  },
 ];
 
 const tocItems = [
@@ -106,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for commercial kitchen installations.',
+    description:
+      'Complete Electrical Installation Certificates for commercial kitchen installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -137,9 +141,9 @@ const sections = [
         </p>
         <p>
           The electrical installation must support heavy-duty cooking equipment (often 3-phase),
-          commercial refrigeration, extraction and ventilation systems, lighting suitable for
-          food preparation, and emergency provisions — all in a hot, wet, greasy environment
-          that demands robust IP-rated equipment and containment.
+          commercial refrigeration, extraction and ventilation systems, lighting suitable for food
+          preparation, and emergency provisions — all in a hot, wet, greasy environment that demands
+          robust IP-rated equipment and containment.
         </p>
       </>
     ),
@@ -160,25 +164,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Combi oven (6 to 20 tray)</strong> — 10 to 30kW, 3-phase. The single
-                largest electrical load in most commercial kitchens. Requires a dedicated circuit
-                with an isolator adjacent to the appliance.
+                <strong>Combi oven (6 to 20 tray)</strong> — 10 to 30kW, 3-phase. The single largest
+                electrical load in most commercial kitchens. Requires a dedicated circuit with an
+                isolator adjacent to the appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial dishwasher</strong> — 8 to 20kW, typically 3-phase for
-                pass-through and conveyor types. Single-phase under-counter dishwashers draw
-                3 to 6kW.
+                pass-through and conveyor types. Single-phase under-counter dishwashers draw 3 to
+                6kW.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Walk-in cold room</strong> — 2 to 8kW depending on size and temperature.
-                Dedicated circuit with isolator. Compressor starting current can be 3 to 5 times
-                the running current.
+                Dedicated circuit with isolator. Compressor starting current can be 3 to 5 times the
+                running current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -191,9 +195,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          A 3-phase TPN distribution board with MCCB incomer costs £2,000 to £4,000 installed
-          for a typical restaurant kitchen. If the premises does not have an existing 3-phase
-          supply, a DNO application and upgrade costs £1,500 to £5,000 additional.
+          A 3-phase TPN distribution board with MCCB incomer costs £2,000 to £4,000 installed for a
+          typical restaurant kitchen. If the premises does not have an existing 3-phase supply, a
+          DNO application and upgrade costs £1,500 to £5,000 additional.
         </p>
       </>
     ),
@@ -206,8 +210,7 @@ const sections = [
         <p>
           The extraction interlock system is one of the most critical safety elements in a
           commercial kitchen. It ensures that gas cooking appliances cannot operate unless the
-          extraction ventilation is running — preventing potentially fatal carbon monoxide
-          build-up.
+          extraction ventilation is running — preventing potentially fatal carbon monoxide build-up.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Interlock System Requirements</h3>
@@ -226,16 +229,16 @@ const sections = [
               <span>
                 <strong>Current sensor or air pressure switch</strong> — Monitors that the
                 extraction fan is running. A current sensor on the fan motor supply is the most
-                common method. Air pressure switches across the duct are an alternative. Supply
-                and install: £100 to £250.
+                common method. Air pressure switches across the duct are an alternative. Supply and
+                install: £100 to £250.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Interlock control panel</strong> — Links the extraction monitoring to the
-                gas solenoid valve. Provides status indication and fault alarm. Supply and
-                install: £300 to £800.
+                gas solenoid valve. Provides status indication and fault alarm. Supply and install:
+                £300 to £800.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -249,8 +252,8 @@ const sections = [
         </div>
         <p>
           Total extraction interlock system cost: £800 to £2,000 depending on the number of gas
-          appliances and the complexity of the extraction system. This is a legal requirement
-          under the Gas Safety (Installation and Use) Regulations 1998 and IGEM/UP/19.
+          appliances and the complexity of the extraction system. This is a legal requirement under
+          the Gas Safety (Installation and Use) Regulations 1998 and IGEM/UP/19.
         </p>
       </>
     ),
@@ -262,26 +265,26 @@ const sections = [
       <>
         <p>
           Commercial kitchens are hostile environments for electrical equipment. Steam, water
-          splash, grease, and regular wash-down mean that all electrical accessories and
-          connections must be appropriately IP rated.
+          splash, grease, and regular wash-down mean that all electrical accessories and connections
+          must be appropriately IP rated.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">General Kitchen Areas (IP44)</h3>
             <p className="text-white text-sm leading-relaxed">
-              IP44 provides protection against splashing water from any direction and solid
-              objects over 1mm. Suitable for general cooking areas, preparation surfaces, and
-              serving areas. IP44 socket outlets with spring-loaded covers: £15 to £30 each.
-              IP44 isolators for equipment connections: £20 to £45 each.
+              IP44 provides protection against splashing water from any direction and solid objects
+              over 1mm. Suitable for general cooking areas, preparation surfaces, and serving areas.
+              IP44 socket outlets with spring-loaded covers: £15 to £30 each. IP44 isolators for
+              equipment connections: £20 to £45 each.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Wash-Down Zones (IP65)</h3>
             <p className="text-white text-sm leading-relaxed">
-              IP65 provides protection against low-pressure water jets from any direction.
-              Required near pot wash areas, dishwasher stations, and areas subject to
-              floor-level wash-down. IP65 socket outlets: £25 to £50 each. IP65 light
-              fittings: £40 to £80 each. IP65 junction boxes: £15 to £30 each.
+              IP65 provides protection against low-pressure water jets from any direction. Required
+              near pot wash areas, dishwasher stations, and areas subject to floor-level wash-down.
+              IP65 socket outlets: £25 to £50 each. IP65 light fittings: £40 to £80 each. IP65
+              junction boxes: £15 to £30 each.
             </p>
           </div>
         </div>
@@ -312,8 +315,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency gas shut-off</strong> — Large red mushroom-head button near the
-                main exit. Activates the gas solenoid valve to shut off gas to all appliances.
-                Cost: £80 to £150 installed.
+                main exit. Activates the gas solenoid valve to shut off gas to all appliances. Cost:
+                £80 to £150 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,16 +345,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small cafe kitchen (£5,000 to £7,000)</strong> — Single-phase supply,
-                4 to 6 equipment connections, basic extraction interlock, IP44 accessories,
-                emergency lighting, 8 to 10 socket outlets. 3 to 5 days installation.
+                <strong>Small cafe kitchen (£5,000 to £7,000)</strong> — Single-phase supply, 4 to 6
+                equipment connections, basic extraction interlock, IP44 accessories, emergency
+                lighting, 8 to 10 socket outlets. 3 to 5 days installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium restaurant kitchen (£8,000 to £12,000)</strong> — 3-phase supply,
-                8 to 12 equipment connections including combi oven and dishwasher, full extraction
+                <strong>Medium restaurant kitchen (£8,000 to £12,000)</strong> — 3-phase supply, 8
+                to 12 equipment connections including combi oven and dishwasher, full extraction
                 interlock, IP44/IP65 accessories, emergency stop, emergency lighting, 15 to 20
                 socket outlets. 1 to 2 weeks installation.
               </span>
@@ -389,18 +392,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — The wiring regulations. RCD protection
-                per Regulation 411.3.3 applies to all socket outlets up to 32A. Equipment
-                connections must comply with the appropriate sections for the environment.
+                <strong>BS 7671:2018+A3:2024</strong> — The wiring regulations. RCD protection per
+                Regulation 411.3.3 applies to all socket outlets up to 32A. Equipment connections
+                must comply with the appropriate sections for the environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Gas Safety (Installation and Use) Regulations 1998</strong> — Requires
-                extraction interlock for gas cooking appliances in commercial kitchens. The
-                gas work must be done by a Gas Safe registered engineer; the electrical
-                interlock wiring is the electrician's responsibility.
+                extraction interlock for gas cooking appliances in commercial kitchens. The gas work
+                must be done by a Gas Safe registered engineer; the electrical interlock wiring is
+                the electrician's responsibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -421,8 +424,8 @@ const sections = [
         </div>
         <p>
           An Electrical Installation Certificate (EIC) must be issued for the complete kitchen
-          electrical installation. The extraction interlock system should be commissioned and
-          a separate commissioning certificate provided.
+          electrical installation. The extraction interlock system should be commissioned and a
+          separate commissioning certificate provided.
         </p>
       </>
     ),
@@ -433,8 +436,8 @@ const sections = [
     content: (
       <>
         <p>
-          Restaurant kitchen electrical work is specialist, high-value work. Here are practical
-          tips for quoting these projects:
+          Restaurant kitchen electrical work is specialist, high-value work. Here are practical tips
+          for quoting these projects:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -443,10 +446,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Get the Equipment Schedule Early</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Request the full kitchen equipment schedule from the kitchen design company
-                  before quoting. You need the kW rating, voltage (single or 3-phase), and
-                  connection type for every piece of fixed equipment. Do not guess — the
-                  difference between a 10kW and a 30kW combi oven is significant.
+                  Request the full kitchen equipment schedule from the kitchen design company before
+                  quoting. You need the kW rating, voltage (single or 3-phase), and connection type
+                  for every piece of fixed equipment. Do not guess — the difference between a 10kW
+                  and a 30kW combi oven is significant.
                 </p>
               </div>
             </div>
@@ -457,11 +460,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Coordinate with the Gas Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The extraction interlock requires close coordination between the electrician,
-                  the gas engineer, and the ventilation contractor. Agree responsibilities
-                  clearly before starting. The electrician typically provides the interlock
-                  panel, wiring, and gas solenoid connection. The gas engineer commissions
-                  the gas side.
+                  The extraction interlock requires close coordination between the electrician, the
+                  gas engineer, and the ventilation contractor. Agree responsibilities clearly
+                  before starting. The electrician typically provides the interlock panel, wiring,
+                  and gas solenoid connection. The gas engineer commissions the gas side.
                 </p>
               </div>
             </div>
@@ -473,10 +475,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Document Everything</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Commercial kitchen installations are subject to Environmental Health inspection.
-                  Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> thoroughly,
-                  photograph interlock wiring and emergency stop positions, and provide a clear
-                  hand-over document to the client. This protects you and demonstrates
+                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  thoroughly, photograph interlock wiring and emergency stop positions, and provide
+                  a clear hand-over document to the client. This protects you and demonstrates
                   professionalism.
                 </p>
               </div>
@@ -522,7 +523,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Restaurant Kitchen Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Restaurant Kitchen Electrical with Equipment Schedules"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial kitchen quoting with equipment schedules, interlock costing, and professional PDF output. 7-day free trial."
     />
   );
 }

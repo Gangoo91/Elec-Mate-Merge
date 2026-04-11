@@ -641,7 +641,7 @@ export default function ThreePhaseInstallationPage() {
       faqHeading="Frequently Asked Questions About Three Phase Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Design Boards Faster"
-      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's cable sizing calculator, voltage drop calculator, and AI circuit designer handle three phase calculations instantly. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

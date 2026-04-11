@@ -495,7 +495,7 @@ export default function BMSCoursePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Upskill into BMS with Elec-Mate"
-            description="Access BMS training, 70+ electrical calculators, 8 certificate types, and AI-powered study tools — all in one app built for UK electricians. Study at your own pace around your working day."
+            description="Access BMS training, 70+ electrical calculators, 16 certificate types, and AI-powered study tools — all in one app built for UK electricians. Study at your own pace around your working day."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />
@@ -562,7 +562,7 @@ export default function BMSCoursePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Ready to move into BMS?"
-        subheading="Join 430+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians studying smarter with AI. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

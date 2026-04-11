@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-system-design',
     title: 'Solar PV System Design',
-    description: 'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
+    description:
+      'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/solar-battery-storage-installation',
     title: 'Solar Battery Storage Installation',
-    description: 'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
+    description:
+      'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
     icon: Zap,
     category: 'Guide',
   },
@@ -107,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-maintenance',
     title: 'Solar Panel Maintenance',
-    description: 'Annual inspection checklist, cleaning, inverter replacement, and monitoring setup.',
+    description:
+      'Annual inspection checklist, cleaning, inverter replacement, and monitoring setup.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -131,8 +134,8 @@ const sections = [
     content: (
       <>
         <p>
-          The Microgeneration Certification Scheme (MCS) is the UK's quality assurance framework
-          for small-scale renewable energy technologies. It certifies both the products (panels,
+          The Microgeneration Certification Scheme (MCS) is the UK's quality assurance framework for
+          small-scale renewable energy technologies. It certifies both the products (panels,
           inverters, batteries) used in installations and the installers who carry out the work,
           providing consumers with confidence that their system has been correctly designed,
           installed, and documented.
@@ -142,28 +145,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Technologies covered:</strong> Solar PV (MCS 001), solar thermal (MCS
-                002), heat pumps (MCS 007), biomass (MCS 006), battery storage (MCS 030), and
-                wind turbines (MCS 006). An installer must hold a separate certification scope
-                for each technology they install under MCS.
+                <strong>Technologies covered:</strong> Solar PV (MCS 001), solar thermal (MCS 002),
+                heat pumps (MCS 007), biomass (MCS 006), battery storage (MCS 030), and wind
+                turbines (MCS 006). An installer must hold a separate certification scope for each
+                technology they install under MCS.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Product certification:</strong> Panels, inverters, and batteries used
-                in MCS-certified installations must be listed on the MCS Product Directory.
-                Products are independently tested and listed by the manufacturer. Using an
-                unlisted product in an MCS installation is a compliance failure and can invalidate
-                the customer's MCS certificate.
+                <strong>Product certification:</strong> Panels, inverters, and batteries used in
+                MCS-certified installations must be listed on the MCS Product Directory. Products
+                are independently tested and listed by the manufacturer. Using an unlisted product
+                in an MCS installation is a compliance failure and can invalidate the customer's MCS
+                certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Installer certification:</strong> Approximately 3,000 MCS-certified
-                installer companies are registered in the UK. The MCS Contractor Database
-                allows homeowners to find certified installers by postcode and technology.
+                installer companies are registered in the UK. The MCS Contractor Database allows
+                homeowners to find certified installers by postcode and technology.
               </span>
             </li>
           </ul>
@@ -178,8 +181,8 @@ const sections = [
       <>
         <p>
           MCS certification is the gateway to virtually all UK solar PV financial incentives and
-          consumer protections. Without MCS, a solar installation has significantly reduced value
-          to the customer and limited commercial appeal for the installer.
+          consumer protections. Without MCS, a solar installation has significantly reduced value to
+          the customer and limited commercial appeal for the installer.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,26 +198,26 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>0% VAT on battery storage:</strong> Battery storage installed alongside
-                solar PV qualifies for 0% VAT only when the solar installation is MCS-certified.
-                A non-MCS battery installation attracts 20% VAT, adding significant cost for
-                the customer.
+                solar PV qualifies for 0% VAT only when the solar installation is MCS-certified. A
+                non-MCS battery installation attracts 20% VAT, adding significant cost for the
+                customer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grant funding:</strong> ECO4, LA Flex, and Home Energy Scotland loans
-                all require MCS certification. These schemes can fund the entire cost of
-                installation for eligible households.
+                <strong>Grant funding:</strong> ECO4, LA Flex, and Home Energy Scotland loans all
+                require MCS certification. These schemes can fund the entire cost of installation
+                for eligible households.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property value and insurability:</strong> Mortgage lenders and home
-                insurers typically require an MCS Installation Certificate before recognising
-                solar panels as a property feature or providing appropriate cover. An
-                MCS-certified system increases a property's EPC rating and market value.
+                <strong>Property value and insurability:</strong> Mortgage lenders and home insurers
+                typically require an MCS Installation Certificate before recognising solar panels as
+                a property feature or providing appropriate cover. An MCS-certified system increases
+                a property's EPC rating and market value.
               </span>
             </li>
           </ul>
@@ -229,8 +232,8 @@ const sections = [
       <>
         <p>
           The MCS certification process follows a structured path from initial application through
-          to certification. Here are the key steps for an electrical company seeking solar PV
-          (MCS 001) certification:
+          to certification. Here are the key steps for an electrical company seeking solar PV (MCS
+          001) certification:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -255,10 +258,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — Submit your application:</strong> Complete the application
-                form and submit with supporting documents including qualifications, insurance
-                certificates, and your quality management system documentation. The certification
-                body will review and confirm eligibility.
+                <strong>Step 3 — Submit your application:</strong> Complete the application form and
+                submit with supporting documents including qualifications, insurance certificates,
+                and your quality management system documentation. The certification body will review
+                and confirm eligibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,8 +277,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Certification issued:</strong> If the audit is successful,
-                certification is issued and your company is listed on the MCS Contractor
-                Database. You can then issue MCS Installation Certificates (MICs) to customers.
+                certification is issued and your company is listed on the MCS Contractor Database.
+                You can then issue MCS Installation Certificates (MICs) to customers.
               </span>
             </li>
           </ul>
@@ -298,17 +301,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Initial assessment fee:</strong> £500–£1,500 depending on the
-                certification body. This covers document review and the initial audit visit.
-                Some bodies include a pre-assessment consultation.
+                <strong>Initial assessment fee:</strong> £500–£1,500 depending on the certification
+                body. This covers document review and the initial audit visit. Some bodies include a
+                pre-assessment consultation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual registration fee:</strong> £500–£1,200 per year for a small
-                company. This covers annual surveillance audits and maintenance of your listing
-                on the MCS Contractor Database.
+                <strong>Annual registration fee:</strong> £500–£1,200 per year for a small company.
+                This covers annual surveillance audits and maintenance of your listing on the MCS
+                Contractor Database.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -322,20 +325,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MIC issuance fees:</strong> Some certification bodies charge a small
-                fee (£2–£5) for each MCS Installation Certificate issued. Others include
-                unlimited MICs in the annual registration fee. Check the fee schedule before
-                choosing a certification body if you plan to issue high volumes.
+                <strong>MIC issuance fees:</strong> Some certification bodies charge a small fee
+                (£2–£5) for each MCS Installation Certificate issued. Others include unlimited MICs
+                in the annual registration fee. Check the fee schedule before choosing a
+                certification body if you plan to issue high volumes.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Training costs (solar-specific qualifications such as City & Guilds 2399 or BPEC
-          Solar PV) are additional — typically £400–£800 per engineer for a one-week course.
-          The total investment to become MCS-certified and trained is typically £1,500–£4,000
-          for a sole trader, recovered within the first 2–5 solar installations at current
-          margins.
+          Training costs (solar-specific qualifications such as City & Guilds 2399 or BPEC Solar PV)
+          are additional — typically £400–£800 per engineer for a one-week course. The total
+          investment to become MCS-certified and trained is typically £1,500–£4,000 for a sole
+          trader, recovered within the first 2–5 solar installations at current margins.
         </p>
       </>
     ),
@@ -347,8 +349,8 @@ const sections = [
       <>
         <p>
           Maintaining MCS certification requires an annual audit by your certification body.
-          Understanding what the audit covers helps you prepare effectively and avoid the risk
-          of suspension.
+          Understanding what the audit covers helps you prepare effectively and avoid the risk of
+          suspension.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -364,30 +366,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Physical installation inspection:</strong> The auditor typically selects
-                one or more recent installations for a physical inspection, checking compliance
-                with MCS 001 (design, cable routing, labelling, commissioning) and BS 7671.
-                All installations must be to the same standard regardless of whether they are
-                audited.
+                <strong>Physical installation inspection:</strong> The auditor typically selects one
+                or more recent installations for a physical inspection, checking compliance with MCS
+                001 (design, cable routing, labelling, commissioning) and BS 7671. All installations
+                must be to the same standard regardless of whether they are audited.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Quality management system:</strong> The auditor checks that your QMS
-                documentation is current, that calibration records for test equipment are
-                maintained (multimeters, clamp meters, and insulation testers used on PV work
-                must be calibrated annually), and that any changes to the company are reflected
-                in the documentation.
+                documentation is current, that calibration records for test equipment are maintained
+                (multimeters, clamp meters, and insulation testers used on PV work must be
+                calibrated annually), and that any changes to the company are reflected in the
+                documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-conformance process:</strong> Where issues are found, the
-                certification body issues a corrective action report with a deadline for
-                remediation. Minor non-conformances are typically resolved without impact on
-                certification; major non-conformances can result in suspension pending resolution.
+                <strong>Non-conformance process:</strong> Where issues are found, the certification
+                body issues a corrective action report with a deadline for remediation. Minor
+                non-conformances are typically resolved without impact on certification; major
+                non-conformances can result in suspension pending resolution.
               </span>
             </li>
           </ul>
@@ -401,8 +402,8 @@ const sections = [
     content: (
       <>
         <p>
-          MCS 001 (Microgeneration Installation Standard: Issue 3.0 — Solar Photovoltaic Systems)
-          is the technical standard that governs every aspect of an MCS-certified solar PV
+          MCS 001 (Microgeneration Installation Standard: Issue 3.0 — Solar Photovoltaic Systems) is
+          the technical standard that governs every aspect of an MCS-certified solar PV
           installation. Installers must demonstrate compliance with MCS 001 at every stage from
           design to handover.
         </p>
@@ -428,18 +429,18 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Handover pack:</strong> MCS 001 specifies a mandatory handover pack
-                including: the MCS Installation Certificate (MIC), system schematic, operation
-                and maintenance manual, commissioning test results, DNO notification reference,
-                and warranty documentation.
+                including: the MCS Installation Certificate (MIC), system schematic, operation and
+                maintenance manual, commissioning test results, DNO notification reference, and
+                warranty documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on
-                BS 7671:2018+A3:2024 Section 712. Compliance with BS 7671 is a prerequisite
-                for MCS 001 compliance — MCS does not replace the wiring regulations, it
-                supplements them with microgeneration-specific requirements.
+                <strong>Relationship with BS 7671:</strong> MCS 001 references and builds on BS
+                7671:2018+A3:2024 Section 712. Compliance with BS 7671 is a prerequisite for MCS 001
+                compliance — MCS does not replace the wiring regulations, it supplements them with
+                microgeneration-specific requirements.
               </span>
             </li>
           </ul>
@@ -453,34 +454,34 @@ const sections = [
     content: (
       <>
         <p>
-          Homeowners and businesses looking for MCS-certified solar PV installers can use
-          several official resources to find registered companies in their area:
+          Homeowners and businesses looking for MCS-certified solar PV installers can use several
+          official resources to find registered companies in their area:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS Contractor Database:</strong> installer.mcscertified.com — the
-                official MCS installer search. Filter by postcode and technology type. All
-                listed companies are currently certified and have passed an MCS audit.
+                <strong>MCS Contractor Database:</strong> installer.mcscertified.com — the official
+                MCS installer search. Filter by postcode and technology type. All listed companies
+                are currently certified and have passed an MCS audit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC, NAPIT, and ELECSA:</strong> Each competent person scheme
-                maintains a publicly searchable contractor database. Filtering for solar PV
-                certified members returns MCS-certified electricians.
+                <strong>NICEIC, NAPIT, and ELECSA:</strong> Each competent person scheme maintains a
+                publicly searchable contractor database. Filtering for solar PV certified members
+                returns MCS-certified electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify before committing:</strong> Always check the installer's MCS
-                number on the official database before paying a deposit. Unscrupulous traders
-                have occasionally claimed MCS certification falsely. A legitimate MCS installer
-                will provide their MCS number upfront and can be verified online.
+                <strong>Verify before committing:</strong> Always check the installer's MCS number
+                on the official database before paying a deposit. Unscrupulous traders have
+                occasionally claimed MCS certification falsely. A legitimate MCS installer will
+                provide their MCS number upfront and can be verified online.
               </span>
             </li>
           </ul>
@@ -503,7 +504,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue MCS installation certificates with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs, and solar installation documentation on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue EICs, EICRs, and solar installation documentation on your phone. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -540,7 +541,7 @@ export default function MCSCertificationGuidePage() {
       faqHeading="Frequently Asked Questions About MCS Certification"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Solar Business with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Type C MCBs trip magnetically between 5 and 10 times rated current — designed for moderately inductive loads such as motors, discharge lighting, and fluorescent fittings with magnetic ballasts.',
   'Type D MCBs trip magnetically between 10 and 20 times rated current — reserved for highly inductive loads with very high inrush currents such as transformers, X-ray machines, and welding equipment.',
   'Using a higher-type MCB than necessary (e.g. Type C where Type B would suffice) reduces the maximum permitted Zs, making it harder to achieve compliant earth fault loop impedance readings.',
-  'Elec-Mate includes 50+ calculators that automatically look up the correct maximum Zs for any MCB type and rating, and the AI board scanner identifies MCB types from a photograph of the consumer unit.',
+  'Elec-Mate includes 70+ calculators that automatically look up the correct maximum Zs for any MCB type and rating, and the AI board scanner identifies MCB types from a photograph of the consumer unit.',
 ];
 
 const faqs = [
@@ -499,7 +499,7 @@ const sections = [
           problems at the testing stage.
         </p>
         <SEOAppBridge
-          title="50+ calculators including Zs by MCB type"
+          title="70+ calculators including Zs by MCB type"
           description="Elec-Mate has every BS 7671 maximum Zs value built in. Select the MCB type (B, C, or D) and rating, and the calculator shows the tabulated maximum and the 0.8-corrected value instantly. Plus cable sizing, voltage drop, PFC, adiabatic, and maximum demand calculators."
           icon={Calculator}
         />
@@ -596,7 +596,7 @@ export default function MCBTypesBCDPage() {
       faqHeading="Frequently Asked Questions About MCB Types"
       relatedPages={relatedPages}
       ctaHeading="Look Up Maximum Zs by MCB Type Instantly"
-      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate has every BS 7671 Zs value for Type B, C, and D MCBs built in. AI board scanner reads MCB types from a photo. Voice entry records test results hands-free. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

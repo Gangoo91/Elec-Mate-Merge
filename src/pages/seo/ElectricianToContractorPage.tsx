@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'When should I hire my first employee?',
     answer:
-      'The decision to hire your first employee is one of the most significant in a small electrical contractor\'s business development. The general rule of thumb is: hire when you are consistently turning down work because you cannot service the demand alone, and when your annual billings are at a level where the additional cost of an employee (salary, NI, pension, holiday pay, tools) is comfortably covered by the additional revenue they generate. For most electrical contractors, this point is reached at annual billings of £120,000 to £150,000. At this level, a competent electrician employee generating £80,000 to £100,000 of additional annual billing (above their cost) creates a viable business case. Before hiring, consider whether subcontracting is a better alternative — taking on a self-employed labourer or electrician on a job-by-job basis to manage demand peaks without the fixed overhead of employment.',
+      "The decision to hire your first employee is one of the most significant in a small electrical contractor's business development. The general rule of thumb is: hire when you are consistently turning down work because you cannot service the demand alone, and when your annual billings are at a level where the additional cost of an employee (salary, NI, pension, holiday pay, tools) is comfortably covered by the additional revenue they generate. For most electrical contractors, this point is reached at annual billings of £120,000 to £150,000. At this level, a competent electrician employee generating £80,000 to £100,000 of additional annual billing (above their cost) creates a viable business case. Before hiring, consider whether subcontracting is a better alternative — taking on a self-employed labourer or electrician on a job-by-job basis to manage demand peaks without the fixed overhead of employment.",
   },
   {
     question: 'How do I tender for larger commercial electrical work?',
@@ -135,11 +135,11 @@ const sections = [
     content: (
       <>
         <p>
-          Going from employed electrician to running your own electrical contracting business is
-          one of the most common career moves in the trade — and one of the most financially
-          rewarding for those who approach it systematically. The majority of small electrical
-          contractors in the UK are former employed electricians who built their own customer base
-          and business over time.
+          Going from employed electrician to running your own electrical contracting business is one
+          of the most common career moves in the trade — and one of the most financially rewarding
+          for those who approach it systematically. The majority of small electrical contractors in
+          the UK are former employed electricians who built their own customer base and business
+          over time.
         </p>
         <p>
           The transition is not without risk. Irregular income, business administration overhead,
@@ -170,10 +170,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Register as self-employed with HMRC</strong> — do this as soon as you
-                start trading. You have until 5 October after the end of the tax year in which
-                you first trade. Penalty for late registration can apply. Consider whether a
-                limited company structure offers better tax efficiency — speak to an accountant.
+                <strong>Register as self-employed with HMRC</strong> — do this as soon as you start
+                trading. You have until 5 October after the end of the tax year in which you first
+                trade. Penalty for late registration can apply. Consider whether a limited company
+                structure offers better tax efficiency — speak to an accountant.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -188,10 +188,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public liability insurance</strong> — arrange cover before your first job.
-                A minimum of £2m is typically required; £5m is more appropriate for domestic work
-                and is required by many clients and main contractors. Annual cost: £300 to £700
-                for a sole trader.
+                <strong>Public liability insurance</strong> — arrange cover before your first job. A
+                minimum of £2m is typically required; £5m is more appropriate for domestic work and
+                is required by many clients and main contractors. Annual cost: £300 to £700 for a
+                sole trader.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -207,8 +207,8 @@ const sections = [
               <span>
                 <strong>Van and commercial insurance</strong> — your vehicle must be insured for
                 commercial use (carrying tools and equipment in the course of business). Standard
-                personal vehicle insurance does not cover business use. Tool insurance can be
-                added to most commercial vehicle policies.
+                personal vehicle insurance does not cover business use. Tool insurance can be added
+                to most commercial vehicle policies.
               </span>
             </li>
           </ul>
@@ -227,8 +227,8 @@ const sections = [
     content: (
       <>
         <p>
-          Building a customer base takes time and consistency. The most effective approaches for
-          a new electrical contractor:
+          Building a customer base takes time and consistency. The most effective approaches for a
+          new electrical contractor:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -239,8 +239,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Start with people who already know and trust you. Family, friends, neighbours,
                   former colleagues. Do these jobs to an exceptional standard — every satisfied
-                  customer in your personal network is your most effective marketing channel.
-                  A personal recommendation converts at a far higher rate than any advertisement.
+                  customer in your personal network is your most effective marketing channel. A
+                  personal recommendation converts at a far higher rate than any advertisement.
                 </p>
               </div>
             </div>
@@ -251,10 +251,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Online reviews and local listings</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Set up a Google Business Profile, Checkatrade listing, and Facebook business
-                  page. Ask every satisfied customer to leave a Google review. A business with
-                  20+ positive reviews and a 4.8-star rating converts significantly better than
-                  one with no reviews. This compounds over time.
+                  Set up a Google Business Profile, Checkatrade listing, and Facebook business page.
+                  Ask every satisfied customer to leave a Google review. A business with 20+
+                  positive reviews and a 4.8-star rating converts significantly better than one with
+                  no reviews. This compounds over time.
                 </p>
               </div>
             </div>
@@ -267,8 +267,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   A good relationship with two or three local letting agents generates consistent
                   EICR and remedial work. Visit in person, introduce yourself, leave a business
-                  card, and follow up. Offer a competitive per-certificate rate and guaranteed
-                  fast turnaround — these are the two things letting agents care about most.
+                  card, and follow up. Offer a competitive per-certificate rate and guaranteed fast
+                  turnaround — these are the two things letting agents care about most.
                 </p>
               </div>
             </div>
@@ -295,9 +295,9 @@ const sections = [
                 <strong>Step 1 — Calculate your annual overhead</strong>. Add up all fixed and
                 variable costs: van (finance/lease/depreciation, insurance, fuel, servicing, road
                 tax), tools (purchase and replacement), scheme membership, insurance, accountancy,
-                phone and broadband, professional subscriptions, marketing. Divide by the number
-                of billable days you expect per year (typically 200 to 220 for a sole trader).
-                This gives your overhead cost per day.
+                phone and broadband, professional subscriptions, marketing. Divide by the number of
+                billable days you expect per year (typically 200 to 220 for a sole trader). This
+                gives your overhead cost per day.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -305,18 +305,18 @@ const sections = [
               <span>
                 <strong>Step 2 — Set your labour rate</strong>. Add your desired annual salary
                 (before tax) to your annual overhead, divide by billable days. This is your
-                break-even day rate. Add your profit margin target (15 to 25%) to get your
-                selling day rate. In 2026, a well-run sole trader in most UK regions should be
-                achieving a selling day rate of £250 to £400+ depending on location and work type.
+                break-even day rate. Add your profit margin target (15 to 25%) to get your selling
+                day rate. In 2026, a well-run sole trader in most UK regions should be achieving a
+                selling day rate of £250 to £400+ depending on location and work type.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — Price materials at cost plus margin</strong>. Add your trade
-                price for materials plus a margin (typically 15 to 30%) to cover procurement time,
-                waste, and the risk of price changes between ordering and invoicing. Never supply
-                materials at cost — the material margin is a legitimate part of the job profit.
+                <strong>Step 3 — Price materials at cost plus margin</strong>. Add your trade price
+                for materials plus a margin (typically 15 to 30%) to cover procurement time, waste,
+                and the risk of price changes between ordering and invoicing. Never supply materials
+                at cost — the material margin is a legitimate part of the job profit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,19 +345,22 @@ const sections = [
       <>
         <p>
           Insurance is not optional for an electrical contractor. The consequences of working
-          uninsured — a house fire traced to your installation, a client who trips over your
-          cable run — can be financially catastrophic. The essential covers:
+          uninsured — a house fire traced to your installation, a client who trips over your cable
+          run — can be financially catastrophic. The essential covers:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public Liability Insurance (PLI)</strong> — covers claims from third
-                parties (clients, members of the public) for injury or property damage caused
-                by your work. Minimum £2m; £5m is the standard for domestic electrical work.
-                Most NICEIC and NAPIT registered contractors carry £5m as a minimum.
-                <em> Legal minimum: none set by statute, but scheme membership usually requires it.</em>
+                <strong>Public Liability Insurance (PLI)</strong> — covers claims from third parties
+                (clients, members of the public) for injury or property damage caused by your work.
+                Minimum £2m; £5m is the standard for domestic electrical work. Most NICEIC and NAPIT
+                registered contractors carry £5m as a minimum.
+                <em>
+                  {' '}
+                  Legal minimum: none set by statute, but scheme membership usually requires it.
+                </em>
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -372,18 +375,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Professional Indemnity Insurance</strong> — covers claims arising from
-                errors in your professional advice or design recommendations. Increasingly
-                important as electricians take on more design responsibility (EV charging
-                infrastructure, solar PV systems, battery storage). Minimum £500k; £1m recommended.
+                errors in your professional advice or design recommendations. Increasingly important
+                as electricians take on more design responsibility (EV charging infrastructure,
+                solar PV systems, battery storage). Minimum £500k; £1m recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Employers Liability Insurance (ELI)</strong> — <em>legally required</em>
-                as soon as you employ anyone (including part-time and temporary workers).
-                Statutory minimum: £5m. Failure to hold ELI when employing staff is a criminal
-                offence, with fines of up to £2,500 per day.
+                as soon as you employ anyone (including part-time and temporary workers). Statutory
+                minimum: £5m. Failure to hold ELI when employing staff is a criminal offence, with
+                fines of up to £2,500 per day.
               </span>
             </li>
           </ul>
@@ -397,8 +400,8 @@ const sections = [
     content: (
       <>
         <p>
-          The decision to hire your first employee is a major business milestone. The key
-          indicators that it is time to hire:
+          The decision to hire your first employee is a major business milestone. The key indicators
+          that it is time to hire:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -415,8 +418,8 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Turning down work regularly</strong> — if you are declining enquiries
-                because you are fully booked, you are leaving revenue on the table. An employee
-                who generates their own cost plus a margin transforms this into profit.
+                because you are fully booked, you are leaving revenue on the table. An employee who
+                generates their own cost plus a margin transforms this into profit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,18 +433,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consider subcontracting first</strong> — before employing, consider
-                engaging a self-employed electrician on a job-by-job basis to manage demand
-                peaks. This gives flexibility without the fixed overhead of employment.
+                <strong>Consider subcontracting first</strong> — before employing, consider engaging
+                a self-employed electrician on a job-by-job basis to manage demand peaks. This gives
+                flexibility without the fixed overhead of employment.
               </span>
             </li>
           </ul>
         </div>
         <p>
           When you hire, ensure you register as an employer with HMRC, set up RTI (Real Time
-          Information) payroll reporting, arrange Employers Liability Insurance, and issue a
-          written contract of employment within 1 day of employment starting (a legal requirement
-          under the Employment Rights Act 1996 as amended).
+          Information) payroll reporting, arrange Employers Liability Insurance, and issue a written
+          contract of employment within 1 day of employment starting (a legal requirement under the
+          Employment Rights Act 1996 as amended).
         </p>
       </>
     ),
@@ -452,8 +455,8 @@ const sections = [
     content: (
       <>
         <p>
-          Moving from domestic into commercial tendering opens access to higher-value contracts.
-          The requirements for commercial tendering:
+          Moving from domestic into commercial tendering opens access to higher-value contracts. The
+          requirements for commercial tendering:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -461,17 +464,17 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Supply chain accreditation</strong> — CHAS (Contractors Health and Safety
-                Assessment Scheme), Constructionline, or Safe Contractor are required by most
-                main contractors and public sector clients. Apply for CHAS as a first step — it
-                covers health and safety, insurance, and business compliance in a single audit.
+                Assessment Scheme), Constructionline, or Safe Contractor are required by most main
+                contractors and public sector clients. Apply for CHAS as a first step — it covers
+                health and safety, insurance, and business compliance in a single audit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RAMS capability</strong> — commercial clients and main contractors require
-                Risk Assessment and Method Statements (RAMS) for all notifiable work. Invest
-                time in developing standard RAMS templates for your common work types.
+                Risk Assessment and Method Statements (RAMS) for all notifiable work. Invest time in
+                developing standard RAMS templates for your common work types.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -487,9 +490,9 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>References and portfolio</strong> — keep records of completed commercial
-                projects with photographs, client contact details for references, and copies of
-                the electrical completion documentation. This builds the evidence base that wins
-                the next contract.
+                projects with photographs, client contact details for references, and copies of the
+                electrical completion documentation. This builds the evidence base that wins the
+                next contract.
               </span>
             </li>
           </ul>
@@ -528,7 +531,7 @@ export default function ElectricianToContractorPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Contracting Business"
       relatedPages={relatedPages}
       ctaHeading="Run Your Electrical Business Professionally from Day One"
-      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate gives electrical contractors professional quoting, on-site certification, and job management tools. 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

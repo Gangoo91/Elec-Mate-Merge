@@ -326,11 +326,11 @@ const sections = [
               For TT earthing systems (common in rural areas), the earth path goes through the
               general mass of earth via an earth rod, which inherently has much higher impedance
               than a metallic return path. On TT systems, Zs will often exceed the MCB maximum
-              values, which is why BS 7671 requires RCD protection (not
-              overcurrent protection) as the primary means of fault disconnection in TT systems. If the earth
-              electrode resistance (RA) is too high even for RCD operation, driving the earth rod
-              deeper, using multiple earth rods in parallel, or treating the soil with bentonite can
-              reduce RA.
+              values, which is why BS 7671 requires RCD protection (not overcurrent protection) as
+              the primary means of fault disconnection in TT systems. If the earth electrode
+              resistance (RA) is too high even for RCD operation, driving the earth rod deeper,
+              using multiple earth rods in parallel, or treating the soil with bentonite can reduce
+              RA.
             </p>
           </div>
         </div>
@@ -496,7 +496,7 @@ export default function EarthFaultLoopTooHighPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Verify Zs Compliance on Site with Elec-Mate"
-      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Zs lookup calculator, R1+R2 calculator, auto-validated schedule of tests, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

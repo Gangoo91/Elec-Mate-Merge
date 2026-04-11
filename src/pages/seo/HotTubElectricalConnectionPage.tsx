@@ -109,21 +109,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/outdoor-kitchen-electrical',
     title: 'Outdoor Kitchen Electrical Guide',
-    description: 'Related outdoor electrical work including IP-rated equipment and SWA cable routing.',
+    description:
+      'Related outdoor electrical work including IP-rated equipment and SWA cable routing.',
     icon: Droplets,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for hot tub installations on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for hot tub installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
-    description: 'Similar dedicated outdoor circuit installation with SWA cable and RCD protection.',
+    description:
+      'Similar dedicated outdoor circuit installation with SWA cable and RCD protection.',
     icon: Cable,
     category: 'Guide',
   },
@@ -147,15 +150,15 @@ const sections = [
     content: (
       <>
         <p>
-          Hot tub installations are one of the most common domestic outdoor electrical jobs in the UK.
-          The work is straightforward for a qualified electrician, but the combination of water, outdoor
-          exposure, and high current draw means the installation must be done correctly. Cutting corners
-          on hot tub wiring is genuinely dangerous.
+          Hot tub installations are one of the most common domestic outdoor electrical jobs in the
+          UK. The work is straightforward for a qualified electrician, but the combination of water,
+          outdoor exposure, and high current draw means the installation must be done correctly.
+          Cutting corners on hot tub wiring is genuinely dangerous.
         </p>
         <p>
           Most hardwired hot tubs draw between 5kW and 9kW — that is 22A to 39A at 230V. They need a
-          dedicated radial circuit from the consumer unit with appropriate cable sizing, RCD protection
-          compliant with{' '}
+          dedicated radial circuit from the consumer unit with appropriate cable sizing, RCD
+          protection compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>
@@ -163,8 +166,9 @@ const sections = [
           Part P of the Building Regulations as it involves a special location.
         </p>
         <p>
-          This guide covers supply requirements, RCD protection, cable selection, IP ratings for outdoor
-          equipment, step-by-step installation, testing, certification, and realistic pricing for 2026.
+          This guide covers supply requirements, RCD protection, cable selection, IP ratings for
+          outdoor equipment, step-by-step installation, testing, certification, and realistic
+          pricing for 2026.
         </p>
       </>
     ),
@@ -198,10 +202,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Before starting, verify the existing supply has sufficient spare capacity. Check the main fuse
-          or service head rating (typically 60A or 100A for domestic properties) and calculate the
-          maximum demand with the hot tub included. If the addition of a 32A or 40A circuit would
-          exceed the available capacity, the DNO may need to upgrade the service head.
+          Before starting, verify the existing supply has sufficient spare capacity. Check the main
+          fuse or service head rating (typically 60A or 100A for domestic properties) and calculate
+          the maximum demand with the hot tub included. If the addition of a 32A or 40A circuit
+          would exceed the available capacity, the DNO may need to upgrade the service head.
         </p>
       </>
     ),
@@ -216,35 +220,37 @@ const sections = [
           additional protection by an RCD with a rated residual operating current not exceeding 30mA
           for socket-outlets with a rated current not exceeding 32A, and for mobile equipment with a
           current rating not exceeding 32A for use outdoors. Hot tubs, as fixed outdoor equipment,
-          also fall within the scope of Section 702 (swimming pools and hot tubs) which has additional
-          RCD requirements.
+          also fall within the scope of Section 702 (swimming pools and hot tubs) which has
+          additional RCD requirements.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30mA RCD or RCBO</strong> — the circuit must be protected by a 30mA device at the
-                consumer unit. An RCBO (combined MCB and RCD) on the dedicated way is the cleanest
-                solution — it provides both overcurrent and earth fault protection without affecting
-                other circuits if it trips.
+                <strong>30mA RCD or RCBO</strong> — the circuit must be protected by a 30mA device
+                at the consumer unit. An RCBO (combined MCB and RCD) on the dedicated way is the
+                cleanest solution — it provides both overcurrent and earth fault protection without
+                affecting other circuits if it trips.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type A RCD</strong> — preferred over Type AC for hot tub circuits. Hot tub pump
-                motors and electronic control boards can produce pulsating DC fault currents that a Type
-                AC RCD may not detect. Type A RCDs detect both AC and pulsating DC residual currents.
+                <strong>Type A RCD</strong> — preferred over Type AC for hot tub circuits. Hot tub
+                pump motors and electronic control boards can produce pulsating DC fault currents
+                that a Type AC RCD may not detect. Type A RCDs detect both AC and pulsating DC
+                residual currents.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping</strong> — hot tub motors and heaters can cause nuisance
-                tripping on sensitive RCDs, particularly at start-up. Ensure the RCD is rated for the
-                inductive load and consider a slight time delay (Type S RCD) only on a secondary
-                upstream device — the 30mA device protecting the circuit must always be instantaneous.
+                tripping on sensitive RCDs, particularly at start-up. Ensure the RCD is rated for
+                the inductive load and consider a slight time delay (Type S RCD) only on a secondary
+                upstream device — the 30mA device protecting the circuit must always be
+                instantaneous.
               </span>
             </li>
           </ul>
@@ -259,26 +265,26 @@ const sections = [
       <>
         <p>
           The cable route from the consumer unit to the hot tub typically involves an indoor section
-          (within the building) and an outdoor section (to the hot tub location). The outdoor section
-          must use a cable type that withstands weather, UV exposure, and mechanical damage.
+          (within the building) and an outdoor section (to the hot tub location). The outdoor
+          section must use a cable type that withstands weather, UV exposure, and mechanical damage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SWA cable (Steel Wire Armoured)</strong> — the standard choice for the outdoor
-                section. 3-core SWA (line, neutral, earth) in 6.0mm² (32A circuit) or 10.0mm² (40A
-                circuit). SWA can be direct-buried at a minimum depth of 500mm with warning tape above,
-                or surface-mounted on cable cleats. The steel wire armour provides mechanical protection
-                and acts as an additional CPC.
+                <strong>SWA cable (Steel Wire Armoured)</strong> — the standard choice for the
+                outdoor section. 3-core SWA (line, neutral, earth) in 6.0mm² (32A circuit) or
+                10.0mm² (40A circuit). SWA can be direct-buried at a minimum depth of 500mm with
+                warning tape above, or surface-mounted on cable cleats. The steel wire armour
+                provides mechanical protection and acts as an additional CPC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Indoor section</strong> — from the consumer unit to the point of exit from the
-                building, 6242Y (twin-and-earth) or singles in conduit/trunking are acceptable.
+                <strong>Indoor section</strong> — from the consumer unit to the point of exit from
+                the building, 6242Y (twin-and-earth) or singles in conduit/trunking are acceptable.
                 Transition from indoor to outdoor requires an IP-rated junction box or adaptable box
                 with SWA glands.
               </span>
@@ -286,9 +292,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage drop</strong> — check the voltage drop for the total cable run. BS 7671
-                allows 5% total; aim for 3% on the final circuit. For a 40A load on 10.0mm² cable, the
-                maximum run for 3% voltage drop is approximately 40 metres. Use the{' '}
+                <strong>Voltage drop</strong> — check the voltage drop for the total cable run. BS
+                7671 allows 5% total; aim for 3% on the final circuit. For a 40A load on 10.0mm²
+                cable, the maximum run for 3% voltage drop is approximately 40 metres. Use the{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
@@ -307,8 +313,8 @@ const sections = [
       <>
         <p>
           All electrical equipment installed outdoors for a hot tub must have an appropriate Ingress
-          Protection (IP) rating. The IP rating indicates protection against solid objects (first digit)
-          and water (second digit).
+          Protection (IP) rating. The IP rating indicates protection against solid objects (first
+          digit) and water (second digit).
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -328,8 +334,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-2">Cable Glands</h3>
             <p className="text-white text-sm leading-relaxed">
-              SWA glands at both ends of the armoured cable must be correctly installed with inner and
-              outer gland nuts, earth tags, and shrouds to maintain the IP rating of the enclosure.
+              SWA glands at both ends of the armoured cable must be correctly installed with inner
+              and outer gland nuts, earth tags, and shrouds to maintain the IP rating of the
+              enclosure.
             </p>
           </div>
         </div>
@@ -341,9 +348,7 @@ const sections = [
     heading: 'Step-by-Step Installation',
     content: (
       <>
-        <p>
-          A typical hot tub electrical installation follows these steps:
-        </p>
+        <p>A typical hot tub electrical installation follows these steps:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
@@ -369,12 +374,13 @@ const sections = [
             </li>
             <li>
               <strong>Make the final connection</strong> — connect to the hot tub terminal block as
-              per the manufacturer instructions. Verify the connection is within an IP-rated enclosure.
+              per the manufacturer instructions. Verify the connection is within an IP-rated
+              enclosure.
             </li>
             <li>
-              <strong>Test</strong> — complete all initial verification tests (continuity, insulation
-              resistance, polarity, earth fault loop impedance, RCD operation). Fill and power the hot
-              tub. Check for correct operation of pumps, heater, lights, and controls.
+              <strong>Test</strong> — complete all initial verification tests (continuity,
+              insulation resistance, polarity, earth fault loop impedance, RCD operation). Fill and
+              power the hot tub. Check for correct operation of pumps, heater, lights, and controls.
             </li>
             <li>
               <strong>Certify</strong> — issue an Electrical Installation Certificate (EIC) and
@@ -398,27 +404,43 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Continuity of protective conductors — CPC from consumer unit to isolator and from isolator to hot tub earth terminal</span>
+              <span>
+                Continuity of protective conductors — CPC from consumer unit to isolator and from
+                isolator to hot tub earth terminal
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Continuity of ring final circuit conductors — not applicable (radial circuit)</span>
+              <span>
+                Continuity of ring final circuit conductors — not applicable (radial circuit)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance — 500V DC between live conductors and earth, minimum 1 megohm (disconnect the hot tub before testing)</span>
+              <span>
+                Insulation resistance — 500V DC between live conductors and earth, minimum 1 megohm
+                (disconnect the hot tub before testing)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Polarity — verify correct line, neutral, and earth connections at all points</span>
+              <span>
+                Polarity — verify correct line, neutral, and earth connections at all points
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Earth fault loop impedance (Zs) — must be within the maximum permitted Zs for the protective device</span>
+              <span>
+                Earth fault loop impedance (Zs) — must be within the maximum permitted Zs for the
+                protective device
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>RCD operation — 30mA device must trip within 300ms at rated current, and within 40ms at 5x rated current</span>
+              <span>
+                RCD operation — 30mA device must trip within 300ms at rated current, and within 40ms
+                at 5x rated current
+              </span>
             </li>
           </ul>
         </div>
@@ -427,8 +449,9 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          must be issued. A Minor Works Certificate is not appropriate because the work involves a new
-          circuit in a special location. The EIC should reference BS 7671 Section 702 in the remarks.
+          must be issued. A Minor Works Certificate is not appropriate because the work involves a
+          new circuit in a special location. The EIC should reference BS 7671 Section 702 in the
+          remarks.
         </p>
       </>
     ),
@@ -444,17 +467,32 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
-            <li><strong>Short run (under 10m), 32A circuit:</strong> £450 to £600 — includes RCBO, 6.0mm² SWA, IP66 isolator, glands, testing, EIC</li>
-            <li><strong>Medium run (10 to 20m), 32A circuit:</strong> £550 to £750 — longer cable run, possible trenching</li>
-            <li><strong>Long run (20 to 30m), 40A circuit:</strong> £700 to £950 — 10.0mm² SWA, more labour for trenching and backfill</li>
-            <li><strong>Consumer unit upgrade required:</strong> add £350 to £600 — if no spare ways or the board needs replacing to accommodate an RCBO</li>
-            <li><strong>Trenching (by customer):</strong> if the customer digs the trench themselves, deduct £100 to £200 from the above</li>
+            <li>
+              <strong>Short run (under 10m), 32A circuit:</strong> £450 to £600 — includes RCBO,
+              6.0mm² SWA, IP66 isolator, glands, testing, EIC
+            </li>
+            <li>
+              <strong>Medium run (10 to 20m), 32A circuit:</strong> £550 to £750 — longer cable run,
+              possible trenching
+            </li>
+            <li>
+              <strong>Long run (20 to 30m), 40A circuit:</strong> £700 to £950 — 10.0mm² SWA, more
+              labour for trenching and backfill
+            </li>
+            <li>
+              <strong>Consumer unit upgrade required:</strong> add £350 to £600 — if no spare ways
+              or the board needs replacing to accommodate an RCBO
+            </li>
+            <li>
+              <strong>Trenching (by customer):</strong> if the customer digs the trench themselves,
+              deduct £100 to £200 from the above
+            </li>
           </ul>
         </div>
         <p>
-          These prices include materials, labour, testing, and the EIC certificate. They do not include
-          the hot tub itself, the base/pad, or any plumbing work. Labour is typically half a day for a
-          straightforward installation, or a full day for longer runs with trenching.
+          These prices include materials, labour, testing, and the EIC certificate. They do not
+          include the hot tub itself, the base/pad, or any plumbing work. Labour is typically half a
+          day for a straightforward installation, or a full day for longer runs with trenching.
         </p>
       </>
     ),
@@ -475,9 +513,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Always Get the Data Plate First</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Before quoting, ask the customer for the hot tub make, model, and data plate photo.
-                  The rated current determines the circuit size. Quoting a 32A circuit for a hot tub
-                  that needs 40A means returning to upgrade — at your cost.
+                  Before quoting, ask the customer for the hot tub make, model, and data plate
+                  photo. The rated current determines the circuit size. Quoting a 32A circuit for a
+                  hot tub that needs 40A means returning to upgrade — at your cost.
                 </p>
               </div>
             </div>
@@ -508,8 +546,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     EIC certificate app
                   </SEOInternalLink>
-                  . Note the BS 7671 Section 702 reference in the remarks. Send the PDF to the customer
-                  immediately — it is professional and avoids the paperwork backlog.
+                  . Note the BS 7671 Section 702 reference in the remarks. Send the PDF to the
+                  customer immediately — it is professional and avoids the paperwork backlog.
                 </p>
               </div>
             </div>
@@ -517,7 +555,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify hot tub connections"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for hot tub electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for hot tub electrical installations. 7-day free trial."
           icon={Droplets}
         />
       </>
@@ -554,7 +592,7 @@ export default function HotTubElectricalConnectionPage() {
       faqHeading="Frequently Asked Questions About Hot Tub Electrical Connections"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Hot Tub Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

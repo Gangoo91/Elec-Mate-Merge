@@ -633,7 +633,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EICRs in half the time"
-          description="AI board scanner, voice test entry, automatic defect coding, and remedial quoting — all in one app. Join 430+ UK electricians using Elec-Mate for periodic inspection. 7-day free trial."
+          description="AI board scanner, voice test entry, automatic defect coding, and remedial quoting — all in one app. Join 1,000+ UK electricians using Elec-Mate for periodic inspection. 7-day free trial."
           icon={FileCheck2}
         />
       </>

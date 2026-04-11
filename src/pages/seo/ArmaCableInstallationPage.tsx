@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What size SWA cable do I need for a 100A supply?',
     answer:
-      'For a 100A single-phase supply run underground (reference method D — buried direct in ground), 35mm² 2-core SWA is typically required. The exact cable size depends on the run length, voltage drop allowance (maximum 4% for final circuits under BS 7671 Appendix 4), installation method, grouping with other cables, and ambient ground temperature. Always carry out a full cable sizing calculation and check voltage drop for your specific installation. Elec-Mate\'s cable sizing calculator can assist with this.',
+      "For a 100A single-phase supply run underground (reference method D — buried direct in ground), 35mm² 2-core SWA is typically required. The exact cable size depends on the run length, voltage drop allowance (maximum 4% for final circuits under BS 7671 Appendix 4), installation method, grouping with other cables, and ambient ground temperature. Always carry out a full cable sizing calculation and check voltage drop for your specific installation. Elec-Mate's cable sizing calculator can assist with this.",
   },
   {
     question: 'Does SWA cable need additional protection in the ground?',
@@ -172,8 +172,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (the IET Wiring Regulations). Cable sizing, burial depth, and termination requirements
-          are all specified in BS 7671 and the associated IET Guidance Notes.
+          (the IET Wiring Regulations). Cable sizing, burial depth, and termination requirements are
+          all specified in BS 7671 and the associated IET Guidance Notes.
         </p>
       </>
     ),
@@ -195,17 +195,17 @@ const sections = [
               <span>
                 <strong>2-core SWA</strong> — line and neutral conductors only. Used for
                 single-phase circuits where the armour itself provides the earth (circuit protective
-                conductor). The armour must be connected to earth at both termination points.
-                Common for sub-main feeds to outbuildings, garden offices, and garages.
+                conductor). The armour must be connected to earth at both termination points. Common
+                for sub-main feeds to outbuildings, garden offices, and garages.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3-core SWA</strong> — line, neutral, and earth conductors. The dedicated
-                earth core allows a larger CPC cross-section than the armour alone may provide.
-                Also used for three-phase delta circuits (three lines, no neutral) where the
-                armour provides the earth.
+                earth core allows a larger CPC cross-section than the armour alone may provide. Also
+                used for three-phase delta circuits (three lines, no neutral) where the armour
+                provides the earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,8 +220,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5-core SWA</strong> — three line conductors, neutral, and earth. Used
-                where a separate dedicated earth core is required in addition to the armour earth,
+                <strong>5-core SWA</strong> — three line conductors, neutral, and earth. Used where
+                a separate dedicated earth core is required in addition to the armour earth,
                 typically in TN-S systems with strict earth impedance requirements.
               </span>
             </li>
@@ -230,8 +230,8 @@ const sections = [
         <p>
           Conductor sizes range from 1.5mm² to 400mm² and above for large power cables. XLPE
           insulation is preferred over PVC for higher-temperature applications and improved
-          current-carrying capacity. Aluminium conductor SWA (AWSWA) is used for large
-          distribution cables where copper would be prohibitively heavy and expensive.
+          current-carrying capacity. Aluminium conductor SWA (AWSWA) is used for large distribution
+          cables where copper would be prohibitively heavy and expensive.
         </p>
       </>
     ),
@@ -243,9 +243,9 @@ const sections = [
       <>
         <p>
           Current ratings for SWA cable depend on the installation method, number of circuits
-          grouped together, ambient temperature, and conductor material. The following figures
-          are approximate for copper conductor XLPE-insulated SWA cable buried directly in
-          ground (reference method D, BS 7671 Appendix 4, Table 4D4A) at 15°C ground temperature:
+          grouped together, ambient temperature, and conductor material. The following figures are
+          approximate for copper conductor XLPE-insulated SWA cable buried directly in ground
+          (reference method D, BS 7671 Appendix 4, Table 4D4A) at 15°C ground temperature:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -266,8 +266,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>25mm² 4-core</strong> — approximately 130A buried. Common for
-                three-phase sub-mains feeding distribution boards.
+                <strong>25mm² 4-core</strong> — approximately 130A buried. Common for three-phase
+                sub-mains feeding distribution boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,10 +281,10 @@ const sections = [
         </div>
         <p>
           Always apply correction factors for grouping (Ca), ambient temperature (Cg), and soil
-          thermal resistivity before selecting cable size. Verify voltage drop does not exceed
-          the limits in BS 7671 Appendix 12 (4% for final circuits, 3% for lighting circuits from
-          the origin of the installation). A cable sizing calculation should be documented and
-          retained as part of the installation records.
+          thermal resistivity before selecting cable size. Verify voltage drop does not exceed the
+          limits in BS 7671 Appendix 12 (4% for final circuits, 3% for lighting circuits from the
+          origin of the installation). A cable sizing calculation should be documented and retained
+          as part of the installation records.
         </p>
       </>
     ),
@@ -296,8 +296,8 @@ const sections = [
       <>
         <p>
           Correct termination of SWA cable is critical for both mechanical security and earth
-          continuity. The armour must be correctly dressed and gripped by the gland to maintain
-          the earth path and prevent the cable pulling out under mechanical stress.
+          continuity. The armour must be correctly dressed and gripped by the gland to maintain the
+          earth path and prevent the cable pulling out under mechanical stress.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -305,54 +305,54 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — measure and mark</strong> — measure the depth of the gland entry
-                plus additional length for the armour to be gripped. Mark the outer sheath with
-                a knife or tape. Allow additional length inside the enclosure for core dressing
-                and connection.
+                plus additional length for the armour to be gripped. Mark the outer sheath with a
+                knife or tape. Allow additional length inside the enclosure for core dressing and
+                connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — remove outer sheath</strong> — score around the outer PVC sheath
-                with a sharp knife, taking care not to cut into the armour wires. Bend the cable
-                to crack and remove the sheath section. Use an armoured cable stripping tool
-                where available to avoid knife slips.
+                with a sharp knife, taking care not to cut into the armour wires. Bend the cable to
+                crack and remove the sheath section. Use an armoured cable stripping tool where
+                available to avoid knife slips.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — dress the armour</strong> — fan out and straighten the steel
-                armour wires. Cut them square at the correct length using sharp side cutters.
-                The armour wire tips should align consistently — uneven armour leads to poor
-                gland grip and reduced earth continuity.
+                <strong>Step 3 — dress the armour</strong> — fan out and straighten the steel armour
+                wires. Cut them square at the correct length using sharp side cutters. The armour
+                wire tips should align consistently — uneven armour leads to poor gland grip and
+                reduced earth continuity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4 — fit the gland</strong> — slide the back-nut and cone over the
-                armour wires (cone first, cone taper facing the gland body). Feed the cable
-                through the gland body entry hole in the enclosure. Tighten the back-nut to draw
-                the cone under the armour wires and clamp them firmly. Do not overtighten — the
-                armour wires should be gripped firmly without being crushed or cut.
+                armour wires (cone first, cone taper facing the gland body). Feed the cable through
+                the gland body entry hole in the enclosure. Tighten the back-nut to draw the cone
+                under the armour wires and clamp them firmly. Do not overtighten — the armour wires
+                should be gripped firmly without being crushed or cut.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — earth connection</strong> — fit an earth tag (lug) between the
-                gland body and the enclosure lock-nut. Connect a green/yellow earth conductor
-                from the earth tag to the enclosure earth bar. This provides the earth continuity
-                between the armour and the installation earth.
+                gland body and the enclosure lock-nut. Connect a green/yellow earth conductor from
+                the earth tag to the enclosure earth bar. This provides the earth continuity between
+                the armour and the installation earth.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          After termination, verify earth continuity with a low-resistance ohmmeter from the
-          armour at one end to the earth connection at the other. The earth loop impedance
-          should be calculated and verified to be within the limits in{' '}
+          After termination, verify earth continuity with a low-resistance ohmmeter from the armour
+          at one end to the earth connection at the other. The earth loop impedance should be
+          calculated and verified to be within the limits in{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
             BS 7671 Table 41.2
           </SEOInternalLink>{' '}
@@ -376,25 +376,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>500mm minimum</strong> — under footpaths, garden areas, and other areas
-                not subject to vehicle loading. Measured from the finished ground level to the
-                top of the cable.
+                <strong>500mm minimum</strong> — under footpaths, garden areas, and other areas not
+                subject to vehicle loading. Measured from the finished ground level to the top of
+                the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>600mm minimum</strong> — under driveways, car parks, and areas subject
-                to vehicle loading. The additional depth provides protection from the increased
-                risk of damage from vehicles parked or driving over the cable.
+                <strong>600mm minimum</strong> — under driveways, car parks, and areas subject to
+                vehicle loading. The additional depth provides protection from the increased risk of
+                damage from vehicles parked or driving over the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warning tape</strong> — yellow/black cable warning tape should be laid
-                150mm above the cable for its full run length. This warns anyone digging above
-                the cable before they reach it.
+                <strong>Warning tape</strong> — yellow/black cable warning tape should be laid 150mm
+                above the cable for its full run length. This warns anyone digging above the cable
+                before they reach it.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -408,9 +408,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bedding</strong> — lay the cable on 50mm of fine sand or selected fill
-                (free from sharp stones and debris). Cover with a further 50mm of sand or
-                selected fill before backfilling.
+                <strong>Bedding</strong> — lay the cable on 50mm of fine sand or selected fill (free
+                from sharp stones and debris). Cover with a further 50mm of sand or selected fill
+                before backfilling.
               </span>
             </li>
           </ul>
@@ -418,8 +418,8 @@ const sections = [
         <p>
           Where it is not practical to achieve minimum burial depths (for example where the cable
           must cross a shallow area of bedrock), the cable must be provided with supplementary
-          mechanical protection such as duct, tiles, or concrete encasement. Record cable routes
-          on as-fitted drawings and retain these for the life of the installation.
+          mechanical protection such as duct, tiles, or concrete encasement. Record cable routes on
+          as-fitted drawings and retain these for the life of the installation.
         </p>
       </>
     ),
@@ -431,9 +431,8 @@ const sections = [
       <>
         <p>
           The IP (Ingress Protection) rating of SWA cable glands must be appropriate for the
-          installation environment. A gland with insufficient IP rating will allow moisture and
-          dust ingress that can cause premature failure of the termination and earth continuity
-          issues.
+          installation environment. A gland with insufficient IP rating will allow moisture and dust
+          ingress that can cause premature failure of the termination and earth continuity issues.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -441,24 +440,24 @@ const sections = [
               <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP54</strong> — dust protected, splash-proof. Suitable for indoor
-                installations in locations where dust or occasional water splash is possible
-                (e.g., garages, plant rooms). Not suitable for outdoor or underground use.
+                installations in locations where dust or occasional water splash is possible (e.g.,
+                garages, plant rooms). Not suitable for outdoor or underground use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP66</strong> — dust tight, powerful water jet proof. The standard
-                minimum rating for outdoor glands and cable entry into outdoor enclosures.
-                Suitable for surface-mounted external installations.
+                <strong>IP66</strong> — dust tight, powerful water jet proof. The standard minimum
+                rating for outdoor glands and cable entry into outdoor enclosures. Suitable for
+                surface-mounted external installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ThermometerSun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP68</strong> — dust tight, continuous submersion. Required for glands
-                at underground cable entry points into pits, chambers, and below-ground
-                enclosures. Also required where cables pass through below-ground walls.
+                <strong>IP68</strong> — dust tight, continuous submersion. Required for glands at
+                underground cable entry points into pits, chambers, and below-ground enclosures.
+                Also required where cables pass through below-ground walls.
               </span>
             </li>
           </ul>
@@ -479,9 +478,7 @@ const sections = [
       <>
         <p>
           SWA cable installation errors frequently appear as observations on{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            EICRs
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICRs</SEOInternalLink>{' '}
           and can result in dangerous conditions if left uncorrected.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
@@ -489,41 +486,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Armour not earthed at one or both ends</strong> — the most dangerous
-                and most common mistake. An unearthed armour provides no fault protection
-                and can become live if a conductor within the cable faults to the sheath.
+                <strong>Armour not earthed at one or both ends</strong> — the most dangerous and
+                most common mistake. An unearthed armour provides no fault protection and can become
+                live if a conductor within the cable faults to the sheath.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wrong gland type</strong> — using standard (non-armoured) cable glands
-                on SWA cable. These grip only the outer sheath and provide no armour retention
-                or earth continuity path.
+                <strong>Wrong gland type</strong> — using standard (non-armoured) cable glands on
+                SWA cable. These grip only the outer sheath and provide no armour retention or earth
+                continuity path.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insufficient burial depth</strong> — cables buried too shallow are
-                routinely damaged during garden work and landscaping. Always verify depth with
-                a measurement and record it.
+                <strong>Insufficient burial depth</strong> — cables buried too shallow are routinely
+                damaged during garden work and landscaping. Always verify depth with a measurement
+                and record it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No route markers or warning tape</strong> — without markers, future
-                groundworks will have no warning that a buried cable exists. Route markers
-                are a BS 7671 requirement, not an optional extra.
+                groundworks will have no warning that a buried cable exists. Route markers are a BS
+                7671 requirement, not an optional extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Undersized cable for voltage drop</strong> — SWA cable runs are often
-                long. Voltage drop must be calculated for the full run length and verified
-                against BS 7671 Appendix 12 limits.
+                <strong>Undersized cable for voltage drop</strong> — SWA cable runs are often long.
+                Voltage drop must be calculated for the full run length and verified against BS 7671
+                Appendix 12 limits.
               </span>
             </li>
           </ul>
@@ -537,10 +534,9 @@ const sections = [
     content: (
       <>
         <p>
-          Every SWA cable installation must be certified with an Electrical Installation
-          Certificate (EIC) or Minor Electrical Installation Works Certificate (MEIWC) as
-          appropriate. As-fitted cable route drawings and cable sizing calculations should
-          be attached or retained.
+          Every SWA cable installation must be certified with an Electrical Installation Certificate
+          (EIC) or Minor Electrical Installation Works Certificate (MEIWC) as appropriate. As-fitted
+          cable route drawings and cable sizing calculations should be attached or retained.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -553,10 +549,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
-                  to complete and issue the Electrical Installation Certificate on site.
-                  Record earth loop impedance, continuity results, and the cable route
-                  description directly in the app and send the PDF to the client before
-                  you leave.
+                  to complete and issue the Electrical Installation Certificate on site. Record
+                  earth loop impedance, continuity results, and the cable route description directly
+                  in the app and send the PDF to the client before you leave.
                 </p>
               </div>
             </div>
@@ -589,8 +584,7 @@ export default function ArmaCableInstallationPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Armoured Cable Installation UK:{' '}
-          <span className="text-yellow-400">SWA Cable Guide</span>
+          Armoured Cable Installation UK: <span className="text-yellow-400">SWA Cable Guide</span>
         </>
       }
       heroSubtitle="Everything electricians need to know about Steel Wire Armoured (SWA) cable — core configurations, current ratings, correct gland termination for earth continuity, underground burial depths, IP ratings, and the common mistakes that generate EICR observations."
@@ -601,7 +595,7 @@ export default function ArmaCableInstallationPage() {
       faqHeading="Frequently Asked Questions About SWA Armoured Cable Installation"
       relatedPages={relatedPages}
       ctaHeading="Certify SWA Cable Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to complete Electrical Installation Certificates on site. Record test results, cable details, and route descriptions — instant PDF export. 7-day free trial."
     />
   );
 }

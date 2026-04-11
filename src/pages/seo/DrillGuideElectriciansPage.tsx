@@ -145,8 +145,8 @@ const sections = [
         <p>
           Using the wrong drill or bit for the material slows the job, damages materials (cracked
           tiles, torn plasterboard), and shortens tool life. Understanding the strengths and limits
-          of each drill type allows you to build a kit that covers all common electrical installation
-          scenarios efficiently.
+          of each drill type allows you to build a kit that covers all common electrical
+          installation scenarios efficiently.
         </p>
         <p>
           This guide covers the three chuck systems used in electrical work (standard keyless, SDS
@@ -176,9 +176,10 @@ const sections = [
               Accepts standard round-shank and hex-shank bits: wood, metal, and light masonry twist
               drills, screwdriver bits, and small hole saws. The keyless chuck grips the bit
               concentrically. Best for timber frame work, plasterboard, light masonry, and
-              screwdriving. The hammer function on a combi drill provides limited percussive action —
-              adequate for occasional light brick drilling but not sustained masonry work. Weight:
-              typically 1.3–1.8kg. The everyday tool for most electrical first-fix and second-fix work.
+              screwdriving. The hammer function on a combi drill provides limited percussive action
+              — adequate for occasional light brick drilling but not sustained masonry work. Weight:
+              typically 1.3–1.8kg. The everyday tool for most electrical first-fix and second-fix
+              work.
             </p>
           </div>
           <div>
@@ -187,13 +188,14 @@ const sections = [
               SDS Plus
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              10mm shank with two open slots and two closed retention grooves. The bit slides axially
-              in the chuck, allowing the hammer mechanism to drive the bit directly without transmitting
-              shock to the chuck bearing — enabling sustained high-frequency hammering without
-              premature bearing wear. SDS Plus drills deliver 1.5–3.5J of impact energy per blow at
-              up to 4,500 blows per minute. Suitable for: dense brick and block, light concrete, back
-              box chases, cable route drilling through masonry, and core bits up to 100mm through
-              un-reinforced masonry. The correct choice for most electrical installation masonry drilling.
+              10mm shank with two open slots and two closed retention grooves. The bit slides
+              axially in the chuck, allowing the hammer mechanism to drive the bit directly without
+              transmitting shock to the chuck bearing — enabling sustained high-frequency hammering
+              without premature bearing wear. SDS Plus drills deliver 1.5–3.5J of impact energy per
+              blow at up to 4,500 blows per minute. Suitable for: dense brick and block, light
+              concrete, back box chases, cable route drilling through masonry, and core bits up to
+              100mm through un-reinforced masonry. The correct choice for most electrical
+              installation masonry drilling.
             </p>
           </div>
           <div>
@@ -205,9 +207,10 @@ const sections = [
               18mm shank with three open slots and two closed retention grooves. Delivers 5–20J of
               impact energy per blow. Used for demolition chiselling, large-diameter core drilling
               through reinforced concrete, and anchor boring in structural concrete. Not a tool most
-              domestic electricians carry — typically hired for specific heavy-duty tasks. Core drilling
-              rigs (rotary-only, no hammer, with water cooling) are the preferred approach for large-
-              diameter structural core drilling in most electrical installation scenarios.
+              domestic electricians carry — typically hired for specific heavy-duty tasks. Core
+              drilling rigs (rotary-only, no hammer, with water cooling) are the preferred approach
+              for large- diameter structural core drilling in most electrical installation
+              scenarios.
             </p>
           </div>
         </div>
@@ -235,14 +238,26 @@ const sections = [
             <p className="text-white text-sm leading-relaxed mb-3">
               Sufficient for all domestic electrical work, the majority of commercial first-fix and
               second-fix, and light to medium masonry drilling. Modern 18V brushless SDS Plus drills
-              (1.5–3.0J impact energy) handle standard brick, dense block, and un-reinforced concrete
-              without difficulty.
+              (1.5–3.0J impact energy) handle standard brick, dense block, and un-reinforced
+              concrete without difficulty.
             </p>
             <ul className="space-y-1 text-white text-sm">
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Lighter tool weight</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Larger ecosystem of compatible tools</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Lower battery and charger cost</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>May slow on sustained dense concrete drilling</span></li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Lighter tool weight</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Larger ecosystem of compatible tools</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Lower battery and charger cost</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>May slow on sustained dense concrete drilling</span>
+              </li>
             </ul>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -254,11 +269,26 @@ const sections = [
               sites with long daily drill runs).
             </p>
             <ul className="space-y-1 text-white text-sm">
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Higher sustained power output</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Less battery sag on heavy sustained loads</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Heavier tool and battery</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Higher initial cost</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Smaller compatible tool range</span></li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Higher sustained power output</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Less battery sag on heavy sustained loads</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Heavier tool and battery</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Higher initial cost</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Smaller compatible tool range</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -284,26 +314,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Back box apertures in plasterboard:</strong> 68mm for single gang,
-                variable for double gang (check back box manufacturer dimensions). Bi-metal hole
-                saws cut plasterboard, MDF, and timber cleanly. Use a guide template for accurate
+                <strong>Back box apertures in plasterboard:</strong> 68mm for single gang, variable
+                for double gang (check back box manufacturer dimensions). Bi-metal hole saws cut
+                plasterboard, MDF, and timber cleanly. Use a guide template for accurate
                 positioning. A sharp pilot drill centres the hole saw correctly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conduit entries (20mm and 25mm):</strong> Standard electrical conduit diameters.
-                25mm hole saw cuts through timber, plasterboard, and light sheet metal for conduit
-                pass-throughs. A step drill (Unibit) also cuts clean conduit entry holes in thin
-                sheet materials.
+                <strong>Conduit entries (20mm and 25mm):</strong> Standard electrical conduit
+                diameters. 25mm hole saw cuts through timber, plasterboard, and light sheet metal
+                for conduit pass-throughs. A step drill (Unibit) also cuts clean conduit entry holes
+                in thin sheet materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable gland entries through metal enclosures:</strong> 20mm, 25mm, 32mm,
-                and 40mm for standard metric cable glands. Bi-metal or carbide hole saws cut steel
+                <strong>Cable gland entries through metal enclosures:</strong> 20mm, 25mm, 32mm, and
+                40mm for standard metric cable glands. Bi-metal or carbide hole saws cut steel
                 enclosure knockouts cleanly. Always de-burr the cut edge before fitting the gland.
               </span>
             </li>
@@ -312,16 +342,17 @@ const sections = [
               <span>
                 <strong>SWA external wall entries:</strong> 32mm to 68mm depending on cable size.
                 Diamond or carbide TCT core drill bits for masonry wall penetrations at these
-                diameters — standard bi-metal hole saws are not suitable for sustained masonry drilling.
+                diameters — standard bi-metal hole saws are not suitable for sustained masonry
+                drilling.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A comprehensive electrician's hole saw set covering 16mm–83mm in bi-metal with quick-change
-          arbors costs approximately £40–£80 and covers the majority of installation scenarios.
-          Keep masonry core bits separate from wood/metal bi-metal sets — contaminating bi-metal
-          bits with masonry dust significantly reduces their life.
+          A comprehensive electrician's hole saw set covering 16mm–83mm in bi-metal with
+          quick-change arbors costs approximately £40–£80 and covers the majority of installation
+          scenarios. Keep masonry core bits separate from wood/metal bi-metal sets — contaminating
+          bi-metal bits with masonry dust significantly reduces their life.
         </p>
       </>
     ),
@@ -333,8 +364,8 @@ const sections = [
       <>
         <p>
           Core drilling for cable containment — running conduit, trunking, or armoured cable through
-          walls, floors, and ceilings — requires larger diameter holes (50–150mm) than standard
-          hole saws can practically produce through masonry. The approach depends on the material:
+          walls, floors, and ceilings — requires larger diameter holes (50–150mm) than standard hole
+          saws can practically produce through masonry. The approach depends on the material:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -350,21 +381,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Concrete and reinforced floors:</strong> Diamond core bits with water cooling
-                on a rotary-only core drilling machine (no hammer). The diamond segments cut smoothly
-                through aggregate and rebar without the percussion that would shatter the concrete
-                around the hole. For one-off penetrations, hire a core drilling rig with a vacuum
-                anchor and water supply rather than attempting to hand-hold a large core bit.
+                <strong>Concrete and reinforced floors:</strong> Diamond core bits with water
+                cooling on a rotary-only core drilling machine (no hammer). The diamond segments cut
+                smoothly through aggregate and rebar without the percussion that would shatter the
+                concrete around the hole. For one-off penetrations, hire a core drilling rig with a
+                vacuum anchor and water supply rather than attempting to hand-hold a large core bit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Timber floors and joists:</strong> Standard bi-metal hole saws on a combi
-                drill. Note structural rules — notches and holes in joists must comply with
-                Approved Document A and the Building Regulations. Consult the engineer or building
-                control for structural members. Fire stopping of any penetration through a
-                compartment floor or fire-resistant wall is required under Building Regulations.
+                drill. Note structural rules — notches and holes in joists must comply with Approved
+                Document A and the Building Regulations. Consult the engineer or building control
+                for structural members. Fire stopping of any penetration through a compartment floor
+                or fire-resistant wall is required under Building Regulations.
               </span>
             </li>
           </ul>
@@ -417,9 +448,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               18V XR brushless SDS Plus. 2.1J impact energy — higher than the DHR171, giving faster
               drilling through dense brick and concrete. SHOCKS Active Vibration Control reduces
-              vibration at the handle. 3 modes: hammer drill, drill only, chisel. DeWalt XR 18V
-              is the most widely adopted platform in UK professional construction. Compatible with
-              XR FLEXVOLT 54V batteries for increased performance on heavy sustained drilling.
+              vibration at the handle. 3 modes: hammer drill, drill only, chisel. DeWalt XR 18V is
+              the most widely adopted platform in UK professional construction. Compatible with XR
+              FLEXVOLT 54V batteries for increased performance on heavy sustained drilling.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -429,15 +460,17 @@ const sections = [
             </p>
             <p className="text-white text-sm leading-relaxed">
               18V M18 FUEL brushless SDS Plus. Powerstate brushless motor, REDLINK PLUS intelligence
-              (electronic overload protection). Extremely robust construction — Milwaukee is known for
-              tool durability in harsh site conditions. 2.0J impact energy. The M18 FUEL platform
-              includes arguably the best-in-class combi drill (M18FPD2) and impact driver (M18FID2)
-              making it an excellent single-platform choice for an electrician wanting consistent
-              quality across all cordless tools.
+              (electronic overload protection). Extremely robust construction — Milwaukee is known
+              for tool durability in harsh site conditions. 2.0J impact energy. The M18 FUEL
+              platform includes arguably the best-in-class combi drill (M18FPD2) and impact driver
+              (M18FID2) making it an excellent single-platform choice for an electrician wanting
+              consistent quality across all cordless tools.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h3 className="font-bold text-white text-lg mb-1">Cordless Combi Drill Recommendations</h3>
+            <h3 className="font-bold text-white text-lg mb-1">
+              Cordless Combi Drill Recommendations
+            </h3>
             <p className="text-white text-xs mb-3 uppercase tracking-wide">
               For Timber, Plasterboard, and Screwdriving
             </p>
@@ -482,8 +515,8 @@ const sections = [
               <span>
                 <strong>RCD protection for power tools:</strong> All portable power tools used on
                 site must be protected by a 30mA RCD at the supply point, or fed from a 110V CTE
-                (Centre-Tapped Earth) transformer. Never plug a 230V power tool directly into a
-                site supply socket without RCD protection.
+                (Centre-Tapped Earth) transformer. Never plug a 230V power tool directly into a site
+                supply socket without RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -491,18 +524,18 @@ const sections = [
               <span>
                 <strong>PPE for drilling and chasing:</strong> Safety glasses or goggles (masonry
                 chips and drill break fragments), dust mask (FFP2 minimum for concrete and silica-
-                bearing materials), hearing protection for SDS drilling, and gloves. Silica dust from
-                concrete and brick is a serious long-term lung hazard — respiratory protection is
-                not optional.
+                bearing materials), hearing protection for SDS drilling, and gloves. Silica dust
+                from concrete and brick is a serious long-term lung hazard — respiratory protection
+                is not optional.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire stopping:</strong> Any penetration of a fire compartment boundary (fire-
-                rated wall, floor, or ceiling) must be sealed with appropriate intumescent fire
-                stopping after cable installation. This is a Building Regulations requirement — not
-                optional and not to be left to other trades.
+                <strong>Fire stopping:</strong> Any penetration of a fire compartment boundary
+                (fire- rated wall, floor, or ceiling) must be sealed with appropriate intumescent
+                fire stopping after cable installation. This is a Building Regulations requirement —
+                not optional and not to be left to other trades.
               </span>
             </li>
           </ul>
@@ -535,7 +568,9 @@ export default function DrillGuideElectriciansPage() {
       heroTitle={
         <>
           Drill Guide for Electricians:{' '}
-          <span className="text-yellow-400">SDS, Cordless, and Hole Saws for UK Electrical Work 2026</span>
+          <span className="text-yellow-400">
+            SDS, Cordless, and Hole Saws for UK Electrical Work 2026
+          </span>
         </>
       }
       heroSubtitle="Everything UK electricians need to know about drills — SDS Plus vs SDS Max, 18V vs 54V cordless platforms, hole saw sets for back boxes and cable entries, core drilling for containment, and the best drills for electrical installation in 2026."
@@ -546,7 +581,7 @@ export default function DrillGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Drills for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Quote, Install, and Certify Electrical Work on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, EIC and EICR certification, and AI site support. 7-day free trial, cancel anytime."
     />
   );
 }

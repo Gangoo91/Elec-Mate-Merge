@@ -465,7 +465,7 @@ export default function ConfinedSpacesCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never enter blind — get confined space trained"
-      ctaSubheading="Join 430+ UK electricians training smarter with Elec-Mate. 5 focused modules, real-world scenarios, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians training smarter with Elec-Mate. 5 focused modules, real-world scenarios, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/confined-spaces"
     />

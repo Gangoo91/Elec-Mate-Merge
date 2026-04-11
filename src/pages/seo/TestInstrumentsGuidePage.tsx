@@ -525,7 +525,7 @@ export default function TestInstrumentsGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Record instrument details on every certificate automatically"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Instrument details, calibration dates, and auto-validated test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Instrument details, calibration dates, and auto-validated test results. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
   },
   {
     href: '/guides/tripped-mcb-wont-reset',
-    title: 'Tripped MCB Won\'t Reset',
+    title: "Tripped MCB Won't Reset",
     description: 'What to do when the MCB for your off-peak circuit will not stay on.',
     icon: Zap,
     category: 'Guide',
@@ -155,9 +155,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermal bricks</strong> — dense clay or ceramic bricks that can store a large
-                amount of heat energy. They are heated overnight and slowly release that heat during
-                the day through natural radiation and convection.
+                <strong>Thermal bricks</strong> — dense clay or ceramic bricks that can store a
+                large amount of heat energy. They are heated overnight and slowly release that heat
+                during the day through natural radiation and convection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -171,9 +171,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Input control</strong> — determines how much heat is stored. A higher setting
-                allows more current to the elements during the off-peak period, storing more heat.
-                Adjusted based on the weather forecast.
+                <strong>Input control</strong> — determines how much heat is stored. A higher
+                setting allows more current to the elements during the off-peak period, storing more
+                heat. Adjusted based on the weather forecast.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -210,16 +210,16 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Off-peak circuit MCB tripped</h4>
             <p className="text-white text-sm leading-relaxed">
-              The circuit breaker for the off-peak supply may have tripped. Check the consumer
-              unit — there will be a separate MCB (or pair of MCBs) for the off-peak circuits.
+              The circuit breaker for the off-peak supply may have tripped. Check the consumer unit
+              — there will be a separate MCB (or pair of MCBs) for the off-peak circuits.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Time switch or teleswitch fault</h4>
             <p className="text-white text-sm leading-relaxed">
-              The off-peak supply is controlled by a time switch or radio teleswitch. If this
-              device fails, no power reaches the heaters during the off-peak period. This requires
-              an electrician or your energy supplier.
+              The off-peak supply is controlled by a time switch or radio teleswitch. If this device
+              fails, no power reaches the heaters during the off-peak period. This requires an
+              electrician or your energy supplier.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -260,8 +260,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Usually a dial numbered 1 to 5 (or 1 to 6). This must be set BEFORE the off-peak
                   period starts. In cold weather, set to 4 or 5. In mild weather, 1 or 2. Setting it
-                  to zero means no heat is stored. Changing the input during the day has no immediate
-                  effect — it only affects the next overnight charge.
+                  to zero means no heat is stored. Changing the input during the day has no
+                  immediate effect — it only affects the next overnight charge.
                 </p>
               </div>
             </div>
@@ -306,9 +306,7 @@ const sections = [
           Storage heaters depend on off-peak electricity — a cheaper tariff available during
           designated hours (typically midnight to 7am on Economy 7, or split hours on Economy 10).
         </p>
-        <p>
-          The off-peak supply is typically controlled by one of these methods:
-        </p>
+        <p>The off-peak supply is typically controlled by one of these methods:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -388,9 +386,7 @@ const sections = [
     heading: 'When to Call an Electrician',
     content: (
       <>
-        <p>
-          Call an electrician if:
-        </p>
+        <p>Call an electrician if:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -417,8 +413,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One heater is not working</strong> — likely an element or thermostat failure.
-                An electrician can test the element resistance and insulation.
+                <strong>One heater is not working</strong> — likely an element or thermostat
+                failure. An electrician can test the element resistance and insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -451,9 +447,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">1. Off-Peak Supply Diagnosis</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Check the time switch or teleswitch for correct operation. Verify the off-peak
-                  contactor (if fitted) is engaging. Check voltage at the off-peak distribution board
-                  during the off-peak period. If the supply is controlled by a radio teleswitch and
-                  it has failed, the supplier needs to replace it.
+                  contactor (if fitted) is engaging. Check voltage at the off-peak distribution
+                  board during the off-peak period. If the supply is controlled by a radio
+                  teleswitch and it has failed, the supplier needs to replace it.
                 </p>
               </div>
             </div>
@@ -464,10 +460,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Element Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Isolate the circuit. Disconnect the element wires. Test element resistance — should
-                  match the rated wattage (R = V squared / P). Test insulation resistance at 500V
-                  between element and earth — minimum 1 megohm. Low IR readings confirm insulation
-                  breakdown.
+                  Isolate the circuit. Disconnect the element wires. Test element resistance —
+                  should match the rated wattage (R = V squared / P). Test insulation resistance at
+                  500V between element and earth — minimum 1 megohm. Low IR readings confirm
+                  insulation breakdown.
                 </p>
               </div>
             </div>
@@ -493,7 +489,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document storage heater installations on your phone"
-          description="Elec-Mate's certificate apps let you record test results and issue certificates for storage heater work with instant PDF export. Join 430+ UK electricians."
+          description="Elec-Mate's certificate apps let you record test results and issue certificates for storage heater work with instant PDF export. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -518,8 +514,7 @@ export default function StorageHeaterNotWorkingPage() {
       badgeIcon={Thermometer}
       heroTitle={
         <>
-          Storage Heater Not Working:{' '}
-          <span className="text-yellow-400">Causes and Fixes</span>
+          Storage Heater Not Working: <span className="text-yellow-400">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Cold storage heaters? This guide explains how they work, what the input and output controls do, why your off-peak supply might have failed, and when you need an electrician."
@@ -530,7 +525,7 @@ export default function StorageHeaterNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Storage Heater Problems"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Heating Circuit Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, test recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, test recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

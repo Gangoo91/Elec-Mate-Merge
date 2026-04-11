@@ -93,8 +93,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -133,8 +132,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -152,10 +150,10 @@ const sections = [
       <>
         <p>
           London is home to some of the oldest domestic electrical installations in the country.
-          From Georgian townhouses in Islington to post-war council blocks in Lewisham, the capital's
-          housing stock presents unique challenges for consumer unit replacement. Many properties
-          still have original rewirable fuse boards, plastic consumer units, or split-load RCD
-          boards that no longer meet current standards.
+          From Georgian townhouses in Islington to post-war council blocks in Lewisham, the
+          capital's housing stock presents unique challenges for consumer unit replacement. Many
+          properties still have original rewirable fuse boards, plastic consumer units, or
+          split-load RCD boards that no longer meet current standards.
         </p>
         <p>
           Under{' '}
@@ -170,8 +168,8 @@ const sections = [
         <p>
           Whether you are a homeowner in Hackney looking to upgrade an old fuse board, or a landlord
           in Croydon preparing a property for new tenants, this guide covers everything you need to
-          know about consumer unit replacement costs in London — including why prices here are higher
-          than the rest of the UK.
+          know about consumer unit replacement costs in London — including why prices here are
+          higher than the rest of the UK.
         </p>
       </>
     ),
@@ -184,8 +182,8 @@ const sections = [
         <p>
           London electricians charge a premium compared to the national average. Day rates in the
           capital range from £350 to £500, compared to £250 to £350 in most other English cities.
-          This reflects higher operating costs including commercial rent, vehicle insurance, ULEZ and
-          congestion charges, parking, and longer travel times between jobs.
+          This reflects higher operating costs including commercial rent, vehicle insurance, ULEZ
+          and congestion charges, parking, and longer travel times between jobs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">London Pricing Breakdown (2026)</h3>
@@ -225,9 +223,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Central London postcodes (W1, WC1, EC1, SW1) typically sit at the upper end due to
-          parking restrictions, congestion charges, and the complexity of period buildings. Outer
-          boroughs such as Bromley, Havering, Sutton, and Enfield are generally 10% to 15% cheaper.
+          Central London postcodes (W1, WC1, EC1, SW1) typically sit at the upper end due to parking
+          restrictions, congestion charges, and the complexity of period buildings. Outer boroughs
+          such as Bromley, Havering, Sutton, and Enfield are generally 10% to 15% cheaper.
         </p>
       </>
     ),
@@ -260,8 +258,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection for
-                socket-outlet circuits and concealed cables. Boards without RCDs or RCBOs present
-                a significant electric shock risk.
+                socket-outlet circuits and concealed cables. Boards without RCDs or RCBOs present a
+                significant electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -276,8 +274,9 @@ const sections = [
               <span>
                 <strong>EICR C2 observation</strong> — if an{' '}
                 <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has
-                identified a C2 (potentially dangerous) observation at the consumer unit, replacement
-                is strongly recommended. London landlords are legally required to have a valid EICR.
+                identified a C2 (potentially dangerous) observation at the consumer unit,
+                replacement is strongly recommended. London landlords are legally required to have a
+                valid EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,19 +298,19 @@ const sections = [
       <>
         <p>
           Consumer unit replacement is classified as notifiable work under Part P of the Building
-          Regulations in England and Wales. In London, this means the work must either be carried out
-          by an electrician registered with a competent person scheme (such as{' '}
+          Regulations in England and Wales. In London, this means the work must either be carried
+          out by an electrician registered with a competent person scheme (such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA), or
-          the homeowner must notify their local council's Building Control department before the work
-          starts.
+          the homeowner must notify their local council's Building Control department before the
+          work starts.
         </p>
         <p>
-          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate
-          (EIC) must be issued for consumer unit replacements. The EIC documents the design,
-          construction, inspection, and testing of the installation. A registered electrician will
-          self-certify the work and submit notification to the relevant London borough council
-          through their scheme provider.
+          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate (EIC)
+          must be issued for consumer unit replacements. The EIC documents the design, construction,
+          inspection, and testing of the installation. A registered electrician will self-certify
+          the work and submit notification to the relevant London borough council through their
+          scheme provider.
         </p>
         <p>
           Each London borough has its own Building Control department. If you use a non-registered
@@ -332,9 +331,7 @@ const sections = [
     heading: 'What to Expect During a Consumer Unit Replacement',
     content: (
       <>
-        <p>
-          Here is what happens during a typical consumer unit replacement in a London property:
-        </p>
+        <p>Here is what happens during a typical consumer unit replacement in a London property:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -462,8 +459,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC included</strong> — confirm the quote includes an Electrical Installation
-                Certificate and Part P notification. Some cheaper quotes exclude these essentials.
+                <strong>EIC included</strong> — confirm the quote includes an Electrical
+                Installation Certificate and Part P notification. Some cheaper quotes exclude these
+                essentials.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -503,8 +501,7 @@ export default function ConsumerUnitReplacementLondonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Consumer Unit Replacement London:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          Consumer Unit Replacement London: <span className="text-yellow-400">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="London consumer unit replacement costs are 15% to 30% higher than the national average. This guide covers local pricing for fuse board upgrades across the capital, from zone 1 flats to outer borough houses — including Part P notification, what to expect during the work, and how to choose a registered electrician."
@@ -515,7 +512,7 @@ export default function ConsumerUnitReplacementLondonPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in London"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in London"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

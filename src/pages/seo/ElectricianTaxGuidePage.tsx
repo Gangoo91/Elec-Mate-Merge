@@ -660,7 +660,7 @@ export default function ElectricianTaxGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Tax"
       relatedPages={relatedPages}
       ctaHeading="Track Expenses and Invoices in One App"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to track expenses, send invoices, and manage cash flow. Every receipt captured, every invoice tracked, every penny accounted for. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track expenses, send invoices, and manage cash flow. Every receipt captured, every invoice tracked, every penny accounted for. 7-day free trial, cancel anytime."
     />
   );
 }

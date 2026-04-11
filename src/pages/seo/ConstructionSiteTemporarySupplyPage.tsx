@@ -614,7 +614,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Site EICRs completed on site, not at a desk"
-          description="Join 430+ UK electricians creating professional certificates with voice entry, AI defect coding, and instant PDF delivery. Built for construction site conditions. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional certificates with voice entry, AI defect coding, and instant PDF delivery. Built for construction site conditions. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -651,7 +651,7 @@ export default function ConstructionSiteTemporarySupplyPage() {
       faqHeading="Frequently Asked Questions About Construction Site Temporary Supply"
       relatedPages={relatedPages}
       ctaHeading="Complete Site EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional certificates with voice test entry, AI defect coding, and instant PDF delivery. Built for construction site conditions. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional certificates with voice test entry, AI defect coding, and instant PDF delivery. Built for construction site conditions. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A domestic 7kW EV charger installation in Liverpool typically costs between £650 and £1,300, reflecting North West labour rates and the city\'s mix of Victorian terraces, Edwardian semis, and modern estates across Merseyside.',
+  "A domestic 7kW EV charger installation in Liverpool typically costs between £650 and £1,300, reflecting North West labour rates and the city's mix of Victorian terraces, Edwardian semis, and modern estates across Merseyside.",
   'Liverpool is served by Electricity North West as the Distribution Network Operator. All EV charger installations must be notified under G98 before the charger is energised.',
   'The OZEV EV chargepoint grant offers up to £350 for eligible flat owners and tenants in Liverpool and across Merseyside.',
   'Regulation 722.411.4.1 of BS 7671 requires earthing consideration for outdoor EV chargers on PME supplies, which predominate across Liverpool.',
@@ -162,9 +162,9 @@ const sections = [
           Liverpool's housing stock is dominated by Victorian and Edwardian terraced streets,
           inter-war council and private semis, and 1960s to 1980s estates across Merseyside. This
           creates a range of installation complexities. Modern properties on new estates in Crosby,
-          Formby, and Woolton are typically straightforward. Older terraced properties in Kensington,
-          Wavertree, Everton, and inner Toxteth require more planning around cable routing, consumer
-          unit capacity, and earthing.
+          Formby, and Woolton are typically straightforward. Older terraced properties in
+          Kensington, Wavertree, Everton, and inner Toxteth require more planning around cable
+          routing, consumer unit capacity, and earthing.
         </p>
         <p>
           All EV charger installations in Liverpool must comply with BS 7671 Section 722 and be
@@ -191,9 +191,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (modern semi/detached, short cable run)</strong> —
-                £650 to £950. Woolton, West Derby, Crosby, Formby, Halewood. Modern consumer unit,
-                clear cable route, no earthing complications.
+                <strong>Simple installation (modern semi/detached, short cable run)</strong> — £650
+                to £950. Woolton, West Derby, Crosby, Formby, Halewood. Modern consumer unit, clear
+                cable route, no earthing complications.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -207,8 +207,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (Victorian terrace, long run, board upgrade)</strong>{' '}
-                — £1,000 to £1,400+. Inner Liverpool: Kensington, Wavertree terraces, Toxteth,
+                <strong>Complex installation (Victorian terrace, long run, board upgrade)</strong> —
+                £1,000 to £1,400+. Inner Liverpool: Kensington, Wavertree terraces, Toxteth,
                 Everton. Longer cable runs, earthing works, consumer unit upgrade.
               </span>
             </li>
@@ -241,8 +241,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">7kW — Right for Liverpool Homes</h3>
             <p className="text-white text-sm leading-relaxed">
               Standard single-phase supply. Every Liverpool property qualifies. 25–30 miles range
-              per hour. G98 notification only. Cost £650 to £1,300 installed. Smart scheduling
-              cuts overnight running costs significantly on time-of-use tariffs.
+              per hour. G98 notification only. Cost £650 to £1,300 installed. Smart scheduling cuts
+              overnight running costs significantly on time-of-use tariffs.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -273,17 +273,16 @@ const sections = [
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Off-peak tariff scheduling</strong> — Liverpool households on time-of-use
-                tariffs such as Octopus Go or OVO Charge Anytime can cut overnight charging costs
-                by up to 70% versus peak rates. Smart charger scheduling automates off-peak
-                charging.
+                tariffs such as Octopus Go or OVO Charge Anytime can cut overnight charging costs by
+                up to 70% versus peak rates. Smart charger scheduling automates off-peak charging.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remote monitoring and control</strong> — start, stop, and schedule charging
-                from a smartphone app. All OZEV-approved smart charger brands include app control
-                as standard.
+                from a smartphone app. All OZEV-approved smart charger brands include app control as
+                standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,9 +305,9 @@ const sections = [
       <>
         <p>
           All EV charger installations in Liverpool must comply with BS 7671:2018+A3:2024 Section
-          722. Liverpool is in England, so Part P of the Building Regulations applies. The installing
-          electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify and submit
-          the Part P notification.
+          722. Liverpool is in England, so Part P of the Building Regulations applies. The
+          installing electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify
+          and submit the Part P notification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -324,8 +323,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
-                protection including Type A with 6mA DC RDC-DD or Type B RCD where required.
-                Most quality charger units include integrated DC protection.
+                protection including Type A with 6mA DC RDC-DD or Type B RCD where required. Most
+                quality charger units include integrated DC protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -398,16 +397,16 @@ const sections = [
     content: (
       <>
         <p>
-          Liverpool residents can access the following financial support for EV charger installation:
+          Liverpool residents can access the following financial support for EV charger
+          installation:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and
-                tenants. Not available to homeowners in houses. Applied for by the OZEV-approved
-                installer.
+                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
+                Not available to homeowners in houses. Applied for by the OZEV-approved installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,8 +422,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Liverpool businesses can claim up to
-                £350 per socket (up to 40 sockets) for workplace EV charger installations via
-                the OZEV scheme.
+                £350 per socket (up to 40 sockets) for workplace EV charger installations via the
+                OZEV scheme.
               </span>
             </li>
           </ul>
@@ -480,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Liverpool EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
           icon={Car}
         />
       </>
@@ -517,7 +516,7 @@ export default function EVChargerInstallationLiverpoolPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

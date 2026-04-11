@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'What is the Consumer Contracts Regulations 2013 cancellation right?',
     answer:
-      'The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 give domestic (consumer) customers a 14-day right to cancel contracts entered into off-premises — which includes any contract signed at the customer\'s property. You must give the customer written notice of this right before the contract is concluded. If the customer asks you to start work within the 14-day period and then cancels, they must pay for work completed up to the point of cancellation. If you fail to inform the customer of their cancellation right, the cancellation period extends to 12 months — meaning the customer can cancel and demand a full refund for up to a year after the contract was made.',
+      "The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 give domestic (consumer) customers a 14-day right to cancel contracts entered into off-premises — which includes any contract signed at the customer's property. You must give the customer written notice of this right before the contract is concluded. If the customer asks you to start work within the 14-day period and then cancels, they must pay for work completed up to the point of cancellation. If you fail to inform the customer of their cancellation right, the cancellation period extends to 12 months — meaning the customer can cancel and demand a full refund for up to a year after the contract was made.",
   },
   {
     question: 'How long should a defects liability period be for electrical work?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'What dispute resolution options do I have if a customer refuses to pay?',
     answer:
-      'For domestic customers, options include: formal letter before action (7 days notice of court proceedings); small claims court (claims up to £10,000 in England and Wales, online application via Gov.uk, court fee from £35); or a mediation service such as CEDR or Ombudsman Services. For commercial contracts, the Housing Grants, Construction and Regeneration Act 1996 gives you the right to adjudication at any time — an adjudicator\'s decision is binding within 28 days and enforceable through the courts. Adjudication is considerably faster than litigation and is the preferred route for commercial payment disputes.',
+      "For domestic customers, options include: formal letter before action (7 days notice of court proceedings); small claims court (claims up to £10,000 in England and Wales, online application via Gov.uk, court fee from £35); or a mediation service such as CEDR or Ombudsman Services. For commercial contracts, the Housing Grants, Construction and Regeneration Act 1996 gives you the right to adjudication at any time — an adjudicator's decision is binding within 28 days and enforceable through the courts. Adjudication is considerably faster than litigation and is the preferred route for commercial payment disputes.",
   },
 ];
 
@@ -135,49 +135,45 @@ const sections = [
         <p>
           Most disputes between electricians and customers arise from ambiguity about what was
           agreed — the scope of work, the price, who was responsible for making good, or when
-          payment was due. A clear written contract, accepted before work begins, eliminates
-          the vast majority of these disputes before they can arise.
+          payment was due. A clear written contract, accepted before work begins, eliminates the
+          vast majority of these disputes before they can arise.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Legal clarity</strong> — a signed written contract is the strongest
-                evidence in any dispute. Without one, the case often comes down to your word
-                against the customer's, and judges in the small claims court are reluctant to
-                make findings of fact against customers when the contractor did not put the
-                agreement in writing.
+                <strong>Legal clarity</strong> — a signed written contract is the strongest evidence
+                in any dispute. Without one, the case often comes down to your word against the
+                customer's, and judges in the small claims court are reluctant to make findings of
+                fact against customers when the contractor did not put the agreement in writing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Professional credibility</strong> — customers who receive a professional
-                written contract perceive the contractor as more competent and trustworthy.
-                A typed contract with clear terms is one of the most cost-effective ways to
-                differentiate yourself from informal tradespeople.
+                written contract perceive the contractor as more competent and trustworthy. A typed
+                contract with clear terms is one of the most cost-effective ways to differentiate
+                yourself from informal tradespeople.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory compliance</strong> — the Consumer Contracts (Information,
-                Cancellation and Additional Charges) Regulations 2013 require specific
-                pre-contract information to be provided to domestic customers. A written
-                contract is the natural vehicle for providing this information.
+                Cancellation and Additional Charges) Regulations 2013 require specific pre-contract
+                information to be provided to domestic customers. A written contract is the natural
+                vehicle for providing this information.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For domestic work, your professional quote accepted by the customer is your contract.
-          For commercial subcontract work, a formal written subcontract agreement is essential —
-          see the{' '}
-          <SEOInternalLink href="/subcontracting-guide">
-            subcontracting guide
-          </SEOInternalLink>{' '}
-          for what subcontract agreements should include.
+          For domestic work, your professional quote accepted by the customer is your contract. For
+          commercial subcontract work, a formal written subcontract agreement is essential — see the{' '}
+          <SEOInternalLink href="/subcontracting-guide">subcontracting guide</SEOInternalLink> for
+          what subcontract agreements should include.
         </p>
       </>
     ),
@@ -188,10 +184,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations
-          2013 are the primary legislation governing contracts between electricians and domestic
-          customers. They were passed to implement the EU Consumer Rights Directive and remain
-          in force in the UK after Brexit.
+          The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013
+          are the primary legislation governing contracts between electricians and domestic
+          customers. They were passed to implement the EU Consumer Rights Directive and remain in
+          force in the UK after Brexit.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -199,38 +195,38 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-contract information</strong> — before any contract is concluded you
-                must provide the customer with: your identity and business address; a description
-                of the services; the total price (or how it will be calculated if not known);
-                the arrangements for payment; how long the contract will last; the customer's
+                must provide the customer with: your identity and business address; a description of
+                the services; the total price (or how it will be calculated if not known); the
+                arrangements for payment; how long the contract will last; the customer's
                 cancellation rights; and the existence of your workmanship guarantee.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>14-day cancellation right</strong> — for off-premises contracts (signed
-                at the customer's property), the customer has 14 days to cancel without penalty.
-                You must give written notice of this right. If you fail to do so, the
-                cancellation period extends to 12 months.
+                <strong>14-day cancellation right</strong> — for off-premises contracts (signed at
+                the customer's property), the customer has 14 days to cancel without penalty. You
+                must give written notice of this right. If you fail to do so, the cancellation
+                period extends to 12 months.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Starting work in the cancellation period</strong> — if the customer
-                asks you to start work within the 14-day period, they must give express written
-                consent. If they then cancel, they must pay for work done up to the point of
-                cancellation. Without written consent, you may not be able to charge for work
-                started during the cancellation period.
+                <strong>Starting work in the cancellation period</strong> — if the customer asks you
+                to start work within the 14-day period, they must give express written consent. If
+                they then cancel, they must pay for work done up to the point of cancellation.
+                Without written consent, you may not be able to charge for work started during the
+                cancellation period.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional charges</strong> — you cannot add charges not disclosed
-                before the contract was made. Any additional charges — for access equipment,
-                parking, making good — must be disclosed in the pre-contract information if
-                they are foreseeable.
+                <strong>Additional charges</strong> — you cannot add charges not disclosed before
+                the contract was made. Any additional charges — for access equipment, parking,
+                making good — must be disclosed in the pre-contract information if they are
+                foreseeable.
               </span>
             </li>
           </ul>
@@ -244,9 +240,9 @@ const sections = [
     content: (
       <>
         <p>
-          A domestic electrical customer contract should be clear enough that any reasonable
-          person can understand what has been agreed without legal training. These are the
-          essential terms that every contract must include.
+          A domestic electrical customer contract should be clear enough that any reasonable person
+          can understand what has been agreed without legal training. These are the essential terms
+          that every contract must include.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -261,25 +257,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope of works</strong> — a detailed description of what is included.
-                The more specific, the better. Reference to drawings or specifications if
-                applicable. Cross-reference your quote document if it contains the detail.
+                <strong>Scope of works</strong> — a detailed description of what is included. The
+                more specific, the better. Reference to drawings or specifications if applicable.
+                Cross-reference your quote document if it contains the detail.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Exclusions</strong> — what is explicitly not included: making good,
-                asbestos removal, third-party connections, planning permissions, Building
-                Regulations application fees (separate from your notification fee), furniture
-                moving.
+                <strong>Exclusions</strong> — what is explicitly not included: making good, asbestos
+                removal, third-party connections, planning permissions, Building Regulations
+                application fees (separate from your notification fee), furniture moving.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Price and payment terms</strong> — the contract sum, VAT treatment,
-                deposit amount, stage payment schedule (if applicable), and final payment date.
+                <strong>Price and payment terms</strong> — the contract sum, VAT treatment, deposit
+                amount, stage payment schedule (if applicable), and final payment date.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,17 +296,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Guarantee</strong> — the duration and scope of your workmanship
-                guarantee. Distinguish between workmanship (your responsibility) and product
-                failure (manufacturer's warranty).
+                <strong>Guarantee</strong> — the duration and scope of your workmanship guarantee.
+                Distinguish between workmanship (your responsibility) and product failure
+                (manufacturer's warranty).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cancellation rights</strong> — the customer's statutory 14-day
-                cancellation right (Consumer Contracts Regulations 2013) and what happens if
-                they exercise it after work has begun.
+                <strong>Cancellation rights</strong> — the customer's statutory 14-day cancellation
+                right (Consumer Contracts Regulations 2013) and what happens if they exercise it
+                after work has begun.
               </span>
             </li>
           </ul>
@@ -325,27 +320,27 @@ const sections = [
     content: (
       <>
         <p>
-          A payment schedule sets out how and when the customer will pay throughout the project.
-          For domestic work, a staged payment schedule protects your cashflow and reduces the
-          risk of non-payment at the end of a project.
+          A payment schedule sets out how and when the customer will pay throughout the project. For
+          domestic work, a staged payment schedule protects your cashflow and reduces the risk of
+          non-payment at the end of a project.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small domestic jobs (under £1,000)</strong> — full payment on completion.
-                A deposit is not usually expected by customers on small jobs, and requesting one
-                can seem unusual. Invoice promptly on completion.
+                <strong>Small domestic jobs (under £1,000)</strong> — full payment on completion. A
+                deposit is not usually expected by customers on small jobs, and requesting one can
+                seem unusual. Invoice promptly on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium domestic jobs (£1,000 to £5,000)</strong> — 25 to 30 per cent
-                deposit on acceptance, balance on practical completion. For jobs lasting more
-                than one week, consider a mid-project payment at a defined milestone (e.g.
-                completion of first fix).
+                <strong>Medium domestic jobs (£1,000 to £5,000)</strong> — 25 to 30 per cent deposit
+                on acceptance, balance on practical completion. For jobs lasting more than one week,
+                consider a mid-project payment at a defined milestone (e.g. completion of first
+                fix).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -360,13 +355,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial subcontract work</strong> — the Housing Grants, Construction
-                and Regeneration Act 1996 requires interim payments at intervals of not less than
-                28 days. Your payment application must be submitted in accordance with the
-                subcontract programme. See the{' '}
-                <SEOInternalLink href="/subcontracting-guide">
-                  subcontracting guide
-                </SEOInternalLink>{' '}
+                <strong>Commercial subcontract work</strong> — the Housing Grants, Construction and
+                Regeneration Act 1996 requires interim payments at intervals of not less than 28
+                days. Your payment application must be submitted in accordance with the subcontract
+                programme. See the{' '}
+                <SEOInternalLink href="/subcontracting-guide">subcontracting guide</SEOInternalLink>{' '}
                 for your full payment rights.
               </span>
             </li>
@@ -381,10 +374,10 @@ const sections = [
     content: (
       <>
         <p>
-          Variations (changes to the original agreed scope) are the most common source of
-          revenue loss for electricians who do not use written variation orders. Customers
-          frequently request additional work verbally during a job, and then refuse to pay
-          for it at the end because "it was just a small extra".
+          Variations (changes to the original agreed scope) are the most common source of revenue
+          loss for electricians who do not use written variation orders. Customers frequently
+          request additional work verbally during a job, and then refuse to pay for it at the end
+          because "it was just a small extra".
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -392,9 +385,9 @@ const sections = [
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The variation order process</strong> — when additional work is requested:
-                (1) pause and agree the scope of the additional work; (2) issue a written
-                variation order with the scope and price; (3) get customer acceptance in writing
-                before starting; (4) carry out the work; (5) include the variation on the invoice.
+                (1) pause and agree the scope of the additional work; (2) issue a written variation
+                order with the scope and price; (3) get customer acceptance in writing before
+                starting; (4) carry out the work; (5) include the variation on the invoice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,27 +395,27 @@ const sections = [
               <span>
                 <strong>Email is sufficient</strong> — a variation order does not need to be a
                 formal document. An email from you describing the additional scope and price,
-                followed by a reply from the customer accepting it, is a binding variation. Screenshot
-                or save all such exchanges.
+                followed by a reply from the customer accepting it, is a binding variation.
+                Screenshot or save all such exchanges.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What your terms should say</strong> — your standard terms should include
-                a clause stating that any additional work outside the agreed scope will be
-                charged at your stated day rate plus materials, and that no additional work will
-                be carried out without a signed or email-confirmed variation order.
+                <strong>What your terms should say</strong> — your standard terms should include a
+                clause stating that any additional work outside the agreed scope will be charged at
+                your stated day rate plus materials, and that no additional work will be carried out
+                without a signed or email-confirmed variation order.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unforeseen conditions</strong> — distinguish between variations requested
-                by the customer and additional costs arising from unforeseen conditions (concealed
+                <strong>Unforeseen conditions</strong> — distinguish between variations requested by
+                the customer and additional costs arising from unforeseen conditions (concealed
                 wiring in worse condition than visible inspection suggested, asbestos, hidden
-                structural elements). Unforeseen conditions are not variations — they are a
-                change in contract price that should be addressed through your assumptions clause.
+                structural elements). Unforeseen conditions are not variations — they are a change
+                in contract price that should be addressed through your assumptions clause.
               </span>
             </li>
           </ul>
@@ -436,41 +429,41 @@ const sections = [
     content: (
       <>
         <p>
-          A defects liability period (DLP) is the period after practical completion during which
-          you remain responsible for rectifying genuine defects in your workmanship at no charge
-          to the customer. It is distinct from a manufacturer's product warranty.
+          A defects liability period (DLP) is the period after practical completion during which you
+          remain responsible for rectifying genuine defects in your workmanship at no charge to the
+          customer. It is distinct from a manufacturer's product warranty.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard DLP — 12 months</strong> — for domestic electrical work, 12
-                months is the standard and the period recommended by NICEIC, NAPIT, and most
-                consumer protection organisations. State the DLP clearly in your contract:
-                "Elec-Mate provides a 12-month guarantee against defects in workmanship from
-                the date of practical completion."
+                <strong>Standard DLP — 12 months</strong> — for domestic electrical work, 12 months
+                is the standard and the period recommended by NICEIC, NAPIT, and most consumer
+                protection organisations. State the DLP clearly in your contract: "Elec-Mate
+                provides a 12-month guarantee against defects in workmanship from the date of
+                practical completion."
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What constitutes a defect</strong> — a defect is a fault arising from
-                poor workmanship, incorrectly specified materials (where you chose the
-                specification), or materials supplied by you that are not fit for purpose.
-                It does not include: fair wear and tear; damage caused by the customer or
-                third parties; faults in materials supplied by the customer; or faults in
-                existing electrical installations that were not part of your scope.
+                <strong>What constitutes a defect</strong> — a defect is a fault arising from poor
+                workmanship, incorrectly specified materials (where you chose the specification), or
+                materials supplied by you that are not fit for purpose. It does not include: fair
+                wear and tear; damage caused by the customer or third parties; faults in materials
+                supplied by the customer; or faults in existing electrical installations that were
+                not part of your scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Manufacturer's warranty</strong> — electrical products (consumer units,
-                luminaires, sockets) carry their own manufacturer's warranties, typically 2 to
-                5 years. Product failure within the manufacturer's warranty period is a claim
-                against the manufacturer, not necessarily against you (unless you supplied the
-                product and made the selection).
+                luminaires, sockets) carry their own manufacturer's warranties, typically 2 to 5
+                years. Product failure within the manufacturer's warranty period is a claim against
+                the manufacturer, not necessarily against you (unless you supplied the product and
+                made the selection).
               </span>
             </li>
           </ul>
@@ -484,29 +477,29 @@ const sections = [
     content: (
       <>
         <p>
-          Retention is a common feature of commercial subcontract electrical work. Understanding
-          how retention works, how it is released, and how to track it across multiple contracts
-          is essential for cashflow management.
+          Retention is a common feature of commercial subcontract electrical work. Understanding how
+          retention works, how it is released, and how to track it across multiple contracts is
+          essential for cashflow management.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical retention rates</strong> — 3 to 5 per cent of the gross value
-                of each interim payment application. The retention is deducted from each payment
-                and held by the main contractor. On a £200,000 electrical subcontract at 5 per
-                cent retention, £10,000 is held.
+                <strong>Typical retention rates</strong> — 3 to 5 per cent of the gross value of
+                each interim payment application. The retention is deducted from each payment and
+                held by the main contractor. On a £200,000 electrical subcontract at 5 per cent
+                retention, £10,000 is held.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Release</strong> — half the retention (e.g. £5,000) is typically released
-                at practical completion of your section. The balance (e.g. £5,000) is released
-                at the end of the defects liability period, usually 12 months after practical
-                completion. Chase retention release actively — main contractors do not always
-                release retention without prompting.
+                <strong>Release</strong> — half the retention (e.g. £5,000) is typically released at
+                practical completion of your section. The balance (e.g. £5,000) is released at the
+                end of the defects liability period, usually 12 months after practical completion.
+                Chase retention release actively — main contractors do not always release retention
+                without prompting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -515,8 +508,8 @@ const sections = [
                 <strong>Retention reform</strong> — there are ongoing proposals for a Retention
                 Deposit Scheme in the UK construction industry that would require retention to be
                 held in a protected account rather than by the main contractor. Monitor industry
-                developments — this would significantly reduce the risk of losing retention
-                through main contractor insolvency.
+                developments — this would significantly reduce the risk of losing retention through
+                main contractor insolvency.
               </span>
             </li>
           </ul>
@@ -530,9 +523,8 @@ const sections = [
     content: (
       <>
         <p>
-          Despite the best contracts, disputes sometimes arise. Knowing your options — and
-          using the least costly and most appropriate one — is essential for any electrical
-          business.
+          Despite the best contracts, disputes sometimes arise. Knowing your options — and using the
+          least costly and most appropriate one — is essential for any electrical business.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -540,36 +532,36 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Letter before action</strong> — always the first step. A formal letter
-                stating the amount owed, the basis of the claim, and that you will take court
-                action within 14 days if unpaid. Many disputes resolve at this stage without
-                further action.
+                stating the amount owed, the basis of the claim, and that you will take court action
+                within 14 days if unpaid. Many disputes resolve at this stage without further
+                action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small claims court</strong> — for domestic disputes up to £10,000
-                (England and Wales). Online application via Gov.uk Money Claim Online. Court
-                fees from £35 to £455 depending on claim value. No legal representation
-                required. Usually resolved within 6 to 12 months.
+                <strong>Small claims court</strong> — for domestic disputes up to £10,000 (England
+                and Wales). Online application via Gov.uk Money Claim Online. Court fees from £35 to
+                £455 depending on claim value. No legal representation required. Usually resolved
+                within 6 to 12 months.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Adjudication</strong> — for commercial subcontract disputes under the
-                Housing Grants, Construction and Regeneration Act 1996. An adjudicator's decision
-                is usually reached within 28 days of referral and is immediately enforceable.
-                The fastest and most cost-effective route for commercial payment disputes.
+                Housing Grants, Construction and Regeneration Act 1996. An adjudicator's decision is
+                usually reached within 28 days of referral and is immediately enforceable. The
+                fastest and most cost-effective route for commercial payment disputes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mediation</strong> — a voluntary process where both parties attempt to
-                reach agreement with the assistance of a neutral mediator. Courts actively
-                encourage mediation before litigation. Services include CEDR, the Civil
-                Mediation Council, and sector-specific mediators.
+                <strong>Mediation</strong> — a voluntary process where both parties attempt to reach
+                agreement with the assistance of a neutral mediator. Courts actively encourage
+                mediation before litigation. Services include CEDR, the Civil Mediation Council, and
+                sector-specific mediators.
               </span>
             </li>
           </ul>
@@ -583,9 +575,9 @@ const sections = [
     content: (
       <>
         <p>
-          The most effective contracts for electricians are those that are used consistently —
-          the same professional template on every job. Elec-Mate provides the tools to build
-          and manage your customer documentation efficiently.
+          The most effective contracts for electricians are those that are used consistently — the
+          same professional template on every job. Elec-Mate provides the tools to build and manage
+          your customer documentation efficiently.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -601,9 +593,7 @@ const sections = [
                   to generate professional quotes that double as customer contracts, including
                   payment terms, exclusions, and guarantee statements. Export to PDF and email
                   direct from site. See the{' '}
-                  <SEOInternalLink href="/quote-writing-guide">
-                    quote writing guide
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/quote-writing-guide">quote writing guide</SEOInternalLink>{' '}
                   for what to include.
                 </p>
               </div>
@@ -615,9 +605,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">RAMS and H&S Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete your H&amp;S documentation alongside your customer contracts using
-                  the Elec-Mate RAMS generator. Keep your H&amp;S policy, risk assessments, and
-                  method statements current and professional. See the{' '}
+                  Complete your H&amp;S documentation alongside your customer contracts using the
+                  Elec-Mate RAMS generator. Keep your H&amp;S policy, risk assessments, and method
+                  statements current and professional. See the{' '}
                   <SEOInternalLink href="/health-safety-audit-electrician">
                     H&amp;S audit guide
                   </SEOInternalLink>{' '}
@@ -629,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage customer contracts and documentation with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. Build better customer relationships with professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. Build better customer relationships with professional documentation. 7-day free trial."
           icon={ClipboardList}
         />
       </>
@@ -666,7 +656,7 @@ export default function ContractTemplatesElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrical Contractor Contracts"
       relatedPages={relatedPages}
       ctaHeading="Build Professional Customer Contracts with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, contracts, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

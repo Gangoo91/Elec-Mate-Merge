@@ -708,7 +708,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Commercial EICRs on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for commercial EICR certificates. Multi-board support, AI board scanning, voice entry, remedial quoting, and instant delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR certificates. Multi-board support, AI board scanning, voice entry, remedial quoting, and instant delivery. 7-day free trial."
           icon={Building}
         />
       </>

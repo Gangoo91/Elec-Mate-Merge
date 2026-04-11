@@ -487,7 +487,7 @@ export default function AIMethodStatementPage() {
       faqHeading="Frequently Asked Questions About the Method Statement Generator"
       relatedPages={relatedPages}
       ctaHeading="Generate Professional RAMS in Seconds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered method statements and risk assessments. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-method-statement-generator"
     />
   );

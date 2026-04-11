@@ -19,9 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [
-  { label: 'Off-Grid Systems', href: '/off-grid-electrical-system' },
-];
+const breadcrumbs = [{ label: 'Off-Grid Systems', href: '/off-grid-electrical-system' }];
 
 const tocItems = [
   { id: 'when-off-grid', label: 'When Off-Grid Makes Sense' },
@@ -94,14 +92,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/hybrid-solar-battery-system',
     title: 'Hybrid Solar Battery System',
-    description: 'Grid-tied solar plus battery — self-consumption optimisation and tariff benefits.',
+    description:
+      'Grid-tied solar plus battery — self-consumption optimisation and tariff benefits.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-certificates',
     title: 'Electrical Certificates App',
-    description: 'Complete off-grid installation certificates on your phone with instant PDF export.',
+    description:
+      'Complete off-grid installation certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -135,8 +135,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remote rural properties</strong> — when the distance from the nearest
-                grid connection point exceeds 200–300 metres, connection costs can easily reach
+                <strong>Remote rural properties</strong> — when the distance from the nearest grid
+                connection point exceeds 200–300 metres, connection costs can easily reach
                 £15,000–£60,000 or more. At these figures, an off-grid system typically delivers
                 better value over a 20-year period.
               </span>
@@ -144,35 +144,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Narrowboats and canal boats</strong> — by nature off-grid when not on
-                shore power. LFP batteries and solar panels have transformed narrowboat living
-                by extending engine-off mooring capacity from hours to days.
+                <strong>Narrowboats and canal boats</strong> — by nature off-grid when not on shore
+                power. LFP batteries and solar panels have transformed narrowboat living by
+                extending engine-off mooring capacity from hours to days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Agricultural and estate buildings</strong> — barns, agricultural
-                dwellings, and estate cottages at the end of long private tracks where grid
-                extension is cost-prohibitive. Off-grid systems can also provide power security
-                that the rural grid — with its frequent and prolonged outages — cannot guarantee.
+                <strong>Agricultural and estate buildings</strong> — barns, agricultural dwellings,
+                and estate cottages at the end of long private tracks where grid extension is
+                cost-prohibitive. Off-grid systems can also provide power security that the rural
+                grid — with its frequent and prolonged outages — cannot guarantee.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Self-build eco homes</strong> — homeowners committed to energy
-                independence and zero carbon footprint, particularly where planning conditions
-                require minimal grid impact.
+                <strong>Self-build eco homes</strong> — homeowners committed to energy independence
+                and zero carbon footprint, particularly where planning conditions require minimal
+                grid impact.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Always request a grid connection quotation from the relevant Distribution Network
-          Operator (UK Power Networks, Western Power Distribution, Northern Powergrid, etc.)
-          before committing to off-grid. The comparison between grid connection cost and
-          off-grid system cost is the foundation of the economic case.
+          Always request a grid connection quotation from the relevant Distribution Network Operator
+          (UK Power Networks, Western Power Distribution, Northern Powergrid, etc.) before
+          committing to off-grid. The comparison between grid connection cost and off-grid system
+          cost is the foundation of the economic case.
         </p>
       </>
     ),
@@ -192,33 +192,33 @@ const sections = [
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV generation</strong> — the primary generation source for most UK
-                off-grid installations. Size is determined by annual energy yield calculations
-                using the property's latitude, panel orientation, and tilt. South-facing panels
-                at 30–35° tilt maximise annual yield in the UK.
+                off-grid installations. Size is determined by annual energy yield calculations using
+                the property's latitude, panel orientation, and tilt. South-facing panels at 30–35°
+                tilt maximise annual yield in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery bank</strong> — stores solar generation for use when the sun
-                is not shining. Must be sized for 3–5 days of autonomy at average daily
-                consumption, accounting for depth of discharge limits of the chosen chemistry.
+                <strong>Battery bank</strong> — stores solar generation for use when the sun is not
+                shining. Must be sized for 3–5 days of autonomy at average daily consumption,
+                accounting for depth of discharge limits of the chosen chemistry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Backup generator</strong> — petrol or diesel generator (5–15 kW) for
-                extended periods of low irradiance. The generator charges the battery bank via
-                the inverter/charger's AC input. Propane/LPG generators are preferred in remote
+                extended periods of low irradiance. The generator charges the battery bank via the
+                inverter/charger's AC input. Propane/LPG generators are preferred in remote
                 locations where diesel delivery is infrequent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inverter/charger</strong> — the central management device that converts
-                DC battery power to AC for use in the property, manages solar charging via MPPT
+                <strong>Inverter/charger</strong> — the central management device that converts DC
+                battery power to AC for use in the property, manages solar charging via MPPT
                 controller, and charges the battery from the generator when needed.
               </span>
             </li>
@@ -242,36 +242,35 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>12V systems</strong> — suitable only for very small loads (narrowboats,
-                motorhomes, small cabins up to 1 kW). At 12V, a 100A cable is needed to carry
-                just 1.2 kW — cable costs and losses become prohibitive for larger loads.
-                Widely compatible with 12V appliances and automotive components.
+                motorhomes, small cabins up to 1 kW). At 12V, a 100A cable is needed to carry just
+                1.2 kW — cable costs and losses become prohibitive for larger loads. Widely
+                compatible with 12V appliances and automotive components.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>24V systems</strong> — a practical compromise for medium-sized
-                applications (1–3 kW). Halves the current compared to 12V for the same power,
-                reducing cable size and losses. Common on larger narrowboats and small rural
-                cabins.
+                <strong>24V systems</strong> — a practical compromise for medium-sized applications
+                (1–3 kW). Halves the current compared to 12V for the same power, reducing cable size
+                and losses. Common on larger narrowboats and small rural cabins.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>48V systems</strong> — the standard for modern off-grid domestic
-                installations above 3 kW. At 48V, a 63A cable carries 3 kW — practical for
-                most wiring runs. 48V is the native voltage of most modern LFP battery modules
-                and inverter/charger units (Victron Quattro, SMA Sunny Island, Schneider XW+).
-                48V systems are expandable and future-proof.
+                installations above 3 kW. At 48V, a 63A cable carries 3 kW — practical for most
+                wiring runs. 48V is the native voltage of most modern LFP battery modules and
+                inverter/charger units (Victron Quattro, SMA Sunny Island, Schneider XW+). 48V
+                systems are expandable and future-proof.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For any new off-grid installation in a dwelling or substantial building, 48V DC is
-          the correct choice. 12V systems should be reserved for narrowboats, motorhomes,
-          and equipment specifically designed for that voltage.
+          For any new off-grid installation in a dwelling or substantial building, 48V DC is the
+          correct choice. 12V systems should be reserved for narrowboats, motorhomes, and equipment
+          specifically designed for that voltage.
         </p>
       </>
     ),
@@ -282,46 +281,46 @@ const sections = [
     content: (
       <>
         <p>
-          The inverter/charger is the heart of an off-grid system. It must be sized correctly
-          for peak load demand, not just average consumption.
+          The inverter/charger is the heart of an off-grid system. It must be sized correctly for
+          peak load demand, not just average consumption.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Victron Energy Quattro</strong> — the market-leading inverter/charger
-                for UK off-grid installations. Available in 3–15 kVA sizes. Dual AC input
-                (generator + optional grid). Excellent integration with Victron MPPT controllers,
-                BMS systems, and the GX monitoring platform. Widely supported by UK installers.
+                <strong>Victron Energy Quattro</strong> — the market-leading inverter/charger for UK
+                off-grid installations. Available in 3–15 kVA sizes. Dual AC input (generator +
+                optional grid). Excellent integration with Victron MPPT controllers, BMS systems,
+                and the GX monitoring platform. Widely supported by UK installers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SMA Sunny Island</strong> — German-engineered off-grid inverter,
-                3.7–6 kW per unit with master/slave parallel capability for larger loads. Pairs
-                with SMA solar inverters for integrated DC coupling.
+                <strong>SMA Sunny Island</strong> — German-engineered off-grid inverter, 3.7–6 kW
+                per unit with master/slave parallel capability for larger loads. Pairs with SMA
+                solar inverters for integrated DC coupling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Peak load sizing</strong> — size the inverter for peak simultaneous
-                demand, not average. A typical UK home may have a peak demand of 6–10 kW (oven,
-                kettle, washing machine running simultaneously). The inverter must handle this
-                without overload. Most inverter/chargers have a 2–3× overload rating for short
-                durations (motor starting, etc.).
+                <strong>Peak load sizing</strong> — size the inverter for peak simultaneous demand,
+                not average. A typical UK home may have a peak demand of 6–10 kW (oven, kettle,
+                washing machine running simultaneously). The inverter must handle this without
+                overload. Most inverter/chargers have a 2–3× overload rating for short durations
+                (motor starting, etc.).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transfer switch time</strong> — when switching between generator and
-                inverter power, the transfer switch introduces a brief interruption (typically
-                20–40 ms for a Victron Quattro). This is usually imperceptible but can cause
-                issues with sensitive computing or medical equipment. Specify a UPS-compatible
-                inverter/charger for such applications.
+                inverter power, the transfer switch introduces a brief interruption (typically 20–40
+                ms for a Victron Quattro). This is usually imperceptible but can cause issues with
+                sensitive computing or medical equipment. Specify a UPS-compatible inverter/charger
+                for such applications.
               </span>
             </li>
           </ul>
@@ -335,41 +334,41 @@ const sections = [
     content: (
       <>
         <p>
-          Off-grid battery sizing is more demanding than grid-tied storage because the battery
-          must bridge extended periods without generation, not merely store a day's solar surplus.
+          Off-grid battery sizing is more demanding than grid-tied storage because the battery must
+          bridge extended periods without generation, not merely store a day's solar surplus.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — daily consumption</strong> — calculate average daily consumption
-                in kWh. For a UK home, this is typically 8–20 kWh/day depending on size and
-                occupants. Obtain 12 months of smart meter data for accuracy.
+                <strong>Step 1 — daily consumption</strong> — calculate average daily consumption in
+                kWh. For a UK home, this is typically 8–20 kWh/day depending on size and occupants.
+                Obtain 12 months of smart meter data for accuracy.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — days of autonomy</strong> — choose the design autonomy period
-                (typically 3–5 days for a UK installation with a backup generator, 7+ days
-                if generator-free). Multiply daily consumption by autonomy days.
+                (typically 3–5 days for a UK installation with a backup generator, 7+ days if
+                generator-free). Multiply daily consumption by autonomy days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — depth of discharge</strong> — divide by the allowable depth of
-                discharge (80% for LFP, 50% for lead-acid). A 5-day autonomy requirement at
-                10 kWh/day with LFP: (10 × 5) ÷ 0.8 = 62.5 kWh of installed capacity.
+                discharge (80% for LFP, 50% for lead-acid). A 5-day autonomy requirement at 10
+                kWh/day with LFP: (10 × 5) ÷ 0.8 = 62.5 kWh of installed capacity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — temperature derating</strong> — in unheated outbuildings,
-                add 10–20% to battery capacity to account for reduced performance at low
-                temperatures. LFP is significantly less affected by cold than NMC.
+                <strong>Step 4 — temperature derating</strong> — in unheated outbuildings, add
+                10–20% to battery capacity to account for reduced performance at low temperatures.
+                LFP is significantly less affected by cold than NMC.
               </span>
             </li>
           </ul>
@@ -384,8 +383,8 @@ const sections = [
       <>
         <p>
           A grid-forming inverter is essential for off-grid operation. Unlike a grid-following
-          (grid-tied) inverter that synchronises to and depends on the grid's voltage and
-          frequency reference, a grid-forming inverter creates its own AC voltage and frequency.
+          (grid-tied) inverter that synchronises to and depends on the grid's voltage and frequency
+          reference, a grid-forming inverter creates its own AC voltage and frequency.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -393,16 +392,16 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage and frequency synthesis</strong> — the grid-forming inverter
-                maintains 230V AC at 50 Hz regardless of grid presence. Standard appliances
-                and equipment designed for the UK grid operate normally.
+                maintains 230V AC at 50 Hz regardless of grid presence. Standard appliances and
+                equipment designed for the UK grid operate normally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Black start capability</strong> — a grid-forming inverter can start up
-                from a fully discharged battery (once minimum voltage is reached) without any
-                external reference. This is the key feature that makes off-grid operation possible.
+                <strong>Black start capability</strong> — a grid-forming inverter can start up from
+                a fully discharged battery (once minimum voltage is reached) without any external
+                reference. This is the key feature that makes off-grid operation possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -429,8 +428,8 @@ const sections = [
     content: (
       <>
         <p>
-          The economic decision between off-grid and grid connection depends on the specific
-          DNO quotation for the property. Always obtain a formal quotation before proceeding.
+          The economic decision between off-grid and grid connection depends on the specific DNO
+          quotation for the property. Always obtain a formal quotation before proceeding.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -438,24 +437,24 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Grid connection costs (typical range)</strong> — £5,000–£15,000 for
-                properties within 100 m of the nearest point of connection; £15,000–£60,000+
-                for properties requiring new overhead line or underground cable runs of
-                200–1,000+ metres.
+                properties within 100 m of the nearest point of connection; £15,000–£60,000+ for
+                properties requiring new overhead line or underground cable runs of 200–1,000+
+                metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small off-grid system (cabin, 2–3 kW)</strong> — £15,000–£25,000
-                installed including solar, LFP battery bank, inverter/charger, and generator.
+                <strong>Small off-grid system (cabin, 2–3 kW)</strong> — £15,000–£25,000 installed
+                including solar, LFP battery bank, inverter/charger, and generator.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full domestic off-grid system (5–10 kW)</strong> — £30,000–£60,000
-                installed. This figure includes 4–8 kW solar, 30–50 kWh LFP battery, Victron
-                Quattro inverter/charger, generator, and monitoring system.
+                installed. This figure includes 4–8 kW solar, 30–50 kWh LFP battery, Victron Quattro
+                inverter/charger, generator, and monitoring system.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -478,9 +477,9 @@ const sections = [
       <>
         <p>
           Off-grid electrical work commands a significant premium over standard domestic
-          installation. Complex system design, specialist equipment, and the need for
-          precise commissioning mean that experienced off-grid installers are in high demand
-          across rural UK markets.
+          installation. Complex system design, specialist equipment, and the need for precise
+          commissioning mean that experienced off-grid installers are in high demand across rural UK
+          markets.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -494,8 +493,8 @@ const sections = [
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete Electrical Installation Certificates for off-grid systems on your
-                  phone. Generate EIC and minor works certificates, schedule of test results,
-                  and commissioning records without any paperwork.
+                  phone. Generate EIC and minor works certificates, schedule of test results, and
+                  commissioning records without any paperwork.
                 </p>
               </div>
             </div>
@@ -520,7 +519,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage off-grid installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for certificates, quoting, and job management. Complete EIC and commissioning documents on your phone. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -557,7 +556,7 @@ export default function OffGridElectricalSystemPage() {
       faqHeading="Frequently Asked Questions About Off-Grid Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Certificate Off-Grid Electrical Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, test schedules, and commissioning records. 7-day free trial, cancel anytime."
     />
   );
 }

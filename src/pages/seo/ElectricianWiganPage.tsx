@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Wigan is in Greater Manchester, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Wigan Council Building Control.',
   'Electricity North West (ENW) is the Distribution Network Operator for Wigan and the wider Greater Manchester area. All new connections, supply upgrades, and G98/G99 generation notifications go through ENW.',
   'Wigan has a large and diverse housing stock including significant ex-mining community estates from the 1950s–1970s, Victorian terraces, and modern new-build development. Ageing wiring across the older stock generates strong rewiring and consumer unit upgrade demand.',
-  'The town\'s position in the Greater Manchester conurbation, with good motorway access (M6, M58, M61), makes it an attractive market for electricians who can also serve the wider metropolitan area.',
+  "The town's position in the Greater Manchester conurbation, with good motorway access (M6, M58, M61), makes it an attractive market for electricians who can also serve the wider metropolitan area.",
   'Labour rates in Wigan are mid-range for Greater Manchester — typically £40 to £58 per hour for a qualified, registered electrician in 2026, slightly lower than Manchester city centre but comparable to nearby Bolton and Leigh.',
 ];
 
@@ -57,10 +57,10 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Wigan?',
     answer:
-      'An EICR in Wigan typically costs £145 to £250 for a standard residential property. This is broadly in line with neighbouring Greater Manchester towns. Wigan\'s large private rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — a valid EICR every five years, with C1/C2 defects remedied within 28 days. HMO EICRs cost more due to the larger number of circuits.',
+      "An EICR in Wigan typically costs £145 to £250 for a standard residential property. This is broadly in line with neighbouring Greater Manchester towns. Wigan's large private rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — a valid EICR every five years, with C1/C2 defects remedied within 28 days. HMO EICRs cost more due to the larger number of circuits.",
   },
   {
-    question: 'What are the electrical challenges in Wigan\'s former mining community housing?',
+    question: "What are the electrical challenges in Wigan's former mining community housing?",
     answer:
       'Wigan was historically a major coal mining town, and many of its residential areas were built to house mining families in the 1950s through 1970s. Areas such as Leigh, Atherton, Tyldesley, and Abram have large estates of this era with wiring that is now approaching or past its safe working life. Common issues include ageing PVC or rubber-insulated wiring, old fuse boards with rewirable fuses, poor earth bonding, limited socket provision, and occasional evidence of amateur wiring work carried out over the decades. EICRs in these properties often generate multiple C2 observations. Asbestos is a risk in pre-1980s properties — recommend surveys before invasive work.',
   },
@@ -93,16 +93,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description:
-      'EICRs for Wigan landlords, letting agents, and residential periodic inspections.',
+    description: 'EICRs for Wigan landlords, letting agents, and residential periodic inspections.',
     icon: ShieldCheck,
     category: 'Certificate',
   },
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Size cables for rewires and new circuits across Wigan\'s varied housing stock.',
+    description: "Size cables for rewires and new circuits across Wigan's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -144,10 +142,10 @@ const sections = [
       <>
         <p>
           Wigan is a metropolitan borough in Greater Manchester with a population of around 330,000.
-          The town has a proud industrial and sporting heritage — as a former mining and manufacturing
-          centre, and famously as a rugby league stronghold. Today, Wigan's economy is diverse,
-          with strong retail, healthcare, education, and logistics sectors alongside continuing
-          manufacturing.
+          The town has a proud industrial and sporting heritage — as a former mining and
+          manufacturing centre, and famously as a rugby league stronghold. Today, Wigan's economy is
+          diverse, with strong retail, healthcare, education, and logistics sectors alongside
+          continuing manufacturing.
         </p>
         <p>
           For electricians, Wigan offers a substantial residential market driven by the need to
@@ -195,17 +193,17 @@ const sections = [
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with BS
                 7671:2018+A3:2024. RCD protection is required for socket outlet circuits under
-                regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors.
-                Consumer unit replacements must use an RCBO or dual-RCD board.
+                regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors. Consumer
+                unit replacements must use an RCBO or dual-RCD board.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR requirements</strong> — Wigan's private landlords must
-                comply with The Electrical Safety Standards in the Private Rented Sector (England)
-                Regulations 2020. Valid EICRs every five years, with C1/C2 defects remedied
-                within 28 days of an unsatisfactory report.
+                <strong>Landlord EICR requirements</strong> — Wigan's private landlords must comply
+                with The Electrical Safety Standards in the Private Rented Sector (England)
+                Regulations 2020. Valid EICRs every five years, with C1/C2 defects remedied within
+                28 days of an unsatisfactory report.
               </span>
             </li>
           </ul>
@@ -225,8 +223,8 @@ const sections = [
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              The town centre and areas such as Scholes, Newtown, and Pemberton have Victorian
-              and Edwardian terrace properties. These commonly have old rubber-insulated wiring,
+              The town centre and areas such as Scholes, Newtown, and Pemberton have Victorian and
+              Edwardian terrace properties. These commonly have old rubber-insulated wiring,
               inadequate consumer units, and poor earthing. Many have been converted to HMOs or
               bedsits. Full rewires and consumer unit upgrades are common.
             </p>
@@ -236,8 +234,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Areas such as Leigh, Atherton, Tyldesley, Hindley, and Abram have large post-war
               estates built in the 1950s–1970s, many originally for mining families. Wiring from
-              this era is now approaching or past its safe life. Consumer unit upgrades and
-              rewires are among the most common jobs.
+              this era is now approaching or past its safe life. Consumer unit upgrades and rewires
+              are among the most common jobs.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -253,9 +251,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Commercial and Retail</h3>
             <p className="text-white text-sm leading-relaxed">
               Wigan has retail parks, leisure facilities, and commercial premises that require
-              commercial electrical work. The Galleries shopping centre and Grand Arcade retail
-              area generate commercial EICR and maintenance work. EV charger installations in
-              retail car parks are a growing market.
+              commercial electrical work. The Galleries shopping centre and Grand Arcade retail area
+              generate commercial EICR and maintenance work. EV charger installations in retail car
+              parks are a growing market.
             </p>
           </div>
         </div>
@@ -267,42 +265,40 @@ const sections = [
     heading: 'Common Electrical Jobs in Wigan',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Wigan in 2026:
-        </p>
+        <p>The most in-demand electrical services in Wigan in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Wigan's active private rental market
-                generates consistent EICR demand. Building relationships with local letting
-                agents creates a reliable pipeline of landlord compliance work throughout the year.
+                generates consistent EICR demand. Building relationships with local letting agents
+                creates a reliable pipeline of landlord compliance work throughout the year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — old fuse boards are extremely
-                common across Wigan's older housing stock. Consumer unit upgrades are one of
-                the most frequently requested jobs in the area.
+                <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
+                across Wigan's older housing stock. Consumer unit upgrades are one of the most
+                frequently requested jobs in the area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full and partial rewires</strong> — Wigan's post-war and Victorian
-                housing stock generates consistent rewiring work. Partial rewires following
-                EICR C2 observations are especially common.
+                <strong>Full and partial rewires</strong> — Wigan's post-war and Victorian housing
+                stock generates consistent rewiring work. Partial rewires following EICR C2
+                observations are especially common.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charger installations</strong> — growing across Wigan's residential
-                and commercial sectors. ENW G98 notification is not required for standard EV
-                charger circuits without generation or storage, but the installation must comply
-                with BS 7671.
+                <strong>EV charger installations</strong> — growing across Wigan's residential and
+                commercial sectors. ENW G98 notification is not required for standard EV charger
+                circuits without generation or storage, but the installation must comply with BS
+                7671.
               </span>
             </li>
           </ul>
@@ -325,25 +321,25 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registered</strong> — search the public registers at
-                niceic.com or napit.org.uk for Wigan electricians. Registration requires
-                annual assessment and confirms Part P self-certification ability.
+                niceic.com or napit.org.uk for Wigan electricians. Registration requires annual
+                assessment and confirms Part P self-certification ability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Correct Part P documentation</strong> — for notifiable work, you should
-                receive a Part P Building Regulations compliance certificate and a BS 7671 EIC.
-                For an EICR, you should receive the full report with all observations and a
-                clear overall result.
+                receive a Part P Building Regulations compliance certificate and a BS 7671 EIC. For
+                an EICR, you should receive the full report with all observations and a clear
+                overall result.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotation</strong> — always get a detailed written quote before
-                work starts. Good Wigan electricians will survey before quoting and provide
-                a full cost breakdown including materials, labour, and certification.
+                <strong>Written quotation</strong> — always get a detailed written quote before work
+                starts. Good Wigan electricians will survey before quoting and provide a full cost
+                breakdown including materials, labour, and certification.
               </span>
             </li>
           </ul>
@@ -441,11 +437,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Same-day documentation keeps Wigan landlords compliant and builds a
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Same-day documentation keeps Wigan landlords compliant and builds a
                   reputation for professionalism that generates referrals.
                 </p>
               </div>
@@ -477,8 +470,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional quotes to Wigan homeowners and landlords. Clear,
-                  itemised quotes help win work in a competitive local market.
+                  to send professional quotes to Wigan homeowners and landlords. Clear, itemised
+                  quotes help win work in a competitive local market.
                 </p>
               </div>
             </div>
@@ -486,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Wigan electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and Greater Manchester. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and Greater Manchester. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -511,8 +504,7 @@ export default function ElectricianWiganPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Wigan:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Wigan: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Wigan's former mining community housing stock, Victorian terraces, and growing EV charger demand create a consistent market for qualified electricians with Part P compliance expertise and EICR knowledge."
@@ -523,7 +515,7 @@ export default function ElectricianWiganPage() {
       faqHeading="Frequently Asked Questions About Electricians in Wigan"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Wigan Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and the wider Greater Manchester area. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Wigan and the wider Greater Manchester area. 7-day free trial."
     />
   );
 }

@@ -635,7 +635,7 @@ export default function MockExamsElectricalPage() {
       faqHeading="Frequently Asked Questions About Mock Exams for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Practice Exams on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for mock exams, flashcards, and structured revision. Track your scores, identify weak areas, and pass first time. 7-day free trial, cancel anytime."
     />
   );
 }

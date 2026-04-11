@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Who is the electricity Distribution Network Operator for Stoke-on-Trent?',
     answer:
-      'National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Stoke-on-Trent. To request a new supply, upgraded supply, or meter relocation, apply through NGED\'s website. Lead times for new connections are typically 4 to 8 weeks.',
+      "National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Stoke-on-Trent. To request a new supply, upgraded supply, or meter relocation, apply through NGED's website. Lead times for new connections are typically 4 to 8 weeks.",
   },
   {
     question: 'Are there special electrical considerations for converted pottery buildings?',
@@ -124,7 +124,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Stoke-on-Trent customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Stoke-on-Trent customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -170,12 +171,10 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
-        <p>
-          Before hiring any electrician in Stoke-on-Trent, verify their credentials:
-        </p>
+        <p>Before hiring any electrician in Stoke-on-Trent, verify their credentials:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -225,8 +224,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed terraced house)</strong> — £3,800 to £6,000 including
-                new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
+                <strong>Full rewire (3-bed terraced house)</strong> — £3,800 to £6,000 including new
+                consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
                 certification.
               </span>
             </li>
@@ -298,11 +297,10 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Inter-War and Post-War Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              Substantial areas of 1930s semi-detached and post-war council housing exist in
-              Meir, Bentilee, Blurton, and Abbey Hulton. These properties often have cavity walls
-              (easier for cable routing) but may still run on original or first-generation
-              replacement wiring. Consumer unit upgrades are the most common electrical job in these
-              properties.
+              Substantial areas of 1930s semi-detached and post-war council housing exist in Meir,
+              Bentilee, Blurton, and Abbey Hulton. These properties often have cavity walls (easier
+              for cable routing) but may still run on original or first-generation replacement
+              wiring. Consumer unit upgrades are the most common electrical job in these properties.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -318,9 +316,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Modern Estates</h3>
             <p className="text-white text-sm leading-relaxed">
               New developments at Trentham Lakes, Berryhill, and around the A500 corridor feature
-              modern installations. Common electrical work includes EV charger installations,
-              garden room circuits, and smart home upgrades. Properties under 10 years old may have
-              NHBC warranty cover for electrical defects.
+              modern installations. Common electrical work includes EV charger installations, garden
+              room circuits, and smart home upgrades. Properties under 10 years old may have NHBC
+              warranty cover for electrical defects.
             </p>
           </div>
         </div>
@@ -342,8 +340,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and supply upgrades</strong> — apply to NGED for new supplies
-                or upgrades. Lead times in Stoke-on-Trent are typically 4 to 8 weeks.
+                <strong>New connections and supply upgrades</strong> — apply to NGED for new
+                supplies or upgrades. Lead times in Stoke-on-Trent are typically 4 to 8 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,8 +361,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work is overseen by Stoke-on-Trent City Council building
           control or an approved inspector.
         </p>
@@ -387,9 +384,9 @@ const sections = [
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Listed bottle ovens and pottery works</strong> — several of Stoke-on-Trent's
-                historic bottle ovens and factory buildings are listed. Any electrical work affecting
-                the character of a listed building requires Listed Building Consent. Surface-mounted
-                conduit and cable routing must be planned sympathetically.
+                historic bottle ovens and factory buildings are listed. Any electrical work
+                affecting the character of a listed building requires Listed Building Consent.
+                Surface-mounted conduit and cable routing must be planned sympathetically.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -397,16 +394,16 @@ const sections = [
               <span>
                 <strong>Industrial conversion challenges</strong> — thick industrial walls, large
                 floor plates, high ceilings, and potentially damp environments all affect electrical
-                installation design. IP ratings for accessories, cable support systems, and
-                circuit design for large open-plan spaces all require careful consideration.
+                installation design. IP ratings for accessories, cable support systems, and circuit
+                design for large open-plan spaces all require careful consideration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety in conversions</strong> — converted industrial buildings have
-                specific fire safety requirements under Building Regulations Part B and Part P.
-                Fire detection, emergency lighting, and fire-resistant cable selection must all be
+                specific fire safety requirements under Building Regulations Part B and Part P. Fire
+                detection, emergency lighting, and fire-resistant cable selection must all be
                 considered in the electrical design.
               </span>
             </li>
@@ -458,7 +455,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Stoke-on-Trent electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -495,7 +492,7 @@ export default function ElectricianStokeOnTrentPage() {
       faqHeading="Frequently Asked Questions About Electricians in Stoke-on-Trent"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Stoke-on-Trent and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Stoke-on-Trent and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

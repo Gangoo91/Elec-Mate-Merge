@@ -111,7 +111,7 @@ const relatedPages = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'All 8 certificate types explained — when to use each one.',
+    description: 'All 16 certificate types explained — when to use each one.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -158,9 +158,9 @@ const sections = [
         <p>
           An Electrical Installation Certificate (EIC) is the formal document issued upon completion
           of a new electrical installation or the installation of new circuits. It is required by BS
-          7671, which states that an EIC shall be provided upon completion of the
-          verification of a new installation or an addition or alteration to an existing
-          installation that includes new circuits.
+          7671, which states that an EIC shall be provided upon completion of the verification of a
+          new installation or an addition or alteration to an existing installation that includes
+          new circuits.
         </p>
         <p>
           The EIC is a <strong>declaration of compliance</strong>. By signing it, the responsible
@@ -502,11 +502,11 @@ const sections = [
           leave site.
         </p>
         <p>
-          All 8 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
+          All 16 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
           Alarm, PAT Testing, EV Charger, and Solar PV. One subscription covers everything.
         </p>
         <SEOAppBridge
-          title="8 Certificate Types in One App"
+          title="16 Certificate Types in One App"
           description="Stop carrying multiple paper pads or paying for separate software for each certificate type. Elec-Mate has EIC, EICR, Minor Works, and 5 more — all with digital signatures, auto-validation, and PDF export. Switch between them in seconds."
           icon={ClipboardCheck}
         />
@@ -539,7 +539,7 @@ export default function EICRvsEICPage() {
       faqHeading="Frequently Asked Questions About EICR vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Both certificates in one app"
-      ctaSubheading="Join 430+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional EIC and EICR certificates on their phones. 7-day free trial, cancel anytime."
     />
   );
 }

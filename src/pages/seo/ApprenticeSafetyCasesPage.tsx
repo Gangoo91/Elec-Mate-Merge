@@ -552,7 +552,7 @@ export default function ApprenticeSafetyCasesPage() {
       faqHeading="Frequently Asked Questions About Safety for Apprentices"
       relatedPages={relatedPages}
       ctaHeading="Safety training that actually sticks"
-      ctaSubheading="Join 430+ UK apprentices building genuine safety competence with Elec-Mate. Health and safety courses, safe isolation training, flashcards, and site diary. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices building genuine safety competence with Elec-Mate. Health and safety courses, safe isolation training, flashcards, and site diary. 7-day free trial, cancel anytime."
     />
   );
 }

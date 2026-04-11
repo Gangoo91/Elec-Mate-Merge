@@ -125,41 +125,40 @@ const sections = [
     content: (
       <>
         <p>
-          Infrared heating panels emit electromagnetic radiation in the long-wave infrared
-          spectrum (far infrared, approximately 8–14 microns wavelength). Unlike visible
-          light, this radiation is absorbed by solid objects — furniture, walls, floors,
-          and people — raising their surface temperature without first heating the air.
+          Infrared heating panels emit electromagnetic radiation in the long-wave infrared spectrum
+          (far infrared, approximately 8–14 microns wavelength). Unlike visible light, this
+          radiation is absorbed by solid objects — furniture, walls, floors, and people — raising
+          their surface temperature without first heating the air.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Radiant vs convective heat</strong> — traditional panel heaters
-                and radiators warm the air, which then circulates by convection to warm
-                occupants. Infrared panels warm objects and occupants directly. This means
-                a person sitting near an infrared panel feels warm even if the air
-                temperature is relatively low — a useful characteristic in draughty or
-                high-ceiling spaces.
+                <strong>Radiant vs convective heat</strong> — traditional panel heaters and
+                radiators warm the air, which then circulates by convection to warm occupants.
+                Infrared panels warm objects and occupants directly. This means a person sitting
+                near an infrared panel feels warm even if the air temperature is relatively low — a
+                useful characteristic in draughty or high-ceiling spaces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermal mass effect</strong> — walls, floors, and furniture absorb
-                infrared radiation and re-radiate heat over time, creating a gentle thermal
-                mass effect. Rooms heated by infrared tend to feel warm more quickly after
-                the panel switches on and retain warmth slightly longer after it switches off
-                compared to pure convection heaters.
+                <strong>Thermal mass effect</strong> — walls, floors, and furniture absorb infrared
+                radiation and re-radiate heat over time, creating a gentle thermal mass effect.
+                Rooms heated by infrared tend to feel warm more quickly after the panel switches on
+                and retain warmth slightly longer after it switches off compared to pure convection
+                heaters.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No air movement</strong> — infrared panels have no fans and create
-                no forced air circulation. This makes them popular in environments where
-                dust circulation is a concern (allergy sufferers, server rooms, precision
-                environments) and in quiet spaces such as home offices and bedrooms.
+                <strong>No air movement</strong> — infrared panels have no fans and create no forced
+                air circulation. This makes them popular in environments where dust circulation is a
+                concern (allergy sufferers, server rooms, precision environments) and in quiet
+                spaces such as home offices and bedrooms.
               </span>
             </li>
           </ul>
@@ -173,25 +172,25 @@ const sections = [
     content: (
       <>
         <p>
-          Infrared panels are available in a wide range of power ratings and physical sizes.
-          Correct panel selection is essential for comfort and efficiency.
+          Infrared panels are available in a wide range of power ratings and physical sizes. Correct
+          panel selection is essential for comfort and efficiency.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>300–500 W</strong> — suitable for small bedrooms (up to 6 m²),
-                bathrooms, and hallways. Physical size approximately 60 × 60 cm to 60 × 90 cm.
-                Can typically be connected to an existing ring main via a fused connection unit.
+                <strong>300–500 W</strong> — suitable for small bedrooms (up to 6 m²), bathrooms,
+                and hallways. Physical size approximately 60 × 60 cm to 60 × 90 cm. Can typically be
+                connected to an existing ring main via a fused connection unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>600–900 W</strong> — suitable for average bedrooms (8–12 m²) and
-                smaller living rooms in well-insulated properties. Physical size approximately
-                60 × 120 cm. Suitable for ring main connection below 2 kW total load.
+                <strong>600–900 W</strong> — suitable for average bedrooms (8–12 m²) and smaller
+                living rooms in well-insulated properties. Physical size approximately 60 × 120 cm.
+                Suitable for ring main connection below 2 kW total load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,18 +204,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1,600–1,800 W</strong> — large rooms, open-plan spaces, conservatories,
-                and workshops (25–30 m²). Physical size 90 × 150 cm to 120 × 120 cm. Dedicated
-                radial circuit recommended. These panels are often ceiling-mounted for maximum
-                coverage area.
+                <strong>1,600–1,800 W</strong> — large rooms, open-plan spaces, conservatories, and
+                workshops (25–30 m²). Physical size 90 × 150 cm to 120 × 120 cm. Dedicated radial
+                circuit recommended. These panels are often ceiling-mounted for maximum coverage
+                area.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          As a sizing guide, use 60–80 W per square metre for rooms with good insulation
-          and 2.4 m ceiling height. Increase to 80–100 W/m² for older properties with
-          less insulation, high ceilings, or significant glazing areas.
+          As a sizing guide, use 60–80 W per square metre for rooms with good insulation and 2.4 m
+          ceiling height. Increase to 80–100 W/m² for older properties with less insulation, high
+          ceilings, or significant glazing areas.
         </p>
       </>
     ),
@@ -227,48 +226,47 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical connection method for infrared panels depends primarily on the
-          panel's power rating and the existing circuit loading.
+          The electrical connection method for infrared panels depends primarily on the panel's
+          power rating and the existing circuit loading.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plug-in (13 A socket)</strong> — panels up to approximately 1,200 W
-                are available with a standard 13 A plug. Suitable for temporary or portable use.
-                For permanent installations, a fused connection unit (FCU) with appropriate
-                fuse rating provides a neater and more professional connection than a socket
-                and plug arrangement. Ensure the ring main circuit load budget is not exceeded.
+                <strong>Plug-in (13 A socket)</strong> — panels up to approximately 1,200 W are
+                available with a standard 13 A plug. Suitable for temporary or portable use. For
+                permanent installations, a fused connection unit (FCU) with appropriate fuse rating
+                provides a neater and more professional connection than a socket and plug
+                arrangement. Ensure the ring main circuit load budget is not exceeded.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fused connection unit (FCU)</strong> — for permanent wiring of panels
-                up to 2 kW onto an existing ring main or radial circuit. The FCU is wired from
-                the nearest available socket or junction, with appropriate fuse rating (3 A for
-                panels up to 700 W, 5 A for panels 700 W–1,100 W, 13 A for higher ratings).
-                The FCU provides local isolation for the panel.
+                <strong>Fused connection unit (FCU)</strong> — for permanent wiring of panels up to
+                2 kW onto an existing ring main or radial circuit. The FCU is wired from the nearest
+                available socket or junction, with appropriate fuse rating (3 A for panels up to 700
+                W, 5 A for panels 700 W–1,100 W, 13 A for higher ratings). The FCU provides local
+                isolation for the panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated radial circuit</strong> — required for panels above 2 kW,
-                for installations in zones where the existing ring main is at or near full
-                load, and for any bathroom infrared installation. A 2.5 mm² radial circuit
-                with a 16 A or 20 A MCB and 30 mA RCD protection is appropriate for most
-                infrared panel applications.
+                <strong>Dedicated radial circuit</strong> — required for panels above 2 kW, for
+                installations in zones where the existing ring main is at or near full load, and for
+                any bathroom infrared installation. A 2.5 mm² radial circuit with a 16 A or 20 A MCB
+                and 30 mA RCD protection is appropriate for most infrared panel applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P compliance</strong> — any fixed wiring of infrared panels
-                (fused connection unit or dedicated circuit) is notifiable work under Part P
-                of the Building Regulations. The work must be self-certified by a registered
-                competent person or notified to building control.
+                <strong>Part P compliance</strong> — any fixed wiring of infrared panels (fused
+                connection unit or dedicated circuit) is notifiable work under Part P of the
+                Building Regulations. The work must be self-certified by a registered competent
+                person or notified to building control.
               </span>
             </li>
           </ul>
@@ -282,45 +280,45 @@ const sections = [
     content: (
       <>
         <p>
-          Running an infrared panel without a thermostat is wasteful — the panel runs
-          continuously regardless of room temperature, eliminating the energy savings
-          achievable through temperature-based switching.
+          Running an infrared panel without a thermostat is wasteful — the panel runs continuously
+          regardless of room temperature, eliminating the energy savings achievable through
+          temperature-based switching.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Built-in thermostats</strong> — some panels include a built-in
-                thermostat and timer. Convenient for single-panel rooms but less accurate
-                than a separate room thermostat positioned at head height away from the panel.
+                <strong>Built-in thermostats</strong> — some panels include a built-in thermostat
+                and timer. Convenient for single-panel rooms but less accurate than a separate room
+                thermostat positioned at head height away from the panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wireless room thermostats</strong> — a wireless thermostat and receiver
-                can control one or more panels in a zone without running control wiring from
-                the thermostat position to each panel. Salus iT500, Honeywell Evohome wireless
-                zones, and Hive wireless receivers are all compatible with infrared panels.
+                <strong>Wireless room thermostats</strong> — a wireless thermostat and receiver can
+                control one or more panels in a zone without running control wiring from the
+                thermostat position to each panel. Salus iT500, Honeywell Evohome wireless zones,
+                and Hive wireless receivers are all compatible with infrared panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart thermostats</strong> — Google Nest, Drayton Wiser, and tado°
-                can control infrared panels via wireless receivers, providing scheduling,
-                geofencing, and learning capabilities. Compatible receivers must be rated
-                for the panel's current draw.
+                <strong>Smart thermostats</strong> — Google Nest, Drayton Wiser, and tado° can
+                control infrared panels via wireless receivers, providing scheduling, geofencing,
+                and learning capabilities. Compatible receivers must be rated for the panel's
+                current draw.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermostat wiring</strong> — when wiring a wired thermostat to
-                an infrared panel, the thermostat switches the live supply to the panel.
-                The thermostat must be rated for the panel's full current. A 16 A thermostat
-                is appropriate for panels up to 3.5 kW.
+                <strong>Thermostat wiring</strong> — when wiring a wired thermostat to an infrared
+                panel, the thermostat switches the live supply to the panel. The thermostat must be
+                rated for the panel's full current. A 16 A thermostat is appropriate for panels up
+                to 3.5 kW.
               </span>
             </li>
           </ul>
@@ -334,28 +332,27 @@ const sections = [
     content: (
       <>
         <p>
-          One of the practical advantages of infrared heating is the ease of implementing
-          true room-by-room zone control, unlike wet central heating systems that require
-          thermostatic radiator valves or zone valves.
+          One of the practical advantages of infrared heating is the ease of implementing true
+          room-by-room zone control, unlike wet central heating systems that require thermostatic
+          radiator valves or zone valves.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Individual panel control</strong> — each panel controlled by its
-                own thermostat provides perfect zone control. A bedroom panel can be set
-                to 17°C while a living room panel is at 21°C, with different schedules
-                for each room.
+                <strong>Individual panel control</strong> — each panel controlled by its own
+                thermostat provides perfect zone control. A bedroom panel can be set to 17°C while a
+                living room panel is at 21°C, with different schedules for each room.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multi-zone smart systems</strong> — platforms like Drayton Wiser,
-                Honeywell Evohome, and tado° support multiple independent zones on a single
-                app. Each zone has a wireless receiver controlling the panel(s) in that room.
-                Up to 12–16 zones can be managed on a single hub.
+                <strong>Multi-zone smart systems</strong> — platforms like Drayton Wiser, Honeywell
+                Evohome, and tado° support multiple independent zones on a single app. Each zone has
+                a wireless receiver controlling the panel(s) in that room. Up to 12–16 zones can be
+                managed on a single hub.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,8 +360,8 @@ const sections = [
               <span>
                 <strong>Open window detection</strong> — smart thermostats with open window
                 detection (tado°, Wiser) reduce or eliminate heating when a window is opened,
-                preventing wasted energy from heating outdoor air. Particularly useful in
-                rooms with frequent ventilation.
+                preventing wasted energy from heating outdoor air. Particularly useful in rooms with
+                frequent ventilation.
               </span>
             </li>
           </ul>
@@ -378,39 +375,39 @@ const sections = [
     content: (
       <>
         <p>
-          Both ceiling and wall mounting are suitable for infrared panels, and the choice
-          depends on room geometry, ceiling height, and the primary occupancy pattern.
+          Both ceiling and wall mounting are suitable for infrared panels, and the choice depends on
+          room geometry, ceiling height, and the primary occupancy pattern.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wall mounting</strong> — positioned high on the wall (1.9–2.1 m)
-                directing radiant energy across the room. Best where occupants are mobile
-                (hallways, kitchens) or where ceiling access is impractical. Side-wall
-                mounting angles energy toward seating or working areas. Most domestic
-                installations use wall mounting for bedrooms and living rooms.
+                <strong>Wall mounting</strong> — positioned high on the wall (1.9–2.1 m) directing
+                radiant energy across the room. Best where occupants are mobile (hallways, kitchens)
+                or where ceiling access is impractical. Side-wall mounting angles energy toward
+                seating or working areas. Most domestic installations use wall mounting for bedrooms
+                and living rooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ceiling mounting</strong> — provides the largest effective coverage
-                area from a single panel. Best for rooms where occupants are stationary
-                (home offices, dining rooms) and for commercial applications (workshops,
-                factories). Ceiling height 2.4–4.5 m is optimal. Mounting above 4.5 m
-                significantly reduces intensity at floor level.
+                <strong>Ceiling mounting</strong> — provides the largest effective coverage area
+                from a single panel. Best for rooms where occupants are stationary (home offices,
+                dining rooms) and for commercial applications (workshops, factories). Ceiling height
+                2.4–4.5 m is optimal. Mounting above 4.5 m significantly reduces intensity at floor
+                level.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <LayoutGrid className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Structural considerations</strong> — ceiling-mounted panels must
-                be fixed to structural joists or adequately rated plasterboard fixings
-                rated for the panel weight (3–8 kg typical). Do not fix to plasterboard
-                with standard plasterboard plugs — use dedicated hollow wall anchors rated
-                for the panel weight or fix through the plasterboard into joists.
+                <strong>Structural considerations</strong> — ceiling-mounted panels must be fixed to
+                structural joists or adequately rated plasterboard fixings rated for the panel
+                weight (3–8 kg typical). Do not fix to plasterboard with standard plasterboard plugs
+                — use dedicated hollow wall anchors rated for the panel weight or fix through the
+                plasterboard into joists.
               </span>
             </li>
           </ul>
@@ -424,41 +421,41 @@ const sections = [
     content: (
       <>
         <p>
-          Infrared heating has lower upfront installation costs than wet central heating
-          but higher running costs than a heat pump. The economics depend heavily on
-          electricity tariff and usage pattern.
+          Infrared heating has lower upfront installation costs than wet central heating but higher
+          running costs than a heat pump. The economics depend heavily on electricity tariff and
+          usage pattern.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Panel supply only</strong> — 300 W panel: £80–£150; 600 W: £130–£220;
-                900 W: £180–£280; 1,200 W: £220–£350; 1,800 W: £320–£500. Premium brands
-                (Herschel, Redwell) command a price premium over budget manufacturers.
+                <strong>Panel supply only</strong> — 300 W panel: £80–£150; 600 W: £130–£220; 900 W:
+                £180–£280; 1,200 W: £220–£350; 1,800 W: £320–£500. Premium brands (Herschel,
+                Redwell) command a price premium over budget manufacturers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation per panel (existing circuit)</strong> — £100–£200 per
-                panel to supply, fix, wire to FCU or existing circuit, and test. More for
-                ceiling mounting requiring access to loft or floor void.
+                <strong>Installation per panel (existing circuit)</strong> — £100–£200 per panel to
+                supply, fix, wire to FCU or existing circuit, and test. More for ceiling mounting
+                requiring access to loft or floor void.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation per panel (new circuit)</strong> — £200–£400 per panel
-                when a new dedicated radial circuit is required from the consumer unit.
+                <strong>Installation per panel (new circuit)</strong> — £200–£400 per panel when a
+                new dedicated radial circuit is required from the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Whole-house infrared system (3-bedroom, 6 panels)</strong> — £3,000–£6,500
-                installed, including panels, wiring, thermostats, and consumer unit additions
-                if required.
+                installed, including panels, wiring, thermostats, and consumer unit additions if
+                required.
               </span>
             </li>
           </ul>
@@ -472,48 +469,46 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding how infrared compares to convection heating helps electricians
-          advise customers on the most suitable heating technology for their property
-          and lifestyle.
+          Understanding how infrared compares to convection heating helps electricians advise
+          customers on the most suitable heating technology for their property and lifestyle.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Speed of warming</strong> — infrared panels feel warm almost
-                immediately (within 1–2 minutes). Convection heaters warm the air first,
-                which then warms occupants — this takes longer, particularly in large rooms.
-                For rooms used intermittently, infrared has a practical advantage.
+                <strong>Speed of warming</strong> — infrared panels feel warm almost immediately
+                (within 1–2 minutes). Convection heaters warm the air first, which then warms
+                occupants — this takes longer, particularly in large rooms. For rooms used
+                intermittently, infrared has a practical advantage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Air quality</strong> — infrared heating creates no air movement
-                and does not dry the air or circulate dust. Convection heaters create air
-                circulation that can dry mucous membranes and distribute airborne allergens.
-                Infrared is preferred in bedrooms and spaces occupied by allergy sufferers.
+                <strong>Air quality</strong> — infrared heating creates no air movement and does not
+                dry the air or circulate dust. Convection heaters create air circulation that can
+                dry mucous membranes and distribute airborne allergens. Infrared is preferred in
+                bedrooms and spaces occupied by allergy sufferers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-ceiling and draughty spaces</strong> — in high-ceiling rooms,
-                warm air rises to the ceiling where it provides no benefit to occupants.
-                Infrared heats objects at the level where people are present, regardless
-                of ceiling height. Workshops, conservatories, and period properties with
-                high ceilings benefit significantly from infrared over convection heating.
+                <strong>High-ceiling and draughty spaces</strong> — in high-ceiling rooms, warm air
+                rises to the ceiling where it provides no benefit to occupants. Infrared heats
+                objects at the level where people are present, regardless of ceiling height.
+                Workshops, conservatories, and period properties with high ceilings benefit
+                significantly from infrared over convection heating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat pump comparison</strong> — an air-source heat pump achieves
-                200–300% efficiency (coefficient of performance) compared to 100% for
-                infrared. Running costs for infrared are 2–3 times higher than a heat pump
-                for the same heat output. For properties where a heat pump is feasible,
-                it is the economically superior choice.
+                <strong>Heat pump comparison</strong> — an air-source heat pump achieves 200–300%
+                efficiency (coefficient of performance) compared to 100% for infrared. Running costs
+                for infrared are 2–3 times higher than a heat pump for the same heat output. For
+                properties where a heat pump is feasible, it is the economically superior choice.
               </span>
             </li>
           </ul>
@@ -527,9 +522,9 @@ const sections = [
     content: (
       <>
         <p>
-          Infrared panel installation is straightforward domestic electrical work with good
-          margins. Most residential jobs are half-day to full-day installations, and the
-          growing interest in electric-only heating makes this a recurring enquiry source.
+          Infrared panel installation is straightforward domestic electrical work with good margins.
+          Most residential jobs are half-day to full-day installations, and the growing interest in
+          electric-only heating makes this a recurring enquiry source.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -542,9 +537,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-certificates">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
-                  to complete Minor Works Certificates or Electrical Installation Certificates
-                  for infrared panel installations on your phone. Clients receive Part P
-                  compliance documentation before you leave.
+                  to complete Minor Works Certificates or Electrical Installation Certificates for
+                  infrared panel installations on your phone. Clients receive Part P compliance
+                  documentation before you leave.
                 </p>
               </div>
             </div>
@@ -555,8 +550,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Multi-Room Systems</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Single-panel enquiries often convert to multi-room systems when you
-                  present a clear whole-house proposal. Use the{' '}
+                  Single-panel enquiries often convert to multi-room systems when you present a
+                  clear whole-house proposal. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -569,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage infrared heating installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional multi-room heating quotes. 7-day free trial, cancel anytime."
           icon={Zap}
         />
       </>
@@ -606,7 +601,7 @@ export default function InfraredHeatingInstallationPage() {
       faqHeading="Frequently Asked Questions About Infrared Heating Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Infrared Heating Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EIC certificates, and professional heating system quotes. 7-day free trial, cancel anytime."
     />
   );
 }

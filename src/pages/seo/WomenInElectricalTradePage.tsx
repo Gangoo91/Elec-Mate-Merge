@@ -650,7 +650,7 @@ export default function WomenInElectricalTradePage() {
       faqHeading="Frequently Asked Questions About Women in the Electrical Trade"
       relatedPages={relatedPages}
       ctaHeading="Professional Tools for Every Electrician"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital certificates, AI study tools, and business management. The same professional platform for everyone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificates, AI study tools, and business management. The same professional platform for everyone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -476,7 +476,7 @@ export default function StaffCostCalculatorPage() {
         {
           question: 'What statutory employment obligations apply to electrical employers?',
           answer:
-            'Employing someone in the UK triggers a range of statutory obligations: registering as an employer with HMRC and operating PAYE (Pay As You Earn) for income tax and National Insurance deductions; auto-enrolling eligible employees into a workplace pension scheme (if the employee earns over £10,000 per year and is aged 22 to state pension age); paying at least the National Living Wage or National Minimum Wage for the employee\'s age group; providing a written statement of particulars (employment contract) within 2 months of the start date; providing at least the statutory minimum holiday entitlement (28 days including bank holidays for full-time employees); complying with the Working Time Regulations 1998 (maximum 48-hour average working week unless the employee opts out); and holding employers\' liability insurance of at least £5 million. Failing to comply with these obligations can result in significant fines and penalties from HMRC and the Employment Tribunal.',
+            "Employing someone in the UK triggers a range of statutory obligations: registering as an employer with HMRC and operating PAYE (Pay As You Earn) for income tax and National Insurance deductions; auto-enrolling eligible employees into a workplace pension scheme (if the employee earns over £10,000 per year and is aged 22 to state pension age); paying at least the National Living Wage or National Minimum Wage for the employee's age group; providing a written statement of particulars (employment contract) within 2 months of the start date; providing at least the statutory minimum holiday entitlement (28 days including bank holidays for full-time employees); complying with the Working Time Regulations 1998 (maximum 48-hour average working week unless the employee opts out); and holding employers' liability insurance of at least £5 million. Failing to comply with these obligations can result in significant fines and penalties from HMRC and the Employment Tribunal.",
         },
       ]}
       relatedPages={[
@@ -529,7 +529,7 @@ export default function StaffCostCalculatorPage() {
         },
       ]}
       ctaHeading="Know the True Cost Before You Hire"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to calculate staff costs, plan capacity, and grow their teams profitably. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',
@@ -548,7 +548,7 @@ export default function StaffCostCalculatorPage() {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
-            ratingCount: '430',
+            ratingCount: '1000',
             bestRating: '5',
           },
         },

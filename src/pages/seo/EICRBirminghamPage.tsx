@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It classifies defects using observation codes (C1, C2, C3, FI) and assesses the installation as Satisfactory or Unsatisfactory.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It classifies defects using observation codes (C1, C2, C3, FI) and assesses the installation as Satisfactory or Unsatisfactory.",
   'Birmingham EICR costs are moderate compared to London. Expect £120 to £200 for a two-bedroom flat, £170 to £280 for a three-bedroom semi-detached house, and £250 to £400 for larger properties.',
   'Since 1 April 2021, landlords in England must have a valid EICR for every private rented property, renewed every five years. Birmingham City Council enforces through its Environmental Health and Private Rented Sector teams.',
   'Birmingham has Article 4 directions in areas such as Selly Oak, Edgbaston, and Harborne that restrict HMO conversions. Existing HMOs in these areas require licensing, and a valid EICR is a mandatory licence condition.',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What happens if my Birmingham property fails an EICR?',
     answer:
-      'If the EICR is Unsatisfactory (C1 or C2 observations present), the landlord must complete remedial work within 28 days or sooner if specified by the inspector. Written confirmation of completed remedial work must be provided to the tenant and to Birmingham City Council if requested. The council can arrange for remedial work to be carried out at the landlord\'s expense if the landlord fails to act.',
+      "If the EICR is Unsatisfactory (C1 or C2 observations present), the landlord must complete remedial work within 28 days or sooner if specified by the inspector. Written confirmation of completed remedial work must be provided to the tenant and to Birmingham City Council if requested. The council can arrange for remedial work to be carried out at the landlord's expense if the landlord fails to act.",
   },
   {
     question: 'Who is the electricity supplier for Birmingham?',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -121,7 +122,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -147,10 +149,10 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an EICR must be used for periodic
-          inspection of existing installations. The inspector carries out a visual inspection and a
-          programme of testing, recording results on Schedules of Circuit Details and Test Results.
-          Each observation is classified using codes (C1, C2, C3, FI) that indicate severity.
+          (Section 631), which specifies that an EICR must be used for periodic inspection of
+          existing installations. The inspector carries out a visual inspection and a programme of
+          testing, recording results on Schedules of Circuit Details and Test Results. Each
+          observation is classified using codes (C1, C2, C3, FI) that indicate severity.
         </p>
         <p>
           The overall installation is assessed as either Satisfactory or Unsatisfactory. An
@@ -189,8 +191,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £170 to £280. Birmingham has large
-                numbers of 1930s semi-detached houses in suburbs like Hall Green, Acocks Green,
-                and Kings Heath with 8 to 12 circuits.
+                numbers of 1930s semi-detached houses in suburbs like Hall Green, Acocks Green, and
+                Kings Heath with 8 to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -204,9 +206,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £300 to £600+. Student HMOs
-                in Selly Oak and Edgbaston are common. Multiple consumer units, fire alarm systems,
-                and emergency lighting are all within scope.
+                <strong>HMO (House in Multiple Occupation)</strong> — £300 to £600+. Student HMOs in
+                Selly Oak and Edgbaston are common. Multiple consumer units, fire alarm systems, and
+                emergency lighting are all within scope.
               </span>
             </li>
           </ul>
@@ -235,8 +237,8 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — every private rented property must have a valid
-                EICR, carried out by a qualified person and renewed at least every five years.
-                BS 7671 requires periodic inspection regimes to confirm installations remain safe.
+                EICR, carried out by a qualified person and renewed at least every five years. BS
+                7671 requires periodic inspection regimes to confirm installations remain safe.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,9 +300,9 @@ const sections = [
               <span>
                 <strong>Article 4 directions</strong> — Birmingham City Council has Article 4
                 directions in Selly Oak, Edgbaston, Harborne, and parts of Erdington. These remove
-                permitted development rights for converting a dwelling (C3 use class) to a small
-                HMO (C4 use class), requiring planning permission instead. Existing HMOs in Article
-                4 areas must comply with all licensing conditions including a valid EICR.
+                permitted development rights for converting a dwelling (C3 use class) to a small HMO
+                (C4 use class), requiring planning permission instead. Existing HMOs in Article 4
+                areas must comply with all licensing conditions including a valid EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -339,9 +341,7 @@ const sections = [
         <p>
           Each defect found during an EICR is classified using one of four observation codes as
           defined in the model forms accompanying{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            BS 7671
-          </SEOInternalLink>
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">BS 7671</SEOInternalLink>
           :
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -379,8 +379,8 @@ const sections = [
           </div>
         </div>
         <p>
-          The EICR is <strong>Unsatisfactory</strong> if any C1 or C2 observations are recorded.
-          C3 and FI observations alone do not trigger an Unsatisfactory result.
+          The EICR is <strong>Unsatisfactory</strong> if any C1 or C2 observations are recorded. C3
+          and FI observations alone do not trigger an Unsatisfactory result.
         </p>
       </>
     ),
@@ -390,9 +390,7 @@ const sections = [
     heading: 'Birmingham Property Challenges for EICR Inspectors',
     content: (
       <>
-        <p>
-          Birmingham's housing stock presents several common challenges for EICR inspectors:
-        </p>
+        <p>Birmingham's housing stock presents several common challenges for EICR inspectors:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -477,8 +475,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dead testing</strong> — supply isolated: continuity of protective
-                conductors, ring final circuit continuity, insulation resistance (500V DC, minimum
-                1 megohm).
+                conductors, ring final circuit continuity, insulation resistance (500V DC, minimum 1
+                megohm).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -500,8 +498,8 @@ const sections = [
         </div>
         <p>
           Prepare by clearing access to the consumer unit and meter, removing items from in front of
-          sockets, and ensuring all rooms are accessible. If the property is tenanted, arrange access
-          in advance.
+          sockets, and ensuring all rooms are accessible. If the property is tenanted, arrange
+          access in advance.
         </p>
       </>
     ),
@@ -511,10 +509,7 @@ const sections = [
     heading: 'How Often Is an EICR Needed?',
     content: (
       <>
-        <p>
-          BS 7671 requires periodic inspection at intervals suited to the property
-          type:
-        </p>
+        <p>BS 7671 requires periodic inspection at intervals suited to the property type:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -567,8 +562,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, and STROMA all
-                maintain searchable registers of qualified electricians. Search for
-                Birmingham-based inspectors.
+                maintain searchable registers of qualified electricians. Search for Birmingham-based
+                inspectors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -628,8 +623,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, quote the remedial work on the spot with
-                  the{' '}
+                  When C1 or C2 observations are found, quote the remedial work on the spot with the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -642,7 +636,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -679,7 +673,7 @@ export default function EICRBirminghamPage() {
       faqHeading="Frequently Asked Questions About EICRs in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

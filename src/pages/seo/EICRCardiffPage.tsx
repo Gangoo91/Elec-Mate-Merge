@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Cardiff EICR costs typically range from £100 to £400 depending on property size. A two-bedroom flat costs £130 to £220, while a three-bedroom house costs £180 to £300. Prices are close to the national average for England and Wales.',
   'Wales has its own landlord registration and licensing scheme through Rent Smart Wales. All landlords in Wales must be registered, and those who self-manage must also be licensed. While the Electrical Safety Standards Regulations 2020 apply to England only, Welsh landlords have obligations under the Renting Homes (Wales) Act 2016 and the Fitness for Human Habitation standard, which include electrical safety.',
   'Cardiff has a large stock of Victorian terraces, particularly in Cathays, Roath, and Splott, alongside student HMOs near Cardiff University and the University of South Wales. These properties frequently present aged wiring and earthing deficiencies.',
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,9 +146,9 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
@@ -166,8 +168,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -178,9 +180,9 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff EICR costs are close to the national average. The city has a growing private rented
-          sector and a significant student population, both of which drive demand for electrical
-          inspections. Below are typical 2026 prices for Cardiff EICRs:
+          Cardiff EICR costs are close to the national average. The city has a growing private
+          rented sector and a significant student population, both of which drive demand for
+          electrical inspections. Below are typical 2026 prices for Cardiff EICRs:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -212,8 +214,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom+ house</strong> — £280 to £400+. Larger properties in
-                Pontcanna, Llandaff, and Cyncoed may have multiple consumer units or extensions
-                that increase the scope of inspection.
+                Pontcanna, Llandaff, and Cyncoed may have multiple consumer units or extensions that
+                increase the scope of inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -254,8 +256,8 @@ const sections = [
                 <strong>Renting Homes (Wales) Act 2016</strong> — this Act, which came into force on
                 1 December 2022, replaced assured shorthold tenancies in Wales with "occupation
                 contracts". Under the Act, landlords must ensure that rental properties are fit for
-                human habitation at the start of the contract and throughout its duration. Electrical
-                safety is a key component of the fitness standard.
+                human habitation at the start of the contract and throughout its duration.
+                Electrical safety is a key component of the fitness standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,8 +283,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO licensing</strong> — Cardiff Council operates mandatory HMO licensing.
-                A valid EICR is a condition of HMO licences in Cardiff, providing a specific legal
+                <strong>HMO licensing</strong> — Cardiff Council operates mandatory HMO licensing. A
+                valid EICR is a condition of HMO licences in Cardiff, providing a specific legal
                 requirement for HMO landlords to obtain and maintain current electrical safety
                 certificates.
               </span>
@@ -291,20 +293,20 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh Building Regulations</strong> — Part P (Electrical Safety) of the
-                Building Regulations applies in Wales as in England. Notifiable electrical work
-                must be either carried out by a registered competent person or notified to Building
-                Control. This includes consumer unit replacements and new circuit installations
-                that may be identified as necessary following an EICR.
+                Building Regulations applies in Wales as in England. Notifiable electrical work must
+                be either carried out by a registered competent person or notified to Building
+                Control. This includes consumer unit replacements and new circuit installations that
+                may be identified as necessary following an EICR.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Although Wales does not have the same prescriptive five-yearly EICR requirement as England,
-          the practical reality is that most Cardiff landlords obtain regular EICRs. Letting agents,
-          insurers, and mortgage lenders typically require them, and the Fitness for Human Habitation
-          standard means landlords need to demonstrate electrical safety — an EICR is the recognised
-          way to do so.
+          Although Wales does not have the same prescriptive five-yearly EICR requirement as
+          England, the practical reality is that most Cardiff landlords obtain regular EICRs.
+          Letting agents, insurers, and mortgage lenders typically require them, and the Fitness for
+          Human Habitation standard means landlords need to demonstrate electrical safety — an EICR
+          is the recognised way to do so.
         </p>
       </>
     ),
@@ -316,8 +318,8 @@ const sections = [
       <>
         <p>
           Rent Smart Wales is the mandatory registration and licensing scheme for landlords and
-          letting agents in Wales. Understanding how it interacts with EICR requirements is important
-          for Cardiff landlords:
+          letting agents in Wales. Understanding how it interacts with EICR requirements is
+          important for Cardiff landlords:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -362,9 +364,9 @@ const sections = [
         </div>
         <p>
           Cardiff landlords should maintain current EICRs for all rental properties as a matter of
-          best practice and to demonstrate compliance with the Fitness for Human Habitation standard.
-          The Welsh Government has indicated it may introduce more specific electrical safety
-          requirements in future, making early compliance a sensible approach.
+          best practice and to demonstrate compliance with the Fitness for Human Habitation
+          standard. The Welsh Government has indicated it may introduce more specific electrical
+          safety requirements in future, making early compliance a sensible approach.
         </p>
       </>
     ),
@@ -396,9 +398,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
-              Cardiff include absent or inadequate earthing (particularly in older Cathays terraces),
-              lack of RCD protection on socket circuits (BS 7671 Section 411), overloaded circuits,
-              and deteriorated cable insulation.
+              Cardiff include absent or inadequate earthing (particularly in older Cathays
+              terraces), lack of RCD protection on socket circuits (BS 7671 Section 411), overloaded
+              circuits, and deteriorated cable insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -414,9 +416,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
               The inspector could not fully assess a part of the installation and further
-              investigation is needed. This is common in Cardiff's Victorian terraces where wiring is
-              concealed in plaster, under floorboards, or behind fixed kitchen units that cannot be
-              moved during the inspection.
+              investigation is needed. This is common in Cardiff's Victorian terraces where wiring
+              is concealed in plaster, under floorboards, or behind fixed kitchen units that cannot
+              be moved during the inspection.
             </p>
           </div>
         </div>
@@ -436,7 +438,8 @@ const sections = [
         <p>
           Cardiff's housing stock includes a large number of Victorian terraces, particularly in the
           inner city areas of Cathays, Roath, Splott, and Adamsdown. Combined with newer Cardiff Bay
-          developments and student HMOs, the city presents a range of challenges for EICR inspectors:
+          developments and student HMOs, the city presents a range of challenges for EICR
+          inspectors:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -465,8 +468,8 @@ const sections = [
               <span>
                 <strong>Earthing deficiencies</strong> — many older Cardiff properties were
                 originally wired without a protective earth conductor. Some still rely on gas or
-                water pipe earthing, which is no longer acceptable. Properties converted to HMOs
-                may have inadequate earthing arrangements for the increased electrical load.
+                water pipe earthing, which is no longer acceptable. Properties converted to HMOs may
+                have inadequate earthing arrangements for the increased electrical load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -484,8 +487,8 @@ const sections = [
                 <strong>Damp and moisture</strong> — some Cardiff properties, particularly those in
                 lower-lying areas and Victorian terraces without damp-proof courses, suffer from
                 damp issues that can affect the electrical installation. Moisture ingress into
-                consumer units, sockets, and cable routes is a common finding that may result in
-                C2 observations.
+                consumer units, sockets, and cable routes is a common finding that may result in C2
+                observations.
               </span>
             </li>
           </ul>
@@ -562,9 +565,9 @@ const sections = [
     content: (
       <>
         <p>
-          The recommended frequency of EICRs depends on the property type and use. BS 7671 Regulation
-          554.4 establishes that installations must be periodically inspected at intervals suited to
-          the property type:
+          The recommended frequency of EICRs depends on the property type and use. BS 7671
+          Regulation 554.4 establishes that installations must be periodically inspected at
+          intervals suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -598,7 +601,8 @@ const sections = [
               <span>
                 <strong>Change of occupancy</strong> — a new EICR is recommended whenever a property
                 changes occupant, even if the previous EICR has not expired. This is particularly
-                relevant in Cardiff's student rental market where properties change tenants annually.
+                relevant in Cardiff's student rental market where properties change tenants
+                annually.
               </span>
             </li>
           </ul>
@@ -627,8 +631,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. Searching these
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. Searching these
                 registers for Cardiff-based inspectors is the most reliable way to find a qualified
                 person.
               </span>
@@ -669,8 +673,8 @@ const sections = [
       <>
         <p>
           Cardiff offers good demand for EICR work. The city's growing private rented sector, large
-          student population, HMO licensing requirements, and substantial stock of Victorian terraces
-          create consistent work for qualified inspectors.
+          student population, HMO licensing requirements, and substantial stock of Victorian
+          terraces create consistent work for qualified inspectors.
         </p>
         <p>
           To maximise efficiency and professionalism, electricians carrying out EICRs in Cardiff
@@ -716,7 +720,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -753,7 +757,7 @@ export default function EICRCardiffPage() {
       faqHeading="Frequently Asked Questions About EICRs in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

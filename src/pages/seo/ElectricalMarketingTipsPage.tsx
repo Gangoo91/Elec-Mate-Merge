@@ -622,7 +622,7 @@ export default function ElectricalMarketingTipsPage() {
         },
       ]}
       ctaHeading="Look Professional, Get More Work"
-      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Branded certificates, instant quotes, professional invoices, and AI-powered pricing. Elec-Mate makes you look professional at every customer touchpoint. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

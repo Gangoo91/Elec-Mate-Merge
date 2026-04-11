@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Rotherham is in South Yorkshire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Rotherham Metropolitan Borough Council Building Control.',
   'Northern Powergrid (NPG) is the Distribution Network Operator for Rotherham and the wider South Yorkshire region. All new connections, supply upgrades, and G98/G99 generation notifications go through NPG.',
   'Rotherham has a significant industrial heritage as a steel and manufacturing town. The housing stock includes large areas of ex-social housing and Victorian terraces with ageing wiring that generates strong demand for rewires and consumer unit upgrades.',
-  'The Advanced Manufacturing Park (AMP) at Waverley is one of the UK\'s premier advanced manufacturing locations, creating commercial and industrial electrical opportunities for qualified electricians.',
+  "The Advanced Manufacturing Park (AMP) at Waverley is one of the UK's premier advanced manufacturing locations, creating commercial and industrial electrical opportunities for qualified electricians.",
   'Labour rates in Rotherham are affordable — typically £37 to £53 per hour for a qualified, registered electrician in 2026, reflecting the South Yorkshire regional market.',
 ];
 
@@ -57,10 +57,10 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Rotherham?',
     answer:
-      'An EICR in Rotherham typically costs £130 to £220 for a standard residential property — among the more affordable in England. Rotherham\'s large private rental market generates consistent EICR demand. Under The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, landlords must have a valid EICR every five years, with any C1 or C2 defects remedied within 28 days. Landlords who fail to comply face fines and enforcement action from Rotherham Council.',
+      "An EICR in Rotherham typically costs £130 to £220 for a standard residential property — among the more affordable in England. Rotherham's large private rental market generates consistent EICR demand. Under The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, landlords must have a valid EICR every five years, with any C1 or C2 defects remedied within 28 days. Landlords who fail to comply face fines and enforcement action from Rotherham Council.",
   },
   {
-    question: 'What are the electrical challenges in Rotherham\'s ex-social housing stock?',
+    question: "What are the electrical challenges in Rotherham's ex-social housing stock?",
     answer:
       'Rotherham has a large stock of ex-social housing, including properties sold under the Right to Buy scheme in the 1980s and 1990s. These properties were built in the 1950s to 1970s and commonly have ageing PVC or rubber-insulated wiring, old fuse boards, and limited socket provision. When these properties change hands or are rented out, EICRs frequently reveal multiple C2 (potentially dangerous) observations. Consumer unit replacements and partial rewires are common remedial works. Full rewires are needed where the wiring is beyond economic repair.',
   },
@@ -75,7 +75,8 @@ const faqs = [
       'The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P, NICEIC or NAPIT registration is required. Rotherham College (now part of RNN Group) offers electrical training and apprenticeship programmes locally. Building trade qualifications locally can help establish a reputation in the Rotherham market.',
   },
   {
-    question: 'Is there commercial electrical work at the Advanced Manufacturing Park in Rotherham?',
+    question:
+      'Is there commercial electrical work at the Advanced Manufacturing Park in Rotherham?',
     answer:
       'The Advanced Manufacturing Park (AMP) at Waverley, Rotherham, is a nationally significant location for advanced manufacturing and engineering businesses, including major aerospace, automotive, and nuclear supply chain companies. Commercial and industrial electrical work at the AMP and in the wider Rotherham industrial sector requires three-phase electrical experience and, depending on the specific application, additional qualifications such as CompEx (hazardous area) certification. Large engineering facilities typically procure electrical services through formal tendering processes, so approved contractor status with major employers in the area is important for accessing this work.',
   },
@@ -102,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for rewires and new circuits across Rotherham\'s varied housing and commercial stock.',
+      "Size cables for rewires and new circuits across Rotherham's varied housing and commercial stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -143,8 +144,8 @@ const sections = [
     content: (
       <>
         <p>
-          Rotherham is a metropolitan borough in South Yorkshire, closely connected to Sheffield
-          and with its own substantial population of around 265,000. The town has a proud industrial
+          Rotherham is a metropolitan borough in South Yorkshire, closely connected to Sheffield and
+          with its own substantial population of around 265,000. The town has a proud industrial
           heritage in steel and manufacturing and is now home to the Advanced Manufacturing Park
           (AMP) at Waverley, one of the UK's leading locations for advanced engineering and
           manufacturing businesses.
@@ -203,8 +204,8 @@ const sections = [
               <span>
                 <strong>Landlord EICR requirements</strong> — Rotherham's private landlords must
                 comply with The Electrical Safety Standards in the Private Rented Sector (England)
-                Regulations 2020. Valid EICRs every five years, with C1/C2 defects remedied
-                within 28 days.
+                Regulations 2020. Valid EICRs every five years, with C1/C2 defects remedied within
+                28 days.
               </span>
             </li>
           </ul>
@@ -227,25 +228,26 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The town centre and areas such as Masbrough, Eastwood, and Moorgate have Victorian
               terrace properties built for industrial workers. These commonly have old
-              rubber-insulated wiring, inadequate consumer units, and poor earth bonding. Many
-              have been converted to HMOs. Rewires and consumer unit upgrades are common.
+              rubber-insulated wiring, inadequate consumer units, and poor earth bonding. Many have
+              been converted to HMOs. Rewires and consumer unit upgrades are common.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Social Housing Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large estates in areas such as Maltby, Wickersley, Swinton, and Rawmarsh were built
-              as social housing in the 1950s–1970s. Wiring from this era is ageing and often
-              approaching or past its safe working life. Consumer unit upgrades and full rewires
-              are among the most common jobs in this housing stock.
+              Large estates in areas such as Maltby, Wickersley, Swinton, and Rawmarsh were built as
+              social housing in the 1950s–1970s. Wiring from this era is ageing and often
+              approaching or past its safe working life. Consumer unit upgrades and full rewires are
+              among the most common jobs in this housing stock.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Private Development</h3>
             <p className="text-white text-sm leading-relaxed">
-              Areas such as Waverley (the new community adjacent to the AMP), Bramley, and Wickersley
-              have modern private housing. This stock is built to current standards. EV charger
-              installations, smart home systems, and additional circuits are the primary job types.
+              Areas such as Waverley (the new community adjacent to the AMP), Bramley, and
+              Wickersley have modern private housing. This stock is built to current standards. EV
+              charger installations, smart home systems, and additional circuits are the primary job
+              types.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -266,40 +268,38 @@ const sections = [
     heading: 'Common Electrical Jobs in Rotherham',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Rotherham in 2026:
-        </p>
+        <p>The most in-demand electrical services in Rotherham in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICRs for landlords</strong> — Rotherham's active private rental market
-                generates consistent EICR demand. Letting agents are key contacts for building
-                a regular pipeline of landlord compliance work.
+                generates consistent EICR demand. Letting agents are key contacts for building a
+                regular pipeline of landlord compliance work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — old fuse boards are extremely
-                common across Rotherham's older housing stock. Consumer unit upgrades are one
-                of the most frequently requested jobs in the area.
+                <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
+                across Rotherham's older housing stock. Consumer unit upgrades are one of the most
+                frequently requested jobs in the area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full and partial rewires</strong> — Rotherham's post-war social housing
-                and Victorian terrace stock generates the highest volume of rewiring work.
+                <strong>Full and partial rewires</strong> — Rotherham's post-war social housing and
+                Victorian terrace stock generates the highest volume of rewiring work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing in residential and commercial
-                settings. The Waverley new community and commercial developments around the AMP
-                are active markets for EV charger installations.
+                settings. The Waverley new community and commercial developments around the AMP are
+                active markets for EV charger installations.
               </span>
             </li>
           </ul>
@@ -313,8 +313,8 @@ const sections = [
     content: (
       <>
         <p>
-          In Rotherham, as across England, NICEIC or NAPIT registration confirms that an
-          electrician is qualified and can self-certify under Part P:
+          In Rotherham, as across England, NICEIC or NAPIT registration confirms that an electrician
+          is qualified and can self-certify under Part P:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -322,25 +322,25 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registered</strong> — search the public registers at
-                niceic.com or napit.org.uk for Rotherham electricians. Registration confirms
-                annual competency assessment and Part P self-certification ability.
+                niceic.com or napit.org.uk for Rotherham electricians. Registration confirms annual
+                competency assessment and Part P self-certification ability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct documentation</strong> — after notifiable work, you should receive
-                a Part P compliance certificate and a BS 7671 EIC. For an EICR, you should receive
-                the full report with all observations and a clear satisfactory or unsatisfactory
-                overall result.
+                <strong>Correct documentation</strong> — after notifiable work, you should receive a
+                Part P compliance certificate and a BS 7671 EIC. For an EICR, you should receive the
+                full report with all observations and a clear satisfactory or unsatisfactory overall
+                result.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotation</strong> — always get a detailed written quote before
-                work starts. Reputable Rotherham electricians will survey the property before
-                quoting and provide a full cost breakdown.
+                <strong>Written quotation</strong> — always get a detailed written quote before work
+                starts. Reputable Rotherham electricians will survey the property before quoting and
+                provide a full cost breakdown.
               </span>
             </li>
           </ul>
@@ -436,12 +436,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Same-day documentation keeps Rotherham landlords compliant and
-                  builds a reputation for professionalism.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Same-day documentation keeps Rotherham landlords compliant and builds a
+                  reputation for professionalism.
                 </p>
               </div>
             </div>
@@ -456,8 +453,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional, detailed quotes to Rotherham homeowners and landlords.
-                  Clear quotes win work in a competitive local market.
+                  to send professional, detailed quotes to Rotherham homeowners and landlords. Clear
+                  quotes win work in a competitive local market.
                 </p>
               </div>
             </div>
@@ -465,7 +462,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Rotherham electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -490,8 +487,7 @@ export default function ElectricianRotherhamPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Rotherham:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Rotherham: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Rotherham's large post-war housing stock, Victorian industrial terraces, and growing Advanced Manufacturing Park create strong demand for qualified electricians with EICR expertise and Part P compliance knowledge."
@@ -502,7 +498,7 @@ export default function ElectricianRotherhamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Rotherham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Rotherham Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Rotherham. 7-day free trial."
     />
   );
 }

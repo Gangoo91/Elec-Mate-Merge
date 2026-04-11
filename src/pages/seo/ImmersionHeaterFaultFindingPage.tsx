@@ -126,8 +126,8 @@ const sections = [
           An immersion heater is a self-contained electric heating element fitted directly into a
           hot water storage cylinder. It operates at 230V and typically draws 3kW, heating the water
           around it through direct conduction. Most cylinders have one or two heater bosses — the
-          upper heater heats a small volume quickly for washing up, whilst the lower heater heats the
-          full cylinder capacity.
+          upper heater heats a small volume quickly for washing up, whilst the lower heater heats
+          the full cylinder capacity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -170,8 +170,8 @@ const sections = [
         </div>
         <p>
           The immersion heater circuit is a dedicated radial circuit from the consumer unit, wired
-          in 2.5mm² twin and earth cable, protected by a 16A MCB and typically an RCD. The heater
-          is switched via a 20A double-pole switch with a neon indicator, mounted on the airing
+          in 2.5mm² twin and earth cable, protected by a 16A MCB and typically an RCD. The heater is
+          switched via a 20A double-pole switch with a neon indicator, mounted on the airing
           cupboard wall.
         </p>
       </>
@@ -196,20 +196,24 @@ const sections = [
           </div>
         </div>
         <p>
-          The safe isolation procedure for an immersion heater circuit follows the same steps as
-          any electrical isolation:
+          The safe isolation procedure for an immersion heater circuit follows the same steps as any
+          electrical isolation:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                1
+              </span>
               <span>
                 <strong>Switch off at the double-pole switch</strong> — turn the DP switch to off
                 and verify the neon indicator has extinguished.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                2
+              </span>
               <span>
                 <strong>Switch off at the consumer unit</strong> — locate the immersion heater MCB
                 (usually labelled "Immersion" or "Hot Water") and switch it off. Lock the board if
@@ -217,7 +221,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                3
+              </span>
               <span>
                 <strong>Prove dead with a voltage indicator</strong> — use a GS38-compliant voltage
                 indicator to test between all live conductors at the heater terminals before
@@ -225,11 +231,12 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                4
+              </span>
               <span>
-                <strong>Post a warning notice</strong> — place a warning notice on the consumer
-                unit stating "Do not switch on — work in progress" to prevent accidental
-                re-energisation.
+                <strong>Post a warning notice</strong> — place a warning notice on the consumer unit
+                stating "Do not switch on — work in progress" to prevent accidental re-energisation.
               </span>
             </li>
           </ol>
@@ -267,10 +274,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermostat fails closed (overheating)</strong> — the thermostat does not
-                cut out when the water reaches temperature. The water overheats and the TCO trips.
-                The symptom is intermittent hot water — the TCO must be manually reset each time.
-                This is a fire and scalding risk and should be rectified immediately.
+                <strong>Thermostat fails closed (overheating)</strong> — the thermostat does not cut
+                out when the water reaches temperature. The water overheats and the TCO trips. The
+                symptom is intermittent hot water — the TCO must be manually reset each time. This
+                is a fire and scalding risk and should be rectified immediately.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -285,10 +292,10 @@ const sections = [
         </div>
         <p>
           Thermostat replacement does not require draining the cylinder. After safe isolation, the
-          heater head cover is removed, the thermostat is unclipped from the element sheath, and
-          the replacement is clipped in. The job typically takes 30 to 60 minutes for an
-          electrician. Thermostat parts cost £10 to £25; labour is £40 to £80, making total repair
-          cost approximately £50 to £105.
+          heater head cover is removed, the thermostat is unclipped from the element sheath, and the
+          replacement is clipped in. The job typically takes 30 to 60 minutes for an electrician.
+          Thermostat parts cost £10 to £25; labour is £40 to £80, making total repair cost
+          approximately £50 to £105.
         </p>
       </>
     ),
@@ -312,18 +319,17 @@ const sections = [
                 <strong>Testing the element</strong> — after safe isolation, disconnect the element
                 wires at the heater head. Using a multifunction tester set to insulation resistance
                 test (500V DC), measure between each element terminal and earth. A healthy element
-                reads above 1MΩ. A reading below 0.5MΩ indicates failing insulation. Zero ohms or
-                a reading of a few ohms indicates a direct earth fault — the element must be
-                replaced.
+                reads above 1MΩ. A reading below 0.5MΩ indicates failing insulation. Zero ohms or a
+                reading of a few ohms indicates a direct earth fault — the element must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Element continuity</strong> — measure resistance between the two element
-                terminals. A 3kW, 230V element has a resistance of approximately 17.6 ohms
-                (R = V²/P = 230²/3000). An open-circuit reading (infinite resistance) confirms
-                the element wire has burned through.
+                terminals. A 3kW, 230V element has a resistance of approximately 17.6 ohms (R = V²/P
+                = 230²/3000). An open-circuit reading (infinite resistance) confirms the element
+                wire has burned through.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -414,8 +420,8 @@ const sections = [
                 <strong>Loose terminal connections</strong> — the heater head terminals can work
                 loose over time due to thermal cycling. A loose neutral connection causes the
                 element to run intermittently. A loose earth connection means the circuit has no
-                earth fault protection. After safe isolation, check all terminals at the heater
-                head for tightness.
+                earth fault protection. After safe isolation, check all terminals at the heater head
+                for tightness.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,8 +429,8 @@ const sections = [
               <span>
                 <strong>Overheated cable</strong> — if the element has been running with a loose
                 connection or the heater has been overloaded, the cable insulation at the heater
-                head may have degraded. Inspect the cable sheathing for discolouration, cracking,
-                or brittleness. Degraded cable must be replaced.
+                head may have degraded. Inspect the cable sheathing for discolouration, cracking, or
+                brittleness. Degraded cable must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -432,9 +438,8 @@ const sections = [
               <span>
                 <strong>Faulty double-pole switch</strong> — the DP switch can fail internally,
                 particularly older rocker-style switches. Test voltage at the switch output
-                terminals (with the switch in the on position) after safe isolation of the
-                consumer unit is confirmed. Replace the switch if it fails to pass voltage when
-                switched on.
+                terminals (with the switch in the on position) after safe isolation of the consumer
+                unit is confirmed. Replace the switch if it fails to pass voltage when switched on.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -491,8 +496,9 @@ const sections = [
               <span>
                 <strong>Full cylinder replacement</strong> — £400 to £800 fitted for a vented copper
                 cylinder. Unvented cylinders cost £800 to £1,500 installed due to the additional
-                complexity and Part G Building Regulations notification requirements. If the cylinder
-                is over 15 years old, full replacement is often the better long-term investment.
+                complexity and Part G Building Regulations notification requirements. If the
+                cylinder is over 15 years old, full replacement is often the better long-term
+                investment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -521,10 +527,10 @@ const sections = [
         <p>
           Immersion heater repair and replacement is routine domestic work for electricians. It
           falls under Part P of the Building Regulations in England and Wales as notifiable
-          electrical work in a bathroom or kitchen (the airing cupboard is treated as a kitchen
-          for Part P purposes if adjacent to a kitchen). Registration with a competent person
-          scheme such as NICEIC or NAPIT means you can self-certify the work without local
-          authority notification.
+          electrical work in a bathroom or kitchen (the airing cupboard is treated as a kitchen for
+          Part P purposes if adjacent to a kitchen). Registration with a competent person scheme
+          such as NICEIC or NAPIT means you can self-certify the work without local authority
+          notification.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -563,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates and quotes on site with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICRs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -588,8 +594,7 @@ export default function ImmersionHeaterFaultFindingPage() {
       badgeIcon={Wrench}
       heroTitle={
         <>
-          Immersion Heater Not Working:{' '}
-          <span className="text-yellow-400">Fault Finding Guide</span>
+          Immersion Heater Not Working: <span className="text-yellow-400">Fault Finding Guide</span>
         </>
       }
       heroSubtitle="Step-by-step fault finding for immersion heaters that are not heating, tripping the RCD, or overheating. Covers thermostat failure, element burn-out, sacrificial anode checks, wiring faults, safe isolation, and repair costs for 2026."
@@ -600,7 +605,7 @@ export default function ImmersionHeaterFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Immersion Heater Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICRs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

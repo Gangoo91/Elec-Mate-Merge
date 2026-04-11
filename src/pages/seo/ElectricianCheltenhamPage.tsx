@@ -40,7 +40,7 @@ const keyTakeaways = [
   'National Grid Electricity Distribution (formerly Western Power Distribution) is the DNO for Cheltenham and the South West and West Midlands. G98/G99 notifications and new connection applications go through NGED.',
   'Cheltenham has an exceptionally high concentration of Regency architecture — terraces, crescents, and villas from the 1820s–1840s. Many are listed buildings in conservation areas, requiring listed building consent for external electrical work.',
   'The cyber security and GCHQ presence in Cheltenham creates a well-paid professional population with high expectations for quality electrical work, smart home installations, and premium kitchen and bathroom electrical fit-outs.',
-  'Cheltenham\'s Regency properties have high ceilings, ornate plasterwork, and solid masonry walls. Rewiring and new installations require careful planning to preserve original features — this commands a premium over standard rates.',
+  "Cheltenham's Regency properties have high ceilings, ornate plasterwork, and solid masonry walls. Rewiring and new installations require careful planning to preserve original features — this commands a premium over standard rates.",
 ];
 
 const faqs = [
@@ -62,17 +62,17 @@ const faqs = [
   {
     question: 'How much does an electrician cost in Cheltenham?',
     answer:
-      'Cheltenham electrician rates in 2026 are above the national average, reflecting the area\'s affluence and the premium for working in period properties. Typical rates: hourly rate £45 to £65 for a qualified, registered electrician; day rate £300 to £450 for a sole trader. Common fixed-price jobs: consumer unit replacement £600 to £1,000, full rewire (3-bed Regency terrace) £5,000 to £8,500, EICR £200 to £320, EV charger installation £850 to £1,350. Listed property and conservation area work commands a further premium.',
+      "Cheltenham electrician rates in 2026 are above the national average, reflecting the area's affluence and the premium for working in period properties. Typical rates: hourly rate £45 to £65 for a qualified, registered electrician; day rate £300 to £450 for a sole trader. Common fixed-price jobs: consumer unit replacement £600 to £1,000, full rewire (3-bed Regency terrace) £5,000 to £8,500, EICR £200 to £320, EV charger installation £850 to £1,350. Listed property and conservation area work commands a further premium.",
   },
   {
     question: 'What are the challenges of rewiring Regency properties in Cheltenham?',
     answer:
-      'Cheltenham\'s Regency terraces and villas — built in the 1820s–1850s — present significant electrical challenges. Walls are solid masonry, making concealed wiring impractical without major plaster damage. High ceilings (3.5m+) and ornate cornices and ceiling roses must be preserved. Rewiring typically involves surface-mounted mini-trunking routed carefully to minimise visual impact, or running cables through floor voids between floors where accessible. Original features such as dado rails, picture rails, and skirting boards offer opportunities for discreet cable routes. An experienced electrician can produce a rewire that is both fully compliant and sympathetic to the original architecture.',
+      "Cheltenham's Regency terraces and villas — built in the 1820s–1850s — present significant electrical challenges. Walls are solid masonry, making concealed wiring impractical without major plaster damage. High ceilings (3.5m+) and ornate cornices and ceiling roses must be preserved. Rewiring typically involves surface-mounted mini-trunking routed carefully to minimise visual impact, or running cables through floor voids between floors where accessible. Original features such as dado rails, picture rails, and skirting boards offer opportunities for discreet cable routes. An experienced electrician can produce a rewire that is both fully compliant and sympathetic to the original architecture.",
   },
   {
     question: 'Is there demand for smart home electrical installations in Cheltenham?',
     answer:
-      'Yes. Cheltenham\'s large professional population — many working in cyber security, financial services, and related sectors — drives significant demand for smart home systems, multi-room audio, enhanced socket provision, dedicated home office circuits, and EV charger installations. This is a higher-value market segment where quality of work and professional approach are more important than being the cheapest quote. Smart lighting control, CAT6 data cabling, and whole-home electrical upgrades are common add-ons to standard rewire and upgrade projects.',
+      "Yes. Cheltenham's large professional population — many working in cyber security, financial services, and related sectors — drives significant demand for smart home systems, multi-room audio, enhanced socket provision, dedicated home office circuits, and EV charger installations. This is a higher-value market segment where quality of work and professional approach are more important than being the cheapest quote. Smart lighting control, CAT6 data cabling, and whole-home electrical upgrades are common add-ons to standard rewire and upgrade projects.",
   },
   {
     question: 'How often do Cheltenham rental properties need an EICR?',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for rewires and new circuits in Cheltenham\'s Regency and Victorian properties.',
+      "Size cables for rewires and new circuits in Cheltenham's Regency and Victorian properties.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 with structured training modules covering EICR procedures.',
+    description: 'Study for C&G 2391 with structured training modules covering EICR procedures.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -143,19 +142,19 @@ const sections = [
     content: (
       <>
         <p>
-          Cheltenham is a spa town in Gloucestershire with a population of around 120,000.
-          Known for its exceptional Regency architecture, the Cheltenham Gold Cup and Festival,
-          and as the home of GCHQ, Cheltenham has a distinctly affluent character that is
-          reflected in its property market and the demand for electrical services.
+          Cheltenham is a spa town in Gloucestershire with a population of around 120,000. Known for
+          its exceptional Regency architecture, the Cheltenham Gold Cup and Festival, and as the
+          home of GCHQ, Cheltenham has a distinctly affluent character that is reflected in its
+          property market and the demand for electrical services.
         </p>
         <p>
-          For electricians, Cheltenham offers a premium market. The Regency townhouses and
-          terraces that define the centre — Montpellier, Pittville, the Promenade, and the
-          Suffolks — are among the finest examples of Regency architecture in England and require
-          a careful, experienced approach to electrical work. Beyond the heritage core,
-          Cheltenham has Victorian and Edwardian suburbs, post-war estates, and modern
-          new-build development in areas such as West Cheltenham (the Cyber Central garden town
-          development around GCHQ) and South Cheltenham.
+          For electricians, Cheltenham offers a premium market. The Regency townhouses and terraces
+          that define the centre — Montpellier, Pittville, the Promenade, and the Suffolks — are
+          among the finest examples of Regency architecture in England and require a careful,
+          experienced approach to electrical work. Beyond the heritage core, Cheltenham has
+          Victorian and Edwardian suburbs, post-war estates, and modern new-build development in
+          areas such as West Cheltenham (the Cyber Central garden town development around GCHQ) and
+          South Cheltenham.
         </p>
         <p>
           This guide covers Part P compliance, the local DNO (National Grid Electricity
@@ -180,32 +179,32 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme</strong> — NICEIC, NAPIT, or ELECSA registration
-                enables self-certification. The scheme notifies Cheltenham Borough Council
-                Building Control and issues the compliance certificate to the customer.
+                enables self-certification. The scheme notifies Cheltenham Borough Council Building
+                Control and issues the compliance certificate to the customer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A3:2024.
-                RCD additional protection is mandatory for socket outlets
-                in dwellings and for circuits in locations of increased shock risk.
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A3:2024. RCD additional protection is mandatory for socket outlets in
+                dwellings and for circuits in locations of increased shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Listed building consent</strong> — required for external electrical work
-                on listed buildings. Cheltenham Borough Council planning department handles consent
+                <strong>Listed building consent</strong> — required for external electrical work on
+                listed buildings. Cheltenham Borough Council planning department handles consent
                 applications. Always check the listing status before quoting for external work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR for rental properties</strong> — five-yearly EICRs required under
-                the Electrical Safety Standards in the Private Rented Sector (England) Regulations
-                2020. Section 631 of BS 7671 governs the periodic inspection methodology.
+                <strong>EICR for rental properties</strong> — five-yearly EICRs required under the
+                Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.
+                Section 631 of BS 7671 governs the periodic inspection methodology.
               </span>
             </li>
           </ul>
@@ -219,32 +218,32 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>National Grid Electricity Distribution (NGED)</strong>, formerly Western
-          Power Distribution, is the DNO for Cheltenham and Gloucestershire:
+          <strong>National Grid Electricity Distribution (NGED)</strong>, formerly Western Power
+          Distribution, is the DNO for Cheltenham and Gloucestershire:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections</strong> — apply through NGED's connections portal
-                for new supplies, service upgrades, and generation connections.
+                <strong>New connections</strong> — apply through NGED's connections portal for new
+                supplies, service upgrades, and generation connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98/G99</strong> — solar PV and battery storage. G98 for systems up
-                to 16A per phase is an online notification. G99 for larger systems requires
-                NGED pre-approval, typically taking several weeks.
+                <strong>G98/G99</strong> — solar PV and battery storage. G98 for systems up to 16A
+                per phase is an online notification. G99 for larger systems requires NGED
+                pre-approval, typically taking several weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing</strong> — most Cheltenham properties are supplied on TN-C-S
-                (PME) systems. Older Regency properties in the town centre may have TN-S earthing
-                from original supply cables. Always confirm the earthing arrangement at the intake.
+                <strong>Earthing</strong> — most Cheltenham properties are supplied on TN-C-S (PME)
+                systems. Older Regency properties in the town centre may have TN-S earthing from
+                original supply cables. Always confirm the earthing arrangement at the intake.
               </span>
             </li>
           </ul>
@@ -268,8 +267,8 @@ const sections = [
               <span>
                 <strong>Over 5,000 listed buildings</strong> — Cheltenham has one of the highest
                 concentrations of listed buildings in England. Montpellier, Pittville, and the
-                Promenade are among the most significant. Many residential streets in the centre
-                are entirely listed.
+                Promenade are among the most significant. Many residential streets in the centre are
+                entirely listed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -277,25 +276,25 @@ const sections = [
               <span>
                 <strong>External work requires consent</strong> — EV charger mounting, external
                 lighting, security cameras with visible cabling, and new meter box locations on
-                listed buildings all require listed building consent from Cheltenham Borough Council.
-                This applies regardless of how minor the work appears.
+                listed buildings all require listed building consent from Cheltenham Borough
+                Council. This applies regardless of how minor the work appears.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area restrictions</strong> — even unlisted buildings in
-                conservation areas may require permission for visible external alterations. The
-                six Cheltenham conservation areas cover much of the town centre. Check with
-                Cheltenham Borough Council planning before quoting external work.
+                conservation areas may require permission for visible external alterations. The six
+                Cheltenham conservation areas cover much of the town centre. Check with Cheltenham
+                Borough Council planning before quoting external work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Internal rewiring approach</strong> — preserve ornamental plasterwork,
-                cornices, and ceiling roses. Route cables through floor voids wherever possible.
-                Use mini-trunking behind skirting boards and behind dado rails. Never cut through
+                cornices, and ceiling roses. Route cables through floor voids wherever possible. Use
+                mini-trunking behind skirting boards and behind dado rails. Never cut through
                 significant plasterwork without explicit customer consent and structural advice.
               </span>
             </li>
@@ -313,36 +312,34 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Regency Terraces and Villas</h3>
             <p className="text-white text-sm leading-relaxed">
-              The defining property type of central Cheltenham. High ceilings (3.5m+), solid
-              masonry walls, ornate plasterwork, original features. Rewires require surface-mounted
-              trunking or careful floor void routing. Listed building considerations throughout
-              the central conservation areas.
+              The defining property type of central Cheltenham. High ceilings (3.5m+), solid masonry
+              walls, ornate plasterwork, original features. Rewires require surface-mounted trunking
+              or careful floor void routing. Listed building considerations throughout the central
+              conservation areas.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Suburbs</h3>
             <p className="text-white text-sm leading-relaxed">
-              St Paul's, Leckhampton, and Charlton Kings have solid Victorian and Edwardian
-              housing. Cavity or solid brick walls, with rewires and consumer unit replacements
-              common. Not listed in most cases, so more flexibility for cable routing than
-              the Regency core.
+              St Paul's, Leckhampton, and Charlton Kings have solid Victorian and Edwardian housing.
+              Cavity or solid brick walls, with rewires and consumer unit replacements common. Not
+              listed in most cases, so more flexibility for cable routing than the Regency core.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Hesters Way, Springbank, and Up Hatherley. Cavity brick construction, standard
-              cable routing. Consumer unit replacements and five-yearly EICRs are the primary
-              work in this stock.
+              Hesters Way, Springbank, and Up Hatherley. Cavity brick construction, standard cable
+              routing. Consumer unit replacements and five-yearly EICRs are the primary work in this
+              stock.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">West Cheltenham (Cyber Central)</h3>
             <p className="text-white text-sm leading-relaxed">
-              The major new development around GCHQ's Benhall site. Modern cavity-wall new
-              builds with current standards and smart home provisions. EV charger demand is
-              high in this area. Commercial cyber and tech offices offer commercial electrical
-              opportunity.
+              The major new development around GCHQ's Benhall site. Modern cavity-wall new builds
+              with current standards and smart home provisions. EV charger demand is high in this
+              area. Commercial cyber and tech offices offer commercial electrical opportunity.
             </p>
           </div>
         </div>
@@ -355,8 +352,8 @@ const sections = [
     content: (
       <>
         <p>
-          Cheltenham rates are above the national average, reflecting the area's affluence and
-          the premium for heritage property work:
+          Cheltenham rates are above the national average, reflecting the area's affluence and the
+          premium for heritage property work:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -401,9 +398,9 @@ const sections = [
           </div>
         </div>
         <p>
-          Regency property rewires command a significant premium over standard properties due
-          to the care required, the need to preserve original features, and the time involved
-          in planning sympathetic cable routes.
+          Regency property rewires command a significant premium over standard properties due to the
+          care required, the need to preserve original features, and the time involved in planning
+          sympathetic cable routes.
         </p>
       </>
     ),
@@ -431,11 +428,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Cheltenham customers expect professionalism — deliver it from your phone.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Cheltenham customers expect professionalism — deliver it from your phone.
                 </p>
               </div>
             </div>
@@ -450,7 +444,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Send professional PDF quotes on survey day that reflect the quality of your work.
+                  . Send professional PDF quotes on survey day that reflect the quality of your
+                  work.
                 </p>
               </div>
             </div>
@@ -458,7 +453,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cheltenham electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working in period properties and premium markets. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working in period properties and premium markets. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -495,7 +490,7 @@ export default function ElectricianCheltenhamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cheltenham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cheltenham Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working in heritage properties and premium markets. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working in heritage properties and premium markets. 7-day free trial."
     />
   );
 }

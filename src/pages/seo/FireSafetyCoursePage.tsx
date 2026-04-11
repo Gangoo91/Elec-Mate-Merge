@@ -435,7 +435,7 @@ export default function FireSafetyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to strengthen your fire safety knowledge?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 4 focused modules covering fire science, extinguisher selection, hot works, and evacuation procedures. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 4 focused modules covering fire science, extinguisher selection, hot works, and evacuation procedures. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/fire-safety"
     />

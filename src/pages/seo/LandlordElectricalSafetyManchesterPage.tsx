@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Manchester', href: '/guides/landlord-electrical-safety-manchester' },
+  {
+    label: 'Landlord Electrical Safety Manchester',
+    href: '/guides/landlord-electrical-safety-manchester',
+  },
 ];
 
 const tocItems = [
@@ -84,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -118,7 +122,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -174,8 +179,8 @@ const sections = [
     content: (
       <>
         <p>
-          Manchester City Council is one of the more proactive local authorities in England when
-          it comes to private rented sector enforcement. The council operates dedicated teams that
+          Manchester City Council is one of the more proactive local authorities in England when it
+          comes to private rented sector enforcement. The council operates dedicated teams that
           investigate complaints, conduct property inspections, and take action against
           non-compliant landlords.
         </p>
@@ -186,9 +191,9 @@ const sections = [
               <span>
                 <strong>Selective licensing</strong> — Manchester City Council operates one of the
                 largest selective licensing schemes in England. Properties in designated areas
-                require a property licence, and EICR compliance is a mandatory condition. The
-                scheme targets areas with high concentrations of privately rented properties and
-                poor housing conditions.
+                require a property licence, and EICR compliance is a mandatory condition. The scheme
+                targets areas with high concentrations of privately rented properties and poor
+                housing conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -197,8 +202,7 @@ const sections = [
                 <strong>Active enforcement areas</strong> — Moss Side, Rusholme, Fallowfield,
                 Levenshulme, Gorton, and parts of Longsight and Hulme have high concentrations of
                 privately rented properties and see the most enforcement activity. The university
-                corridor (Fallowfield, Withington) has a particularly high density of student
-                HMOs.
+                corridor (Fallowfield, Withington) has a particularly high density of student HMOs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -213,8 +217,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Landlords with properties in the Greater Manchester area should note that each of the
-          ten metropolitan boroughs (Manchester, Salford, Trafford, Stockport, Tameside, Oldham,
+          Landlords with properties in the Greater Manchester area should note that each of the ten
+          metropolitan boroughs (Manchester, Salford, Trafford, Stockport, Tameside, Oldham,
           Rochdale, Bury, Bolton, and Wigan) has its own enforcement team and policies.
         </p>
       </>
@@ -227,8 +231,8 @@ const sections = [
       <>
         <p>
           Manchester has a large student population and a significant number of HMOs, particularly
-          around the University of Manchester and Manchester Metropolitan University campuses.
-          HMOs face additional requirements beyond the standard 2020 Regulations.
+          around the University of Manchester and Manchester Metropolitan University campuses. HMOs
+          face additional requirements beyond the standard 2020 Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -253,10 +257,10 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Student accommodation</strong> — purpose-built student accommodation (PBSA)
-                is typically managed by professional operators with their own compliance
-                programmes. However, converted terraced houses used as student HMOs in
-                Fallowfield and Withington are the responsibility of the individual landlord and
-                require full EICR compliance.
+                is typically managed by professional operators with their own compliance programmes.
+                However, converted terraced houses used as student HMOs in Fallowfield and
+                Withington are the responsibility of the individual landlord and require full EICR
+                compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,8 +283,8 @@ const sections = [
     content: (
       <>
         <p>
-          Manchester City Council can impose civil penalties of up to £30,000 per breach of the
-          2020 Regulations. Each failure to comply is a separate breach.
+          Manchester City Council can impose civil penalties of up to £30,000 per breach of the 2020
+          Regulations. Each failure to comply is a separate breach.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -303,9 +307,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Licensing offences</strong> — in selective licensing areas, operating
-                without a licence (which requires EICR compliance) is a criminal offence with
-                an unlimited fine. Tenants can also apply for rent repayment orders of up to 12
-                months' rent.
+                without a licence (which requires EICR compliance) is a criminal offence with an
+                unlimited fine. Tenants can also apply for rent repayment orders of up to 12 months'
+                rent.
               </span>
             </li>
           </ul>
@@ -319,17 +323,16 @@ const sections = [
     content: (
       <>
         <p>
-          Tenants in Manchester have specific rights under the 2020 Regulations regarding
-          electrical safety in their rented property.
+          Tenants in Manchester have specific rights under the 2020 Regulations regarding electrical
+          safety in their rented property.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days of the inspection. New tenants must receive a copy before
-                moving in.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days of the inspection. New tenants must receive a copy before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,8 +348,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Council intervention</strong> — if a landlord fails to comply with a
-                remedial notice, Manchester City Council can arrange for the work to be carried
-                out and recover costs from the landlord.
+                remedial notice, Manchester City Council can arrange for the work to be carried out
+                and recover costs from the landlord.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -376,9 +379,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>28 days maximum</strong> — remedial work must be completed within 28 days
-                of the EICR or sooner if the inspector specifies. The clock starts from the date
-                of the inspection.
+                <strong>28 days maximum</strong> — remedial work must be completed within 28 days of
+                the EICR or sooner if the inspector specifies. The clock starts from the date of the
+                inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -391,9 +394,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation</strong> — a qualified person must confirm the
-                remedial work in writing. This must be provided to the tenant and to the council
-                within 28 days of completion.
+                <strong>Written confirmation</strong> — a qualified person must confirm the remedial
+                work in writing. This must be provided to the tenant and to the council within 28
+                days of completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -401,8 +404,8 @@ const sections = [
               <span>
                 <strong>Common Manchester remedial work</strong> — fitting RCD protection
                 (Regulation 411.3.3), replacing aged consumer units in Victorian and Edwardian
-                terraces, upgrading earthing and bonding, and replacing deteriorated cables are
-                the most common remedial items in Manchester.
+                terraces, upgrading earthing and bonding, and replacing deteriorated cables are the
+                most common remedial items in Manchester.
               </span>
             </li>
           </ul>
@@ -443,9 +446,9 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity North West</strong> — the Distribution Network Operator for
-                Manchester is Electricity North West (ENW). Inspectors should be familiar with
-                ENW supply arrangements, earthing provisions, and the process for reporting
-                supply-side defects.
+                Manchester is Electricity North West (ENW). Inspectors should be familiar with ENW
+                supply arrangements, earthing provisions, and the process for reporting supply-side
+                defects.
               </span>
             </li>
           </ul>
@@ -487,8 +490,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — £350 to £700+. Multiple consumer units, fire alarm systems,
-                and emergency lighting increase cost. Student HMOs in Fallowfield often have
-                complex electrical layouts.
+                and emergency lighting increase cost. Student HMOs in Fallowfield often have complex
+                electrical layouts.
               </span>
             </li>
           </ul>
@@ -526,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -563,7 +566,7 @@ export default function LandlordElectricalSafetyManchesterPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

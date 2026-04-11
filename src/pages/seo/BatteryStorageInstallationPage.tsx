@@ -19,9 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [
-  { label: 'Energy Storage', href: '/battery-storage-installation' },
-];
+const breadcrumbs = [{ label: 'Energy Storage', href: '/battery-storage-installation' }];
 
 const tocItems = [
   { id: 'battery-types', label: 'Battery Types' },
@@ -101,7 +99,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-certificates',
     title: 'Electrical Certificates App',
-    description: 'Complete MCS and installation certificates on your phone with instant PDF export.',
+    description:
+      'Complete MCS and installation certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -163,9 +162,8 @@ const sections = [
         </div>
         <p>
           For most UK homes, LFP is now the preferred chemistry for new installations. The cycle
-          life advantage means a well-specified LFP system will outlast the 10-year warranty
-          period comfortably, while NMC systems may degrade more noticeably toward the end of
-          warranty.
+          life advantage means a well-specified LFP system will outlast the 10-year warranty period
+          comfortably, while NMC systems may degrade more noticeably toward the end of warranty.
         </p>
       </>
     ),
@@ -176,8 +174,8 @@ const sections = [
     content: (
       <>
         <p>
-          The UK market has matured rapidly since 2020. The following systems are among the
-          most frequently installed by UK electricians and solar installers.
+          The UK market has matured rapidly since 2020. The following systems are among the most
+          frequently installed by UK electricians and solar installers.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -236,8 +234,8 @@ const sections = [
     content: (
       <>
         <p>
-          The coupling method determines how the battery connects to the solar PV array and the
-          grid — and has significant implications for retrofit vs new installation scenarios.
+          The coupling method determines how the battery connects to the solar PV array and the grid
+          — and has significant implications for retrofit vs new installation scenarios.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -266,9 +264,9 @@ const sections = [
         </div>
         <p>
           For retrofit installations where the existing solar inverter is in good condition and
-          mid-life, AC coupling is usually the most cost-effective approach. For new solar +
-          battery projects, DC coupling with a hybrid inverter delivers better efficiency and
-          simpler installation.
+          mid-life, AC coupling is usually the most cost-effective approach. For new solar + battery
+          projects, DC coupling with a hybrid inverter delivers better efficiency and simpler
+          installation.
         </p>
       </>
     ),
@@ -280,8 +278,8 @@ const sections = [
       <>
         <p>
           Correct battery sizing is critical to achieving the expected return on investment.
-          Oversizing wastes capital; undersizing means missed savings opportunities during
-          evening and morning peaks.
+          Oversizing wastes capital; undersizing means missed savings opportunities during evening
+          and morning peaks.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -339,8 +337,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5 kWh LFP system (AC-coupled retrofit)</strong> — £3,000 to £4,500 installed.
-                Suitable for smaller properties already with solar PV.
+                <strong>5 kWh LFP system (AC-coupled retrofit)</strong> — £3,000 to £4,500
+                installed. Suitable for smaller properties already with solar PV.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -367,9 +365,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Battery storage installations are currently zero-rated for VAT in the UK when supplied
-          and installed together (Finance Act 2022, Energy Saving Materials relief). This
-          represents a significant saving compared to the former 20% VAT rate.
+          Battery storage installations are currently zero-rated for VAT in the UK when supplied and
+          installed together (Finance Act 2022, Energy Saving Materials relief). This represents a
+          significant saving compared to the former 20% VAT rate.
         </p>
       </>
     ),
@@ -381,26 +379,26 @@ const sections = [
       <>
         <p>
           All grid-connected battery storage systems that can export electricity must meet the
-          requirements of Engineering Recommendation G98 or G99, depending on the system size.
-          These are the DNO standards for connecting generation and storage equipment to the
-          low-voltage distribution network.
+          requirements of Engineering Recommendation G98 or G99, depending on the system size. These
+          are the DNO standards for connecting generation and storage equipment to the low-voltage
+          distribution network.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98 (up to 3.68 kW single-phase)</strong> — notification to the DNO
-                within 28 days after commissioning. The inverter must have a G98-compliant
-                protection relay with loss of mains (LoM) detection (Vector Shift or ROCOF).
-                Most domestic battery systems qualify for G98.
+                <strong>G98 (up to 3.68 kW single-phase)</strong> — notification to the DNO within
+                28 days after commissioning. The inverter must have a G98-compliant protection relay
+                with loss of mains (LoM) detection (Vector Shift or ROCOF). Most domestic battery
+                systems qualify for G98.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 (over 3.68 kW per phase)</strong> — prior approval required from
-                the DNO before installation. Application submitted with system design documentation,
+                <strong>G99 (over 3.68 kW per phase)</strong> — prior approval required from the DNO
+                before installation. Application submitted with system design documentation,
                 single-line diagram, and protection settings. DNO response typically takes 6–12
                 weeks. Required for three-phase installations or high-capacity single-phase systems.
               </span>
@@ -408,18 +406,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Export limitation</strong> — where the DNO has concerns about local
-                network capacity, they may require export limitation (typically to zero export
-                or a specified kW limit). An export limitation device or software-controlled
-                inverter setting is required.
+                <strong>Export limitation</strong> — where the DNO has concerns about local network
+                capacity, they may require export limitation (typically to zero export or a
+                specified kW limit). An export limitation device or software-controlled inverter
+                setting is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart Export Guarantee (SEG)</strong> — to receive SEG payments for
-                exported electricity, the property must have a smart meter (SMETS2) capable of
-                half-hourly export metering. The installer and products must be MCS certified.
+                <strong>Smart Export Guarantee (SEG)</strong> — to receive SEG payments for exported
+                electricity, the property must have a smart meter (SMETS2) capable of half-hourly
+                export metering. The installer and products must be MCS certified.
               </span>
             </li>
           </ul>
@@ -434,9 +432,9 @@ const sections = [
       <>
         <p>
           MCS (Microgeneration Certification Scheme) is the industry standard for small-scale
-          renewable energy and storage installations in the UK. MCS certification of both
-          the installer and the products is required to access the Smart Export Guarantee and
-          most government grant funding streams.
+          renewable energy and storage installations in the UK. MCS certification of both the
+          installer and the products is required to access the Smart Export Guarantee and most
+          government grant funding streams.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -451,19 +449,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS product certification</strong> — the battery system must appear on
-                the MCS product register. All major brands (Tesla, GivEnergy, SolarEdge, Growatt,
-                Fox ESS) maintain MCS-listed products, but always verify the specific model and
-                firmware version on the MCS database before installing.
+                <strong>MCS product certification</strong> — the battery system must appear on the
+                MCS product register. All major brands (Tesla, GivEnergy, SolarEdge, Growatt, Fox
+                ESS) maintain MCS-listed products, but always verify the specific model and firmware
+                version on the MCS database before installing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECO4 and LA Flex</strong> — the Energy Company Obligation (ECO4) scheme
-                can fund battery storage for eligible low-income households as part of whole-house
-                retrofit packages. Local Authority Flexible eligibility (LA Flex) widens access.
-                MCS certification is required for all funded measures.
+                <strong>ECO4 and LA Flex</strong> — the Energy Company Obligation (ECO4) scheme can
+                fund battery storage for eligible low-income households as part of whole-house
+                retrofit packages. Local Authority Flexible eligibility (LA Flex) widens access. MCS
+                certification is required for all funded measures.
               </span>
             </li>
           </ul>
@@ -478,8 +476,8 @@ const sections = [
       <>
         <p>
           Battery storage is one of the fastest-growing segments in the UK electrical industry.
-          Electricians with the right qualifications and equipment can build a profitable
-          battery storage installation business alongside existing domestic and commercial work.
+          Electricians with the right qualifications and equipment can build a profitable battery
+          storage installation business alongside existing domestic and commercial work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -492,9 +490,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-certificates">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
-                  to complete MCS installer certificates, commissioning sheets, and G98
-                  notification paperwork on your phone. Send completed documents to the customer
-                  before leaving site.
+                  to complete MCS installer certificates, commissioning sheets, and G98 notification
+                  paperwork on your phone. Send completed documents to the customer before leaving
+                  site.
                 </p>
               </div>
             </div>
@@ -510,8 +508,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to generate a professional battery storage proposal on site while the customer
-                  is engaged.
+                  to generate a professional battery storage proposal on site while the customer is
+                  engaged.
                 </p>
               </div>
             </div>
@@ -519,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your battery storage installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management. Complete MCS commissioning documents and G98 notifications on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificates, quoting, and job management. Complete MCS commissioning documents and G98 notifications on your phone. 7-day free trial."
           icon={Battery}
         />
       </>
@@ -556,7 +554,7 @@ export default function BatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Home Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Certificate Battery Storage Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site MCS commissioning documents, G98 notifications, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

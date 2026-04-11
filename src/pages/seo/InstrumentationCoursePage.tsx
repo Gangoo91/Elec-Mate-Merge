@@ -529,7 +529,7 @@ export default function InstrumentationCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in instrumentation?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any instrumentation question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any instrumentation question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/instrumentation-course"
     />

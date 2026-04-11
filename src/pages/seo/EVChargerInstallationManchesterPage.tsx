@@ -74,7 +74,8 @@ const faqs = [
       'Most domestic EV charger installations are covered by permitted development rights and do not require planning permission. However, if your property is in a conservation area (parts of Didsbury, Castlefield, Ancoats, and other areas) or is a listed building, you may need planning approval for external mounting. Check with Manchester City Council or your borough planning department before installation.',
   },
   {
-    question: 'What certificate does an electrician need to issue after installing an EV charger in Manchester?',
+    question:
+      'What certificate does an electrician need to issue after installing an EV charger in Manchester?',
     answer:
       'After installing an EV charger in Manchester, the electrician must issue an Electrical Installation Certificate (EIC) or Minor Electrical Installation Works Certificate (MEIWC), depending on whether the installation constitutes a new circuit or a modification to an existing one. A new dedicated circuit from the consumer unit requires an EIC. The electrician must also notify Electricity North West (ENW) under G98 within 28 days of commissioning, and the installation must be notified to Building Control — either through a Competent Person Scheme (such as NICEIC or NAPIT) or directly via a Building Control application.',
   },
@@ -148,9 +149,9 @@ const sections = [
           across Manchester, Salford, Stockport, Trafford, and the surrounding boroughs.
         </p>
         <p>
-          Manchester's housing stock presents a mix of challenges. The inner suburbs are dominated by
-          Victorian and Edwardian terraces — from the bay-fronted houses of Chorlton and Didsbury to
-          the two-up two-downs of Levenshulme and Longsight. Newer estates in outer areas like
+          Manchester's housing stock presents a mix of challenges. The inner suburbs are dominated
+          by Victorian and Edwardian terraces — from the bay-fronted houses of Chorlton and Didsbury
+          to the two-up two-downs of Levenshulme and Longsight. Newer estates in outer areas like
           Wythenshawe, Sale, and Bury offer simpler installations with driveways and garages.
         </p>
         <p>
@@ -173,7 +174,9 @@ const sections = [
           detached stock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Typical Manchester Costs (7kW Single-Phase, 2026)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Typical Manchester Costs (7kW Single-Phase, 2026)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -213,19 +216,17 @@ const sections = [
     heading: 'Manchester Property Challenges for EV Charger Installation',
     content: (
       <>
-        <p>
-          Manchester's housing stock creates specific challenges:
-        </p>
+        <p>Manchester's housing stock creates specific challenges:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — the most common property type in
-                inner Manchester. Consumer units are typically at the rear (kitchen or under-stairs),
-                with parking at the front of the property. Cable runs of 12 to 20 metres are
-                standard. Bay-fronted terraces in Chorlton and Didsbury often have slightly longer
-                runs due to the depth of the property.
+                inner Manchester. Consumer units are typically at the rear (kitchen or
+                under-stairs), with parking at the front of the property. Cable runs of 12 to 20
+                metres are standard. Bay-fronted terraces in Chorlton and Didsbury often have
+                slightly longer runs due to the depth of the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -357,8 +358,9 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>Electricity North West (ENW)</strong> is the DNO for Greater Manchester, Lancashire,
-          Cumbria, Cheshire, and Merseyside. Every EV charger installation must be notified to ENW.
+          <strong>Electricity North West (ENW)</strong> is the DNO for Greater Manchester,
+          Lancashire, Cumbria, Cheshire, and Merseyside. Every EV charger installation must be
+          notified to ENW.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -392,9 +394,7 @@ const sections = [
     heading: 'Manchester Grants and Incentives for EV Charger Installation',
     content: (
       <>
-        <p>
-          Funding options available to Manchester residents:
-        </p>
+        <p>Funding options available to Manchester residents:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -459,9 +459,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EIC certificate
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                   on your phone after installation and testing. ENW G98 notification, Part P
                   building control notification, and professional PDF certificate — all from site.
                 </p>
@@ -471,7 +469,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Manchester EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
           icon={Car}
         />
       </>
@@ -508,7 +506,7 @@ export default function EVChargerInstallationManchesterPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

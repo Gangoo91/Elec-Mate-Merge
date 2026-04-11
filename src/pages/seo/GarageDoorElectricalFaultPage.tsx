@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/outdoor-socket-fault-finding',
     title: 'Outdoor Socket Fault Finding',
-    description: 'RCD protection, weatherproof requirements, IP ratings, circuit faults, earth faults.',
+    description:
+      'RCD protection, weatherproof requirements, IP ratings, circuit faults, earth faults.',
     icon: Zap,
     category: 'Fault Finding',
   },
@@ -129,18 +130,18 @@ const sections = [
     content: (
       <>
         <p>
-          An electric garage door opener is an electromechanical system that consists of a mains-powered
-          motor unit, a drive mechanism (chain, belt, or screw drive), a control board (logic
-          board), safety sensors, remote controls, and a wall-mounted button. Understanding how
-          these components interact helps to diagnose faults efficiently.
+          An electric garage door opener is an electromechanical system that consists of a
+          mains-powered motor unit, a drive mechanism (chain, belt, or screw drive), a control board
+          (logic board), safety sensors, remote controls, and a wall-mounted button. Understanding
+          how these components interact helps to diagnose faults efficiently.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Motor unit</strong> — an AC or DC motor (modern openers increasingly use
-                DC for softer starts and battery backup compatibility) that drives the trolley along
+                <strong>Motor unit</strong> — an AC or DC motor (modern openers increasingly use DC
+                for softer starts and battery backup compatibility) that drives the trolley along
                 the overhead rail. The motor connects to the door via a lift arm. Motor failure is
                 relatively uncommon — most faults occur in the control electronics rather than the
                 motor itself.
@@ -197,12 +198,14 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
             <div className="space-y-2 text-white">
-              <p className="font-bold text-lg">Isolate before accessing the motor unit or control board</p>
+              <p className="font-bold text-lg">
+                Isolate before accessing the motor unit or control board
+              </p>
               <p>
                 The garage door opener operates at 230V mains voltage. Capacitors inside the unit
                 can retain charge after unplugging. Unplug the unit from the socket and wait at
-                least 60 seconds before opening the motor unit casing. Do not attempt to access
-                the control board or internal wiring while the unit is plugged in.
+                least 60 seconds before opening the motor unit casing. Do not attempt to access the
+                control board or internal wiring while the unit is plugged in.
               </p>
             </div>
           </div>
@@ -227,9 +230,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>For fixed wiring (socket, circuit)</strong> — isolate at the consumer
-                unit and prove dead with a voltage indicator before working on the socket or any
-                fixed wiring in the garage. Standard safe isolation procedure applies.
+                <strong>For fixed wiring (socket, circuit)</strong> — isolate at the consumer unit
+                and prove dead with a voltage indicator before working on the socket or any fixed
+                wiring in the garage. Standard safe isolation procedure applies.
               </span>
             </li>
           </ul>
@@ -251,10 +254,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check the consumer unit</strong> — the garage circuit (often a spur from
-                the main ring, or a dedicated radial) may have a tripped MCB or RCD. Reset the
-                breaker and observe. If it trips again immediately or when the opener is used,
-                there is a fault in the circuit or the opener is drawing excessive current.
+                <strong>Check the consumer unit</strong> — the garage circuit (often a spur from the
+                main ring, or a dedicated radial) may have a tripped MCB or RCD. Reset the breaker
+                and observe. If it trips again immediately or when the opener is used, there is a
+                fault in the circuit or the opener is drawing excessive current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -305,10 +308,10 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Symptoms of control board failure</strong> — the door starts to open or
-                close then unexpectedly reverses; the opener responds to neither the remote nor
-                the wall button; the opener activates by itself (phantom operation); the indicator
-                light on the opener flashes in a specific pattern (consult the manual for fault
-                codes); or the opener works intermittently with no obvious pattern.
+                close then unexpectedly reverses; the opener responds to neither the remote nor the
+                wall button; the opener activates by itself (phantom operation); the indicator light
+                on the opener flashes in a specific pattern (consult the manual for fault codes); or
+                the opener works intermittently with no obvious pattern.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -328,19 +331,19 @@ const sections = [
                 the opener manufacturer or third-party suppliers for most popular brands (Hormann,
                 Garador, Cardale, Chamberlain, LiftMaster). The board must be the correct part
                 number for the specific opener model. Fitting an incorrect board can damage the
-                motor. Board replacement requires unplugging the unit and carefully transferring
-                all wiring connections — photograph the existing connections before disconnecting
+                motor. Board replacement requires unplugging the unit and carefully transferring all
+                wiring connections — photograph the existing connections before disconnecting
                 anything.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Factory reset</strong> — before replacing the board, perform a factory
-                reset as specified in the opener manual. This clears all stored remote codes and
-                returns the opener to default settings. After a reset, remotes must be re-paired
-                and limit switches may need re-programming. A reset sometimes resolves erratic
-                behaviour caused by corrupted memory rather than hardware failure.
+                <strong>Factory reset</strong> — before replacing the board, perform a factory reset
+                as specified in the opener manual. This clears all stored remote codes and returns
+                the opener to default settings. After a reset, remotes must be re-paired and limit
+                switches may need re-programming. A reset sometimes resolves erratic behaviour
+                caused by corrupted memory rather than hardware failure.
               </span>
             </li>
           </ul>
@@ -366,8 +369,8 @@ const sections = [
                 <strong>Door runs past the closed position</strong> — the close limit is set too
                 far. The door hits the floor and the motor continues to run, straining the
                 mechanism. Adjust the close limit according to the manufacturer's instructions
-                (typically via adjustment screws on the motor unit or via a programming sequence
-                on electronic systems).
+                (typically via adjustment screws on the motor unit or via a programming sequence on
+                electronic systems).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,10 +386,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Door does not fully open</strong> — the open limit is set too short.
-                The trolley stops before the door reaches the fully open position, leaving the
-                door partially open and creating a risk of it falling. Adjust the open limit to
-                ensure the door opens fully and the opener stops cleanly.
+                <strong>Door does not fully open</strong> — the open limit is set too short. The
+                trolley stops before the door reaches the fully open position, leaving the door
+                partially open and creating a risk of it falling. Adjust the open limit to ensure
+                the door opens fully and the opener stops cleanly.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -395,8 +398,8 @@ const sections = [
                 <strong>Mechanical limit switch failure</strong> — on older openers with physical
                 push-to-break limit switches on the rail, the switch can fail mechanically,
                 preventing it from triggering. The switch actuator can also become misaligned.
-                Inspect the switch position on the rail and test continuity of the switch with
-                a multimeter after unplugging the unit.
+                Inspect the switch position on the rail and test continuity of the switch with a
+                multimeter after unplugging the unit.
               </span>
             </li>
           </ul>
@@ -419,30 +422,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Indicator lights</strong> — most openers have LED indicator lights on
-                each sensor. Typically: transmitter sensor has a steady amber light; receiver
-                sensor has a steady green light when correctly aligned. A flashing or off indicator
-                light on the receiver sensor means the beam is interrupted or the sensors are
-                misaligned. Both indicators should be steady during normal operation.
+                <strong>Indicator lights</strong> — most openers have LED indicator lights on each
+                sensor. Typically: transmitter sensor has a steady amber light; receiver sensor has
+                a steady green light when correctly aligned. A flashing or off indicator light on
+                the receiver sensor means the beam is interrupted or the sensors are misaligned.
+                Both indicators should be steady during normal operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cleaning the lenses</strong> — dirty lenses are a common cause of sensor
-                faults. Wipe the sensor lenses gently with a dry cloth. Avoid abrasive cleaners
-                that could scratch the lens. In dusty garages (near workshop areas), clean the
-                sensor lenses monthly.
+                faults. Wipe the sensor lenses gently with a dry cloth. Avoid abrasive cleaners that
+                could scratch the lens. In dusty garages (near workshop areas), clean the sensor
+                lenses monthly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Realigning the sensors</strong> — sensors are mounted on adjustable
-                brackets. Loosen the mounting wing nut, physically align the sensor so it
-                points directly at its counterpart across the door frame, then retighten. The
-                receiver indicator light should switch from flashing to steady green when alignment
-                is correct.
+                brackets. Loosen the mounting wing nut, physically align the sensor so it points
+                directly at its counterpart across the door frame, then retighten. The receiver
+                indicator light should switch from flashing to steady green when alignment is
+                correct.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -459,11 +462,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sunlight interference</strong> — direct sunlight can overwhelm the
-                sensor receiver, causing the control board to detect a false obstruction. This
-                typically occurs at specific times of day when the sun is at a low angle and
-                shines directly into the garage. A shade or visor above the receiver sensor
-                resolves this without disabling the safety function.
+                <strong>Sunlight interference</strong> — direct sunlight can overwhelm the sensor
+                receiver, causing the control board to detect a false obstruction. This typically
+                occurs at specific times of day when the sun is at a low angle and shines directly
+                into the garage. A shade or visor above the receiver sensor resolves this without
+                disabling the safety function.
               </span>
             </li>
           </ul>
@@ -477,50 +480,50 @@ const sections = [
     content: (
       <>
         <p>
-          Remote control and keypad issues are common and are usually resolved without calling
-          an electrician or garage door engineer.
+          Remote control and keypad issues are common and are usually resolved without calling an
+          electrician or garage door engineer.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replace the battery first</strong> — a remote that works intermittently
-                or has a reduced range almost certainly has a low battery. Replace with a fresh
-                battery of the correct specification (typically CR2032, CR2016, or AA/AAA depending
-                on the remote model). A fresh battery should restore full range (typically 10 to
-                20 metres for residential openers).
+                <strong>Replace the battery first</strong> — a remote that works intermittently or
+                has a reduced range almost certainly has a low battery. Replace with a fresh battery
+                of the correct specification (typically CR2032, CR2016, or AA/AAA depending on the
+                remote model). A fresh battery should restore full range (typically 10 to 20 metres
+                for residential openers).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Re-programming the remote</strong> — if the remote has lost its pairing
-                with the opener (this can happen after a power surge or control board replacement),
-                it must be re-programmed. Locate the "learn" button on the motor unit (usually
-                requires opening a cover), press and release it (the indicator light will flash),
-                then press the button on the remote you wish to programme. The indicator light
-                should flash or change to confirm successful pairing.
+                <strong>Re-programming the remote</strong> — if the remote has lost its pairing with
+                the opener (this can happen after a power surge or control board replacement), it
+                must be re-programmed. Locate the "learn" button on the motor unit (usually requires
+                opening a cover), press and release it (the indicator light will flash), then press
+                the button on the remote you wish to programme. The indicator light should flash or
+                change to confirm successful pairing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wireless keypad faults</strong> — an external wireless keypad uses the
-                same radio frequency and pairing process as a remote. A keypad that stops working
-                should have its battery replaced first, then be re-programmed if the new battery
-                does not resolve it. Check the keypad enclosure for water ingress — keypads mounted
-                outdoors are vulnerable to moisture damage.
+                <strong>Wireless keypad faults</strong> — an external wireless keypad uses the same
+                radio frequency and pairing process as a remote. A keypad that stops working should
+                have its battery replaced first, then be re-programmed if the new battery does not
+                resolve it. Check the keypad enclosure for water ingress — keypads mounted outdoors
+                are vulnerable to moisture damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Radio interference</strong> — new wireless devices near the garage (Wi-Fi
-                extenders, baby monitors, LED lighting with poor EMC suppression) can interfere
-                with the opener's 433MHz or 868MHz radio frequency. Try moving potential
-                interference sources away from the garage. If the problem is recent and coincides
-                with a new device being installed, this is likely the cause.
+                extenders, baby monitors, LED lighting with poor EMC suppression) can interfere with
+                the opener's 433MHz or 868MHz radio frequency. Try moving potential interference
+                sources away from the garage. If the problem is recent and coincides with a new
+                device being installed, this is likely the cause.
               </span>
             </li>
           </ul>
@@ -543,24 +546,24 @@ const sections = [
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tripping MCB or RCD</strong> — repeated tripping indicates an electrical
-                fault in the opener, the supply cable, or the socket. Do not continue resetting.
-                An electrician will perform insulation resistance testing and current measurement
-                to locate the fault.
+                fault in the opener, the supply cable, or the socket. Do not continue resetting. An
+                electrician will perform insulation resistance testing and current measurement to
+                locate the fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Burning smell or visible scorching</strong> — switch off the supply
-                immediately. Do not use the opener until an electrician has inspected the motor
-                unit and the supply wiring. A burning smell indicates a serious electrical fault.
+                immediately. Do not use the opener until an electrician has inspected the motor unit
+                and the supply wiring. A burning smell indicates a serious electrical fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New socket or circuit installation</strong> — if the garage does not have
-                a suitable socket near the opener, a new socket must be installed by a registered
+                <strong>New socket or circuit installation</strong> — if the garage does not have a
+                suitable socket near the opener, a new socket must be installed by a registered
                 electrician. This is notifiable work under Part P and requires an Electrical
                 Installation Certificate.
               </span>
@@ -568,10 +571,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Garage wiring inspection</strong> — if the garage has old wiring (rubber
-                or cloth-insulated cable), this should be inspected by an electrician before
-                connecting new loads. Old wiring may be unsafe and require replacement before the
-                garage can be safely used.
+                <strong>Garage wiring inspection</strong> — if the garage has old wiring (rubber or
+                cloth-insulated cable), this should be inspected by an electrician before connecting
+                new loads. Old wiring may be unsafe and require replacement before the garage can be
+                safely used.
               </span>
             </li>
           </ul>
@@ -601,16 +604,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safety sensor replacement (pair)</strong> — £30 to £80 for the sensors,
-                plus £40 to £80 labour if fitted by a garage door engineer. Many homeowners can
-                fit replacement sensors themselves using the existing wiring.
+                <strong>Safety sensor replacement (pair)</strong> — £30 to £80 for the sensors, plus
+                £40 to £80 labour if fitted by a garage door engineer. Many homeowners can fit
+                replacement sensors themselves using the existing wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Control board replacement</strong> — £60 to £200 for the board, plus £60
-                to £120 labour for a garage door engineer to fit and programme it. Brand-specific
+                <strong>Control board replacement</strong> — £60 to £200 for the board, plus £60 to
+                £120 labour for a garage door engineer to fit and programme it. Brand-specific
                 boards (Hormann, Garador) tend to cost more than generic replacements.
               </span>
             </li>
@@ -625,19 +628,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New dedicated socket in garage</strong> — £150 to £350, including cable
-                from consumer unit, socket, weatherproof enclosure if needed, and Electrical
-                Installation Certificate. Longer cable runs or complex routes through masonry
-                increase cost.
+                <strong>New dedicated socket in garage</strong> — £150 to £350, including cable from
+                consumer unit, socket, weatherproof enclosure if needed, and Electrical Installation
+                Certificate. Longer cable runs or complex routes through masonry increase cost.
               </span>
             </li>
           </ul>
         </div>
         <p>
           As a general rule: if the opener is over 10 years old and the control board has failed,
-          full replacement of the opener is usually better value than repairing the old unit.
-          Modern openers offer smartphone connectivity, improved security codes, and battery backup
-          that older units lack.
+          full replacement of the opener is usually better value than repairing the old unit. Modern
+          openers offer smartphone connectivity, improved security codes, and battery backup that
+          older units lack.
         </p>
       </>
     ),
@@ -663,7 +665,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Issue Certificates Before Leaving Site</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Issue Certificates Before Leaving Site
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
@@ -685,8 +689,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Wiring Upgrades On the Spot</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Garages frequently have substandard or aged wiring. When you find a fault,
-                  use the{' '}
+                  Garages frequently have substandard or aged wiring. When you find a fault, use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
@@ -699,7 +702,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete garage electrical certificates on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -736,7 +739,7 @@ export default function GarageDoorElectricalFaultPage() {
       faqHeading="Frequently Asked Questions — Garage Door Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Garage Electrical Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

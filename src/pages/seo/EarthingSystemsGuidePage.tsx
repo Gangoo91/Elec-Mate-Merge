@@ -40,7 +40,7 @@ const tocItems = [
 const keyTakeaways = [
   'The earthing system type determines how fault current returns to the source and directly affects earth loop impedance, disconnection times, and the type of protective measures required.',
   'TN-S systems have separate neutral (N) and protective earth (PE) conductors throughout — typically found in older properties served by concentric wiring or properties with a separate earth terminal at the cut-out.',
-  'TN-C-S (PME) systems combine N and PE in the network (PEN conductor) and split them at the consumer\'s installation — the most common system in the UK, supplied by the DNO\'s PME terminal.',
+  "TN-C-S (PME) systems combine N and PE in the network (PEN conductor) and split them at the consumer's installation — the most common system in the UK, supplied by the DNO's PME terminal.",
   'TT systems use a local earth electrode — required for outbuildings, caravans, marinas, and any installation where the PME earth terminal is not available or suitable.',
   'PME earthing must not be extended to outbuildings, caravans, static caravans, or locations accessible to livestock due to the risk of dangerous touch voltages under open-circuit neutral conditions.',
   'EV charge points require specific earthing considerations — TN-C-S supplies need a PME earth electrode system or PME earthing prohibition check; TT supplies may require an earth electrode at the charge point.',
@@ -50,32 +50,32 @@ const faqs = [
   {
     question: 'What is the difference between TN-S and TN-C-S earthing?',
     answer:
-      'In a TN-S system, the neutral conductor (N) and the protective earth conductor (PE) are separate throughout the entire network, from the transformer to the consumer\'s installation. The installation earth terminal connects to a dedicated PE conductor. In a TN-C-S system (commonly called PME — Protective Multiple Earthing), the neutral and protective earth are combined as a single PEN conductor in the distribution network. At the consumer\'s installation, the PEN conductor is split into separate N and PE conductors. TN-C-S is now the most common system for new domestic connections in the UK.',
+      "In a TN-S system, the neutral conductor (N) and the protective earth conductor (PE) are separate throughout the entire network, from the transformer to the consumer's installation. The installation earth terminal connects to a dedicated PE conductor. In a TN-C-S system (commonly called PME — Protective Multiple Earthing), the neutral and protective earth are combined as a single PEN conductor in the distribution network. At the consumer's installation, the PEN conductor is split into separate N and PE conductors. TN-C-S is now the most common system for new domestic connections in the UK.",
   },
   {
     question: 'What is PME earthing and why does it have limitations?',
     answer:
-      'PME (Protective Multiple Earthing) is the earthing arrangement used in TN-C-S systems. The distribution network\'s combined PEN conductor is connected to earth at multiple points (at the substation and at consumers\' installations). The consumer\'s installation earth is taken from the DNO\'s PME terminal. The limitation of PME arises from the risk of a broken neutral: if the PEN conductor breaks upstream of the consumer, the consumer\'s earth terminal — and everything connected to it — can rise to line voltage potential relative to true earth. This is why PME earthing must not be extended to locations where people or livestock might simultaneously contact the PME earth and true earth (outbuildings, caravans, swimming pools, marinas).',
+      "PME (Protective Multiple Earthing) is the earthing arrangement used in TN-C-S systems. The distribution network's combined PEN conductor is connected to earth at multiple points (at the substation and at consumers' installations). The consumer's installation earth is taken from the DNO's PME terminal. The limitation of PME arises from the risk of a broken neutral: if the PEN conductor breaks upstream of the consumer, the consumer's earth terminal — and everything connected to it — can rise to line voltage potential relative to true earth. This is why PME earthing must not be extended to locations where people or livestock might simultaneously contact the PME earth and true earth (outbuildings, caravans, swimming pools, marinas).",
   },
   {
     question: 'When is a TT earthing system required?',
     answer:
-      'A TT system (where the installation earth is provided by a local earth electrode rather than the DNO\'s earth terminal) is required in several situations: where the DNO cannot provide a PME terminal; for outbuildings that are separate structures; for caravans and static caravans; for marinas and caravan parks; for agricultural premises where livestock may contact earthed equipment; and for any installation where extending PME earthing would create an unacceptable risk. The installation of a TT system requires a suitable earth electrode (usually a copper earth rod) and RCD protection to ensure disconnection times are achieved given the typically higher earth loop impedance.',
+      "A TT system (where the installation earth is provided by a local earth electrode rather than the DNO's earth terminal) is required in several situations: where the DNO cannot provide a PME terminal; for outbuildings that are separate structures; for caravans and static caravans; for marinas and caravan parks; for agricultural premises where livestock may contact earthed equipment; and for any installation where extending PME earthing would create an unacceptable risk. The installation of a TT system requires a suitable earth electrode (usually a copper earth rod) and RCD protection to ensure disconnection times are achieved given the typically higher earth loop impedance.",
   },
   {
     question: 'Why is earth loop impedance (Zs) different between TN-S and TT systems?',
     answer:
-      'Earth loop impedance (Zs) is the impedance of the fault current loop from the source, through the protective conductors, through the fault, and back to the source. In TN-S and TN-C-S systems, the fault current returns via low-impedance metallic conductors, resulting in Zs values typically in the range of 0.1 to 1.0 ohms. In TT systems, the fault current returns via the soil between the installation earth electrode and the DNO\'s substation earth. Soil impedance is much higher — TT system Zs values are typically 20 to 200 ohms or more. This high impedance means overcurrent devices (MCBs/fuses) cannot reliably clear faults, which is why TT systems always require RCD protection for disconnection.',
+      "Earth loop impedance (Zs) is the impedance of the fault current loop from the source, through the protective conductors, through the fault, and back to the source. In TN-S and TN-C-S systems, the fault current returns via low-impedance metallic conductors, resulting in Zs values typically in the range of 0.1 to 1.0 ohms. In TT systems, the fault current returns via the soil between the installation earth electrode and the DNO's substation earth. Soil impedance is much higher — TT system Zs values are typically 20 to 200 ohms or more. This high impedance means overcurrent devices (MCBs/fuses) cannot reliably clear faults, which is why TT systems always require RCD protection for disconnection.",
   },
   {
     question: 'How do I identify which earthing system I have?',
     answer:
-      'The most reliable method is to check the DNO\'s supply head (cut-out). A TN-S supply will have a separate earth terminal and neutral terminal at the cut-out, with the earth connection going to the PE conductor. A TN-C-S (PME) supply will have a PME earth terminal clearly marked, usually with a label. A TT supply will have no DNO-provided earth terminal — the installation will have its own earth electrode, typically an earth rod driven into the ground near the consumer unit. You can also contact the DNO to confirm the supply type for a specific address.',
+      "The most reliable method is to check the DNO's supply head (cut-out). A TN-S supply will have a separate earth terminal and neutral terminal at the cut-out, with the earth connection going to the PE conductor. A TN-C-S (PME) supply will have a PME earth terminal clearly marked, usually with a label. A TT supply will have no DNO-provided earth terminal — the installation will have its own earth electrode, typically an earth rod driven into the ground near the consumer unit. You can also contact the DNO to confirm the supply type for a specific address.",
   },
   {
     question: 'Can I extend PME earthing to my garden building?',
     answer:
-      'No. PME earthing must not be extended to outbuildings, garden offices, sheds, garages (that are separate structures), or any building that is a separate structure from the main property. This is not merely best practice — it is a requirement of the Electricity Safety, Quality and Continuity Regulations 2002 and is reinforced by BS 7671. The outbuilding must be supplied via a TT system using its own earth electrode, or via an insulating separation supply, or via a separation supply. The supply cable between the main building and outbuilding must have no metallic armour or screen connected to the main building\'s earth.',
+      "No. PME earthing must not be extended to outbuildings, garden offices, sheds, garages (that are separate structures), or any building that is a separate structure from the main property. This is not merely best practice — it is a requirement of the Electricity Safety, Quality and Continuity Regulations 2002 and is reinforced by BS 7671. The outbuilding must be supplied via a TT system using its own earth electrode, or via an insulating separation supply, or via a separation supply. The supply cable between the main building and outbuilding must have no metallic armour or screen connected to the main building's earth.",
   },
   {
     question: 'What earthing arrangement is required for EV charge points?',
@@ -133,12 +133,12 @@ const sections = [
     content: (
       <>
         <p>
-          An earthing system is the arrangement by which the electrical installation is connected
-          to earth (the general mass of the earth) to ensure that exposed metallic parts of
-          equipment and the installation are maintained at earth potential under fault conditions.
-          Earthing provides a low-impedance path for fault current to flow, enabling protective
-          devices (MCBs, fuses, RCDs) to operate and disconnect the supply before dangerous
-          voltages or temperatures develop.
+          An earthing system is the arrangement by which the electrical installation is connected to
+          earth (the general mass of the earth) to ensure that exposed metallic parts of equipment
+          and the installation are maintained at earth potential under fault conditions. Earthing
+          provides a low-impedance path for fault current to flow, enabling protective devices
+          (MCBs, fuses, RCDs) to operate and disconnect the supply before dangerous voltages or
+          temperatures develop.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -148,15 +148,16 @@ const sections = [
                 <strong>Protection against electric shock</strong> — if a live conductor contacts
                 exposed metalwork (a fault to earth), the earthing system ensures fault current
                 flows via the protective conductor rather than through a person who touches the
-                metalwork. The fault current is high enough to operate the protective device quickly.
+                metalwork. The fault current is high enough to operate the protective device
+                quickly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protection against fire</strong> — by ensuring rapid disconnection of
-                earth faults, the earthing system limits the duration and magnitude of arcing that
-                could ignite surrounding materials.
+                <strong>Protection against fire</strong> — by ensuring rapid disconnection of earth
+                faults, the earthing system limits the duration and magnitude of arcing that could
+                ignite surrounding materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -197,27 +198,27 @@ const sections = [
               <span>
                 <strong>Where it is found</strong> — TN-S is increasingly rare in new UK
                 installations. It is typically found in older properties served by concentric wiring
-                (where the outer sheath of the service cable acts as the PE), in properties with
-                an armoured service cable where the armouring is used as the PE, and in some
-                industrial and commercial installations with dedicated earth conductors.
+                (where the outer sheath of the service cable acts as the PE), in properties with an
+                armoured service cable where the armouring is used as the PE, and in some industrial
+                and commercial installations with dedicated earth conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Identification</strong> — at the DNO cut-out, a TN-S supply will have
-                separate earth and neutral terminals. The earth terminal is connected to the
-                cable's metallic sheath or armour rather than the neutral conductor. The neutral
-                and earth are not bonded together at the cut-out.
+                separate earth and neutral terminals. The earth terminal is connected to the cable's
+                metallic sheath or armour rather than the neutral conductor. The neutral and earth
+                are not bonded together at the cut-out.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth loop impedance</strong> — TN-S systems typically have Zs values in
-                the range of 0.1 to 0.8 ohms at the consumer's installation, depending on the
-                cable length and cross-sectional area. This relatively low impedance means MCBs
-                and fuses can reliably clear earth faults within the required disconnection times.
+                <strong>Earth loop impedance</strong> — TN-S systems typically have Zs values in the
+                range of 0.1 to 0.8 ohms at the consumer's installation, depending on the cable
+                length and cross-sectional area. This relatively low impedance means MCBs and fuses
+                can reliably clear earth faults within the required disconnection times.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -251,10 +252,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO PME terminal</strong> — the DNO provides a combined N/E terminal at
-                the cut-out, usually labelled "PME Earth Terminal" or marked with the combined
-                N/PE symbol. The installation's main earthing terminal and the neutral are both
-                connected to this terminal and bonded together within the installation.
+                <strong>DNO PME terminal</strong> — the DNO provides a combined N/E terminal at the
+                cut-out, usually labelled "PME Earth Terminal" or marked with the combined N/PE
+                symbol. The installation's main earthing terminal and the neutral are both connected
+                to this terminal and bonded together within the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -309,8 +310,8 @@ const sections = [
               <span>
                 <strong>High earth loop impedance</strong> — because fault current returns via soil
                 rather than a metallic conductor, Zs values on TT systems are typically 20 to 200
-                ohms or higher, depending on soil type, moisture content, and electrode design.
-                At these impedances, overcurrent devices (MCBs) cannot operate within the required
+                ohms or higher, depending on soil type, moisture content, and electrode design. At
+                these impedances, overcurrent devices (MCBs) cannot operate within the required
                 disconnection times — RCD protection is mandatory on TT systems for this reason.
               </span>
             </li>
@@ -318,19 +319,19 @@ const sections = [
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode testing</strong> — the earth electrode resistance must be
-                measured during installation and at each EICR. The electrode resistance (Ra) in
-                ohms multiplied by the RCD rating (IΔn) in amps must not exceed 50V, per BS 7671.
-                For a 30mA RCD: Ra × 0.03 ≤ 50, meaning Ra must not exceed approximately 1,667 ohms
-                — achievable with a well-installed electrode, though lower is always better.
+                measured during installation and at each EICR. The electrode resistance (Ra) in ohms
+                multiplied by the RCD rating (IΔn) in amps must not exceed 50V, per BS 7671. For a
+                30mA RCD: Ra × 0.03 ≤ 50, meaning Ra must not exceed approximately 1,667 ohms —
+                achievable with a well-installed electrode, though lower is always better.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No bonding to main building's earth</strong> — where a TT outbuilding is
-                fed from a TN-C-S main building, the supply cable must have no metallic armour or
-                screen connected to the main building's earth. An SWA cable's armouring must be
-                isolated at the outbuilding end, or an XLPE/LSF cable in plastic conduit used.
+                <strong>No bonding to main building's earth</strong> — where a TT outbuilding is fed
+                from a TN-C-S main building, the supply cable must have no metallic armour or screen
+                connected to the main building's earth. An SWA cable's armouring must be isolated at
+                the outbuilding end, or an XLPE/LSF cable in plastic conduit used.
               </span>
             </li>
           </ul>
@@ -373,8 +374,8 @@ const sections = [
               <span>
                 <strong>Livestock locations</strong> — agricultural premises where livestock have
                 access to earthed metalwork must not use PME earthing. Animals are more susceptible
-                to electric shock than humans (lower body resistance, multiple contact points)
-                and may receive dangerous touch voltages under PME open-neutral conditions.
+                to electric shock than humans (lower body resistance, multiple contact points) and
+                may receive dangerous touch voltages under PME open-neutral conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -405,29 +406,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-C-S (PME) supplies</strong> — an earth electrode must be installed at
-                the charge point location, bonded to the charge point's earth terminal, to provide
-                a combined PME/electrode earthing arrangement. This limits the touch voltage to a
-                safe level if the neutral is lost. Alternatively, charge points with integral
-                protective measures against loss-of-earth (including automatic disconnection) may
-                be used without an additional electrode, subject to the device's documentation.
+                <strong>TN-C-S (PME) supplies</strong> — an earth electrode must be installed at the
+                charge point location, bonded to the charge point's earth terminal, to provide a
+                combined PME/electrode earthing arrangement. This limits the touch voltage to a safe
+                level if the neutral is lost. Alternatively, charge points with integral protective
+                measures against loss-of-earth (including automatic disconnection) may be used
+                without an additional electrode, subject to the device's documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT supplies</strong> — the charge point must be on the TT earth system.
-                A Type A or Type B RCD must protect the charge point circuit. The earth electrode
-                resistance must be verified to ensure the RCD trip condition (Ra × IΔn ≤ 50V)
-                is met.
+                <strong>TT supplies</strong> — the charge point must be on the TT earth system. A
+                Type A or Type B RCD must protect the charge point circuit. The earth electrode
+                resistance must be verified to ensure the RCD trip condition (Ra × IΔn ≤ 50V) is
+                met.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD type for EV circuits</strong> — EV charge point circuits require a
-                Type A or Type B RCD (not Type AC) because the charging electronics can produce
-                pulsating DC residual currents that Type AC RCDs cannot detect reliably.
+                <strong>RCD type for EV circuits</strong> — EV charge point circuits require a Type
+                A or Type B RCD (not Type AC) because the charging electronics can produce pulsating
+                DC residual currents that Type AC RCDs cannot detect reliably.
               </span>
             </li>
           </ul>
@@ -443,8 +444,8 @@ const sections = [
         <p>
           Supplying a separate outbuilding (garden office, garage, workshop, studio) is one of the
           most common domestic electrical jobs that requires a TT earthing system. Getting the
-          earthing arrangement wrong is one of the most common and dangerous errors in this type
-          of work.
+          earthing arrangement wrong is one of the most common and dangerous errors in this type of
+          work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -453,27 +454,27 @@ const sections = [
               <span>
                 <strong>Earth rod installation</strong> — the earth rod should be driven vertically
                 into the ground to a sufficient depth to achieve adequate electrode resistance
-                (typically 1.2m or more, with multiple rods or horizontal electrodes where
-                soil resistance is high). The rod must be accessible for testing.
+                (typically 1.2m or more, with multiple rods or horizontal electrodes where soil
+                resistance is high). The rod must be accessible for testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supply cable selection</strong> — use a cable with no metallic sheath
-                or armour connected to the main building's earth terminal. An unarmoured cable
-                in a protective conduit, or an SWA cable with the armouring isolated at the
-                outbuilding end, are both acceptable. Never connect SWA armouring to both the
-                main building's PME earth and the outbuilding's TT earth.
+                <strong>Supply cable selection</strong> — use a cable with no metallic sheath or
+                armour connected to the main building's earth terminal. An unarmoured cable in a
+                protective conduit, or an SWA cable with the armouring isolated at the outbuilding
+                end, are both acceptable. Never connect SWA armouring to both the main building's
+                PME earth and the outbuilding's TT earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection mandatory</strong> — all circuits in TT outbuildings must
-                be protected by RCDs because the high earth loop impedance prevents MCBs from
-                clearing earth faults within required times. An RCCB or RCBOs at the outbuilding
-                distribution board is essential.
+                <strong>RCD protection mandatory</strong> — all circuits in TT outbuildings must be
+                protected by RCDs because the high earth loop impedance prevents MCBs from clearing
+                earth faults within required times. An RCCB or RCBOs at the outbuilding distribution
+                board is essential.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,8 +498,8 @@ const sections = [
         <p>
           Earth loop impedance (Zs) is the total impedance of the fault current loop and is
           fundamental to determining whether protective devices will operate within the required
-          disconnection time under fault conditions. The earthing system has a major influence
-          on Zs.
+          disconnection time under fault conditions. The earthing system has a major influence on
+          Zs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -507,9 +508,9 @@ const sections = [
               <span>
                 <strong>TN-S and TN-C-S</strong> — Zs is typically 0.1 to 1.0 ohm for final
                 circuits. Low Zs means high fault current, which reliably trips MCBs within 0.4
-                seconds (for circuits up to 32A) or 5 seconds (for distribution circuits). RCDs
-                are not needed as the primary means of disconnection, but are required for
-                additional protection on specified circuit types.
+                seconds (for circuits up to 32A) or 5 seconds (for distribution circuits). RCDs are
+                not needed as the primary means of disconnection, but are required for additional
+                protection on specified circuit types.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,8 +518,8 @@ const sections = [
               <span>
                 <strong>TT systems</strong> — Zs is typically 20 to 200 ohms or more. At these
                 impedances, a phase-to-earth fault would produce only 1.2 to 12 amperes of fault
-                current — far below the trip threshold of any MCB or fuse. RCDs are therefore
-                the primary means of disconnection in TT systems.
+                current — far below the trip threshold of any MCB or fuse. RCDs are therefore the
+                primary means of disconnection in TT systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -526,9 +527,9 @@ const sections = [
               <span>
                 <strong>Impact on EICR assessment</strong> — measured Zs values must be compared
                 against the maximum Zs values in BS 7671 Appendix 3 for the specific protective
-                device. A TT system's Zs values will always appear extremely high in absolute
-                terms but are acceptable because RCD protection is confirmed to operate correctly
-                at those impedances.
+                device. A TT system's Zs values will always appear extremely high in absolute terms
+                but are acceptable because RCD protection is confirmed to operate correctly at those
+                impedances.
               </span>
             </li>
           </ul>
@@ -587,10 +588,10 @@ const sections = [
         <p>
           The earthing system must be correctly identified and documented on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. Errors in
-          earthing system identification are among the most consequential mistakes on electrical
-          certificates, as they affect the interpretation of all Zs measurements and the
-          assessment of protective device adequacy.
+          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. Errors in earthing
+          system identification are among the most consequential mistakes on electrical
+          certificates, as they affect the interpretation of all Zs measurements and the assessment
+          of protective device adequacy.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -599,10 +600,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Record Earthing System on Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The earthing system type (TN-S, TN-C-S, TT) must be recorded on the EIC or
-                  EICR, along with the method of earthing (DNO terminal, earth electrode, etc.)
-                  and the measured earth electrode resistance where applicable. Use the
-                  Elec-Mate app to complete all sections correctly with built-in guidance.
+                  The earthing system type (TN-S, TN-C-S, TT) must be recorded on the EIC or EICR,
+                  along with the method of earthing (DNO terminal, earth electrode, etc.) and the
+                  measured earth electrode resistance where applicable. Use the Elec-Mate app to
+                  complete all sections correctly with built-in guidance.
                 </p>
               </div>
             </div>
@@ -610,7 +611,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and EICs with correct earthing system documentation"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion. Built-in guidance for earthing system identification, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -647,7 +648,7 @@ export default function EarthingSystemsGuidePage() {
       faqHeading="Frequently Asked Questions About UK Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Earthing Documentation Correctly on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR and EIC completion with correct earthing system documentation, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

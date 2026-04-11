@@ -80,7 +80,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -110,7 +111,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -126,15 +128,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory EICR</strong> — required before new tenancies and every five
-                years for existing tenancies. Applied to all tenancies from 1 April 2021.
+                <strong>Mandatory EICR</strong> — required before new tenancies and every five years
+                for existing tenancies. Applied to all tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant copies</strong> — existing tenants within 28 days, new tenants
-                before moving in.
+                <strong>Tenant copies</strong> — existing tenants within 28 days, new tenants before
+                moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -147,8 +149,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days or sooner if specified.
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days or sooner if specified.
               </span>
             </li>
           </ul>
@@ -162,9 +164,9 @@ const sections = [
     content: (
       <>
         <p>
-          Leeds City Council has a dedicated private rented sector team within its housing
-          standards service. The council takes a proactive approach to enforcement, particularly
-          in areas with high concentrations of privately rented properties.
+          Leeds City Council has a dedicated private rented sector team within its housing standards
+          service. The council takes a proactive approach to enforcement, particularly in areas with
+          high concentrations of privately rented properties.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -172,25 +174,24 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Selective licensing</strong> — Leeds operates selective licensing in
-                designated areas. A valid EICR is a mandatory licence condition. Areas include
-                parts of Harehills, Beeston, and Holbeck where the private rented sector is
-                substantial.
+                designated areas. A valid EICR is a mandatory licence condition. Areas include parts
+                of Harehills, Beeston, and Holbeck where the private rented sector is substantial.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Student areas</strong> — Headingley, Hyde Park, Woodhouse, and Burley
-                have high concentrations of student HMOs. Leeds City Council actively enforces
-                HMO licensing and electrical safety compliance in these areas.
+                <strong>Student areas</strong> — Headingley, Hyde Park, Woodhouse, and Burley have
+                high concentrations of student HMOs. Leeds City Council actively enforces HMO
+                licensing and electrical safety compliance in these areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complaint investigation</strong> — the council investigates tenant
-                complaints and can require landlords to obtain an EICR and complete remedial
-                work. Failure to comply results in civil penalties.
+                complaints and can require landlords to obtain an EICR and complete remedial work.
+                Failure to comply results in civil penalties.
               </span>
             </li>
           </ul>
@@ -205,16 +206,16 @@ const sections = [
       <>
         <p>
           Leeds has a large student population supporting a substantial HMO market. The student
-          areas of Headingley, Hyde Park, and Woodhouse contain hundreds of HMOs, many in
-          converted Victorian and Edwardian terraced houses.
+          areas of Headingley, Hyde Park, and Woodhouse contain hundreds of HMOs, many in converted
+          Victorian and Edwardian terraced houses.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing</strong> — properties with five or more occupants
-                in two or more households. Valid EICR is a licence condition.
+                <strong>Mandatory HMO licensing</strong> — properties with five or more occupants in
+                two or more households. Valid EICR is a licence condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,9 +230,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire safety</strong> — HMO fire alarm and emergency lighting systems
-                must be tested as part of the EICR. RCD protection (Regulation 411.3.3) is
-                particularly important in shared properties.
+                <strong>Fire safety</strong> — HMO fire alarm and emergency lighting systems must be
+                tested as part of the EICR. RCD protection (Regulation 411.3.3) is particularly
+                important in shared properties.
               </span>
             </li>
           </ul>
@@ -244,9 +245,7 @@ const sections = [
     heading: 'Penalties for Non-Compliance',
     content: (
       <>
-        <p>
-          Leeds City Council can impose civil penalties of up to £30,000 per breach.
-        </p>
+        <p>Leeds City Council can impose civil penalties of up to £30,000 per breach.</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -266,8 +265,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Licensing offences</strong> — operating an unlicensed HMO or property in
-                a selective licensing area is a criminal offence with an unlimited fine.
+                <strong>Licensing offences</strong> — operating an unlicensed HMO or property in a
+                selective licensing area is a criminal offence with an unlimited fine.
               </span>
             </li>
           </ul>
@@ -285,8 +284,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — within 28 days for existing
-                tenants, before moving in for new tenants.
+                <strong>Right to a copy of the EICR</strong> — within 28 days for existing tenants,
+                before moving in for new tenants.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -359,8 +358,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — City and Guilds 2391 plus current BS 7671
-                (C&G 2382 18th Edition).
+                <strong>Qualifications</strong> — City and Guilds 2391 plus current BS 7671 (C&G
+                2382 18th Edition).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -385,19 +384,27 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>One-bedroom flat</strong> — £110 to £190.</span>
+              <span>
+                <strong>One-bedroom flat</strong> — £110 to £190.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Two-bedroom terraced house</strong> — £160 to £270.</span>
+              <span>
+                <strong>Two-bedroom terraced house</strong> — £160 to £270.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Three-bedroom semi-detached</strong> — £230 to £370.</span>
+              <span>
+                <strong>Three-bedroom semi-detached</strong> — £230 to £370.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>HMO</strong> — £320 to £650+.</span>
+              <span>
+                <strong>HMO</strong> — £320 to £650+.
+              </span>
             </li>
           </ul>
         </div>
@@ -411,8 +418,8 @@ const sections = [
       <>
         <p>
           Leeds has a strong private rented sector with particular demand during the student
-          turnover period in summer. Electricians who build relationships with letting agents
-          in the Headingley and Hyde Park areas can secure consistent EICR work.
+          turnover period in summer. Electricians who build relationships with letting agents in the
+          Headingley and Hyde Park areas can secure consistent EICR work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -433,7 +440,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -466,7 +473,7 @@ export default function LandlordElectricalSafetyLeedsPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

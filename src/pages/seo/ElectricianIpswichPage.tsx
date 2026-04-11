@@ -161,12 +161,10 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
-        <p>
-          Before hiring any electrician in Ipswich, verify their credentials:
-        </p>
+        <p>Before hiring any electrician in Ipswich, verify their credentials:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -303,10 +301,10 @@ const sections = [
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural Suffolk Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              Ipswich electricians also serve surrounding villages where properties may have overhead
-              supply lines, long cable runs from the road, and TT earthing systems (requiring RCD
-              protection on all circuits as per Regulation 411.3.3). Understanding TT earthing
-              arrangements is essential for rural Suffolk work.
+              Ipswich electricians also serve surrounding villages where properties may have
+              overhead supply lines, long cable runs from the road, and TT earthing systems
+              (requiring RCD protection on all circuits as per Regulation 411.3.3). Understanding TT
+              earthing arrangements is essential for rural Suffolk work.
             </p>
           </div>
         </div>
@@ -319,17 +317,17 @@ const sections = [
     content: (
       <>
         <p>
-          UKPN (UK Power Networks) is the Distribution Network Operator for Ipswich and the whole
-          of Suffolk. Any work affecting the electricity supply involves UKPN:
+          UKPN (UK Power Networks) is the Distribution Network Operator for Ipswich and the whole of
+          Suffolk. Any work affecting the electricity supply involves UKPN:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and supply upgrades</strong> — apply to UKPN for new supplies
-                or upgrades from single-phase to three-phase. Suffolk lead times are typically 4 to
-                8 weeks.
+                <strong>New connections and supply upgrades</strong> — apply to UKPN for new
+                supplies or upgrades from single-phase to three-phase. Suffolk lead times are
+                typically 4 to 8 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -350,8 +348,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Ipswich is overseen by Ipswich Borough Council
           building control or an approved inspector.
         </p>
@@ -448,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Ipswich electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -485,7 +482,7 @@ export default function ElectricianIpswichPage() {
       faqHeading="Frequently Asked Questions About Electricians in Ipswich"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Ipswich and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Ipswich and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

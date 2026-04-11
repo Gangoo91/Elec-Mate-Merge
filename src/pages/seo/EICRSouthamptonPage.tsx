@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'Southampton EICR costs are broadly in line with the South of England average. Expect to pay between £120 and £220 for a two-bedroom flat and £180 to £320 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it at least every five years. Southampton City Council enforces these requirements and can issue fines of up to £30,000 for non-compliance.',
   'Southampton has a significant proportion of inter-war and post-war housing rebuilt after extensive wartime bomb damage. Many properties also include 1960s and 1970s wiring that is approaching the end of its safe service life and commonly returns C2 observations.',
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -125,7 +126,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -176,10 +178,10 @@ const sections = [
     content: (
       <>
         <p>
-          Southampton EICR prices are broadly in line with the South of England average and
-          somewhat lower than London rates. Prices vary depending on the size of the property,
-          the number of circuits, and the condition of the installation. Below are typical 2026
-          prices for Southampton EICRs:
+          Southampton EICR prices are broadly in line with the South of England average and somewhat
+          lower than London rates. Prices vary depending on the size of the property, the number of
+          circuits, and the condition of the installation. Below are typical 2026 prices for
+          Southampton EICRs:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -200,8 +202,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £180 to £320. Expect 8 to 15 circuits.
-                1960s and 1970s semi-detached properties often have wiring requiring attention.
+                <strong>Three-bedroom house</strong> — £180 to £320. Expect 8 to 15 circuits. 1960s
+                and 1970s semi-detached properties often have wiring requiring attention.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,8 +216,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £650+. Student
-                HMOs near the universities have multiple consumer units, fire alarm systems, and
+                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £650+. Student HMOs
+                near the universities have multiple consumer units, fire alarm systems, and
                 emergency lighting that all form part of the inspection scope.
               </span>
             </li>
@@ -243,9 +245,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This applies to all new tenancies from 1 July 2020 and all
-                existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This applies to all new tenancies from 1 July 2020 and all existing
+                tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,25 +262,24 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant notification</strong> — a copy of the EICR must be provided to the
-                tenant within 28 days of the inspection. New tenants must receive a copy before
-                they move in.
+                tenant within 28 days of the inspection. New tenants must receive a copy before they
+                move in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days (or sooner if specified by the inspector). Written confirmation of
-                completion must be provided to the tenant and, if requested, to Southampton City
-                Council.
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days (or sooner if specified by the inspector). Written confirmation of completion
+                must be provided to the tenant and, if requested, to Southampton City Council.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties</strong> — Southampton City Council can impose civil penalties
-                of up to £30,000 per breach. The council actively enforces compliance, particularly
-                for HMO landlords.
+                <strong>Penalties</strong> — Southampton City Council can impose civil penalties of
+                up to £30,000 per breach. The council actively enforces compliance, particularly for
+                HMO landlords.
               </span>
             </li>
           </ul>
@@ -297,10 +298,10 @@ const sections = [
     content: (
       <>
         <p>
-          Southampton's housing stock is distinctive due to the city's history of heavy wartime
-          bomb damage. Much of the inner city was rebuilt in the late 1940s, 1950s, and 1960s,
-          resulting in a high proportion of post-war and mid-century properties. This shapes the
-          common findings during EICRs in Southampton:
+          Southampton's housing stock is distinctive due to the city's history of heavy wartime bomb
+          damage. Much of the inner city was rebuilt in the late 1940s, 1950s, and 1960s, resulting
+          in a high proportion of post-war and mid-century properties. This shapes the common
+          findings during EICRs in Southampton:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -316,8 +317,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                RCD protection for socket outlet circuits not exceeding 20A. Older consumer units
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
+                protection for socket outlet circuits not exceeding 20A. Older consumer units
                 without RCD protection are a very common C2 finding across Southampton's post-war
                 housing stock.
               </span>
@@ -373,8 +374,8 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action required. The most common C2 finding
-              in Southampton is absence of RCD protection on socket circuits (Regulation 411.3.3),
+              Could become dangerous. Urgent remedial action required. The most common C2 finding in
+              Southampton is absence of RCD protection on socket circuits (Regulation 411.3.3),
               followed by inadequate earthing and deteriorated cable insulation.
             </p>
           </div>
@@ -390,8 +391,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
               The inspector could not fully assess a part of the installation. This is common in
-              Southampton properties where cables are concealed under solid floors or behind
-              fixed kitchen units.
+              Southampton properties where cables are concealed under solid floors or behind fixed
+              kitchen units.
             </p>
           </div>
         </div>
@@ -435,17 +436,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Live testing</strong> — with supply restored: earth fault loop impedance
-                (Ze and Zs), prospective fault current, RCD operation times, and polarity.
+                <strong>Live testing</strong> — with supply restored: earth fault loop impedance (Ze
+                and Zs), prospective fault current, RCD operation times, and polarity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results as required by Section 631. The
-                report includes observation codes, an overall assessment, and a recommended date
-                for the next inspection.
+                Schedules of Circuit Details and Test Results as required by Section 631. The report
+                includes observation codes, an overall assessment, and a recommended date for the
+                next inspection.
               </span>
             </li>
           </ul>
@@ -465,16 +466,16 @@ const sections = [
       <>
         <p>
           The required frequency of periodic inspection depends on property type and use. BS 7671
-          Section 621 establishes that installations must be inspected at intervals appropriate
-          to the type of installation and its use:
+          Section 621 establishes that installations must be inspected at intervals appropriate to
+          the type of installation and its use:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property (England)</strong> — at least every 5 years
-                (legal requirement under the 2020 Regulations).
+                <strong>Private rented property (England)</strong> — at least every 5 years (legal
+                requirement under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,9 +496,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Change of occupancy</strong> — a new EICR is recommended whenever a
-                property changes occupant, even if the previous EICR has not expired. This is a
-                legal requirement for rented properties.
+                <strong>Change of occupancy</strong> — a new EICR is recommended whenever a property
+                changes occupant, even if the previous EICR has not expired. This is a legal
+                requirement for rented properties.
               </span>
             </li>
           </ul>
@@ -526,8 +527,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, and STROMA
-                maintain online registers. Search for Southampton-based inspectors to find
-                qualified local electricians accepted by Southampton City Council.
+                maintain online registers. Search for Southampton-based inspectors to find qualified
+                local electricians accepted by Southampton City Council.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -564,8 +565,8 @@ const sections = [
         <p>
           Southampton's large private rented sector, driven by two universities and a busy port
           economy, creates consistent demand for EICR work. The city's high proportion of post-war
-          and 1960s properties means that many EICRs will identify remedial work, creating
-          follow-on revenue opportunities for thorough inspectors.
+          and 1960s properties means that many EICRs will identify remedial work, creating follow-on
+          revenue opportunities for thorough inspectors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -605,7 +606,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -642,7 +643,7 @@ export default function EICRSouthamptonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

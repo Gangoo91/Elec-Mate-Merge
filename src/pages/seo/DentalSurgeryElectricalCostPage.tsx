@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What electrical supply does a dental chair need?',
     answer:
-      'A modern dental chair unit typically requires a hardwired connection (1 to 3kW) for the integral compressor, suction, curing light, and water system, plus 2 to 4 additional socket outlets for ancillary equipment (ultrasonic scaler, curing light, electric handpieces, and monitoring equipment). The chair is usually hardwired to a local isolator, with a separate circuit from the distribution board. Some chair units have integral transformers providing SELV for patient contact parts. The manufacturer\'s installation manual specifies exact requirements.',
+      "A modern dental chair unit typically requires a hardwired connection (1 to 3kW) for the integral compressor, suction, curing light, and water system, plus 2 to 4 additional socket outlets for ancillary equipment (ultrasonic scaler, curing light, electric handpieces, and monitoring equipment). The chair is usually hardwired to a local isolator, with a separate circuit from the distribution board. Some chair units have integral transformers providing SELV for patient contact parts. The manufacturer's installation manual specifies exact requirements.",
   },
   {
     question: 'What are the electrical requirements for dental X-ray equipment?',
@@ -105,14 +105,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for medical location installations.',
+    description:
+      'Complete Electrical Installation Certificates for medical location installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote dental surgery electrical work with equipment schedules and Section 710 provisions.',
+    description:
+      'Quote dental surgery electrical work with equipment schedules and Section 710 provisions.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -130,17 +132,16 @@ const sections = [
       <>
         <p>
           Dental surgery electrical installation is specialist medical-sector work that requires
-          knowledge of Section 710 of BS 7671, understanding of dental equipment power
-          requirements, and coordination with dental equipment suppliers. It is among the
-          highest-value commercial fit-out work available to electrical contractors.
+          knowledge of Section 710 of BS 7671, understanding of dental equipment power requirements,
+          and coordination with dental equipment suppliers. It is among the highest-value commercial
+          fit-out work available to electrical contractors.
         </p>
         <p>
-          The electrical installation must support dental chairs with integral equipment,
-          X-ray units, air compressors, suction systems, sterilisation equipment, IT
-          infrastructure, and clinical lighting — all within the regulatory framework for
-          medical locations. Supplementary equipotential bonding, specific RCD requirements,
-          and dedicated circuits for critical equipment add complexity and cost compared to
-          standard commercial installations.
+          The electrical installation must support dental chairs with integral equipment, X-ray
+          units, air compressors, suction systems, sterilisation equipment, IT infrastructure, and
+          clinical lighting — all within the regulatory framework for medical locations.
+          Supplementary equipotential bonding, specific RCD requirements, and dedicated circuits for
+          critical equipment add complexity and cost compared to standard commercial installations.
         </p>
       </>
     ),
@@ -159,23 +160,25 @@ const sections = [
           treatment rooms are classified as Group 1 medical locations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Group 1 Requirements for Dental Surgeries</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Group 1 Requirements for Dental Surgeries
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary equipotential bonding</strong> — All extraneous-conductive-parts
-                and protective conductors within the patient environment must be connected to a
-                supplementary bonding bar. Minimum 4mm² copper bonding conductor. This limits
-                touch voltage to safe levels during a fault.
+                <strong>Supplementary equipotential bonding</strong> — All
+                extraneous-conductive-parts and protective conductors within the patient environment
+                must be connected to a supplementary bonding bar. Minimum 4mm² copper bonding
+                conductor. This limits touch voltage to safe levels during a fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — All circuits in the Group 1 medical location
-                must have 30 mA RCD protection per BS 7671 Section 411. Individual RCBOs are
-                recommended to avoid nuisance tripping of multiple circuits.
+                <strong>RCD protection</strong> — All circuits in the Group 1 medical location must
+                have 30 mA RCD protection per BS 7671 Section 411. Individual RCBOs are recommended
+                to avoid nuisance tripping of multiple circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,24 +223,24 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Chair unit hardwired connection</strong> — 1 to 3kW, dedicated circuit,
-                local isolator adjacent to the chair. Some chair units require a 20A supply.
-                Cost: £150 to £300 for the dedicated circuit and isolator.
+                local isolator adjacent to the chair. Some chair units require a 20A supply. Cost:
+                £150 to £300 for the dedicated circuit and isolator.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ancillary socket outlets</strong> — 2 to 4 double sockets per treatment
-                room for ultrasonic scaler, additional curing light, patient monitor, and
-                ancillary equipment. Cost: £100 to £200 for outlets with Section 710 compliance.
+                <strong>Ancillary socket outlets</strong> — 2 to 4 double sockets per treatment room
+                for ultrasonic scaler, additional curing light, patient monitor, and ancillary
+                equipment. Cost: £100 to £200 for outlets with Section 710 compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dental operating light</strong> — Typically ceiling-mounted with a
-                dedicated connection point. LED dental lights draw 50 to 150W. Connection
-                and ceiling rose: £80 to £150.
+                <strong>Dental operating light</strong> — Typically ceiling-mounted with a dedicated
+                connection point. LED dental lights draw 50 to 150W. Connection and ceiling rose:
+                £80 to £150.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -251,8 +254,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Total electrical cost per treatment room (excluding Section 710 bonding): £600 to
-          £1,200. With supplementary equipotential bonding: £1,000 to £2,000 per room.
+          Total electrical cost per treatment room (excluding Section 710 bonding): £600 to £1,200.
+          With supplementary equipotential bonding: £1,000 to £2,000 per room.
         </p>
       </>
     ),
@@ -271,9 +274,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Intraoral X-ray</strong> — 1 to 2kW, dedicated 13A circuit per X-ray
-                unit. Radiation warning light circuit wired to the X-ray control. Cost: £200 to
-                £400 per unit including dedicated circuit and warning light.
+                <strong>Intraoral X-ray</strong> — 1 to 2kW, dedicated 13A circuit per X-ray unit.
+                Radiation warning light circuit wired to the X-ray control. Cost: £200 to £400 per
+                unit including dedicated circuit and warning light.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,35 +284,35 @@ const sections = [
               <span>
                 <strong>OPG / Panoramic X-ray</strong> — 3 to 5kW, dedicated 20A or 32A circuit.
                 Requires stable voltage supply — consider a dedicated radial from the main board.
-                Radiation warning light and control circuit. Cost: £400 to £800 including
-                dedicated circuit, warning lights, and containment.
+                Radiation warning light and control circuit. Cost: £400 to £800 including dedicated
+                circuit, warning lights, and containment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CBCT scanner</strong> — 5 to 10kW, dedicated 32A circuit, often with
-                specific voltage tolerance requirements. Some scanners require UPS protection.
-                Cost: £800 to £1,500 for the electrical supply including UPS if needed.
+                specific voltage tolerance requirements. Some scanners require UPS protection. Cost:
+                £800 to £1,500 for the electrical supply including UPS if needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dental compressor</strong> — 1.5 to 5kW, dedicated circuit, typically
-                located in a plant room. Oil-free dental compressors require a clean air supply
-                and appropriate ventilation. Starting current can be 3 to 5 times running
-                current — size the cable and protective device accordingly. Cost: £300 to £600
-                for the circuit, isolator, and ventilation extraction fan supply.
+                located in a plant room. Oil-free dental compressors require a clean air supply and
+                appropriate ventilation. Starting current can be 3 to 5 times running current — size
+                the cable and protective device accordingly. Cost: £300 to £600 for the circuit,
+                isolator, and ventilation extraction fan supply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Stethoscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Autoclave (steriliser)</strong> — 2 to 6kW, dedicated 20A or 32A circuit
-                in the decontamination room. Some autoclaves require a dedicated water supply
-                with an associated water treatment unit (100 to 300W). Cost: £200 to £400 for
-                the dedicated circuit.
+                <strong>Autoclave (steriliser)</strong> — 2 to 6kW, dedicated 20A or 32A circuit in
+                the decontamination room. Some autoclaves require a dedicated water supply with an
+                associated water treatment unit (100 to 300W). Cost: £200 to £400 for the dedicated
+                circuit.
               </span>
             </li>
           </ul>
@@ -322,18 +325,16 @@ const sections = [
     heading: 'Cost Breakdown by Surgery Size',
     content: (
       <>
-        <p>
-          Here are realistic total electrical installation costs for dental surgeries in 2026:
-        </p>
+        <p>Here are realistic total electrical installation costs for dental surgeries in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single surgery practice (£8,000 to £12,000)</strong> — 1 treatment room
-                with Section 710 bonding, 1 intraoral X-ray, compressor circuit, decontamination
-                room with autoclave circuit, reception wiring, IT cabling, emergency lighting,
-                consumer unit with RCBOs and SPD. 1 to 2 weeks installation.
+                <strong>Single surgery practice (£8,000 to £12,000)</strong> — 1 treatment room with
+                Section 710 bonding, 1 intraoral X-ray, compressor circuit, decontamination room
+                with autoclave circuit, reception wiring, IT cabling, emergency lighting, consumer
+                unit with RCBOs and SPD. 1 to 2 weeks installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,11 +349,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large multi-surgery practice (£20,000 to £25,000+)</strong> — 5+
-                treatment rooms, CBCT scanner with UPS, multiple compressors, full IT server
-                room, digital workflow integration, premium clinical lighting, air conditioning
-                supplies, comprehensive Section 710 compliance, sub-distribution boards. 3 to 4
-                weeks installation.
+                <strong>Large multi-surgery practice (£20,000 to £25,000+)</strong> — 5+ treatment
+                rooms, CBCT scanner with UPS, multiple compressors, full IT server room, digital
+                workflow integration, premium clinical lighting, air conditioning supplies,
+                comprehensive Section 710 compliance, sub-distribution boards. 3 to 4 weeks
+                installation.
               </span>
             </li>
           </ul>
@@ -379,25 +380,25 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A3:2024 Section 710</strong> — Medical locations. Group 1
-                classification for dental treatment rooms. Supplementary bonding, RCD protection
-                per BS 7671 Section 411, socket identification, and protective conductor monitoring.
+                classification for dental treatment rooms. Supplementary bonding, RCD protection per
+                BS 7671 Section 411, socket identification, and protective conductor monitoring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HTM 06-01</strong> — Department of Health guidance on electrical
-                installations in healthcare premises. Covers safety, resilience, and design
-                criteria for medical location installations.
+                installations in healthcare premises. Covers safety, resilience, and design criteria
+                for medical location installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ionising Radiation Regulations 2017</strong> — Applies to X-ray
-                installations. The dental practice must have a radiation protection adviser and
-                the X-ray rooms must be designed to contain radiation. Electrical cable routes
-                through lead-lined walls require specialist sealing.
+                installations. The dental practice must have a radiation protection adviser and the
+                X-ray rooms must be designed to contain radiation. Electrical cable routes through
+                lead-lined walls require specialist sealing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,9 +424,7 @@ const sections = [
     heading: 'For Electricians: Quoting Dental Work',
     content: (
       <>
-        <p>
-          Dental surgery fit-outs are premium-rate specialist work. Here are practical tips:
-        </p>
+        <p>Dental surgery fit-outs are premium-rate specialist work. Here are practical tips:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -433,10 +432,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Get Equipment Data Sheets</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Request electrical data sheets from the dental equipment supplier for every
-                  piece of equipment — chairs, X-ray units, compressors, autoclaves. These
-                  specify exact voltage, current, circuit type, and connection requirements.
-                  Do not quote without this information.
+                  Request electrical data sheets from the dental equipment supplier for every piece
+                  of equipment — chairs, X-ray units, compressors, autoclaves. These specify exact
+                  voltage, current, circuit type, and connection requirements. Do not quote without
+                  this information.
                 </p>
               </div>
             </div>
@@ -449,8 +448,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Section 710 compliance is non-negotiable and adds cost. Price it properly —
                   supplementary bonding, dedicated circuits, identified socket outlets, and the
-                  additional testing time. If you are not confident with Section 710, partner
-                  with an experienced colleague or invest in specific training.
+                  additional testing time. If you are not confident with Section 710, partner with
+                  an experienced colleague or invest in specific training.
                 </p>
               </div>
             </div>
@@ -462,10 +461,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">CQC-Ready Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Dental practices are inspected by CQC. Provide a comprehensive{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> with
-                  Section 710 compliance clearly documented, supplementary bonding test results,
-                  and an as-installed drawing showing all equipment positions and circuit
-                  references. This level of documentation justifies premium pricing.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> with Section
+                  710 compliance clearly documented, supplementary bonding test results, and an
+                  as-installed drawing showing all equipment positions and circuit references. This
+                  level of documentation justifies premium pricing.
                 </p>
               </div>
             </div>
@@ -510,7 +509,7 @@ export default function DentalSurgeryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Dental Surgery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Dental Surgery Electrical with Medical Location Compliance"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for medical location quoting with Section 710 compliance, equipment schedules, and CQC-ready EIC certificates. 7-day free trial."
     />
   );
 }

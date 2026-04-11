@@ -87,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for extension circuits including long runs to rear and side extensions.',
+    description:
+      'Size cables for extension circuits including long runs to rear and side extensions.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on long cable runs from front-of-house consumer unit to rear extension.',
+    description:
+      'Check voltage drop on long cable runs from front-of-house consumer unit to rear extension.',
     icon: Zap,
     category: 'Tool',
   },
@@ -108,7 +110,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Price house extension electrical packages with first fix, second fix, and Part P notification.',
+    description:
+      'Price house extension electrical packages with first fix, second fix, and Part P notification.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -139,19 +142,19 @@ const sections = [
     content: (
       <>
         <p>
-          A house extension — whether a single-storey rear addition, a side return, an orangery, or a
-          two-storey extension — requires new electrical work that must be integrated with the existing
-          installation and comply with{' '}
+          A house extension — whether a single-storey rear addition, a side return, an orangery, or
+          a two-storey extension — requires new electrical work that must be integrated with the
+          existing installation and comply with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           and Part P of the Building Regulations.
         </p>
         <p>
-          The electrical package is divided into first fix (pre-plaster) and second fix (post-plaster),
-          with testing and certification carried out at second fix. The scope varies significantly based
-          on the use of the extension: a simple living room extension has much simpler electrical
-          requirements than an open-plan kitchen-diner extension.
+          The electrical package is divided into first fix (pre-plaster) and second fix
+          (post-plaster), with testing and certification carried out at second fix. The scope varies
+          significantly based on the use of the extension: a simple living room extension has much
+          simpler electrical requirements than an open-plan kitchen-diner extension.
         </p>
         <p>
           This guide covers typical costs, the first and second fix stages, when to use new circuits
@@ -166,9 +169,7 @@ const sections = [
     heading: 'Typical Costs for House Extension Electrical Work',
     content: (
       <>
-        <p>
-          Costs vary with floor area, room type, and number of circuits. Typical ranges:
-        </p>
+        <p>Costs vary with floor area, room type, and number of circuits. Typical ranges:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -212,8 +213,8 @@ const sections = [
       <>
         <p>
           First fix is all electrical work carried out before the plasterer. The objective is to
-          install all cables, conduit, and back boxes in their final positions so that nothing needs to
-          be disturbed after plastering. Key first-fix tasks for an extension:
+          install all cables, conduit, and back boxes in their final positions so that nothing needs
+          to be disturbed after plastering. Key first-fix tasks for an extension:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -221,10 +222,11 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routes from consumer unit</strong> — run new circuit cables from the
-                consumer unit to the extension. Route through the original house structure (typically
-                beneath floorboards on the ground floor, or through the loft on upper floors) before
-                entering the extension. Protect cables where they pass through the wall at the
-                boundary between original house and extension with a fire-stopping sleeve.
+                consumer unit to the extension. Route through the original house structure
+                (typically beneath floorboards on the ground floor, or through the loft on upper
+                floors) before entering the extension. Protect cables where they pass through the
+                wall at the boundary between original house and extension with a fire-stopping
+                sleeve.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -261,16 +263,15 @@ const sections = [
     content: (
       <>
         <p>
-          Second fix is carried out after plastering and decoration. The cables that were left tailed
-          at first fix are now connected and all accessories fitted. The second-fix sequence is:
+          Second fix is carried out after plastering and decoration. The cables that were left
+          tailed at first fix are now connected and all accessories fitted. The second-fix sequence
+          is:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Fit socket faceplates, switch plates, and connect wiring to terminals
-              </span>
+              <span>Fit socket faceplates, switch plates, and connect wiring to terminals</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -280,15 +281,13 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Connect circuit cables at the consumer unit and fit MCBs or RCBOs
-              </span>
+              <span>Connect circuit cables at the consumer unit and fit MCBs or RCBOs</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Test all new circuits: continuity of CPCs, insulation resistance (500V DC, minimum
-                1 megohm), polarity, earth fault loop impedance, and RCD operation
+                Test all new circuits: continuity of CPCs, insulation resistance (500V DC, minimum 1
+                megohm), polarity, earth fault loop impedance, and RCD operation
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -312,17 +311,17 @@ const sections = [
     content: (
       <>
         <p>
-          One of the most common decisions in extension electrical work is whether to run new circuits
-          from the consumer unit or to extend existing circuits. The answer is nearly always: new
-          circuits.
+          One of the most common decisions in extension electrical work is whether to run new
+          circuits from the consumer unit or to extend existing circuits. The answer is nearly
+          always: new circuits.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-2">Extending Existing Circuits</h3>
             <p className="text-white text-sm leading-relaxed">
               Technically permissible if the extended ring still complies (area under 100m², load
-              within MCB rating, voltage drop within limits). However: the existing circuit is
-              made more complex, fault-finding is harder, the EIC must reference the existing
+              within MCB rating, voltage drop within limits). However: the existing circuit is made
+              more complex, fault-finding is harder, the EIC must reference the existing
               installation condition, and overloading risk increases if the extension adds
               significant load. Not recommended for kitchen or heating circuits.
             </p>
@@ -330,10 +329,10 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-2">New Circuits (Recommended)</h3>
             <p className="text-white text-sm leading-relaxed">
-              New circuits from the consumer unit provide clean fault discrimination, correct voltage
-              drop design, and a simple EIC covering only the new work. The homeowner gets properly
-              protected dedicated circuits, the documentation is straightforward, and the installation
-              is future-proof. The extra cable cost is modest compared to the benefits.
+              New circuits from the consumer unit provide clean fault discrimination, correct
+              voltage drop design, and a simple EIC covering only the new work. The homeowner gets
+              properly protected dedicated circuits, the documentation is straightforward, and the
+              installation is future-proof. The extra cable cost is modest compared to the benefits.
             </p>
           </div>
         </div>
@@ -360,8 +359,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme (preferred route)</strong> — NICEIC, NAPIT, or
-                ELECSA-registered electricians can self-certify the work. The scheme issues the Part P
-                certificate directly. No building notice required; the scheme notifies the local
+                ELECSA-registered electricians can self-certify the work. The scheme issues the Part
+                P certificate directly. No building notice required; the scheme notifies the local
                 authority on behalf of the electrician.
               </span>
             </li>
@@ -369,16 +368,16 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building notice (alternative route)</strong> — the homeowner or contractor
-                submits a building notice to local authority Building Control before work begins.
-                A Building Control officer inspects the completed work. Slower and more expensive
-                than using a competent person scheme.
+                submits a building notice to local authority Building Control before work begins. A
+                Building Control officer inspects the completed work. Slower and more expensive than
+                using a competent person scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation for sale</strong> — the Part P certificate must be provided
-                to the homeowner and is required for the property sale conveyancing process. Without
+                <strong>Documentation for sale</strong> — the Part P certificate must be provided to
+                the homeowner and is required for the property sale conveyancing process. Without
                 it, the extension electrical work is flagged as non-compliant by the buyer's
                 solicitor. Electricians who do not issue Part P certificates create problems for
                 their customers.
@@ -425,9 +424,9 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  on the survey to check that the cable size is appropriate for the cable run length.
-                  Specifying 4mm cable on a long socket circuit run during the quote avoids a
-                  materials change once work has started.
+                  on the survey to check that the cable size is appropriate for the cable run
+                  length. Specifying 4mm cable on a long socket circuit run during the quote avoids
+                  a materials change once work has started.
                 </p>
               </div>
             </div>
@@ -435,7 +434,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify house extension electrical work on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification for house extension projects. 7-day free trial."
           icon={Home}
         />
       </>

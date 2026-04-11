@@ -547,7 +547,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Your Digital Site Diary Today"
-          description="Mood tracking, skills tracking, AI coach insights, auto AC mapping, study streaks, and weekly summaries — all from your phone on site. Join 430+ UK apprentices building their evidence daily. 7-day free trial."
+          description="Mood tracking, skills tracking, AI coach insights, auto AC mapping, study streaks, and weekly summaries — all from your phone on site. Join 1,000+ UK apprentices building their evidence daily. 7-day free trial."
           icon={PenLine}
         />
       </>
@@ -580,7 +580,7 @@ export default function SiteDiaryApprenticeGuidePage() {
       faqHeading="Frequently Asked Questions About Apprentice Site Diaries"
       relatedPages={relatedPages}
       ctaHeading="Build your evidence from day one"
-      ctaSubheading="Join 430+ UK apprentices keeping daily site diaries with Elec-Mate. Mood tracking, AI coaching, auto AC mapping, and portfolio integration. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices keeping daily site diaries with Elec-Mate. Mood tracking, AI coaching, auto AC mapping, and portfolio integration. 7-day free trial, cancel anytime."
     />
   );
 }

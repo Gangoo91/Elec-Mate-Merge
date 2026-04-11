@@ -586,7 +586,7 @@ export default function EnvironmentalSustainabilityCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Develop your green skills today"
-      ctaSubheading="Join 430+ UK electricians building future-proof careers with Elec-Mate. Sustainability modules, energy efficiency tools, and an AI tutor for any green skills question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians building future-proof careers with Elec-Mate. Sustainability modules, energy efficiency tools, and an AI tutor for any green skills question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/environmental-sustainability"
     />

@@ -647,7 +647,7 @@ export default function MICCCableGuidePage() {
         },
       ]}
       ctaHeading="Certify Fire-Critical Installations"
-      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates support MICC cable documentation with full test result validation. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates support MICC cable documentation with full test result validation. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

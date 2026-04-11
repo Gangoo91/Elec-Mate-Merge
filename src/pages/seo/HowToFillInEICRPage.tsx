@@ -291,11 +291,18 @@ export default function HowToFillInEICRPage() {
               This guide walks through every section of the EICR form in the order you should
               complete it on site, with practical tips for avoiding the most common mistakes. Before
               you start the inspection, ensure you have carried out{' '}
-              <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+                safe isolation
+              </SEOInternalLink>{' '}
               and understand how to carry out{' '}
-              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">insulation resistance testing</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                insulation resistance testing
+              </SEOInternalLink>{' '}
               and interpret the results against{' '}
-              <SEOInternalLink href="/tools/bs7671-observation-codes">BS 7671 observation codes</SEOInternalLink>.
+              <SEOInternalLink href="/tools/bs7671-observation-codes">
+                BS 7671 observation codes
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -616,7 +623,7 @@ export default function HowToFillInEICRPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Fill In EICR Forms Digitally"
-        subheading="Join 430+ UK electricians creating professional EICR certificates on their phones. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians creating professional EICR certificates on their phones. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

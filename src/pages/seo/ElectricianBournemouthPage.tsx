@@ -64,12 +64,12 @@ const faqs = [
   {
     question: 'Do I need special approval for electrical work in a Bournemouth flat conversion?',
     answer:
-      'Electrical work in a flat conversion follows the same Part P rules as any domestic property — notifiable work must be done by a competent person scheme registered electrician or signed off by building control. However, flat conversions in Bournemouth often have shared supplies and complex metering arrangements. If the work affects the communal supply or shared areas, you need the freeholder or managing agent\'s permission. Fire detection and emergency lighting may also need to comply with the relevant Housing Act requirements for HMOs.',
+      "Electrical work in a flat conversion follows the same Part P rules as any domestic property — notifiable work must be done by a competent person scheme registered electrician or signed off by building control. However, flat conversions in Bournemouth often have shared supplies and complex metering arrangements. If the work affects the communal supply or shared areas, you need the freeholder or managing agent's permission. Fire detection and emergency lighting may also need to comply with the relevant Housing Act requirements for HMOs.",
   },
   {
     question: 'Can I get solar panels installed in Bournemouth?',
     answer:
-      'Yes. Bournemouth benefits from above-average solar irradiance for the UK due to its southern coastal location. A typical 4kW domestic solar PV system costs £5,000 to £7,000 installed, with battery storage adding £3,000 to £5,000. Your electrician must notify SSEN under G98 (up to 16A per phase) or apply under G99 for larger systems. If your property is in a conservation area or is listed, planning permission may be required for roof-mounted panels. South-facing roofs on Bournemouth\'s cliff-top properties are particularly well suited to solar generation.',
+      "Yes. Bournemouth benefits from above-average solar irradiance for the UK due to its southern coastal location. A typical 4kW domestic solar PV system costs £5,000 to £7,000 installed, with battery storage adding £3,000 to £5,000. Your electrician must notify SSEN under G98 (up to 16A per phase) or apply under G99 for larger systems. If your property is in a conservation area or is listed, planning permission may be required for roof-mounted panels. South-facing roofs on Bournemouth's cliff-top properties are particularly well suited to solar generation.",
   },
   {
     question: 'What qualifications should a Bournemouth electrician have?',
@@ -118,7 +118,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Bournemouth customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Bournemouth customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -142,8 +143,8 @@ const sections = [
         </p>
         <p>
           The local electrical market includes a healthy mix of sole traders, small firms, and
-          larger contractors. Domestic work dominates — rewires, consumer unit upgrades, EICRs,
-          EV charger installations, and the ongoing conversion and refurbishment of the town's
+          larger contractors. Domestic work dominates — rewires, consumer unit upgrades, EICRs, EV
+          charger installations, and the ongoing conversion and refurbishment of the town's
           extensive stock of Victorian and Edwardian properties. The hospitality sector (hotels,
           guest houses, restaurants) also generates significant commercial electrical work,
           particularly around seasonal refurbishment cycles.
@@ -163,12 +164,10 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
-        <p>
-          Before hiring any electrician in Bournemouth, verify their credentials:
-        </p>
+        <p>Before hiring any electrician in Bournemouth, verify their credentials:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -331,8 +330,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and supply upgrades</strong> — apply to SSEN for new supplies
-                or upgrades. Dorset lead times are typically 4 to 10 weeks depending on complexity.
+                <strong>New connections and supply upgrades</strong> — apply to SSEN for new
+                supplies or upgrades. Dorset lead times are typically 4 to 10 weeks depending on
+                complexity.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -353,8 +353,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Bournemouth is overseen by BCP Council building
           control or an approved inspector.
         </p>
@@ -367,8 +366,8 @@ const sections = [
     content: (
       <>
         <p>
-          Bournemouth's coastal location creates specific considerations for electrical installations
-          that electricians and homeowners should be aware of:
+          Bournemouth's coastal location creates specific considerations for electrical
+          installations that electricians and homeowners should be aware of:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -437,8 +436,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  An{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
+                  An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave site gives customers confidence and
                   saves you time on paperwork.
@@ -449,7 +447,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Bournemouth electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -486,7 +484,7 @@ export default function ElectricianBournemouthPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bournemouth"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Bournemouth and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Bournemouth and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

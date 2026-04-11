@@ -90,21 +90,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bathroom-electrical-regulations',
     title: 'Bathroom Electrical Regulations',
-    description: 'Complete guide to Section 701 zone requirements, IP ratings, and bonding for bathrooms.',
+    description:
+      'Complete guide to Section 701 zone requirements, IP ratings, and bonding for bathrooms.',
     icon: Droplets,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic fault finding approach for electricians diagnosing RCD tripping issues.',
+    description:
+      'Systematic fault finding approach for electricians diagnosing RCD tripping issues.',
     icon: Search,
     category: 'Guide',
   },
   {
     href: '/guides/circuit-breaker-tripping',
     title: 'Circuit Breaker Tripping',
-    description: 'Causes and solutions when MCBs and RCBOs keep tripping on different circuit types.',
+    description:
+      'Causes and solutions when MCBs and RCBOs keep tripping on different circuit types.',
     icon: Zap,
     category: 'Guide',
   },
@@ -125,7 +128,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete Electrical Installation Condition Reports on your phone with AI assistance.',
+    description:
+      'Complete Electrical Installation Condition Reports on your phone with AI assistance.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -143,14 +147,14 @@ const sections = [
       <>
         <p>
           You step into the shower, turn it on, and within seconds the power cuts out. The lights go
-          off in the bathroom — and possibly the rest of the house. You go to the consumer unit, find
-          the RCD has tripped, push it back up, and try again. Same result. Or perhaps it works for
-          five minutes before tripping again.
+          off in the bathroom — and possibly the rest of the house. You go to the consumer unit,
+          find the RCD has tripped, push it back up, and try again. Same result. Or perhaps it works
+          for five minutes before tripping again.
         </p>
         <p>
-          An electric shower tripping the RCD is one of the most common call-outs for UK electricians,
-          and one of the most frustrating problems for homeowners. The shower was working fine yesterday
-          — so what changed?
+          An electric shower tripping the RCD is one of the most common call-outs for UK
+          electricians, and one of the most frustrating problems for homeowners. The shower was
+          working fine yesterday — so what changed?
         </p>
         <p>
           The answer is almost always one of a small number of causes: a degraded heating element,
@@ -186,11 +190,11 @@ const sections = [
           circuits), the RCD disconnects the circuit in milliseconds.
         </p>
         <p>
-          This is a life-saving function. A current of 30mA through the human body is enough to cause
-          ventricular fibrillation (cardiac arrest). By disconnecting at 30mA, the RCD limits the
-          duration of the shock and prevents a fatal outcome in most circumstances. Regulation 411.3.3
-          of BS 7671 requires RCD protection on circuits in bathrooms to provide this additional
-          protection against electric shock.
+          This is a life-saving function. A current of 30mA through the human body is enough to
+          cause ventricular fibrillation (cardiac arrest). By disconnecting at 30mA, the RCD limits
+          the duration of the shock and prevents a fatal outcome in most circumstances. Regulation
+          411.3.3 of BS 7671 requires RCD protection on circuits in bathrooms to provide this
+          additional protection against electric shock.
         </p>
         <p>
           When your shower trips the RCD, the RCD is doing exactly what it is designed to do —
@@ -208,20 +212,19 @@ const sections = [
         <p>
           The heating element is a metal coil submerged in water inside the shower unit. When you
           switch the shower on, current flows through the element, heating it, and the water flowing
-          over the element heats up. The element is insulated from the water by a coating (typically a
-          ceramic or mineral insulation) that prevents current from passing from the element into the
-          water and then to earth.
+          over the element heats up. The element is insulated from the water by a coating (typically
+          a ceramic or mineral insulation) that prevents current from passing from the element into
+          the water and then to earth.
         </p>
         <p>
           Over time, this insulation degrades. Limescale buildup (particularly in hard water areas),
-          thermal cycling (heating and cooling thousands of times), and general ageing all contribute
-          to the breakdown of the element insulation. As the insulation deteriorates, its resistance
-          drops, and current begins to leak from the element through the water to the metal body of
-          the shower (which is earthed). When this leakage exceeds 30mA, the RCD trips.
+          thermal cycling (heating and cooling thousands of times), and general ageing all
+          contribute to the breakdown of the element insulation. As the insulation deteriorates, its
+          resistance drops, and current begins to leak from the element through the water to the
+          metal body of the shower (which is earthed). When this leakage exceeds 30mA, the RCD
+          trips.
         </p>
-        <p>
-          The characteristic pattern of element failure is:
-        </p>
+        <p>The characteristic pattern of element failure is:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -243,9 +246,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Late stage</strong> — the RCD trips as soon as the shower is switched on. The
-                insulation has failed completely and current leaks to earth even when the element is
-                cold.
+                <strong>Late stage</strong> — the RCD trips as soon as the shower is switched on.
+                The insulation has failed completely and current leaks to earth even when the
+                element is cold.
               </span>
             </li>
           </ul>
@@ -270,14 +273,12 @@ const sections = [
     content: (
       <>
         <p>
-          Electric showers are designed to operate in wet environments, but the electrical connections
-          inside the shower unit and the cable entry point must remain dry. Water reaching the
-          electrical terminals or the cable connections will create a conductive path to earth and
-          cause the RCD to trip.
+          Electric showers are designed to operate in wet environments, but the electrical
+          connections inside the shower unit and the cable entry point must remain dry. Water
+          reaching the electrical terminals or the cable connections will create a conductive path
+          to earth and cause the RCD to trip.
         </p>
-        <p>
-          Common causes of water ingress include:
-        </p>
+        <p>Common causes of water ingress include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -292,9 +293,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cracked shower case</strong> — physical damage to the shower enclosure allows
-                water spray to enter the unit directly. Even a hairline crack can admit enough moisture
-                to cause problems.
+                <strong>Cracked shower case</strong> — physical damage to the shower enclosure
+                allows water spray to enter the unit directly. Even a hairline crack can admit
+                enough moisture to cause problems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -308,8 +309,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Condensation</strong> — in poorly ventilated bathrooms, condensation can form
-                inside the shower unit, particularly on cold surfaces. Over time, this moisture
+                <strong>Condensation</strong> — in poorly ventilated bathrooms, condensation can
+                form inside the shower unit, particularly on cold surfaces. Over time, this moisture
                 accumulates and can bridge between live terminals and earth.
               </span>
             </li>
@@ -331,15 +332,13 @@ const sections = [
     content: (
       <>
         <p>
-          A neutral-earth fault is one of the more difficult causes to diagnose because the fault may
-          not be in the shower itself. If the neutral conductor contacts the earth conductor or an
-          earthed metal part somewhere in the circuit, some of the return current flows via the earth
-          path instead of the neutral. The RCD detects this as an imbalance (current going out on live
-          does not all return on neutral) and trips.
+          A neutral-earth fault is one of the more difficult causes to diagnose because the fault
+          may not be in the shower itself. If the neutral conductor contacts the earth conductor or
+          an earthed metal part somewhere in the circuit, some of the return current flows via the
+          earth path instead of the neutral. The RCD detects this as an imbalance (current going out
+          on live does not all return on neutral) and trips.
         </p>
-        <p>
-          Neutral-earth faults on shower circuits can be caused by:
-        </p>
+        <p>Neutral-earth faults on shower circuits can be caused by:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -361,9 +360,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Borrowed neutral</strong> — in some older installations, circuits share neutral
-                conductors. If the shower circuit shares a neutral with another circuit, the RCD
-                cannot correctly measure the current balance. This is a wiring error that needs
+                <strong>Borrowed neutral</strong> — in some older installations, circuits share
+                neutral conductors. If the shower circuit shares a neutral with another circuit, the
+                RCD cannot correctly measure the current balance. This is a wiring error that needs
                 correction. See the{' '}
                 <SEOInternalLink href="/guides/borrowed-neutral">
                   borrowed neutral guide
@@ -374,8 +373,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Diagnosing a neutral-earth fault requires careful insulation resistance testing between the
-          neutral and earth conductors on the shower circuit, with all equipment disconnected. A
+          Diagnosing a neutral-earth fault requires careful insulation resistance testing between
+          the neutral and earth conductors on the shower circuit, with all equipment disconnected. A
           healthy circuit should show well above 1 megohm between neutral and earth.
         </p>
       </>
@@ -396,18 +395,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone system</strong> — bathrooms are divided into zones (0, 1, and 2) based on
-                proximity to the bath or shower tray. Each zone has specific requirements for what
-                equipment can be installed and what IP rating is required. Electric showers are
+                <strong>Zone system</strong> — bathrooms are divided into zones (0, 1, and 2) based
+                on proximity to the bath or shower tray. Each zone has specific requirements for
+                what equipment can be installed and what IP rating is required. Electric showers are
                 typically in Zone 1 and must be rated at least IPX4.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — Regulation 411.3.3 requires additional protection by
-                RCDs not exceeding 30mA for circuits in bathrooms and shower rooms. This applies to
-                all circuits — not just the shower circuit. Lighting, heated towel rails, and any
+                <strong>RCD protection</strong> — Regulation 411.3.3 requires additional protection
+                by RCDs not exceeding 30mA for circuits in bathrooms and shower rooms. This applies
+                to all circuits — not just the shower circuit. Lighting, heated towel rails, and any
                 other electrical equipment in the bathroom must also be RCD protected.
               </span>
             </li>
@@ -416,25 +415,26 @@ const sections = [
               <span>
                 <strong>Supplementary equipotential bonding</strong> — Regulation 701.415.2 requires
                 supplementary bonding in bathrooms to reduce touch voltages between exposed
-                conductive parts and extraneous conductive parts. Metal pipes, radiators, baths,
-                and the shower unit case must all be bonded together.
+                conductive parts and extraneous conductive parts. Metal pipes, radiators, baths, and
+                the shower unit case must all be bonded together.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switches and controls</strong> — Regulation 132.14 governs the selection and
-                placement of switches in bathrooms. Pull-cord switches or switches outside the bathroom
-                are required in Zones 0, 1, and 2. Wall switches must be outside the zone boundaries.
+                placement of switches in bathrooms. Pull-cord switches or switches outside the
+                bathroom are required in Zones 0, 1, and 2. Wall switches must be outside the zone
+                boundaries.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These regulations exist because the consequences of an electrical fault in a bathroom are
-          severe. Wet skin has much lower resistance than dry skin, meaning the same voltage produces
-          a much higher current through the body. A fault that might cause a mild tingle in a dry
-          location could be fatal in a bathroom. The 30mA RCD, supplementary bonding, and zone
+          severe. Wet skin has much lower resistance than dry skin, meaning the same voltage
+          produces a much higher current through the body. A fault that might cause a mild tingle in
+          a dry location could be fatal in a bathroom. The 30mA RCD, supplementary bonding, and zone
           restrictions all work together to minimise this risk.
         </p>
       </>
@@ -451,16 +451,20 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 1: Does the RCD stay in when the shower is off?</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 1: Does the RCD stay in when the shower is off?
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               Turn the shower off at its own switch (not the isolator). Reset the RCD. If the RCD
-              holds, the fault is inside the shower unit or occurs only when the element is energised.
-              If the RCD trips even with the shower switched off, the fault is in the wiring between
-              the consumer unit and the shower (or the RCD itself).
+              holds, the fault is inside the shower unit or occurs only when the element is
+              energised. If the RCD trips even with the shower switched off, the fault is in the
+              wiring between the consumer unit and the shower (or the RCD itself).
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 2: Does it trip immediately or after a few minutes?</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 2: Does it trip immediately or after a few minutes?
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               Immediate trip = hard insulation fault (dead short between live/neutral and earth).
               Delayed trip (after 2 to 10 minutes) = thermal fault (insulation breaks down as the
@@ -469,21 +473,25 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 3: Does it trip on all power settings?</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 3: Does it trip on all power settings?
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              Some showers have multiple heating elements (a low and high setting). If the RCD trips on
-              the high setting but not the low setting, only one element is faulty. If it trips on all
-              settings, either both elements are faulty or the fault is in the common wiring/
+              Some showers have multiple heating elements (a low and high setting). If the RCD trips
+              on the high setting but not the low setting, only one element is faulty. If it trips
+              on all settings, either both elements are faulty or the fault is in the common wiring/
               connections.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 4: Do other circuits also trip the RCD?</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 4: Do other circuits also trip the RCD?
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              If the shower is on a shared RCD (not a dedicated RCBO), the RCD may be tripping because
-              of a fault on another circuit, not the shower. Disconnect the shower at the isolator and
-              check if the RCD holds. If it does, the problem is the shower or its circuit. If it still
-              trips, the fault is on another circuit sharing the same RCD.
+              If the shower is on a shared RCD (not a dedicated RCBO), the RCD may be tripping
+              because of a fault on another circuit, not the shower. Disconnect the shower at the
+              isolator and check if the RCD holds. If it does, the problem is the shower or its
+              circuit. If it still trips, the fault is on another circuit sharing the same RCD.
             </p>
           </div>
         </div>
@@ -523,25 +531,25 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>You can see water inside the shower unit</strong> — if water is visible
-                around the electrical terminals or the cable entry, the unit needs to be isolated and
-                dried before any further investigation.
+                around the electrical terminals or the cable entry, the unit needs to be isolated
+                and dried before any further investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The shower is more than 10 years old</strong> — older shower units have had
-                more thermal cycles and more opportunity for insulation degradation. If an older shower
-                starts tripping, replacement is usually more cost-effective than repair.
+                more thermal cycles and more opportunity for insulation degradation. If an older
+                shower starts tripping, replacement is usually more cost-effective than repair.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A qualified electrician will isolate the supply, carry out insulation resistance testing on
-          the shower unit and the circuit, check the supplementary bonding, verify the RCD operation,
-          and recommend the appropriate repair — whether that is replacing the shower, repairing a
-          cable, or addressing a wiring fault.
+          A qualified electrician will isolate the supply, carry out insulation resistance testing
+          on the shower unit and the circuit, check the supplementary bonding, verify the RCD
+          operation, and recommend the appropriate repair — whether that is replacing the shower,
+          repairing a cable, or addressing a wiring fault.
         </p>
       </>
     ),
@@ -563,8 +571,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">1. Isolate and Disconnect</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Isolate the shower circuit at the consumer unit. Disconnect the shower unit at the
-                  local isolator or at the shower terminals. This separates the circuit wiring from the
-                  shower unit, allowing you to test each independently.
+                  local isolator or at the shower terminals. This separates the circuit wiring from
+                  the shower unit, allowing you to test each independently.
                 </p>
               </div>
             </div>
@@ -575,11 +583,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Test Circuit Wiring</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  With the shower disconnected, perform insulation resistance at 500V DC on the circuit
-                  wiring: L-E, N-E, and L-N. Acceptance criteria: minimum 1 megohm. If the circuit
-                  wiring passes, the fault is in the shower unit. If it fails, the fault is in the
-                  circuit — check the cable for damage, particularly at cable clips, where it passes
-                  through walls, and at the isolator terminals.
+                  With the shower disconnected, perform insulation resistance at 500V DC on the
+                  circuit wiring: L-E, N-E, and L-N. Acceptance criteria: minimum 1 megohm. If the
+                  circuit wiring passes, the fault is in the shower unit. If it fails, the fault is
+                  in the circuit — check the cable for damage, particularly at cable clips, where it
+                  passes through walls, and at the isolator terminals.
                 </p>
               </div>
             </div>
@@ -590,11 +598,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">3. Test Shower Unit</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Test the shower element insulation: measure resistance between the element terminals
-                  and the metal body of the shower (earth). A healthy element shows well above 1
-                  megohm. A failed element may show kilohms or even ohms. For thermal faults, test
-                  cold then run the shower briefly (with a temporary connection if safe to do so) and
-                  retest — the reading will drop as the element heats.
+                  Test the shower element insulation: measure resistance between the element
+                  terminals and the metal body of the shower (earth). A healthy element shows well
+                  above 1 megohm. A failed element may show kilohms or even ohms. For thermal
+                  faults, test cold then run the shower briefly (with a temporary connection if safe
+                  to do so) and retest — the reading will drop as the element heats.
                 </p>
               </div>
             </div>
@@ -605,10 +613,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Verify Protection and Bonding</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Confirm RCD protection at 30mA is present and operating within BS 7671 time limits.
-                  Check supplementary bonding per Regulation 411.3.3. Verify earth fault loop impedance
-                  (Zs) is within limits for the protective device rating. If replacing the shower,
-                  issue a{' '}
+                  Confirm RCD protection at 30mA is present and operating within BS 7671 time
+                  limits. Check supplementary bonding per Regulation 411.3.3. Verify earth fault
+                  loop impedance (Zs) is within limits for the protective device rating. If
+                  replacing the shower, issue a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -620,7 +628,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete certificates on site after shower replacement"
-          description="Elec-Mate's certificate app lets you complete Minor Works Certificates and EICRs on your phone with AI assistance. Instant PDF export and cloud backup. Join 430+ UK electricians. 7-day free trial."
+          description="Elec-Mate's certificate app lets you complete Minor Works Certificates and EICRs on your phone with AI assistance. Instant PDF export and cloud backup. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -657,7 +665,7 @@ export default function ElectricShowerTrippingRCDPage() {
       faqHeading="Frequently Asked Questions About Electric Showers Tripping the RCD"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Certify Shower Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance guidance, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

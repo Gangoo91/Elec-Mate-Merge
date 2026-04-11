@@ -632,7 +632,7 @@ export default function FirstFixElectricalPage() {
       faqHeading="Frequently Asked Questions About First Fix Electrical"
       relatedPages={relatedPages}
       ctaHeading="Plan First Fix Jobs Properly"
-      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you plan, price, and deliver first fix work professionally. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you plan, price, and deliver first fix work professionally. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -51,9 +51,9 @@ const faqs = [
       'Use the online "find a contractor" search tools on the NICEIC website (niceic.com) or the NAPIT website (napit.org.uk). Enter the company name or postcode to verify current registration. ELECSA (elecsa.co.uk) operates a similar register for its members. Do not rely on a photocopy of a certificate — always check directly with the scheme. Registration should be current (renewed annually) and should cover the specific type of work you are subcontracting.',
   },
   {
-    question: 'What is CIS and why do I need to verify my subcontractor\'s registration?',
+    question: "What is CIS and why do I need to verify my subcontractor's registration?",
     answer:
-      'The Construction Industry Scheme (CIS) is HMRC\'s tax deduction scheme for the construction industry, which includes electrical contracting. When you pay a subcontractor, you must verify their CIS status with HMRC (via CIS Online or your accountant). If they are registered under CIS, deduct 20% from their payment and pay this to HMRC. If they are not registered, deduct 30%. Failing to operate CIS correctly exposes you to HMRC penalties regardless of what you agreed with the subcontractor.',
+      "The Construction Industry Scheme (CIS) is HMRC's tax deduction scheme for the construction industry, which includes electrical contracting. When you pay a subcontractor, you must verify their CIS status with HMRC (via CIS Online or your accountant). If they are registered under CIS, deduct 20% from their payment and pay this to HMRC. If they are not registered, deduct 30%. Failing to operate CIS correctly exposes you to HMRC penalties regardless of what you agreed with the subcontractor.",
   },
   {
     question: 'What should a subcontract agreement include?',
@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What is IR35 and does it apply to electrical subcontractors?',
     answer:
-      'IR35 (now the off-payroll working rules) targets workers who provide services through a personal service company (PSC or limited company) but are effectively working as employees. Since April 2021, medium and large private sector businesses must determine the IR35 status of limited company subcontractors and, if they are inside IR35, deduct PAYE and NI before payment. Small businesses (turnover under £10.2m, fewer than 50 employees) are exempt from making this determination — the responsibility remains with the subcontractor\'s own company. Most genuinely self-employed electrical subcontractors are outside IR35, but if you are directing their work, controlling their hours, and providing equipment, the risk increases.',
+      "IR35 (now the off-payroll working rules) targets workers who provide services through a personal service company (PSC or limited company) but are effectively working as employees. Since April 2021, medium and large private sector businesses must determine the IR35 status of limited company subcontractors and, if they are inside IR35, deduct PAYE and NI before payment. Small businesses (turnover under £10.2m, fewer than 50 employees) are exempt from making this determination — the responsibility remains with the subcontractor's own company. Most genuinely self-employed electrical subcontractors are outside IR35, but if you are directing their work, controlling their hours, and providing equipment, the risk increases.",
   },
   {
     question: 'What should I do if a subcontractor refuses to rectify defective work?',
@@ -100,7 +100,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-business-growth',
     title: 'Growing Your Electrical Business',
-    description: 'Strategies for scaling from sole trader to employer in the UK electrical industry.',
+    description:
+      'Strategies for scaling from sole trader to employer in the UK electrical industry.',
     icon: Building2,
     category: 'Guide',
   },
@@ -124,9 +125,9 @@ const sections = [
     content: (
       <>
         <p>
-          Your reputation is on the line when a subcontractor works under your name. A single
-          poorly wired installation or missed test can cost you a client, a scheme registration,
-          or worse. Verifying competency and insurance before work starts is non-negotiable.
+          Your reputation is on the line when a subcontractor works under your name. A single poorly
+          wired installation or missed test can cost you a client, a scheme registration, or worse.
+          Verifying competency and insurance before work starts is non-negotiable.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -134,9 +135,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Scheme registration check</strong> — verify the subcontractor is currently
-                registered with NICEIC (niceic.com), NAPIT (napit.org.uk), or ELECSA
-                (elecsa.co.uk). Registration must be current and must cover the categories of work
-                being subcontracted. A contractor registered only for domestic work should not be
+                registered with NICEIC (niceic.com), NAPIT (napit.org.uk), or ELECSA (elecsa.co.uk).
+                Registration must be current and must cover the categories of work being
+                subcontracted. A contractor registered only for domestic work should not be
                 subcontracted for commercial or industrial installations.
               </span>
             </li>
@@ -180,26 +181,26 @@ const sections = [
       <>
         <p>
           The Construction Industry Scheme (CIS) is a mandatory HMRC scheme for contractors and
-          subcontractors in construction, which includes electrical work. Getting CIS wrong
-          exposes you to significant financial penalties.
+          subcontractors in construction, which includes electrical work. Getting CIS wrong exposes
+          you to significant financial penalties.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify before payment</strong> — before paying a subcontractor for the
-                first time, verify their CIS status online via HMRC's CIS Online service or ask
-                your accountant to do so. HMRC will confirm whether they are registered and at what
-                rate (gross, standard 20%, or higher 30%).
+                <strong>Verify before payment</strong> — before paying a subcontractor for the first
+                time, verify their CIS status online via HMRC's CIS Online service or ask your
+                accountant to do so. HMRC will confirm whether they are registered and at what rate
+                (gross, standard 20%, or higher 30%).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Deduction and payment to HMRC</strong> — deduct the appropriate rate from
-                the subcontractor's labour element (not materials). Pay the deduction to HMRC by
-                the 19th of each month and file your monthly CIS return. Keep records of all
+                the subcontractor's labour element (not materials). Pay the deduction to HMRC by the
+                19th of each month and file your monthly CIS return. Keep records of all
                 subcontractor verifications and payments for six years.
               </span>
             </li>
@@ -208,17 +209,17 @@ const sections = [
               <span>
                 <strong>CIS deduction statements</strong> — issue the subcontractor with a written
                 deduction statement within 14 days of the end of each tax month. This shows the
-                gross payment, deduction, and net payment. They use this to offset against their
-                own tax liability.
+                gross payment, deduction, and net payment. They use this to offset against their own
+                tax liability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties for non-compliance</strong> — HMRC can charge penalties of
-                £100 to £3,000 per return for late or incorrect CIS returns, and can also hold
-                you liable for unpaid tax if you have not correctly operated the scheme. CIS
-                compliance is not optional.
+                <strong>Penalties for non-compliance</strong> — HMRC can charge penalties of £100 to
+                £3,000 per return for late or incorrect CIS returns, and can also hold you liable
+                for unpaid tax if you have not correctly operated the scheme. CIS compliance is not
+                optional.
               </span>
             </li>
           </ul>
@@ -250,10 +251,9 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Payment terms</strong> — specify the rate (day rate, price per unit, or
-                fixed price), payment intervals (weekly, monthly, or on milestones), and the date
-                by which invoices must be submitted. The Housing Grants, Construction and
-                Regeneration Act 1996 gives both parties a right to interim payments on contracts
-                over 45 days.
+                fixed price), payment intervals (weekly, monthly, or on milestones), and the date by
+                which invoices must be submitted. The Housing Grants, Construction and Regeneration
+                Act 1996 gives both parties a right to interim payments on contracts over 45 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,10 +268,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Termination rights</strong> — specify the grounds on which either party
-                can terminate (e.g., persistent poor quality, failure to maintain programme, or
-                insolvency) and the notice required. Without this, disputes about termination
-                can be costly.
+                <strong>Termination rights</strong> — specify the grounds on which either party can
+                terminate (e.g., persistent poor quality, failure to maintain programme, or
+                insolvency) and the notice required. Without this, disputes about termination can be
+                costly.
               </span>
             </li>
           </ul>
@@ -311,11 +311,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fixed price — best for defined scope projects</strong> — where the scope
-                is fully defined and risks are understood, a fixed price gives you cost certainty.
-                Ensure the fixed price includes all foreseeable risks and that the subcontractor
-                has priced the design accurately. Variations must be agreed in writing before work
-                is carried out.
+                <strong>Fixed price — best for defined scope projects</strong> — where the scope is
+                fully defined and risks are understood, a fixed price gives you cost certainty.
+                Ensure the fixed price includes all foreseeable risks and that the subcontractor has
+                priced the design accurately. Variations must be agreed in writing before work is
+                carried out.
               </span>
             </li>
           </ul>
@@ -329,8 +329,8 @@ const sections = [
     content: (
       <>
         <p>
-          Your name is on the certificates, even when a subcontractor does the work. Quality
-          control visits and clear standards protect your reputation and your scheme registration.
+          Your name is on the certificates, even when a subcontractor does the work. Quality control
+          visits and clear standards protect your reputation and your scheme registration.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -357,9 +357,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Photographic records</strong> — take photographs at key stages (consumer
-                unit before and after, earthing arrangement, any buried cables before boarding over).
-                These protect you if queries arise later and demonstrate diligence to your scheme
-                body if audited.
+                unit before and after, earthing arrangement, any buried cables before boarding
+                over). These protect you if queries arise later and demonstrate diligence to your
+                scheme body if audited.
               </span>
             </li>
           </ul>
@@ -373,10 +373,10 @@ const sections = [
     content: (
       <>
         <p>
-          Retention is a percentage of the contract value withheld until defects identified during
-          a defined period after practical completion have been rectified. It is a standard feature
-          of construction subcontracts and protects you against defective work discovered after
-          the subcontractor has left site.
+          Retention is a percentage of the contract value withheld until defects identified during a
+          defined period after practical completion have been rectified. It is a standard feature of
+          construction subcontracts and protects you against defective work discovered after the
+          subcontractor has left site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -392,8 +392,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Must be in the contract</strong> — you can only withhold retention if it
-                is stated in the subcontract agreement. Withholding retention without a contractual
+                <strong>Must be in the contract</strong> — you can only withhold retention if it is
+                stated in the subcontract agreement. Withholding retention without a contractual
                 right to do so is a breach of contract and the subcontractor can refer the dispute
                 to adjudication.
               </span>
@@ -401,10 +401,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Using retention for defects</strong> — if the subcontractor fails to
-                rectify defects after written notice, you can use the withheld retention to fund
-                a third party to carry out the remedial works. Document everything and keep
-                invoices for the remedial work carried out.
+                <strong>Using retention for defects</strong> — if the subcontractor fails to rectify
+                defects after written notice, you can use the withheld retention to fund a third
+                party to carry out the remedial works. Document everything and keep invoices for the
+                remedial work carried out.
               </span>
             </li>
           </ul>
@@ -418,9 +418,9 @@ const sections = [
     content: (
       <>
         <p>
-          Poor quality work, repeated absences, or failure to maintain programme are the most
-          common reasons to terminate a subcontract. Acting early and following the correct
-          process prevents the dispute escalating.
+          Poor quality work, repeated absences, or failure to maintain programme are the most common
+          reasons to terminate a subcontract. Acting early and following the correct process
+          prevents the dispute escalating.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -428,28 +428,28 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Raise issues immediately in writing</strong> — verbal warnings are
-                forgotten. A simple email or WhatsApp message noting the issue and expected
-                standard creates a paper trail. Follow up with a formal written notice if the
-                issue continues.
+                forgotten. A simple email or WhatsApp message noting the issue and expected standard
+                creates a paper trail. Follow up with a formal written notice if the issue
+                continues.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Termination notice</strong> — most subcontracts include a right to
-                terminate for material breach. Issue a written termination notice citing the
-                specific grounds, giving the notice period stated in the contract. Take care not
-                to terminate wrongfully — if your grounds are not watertight, you may end up owing
-                the subcontractor for work done.
+                <strong>Termination notice</strong> — most subcontracts include a right to terminate
+                for material breach. Issue a written termination notice citing the specific grounds,
+                giving the notice period stated in the contract. Take care not to terminate
+                wrongfully — if your grounds are not watertight, you may end up owing the
+                subcontractor for work done.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Secure the site</strong> — when terminating, take immediate steps to
-                secure the site, photograph the state of the works, and take possession of any
-                materials you have paid for. This prevents disputes about what was and was not
-                completed at termination.
+                <strong>Secure the site</strong> — when terminating, take immediate steps to secure
+                the site, photograph the state of the works, and take possession of any materials
+                you have paid for. This prevents disputes about what was and was not completed at
+                termination.
               </span>
             </li>
           </ul>
@@ -474,27 +474,27 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Who determines status?</strong> — since April 2021, medium and large
-                businesses (turnover above £10.2m or more than 50 employees) must determine the
-                IR35 status of limited company subcontractors and issue a Status Determination
-                Statement (SDS). Small businesses are exempt — IR35 status determination remains
-                the responsibility of the subcontractor's company.
+                businesses (turnover above £10.2m or more than 50 employees) must determine the IR35
+                status of limited company subcontractors and issue a Status Determination Statement
+                (SDS). Small businesses are exempt — IR35 status determination remains the
+                responsibility of the subcontractor's company.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key IR35 indicators</strong> — HMRC looks at: whether you control how,
-                when, and where the work is done (control); whether the subcontractor can send a
+                <strong>Key IR35 indicators</strong> — HMRC looks at: whether you control how, when,
+                and where the work is done (control); whether the subcontractor can send a
                 substitute (substitution); and whether the subcontractor bears financial risk
-                (financial risk). An electrician who works set hours, uses your equipment, and
-                works exclusively for you is likely inside IR35.
+                (financial risk). An electrician who works set hours, uses your equipment, and works
+                exclusively for you is likely inside IR35.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Practical steps</strong> — use HMRC's Check Employment Status for Tax
-                (CEST) tool before engaging a limited company subcontractor. Keep a record of your
+                <strong>Practical steps</strong> — use HMRC's Check Employment Status for Tax (CEST)
+                tool before engaging a limited company subcontractor. Keep a record of your
                 determination. If in doubt, engage the subcontractor as a self-employed individual
                 (sole trader) rather than through their limited company, which removes the IR35
                 complication entirely.
@@ -514,8 +514,8 @@ const sections = [
           Managing multiple subcontractors across different sites is a significant administrative
           burden. Elec-Mate's{' '}
           <SEOInternalLink href="/tools/job-scheduling">job scheduling</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink>{' '}
-          help you keep track of who is working where and at what cost.
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> help
+          you keep track of who is working where and at what cost.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -528,8 +528,8 @@ const sections = [
                   <SEOInternalLink href="/tools/job-scheduling">
                     Elec-Mate scheduler
                   </SEOInternalLink>{' '}
-                  to assign jobs to subcontractors and track progress in real time. No more calls
-                  to find out where someone is — the job status tells you.
+                  to assign jobs to subcontractors and track progress in real time. No more calls to
+                  find out where someone is — the job status tells you.
                 </p>
               </div>
             </div>
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage subcontractors and jobs with Elec-Mate"
-          description="Job scheduling, electrical certificates, quoting, and invoicing in one app built for UK electricians. Join 430+ electricians running their business with Elec-Mate. 7-day free trial."
+          description="Job scheduling, electrical certificates, quoting, and invoicing in one app built for UK electricians. Join 1,000+ electricians running their business with Elec-Mate. 7-day free trial."
           icon={Users}
         />
       </>
@@ -587,7 +587,7 @@ export default function ManagingSubcontractorsElectricianPage() {
       faqHeading="Frequently Asked Questions About Managing Electrical Subcontractors"
       relatedPages={relatedPages}
       ctaHeading="Manage your jobs and subcontractors with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

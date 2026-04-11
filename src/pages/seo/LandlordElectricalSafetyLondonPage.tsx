@@ -95,14 +95,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-london',
     title: 'EICR London',
-    description: 'Full London EICR guide with costs, borough enforcement, and Victorian wiring challenges.',
+    description:
+      'Full London EICR guide with costs, borough enforcement, and Victorian wiring challenges.',
     icon: Building2,
     category: 'Guide',
   },
@@ -136,7 +138,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -201,9 +204,9 @@ const sections = [
       <>
         <p>
           Each of London's 32 borough councils plus the City of London Corporation is the local
-          housing authority responsible for enforcing the 2020 Regulations in their area. Enforcement
-          varies significantly between boroughs, but London overall has some of the most active
-          enforcement in England.
+          housing authority responsible for enforcing the 2020 Regulations in their area.
+          Enforcement varies significantly between boroughs, but London overall has some of the most
+          active enforcement in England.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -249,9 +252,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          London landlords with properties across multiple boroughs should not assume that a
-          relaxed approach in one borough means the same will apply elsewhere. The safest strategy
-          is full compliance across all properties.
+          London landlords with properties across multiple boroughs should not assume that a relaxed
+          approach in one borough means the same will apply elsewhere. The safest strategy is full
+          compliance across all properties.
         </p>
       </>
     ),
@@ -282,9 +285,9 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional licensing</strong> — many London boroughs (including Camden,
-                Islington, Haringey, Lewisham, and Wandsworth) operate additional HMO licensing
-                that covers smaller HMOs not caught by mandatory licensing. EICR compliance is
-                a standard condition of these licences.
+                Islington, Haringey, Lewisham, and Wandsworth) operate additional HMO licensing that
+                covers smaller HMOs not caught by mandatory licensing. EICR compliance is a standard
+                condition of these licences.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,20 +301,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire safety integration</strong> — HMO fire alarm systems (Grade A, D, or
-                LD systems depending on the property) and emergency lighting are part of the fixed
+                <strong>Fire safety integration</strong> — HMO fire alarm systems (Grade A, D, or LD
+                systems depending on the property) and emergency lighting are part of the fixed
                 electrical installation. The EICR inspector must test these systems. RCD protection
-                under Regulation 411.3.3 is particularly important in HMOs where multiple
-                households share circuits.
+                under Regulation 411.3.3 is particularly important in HMOs where multiple households
+                share circuits.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Operating an unlicensed HMO in London is a criminal offence that can result in
-          prosecution and an unlimited fine, in addition to civil penalties for breach of the
-          electrical safety regulations. London boroughs have been increasingly aggressive in
-          pursuing unlicensed HMOs.
+          Operating an unlicensed HMO in London is a criminal offence that can result in prosecution
+          and an unlimited fine, in addition to civil penalties for breach of the electrical safety
+          regulations. London boroughs have been increasingly aggressive in pursuing unlicensed
+          HMOs.
         </p>
       </>
     ),
@@ -333,16 +336,16 @@ const sections = [
               <span>
                 <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing to
                 provide it to the tenant, failing to supply it to the local authority on request,
-                and failing to complete remedial work are each separate breaches. A landlord who
-                has never obtained an EICR and ignores a remedial notice could face multiple
-                penalties totalling well over £30,000.
+                and failing to complete remedial work are each separate breaches. A landlord who has
+                never obtained an EICR and ignores a remedial notice could face multiple penalties
+                totalling well over £30,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Repeat offences</strong> — local authorities can impose higher penalties
-                for repeat non-compliance. London boroughs with active enforcement teams maintain
+                <strong>Repeat offences</strong> — local authorities can impose higher penalties for
+                repeat non-compliance. London boroughs with active enforcement teams maintain
                 records of previous breaches and escalate penalties accordingly.
               </span>
             </li>
@@ -381,19 +384,18 @@ const sections = [
     content: (
       <>
         <p>
-          The 2020 Regulations give tenants in London specific rights regarding electrical safety
-          in their rented property. Tenants should be aware of these rights and how to exercise
-          them.
+          The 2020 Regulations give tenants in London specific rights regarding electrical safety in
+          their rented property. Tenants should be aware of these rights and how to exercise them.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days of the inspection. New tenants must receive a copy before
-                moving in. If you have not received one, request it in writing from your landlord
-                or letting agent.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days of the inspection. New tenants must receive a copy before moving in.
+                If you have not received one, request it in writing from your landlord or letting
+                agent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -409,8 +411,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Right to safe electrics</strong> — if the EICR identifies urgent safety
-                issues (C1 or C2 observations), the landlord must arrange remedial work promptly.
-                If the landlord fails to act, the council can arrange for the work to be done and
+                issues (C1 or C2 observations), the landlord must arrange remedial work promptly. If
+                the landlord fails to act, the council can arrange for the work to be done and
                 recover costs from the landlord. The tenant should not be charged for any of this
                 work.
               </span>
@@ -440,8 +442,8 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
-          the landlord is legally required to complete remedial work within strict timescales.
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          landlord is legally required to complete remedial work within strict timescales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -450,26 +452,26 @@ const sections = [
               <span>
                 <strong>28 days maximum</strong> — the landlord must ensure all remedial work is
                 completed within 28 days of the EICR, unless the inspector specifies a shorter
-                timeframe. The 28-day clock starts from the date of the inspection, not the date
-                the landlord receives the report.
+                timeframe. The 28-day clock starts from the date of the inspection, not the date the
+                landlord receives the report.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate</strong> — where a C1 (danger present)
-                observation is recorded, the inspector may recommend immediate disconnection of
-                the affected circuit. The landlord should arrange emergency remedial work as soon
-                as possible, not wait the full 28 days.
+                observation is recorded, the inspector may recommend immediate disconnection of the
+                affected circuit. The landlord should arrange emergency remedial work as soon as
+                possible, not wait the full 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation</strong> — once remedial work is complete, the
-                landlord must obtain written confirmation from a qualified person that the work
-                has been done satisfactorily. This confirmation must be provided to the tenant and
-                to the local authority within 28 days of the work being completed.
+                <strong>Written confirmation</strong> — once remedial work is complete, the landlord
+                must obtain written confirmation from a qualified person that the work has been done
+                satisfactorily. This confirmation must be provided to the tenant and to the local
+                authority within 28 days of the work being completed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -484,9 +486,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Landlords in London should establish a relationship with a reliable local electrician
-          who can respond quickly when remedial work is needed. Delays in completing remedial work
-          are a separate breach of the regulations and can attract their own penalty.
+          Landlords in London should establish a relationship with a reliable local electrician who
+          can respond quickly when remedial work is needed. Delays in completing remedial work are a
+          separate breach of the regulations and can attract their own penalty.
         </p>
       </>
     ),
@@ -514,18 +516,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Required qualifications</strong> — the inspector should hold City and
-                Guilds 2391 (Inspection and Testing) or equivalent, plus a current BS 7671
-                qualification (C&G 2382 18th Edition). Experience with London property types
-                (Victorian terraces, purpose-built flats, HMOs) is also important.
+                <strong>Required qualifications</strong> — the inspector should hold City and Guilds
+                2391 (Inspection and Testing) or equivalent, plus a current BS 7671 qualification
+                (C&G 2382 18th Edition). Experience with London property types (Victorian terraces,
+                purpose-built flats, HMOs) is also important.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — verify that the inspector carries professional
-                indemnity insurance. This is a requirement of competent person scheme membership
-                and protects both parties if an error is made on the report.
+                indemnity insurance. This is a requirement of competent person scheme membership and
+                protects both parties if an error is made on the report.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -549,8 +551,8 @@ const sections = [
       <>
         <p>
           London EICR costs are consistently higher than the national average, reflecting elevated
-          labour rates, congestion zone and ULEZ charges, parking costs, and longer travel times
-          in inner London.
+          labour rates, congestion zone and ULEZ charges, parking costs, and longer travel times in
+          inner London.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -571,8 +573,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £300 to £500. Victorian terraced houses
-                in inner London often cost more due to aged wiring and complex layouts.
+                <strong>Three-bedroom house</strong> — £300 to £500. Victorian terraced houses in
+                inner London often cost more due to aged wiring and complex layouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -599,8 +601,8 @@ const sections = [
       <>
         <p>
           London's massive private rented sector (approximately 27 per cent of all households)
-          creates enormous demand for landlord EICRs. Electricians who specialise in inspection
-          and testing work can build a sustainable business from landlord EICR contracts alone.
+          creates enormous demand for landlord EICRs. Electricians who specialise in inspection and
+          testing work can build a sustainable business from landlord EICR contracts alone.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -613,9 +615,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork. Send the
-                  report to the landlord before you leave the property.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork. Send the report to
+                  the landlord before you leave the property.
                 </p>
               </div>
             </div>
@@ -631,8 +633,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Landlords must act within 28 days — the electrician who quotes on the day of
-                  the EICR wins the work.
+                  . Landlords must act within 28 days — the electrician who quotes on the day of the
+                  EICR wins the work.
                 </p>
               </div>
             </div>
@@ -640,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -677,7 +679,7 @@ export default function LandlordElectricalSafetyLondonPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in London"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

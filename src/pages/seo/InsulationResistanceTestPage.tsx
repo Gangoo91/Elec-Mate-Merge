@@ -637,7 +637,7 @@ export default function InsulationResistanceTestPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate insulation resistance readings on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Voice test entry, auto BS 7671 validation, board scanner, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

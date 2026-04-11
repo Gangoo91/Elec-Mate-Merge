@@ -146,14 +146,14 @@ const sections = [
         <p>
           SSSTS (Site Supervisors' Safety Training Scheme) and SMSTS (Site Management Safety
           Training Scheme) are health and safety qualifications run by CITB (Construction Industry
-          Training Board). They are the industry-standard site safety qualifications for anyone in
-          a supervisory or management role on a UK construction site.
+          Training Board). They are the industry-standard site safety qualifications for anyone in a
+          supervisory or management role on a UK construction site.
         </p>
         <p>
           For electricians, these qualifications become relevant when you step beyond hands-on
           installation work into supervision, project management, or running your own team. Most
-          major construction sites require anyone in a supervisory role to hold at least SSSTS,
-          and site managers to hold SMSTS.
+          major construction sites require anyone in a supervisory role to hold at least SSSTS, and
+          site managers to hold SMSTS.
         </p>
         <p>
           These are not electrical qualifications — they cover general construction health and
@@ -165,12 +165,12 @@ const sections = [
   },
   {
     id: 'sssts',
-    heading: 'SSSTS — Site Supervisors\' Safety Training Scheme',
+    heading: "SSSTS — Site Supervisors' Safety Training Scheme",
     content: (
       <>
         <p>
-          SSSTS is designed for people who have, or are about to take on, supervisory responsibilities
-          on a construction site. For electricians, this typically means:
+          SSSTS is designed for people who have, or are about to take on, supervisory
+          responsibilities on a construction site. For electricians, this typically means:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -277,9 +277,7 @@ const sections = [
     heading: 'Who Needs Which?',
     content: (
       <>
-        <p>
-          Here is a practical guide:
-        </p>
+        <p>Here is a practical guide:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -300,8 +298,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Running a small team (2 to 5 people):</strong> SSSTS as a minimum. SMSTS
-                if you are the principal contractor on projects.
+                <strong>Running a small team (2 to 5 people):</strong> SSSTS as a minimum. SMSTS if
+                you are the principal contractor on projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -321,9 +319,7 @@ const sections = [
     heading: 'What the Courses Cover',
     content: (
       <>
-        <p>
-          Both courses cover health and safety topics relevant to construction sites:
-        </p>
+        <p>Both courses cover health and safety topics relevant to construction sites:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <div className="flex items-start gap-4">
@@ -355,7 +351,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <HardHat className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">CDM Regulations (SMSTS only — in depth)</h4>
+                <h4 className="font-bold text-white mb-1">
+                  CDM Regulations (SMSTS only — in depth)
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Construction (Design and Management) Regulations 2015. Roles and responsibilities
                   of client, principal designer, principal contractor, contractors, and workers.
@@ -503,7 +501,7 @@ export default function SSSMTSGuidePage() {
       faqHeading="Frequently Asked Questions About SSSTS and SMSTS"
       relatedPages={relatedPages}
       ctaHeading="Professional Site Safety Documentation"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for risk assessments, method statements, and site safety management. 7-day free trial, cancel anytime."
     />
   );
 }

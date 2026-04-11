@@ -50,7 +50,8 @@ const faqs = [
       'Consumer unit replacement (fuse box upgrade) in Hull typically costs £400 to £750. The lower end applies to straightforward replacements in smaller properties such as 2-bedroom terraced houses common across HU postcodes. Larger properties, those with older wiring requiring inspection of multiple circuits, or installations requiring earthing work will sit toward the upper end. Yorkshire labour rates are generally competitive compared to larger cities. Always obtain at least two written quotes from registered electricians.',
   },
   {
-    question: 'Do I need planning permission or Building Control approval for a fuse box replacement in Hull?',
+    question:
+      'Do I need planning permission or Building Control approval for a fuse box replacement in Hull?',
     answer:
       'You do not need planning permission, but consumer unit replacement is notifiable Part P electrical work under the Building Regulations. This means either: using a registered competent person (NICEIC, NAPIT, ELECSA) who handles self-certification and notifies Hull City Council Building Control automatically, or notifying the council directly before work begins. The competent person route is simpler and does not usually cost more. Hull City Council Building Control can advise on fees if you choose the direct notification route.',
   },
@@ -178,8 +179,8 @@ const sections = [
         <p>
           Hull's housing stock includes a significant proportion of pre-1960s terraced properties,
           particularly in the inner-city areas of Hessle Road, Holderness Road, Beverley Road,
-          Spring Bank, and Newland Avenue. Many of these properties retain original or early post-war
-          electrical installations that predate modern safety requirements.
+          Spring Bank, and Newland Avenue. Many of these properties retain original or early
+          post-war electrical installations that predate modern safety requirements.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -188,8 +189,8 @@ const sections = [
               <span>
                 <strong>Rewireable fuse boards</strong> — common in Hull terraced properties built
                 before the 1970s. These provide no RCD protection and are a known fire and electric
-                shock risk. Replacement is the most effective single improvement you can make to
-                an older Hull property.
+                shock risk. Replacement is the most effective single improvement you can make to an
+                older Hull property.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -212,9 +213,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Properties in Hull's newer outer areas (Kingswood, Bransholme, Orchard Park) tend to
-          have more modern wiring, but even 1980s and 1990s installations may lack RCD protection
-          on socket circuits and benefit from a consumer unit upgrade.
+          Properties in Hull's newer outer areas (Kingswood, Bransholme, Orchard Park) tend to have
+          more modern wiring, but even 1980s and 1990s installations may lack RCD protection on
+          socket circuits and benefit from a consumer unit upgrade.
         </p>
       </>
     ),
@@ -256,8 +257,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Frequent tripping, buzzing, or burning smell</strong> — signs of deteriorated
-                components requiring urgent inspection.
+                <strong>Frequent tripping, buzzing, or burning smell</strong> — signs of
+                deteriorated components requiring urgent inspection.
               </span>
             </li>
           </ul>
@@ -273,8 +274,8 @@ const sections = [
         <p>
           Amendment 3 to BS 7671:2008, effective from 1 January 2016, added Regulation 421.1.201
           requiring that all consumer units and similar switchgear assemblies in domestic premises
-          have an enclosure of non-combustible material. A metal enclosure is the standard
-          compliant solution. This requirement is unchanged in BS 7671:2018+A3:2024.
+          have an enclosure of non-combustible material. A metal enclosure is the standard compliant
+          solution. This requirement is unchanged in BS 7671:2018+A3:2024.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -308,9 +309,9 @@ const sections = [
       <>
         <p>
           Hull and the East Yorkshire region offer competitive labour rates compared to larger
-          English cities. The following 2026 price ranges cover a complete consumer unit
-          replacement including the metal consumer unit, all labour, testing, and the Electrical
-          Installation Certificate.
+          English cities. The following 2026 price ranges cover a complete consumer unit replacement
+          including the metal consumer unit, all labour, testing, and the Electrical Installation
+          Certificate.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -324,24 +325,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3–4 bedroom semi or detached</strong> — £500 to £700. Most common in
-                Hull's outer suburbs. 12 to 18 circuits. Typically 4 to 8 hours on site.
+                <strong>3–4 bedroom semi or detached</strong> — £500 to £700. Most common in Hull's
+                outer suburbs. 12 to 18 circuits. Typically 4 to 8 hours on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or larger property</strong> — £700 to £950+. Multiple circuits, fire
-                alarm system testing, and potentially multiple RCD sections. HMO landlords may
-                need to budget for additional remedial work.
+                alarm system testing, and potentially multiple RCD sections. HMO landlords may need
+                to budget for additional remedial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What is included</strong> — metal consumer unit (specified make/model),
-                all labour, circuit reconnection, main bonding verification, full testing per
-                BS 7671 Chapter 61, EIC with schedule of test results, and Part P notification.
+                <strong>What is included</strong> — metal consumer unit (specified make/model), all
+                labour, circuit reconnection, main bonding verification, full testing per BS 7671
+                Chapter 61, EIC with schedule of test results, and Part P notification.
               </span>
             </li>
           </ul>
@@ -355,9 +356,9 @@ const sections = [
     content: (
       <>
         <p>
-          A compliant consumer unit replacement in Hull follows a structured sequence ensuring
-          all circuits are correctly identified, connected, and tested before the installation
-          is energised.
+          A compliant consumer unit replacement in Hull follows a structured sequence ensuring all
+          circuits are correctly identified, connected, and tested before the installation is
+          energised.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -382,16 +383,16 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing</strong> — full schedule of tests per BS 7671 Chapter 61:
-                continuity, insulation resistance, polarity, earth fault loop impedance,
-                and RCD operating time. All results recorded on the schedule.
+                continuity, insulation resistance, polarity, earth fault loop impedance, and RCD
+                operating time. All results recorded on the schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Certification and notification</strong> — EIC issued, competent person
-                scheme notifies Hull City Council Building Control, Building Regulations
-                Compliance Certificate issued.
+                scheme notifies Hull City Council Building Control, Building Regulations Compliance
+                Certificate issued.
               </span>
             </li>
           </ul>
@@ -420,8 +421,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-installation-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
-                  to complete the certificate and schedule of test results on your phone while
-                  still at the property. No evening paperwork — send the PDF before you leave.
+                  to complete the certificate and schedule of test results on your phone while still
+                  at the property. No evening paperwork — send the PDF before you leave.
                 </p>
               </div>
             </div>
@@ -445,7 +446,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Hull electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -482,7 +483,7 @@ export default function ConsumerUnitReplacementHullPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Hull"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Hull"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

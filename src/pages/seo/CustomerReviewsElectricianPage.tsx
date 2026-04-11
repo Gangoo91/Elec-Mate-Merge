@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Reviews are the single most influential factor in a homeowner\'s decision to hire a tradesperson. BrightLocal research shows that 87 per cent of consumers read online reviews for local businesses, and 79 per cent trust them as much as personal recommendations.',
+  "Reviews are the single most influential factor in a homeowner's decision to hire a tradesperson. BrightLocal research shows that 87 per cent of consumers read online reviews for local businesses, and 79 per cent trust them as much as personal recommendations.",
   'Google reviews are the highest priority — they directly influence your local map pack ranking, your Google Ads Quality Score, and your Local Services Ads position. Target Google before any other platform.',
   'The best time to ask for a review is immediately after completing the job, while the customer is satisfied and grateful. Conversion rates drop significantly after 24 hours.',
   'A brief, personalised WhatsApp or SMS message with your Google review link, sent within an hour of finishing the job, is the most effective review generation method for most electricians.',
@@ -61,10 +61,11 @@ const faqs = [
   {
     question: 'Should I pay for reviews or use review generation services?',
     answer:
-      'Never pay for fake reviews, incentivise customers in exchange for positive reviews, or use services that generate inauthentic reviews. This violates Google\'s terms of service and can result in your Business Profile being suspended — removing all your legitimate reviews along with the fake ones. It also violates the UK\'s Consumer Protection from Unfair Trading Regulations 2008. The risk is completely disproportionate to any short-term benefit. Legitimate review generation tools (which automate the request process for real customers) are fine — the line is asking real customers to share their genuine experience.',
+      "Never pay for fake reviews, incentivise customers in exchange for positive reviews, or use services that generate inauthentic reviews. This violates Google's terms of service and can result in your Business Profile being suspended — removing all your legitimate reviews along with the fake ones. It also violates the UK's Consumer Protection from Unfair Trading Regulations 2008. The risk is completely disproportionate to any short-term benefit. Legitimate review generation tools (which automate the request process for real customers) are fine — the line is asking real customers to share their genuine experience.",
   },
   {
-    question: 'What is the best platform for electrician reviews — Google, Checkatrade, or Trustpilot?',
+    question:
+      'What is the best platform for electrician reviews — Google, Checkatrade, or Trustpilot?',
     answer:
       'Google is the clear priority for most electricians — reviews directly improve your local ranking and are visible to anyone searching for you without needing to visit another site. Checkatrade is second priority if you have a paid listing — their reviews are trusted by homeowners and can be a key differentiator when customers compare multiple quotes. Trustpilot is more relevant for larger businesses with significant online transaction volume. For most electricians, focus 80 per cent of review generation efforts on Google and 20 per cent on your primary trade platform.',
   },
@@ -89,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/seo-for-electricians',
     title: 'SEO for Electricians',
-    description: 'How reviews feed your Google ranking — and everything else you need to rank locally.',
+    description:
+      'How reviews feed your Google ranking — and everything else you need to rank locally.',
     icon: Search,
     category: 'Guide',
   },
@@ -135,9 +137,9 @@ const sections = [
       <>
         <p>
           Electrical work involves entering someone's home and carrying out safety-critical work.
-          Homeowners are understandably cautious about who they invite in. Reviews provide the social
-          proof that overcomes that caution — they are the equivalent of a personal recommendation
-          at scale.
+          Homeowners are understandably cautious about who they invite in. Reviews provide the
+          social proof that overcomes that caution — they are the equivalent of a personal
+          recommendation at scale.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -165,15 +167,15 @@ const sections = [
               <span>
                 <strong>Pricing power</strong> — electricians with strong reviews can charge more.
                 Customers who are confident in the quality of your work before you arrive are less
-                likely to question your quote or ask for a discount. A 4.9-star electrician with
-                50 reviews competes less on price than one with no online presence.
+                likely to question your quote or ask for a discount. A 4.9-star electrician with 50
+                reviews competes less on price than one with no online presence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Referral amplification</strong> — when a referred customer Googles you
-                (they always do), reviews confirm the referral. Without them, even a personal
+                <strong>Referral amplification</strong> — when a referred customer Googles you (they
+                always do), reviews confirm the referral. Without them, even a personal
                 recommendation may not be enough to secure the booking.
               </span>
             </li>
@@ -193,9 +195,9 @@ const sections = [
     content: (
       <>
         <p>
-          Timing is everything. The moment immediately after completing a job — when the customer
-          is relieved the problem is solved, impressed by the work, and grateful — is when your
-          review conversion rate is highest. This window closes quickly.
+          Timing is everything. The moment immediately after completing a job — when the customer is
+          relieved the problem is solved, impressed by the work, and grateful — is when your review
+          conversion rate is highest. This window closes quickly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -213,9 +215,9 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Send the link within one hour</strong> — WhatsApp is the most effective
-                channel for electricians. Compose a short, personal message: "Hi [name], thanks
-                for having me today. Here's that Google review link if you get a chance — [link].
-                Really appreciate it." Personal messages convert significantly better than generic
+                channel for electricians. Compose a short, personal message: "Hi [name], thanks for
+                having me today. Here's that Google review link if you get a chance — [link]. Really
+                appreciate it." Personal messages convert significantly better than generic
                 automated requests.
               </span>
             </li>
@@ -223,8 +225,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>One follow-up only</strong> — if you do not receive a review within a week,
-                one gentle reminder is acceptable: "I hope everything is working well. If you have
-                a spare moment, your Google review would be much appreciated." Never send more than
+                one gentle reminder is acceptable: "I hope everything is working well. If you have a
+                spare moment, your Google review would be much appreciated." Never send more than
                 two requests — it damages the relationship.
               </span>
             </li>
@@ -256,7 +258,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Google Reviews — primary priority (80% of your effort)</strong>
+                <strong className="block mb-1">
+                  Google Reviews — primary priority (80% of your effort)
+                </strong>
                 <span>
                   Directly improve your local map pack ranking, visible on your Business Profile
                   without the customer needing to visit another site, and displayed when customers
@@ -268,7 +272,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Checkatrade — secondary priority (if you have a paid listing)</strong>
+                <strong className="block mb-1">
+                  Checkatrade — secondary priority (if you have a paid listing)
+                </strong>
                 <span>
                   Checkatrade reviews are trusted by homeowners and shown prominently on your
                   listing. A strong Checkatrade review score is a key differentiator when customers
@@ -292,11 +298,13 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">MyBuilder and Rated People — platform-specific</strong>
+                <strong className="block mb-1">
+                  MyBuilder and Rated People — platform-specific
+                </strong>
                 <span>
                   Reviews on pay-per-lead platforms only appear within those platforms. They do not
-                  improve your Google ranking directly. Focus on them only if a significant proportion
-                  of your work comes through those platforms.
+                  improve your Google ranking directly. Focus on them only if a significant
+                  proportion of your work comes through those platforms.
                 </span>
               </div>
             </li>
@@ -330,19 +338,19 @@ const sections = [
               <span>
                 <strong>Acknowledge, do not argue</strong> — even if the review is unfair or
                 factually incorrect, do not argue publicly. Acknowledge the customer's concern,
-                thank them for the feedback, and invite them to discuss it privately: "I'm sorry
-                to hear you weren't fully satisfied. Please call me on [number] so I can understand
+                thank them for the feedback, and invite them to discuss it privately: "I'm sorry to
+                hear you weren't fully satisfied. Please call me on [number] so I can understand
                 what happened and make it right."
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Do not include customer information</strong> — never reference specific
-                job details, dates, or pricing in your public response. If the situation was
+                <strong>Do not include customer information</strong> — never reference specific job
+                details, dates, or pricing in your public response. If the situation was
                 complicated, acknowledge that offline resolution is appropriate: "There are aspects
-                of this situation I cannot discuss in a public forum, but I would welcome the
-                chance to speak with you directly."
+                of this situation I cannot discuss in a public forum, but I would welcome the chance
+                to speak with you directly."
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -350,8 +358,8 @@ const sections = [
               <span>
                 <strong>Flag fraudulent reviews</strong> — if you believe a review is from someone
                 who was not your customer (a competitor, a malicious actor), flag it for removal
-                through Google Business Profile. Provide any evidence you have that the reviewer
-                was not a genuine customer. Google does remove reviews that violate their policies,
+                through Google Business Profile. Provide any evidence you have that the reviewer was
+                not a genuine customer. Google does remove reviews that violate their policies,
                 though the process can take weeks.
               </span>
             </li>
@@ -359,9 +367,9 @@ const sections = [
         </div>
         <p>
           A business with one negative review handled graciously — and 40 positive responses to
-          others — will convert better than a business with an unachievable 5.0 average and terse
-          or defensive responses to any criticism. Authenticity and professionalism matter more than
-          a perfect score.
+          others — will convert better than a business with an unachievable 5.0 average and terse or
+          defensive responses to any criticism. Authenticity and professionalism matter more than a
+          perfect score.
         </p>
       </>
     ),
@@ -383,8 +391,8 @@ const sections = [
               <span>
                 <strong>Create your QR code</strong> — generate a QR code from your Google Business
                 Profile review link using QR Code Generator (qr-code-generator.com, free) or
-                similar. Test it on multiple devices to confirm it links directly to the review prompt,
-                not just to your profile.
+                similar. Test it on multiple devices to confirm it links directly to the review
+                prompt, not just to your profile.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +418,8 @@ const sections = [
               <span>
                 <strong>Platform diversification on cards</strong> — if you want reviews on both
                 Google and Checkatrade, print two QR codes side by side with clear labels. Some
-                electricians print two card designs and alternate them. Keep it simple — one platform
-                per card converts better than a card asking for reviews on five platforms.
+                electricians print two card designs and alternate them. Keep it simple — one
+                platform per card converts better than a card asking for reviews on five platforms.
               </span>
             </li>
           </ul>
@@ -437,8 +445,8 @@ const sections = [
                 <strong>WhatsApp templates</strong> — save a review request message template in your
                 phone so you can personalise and send it in under 30 seconds after each job. Semi-
                 automated (template plus manual send) converts better than fully automated, because
-                you can personalise the opening line with the customer's name and a specific reference
-                to the job.
+                you can personalise the opening line with the customer's name and a specific
+                reference to the job.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,8 +463,8 @@ const sections = [
               <span>
                 <strong>Invoice-triggered requests</strong> — some invoicing platforms (including
                 Elec-Mate) allow you to include a review link in the invoice footer. When the
-                customer receives and reads their invoice, they see the review prompt in context
-                of the completed, paid-for work.
+                customer receives and reads their invoice, they see the review prompt in context of
+                the completed, paid-for work.
               </span>
             </li>
           </ul>
@@ -471,8 +479,8 @@ const sections = [
       <>
         <p>
           Professional customer management — sending invoices promptly, issuing certificates on
-          site, communicating clearly — directly drives positive reviews. Customers who experience
-          a polished, professional service are more likely to leave a five-star review and refer you
+          site, communicating clearly — directly drives positive reviews. Customers who experience a
+          polished, professional service are more likely to leave a five-star review and refer you
           to others.
         </p>
         <div className="space-y-4 my-4">
@@ -482,11 +490,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Invoices That Impress</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Send branded, itemised invoices from your phone within minutes of completing a job.
-                  A professional invoice — not a handwritten receipt or a basic text message — signals
-                  that you run a serious, organised business. Customers who receive professional invoices
-                  are more likely to leave professional reviews. Include your review link in the footer
-                  automatically.
+                  Send branded, itemised invoices from your phone within minutes of completing a
+                  job. A professional invoice — not a handwritten receipt or a basic text message —
+                  signals that you run a serious, organised business. Customers who receive
+                  professional invoices are more likely to leave professional reviews. Include your
+                  review link in the footer automatically.
                 </p>
               </div>
             </div>
@@ -498,9 +506,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Customer History at Your Fingertips</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Store customer records, job notes, and certificate history in Elec-Mate. When a
-                  customer calls back with a question or wants additional work, you can pull up their
-                  full history instantly — impressing them with your organisation and building the
-                  kind of long-term relationship that generates both repeat business and reviews.
+                  customer calls back with a question or wants additional work, you can pull up
+                  their full history instantly — impressing them with your organisation and building
+                  the kind of long-term relationship that generates both repeat business and
+                  reviews.
                 </p>
               </div>
             </div>
@@ -508,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional customer management that generates five-star reviews"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. The professional experience your customers will review. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. The professional experience your customers will review. 7-day free trial."
           icon={Star}
         />
       </>

@@ -113,7 +113,7 @@ export default function BestCableSizingAppPage() {
           content: (
             <>
               <p>
-                <strong>Elec-Mate</strong> — All-in-one platform with 50+ calculators including
+                <strong>Elec-Mate</strong> — All-in-one platform with 70+ calculators including
                 cable sizing, plus certificates, AI tools, training, and business management.
                 References BS 7671:2018+A3:2024. From £5.99/month.
               </p>
@@ -215,7 +215,7 @@ export default function BestCableSizingAppPage() {
           <p>
             If you need cable sizing as part of a broader electrical toolkit — and most working
             electricians do — Elec-Mate is the clear winner. It includes cable sizing alongside 50+
-            other BS 7671 calculators, 8 certificate types, AI-powered tools, 46+ training courses,
+            other BS 7671 calculators, 16 certificate types, AI-powered tools, 46+ training courses,
             and business management features. The certificate integration alone (cable sizing
             results flowing directly into your forms) justifies the £5.99 per month subscription.
           </p>
@@ -265,7 +265,7 @@ export default function BestCableSizingAppPage() {
           icon: WifiOff,
           title: 'Full Offline Mode',
           description:
-            'All 50+ calculators work without an internet connection. Essential for basements, plant rooms, and sites without mobile signal.',
+            'All 70+ calculators work without an internet connection. Essential for basements, plant rooms, and sites without mobile signal.',
         },
       ]}
       uniqueFeaturesHeading="What Only Elec-Mate Offers"
@@ -273,7 +273,7 @@ export default function BestCableSizingAppPage() {
         {
           question: 'What is the best cable sizing app for UK electricians?',
           answer:
-            'Elec-Mate is the best overall cable sizing app for UK electricians in 2026 because it combines BS 7671:2018+A3:2024-compliant cable sizing with 50+ other electrical calculators, 8 certificate types, AI tools, 46+ training courses, and business management — all in a single app from £5.99 per month. If you only need a free standalone cable sizing calculator, Cable Calc is a good alternative.',
+            'Elec-Mate is the best overall cable sizing app for UK electricians in 2026 because it combines BS 7671:2018+A3:2024-compliant cable sizing with 50+ other electrical calculators, 16 certificate types, AI tools, 46+ training courses, and business management — all in a single app from £5.99 per month. If you only need a free standalone cable sizing calculator, Cable Calc is a good alternative.',
         },
         {
           question: 'Are free cable sizing apps accurate?',
@@ -357,7 +357,7 @@ export default function BestCableSizingAppPage() {
         },
       ]}
       ctaHeading="More than just cable sizing"
-      ctaSubheading="Try Elec-Mate free for 7 days. 50+ BS 7671 calculators, 8 certificate types, AI tools, 46+ training courses, and business management. All from £5.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. 50+ BS 7671 calculators, 16 certificate types, AI tools, 46+ training courses, and business management. All from £5.99/month."
       comparePath="/compare/best-cable-sizing-app"
     />
   );

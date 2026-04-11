@@ -591,7 +591,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage pub electrical contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for commercial quoting, EIC and EICR completion, and emergency lighting certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial quoting, EIC and EICR completion, and emergency lighting certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -628,7 +628,7 @@ export default function PubElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Pub Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Pub Electrical Work on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for commercial quotes, EIC and EICR completion, and emergency lighting log books. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial quotes, EIC and EICR completion, and emergency lighting log books. 7-day free trial, cancel anytime."
     />
   );
 }

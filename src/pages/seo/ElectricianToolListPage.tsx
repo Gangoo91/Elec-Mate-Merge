@@ -687,7 +687,7 @@ export default function ElectricianToolListPage() {
       faqHeading="Frequently Asked Questions About Electrician Tools"
       relatedPages={relatedPages}
       ctaHeading="Your Complete Electrician Toolkit -- Physical and Digital"
-      ctaSubheading="Elec-Mate completes your professional toolkit with digital certificates, 70 calculators, AI-powered quoting, expense tracking, and 36+ training courses. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate completes your professional toolkit with digital certificates, 70+ calculators, AI-powered quoting, expense tracking, and 46+ training courses. 7-day free trial, cancel anytime."
     />
   );
 }

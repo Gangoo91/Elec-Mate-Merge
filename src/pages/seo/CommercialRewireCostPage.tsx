@@ -113,7 +113,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote commercial rewires with itemised materials, labour, and professional PDF output.',
+    description:
+      'Quote commercial rewires with itemised materials, labour, and professional PDF output.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -130,10 +131,11 @@ const sections = [
     content: (
       <>
         <p>
-          A commercial rewire is a fundamentally different undertaking to a domestic rewire. The scale
-          of distribution, the containment requirements, the regulatory framework, and the ancillary
-          systems involved — fire alarm, emergency lighting, data infrastructure — mean that
-          commercial electrical projects demand a different approach to pricing and project management.
+          A commercial rewire is a fundamentally different undertaking to a domestic rewire. The
+          scale of distribution, the containment requirements, the regulatory framework, and the
+          ancillary systems involved — fire alarm, emergency lighting, data infrastructure — mean
+          that commercial electrical projects demand a different approach to pricing and project
+          management.
         </p>
         <p>
           Commercial rewires typically involve replacing the entire electrical installation from the
@@ -155,9 +157,9 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial electrical installations are typically priced per square metre of gross internal
-          floor area. The rate varies significantly depending on the specification level and building
-          complexity.
+          Commercial electrical installations are typically priced per square metre of gross
+          internal floor area. The rate varies significantly depending on the specification level
+          and building complexity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Per Square Metre Rates (2026)</h3>
@@ -166,9 +168,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Basic specification (£30 to £45/m²)</strong> — Standard office rewire with
-                power, lighting, and basic containment. No fire alarm or emergency lighting in scope.
-                Single distribution board replacement. Suitable for small office refurbishments
-                under 300m².
+                power, lighting, and basic containment. No fire alarm or emergency lighting in
+                scope. Single distribution board replacement. Suitable for small office
+                refurbishments under 300m².
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -195,9 +197,8 @@ const sections = [
         </div>
         <p>
           For a typical 500m² commercial office at mid specification, the electrical installation
-          cost would be £22,500 to £30,000. A 1,000m² high-specification fit-out would be £60,000
-          to £80,000. These figures include materials, labour, containment, testing, and
-          certification.
+          cost would be £22,500 to £30,000. A 1,000m² high-specification fit-out would be £60,000 to
+          £80,000. These figures include materials, labour, containment, testing, and certification.
         </p>
       </>
     ),
@@ -218,8 +219,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3-phase main distribution board (TPN)</strong> — £2,000 to £6,000 supply
-                and install depending on rating and number of ways. An 18-way TPN board with MCCB
+                <strong>3-phase main distribution board (TPN)</strong> — £2,000 to £6,000 supply and
+                install depending on rating and number of ways. An 18-way TPN board with MCCB
                 incomer costs approximately £3,500 installed.
               </span>
             </li>
@@ -234,8 +235,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Submain cables</strong> — £15 to £60 per metre installed depending on CSA.
-                A 4-core 25mm² SWA cable for a floor sub-distribution costs approximately £25 per
+                <strong>Submain cables</strong> — £15 to £60 per metre installed depending on CSA. A
+                4-core 25mm² SWA cable for a floor sub-distribution costs approximately £25 per
                 metre installed including containment and termination.
               </span>
             </li>
@@ -282,16 +283,16 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Trunking and Conduit</h3>
             <p className="text-white text-sm leading-relaxed">
               Dado trunking (£12 to £25/m installed) provides power and data outlets at desk height
-              in offices. Floor trunking and floor boxes (£80 to £200 per floor box installed)
-              serve open-plan areas. Steel conduit (£8 to £18/m installed) is used in exposed
-              areas and where mechanical protection is needed.
+              in offices. Floor trunking and floor boxes (£80 to £200 per floor box installed) serve
+              open-plan areas. Steel conduit (£8 to £18/m installed) is used in exposed areas and
+              where mechanical protection is needed.
             </p>
           </div>
         </div>
         <p>
-          Containment typically accounts for 25% to 40% of the total electrical installation cost
-          in commercial buildings. Getting the containment design right at tender stage is critical
-          — underestimating containment is one of the most common causes of losses on commercial
+          Containment typically accounts for 25% to 40% of the total electrical installation cost in
+          commercial buildings. Getting the containment design right at tender stage is critical —
+          underestimating containment is one of the most common causes of losses on commercial
           electrical contracts.
         </p>
       </>
@@ -303,9 +304,9 @@ const sections = [
     content: (
       <>
         <p>
-          A commercial rewire scope frequently includes structured data cabling, fire alarm
-          systems, and emergency lighting. These are often the responsibility of the electrical
-          contractor even though they require specialist design competence.
+          A commercial rewire scope frequently includes structured data cabling, fire alarm systems,
+          and emergency lighting. These are often the responsibility of the electrical contractor
+          even though they require specialist design competence.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -314,8 +315,8 @@ const sections = [
               <span>
                 <strong>Structured data cabling</strong> — Cat6A data point: £80 to £150 per point
                 installed (including patch panel termination and testing). A typical office desk
-                position requires 2 data points. Fibre backbone between comms rooms: £500 to
-                £1,500 per link.
+                position requires 2 data points. Fibre backbone between comms rooms: £500 to £1,500
+                per link.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -376,17 +377,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Working hours restrictions</strong> — Occupied buildings may require
-                evening and weekend working, adding 25% to 50% to labour costs through overtime
-                rates and reduced productivity.
+                <strong>Working hours restrictions</strong> — Occupied buildings may require evening
+                and weekend working, adding 25% to 50% to labour costs through overtime rates and
+                reduced productivity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos and legacy services</strong> — Pre-2000 buildings often contain
-                asbestos. Removal or encapsulation costs are borne by the client but cause
-                programme delays that affect the electrical contractor.
+                asbestos. Removal or encapsulation costs are borne by the client but cause programme
+                delays that affect the electrical contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -528,7 +529,7 @@ export default function CommercialRewireCostPage() {
       faqHeading="Frequently Asked Questions About Commercial Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Commercial Rewires with Itemised Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for commercial quoting with distribution schedules, containment costing, and AI cost engineering. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial quoting with distribution schedules, containment costing, and AI cost engineering. 7-day free trial."
     />
   );
 }

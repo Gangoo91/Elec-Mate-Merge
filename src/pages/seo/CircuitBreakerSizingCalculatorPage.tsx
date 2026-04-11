@@ -470,7 +470,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size circuit breakers with confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for MCB selection and cable coordination. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for MCB selection and cable coordination. 7-day free trial, cancel anytime."
       toolPath="/tools/circuit-breaker-sizing-calculator"
     />
   );

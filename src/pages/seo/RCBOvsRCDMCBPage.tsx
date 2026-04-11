@@ -437,7 +437,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Voice test entry for EICR schedule of tests"
-          description="Whether the board has RCBOs or shared RCDs, Elec-Mate records the protection arrangement for every circuit. Speak your test results — 'RCBO 1, Type A, 30 milliamp, trip time positive 22 milliseconds' — and the schedule fills in automatically. 50+ calculators validate every reading against BS 7671."
+          description="Whether the board has RCBOs or shared RCDs, Elec-Mate records the protection arrangement for every circuit. Speak your test results — 'RCBO 1, Type A, 30 milliamp, trip time positive 22 milliseconds' — and the schedule fills in automatically. 70+ calculators validate every reading against BS 7671."
           icon={Mic}
         />
       </>
@@ -551,7 +551,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Capture every protection device with AI board scanning"
-          description="Elec-Mate's AI board scanner reads the consumer unit from a photo — identifying every MCB, RCBO, RCD, and isolator with its type, rating, and manufacturer. The EICR and EIC schedules auto-populate. Combined with voice test entry and 50+ calculators, you complete certificates faster and more accurately."
+          description="Elec-Mate's AI board scanner reads the consumer unit from a photo — identifying every MCB, RCBO, RCD, and isolator with its type, rating, and manufacturer. The EICR and EIC schedules auto-populate. Combined with voice test entry and 70+ calculators, you complete certificates faster and more accurately."
           icon={Camera}
         />
       </>
@@ -587,7 +587,7 @@ export default function RCBOvsRCDMCBPage() {
       faqHeading="Frequently Asked Questions About RCBO vs RCD + MCB"
       relatedPages={relatedPages}
       ctaHeading="Scan Any Consumer Unit With AI"
-      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 50+ calculators check every reading. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Whether it is an RCBO board or a split-load, Elec-Mate's AI board scanner reads every device from a photo. Voice test entry records results hands-free. 70+ calculators check every reading. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

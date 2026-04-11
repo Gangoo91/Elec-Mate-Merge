@@ -627,7 +627,7 @@ export default function FlashcardsElectricalPage() {
       faqHeading="Frequently Asked Questions About Flashcards for Electrical Exams"
       relatedPages={relatedPages}
       ctaHeading="Study Smarter With Digital Flashcards"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for flashcards, mock exams, and structured revision. Spaced repetition built in. Study anywhere on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -767,7 +767,7 @@ export default function ElectricalInspectionChecklistPage() {
       faqHeading="Frequently Asked Questions About Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Inspect with Confidence"
-      ctaSubheading="Digital inspection checklist, AI observation classification, and automatic EICR generation. Join 430+ UK electricians using Elec-Mate on every inspection. 7-day free trial, cancel anytime."
+      ctaSubheading="Digital inspection checklist, AI observation classification, and automatic EICR generation. Join 1,000+ UK electricians using Elec-Mate on every inspection. 7-day free trial, cancel anytime."
     />
   );
 }

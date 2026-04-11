@@ -139,8 +139,8 @@ const sections = [
           MICC cable consists of copper conductors embedded in highly compressed magnesium oxide
           (MgO) mineral insulation, all enclosed within a seamless drawn copper tube (the sheath).
           This construction is manufactured by feeding copper conductors through a copper tube
-          packed with magnesium oxide powder, then drawing the assembly down through dies to
-          compact the insulation and reduce the diameter to the finished cable size.
+          packed with magnesium oxide powder, then drawing the assembly down through dies to compact
+          the insulation and reduce the diameter to the finished cable size.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -155,17 +155,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No smoke or toxic gas emission</strong> — bare MICC cable produces no
-                smoke and no toxic combustion products, as the materials cannot burn. This makes
-                it particularly valuable in occupied buildings during a fire.
+                <strong>No smoke or toxic gas emission</strong> — bare MICC cable produces no smoke
+                and no toxic combustion products, as the materials cannot burn. This makes it
+                particularly valuable in occupied buildings during a fire.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long service life</strong> — the inorganic materials in MICC cable do
-                not age, degrade, or become brittle over time. MICC installations from the 1960s
-                and 1970s are still found in service in many UK buildings.
+                <strong>Long service life</strong> — the inorganic materials in MICC cable do not
+                age, degrade, or become brittle over time. MICC installations from the 1960s and
+                1970s are still found in service in many UK buildings.
               </span>
             </li>
           </ul>
@@ -179,43 +179,43 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the construction of MICC cable helps explain both its exceptional
-          properties and the specialist handling it requires during installation.
+          Understanding the construction of MICC cable helps explain both its exceptional properties
+          and the specialist handling it requires during installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conductors</strong> — annealed copper conductors, available in
-                single-core, 2-core, 3-core, 4-core, and 7-core configurations. Conductor
-                sizes from 1mm² to 240mm² for power applications.
+                <strong>Conductors</strong> — annealed copper conductors, available in single-core,
+                2-core, 3-core, 4-core, and 7-core configurations. Conductor sizes from 1mm² to
+                240mm² for power applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation</strong> — highly compressed magnesium oxide (MgO) powder.
-                MgO is a white inorganic compound with a melting point of 2852°C — it cannot
-                burn and does not decompose under fire conditions experienced in buildings.
-                However, it is hygroscopic and must be protected from moisture.
+                <strong>Insulation</strong> — highly compressed magnesium oxide (MgO) powder. MgO is
+                a white inorganic compound with a melting point of 2852°C — it cannot burn and does
+                not decompose under fire conditions experienced in buildings. However, it is
+                hygroscopic and must be protected from moisture.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sheath</strong> — seamless drawn copper tube. The copper sheath acts
-                as the outer conductor (providing the earth path), the mechanical protection,
-                and the moisture barrier for the MgO insulation. The sheath must be kept intact
-                and sealed at all termination points.
+                <strong>Sheath</strong> — seamless drawn copper tube. The copper sheath acts as the
+                outer conductor (providing the earth path), the mechanical protection, and the
+                moisture barrier for the MgO insulation. The sheath must be kept intact and sealed
+                at all termination points.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Oversheath (optional)</strong> — an outer PVC or LSF sheath is applied
-                over the copper sheath for corrosion protection and identification. Bare MICC
-                cable (no oversheath) is used indoors in dry, non-corrosive environments.
+                <strong>Oversheath (optional)</strong> — an outer PVC or LSF sheath is applied over
+                the copper sheath for corrosion protection and identification. Bare MICC cable (no
+                oversheath) is used indoors in dry, non-corrosive environments.
               </span>
             </li>
           </ul>
@@ -238,35 +238,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Continuous operating temperature</strong> — up to 250°C for bare MICC
-                (70°C or 105°C with PVC or LSF oversheath). This allows use in high-temperature
-                environments such as boiler rooms, steam generating plant, and industrial
-                processes — far beyond the capability of any conventional cable.
+                <strong>Continuous operating temperature</strong> — up to 250°C for bare MICC (70°C
+                or 105°C with PVC or LSF oversheath). This allows use in high-temperature
+                environments such as boiler rooms, steam generating plant, and industrial processes
+                — far beyond the capability of any conventional cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Circuit integrity under fire</strong> — MICC can maintain circuit
-                integrity at flame temperatures exceeding 1000°C for periods of 60 minutes
-                and beyond. This exceeds the BS 7629-1 fire test conditions used for
-                FP200 Gold and similar cables.
+                <strong>Circuit integrity under fire</strong> — MICC can maintain circuit integrity
+                at flame temperatures exceeding 1000°C for periods of 60 minutes and beyond. This
+                exceeds the BS 7629-1 fire test conditions used for FP200 Gold and similar cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS EN 60702-1 compliance</strong> — MICC cables are tested and
-                classified to BS EN 60702-1 (mineral insulated cables and their terminations),
-                which specifies construction, test methods, and performance requirements.
+                <strong>BS EN 60702-1 compliance</strong> — MICC cables are tested and classified to
+                BS EN 60702-1 (mineral insulated cables and their terminations), which specifies
+                construction, test methods, and performance requirements.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For circuits specified to maintain function for 60 or 90 minutes under fire conditions
-          (as required by some fire engineering designs and fire authority specifications), MICC
-          is often the only cable type that can demonstrate compliance with certainty.
+          For circuits specified to maintain function for 60 or 90 minutes under fire conditions (as
+          required by some fire engineering designs and fire authority specifications), MICC is
+          often the only cable type that can demonstrate compliance with certainty.
         </p>
       </>
     ),
@@ -286,45 +285,44 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MICC cutter</strong> — used to cut the cable square. A hacksaw or
-                standard cable cutters leave a rough sheath end that is difficult to seal.
-                The MICC cutter produces a square, clean cut.
+                <strong>MICC cutter</strong> — used to cut the cable square. A hacksaw or standard
+                cable cutters leave a rough sheath end that is difficult to seal. The MICC cutter
+                produces a square, clean cut.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sheath stripper</strong> — removes the copper sheath without damaging
-                the conductors. Cuts a ring in the sheath and allows the end section to be
-                removed. The reamer tool is then used to remove the MgO insulation from around
-                the conductors.
+                <strong>Sheath stripper</strong> — removes the copper sheath without damaging the
+                conductors. Cuts a ring in the sheath and allows the end section to be removed. The
+                reamer tool is then used to remove the MgO insulation from around the conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Termination pot and crimping tool</strong> — a brass termination pot
-                is threaded onto the cable conductors and crimped onto the copper sheath using
-                a ratchet crimping tool. The pot provides the gland thread and the base for
-                the sealing compound.
+                <strong>Termination pot and crimping tool</strong> — a brass termination pot is
+                threaded onto the cable conductors and crimped onto the copper sheath using a
+                ratchet crimping tool. The pot provides the gland thread and the base for the
+                sealing compound.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sealing compound</strong> — silicone rubber, epoxy resin, or
-                proprietary compounds (such as Deroxit) are injected or packed into the pot
-                to seal the MgO insulation against moisture. The compound must be allowed
-                to cure fully before the installation is energised.
+                <strong>Sealing compound</strong> — silicone rubber, epoxy resin, or proprietary
+                compounds (such as Deroxit) are injected or packed into the pot to seal the MgO
+                insulation against moisture. The compound must be allowed to cure fully before the
+                installation is energised.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Seal cut ends immediately</strong> — never leave a cut MICC cable
-                end unsealed, even for a short time. The MgO insulation begins absorbing
-                moisture immediately on exposure to air. Pre-terminate or cap with
-                electrician's tape as a temporary measure.
+                <strong>Seal cut ends immediately</strong> — never leave a cut MICC cable end
+                unsealed, even for a short time. The MgO insulation begins absorbing moisture
+                immediately on exposure to air. Pre-terminate or cap with electrician's tape as a
+                temporary measure.
               </span>
             </li>
           </ul>
@@ -345,18 +343,18 @@ const sections = [
     content: (
       <>
         <p>
-          MICC cable is specified where no other cable type provides adequate performance. Its
-          high cost means it is reserved for applications where its unique properties genuinely
-          justify the investment.
+          MICC cable is specified where no other cable type provides adequate performance. Its high
+          cost means it is reserved for applications where its unique properties genuinely justify
+          the investment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm systems — high-risk</strong> — power and detection circuits
-                in high-risk buildings (petrochemical, nuclear, and large hospitals) where
-                60-minute or 90-minute circuit integrity is required.
+                <strong>Fire alarm systems — high-risk</strong> — power and detection circuits in
+                high-risk buildings (petrochemical, nuclear, and large hospitals) where 60-minute or
+                90-minute circuit integrity is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -370,27 +368,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-temperature environments</strong> — wiring in boiler rooms,
-                generator sets, furnaces, steam raising plant, and industrial processes
-                where ambient temperatures exceed the continuous rating of polymer-insulated
-                cables.
+                <strong>High-temperature environments</strong> — wiring in boiler rooms, generator
+                sets, furnaces, steam raising plant, and industrial processes where ambient
+                temperatures exceed the continuous rating of polymer-insulated cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hazardous areas</strong> — MICC cable is widely used in Zone 1 and
-                Zone 2 hazardous areas (potentially explosive atmospheres) due to its
-                non-combustible construction and suitability for use with explosion-proof
-                termination fittings.
+                <strong>Hazardous areas</strong> — MICC cable is widely used in Zone 1 and Zone 2
+                hazardous areas (potentially explosive atmospheres) due to its non-combustible
+                construction and suitability for use with explosion-proof termination fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Interference-sensitive circuits</strong> — the copper sheath provides
-                excellent electromagnetic shielding. MICC is used for instrumentation and
-                control cables in industrial environments where EMI shielding is required.
+                excellent electromagnetic shielding. MICC is used for instrumentation and control
+                cables in industrial environments where EMI shielding is required.
               </span>
             </li>
           </ul>
@@ -404,8 +400,8 @@ const sections = [
     content: (
       <>
         <p>
-          Both MICC and FP200 Gold are accepted by BS 5839-1 for fire alarm circuits and by
-          BS 5266-1 for emergency lighting. The choice depends on the specific fire engineering
+          Both MICC and FP200 Gold are accepted by BS 5839-1 for fire alarm circuits and by BS
+          5266-1 for emergency lighting. The choice depends on the specific fire engineering
           requirements and budget.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -414,9 +410,9 @@ const sections = [
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Choose MICC when</strong> — the specification requires 60-minute or
-                90-minute circuit integrity; the cable will be in an area of extreme fire
-                load; the installation is in a high-temperature environment; or the client
-                or fire engineer explicitly requires MICC.
+                90-minute circuit integrity; the cable will be in an area of extreme fire load; the
+                installation is in a high-temperature environment; or the client or fire engineer
+                explicitly requires MICC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -424,17 +420,15 @@ const sections = [
               <span>
                 <strong>Choose FP200 Gold when</strong> — the specification requires 30-minute
                 circuit integrity (BS 7629-1 minimum); the building is standard commercial or
-                residential; budget is a significant factor; or the programme does not allow
-                for the longer termination time required by MICC.
+                residential; budget is a significant factor; or the programme does not allow for the
+                longer termination time required by MICC.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See the{' '}
-          <SEOInternalLink href="/fp200-gold-cable-guide">
-            FP200 Gold cable guide
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/fp200-gold-cable-guide">FP200 Gold cable guide</SEOInternalLink>{' '}
           for full details on fire-resistant cable for standard fire alarm and emergency lighting
           installations.
         </p>
@@ -447,44 +441,44 @@ const sections = [
     content: (
       <>
         <p>
-          MICC cable is significantly more expensive than any alternative fire-resistant cable,
-          both in material cost and installation time. Understanding where this cost is and is
-          not justified is important for project pricing and specification.
+          MICC cable is significantly more expensive than any alternative fire-resistant cable, both
+          in material cost and installation time. Understanding where this cost is and is not
+          justified is important for project pricing and specification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Material cost</strong> — 2-core 1.5mm² MICC cable is typically 3 to
-                5 times the price per metre of equivalent FP200 Gold. For large cable quantities,
-                this difference is significant.
+                <strong>Material cost</strong> — 2-core 1.5mm² MICC cable is typically 3 to 5 times
+                the price per metre of equivalent FP200 Gold. For large cable quantities, this
+                difference is significant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labour cost</strong> — MICC termination takes 3 to 4 times longer
-                than FP200 Gold termination per end due to the specialist tools and sealing
-                process required. On a large installation with hundreds of terminations,
-                this has a major impact on project cost.
+                <strong>Labour cost</strong> — MICC termination takes 3 to 4 times longer than FP200
+                Gold termination per end due to the specialist tools and sealing process required.
+                On a large installation with hundreds of terminations, this has a major impact on
+                project cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tool investment</strong> — a complete MICC termination kit costs
-                several hundred pounds and requires maintenance. Electricians who rarely
-                install MICC may need to hire tools or subcontract to a specialist.
+                <strong>Tool investment</strong> — a complete MICC termination kit costs several
+                hundred pounds and requires maintenance. Electricians who rarely install MICC may
+                need to hire tools or subcontract to a specialist.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where cost is justified</strong> — nuclear, petrochemical, large
-                hospitals, and critical national infrastructure where the cost of circuit
-                failure during a fire is catastrophic. The additional cost of MICC is a
-                small fraction of the total facility value.
+                <strong>Where cost is justified</strong> — nuclear, petrochemical, large hospitals,
+                and critical national infrastructure where the cost of circuit failure during a fire
+                is catastrophic. The additional cost of MICC is a small fraction of the total
+                facility value.
               </span>
             </li>
           </ul>
@@ -500,8 +494,8 @@ const sections = [
         <p>
           MICC cable installations must be certified with the appropriate Electrical Installation
           Certificate, with test results including insulation resistance values for each conductor
-          to sheath and between conductors. Low insulation resistance on MICC is almost always
-          a termination moisture issue.
+          to sheath and between conductors. Low insulation resistance on MICC is almost always a
+          termination moisture issue.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -514,9 +508,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
-                  to issue Electrical Installation Certificates for MICC installations.
-                  Record insulation resistance test results, cable type, and installation
-                  details — produce the PDF on site before you leave.
+                  to issue Electrical Installation Certificates for MICC installations. Record
+                  insulation resistance test results, cable type, and installation details — produce
+                  the PDF on site before you leave.
                 </p>
               </div>
             </div>
@@ -561,7 +555,7 @@ export default function MineralInsulatedCableGuidePage() {
       faqHeading="Frequently Asked Questions About Mineral Insulated (MICC) Cable"
       relatedPages={relatedPages}
       ctaHeading="Complete MICC Installation Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify fire-critical cable installations on site. Record insulation resistance test results and cable details — instant PDF export. 7-day free trial."
     />
   );
 }

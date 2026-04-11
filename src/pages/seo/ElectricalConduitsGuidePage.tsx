@@ -631,7 +631,7 @@ export default function ElectricalConduitsGuidePage() {
         },
       ]}
       ctaHeading="Calculate Conduit Fill Instantly"
-      ctaSubheading="Elec-Mate's conduit fill calculator, cable sizing tools, and digital certificates support every commercial and domestic conduit installation. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's conduit fill calculator, cable sizing tools, and digital certificates support every commercial and domestic conduit installation. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

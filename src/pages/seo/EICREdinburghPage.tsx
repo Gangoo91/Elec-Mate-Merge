@@ -42,8 +42,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.',
-  'Edinburgh EICR costs typically range from £110 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Edinburgh prices are higher than the Scottish average due to the city\'s premium labour rates and the complexity of its tenement housing stock.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Regulation 712.534.101). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
+  "Edinburgh EICR costs typically range from £110 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Edinburgh prices are higher than the Scottish average due to the city's premium labour rates and the complexity of its tenement housing stock.",
   'Scotland has different landlord rules from England and Wales. Under the Housing (Scotland) Act 2006, landlords must meet the Repairing Standard, which requires that the electrical installation is in a reasonable state of repair and proper working order. An EICR is the standard way to demonstrate compliance. Landlords must carry out an EICR before the start of a tenancy and at least every five years.',
   'Edinburgh has a vast stock of tenement flats, many dating from the Georgian and Victorian eras. These properties present unique challenges including shared electrical supplies, communal stairwell installations, stone construction that complicates cable routing, and multiple phases of wiring from different decades.',
   'SPEN (SP Energy Networks) is the Distribution Network Operator for Edinburgh. Supply-side issues such as deteriorated cut-outs, shared intake positions in tenement stairwells, and absent earthing provision are common findings during Edinburgh EICRs.',
@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'Do I need an EICR for an Edinburgh flat I own and live in?',
     answer:
-      'There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. Given the age of much of Edinburgh\'s housing stock, periodic inspection is particularly important. If you are selling the property, you will need a Home Report (which is mandatory in Scotland) but this does not include an EICR — a separate EICR is recommended.',
+      "There is no legal requirement for owner-occupiers to obtain an EICR. However, it is strongly recommended every 10 years (or every 5 years for properties over 25 years old) as best practice under BS 7671 Regulation 134.2. Given the age of much of Edinburgh's housing stock, periodic inspection is particularly important. If you are selling the property, you will need a Home Report (which is mandatory in Scotland) but this does not include an EICR — a separate EICR is recommended.",
   },
 ];
 
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,9 +146,9 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
@@ -166,8 +168,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -205,8 +207,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £200 to £350. Expect 8 to 15 circuits.
-                Victorian and Edwardian houses in Morningside, Marchmont, and Bruntsfield often
-                take longer due to aged wiring and complex layouts.
+                Victorian and Edwardian houses in Morningside, Marchmont, and Bruntsfield often take
+                longer due to aged wiring and complex layouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,10 +222,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Edinburgh has
-                a significant number of HMOs, particularly around the university areas and in the
-                Old Town. HMOs have multiple consumer units, fire alarm systems, and emergency
-                lighting that all form part of the inspection scope.
+                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Edinburgh has a
+                significant number of HMOs, particularly around the university areas and in the Old
+                Town. HMOs have multiple consumer units, fire alarm systems, and emergency lighting
+                that all form part of the inspection scope.
               </span>
             </li>
           </ul>
@@ -303,7 +305,8 @@ const sections = [
         <p>
           Edinburgh landlords should be aware that Scotland's legal framework, while different from
           England's, imposes equivalent obligations regarding electrical safety. The practical
-          requirement is the same: obtain an EICR before a new tenancy and renew it every five years.
+          requirement is the same: obtain an EICR before a new tenancy and renew it every five
+          years.
         </p>
       </>
     ),
@@ -397,9 +400,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
-              Edinburgh include absent or inadequate earthing (particularly in older tenement flats),
-              lack of RCD protection on socket circuits (BS 7671 Section 411), overloaded circuits in
-              properties with electric storage heating, and deteriorated cable insulation.
+              Edinburgh include absent or inadequate earthing (particularly in older tenement
+              flats), lack of RCD protection on socket circuits (BS 7671 Section 411), overloaded
+              circuits in properties with electric storage heating, and deteriorated cable
+              insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -459,8 +463,8 @@ const sections = [
                 their own electrical installation for lighting and, in some cases, entry-phone
                 systems. The supply arrangement for stairwell lighting may be shared between the
                 flats or provided by a separate communal supply. Inspectors need to establish the
-                extent of the installation being inspected and whether the stairwell installation
-                is included or excluded.
+                extent of the installation being inspected and whether the stairwell installation is
+                included or excluded.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -479,8 +483,8 @@ const sections = [
                 <strong>SPEN supply issues</strong> — SP Energy Networks (SPEN) is the DNO for
                 Edinburgh. Older tenements may have deteriorated service cut-outs, inadequate
                 earthing provision, or supply cables that have been in service for decades. The
-                inspector may need to recommend an SP Energy Networks visit to assess or upgrade
-                the supply-side equipment. In tenements, supply-side work may affect multiple flats.
+                inspector may need to recommend an SP Energy Networks visit to assess or upgrade the
+                supply-side equipment. In tenements, supply-side work may affect multiple flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -488,9 +492,9 @@ const sections = [
               <span>
                 <strong>Multiple phases of wiring</strong> — Edinburgh tenement flats have often
                 been rewired or partially rewired multiple times. It is common to find original lead
-                or rubber-insulated cables alongside PVC wiring from different decades. Some circuits
-                may have been added informally without proper documentation, making the inspection
-                more complex.
+                or rubber-insulated cables alongside PVC wiring from different decades. Some
+                circuits may have been added informally without proper documentation, making the
+                inspection more complex.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -498,8 +502,8 @@ const sections = [
               <span>
                 <strong>Electric storage heating</strong> — many Edinburgh tenement flats use
                 electric storage heaters on an Economy 7 or Economy 10 tariff. These high-load
-                circuits require adequate cable sizing, dedicated MCBs or RCBOs, and proper earthing.
-                Older storage heater circuits are a common source of C2 observations.
+                circuits require adequate cable sizing, dedicated MCBs or RCBOs, and proper
+                earthing. Older storage heater circuits are a common source of C2 observations.
               </span>
             </li>
           </ul>
@@ -507,8 +511,8 @@ const sections = [
         <p>
           Electricians working in Edinburgh should allow extra time when quoting EICRs for tenement
           flats. A two-bedroom tenement flat may take 3 to 4 hours compared to 2 hours for a modern
-          flat of the same size. Access to the communal stairwell cupboard should be confirmed before
-          the inspection date.
+          flat of the same size. Access to the communal stairwell cupboard should be confirmed
+          before the inspection date.
         </p>
       </>
     ),
@@ -563,10 +567,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          In Edinburgh, tenants and landlords should prepare by ensuring clear access to the consumer
-          unit and meter. In tenement flats, the meter and supply cut-out are often in a communal
-          stairwell cupboard — ensure you have a key or have arranged access with the factor. Remove
-          items stored in front of electrical equipment and make all rooms accessible.
+          In Edinburgh, tenants and landlords should prepare by ensuring clear access to the
+          consumer unit and meter. In tenement flats, the meter and supply cut-out are often in a
+          communal stairwell cupboard — ensure you have a key or have arranged access with the
+          factor. Remove items stored in front of electrical equipment and make all rooms
+          accessible.
         </p>
       </>
     ),
@@ -634,18 +639,18 @@ const sections = [
       <>
         <p>
           The EICR must be carried out by a person who is qualified and competent. In Scotland,
-          SELECT (the trade body for the Scottish electrotechnical industry) is the primary competent
-          person scheme, alongside national bodies.
+          SELECT (the trade body for the Scottish electrotechnical industry) is the primary
+          competent person scheme, alongside national bodies.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — SELECT, NICEIC, NAPIT, ELECSA, and
-                other approved bodies maintain registers of qualified electricians. SELECT is
-                Scotland's leading trade body and searching their register for Edinburgh-based
-                inspectors is a reliable way to find a qualified person.
+                <strong>Competent person schemes</strong> — SELECT, NICEIC, NAPIT, ELECSA, and other
+                approved bodies maintain registers of qualified electricians. SELECT is Scotland's
+                leading trade body and searching their register for Edinburgh-based inspectors is a
+                reliable way to find a qualified person.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -733,7 +738,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -770,7 +775,7 @@ export default function EICREdinburghPage() {
       faqHeading="Frequently Asked Questions About EICRs in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

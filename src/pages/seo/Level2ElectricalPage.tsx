@@ -249,12 +249,17 @@ export default function Level2ElectricalPage() {
               to select the correct cable for a given application, and how to carry out basic
               installation work competently and safely. This foundation is essential because
               everything you learn at{' '}
-              <SEOInternalLink href="/study/level-3-electrical">Level 3</SEOInternalLink>{' '}
-              and beyond assumes you have mastered these concepts. Once qualified, you will progress to
+              <SEOInternalLink href="/study/level-3-electrical">Level 3</SEOInternalLink> and beyond
+              assumes you have mastered these concepts. Once qualified, you will progress to
               qualifications like the{' '}
-              <SEOInternalLink href="/study/inspection-testing-course">C&G 2391 Inspection and Testing</SEOInternalLink>{' '}
+              <SEOInternalLink href="/study/inspection-testing-course">
+                C&G 2391 Inspection and Testing
+              </SEOInternalLink>{' '}
               and the{' '}
-              <SEOInternalLink href="/study/18th-edition-course">18th Edition (C&G 2382)</SEOInternalLink>.
+              <SEOInternalLink href="/study/18th-edition-course">
+                18th Edition (C&G 2382)
+              </SEOInternalLink>
+              .
             </p>
           </div>
         </div>
@@ -570,7 +575,7 @@ export default function Level2ElectricalPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start your electrical career today"
-        subheading="Join 430+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

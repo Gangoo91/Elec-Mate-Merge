@@ -600,7 +600,7 @@ export default function EICRLimitationsPage() {
       faqHeading="Frequently Asked Questions About EICR Limitations"
       relatedPages={relatedPages}
       ctaHeading="Complete Professional EICRs on Your Phone"
-      ctaSubheading="AI board scanning, voice test entry, structured extent and limitations recording, and instant PDF delivery. Join 430+ electricians doing EICRs the smart way. 7-day free trial."
+      ctaSubheading="AI board scanning, voice test entry, structured extent and limitations recording, and instant PDF delivery. Join 1,000+ electricians doing EICRs the smart way. 7-day free trial."
     />
   );
 }

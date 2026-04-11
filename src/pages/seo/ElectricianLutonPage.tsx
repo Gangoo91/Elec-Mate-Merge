@@ -40,7 +40,7 @@ const keyTakeaways = [
   'UK Power Networks (UKPN) Eastern is the Distribution Network Operator for Luton. All new connections, supply upgrades, and G98/G99 generation notifications go through UKPN.',
   'Luton has a large and diverse housing stock, including significant social housing estates from the 1960s and 1970s, Victorian terraces, and newer private development. Post-war housing often contains wiring that is approaching or past its safe working life.',
   'The town has a strong demand for EICR work driven by a large private rental sector, a significant HMO market, and the Renters (Reform) Act requirements.',
-  'Luton electrician rates are in the lower-mid range for the South East and East of England — typically £45 to £65 per hour in 2026, reflecting the town\'s position between London and the lower-cost Midlands.',
+  "Luton electrician rates are in the lower-mid range for the South East and East of England — typically £45 to £65 per hour in 2026, reflecting the town's position between London and the lower-cost Midlands.",
 ];
 
 const faqs = [
@@ -52,22 +52,22 @@ const faqs = [
   {
     question: 'Who is the DNO for Luton?',
     answer:
-      'UK Power Networks (UKPN) Eastern is the Distribution Network Operator for Luton and the surrounding Bedfordshire area. For new connections, supply upgrades (for EV chargers, heat pumps, or increased demand), and G98/G99 generation notifications for solar PV or battery storage, you deal with UKPN. G98 notifications for systems up to 16A per phase are processed online. G99 applications for larger systems require prior approval, typically taking 8 to 12 weeks. UKPN\'s online portal is generally straightforward for standard connection applications.',
+      "UK Power Networks (UKPN) Eastern is the Distribution Network Operator for Luton and the surrounding Bedfordshire area. For new connections, supply upgrades (for EV chargers, heat pumps, or increased demand), and G98/G99 generation notifications for solar PV or battery storage, you deal with UKPN. G98 notifications for systems up to 16A per phase are processed online. G99 applications for larger systems require prior approval, typically taking 8 to 12 weeks. UKPN's online portal is generally straightforward for standard connection applications.",
   },
   {
     question: 'How much does an EICR cost in Luton?',
     answer:
-      'An EICR in Luton typically costs £170 to £290 for a standard residential property. HMO properties cost more, reflecting the larger number of circuits and the time required. Luton rates are broadly in line with the wider Bedfordshire and South East Midlands area. The town\'s large private rental sector generates strong and consistent EICR demand — landlords are required to have a valid EICR every five years, with remedial work completed within 28 days of an unsatisfactory report.',
+      "An EICR in Luton typically costs £170 to £290 for a standard residential property. HMO properties cost more, reflecting the larger number of circuits and the time required. Luton rates are broadly in line with the wider Bedfordshire and South East Midlands area. The town's large private rental sector generates strong and consistent EICR demand — landlords are required to have a valid EICR every five years, with remedial work completed within 28 days of an unsatisfactory report.",
   },
   {
-    question: 'What are the electrical challenges in Luton\'s post-war housing estates?',
+    question: "What are the electrical challenges in Luton's post-war housing estates?",
     answer:
       'Luton has a significant number of post-war housing estates — including large estates in areas such as Marsh Farm, Farley Hill, and Stopsley — built in the 1950s through to the 1970s. These properties frequently contain ageing PVC wiring from the 1960s and 1970s, rubber-insulated wiring in earlier properties, inadequate consumer units with rewirable fuses, poor earth bonding, and limited socket provision. EICRs in these properties commonly generate multiple C2 (potentially dangerous) observations, requiring either remedial work or full rewires. Asbestos is also a risk in pre-1980s properties, particularly in ceiling tiles, pipe lagging, and artex coatings.',
   },
   {
     question: 'Does Luton Airport proximity affect electrical work?',
     answer:
-      'Luton Airport\'s proximity does not directly affect most residential electrical work. However, commercial electrical work near the airport, on airport-related developments, or for businesses in the airport supply chain will have its own procurement and compliance requirements. Electricians who want to work on airport-related commercial projects typically need to be on approved contractor lists and may require specific security clearance. For residential work in areas close to the airport (such as Stopsley and Wigmore), standard Part P and BS 7671 requirements apply.',
+      "Luton Airport's proximity does not directly affect most residential electrical work. However, commercial electrical work near the airport, on airport-related developments, or for businesses in the airport supply chain will have its own procurement and compliance requirements. Electricians who want to work on airport-related commercial projects typically need to be on approved contractor lists and may require specific security clearance. For residential work in areas close to the airport (such as Stopsley and Wigmore), standard Part P and BS 7671 requirements apply.",
   },
   {
     question: 'What is the typical cost of a consumer unit replacement in Luton?',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for rewires, new circuits, and EV charger installations across Luton\'s varied housing stock.',
+      "Size cables for rewires, new circuits, and EV charger installations across Luton's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -144,17 +144,18 @@ const sections = [
       <>
         <p>
           Luton is a large town in Bedfordshire with a population of around 220,000. It has a
-          diverse economy centred on Luton Airport (one of the UK's busiest airports), manufacturing,
-          retail, and a growing service sector. For electricians, Luton offers a substantial and
-          varied workload: residential rewires and upgrades across a large and diverse housing stock,
-          significant EICR demand from a busy private rental market, commercial electrical work in
-          retail parks and industrial estates, and growing demand for EV chargers and solar PV.
+          diverse economy centred on Luton Airport (one of the UK's busiest airports),
+          manufacturing, retail, and a growing service sector. For electricians, Luton offers a
+          substantial and varied workload: residential rewires and upgrades across a large and
+          diverse housing stock, significant EICR demand from a busy private rental market,
+          commercial electrical work in retail parks and industrial estates, and growing demand for
+          EV chargers and solar PV.
         </p>
         <p>
-          The town's housing stock ranges from Victorian and Edwardian terraces in areas like
-          Bury Park and High Town to large post-war estates in Marsh Farm, Stopsley, and Farley
-          Hill, and modern private development in areas such as Wigmore and Barton Hills. Each
-          part of the stock presents different electrical characteristics and challenges.
+          The town's housing stock ranges from Victorian and Edwardian terraces in areas like Bury
+          Park and High Town to large post-war estates in Marsh Farm, Stopsley, and Farley Hill, and
+          modern private development in areas such as Wigmore and Barton Hills. Each part of the
+          stock presents different electrical characteristics and challenges.
         </p>
         <p>
           This guide covers the regulatory requirements, DNO contacts, local property types, typical
@@ -186,8 +187,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Control notification</strong> — unregistered electricians must
-                notify Luton Borough Council Building Control before starting notifiable work.
-                The council inspects the completed work and issues a completion certificate.
+                notify Luton Borough Council Building Control before starting notifiable work. The
+                council inspects the completed work and issues a completion certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -202,10 +203,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR requirements</strong> — Luton's large private rental sector
-                is subject to The Electrical Safety Standards in the Private Rented Sector
-                (England) Regulations 2020. Landlords must have a valid EICR every five years,
-                with C1/C2 defects remedied within 28 days.
+                <strong>Landlord EICR requirements</strong> — Luton's large private rental sector is
+                subject to The Electrical Safety Standards in the Private Rented Sector (England)
+                Regulations 2020. Landlords must have a valid EICR every five years, with C1/C2
+                defects remedied within 28 days.
               </span>
             </li>
           </ul>
@@ -235,26 +236,26 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Estates (1950s–1970s)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Marsh Farm, Farley Hill, Lewsey Farm, and Stopsley have large council estates
-              built between 1950 and 1975. Wiring from this era ranges from early PVC to
-              rubber-insulated. Consumer units are often inadequate. EICRs in these properties
-              frequently identify multiple C2 observations.
+              Marsh Farm, Farley Hill, Lewsey Farm, and Stopsley have large council estates built
+              between 1950 and 1975. Wiring from this era ranges from early PVC to rubber-insulated.
+              Consumer units are often inadequate. EICRs in these properties frequently identify
+              multiple C2 observations.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">1980s–2000s Developments</h3>
             <p className="text-white text-sm leading-relaxed">
-              Luton has significant development from the 1980s through to the early 2000s in
-              areas such as Wigmore, Barton Hills, and Limbury. This stock has modern cavity
-              walls and generally better wiring, but may have outdated consumer units that
-              need upgrading to meet current BS 7671 standards.
+              Luton has significant development from the 1980s through to the early 2000s in areas
+              such as Wigmore, Barton Hills, and Limbury. This stock has modern cavity walls and
+              generally better wiring, but may have outdated consumer units that need upgrading to
+              meet current BS 7671 standards.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial and Industrial</h3>
             <p className="text-white text-sm leading-relaxed">
-              Luton has significant commercial and industrial premises around the airport and
-              in areas such as Kimpton Road and Chaul End. Commercial electrical work requires
+              Luton has significant commercial and industrial premises around the airport and in
+              areas such as Kimpton Road and Chaul End. Commercial electrical work requires
               appropriate qualifications and understanding of BS 7671 and other applicable
               standards. EV charger installation in car parks and commercial premises is growing.
             </p>
@@ -268,33 +269,30 @@ const sections = [
     heading: 'Common Electrical Jobs in Luton',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Luton in 2026:
-        </p>
+        <p>The most in-demand electrical services in Luton in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for landlords and HMOs</strong> — Luton's large private rental
-                sector generates consistent EICR demand. Electricians who work with local letting
-                agents can build a regular pipeline of landlord compliance work.
+                <strong>EICRs for landlords and HMOs</strong> — Luton's large private rental sector
+                generates consistent EICR demand. Electricians who work with local letting agents
+                can build a regular pipeline of landlord compliance work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacements</strong> — old fuse boards across Luton's
-                post-war housing stock generate significant demand for consumer unit upgrades.
-                Most EICR defect remedials in older properties include a consumer unit
-                replacement.
+                post-war housing stock generate significant demand for consumer unit upgrades. Most
+                EICR defect remedials in older properties include a consumer unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charger installations</strong> — Luton's proximity to the M1 and
-                London commuter routes drives demand for home EV chargers. Commercial EV charger
+                <strong>EV charger installations</strong> — Luton's proximity to the M1 and London
+                commuter routes drives demand for home EV chargers. Commercial EV charger
                 installations at the airport, retail parks, and car parks are a growing market.
               </span>
             </li>
@@ -325,26 +323,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC or NAPIT registered</strong> — use the public registers at
-                niceic.com or napit.org.uk to find registered electricians in Luton. Registration
-                confirms annual technical competency assessment and ability to self-certify.
+                <strong>NICEIC or NAPIT registered</strong> — use the public registers at niceic.com
+                or napit.org.uk to find registered electricians in Luton. Registration confirms
+                annual technical competency assessment and ability to self-certify.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Correct Part P documentation</strong> — after notifiable work, you should
-                receive a Part P compliance certificate and a BS 7671 EIC. For an EICR, you
-                should receive the full report including all observations, test results, and
-                an overall satisfactory or unsatisfactory result.
+                receive a Part P compliance certificate and a BS 7671 EIC. For an EICR, you should
+                receive the full report including all observations, test results, and an overall
+                satisfactory or unsatisfactory result.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotations</strong> — always get a detailed written quotation
-                before work starts. Reputable Luton electricians will survey before quoting
-                and will clearly state all costs including materials, labour, and certification.
+                <strong>Written quotations</strong> — always get a detailed written quotation before
+                work starts. Reputable Luton electricians will survey before quoting and will
+                clearly state all costs including materials, labour, and certification.
               </span>
             </li>
           </ul>
@@ -358,8 +356,8 @@ const sections = [
     content: (
       <>
         <p>
-          Luton electrician rates in 2026 are in the lower-mid range for the South East, higher
-          than comparable towns in the East Midlands but below central London rates:
+          Luton electrician rates in 2026 are in the lower-mid range for the South East, higher than
+          comparable towns in the East Midlands but below central London rates:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -436,12 +434,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. For Luton's busy landlord market, delivering documentation on the day
-                  of the job builds trust and generates referrals.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. For Luton's busy landlord market, delivering documentation on the day of the
+                  job builds trust and generates referrals.
                 </p>
               </div>
             </div>
@@ -456,8 +451,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional quotes to Luton landlords and homeowners. Clear,
-                  itemised quotes win work in a competitive market.
+                  to send professional quotes to Luton landlords and homeowners. Clear, itemised
+                  quotes win work in a competitive market.
                 </p>
               </div>
             </div>
@@ -465,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Luton electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the realities of Luton's diverse housing stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the realities of Luton's diverse housing stock. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -490,8 +485,7 @@ export default function ElectricianLutonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Luton:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Luton: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Luton's diverse housing stock — from Victorian terraces and post-war estates to modern developments — creates strong demand for qualified electricians with Part P compliance expertise, EICR knowledge, and EV charger installation skills."
@@ -502,7 +496,7 @@ export default function ElectricianLutonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Luton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Luton Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the demands of Luton's busy rental and residential market. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Part P compliance and the demands of Luton's busy rental and residential market. 7-day free trial."
     />
   );
 }

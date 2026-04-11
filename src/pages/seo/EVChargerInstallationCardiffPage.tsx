@@ -39,11 +39,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A 7kW home EV charger installation in Cardiff typically costs £800 to £1,200, with Wales generally offering competitive labour rates compared to England\'s major cities.',
+  "A 7kW home EV charger installation in Cardiff typically costs £800 to £1,200, with Wales generally offering competitive labour rates compared to England's major cities.",
   'Welsh Government EV support programmes complement the national OZEV EV chargepoint grant of up to £350, providing additional routes to funding for eligible Welsh residents.',
   'SP Energy Networks (SP Manweb) is the DNO for Cardiff and all of Wales. G98 notification is required before energising any domestic 7kW EV charger.',
   'BS 7671:2018 Section 722 applies across the whole UK including Wales. PME earthing is common in Cardiff, requiring an earth rod for most outdoor charger installations.',
-  'Cardiff\'s Victorian bay-fronted terraces in areas such as Roath, Canton, and Pontcanna often have front parking, making EV charging installation feasible at moderate cost.',
+  "Cardiff's Victorian bay-fronted terraces in areas such as Roath, Canton, and Pontcanna often have front parking, making EV charging installation feasible at moderate cost.",
   'NICEIC and NAPIT-registered electricians can self-certify EV charger installations to Part P of the Building Regulations. Welsh Government Building Regulations apply in Wales.',
 ];
 
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Can I install an EV charger in a Cardiff Victorian terrace?',
     answer:
-      'Yes. Cardiff\'s Victorian bay-fronted terraces — common in Roath, Canton, Pontcanna, Cathays, and Splott — are generally well-suited to EV charger installation. Many have bay windows with off-street parking at the front, providing a short cable route from the consumer unit. Where the consumer unit is at the rear and the parking is at the front, cable runs of 12 to 20 metres may be needed, adding cost. An OZEV-approved installer should carry out a free survey before giving a firm quote.',
+      "Yes. Cardiff's Victorian bay-fronted terraces — common in Roath, Canton, Pontcanna, Cathays, and Splott — are generally well-suited to EV charger installation. Many have bay windows with off-street parking at the front, providing a short cable route from the consumer unit. Where the consumer unit is at the rear and the parking is at the front, cable runs of 12 to 20 metres may be needed, adding cost. An OZEV-approved installer should carry out a free survey before giving a firm quote.",
   },
   {
     question: 'Do I need an earth rod for an EV charger in Cardiff?',
@@ -94,7 +94,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-cost',
     title: 'EV Charger Installation Cost UK',
-    description: 'National price guide for EV charger installation covering all charger types and cost factors.',
+    description:
+      'National price guide for EV charger installation covering all charger types and cost factors.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -148,8 +149,8 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff is Wales' capital and largest city, and EV adoption is growing steadily across
-          the city and wider South Wales region. The Welsh Government's <strong>Net Zero Wales</strong>{' '}
+          Cardiff is Wales' capital and largest city, and EV adoption is growing steadily across the
+          city and wider South Wales region. The Welsh Government's <strong>Net Zero Wales</strong>{' '}
           commitment and Clean Air Plan for Wales are driving investment in EV infrastructure, and
           home charger installation remains the most practical and cost-effective way for Cardiff
           residents to charge their electric vehicles.
@@ -157,17 +158,17 @@ const sections = [
         <p>
           Cardiff's housing stock spans modern new builds in St Mellons and Pontprennau to
           distinctive Victorian bay-fronted terraces in Roath, Canton, Pontcanna, Cathays, and
-          Splott. This variety means installation complexity and cost differ across the city,
-          though Cardiff's terraced properties — many with front parking — are generally
-          well-suited to EV charger installation.
+          Splott. This variety means installation complexity and cost differ across the city, though
+          Cardiff's terraced properties — many with front parking — are generally well-suited to EV
+          charger installation.
         </p>
         <p>
           This guide covers the real costs of EV charger installation in Cardiff in 2026, Welsh
           Government EV support programmes, the national OZEV grant of up to £350, the{' '}
           <strong>SP Energy Networks (SP Manweb)</strong> DNO notification process, and Part P
-          compliance under Welsh Building Regulations. Whether you are a Cardiff homeowner
-          getting quotes or an electrician pricing South Wales jobs, this guide reflects current
-          2026 market conditions.
+          compliance under Welsh Building Regulations. Whether you are a Cardiff homeowner getting
+          quotes or an electrician pricing South Wales jobs, this guide reflects current 2026 market
+          conditions.
         </p>
       </>
     ),
@@ -178,9 +179,9 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff and South Wales offer competitive pricing for home EV charger installation.
-          Labour rates are lower than London and the South East, and most Cardiff residential
-          properties have manageable cable routes.
+          Cardiff and South Wales offer competitive pricing for home EV charger installation. Labour
+          rates are lower than London and the South East, and most Cardiff residential properties
+          have manageable cable routes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -191,35 +192,33 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (modern detached/semi, garage)</strong> — £800 to
-                £1,000. Short cable run of 3 to 8 metres, spare consumer unit way, no earth
-                upgrade required. Common for Cardiff's newer residential areas in St Mellons,
-                Pontprennau, and Lisvane.
+                £1,000. Short cable run of 3 to 8 metres, spare consumer unit way, no earth upgrade
+                required. Common for Cardiff's newer residential areas in St Mellons, Pontprennau,
+                and Lisvane.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (Victorian terrace, front parking)</strong> — £900
-                to £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB
-                addition. Typical for Roath, Canton, and Pontcanna terraces with paved front
-                parking areas.
+                <strong>Standard installation (Victorian terrace, front parking)</strong> — £900 to
+                £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition.
+                Typical for Roath, Canton, and Pontcanna terraces with paved front parking areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (long cable run, board upgrade)</strong> — £1,100
-                to £1,400. Consumer unit at the rear, parking at the front, cable run over 15
-                metres, full board upgrade needed. More common for older Cathays and Splott
-                terraces.
+                <strong>Complex installation (long cable run, board upgrade)</strong> — £1,100 to
+                £1,400. Consumer unit at the rear, parking at the front, cable run over 15 metres,
+                full board upgrade needed. More common for older Cathays and Splott terraces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires
-                an existing three-phase supply and G99 approval from SP Manweb. Suitable for
-                properties with high mileage usage or multiple EVs.
+                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires an
+                existing three-phase supply and G99 approval from SP Manweb. Suitable for properties
+                with high mileage usage or multiple EVs.
               </span>
             </li>
           </ul>
@@ -238,8 +237,8 @@ const sections = [
       <>
         <p>
           The Welsh Government has committed to supporting EV uptake as part of its Net Zero Wales
-          programme and Clean Air Plan. Welsh Government EV support takes several forms relevant
-          to Cardiff residents:
+          programme and Clean Air Plan. Welsh Government EV support takes several forms relevant to
+          Cardiff residents:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -247,10 +246,10 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Welsh Government Electric Vehicle Charging Strategy</strong> — Wales has
-                published a national EV charging strategy targeting a comprehensive charging
-                network across Welsh local authority areas. This has supported the rollout of
-                public charging infrastructure across Cardiff, including rapid chargers on the
-                Strategic Road Network and in town centre car parks.
+                published a national EV charging strategy targeting a comprehensive charging network
+                across Welsh local authority areas. This has supported the rollout of public
+                charging infrastructure across Cardiff, including rapid chargers on the Strategic
+                Road Network and in town centre car parks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -258,8 +257,8 @@ const sections = [
               <span>
                 <strong>Cardiff Council EV infrastructure</strong> — Cardiff Council has installed
                 on-street charging points across multiple residential areas through Transport for
-                Wales and Cardiff's Local Transport Plan. Residents without off-street parking
-                can access a growing network of kerbside and lamp-post chargers.
+                Wales and Cardiff's Local Transport Plan. Residents without off-street parking can
+                access a growing network of kerbside and lamp-post chargers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,8 +273,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Check the Welsh Government website (gov.wales) and Cardiff Council's transport pages
-          for the most current available schemes, as funding programmes open and close regularly.
+          Check the Welsh Government website (gov.wales) and Cardiff Council's transport pages for
+          the most current available schemes, as funding programmes open and close regularly.
         </p>
       </>
     ),
@@ -310,19 +309,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How to claim</strong> — your OZEV-approved installer applies on your
-                behalf. They deduct the grant from the invoice you pay. Search for OZEV-approved
-                installers operating in Cardiff and South Wales via the gov.uk approved installer
-                register before booking.
+                <strong>How to claim</strong> — your OZEV-approved installer applies on your behalf.
+                They deduct the grant from the invoice you pay. Search for OZEV-approved installers
+                operating in Cardiff and South Wales via the gov.uk approved installer register
+                before booking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workplace Charging Scheme</strong> — Cardiff businesses can claim up to
-                £350 per socket (maximum 40 sockets) for workplace EV charger installation.
-                Available to Welsh businesses registered with HMRC, using an OZEV-approved
-                commercial installer.
+                <strong>Workplace Charging Scheme</strong> — Cardiff businesses can claim up to £350
+                per socket (maximum 40 sockets) for workplace EV charger installation. Available to
+                Welsh businesses registered with HMRC, using an OZEV-approved commercial installer.
               </span>
             </li>
           </ul>
@@ -348,9 +346,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated
-                32A circuit from the consumer unit. Older Cardiff consumer units may need a
-                spare way or a board upgrade to accommodate this requirement.
+                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
+                circuit from the consumer unit. Older Cardiff consumer units may need a spare way or
+                a board upgrade to accommodate this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -391,20 +389,19 @@ const sections = [
     content: (
       <>
         <p>
-          Most Cardiff properties are supplied on PME (TN-C-S) earthing arrangements.
-          Regulation 722.411.4.1 and the IET Code of Practice for EV Charging Equipment
-          Installation require specific measures where an EV charging point is outdoors on a
-          PME supply.
+          Most Cardiff properties are supplied on PME (TN-C-S) earthing arrangements. Regulation
+          722.411.4.1 and the IET Code of Practice for EV Charging Equipment Installation require
+          specific measures where an EV charging point is outdoors on a PME supply.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">The PME Risk</h3>
             <p className="text-white text-sm leading-relaxed">
-              On a PME supply, a broken PEN conductor between the distribution transformer and
-              the property can cause dangerous touch voltages on earthed metalwork. An electric
-              vehicle being charged outdoors is particularly at risk — the vehicle connects
-              the charger's earthed metalwork to the vehicle chassis, and the tyres provide
-              limited isolation, especially on a wet Cardiff driveway in winter.
+              On a PME supply, a broken PEN conductor between the distribution transformer and the
+              property can cause dangerous touch voltages on earthed metalwork. An electric vehicle
+              being charged outdoors is particularly at risk — the vehicle connects the charger's
+              earthed metalwork to the vehicle chassis, and the tyres provide limited isolation,
+              especially on a wet Cardiff driveway in winter.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -412,16 +409,16 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The most common approach is installing a local earth electrode (earth rod) at the
               charger location to create a TT arrangement with an appropriate RCD. Alternatively,
-              chargers with integrated PEN fault detection can be used without a separate earth
-              rod. Where the charger is inside a garage or enclosed carport, the PME earth may
-              be acceptable subject to the electrician's assessment.
+              chargers with integrated PEN fault detection can be used without a separate earth rod.
+              Where the charger is inside a garage or enclosed carport, the PME earth may be
+              acceptable subject to the electrician's assessment.
             </p>
           </div>
         </div>
         <p>
           An earth rod installation in Cardiff adds approximately £80 to £150 to the total cost.
-          Cardiff's coastal proximity means ground conditions can vary — your electrician will
-          test earth resistance values to confirm the rod achieves adequate resistance.
+          Cardiff's coastal proximity means ground conditions can vary — your electrician will test
+          earth resistance values to confirm the rod achieves adequate resistance.
         </p>
       </>
     ),
@@ -432,10 +429,10 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>SP Energy Networks (SP Manweb)</strong> is the Distribution Network Operator
-          for the whole of Wales, including Cardiff, Newport, Swansea, and all Welsh local
-          authority areas. G98 notification to SP Manweb is a legal requirement before any
-          domestic EV charger is energised.
+          <strong>SP Energy Networks (SP Manweb)</strong> is the Distribution Network Operator for
+          the whole of Wales, including Cardiff, Newport, Swansea, and all Welsh local authority
+          areas. G98 notification to SP Manweb is a legal requirement before any domestic EV charger
+          is energised.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -443,17 +440,17 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via the SP
-                Manweb portal. This is a notification, not an application — the installer
-                proceeds with connection and notifies concurrently. No prior approval is
-                required for standard 7kW domestic installations.
+                Manweb portal. This is a notification, not an application — the installer proceeds
+                with connection and notifies concurrently. No prior approval is required for
+                standard 7kW domestic installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 application (22kW three-phase)</strong> — prior approval required
-                from SP Manweb before installation. Allow 4 to 10 weeks for assessment. Required
-                for three-phase chargers and commercial installations.
+                <strong>G99 application (22kW three-phase)</strong> — prior approval required from
+                SP Manweb before installation. Allow 4 to 10 weeks for assessment. Required for
+                three-phase chargers and commercial installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -461,8 +458,8 @@ const sections = [
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits the DNO
                 notification on behalf of the homeowner. Confirm this is included in the quoted
-                price. Failure to notify SP Manweb can result in the charger being required to
-                be disconnected.
+                price. Failure to notify SP Manweb can result in the charger being required to be
+                disconnected.
               </span>
             </li>
           </ul>
@@ -506,14 +503,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Welsh Building Regulations Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Building Regulations in Wales are administered separately from England.
-                  NICEIC and NAPIT members can self-certify under the Welsh Part P equivalent.
-                  Issue the{' '}
+                  Building Regulations in Wales are administered separately from England. NICEIC and
+                  NAPIT members can self-certify under the Welsh Part P equivalent. Issue the{' '}
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
-                  from your phone before leaving site — every Cardiff EV installation requires
-                  a full EIC under BS 7671 Section 722.
+                  from your phone before leaving site — every Cardiff EV installation requires a
+                  full EIC under BS 7671 Section 722.
                 </p>
               </div>
             </div>
@@ -521,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cardiff EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cardiff and South Wales."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cardiff and South Wales."
           icon={Car}
         />
       </>
@@ -558,7 +554,7 @@ export default function EVChargerInstallationCardiffPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

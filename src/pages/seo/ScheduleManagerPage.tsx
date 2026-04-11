@@ -478,7 +478,7 @@ export default function ScheduleManagerPage() {
       faqHeading="Frequently Asked Questions About Job Scheduling"
       relatedPages={relatedPages}
       ctaHeading="Take Control of Your Schedule"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to schedule jobs, optimise routes, and communicate professionally with clients. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to schedule jobs, optimise routes, and communicate professionally with clients. 7-day free trial, cancel anytime."
       pagePath="/tools/schedule-manager-electrician"
     />
   );

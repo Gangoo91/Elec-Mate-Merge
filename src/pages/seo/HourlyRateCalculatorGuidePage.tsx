@@ -622,7 +622,7 @@ export default function HourlyRateCalculatorGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Hourly Rates"
       relatedPages={relatedPages}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to generate accurate quotes, track job profitability, and manage cash flow. AI cost engineer, expense tracking, and business analytics — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to generate accurate quotes, track job profitability, and manage cash flow. AI cost engineer, expense tracking, and business analytics — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

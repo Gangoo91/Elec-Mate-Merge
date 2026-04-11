@@ -532,7 +532,7 @@ export default function PowerConsumptionCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate power consumption and running costs instantly"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for energy calculations, circuit design, and certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for energy calculations, circuit design, and certification. 7-day free trial, cancel anytime."
       toolPath="/tools/power-consumption-calculator"
     />
   );

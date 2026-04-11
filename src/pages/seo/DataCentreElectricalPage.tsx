@@ -48,7 +48,8 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'What earthing system is recommended for data centre electrical installations in the UK?',
+    question:
+      'What earthing system is recommended for data centre electrical installations in the UK?',
     answer:
       'BS 7671:2018+A3:2024 recommends TN-S (Terra Neutral Separated) earthing for data centre environments. In a TN-S system the neutral and protective earth conductors are kept entirely separate throughout the installation, which minimises earth loop impedance and prevents conducted noise from returning via the neutral to IT equipment. A single earth reference point (star point) is established at the main LV switchboard, with separate PE conductors run to all distribution boards and IT equipment frames. Mixed TN-C-S systems should be avoided in critical environments.',
   },
@@ -68,7 +69,8 @@ const faqs = [
       'A data centre Power Distribution Unit (PDU) is a device that distributes electrical power from a UPS or main distribution board to multiple server racks and IT equipment within the data hall. Intelligent (or "smart") PDUs provide individual outlet-level metering, remote switching, and environmental monitoring. Data centre PDUs typically operate at 32A or 63A, often at 230V single-phase or 400V three-phase. Each rack is typically served by two PDUs fed from independent power paths (A-feed and B-feed) to provide redundancy at rack level.',
   },
   {
-    question: 'What are the Electricity at Work Regulations 1989 obligations for data centre operators?',
+    question:
+      'What are the Electricity at Work Regulations 1989 obligations for data centre operators?',
     answer:
       'The Electricity at Work Regulations 1989 impose duties on employers and others in control of electrical systems (duty holders) to ensure those systems are constructed and maintained so as to prevent danger. For data centres this means: maintaining all switchgear, UPS systems, generators, and cabling in safe condition; conducting periodic inspection and testing in accordance with BS 7671; keeping records of all maintenance; ensuring only competent persons work on or near live conductors; and implementing safe systems of work (permits to work) for maintenance activities. Regulation 4(2) places a positive duty to maintain the system — failing to inspect and test is a criminal offence.',
   },
@@ -88,28 +90,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/hospital-electrical-installation',
     title: 'Hospital Electrical Installation',
-    description: 'Healthcare electrical systems, IEC 60364-7-710, isolated power supplies, and HTM06-01.',
+    description:
+      'Healthcare electrical systems, IEC 60364-7-710, isolated power supplies, and HTM06-01.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/factory-electrical-installation',
     title: 'Factory Electrical Installation',
-    description: 'Three-phase supplies, motor control centres, HRC fuses, and ATEX zone classification.',
+    description:
+      'Three-phase supplies, motor control centres, HRC fuses, and ATEX zone classification.',
     icon: Settings,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-commercial-property',
     title: 'Commercial EICR Guide',
-    description: 'Periodic inspection and testing requirements for commercial and industrial premises.',
+    description:
+      'Periodic inspection and testing requirements for commercial and industrial premises.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote data centre and commercial electrical projects on site with instant PDF export.',
+    description:
+      'Quote data centre and commercial electrical projects on site with instant PDF export.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -154,15 +160,15 @@ const sections = [
               <Server className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Primary standards:</strong> BS 7671:2018+A3:2024 (IET Wiring Regulations),
-                Electricity at Work Regulations 1989, EN 50600 (European data centre standard),
-                and Uptime Institute Tier Classification.
+                Electricity at Work Regulations 1989, EN 50600 (European data centre standard), and
+                Uptime Institute Tier Classification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Server className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power densities:</strong> Modern hyperscale data centres can reach 20 to
-                50 kW per rack, compared to 3 to 5 kW per rack in legacy facilities. Electrical
+                <strong>Power densities:</strong> Modern hyperscale data centres can reach 20 to 50
+                kW per rack, compared to 3 to 5 kW per rack in legacy facilities. Electrical
                 infrastructure must be designed for these densities from day one.
               </span>
             </li>
@@ -214,9 +220,9 @@ const sections = [
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tier III — Concurrently Maintainable:</strong> Multiple active distribution
-                paths with N+1 redundancy. All equipment can be maintained without shutting down
-                the load. Annual downtime up to 1.6 hours. The most common tier for commercial
-                UK colocation facilities.
+                paths with N+1 redundancy. All equipment can be maintained without shutting down the
+                load. Annual downtime up to 1.6 hours. The most common tier for commercial UK
+                colocation facilities.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,9 +251,9 @@ const sections = [
       <>
         <p>
           Uninterruptible Power Supply (UPS) systems are the central element of data centre power
-          protection. They bridge the gap between a mains failure and the start of backup generators,
-          filter power quality issues, and protect sensitive IT equipment from voltage transients,
-          sags, and surges.
+          protection. They bridge the gap between a mains failure and the start of backup
+          generators, filter power quality issues, and protect sensitive IT equipment from voltage
+          transients, sags, and surges.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -265,15 +271,15 @@ const sections = [
               <span>
                 <strong>Modular UPS architecture:</strong> Large data centres use modular UPS frames
                 where individual power modules (typically 20 to 75 kW each) can be hot-swapped
-                without interrupting the load. This enables N+1 redundancy within a single frame
-                and allows capacity to grow with the IT load.
+                without interrupting the load. This enables N+1 redundancy within a single frame and
+                allows capacity to grow with the IT load.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery management:</strong> VRLA (Valve Regulated Lead Acid) batteries
-                are most common, but lithium-ion battery systems are increasingly adopted for their
+                <strong>Battery management:</strong> VRLA (Valve Regulated Lead Acid) batteries are
+                most common, but lithium-ion battery systems are increasingly adopted for their
                 higher energy density, longer life, and faster recharge capability. Battery rooms
                 require ventilation to BS EN 50272-2 to manage hydrogen gas evolution.
               </span>
@@ -298,9 +304,10 @@ const sections = [
     content: (
       <>
         <p>
-          To achieve Tier III and IV availability, every server rack must be fed from two independent
-          power paths, each capable of carrying the full rack load independently. This A-feed and
-          B-feed architecture must be maintained from the utility supply all the way to the rack PDU.
+          To achieve Tier III and IV availability, every server rack must be fed from two
+          independent power paths, each capable of carrying the full rack load independently. This
+          A-feed and B-feed architecture must be maintained from the utility supply all the way to
+          the rack PDU.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -318,29 +325,29 @@ const sections = [
               <span>
                 <strong>Rack PDU types:</strong> Basic PDUs simply distribute power to outlets.
                 Metered PDUs add input current monitoring. Switched PDUs enable individual outlet
-                switching. Intelligent PDUs add outlet-level monitoring, environmental sensors,
-                and remote access via IP. For new data centre installations, intelligent PDUs are
+                switching. Intelligent PDUs add outlet-level monitoring, environmental sensors, and
+                remote access via IP. For new data centre installations, intelligent PDUs are
                 strongly recommended for load balancing visibility and fault diagnosis.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase balance:</strong> Data hall PDUs are typically three-phase
-                32A or 63A with single-phase outlet circuits. Care must be taken during
-                commissioning to balance loads across all three phases. Imbalance exceeding 10 per
-                cent at the main distribution board should be corrected to maintain neutral conductor
-                integrity and minimise UPS capacity waste.
+                <strong>Three-phase balance:</strong> Data hall PDUs are typically three-phase 32A
+                or 63A with single-phase outlet circuits. Care must be taken during commissioning to
+                balance loads across all three phases. Imbalance exceeding 10 per cent at the main
+                distribution board should be corrected to maintain neutral conductor integrity and
+                minimise UPS capacity waste.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Busway systems:</strong> High-density data halls increasingly use
-                overhead busway (busbar trunking) systems rather than fixed cable runs to the
-                racks. Busway allows tap-off boxes to be repositioned as rack layouts change,
-                significantly reducing reconfiguration costs. The busway must be protected to the
-                same level as the circuit breaker feeding it.
+                <strong>Busway systems:</strong> High-density data halls increasingly use overhead
+                busway (busbar trunking) systems rather than fixed cable runs to the racks. Busway
+                allows tap-off boxes to be repositioned as rack layouts change, significantly
+                reducing reconfiguration costs. The busway must be protected to the same level as
+                the circuit breaker feeding it.
               </span>
             </li>
           </ul>
@@ -355,8 +362,8 @@ const sections = [
       <>
         <p>
           Correct earthing is critical in data centre environments. IT equipment is highly sensitive
-          to earth potential differences and conducted electrical noise. BS 7671:2018+A3:2024
-          and the IET Code of Practice for Earthing recommend TN-S earthing for IT-sensitive
+          to earth potential differences and conducted electrical noise. BS 7671:2018+A3:2024 and
+          the IET Code of Practice for Earthing recommend TN-S earthing for IT-sensitive
           installations.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -364,11 +371,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-S system:</strong> Neutral (N) and Protective Earth (PE) conductors
-                are kept separate throughout the installation. The neutral is connected to earth
-                at the supply transformer star point only. This prevents earth fault current
-                returning via the neutral and minimises the potential for conducted noise on
-                sensitive IT equipment.
+                <strong>TN-S system:</strong> Neutral (N) and Protective Earth (PE) conductors are
+                kept separate throughout the installation. The neutral is connected to earth at the
+                supply transformer star point only. This prevents earth fault current returning via
+                the neutral and minimises the potential for conducted noise on sensitive IT
+                equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -387,18 +394,18 @@ const sections = [
                 <strong>Earth electrode systems:</strong> Where TN-S supply is not available from
                 the utility (many UK utility supplies are TN-C-S), an independent earth electrode
                 system must be installed and the supply converted to TN-S at the main LV intake.
-                Earth electrode resistance should be measured to confirm compliance with
-                Regulation 542.2 of BS 7671.
+                Earth electrode resistance should be measured to confirm compliance with Regulation
+                542.2 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Generator earthing:</strong> When a generator operates in island mode
-                (disconnected from the utility), it must have its own earthing arrangement.
-                This typically means the generator neutral is connected to an earth electrode at
-                the generator terminals, with the utility neutral link in the ATS opened when
-                the generator is running.
+                (disconnected from the utility), it must have its own earthing arrangement. This
+                typically means the generator neutral is connected to an earth electrode at the
+                generator terminals, with the utility neutral link in the ATS opened when the
+                generator is running.
               </span>
             </li>
           </ul>
@@ -413,48 +420,48 @@ const sections = [
       <>
         <p>
           Busbar trunking systems and diesel generator sets form the backbone of high-availability
-          data centre power infrastructure. These systems must be designed, installed, and maintained
-          to the highest standards to ensure that the electrical infrastructure never becomes
-          the weak link in the availability chain.
+          data centre power infrastructure. These systems must be designed, installed, and
+          maintained to the highest standards to ensure that the electrical infrastructure never
+          becomes the weak link in the availability chain.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main LV switchboard (MLVS):</strong> The main LV switchboard receives
-                the incoming supply from the HV/LV transformer(s) and distributes power to UPS
-                systems, mechanical plant, and lighting. For redundant facilities, two or more
-                MLVS busbars are fed from separate transformers and linked by a bus-section circuit
-                breaker with automatic transfer logic.
+                <strong>Main LV switchboard (MLVS):</strong> The main LV switchboard receives the
+                incoming supply from the HV/LV transformer(s) and distributes power to UPS systems,
+                mechanical plant, and lighting. For redundant facilities, two or more MLVS busbars
+                are fed from separate transformers and linked by a bus-section circuit breaker with
+                automatic transfer logic.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Horizontal busbar trunking:</strong> High-current busbar trunking
-                (typically 1,600A to 6,300A) is used to distribute power from the MLVS to zone
-                distribution boards across the data hall. Busway joints must be torqued to
-                manufacturer specification and thermally imaged during commissioning.
+                <strong>Horizontal busbar trunking:</strong> High-current busbar trunking (typically
+                1,600A to 6,300A) is used to distribute power from the MLVS to zone distribution
+                boards across the data hall. Busway joints must be torqued to manufacturer
+                specification and thermally imaged during commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Generator sets:</strong> Standby generators are sized to carry the full
-                data centre load on generator power alone, including mechanical cooling plant.
-                Step-load acceptance testing confirms the generator can pick up the full load in
-                stages without voltage or frequency excursions outside acceptable limits (typically
-                ±10% voltage, ±2% frequency per IEC 60034).
+                <strong>Generator sets:</strong> Standby generators are sized to carry the full data
+                centre load on generator power alone, including mechanical cooling plant. Step-load
+                acceptance testing confirms the generator can pick up the full load in stages
+                without voltage or frequency excursions outside acceptable limits (typically ±10%
+                voltage, ±2% frequency per IEC 60034).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fuel systems:</strong> Generator fuel storage must comply with the Dangerous
-                Substances and Explosive Atmospheres Regulations 2002 (DSEAR) and Environment
-                Agency requirements for oil storage above 200 litres. Bunded tanks with a minimum
-                24-hour fuel supply (72 hours for critical facilities) are standard.
+                Substances and Explosive Atmospheres Regulations 2002 (DSEAR) and Environment Agency
+                requirements for oil storage above 200 litres. Bunded tanks with a minimum 24-hour
+                fuel supply (72 hours for critical facilities) are standard.
               </span>
             </li>
           </ul>
@@ -477,11 +484,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CRAC/CRAH units:</strong> Computer Room Air Conditioning (CRAC) and
-                Computer Room Air Handler (CRAH) units are typically three-phase 32A or 63A
-                circuits. Variable speed drives (VSDs) on fans and compressors significantly
-                reduce power consumption at part-load. Each unit should be on an independent
-                circuit with local isolation.
+                <strong>CRAC/CRAH units:</strong> Computer Room Air Conditioning (CRAC) and Computer
+                Room Air Handler (CRAH) units are typically three-phase 32A or 63A circuits.
+                Variable speed drives (VSDs) on fans and compressors significantly reduce power
+                consumption at part-load. Each unit should be on an independent circuit with local
+                isolation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,8 +496,8 @@ const sections = [
               <span>
                 <strong>Chiller plant:</strong> Larger data centres use chilled water systems with
                 electric chillers. Chillers are typically the largest single electrical loads, often
-                400 kW to several MW per unit. Chiller electrical connections must account for
-                high starting currents and the specific requirements of the chiller manufacturer.
+                400 kW to several MW per unit. Chiller electrical connections must account for high
+                starting currents and the specific requirements of the chiller manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -525,8 +532,8 @@ const sections = [
               <span>
                 <strong>IT load calculation:</strong> Total IT load is calculated from the sum of
                 rack power densities. Nameplate power ratings typically overstate actual consumption
-                by 40 to 60 per cent. Measured data from the client's equipment data sheets or
-                power metering is preferred over nameplate values.
+                by 40 to 60 per cent. Measured data from the client's equipment data sheets or power
+                metering is preferred over nameplate values.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -534,8 +541,8 @@ const sections = [
               <span>
                 <strong>Mechanical and lighting load:</strong> Add cooling plant, UPS losses,
                 lighting, and building management systems to the IT load to determine the total
-                facility load. UPS losses at full load are typically 3 to 5 per cent of IT load
-                for modern double-conversion units.
+                facility load. UPS losses at full load are typically 3 to 5 per cent of IT load for
+                modern double-conversion units.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -572,8 +579,9 @@ const sections = [
       <>
         <p>
           Data centre electrical work is a high-value specialism for UK electricians and electrical
-          contractors. The combination of 24/7 operational constraints, high redundancy requirements,
-          and complex systems means that experienced data centre electricians command premium rates.
+          contractors. The combination of 24/7 operational constraints, high redundancy
+          requirements, and complex systems means that experienced data centre electricians command
+          premium rates.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -600,8 +608,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certification app
                   </SEOInternalLink>{' '}
-                  to complete Electrical Installation Certificates and Minor Works Certificates
-                  on site, with instant PDF export for the client's compliance records.
+                  to complete Electrical Installation Certificates and Minor Works Certificates on
+                  site, with instant PDF export for the client's compliance records.
                 </p>
               </div>
             </div>
@@ -609,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage data centre electrical projects with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -646,7 +654,7 @@ export default function DataCentreElectricalPage() {
       faqHeading="Frequently Asked Questions — Data Centre Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Data Centre Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

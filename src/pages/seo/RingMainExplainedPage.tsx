@@ -613,7 +613,7 @@ export default function RingMainExplainedPage() {
       faqHeading="Frequently Asked Questions About Ring Final Circuits"
       relatedPages={relatedPages}
       ctaHeading="Test and Certify With Confidence"
-      ctaSubheading="Elec-Mate's EICR and EIC apps include complete ring circuit test schedules with voice entry and automatic validation. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's EICR and EIC apps include complete ring circuit test schedules with voice entry and automatic validation. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

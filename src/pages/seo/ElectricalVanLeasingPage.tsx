@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How long is a typical van lease for an electrician?',
     answer:
-      'Standard contract hire agreements run for 24, 36, or 48 months. For electricians, 36 or 48 months is most common — this keeps monthly payments lower and gives you a new van every three to four years with a full manufacturer warranty. Shorter terms have higher monthly payments but give more flexibility if your business needs change. The initial rental (effectively a deposit) is typically equivalent to three to six months\' rental payments and is not refundable if you end the lease early.',
+      "Standard contract hire agreements run for 24, 36, or 48 months. For electricians, 36 or 48 months is most common — this keeps monthly payments lower and gives you a new van every three to four years with a full manufacturer warranty. Shorter terms have higher monthly payments but give more flexibility if your business needs change. The initial rental (effectively a deposit) is typically equivalent to three to six months' rental payments and is not refundable if you end the lease early.",
   },
   {
     question: 'What happens if I exceed the mileage limit on my van lease?',
@@ -85,7 +85,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician-tool-insurance-2025',
     title: 'Electrician Tool Insurance 2025',
-    description: 'What\'s covered, what\'s excluded, and how to choose the right policy.',
+    description: "What's covered, what's excluded, and how to choose the right policy.",
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -124,8 +124,8 @@ const sections = [
       <>
         <p>
           Choosing the right finance method for your van has significant tax and cash flow
-          implications. The best option depends on your VAT registration status, the structure
-          of your business, and how much flexibility you need.
+          implications. The best option depends on your VAT registration status, the structure of
+          your business, and how much flexibility you need.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -134,9 +134,9 @@ const sections = [
               <span>
                 <strong>Contract hire (operating lease)</strong> — fixed monthly payments for a set
                 term (24 to 48 months). You return the van at the end. Payments are 100%
-                tax-deductible. VAT is 100% reclaimable if the van is used exclusively for
-                business. No residual value risk. Best for VAT-registered electricians who want
-                simplicity and predictable costs.
+                tax-deductible. VAT is 100% reclaimable if the van is used exclusively for business.
+                No residual value risk. Best for VAT-registered electricians who want simplicity and
+                predictable costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -144,27 +144,27 @@ const sections = [
               <span>
                 <strong>Finance lease</strong> — similar to contract hire but you bear the residual
                 value risk at the end of the term. You typically sell the van (the leasing company
-                takes a portion of the proceeds) or make a lump sum payment to own it. Slightly
-                more flexible than contract hire for those who want the option to keep the van.
+                takes a portion of the proceeds) or make a lump sum payment to own it. Slightly more
+                flexible than contract hire for those who want the option to keep the van.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hire purchase (HP)</strong> — you pay a deposit (typically 10 to 20%),
-                then fixed monthly instalments, then a small option to purchase fee. You own the
-                van at the end. Only the interest portion of HP payments is tax-deductible. The
-                van's capital cost is recovered via Annual Investment Allowance (AIA) — allowing
-                100% of the cost in Year 1 for most businesses. Good for those who want to own
-                the van and benefit from full capital allowances.
+                <strong>Hire purchase (HP)</strong> — you pay a deposit (typically 10 to 20%), then
+                fixed monthly instalments, then a small option to purchase fee. You own the van at
+                the end. Only the interest portion of HP payments is tax-deductible. The van's
+                capital cost is recovered via Annual Investment Allowance (AIA) — allowing 100% of
+                the cost in Year 1 for most businesses. Good for those who want to own the van and
+                benefit from full capital allowances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outright purchase</strong> — maximum flexibility, no monthly commitments,
-                no mileage limits. Tax relief via Annual Investment Allowance (AIA) in Year 1. Best
-                for businesses with strong cash reserves that want to minimise ongoing costs. Less
+                <strong>Outright purchase</strong> — maximum flexibility, no monthly commitments, no
+                mileage limits. Tax relief via Annual Investment Allowance (AIA) in Year 1. Best for
+                businesses with strong cash reserves that want to minimise ongoing costs. Less
                 favourable for cash flow in Year 1 due to the upfront outlay.
               </span>
             </li>
@@ -179,19 +179,18 @@ const sections = [
     content: (
       <>
         <p>
-          Van leasing is tax-efficient for the majority of electricians, particularly those who
-          are VAT registered. Understanding the tax treatment helps you compare leasing against
-          the alternatives on a true after-tax cost basis.
+          Van leasing is tax-efficient for the majority of electricians, particularly those who are
+          VAT registered. Understanding the tax treatment helps you compare leasing against the
+          alternatives on a true after-tax cost basis.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>100% VAT reclaim</strong> — if you are VAT registered and the van is
-                used exclusively for business, reclaim 100% of the VAT on each monthly rental
-                payment. On a £400/month ex-VAT lease, you reclaim £80/month in VAT — £960 per
-                year.
+                <strong>100% VAT reclaim</strong> — if you are VAT registered and the van is used
+                exclusively for business, reclaim 100% of the VAT on each monthly rental payment. On
+                a £400/month ex-VAT lease, you reclaim £80/month in VAT — £960 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -200,24 +199,24 @@ const sections = [
                 <strong>Income tax / corporation tax deduction</strong> — lease payments are a
                 business expense, deductible against profits. A sole trader in the higher rate tax
                 band saves 40% of the lease cost in income tax. On £400/month ex-VAT, the net
-                after-tax cost is £240/month — a significantly different proposition to the
-                headline rental.
+                after-tax cost is £240/month — a significantly different proposition to the headline
+                rental.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No depreciation risk</strong> — you never own the van, so you are never
-                exposed to the risk of its value falling more than expected. Electric van values
-                in particular have been volatile — contract hire insulates you from this risk.
+                exposed to the risk of its value falling more than expected. Electric van values in
+                particular have been volatile — contract hire insulates you from this risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fixed cost for budgeting</strong> — contract hire gives you a fixed monthly
-                cost for the term, making budgeting straightforward. No unexpected repair bills
-                if you add a maintenance package, and no worry about residual value at the end.
+                cost for the term, making budgeting straightforward. No unexpected repair bills if
+                you add a maintenance package, and no worry about residual value at the end.
               </span>
             </li>
           </ul>
@@ -241,17 +240,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2025/26 van BIK rate — £4,020</strong> — this is added to your taxable
-                income. Basic rate taxpayer: £804 extra tax. Higher rate taxpayer: £1,608 extra
-                tax. Employer (or yourself as director) also pays Class 1A NIC at 13.8% on the
-                BIK value: approximately £555 per year.
+                income. Basic rate taxpayer: £804 extra tax. Higher rate taxpayer: £1,608 extra tax.
+                Employer (or yourself as director) also pays Class 1A NIC at 13.8% on the BIK value:
+                approximately £555 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fuel benefit — £769 flat rate</strong> — if you (or your company) pay for
-                fuel used on private journeys, an additional fuel benefit charge of £769 applies
-                for 2025/26. This stacks on top of the van BIK.
+                fuel used on private journeys, an additional fuel benefit charge of £769 applies for
+                2025/26. This stacks on top of the van BIK.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -259,9 +258,9 @@ const sections = [
               <span>
                 <strong>Avoiding BIK — business use only</strong> — if the van is genuinely only
                 used for business travel (including travelling to temporary workplaces), no BIK
-                arises. HMRC allows commuting to a temporary workplace (where you work for less
-                than 24 months) as business travel. Keep a mileage log and have a written company
-                vehicle policy to evidence business-only use if HMRC ever enquires.
+                arises. HMRC allows commuting to a temporary workplace (where you work for less than
+                24 months) as business travel. Keep a mileage log and have a written company vehicle
+                policy to evidence business-only use if HMRC ever enquires.
               </span>
             </li>
           </ul>
@@ -284,38 +283,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ford Transit Custom (SWB)</strong> — the most popular electrician's van
-                in the UK. 1,000 to 1,200kg payload, excellent racking compatibility, strong
-                dealer network, and widespread parts availability. The 2.0L EcoBlue diesel is
-                reliable and economical. A good mid-size option for domestic and light commercial
-                work. Available as plug-in hybrid from 2024.
+                <strong>Ford Transit Custom (SWB)</strong> — the most popular electrician's van in
+                the UK. 1,000 to 1,200kg payload, excellent racking compatibility, strong dealer
+                network, and widespread parts availability. The 2.0L EcoBlue diesel is reliable and
+                economical. A good mid-size option for domestic and light commercial work. Available
+                as plug-in hybrid from 2024.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vauxhall Vivaro / Peugeot Expert / Citroën Dispatch / Fiat Scudo</strong>
-                {' '}— the Stellantis platform vans are popular alternatives offering competitive
-                lease rates, good payload (typically 900 to 1,100kg), and an efficient diesel
-                powertrain. Electric versions (e-Vivaro, e-Expert) available with up to 200 miles
-                WLTP range — viable for electricians not travelling excessive daily distances.
+                <strong>Vauxhall Vivaro / Peugeot Expert / Citroën Dispatch / Fiat Scudo</strong> —
+                the Stellantis platform vans are popular alternatives offering competitive lease
+                rates, good payload (typically 900 to 1,100kg), and an efficient diesel powertrain.
+                Electric versions (e-Vivaro, e-Expert) available with up to 200 miles WLTP range —
+                viable for electricians not travelling excessive daily distances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mercedes-Benz Sprinter (MWB)</strong> — the choice for electricians on
-                larger commercial or industrial projects who need maximum load space. 900 to
-                1,200kg payload in MWB form. Higher lease cost than Transit Custom but excellent
-                build quality and strong residual values. Available with diesel or plug-in
-                electric drivetrains.
+                larger commercial or industrial projects who need maximum load space. 900 to 1,200kg
+                payload in MWB form. Higher lease cost than Transit Custom but excellent build
+                quality and strong residual values. Available with diesel or plug-in electric
+                drivetrains.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Truck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Volkswagen Transporter T6.1 / T7</strong> — popular with electricians
-                who value comfort and brand image on customer-facing domestic work. Slightly lower
+                <strong>Volkswagen Transporter T6.1 / T7</strong> — popular with electricians who
+                value comfort and brand image on customer-facing domestic work. Slightly lower
                 payload (around 800 to 1,000kg) but excellent reliability and strong residual
                 values. Commands higher lease rates than equivalent Transit Custom.
               </span>
@@ -331,27 +330,26 @@ const sections = [
     content: (
       <>
         <p>
-          Van lease costs vary significantly depending on the van model, term length, annual
-          mileage allowance, and your credit profile. The costs below are indicative ex-VAT
-          figures for 36-month contract hire at 10,000 miles per year, with a 3-month initial
-          rental.
+          Van lease costs vary significantly depending on the van model, term length, annual mileage
+          allowance, and your credit profile. The costs below are indicative ex-VAT figures for
+          36-month contract hire at 10,000 miles per year, with a 3-month initial rental.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ford Transit Custom SWB (diesel)</strong> — approximately £280 to £380
-                per month ex-VAT. Initial rental: approximately £840 to £1,140. Total 3-year
-                commitment: approximately £11,000 to £14,700 ex-VAT before VAT reclaim.
+                <strong>Ford Transit Custom SWB (diesel)</strong> — approximately £280 to £380 per
+                month ex-VAT. Initial rental: approximately £840 to £1,140. Total 3-year commitment:
+                approximately £11,000 to £14,700 ex-VAT before VAT reclaim.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vauxhall Vivaro SWB (diesel)</strong> — approximately £250 to £340
-                per month ex-VAT. Often slightly cheaper than the Transit Custom on comparable
-                specs. Initial rental: approximately £750 to £1,020.
+                <strong>Vauxhall Vivaro SWB (diesel)</strong> — approximately £250 to £340 per month
+                ex-VAT. Often slightly cheaper than the Transit Custom on comparable specs. Initial
+                rental: approximately £750 to £1,020.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -366,17 +364,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric van premium</strong> — electric versions of the above vans
-                typically carry a £50 to £150/month premium over diesel equivalents. This premium
-                is partially offset by lower fuel costs (charging vs diesel) and lower servicing
-                costs, but the payback period depends heavily on mileage and charging costs.
+                typically carry a £50 to £150/month premium over diesel equivalents. This premium is
+                partially offset by lower fuel costs (charging vs diesel) and lower servicing costs,
+                but the payback period depends heavily on mileage and charging costs.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Always compare quotes from multiple lease brokers and manufacturer finance arms. Lease
-          deals change monthly and significant savings are available by timing your agreement
-          around end-of-quarter fleet deals from manufacturers.
+          deals change monthly and significant savings are available by timing your agreement around
+          end-of-quarter fleet deals from manufacturers.
         </p>
       </>
     ),
@@ -413,19 +411,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Racking and accessories</strong> — confirm whether you can fit racking,
-                roof bars, or other accessories to the van. Most leasing companies permit
-                professional racking that can be removed without damage, but always get written
-                confirmation. Accessories fitted by the leasing company (e.g., reversing cameras,
-                ply lining) can often be added to the contract.
+                <strong>Racking and accessories</strong> — confirm whether you can fit racking, roof
+                bars, or other accessories to the van. Most leasing companies permit professional
+                racking that can be removed without damage, but always get written confirmation.
+                Accessories fitted by the leasing company (e.g., reversing cameras, ply lining) can
+                often be added to the contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Early termination</strong> — understand the cost of ending the lease early.
-                Most contract hire agreements require you to pay 50 to 100% of remaining rentals
-                on early termination. This can be very costly if your business circumstances change.
+                Most contract hire agreements require you to pay 50 to 100% of remaining rentals on
+                early termination. This can be very costly if your business circumstances change.
               </span>
             </li>
           </ul>
@@ -448,27 +446,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What's typically covered</strong> — all scheduled servicing, MOT (from
-                Year 3), tyres (subject to a fair wear and tear policy), replacement pads and
-                discs, and breakdown assistance. Some packages also include replacement vehicle
-                cover, which is particularly valuable for electricians who cannot work without
-                transport.
+                <strong>What's typically covered</strong> — all scheduled servicing, MOT (from Year
+                3), tyres (subject to a fair wear and tear policy), replacement pads and discs, and
+                breakdown assistance. Some packages also include replacement vehicle cover, which is
+                particularly valuable for electricians who cannot work without transport.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical cost</strong> — maintenance packages for a mid-size diesel van
-                add approximately £30 to £60 per month to the lease cost. This is fully
-                tax-deductible and VAT-reclaimable on the same basis as the lease rental.
+                <strong>Typical cost</strong> — maintenance packages for a mid-size diesel van add
+                approximately £30 to £60 per month to the lease cost. This is fully tax-deductible
+                and VAT-reclaimable on the same basis as the lease rental.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Is it worth it?</strong> — for high-mileage vans (15,000+ miles per year)
-                the package is generally worth taking. Tyres alone on a working van can cost £400
-                to £600 per axle. For lower mileage, the package is marginal — compare the total
+                the package is generally worth taking. Tyres alone on a working van can cost £400 to
+                £600 per axle. For lower mileage, the package is marginal — compare the total
                 package cost against your estimated actual maintenance spend.
               </span>
             </li>
@@ -484,9 +481,10 @@ const sections = [
       <>
         <p>
           Your van is one of your biggest business costs — making sure it earns its keep means
-          keeping it fully utilised and factoring its cost correctly into every job quote. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink>{' '}
-          let you include van costs, fuel, and travel time automatically in every estimate.
+          keeping it fully utilised and factoring its cost correctly into every job quote.
+          Elec-Mate's{' '}
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> let
+          you include van costs, fuel, and travel time automatically in every estimate.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -524,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and schedule jobs with Elec-Mate — built for UK electricians"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. Include van costs in every quote automatically. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. Include van costs in every quote automatically. 7-day free trial."
           icon={Truck}
         />
       </>
@@ -561,7 +559,7 @@ export default function ElectricalVanLeasingPage() {
       faqHeading="Frequently Asked Questions About Van Leasing for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business smarter with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job scheduling, and electrical certificates. 7-day free trial, cancel anytime."
     />
   );
 }

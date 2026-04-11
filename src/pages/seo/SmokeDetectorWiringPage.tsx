@@ -577,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Wire, test, certify, and invoice smoke detectors"
-          description="From quoting to certification to invoicing — do the entire smoke detector job on your phone. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="From quoting to certification to invoicing — do the entire smoke detector job on your phone. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Bell}
         />
       </>
@@ -614,7 +614,7 @@ export default function SmokeDetectorWiringPage() {
       faqHeading="Frequently Asked Questions About Smoke Detector Wiring"
       relatedPages={relatedPages}
       ctaHeading="Certificate Smoke Detector Installations on Your Phone"
-      ctaSubheading="EIC and Minor Works certificates, AI observation coding, quoting, and invoicing — all in one app. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="EIC and Minor Works certificates, AI observation coding, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

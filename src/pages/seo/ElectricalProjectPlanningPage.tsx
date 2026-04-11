@@ -638,7 +638,7 @@ export default function ElectricalProjectPlanningPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional project tools for electrical contractors"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered cost engineering, professional testing and certification, and digital documentation. Plan better, deliver better. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered cost engineering, professional testing and certification, and digital documentation. Plan better, deliver better. 7-day free trial, cancel anytime."
     />
   );
 }

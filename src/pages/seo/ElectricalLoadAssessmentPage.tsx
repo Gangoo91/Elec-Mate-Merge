@@ -591,7 +591,7 @@ export default function ElectricalLoadAssessmentPage() {
         },
       ]}
       ctaHeading="Calculate Maximum Demand in Under a Minute"
-      ctaSubheading="BS 7671 diversity factors applied automatically, instant supply adequacy check, and DNO notification triggers flagged. Join 430+ UK electricians using Elec-Mate for fast, accurate load assessments. 7-day free trial."
+      ctaSubheading="BS 7671 diversity factors applied automatically, instant supply adequacy check, and DNO notification triggers flagged. Join 1,000+ UK electricians using Elec-Mate for fast, accurate load assessments. 7-day free trial."
     />
   );
 }

@@ -90,48 +90,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/health-safety-policy-electrician',
     title: 'Health and Safety Policy',
-    description:
-      'Template structure and legal requirements for your H&S policy.',
+    description: 'Template structure and legal requirements for your H&S policy.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-business-plan-template',
     title: 'Electrical Business Plan',
-    description:
-      'Business plan template including compliance and operational planning.',
+    description: 'Business plan template including compliance and operational planning.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'Commercial clients expect GDPR compliance — get it right before you tender.',
+    description: 'Commercial clients expect GDPR compliance — get it right before you tender.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/partnership-vs-sole-trader-vs-ltd-electrician',
     title: 'Sole Trader vs Ltd',
-    description:
-      'Business structure affects your data protection obligations.',
+    description: 'Business structure affects your data protection obligations.',
     icon: Users,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Securely store and manage electrical certificates digitally.',
+    description: 'Securely store and manage electrical certificates digitally.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/how-to-get-first-electrical-customer',
     title: 'Getting Your First Customer',
-    description:
-      'Starting your electrical business with the right compliance foundations.',
+    description: 'Starting your electrical business with the right compliance foundations.',
     icon: Briefcase,
     category: 'Guide',
   },
@@ -148,24 +142,24 @@ const sections = [
     content: (
       <>
         <p>
-          If you hold any personal data about customers — their name, address, phone number,
-          email, or photos of their property — you are a "data controller" under the UK
-          General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
-          This applies to every electrician, whether you are a sole trader with a notebook
-          of customer numbers or a large contractor with a CRM system.
+          If you hold any personal data about customers — their name, address, phone number, email,
+          or photos of their property — you are a "data controller" under the UK General Data
+          Protection Regulation (UK GDPR) and the Data Protection Act 2018. This applies to every
+          electrician, whether you are a sole trader with a notebook of customer numbers or a large
+          contractor with a CRM system.
         </p>
         <p>
-          GDPR is not as complicated as it sounds. For most electricians, compliance means:
-          register with the ICO (£40/year), understand what data you hold and why, keep it
-          secure, tell customers what you do with their data, and delete it when you no longer
-          need it. This guide covers each step in practical terms.
+          GDPR is not as complicated as it sounds. For most electricians, compliance means: register
+          with the ICO (£40/year), understand what data you hold and why, keep it secure, tell
+          customers what you do with their data, and delete it when you no longer need it. This
+          guide covers each step in practical terms.
         </p>
         <p>
-          The consequences of non-compliance range from ICO enforcement notices and fines
-          (up to £17.5 million or 4% of turnover, though fines for small businesses are
-          typically much smaller) to criminal prosecution for failure to register (fines up
-          to £4,350). More practically, commercial clients increasingly require GDPR
-          compliance as a condition of awarding contracts.
+          The consequences of non-compliance range from ICO enforcement notices and fines (up to
+          £17.5 million or 4% of turnover, though fines for small businesses are typically much
+          smaller) to criminal prosecution for failure to register (fines up to £4,350). More
+          practically, commercial clients increasingly require GDPR compliance as a condition of
+          awarding contracts.
         </p>
       </>
     ),
@@ -175,9 +169,7 @@ const sections = [
     heading: 'What Personal Data Do You Hold?',
     content: (
       <>
-        <p>
-          More than you think. Here is what most electricians hold:
-        </p>
+        <p>More than you think. Here is what most electricians hold:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2 text-white text-sm">
             <div>
@@ -241,8 +233,8 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>GDPR applies to all of this</strong> — digital and paper records alike. If
-          it identifies a living individual, it is personal data.
+          <strong>GDPR applies to all of this</strong> — digital and paper records alike. If it
+          identifies a living individual, it is personal data.
         </p>
       </>
     ),
@@ -253,8 +245,8 @@ const sections = [
     content: (
       <>
         <p>
-          GDPR requires a "lawful basis" for processing personal data. For electricians,
-          three bases are relevant:
+          GDPR requires a "lawful basis" for processing personal data. For electricians, three bases
+          are relevant:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -262,9 +254,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400" /> Contract
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              You need the data to perform a contract with the customer — the electrical work
-              they have hired you to do. You need their name, address, and contact details to
-              visit their property, communicate about the work, and provide certificates.
+              You need the data to perform a contract with the customer — the electrical work they
+              have hired you to do. You need their name, address, and contact details to visit their
+              property, communicate about the work, and provide certificates.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -272,10 +264,9 @@ const sections = [
               <Shield className="w-5 h-5 text-green-400" /> Legal Obligation
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              You are legally required to keep certain records: tax records (HMRC requires 5
-              years), electrical certificates (required by Building Regulations), and health
-              and safety records. You do not need consent to keep data that you are legally
-              required to hold.
+              You are legally required to keep certain records: tax records (HMRC requires 5 years),
+              electrical certificates (required by Building Regulations), and health and safety
+              records. You do not need consent to keep data that you are legally required to hold.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -283,10 +274,10 @@ const sections = [
               <Eye className="w-5 h-5 text-purple-400" /> Legitimate Interests
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              You have a legitimate business interest in keeping customer records for
-              aftercare, warranty, future work, and dispute resolution. You must balance your
-              interest against the customer&apos;s privacy — for most electrical work, this
-              balance clearly favours keeping the records.
+              You have a legitimate business interest in keeping customer records for aftercare,
+              warranty, future work, and dispute resolution. You must balance your interest against
+              the customer&apos;s privacy — for most electrical work, this balance clearly favours
+              keeping the records.
             </p>
           </div>
         </div>
@@ -308,9 +299,9 @@ const sections = [
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Marketing communications</strong> — if you want to add customers to a
-                mailing list, send promotional emails or texts, or contact them about services
-                they did not ask about, you need their explicit, freely given consent. They
-                must actively opt in (no pre-ticked boxes).
+                mailing list, send promotional emails or texts, or contact them about services they
+                did not ask about, you need their explicit, freely given consent. They must actively
+                opt in (no pre-ticked boxes).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -324,21 +315,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sharing data with third parties</strong> — beyond what is necessary for
-                the work (competent person scheme, HMRC), sharing data with other companies
-                requires consent.
+                <strong>Sharing data with third parties</strong> — beyond what is necessary for the
+                work (competent person scheme, HMRC), sharing data with other companies requires
+                consent.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          <strong>Privacy notice:</strong> You must inform customers what data you collect and
-          why. A simple paragraph on your quote, terms, or website is sufficient. Example:
-          "We collect your name, address, and contact details to provide electrical services,
-          issue certificates, and maintain records as required by law. We keep your data
-          securely and do not share it with third parties except as required for certification
-          and tax purposes. You can request to see, correct, or delete your data at any time
-          by contacting us."
+          <strong>Privacy notice:</strong> You must inform customers what data you collect and why.
+          A simple paragraph on your quote, terms, or website is sufficient. Example: "We collect
+          your name, address, and contact details to provide electrical services, issue
+          certificates, and maintain records as required by law. We keep your data securely and do
+          not share it with third parties except as required for certification and tax purposes. You
+          can request to see, correct, or delete your data at any time by contacting us."
         </p>
       </>
     ),
@@ -380,10 +370,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Annual data review:</strong> Once a year, review your customer records and
-          delete data you no longer need. Old enquiries, lapsed marketing lists, and records
-          beyond their retention period should be securely deleted (digital) or shredded
-          (paper).
+          <strong>Annual data review:</strong> Once a year, review your customer records and delete
+          data you no longer need. Old enquiries, lapsed marketing lists, and records beyond their
+          retention period should be securely deleted (digital) or shredded (paper).
         </p>
       </>
     ),
@@ -394,8 +383,8 @@ const sections = [
     content: (
       <>
         <p>
-          A data breach is any event where personal data is accidentally or unlawfully
-          accessed, lost, destroyed, or disclosed. Common examples for electricians:
+          A data breach is any event where personal data is accidentally or unlawfully accessed,
+          lost, destroyed, or disclosed. Common examples for electricians:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -413,17 +402,19 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Sending an email to the wrong customer with another customer&apos;s details</span>
+              <span>
+                Sending an email to the wrong customer with another customer&apos;s details
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          <strong>What to do:</strong> (1) Contain the breach — change passwords, remote-wipe
-          the device, report theft to police. (2) Assess the risk — could the data be used to
-          harm individuals? (3) If there is a risk to individuals, report to the ICO within
-          72 hours using their online breach reporting tool. (4) If there is a high risk,
-          also inform the affected customers. (5) Document everything — the breach, your
-          response, and what you will do to prevent it happening again.
+          <strong>What to do:</strong> (1) Contain the breach — change passwords, remote-wipe the
+          device, report theft to police. (2) Assess the risk — could the data be used to harm
+          individuals? (3) If there is a risk to individuals, report to the ICO within 72 hours
+          using their online breach reporting tool. (4) If there is a high risk, also inform the
+          affected customers. (5) Document everything — the breach, your response, and what you will
+          do to prevent it happening again.
         </p>
       </>
     ),
@@ -438,27 +429,28 @@ const sections = [
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2">Who Must Register</h4>
               <p>
-                Every organisation or sole trader that processes personal data must register
-                with the ICO and pay the data protection fee — unless they qualify for a
-                specific exemption (most electricians do not).
+                Every organisation or sole trader that processes personal data must register with
+                the ICO and pay the data protection fee — unless they qualify for a specific
+                exemption (most electricians do not).
               </p>
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2">Fee Tiers (2026)</h4>
               <p>
-                Micro-organisations (fewer than 10 employees, turnover under £632,000): <strong className="text-yellow-400">£40/year</strong>.
-                Small organisations (fewer than 250 employees, turnover under £36 million): <strong className="text-yellow-400">£60/year</strong>.
-                Large organisations: <strong className="text-yellow-400">£2,900/year</strong>.
-                Most electricians fall into the micro tier at £40/year.
+                Micro-organisations (fewer than 10 employees, turnover under £632,000):{' '}
+                <strong className="text-yellow-400">£40/year</strong>. Small organisations (fewer
+                than 250 employees, turnover under £36 million):{' '}
+                <strong className="text-yellow-400">£60/year</strong>. Large organisations:{' '}
+                <strong className="text-yellow-400">£2,900/year</strong>. Most electricians fall
+                into the micro tier at £40/year.
               </p>
             </div>
             <div className="pb-3">
               <h4 className="font-bold text-white mb-2">How to Register</h4>
               <p>
                 Visit ico.org.uk and complete the online registration form. It takes about 10
-                minutes. You will receive a registration number which you should keep on file.
-                Some commercial clients and accreditation schemes ask for your ICO registration
-                number.
+                minutes. You will receive a registration number which you should keep on file. Some
+                commercial clients and accreditation schemes ask for your ICO registration number.
               </p>
             </div>
           </div>
@@ -483,8 +475,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lock all devices</strong> — PIN, fingerprint, or face unlock on your
-                phone, tablet, and laptop. Enable encryption and remote wipe.
+                <strong>Lock all devices</strong> — PIN, fingerprint, or face unlock on your phone,
+                tablet, and laptop. Enable encryption and remote wipe.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,22 +489,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Secure paper records</strong> — keep job sheets and certificates in a
-                locked cabinet or drawer, not loose in the van.
+                <strong>Secure paper records</strong> — keep job sheets and certificates in a locked
+                cabinet or drawer, not loose in the van.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual data review</strong> — once a year, delete data you no longer
-                need. Old enquiries, expired marketing lists, records beyond retention.
+                <strong>Annual data review</strong> — once a year, delete data you no longer need.
+                Old enquiries, expired marketing lists, records beyond retention.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Back up digital records</strong> — if your phone breaks or is stolen,
-                you need to be able to recover your data. Use cloud backup with encryption.
+                <strong>Back up digital records</strong> — if your phone breaks or is stolen, you
+                need to be able to recover your data. Use cloud backup with encryption.
               </span>
             </li>
           </ul>
@@ -526,9 +518,9 @@ const sections = [
     content: (
       <>
         <p>
-          GDPR compliance for a sole-trader electrician takes about an hour to set up and
-          a few minutes per year to maintain. Register with the ICO, add a privacy notice to
-          your paperwork, lock your devices, and do an annual data review. That is it.
+          GDPR compliance for a sole-trader electrician takes about an hour to set up and a few
+          minutes per year to maintain. Register with the ICO, add a privacy notice to your
+          paperwork, lock your devices, and do an annual data review. That is it.
         </p>
         <SEOAppBridge
           title="Keep customer data secure and organised"
@@ -569,7 +561,7 @@ export default function GDPRForElectriciansPage() {
       faqHeading="Frequently Asked Questions About GDPR for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Keep Customer Data Secure"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for secure customer records, certificates, and invoices. Cloud-encrypted, backed up, always accessible. 7-day free trial, cancel anytime."
     />
   );
 }

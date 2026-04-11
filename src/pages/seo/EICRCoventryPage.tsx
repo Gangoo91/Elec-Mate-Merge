@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Coventry EICR costs are broadly in line with the Midlands average. Expect to pay between £100 and £200 for a two-bedroom flat and £160 to £280 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Coventry City Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'Coventry has a high proportion of post-war rebuilt housing following extensive wartime bombing, alongside 1960s and 1970s social housing and Victorian terraced properties that survived the Blitz. Post-war and mid-century housing commonly returns C2 EICR findings for ageing wiring and absent RCD protection.',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Coventry properties?',
     answer:
-      'Coventry\'s post-war rebuilt housing stock produces characteristic EICR findings. Absent RCD protection on socket circuits is the most common C2 finding under Regulation 411.3.3 of BS 7671. Ageing PVC wiring from the 1960s and 1970s with degraded insulation, inadequate earthing and bonding, overloaded circuits in student HMOs, and consumer units that are inadequate for modern load demands are all common findings. Victorian properties in the Spon End, Chapelfields, and Earlsdon areas that survived wartime bombing may also have older wiring types requiring replacement.',
+      "Coventry's post-war rebuilt housing stock produces characteristic EICR findings. Absent RCD protection on socket circuits is the most common C2 finding under Regulation 411.3.3 of BS 7671. Ageing PVC wiring from the 1960s and 1970s with degraded insulation, inadequate earthing and bonding, overloaded circuits in student HMOs, and consumer units that are inadequate for modern load demands are all common findings. Victorian properties in the Spon End, Chapelfields, and Earlsdon areas that survived wartime bombing may also have older wiring types requiring replacement.",
   },
   {
     question: 'How long does an EICR take in Coventry?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -124,7 +125,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -151,8 +153,8 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and
-          FI observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
+          (Section 631). It is a detailed condition assessment using standardised C1, C2, C3, and FI
+          observation codes. The overall assessment is either Satisfactory or Unsatisfactory.
         </p>
       </>
     ),
@@ -163,31 +165,31 @@ const sections = [
     content: (
       <>
         <p>
-          Coventry EICR prices are broadly in line with the West Midlands average. Below are
-          typical 2026 prices:
+          Coventry EICR prices are broadly in line with the West Midlands average. Below are typical
+          2026 prices:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio / one-bedroom flat</strong> — £85 to £165. Common in the city
-                centre and student areas near Coventry University.
+                <strong>Studio / one-bedroom flat</strong> — £85 to £165. Common in the city centre
+                and student areas near Coventry University.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £100 to £200. Post-war and 1960s purpose-
-                built flats are common across Coventry.
+                <strong>Two-bedroom flat</strong> — £100 to £200. Post-war and 1960s purpose- built
+                flats are common across Coventry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £160 to £280. Post-war rebuilt and 1960s
-                semi-detached properties are the most common house type in Coventry's private
-                rented sector.
+                semi-detached properties are the most common house type in Coventry's private rented
+                sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -222,9 +224,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This has applied to all new tenancies from 1 July 2020 and
-                all existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This has applied to all new tenancies from 1 July 2020 and all
+                existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -238,23 +240,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant notification</strong> — a copy must be provided to tenants within
-                28 days. New tenants must receive it before moving in.
+                <strong>Tenant notification</strong> — a copy must be provided to tenants within 28
+                days. New tenants must receive it before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days. Written confirmation must be provided to the tenant and to Coventry City
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days. Written confirmation must be provided to the tenant and to Coventry City
                 Council if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties</strong> — Coventry City Council can issue civil penalties of
-                up to £30,000 per breach and may revoke HMO licences for persistent non-compliance.
+                <strong>Penalties</strong> — Coventry City Council can issue civil penalties of up
+                to £30,000 per breach and may revoke HMO licences for persistent non-compliance.
               </span>
             </li>
           </ul>
@@ -278,27 +280,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                RCD protection on socket circuits not exceeding 20A. This is the most common C2
-                finding across Coventry's large stock of pre-1990s properties, both post-war
-                rebuilds and Victorian survivals.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
+                protection on socket circuits not exceeding 20A. This is the most common C2 finding
+                across Coventry's large stock of pre-1990s properties, both post-war rebuilds and
+                Victorian survivals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ageing 1960s and 1970s wiring</strong> — Coventry's post-war housing
-                is now 50 to 70 years old. PVC wiring installed during this period is reaching
-                the end of its design life. Brittle insulation, overloaded circuits, and outdated
-                consumer units are common findings.
+                <strong>Ageing 1960s and 1970s wiring</strong> — Coventry's post-war housing is now
+                50 to 70 years old. PVC wiring installed during this period is reaching the end of
+                its design life. Brittle insulation, overloaded circuits, and outdated consumer
+                units are common findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inadequate earthing and bonding</strong> — many post-war Coventry
-                properties have undersized protective conductors and absent main protective
-                bonding to gas and water services. These are frequent C2 findings.
+                <strong>Inadequate earthing and bonding</strong> — many post-war Coventry properties
+                have undersized protective conductors and absent main protective bonding to gas and
+                water services. These are frequent C2 findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,24 +333,24 @@ const sections = [
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
-              Risk of injury exists. Immediate remedial action required. The inspector may
-              recommend disconnecting the circuit. Common in Coventry properties with
-              severely deteriorated wiring or exposed live conductors.
+              Risk of injury exists. Immediate remedial action required. The inspector may recommend
+              disconnecting the circuit. Common in Coventry properties with severely deteriorated
+              wiring or exposed live conductors.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action required. Absent RCD protection
-              (Regulation 411.3.3) and ageing wiring insulation are the most common C2 findings
-              in Coventry.
+              (Regulation 411.3.3) and ageing wiring insulation are the most common C2 findings in
+              Coventry.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
-              Not immediately dangerous. C3 alone does not make the EICR Unsatisfactory. Common
-              in Coventry properties where accessories are older but still functional.
+              Not immediately dangerous. C3 alone does not make the EICR Unsatisfactory. Common in
+              Coventry properties where accessories are older but still functional.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -414,16 +416,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property</strong> — at least every 5 years (legal
-                requirement under the 2020 Regulations).
+                <strong>Private rented property</strong> — at least every 5 years (legal requirement
+                under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years recommended. Coventry
-                properties with 1960s or 1970s wiring should be inspected every 5 years given
-                their age.
+                properties with 1960s or 1970s wiring should be inspected every 5 years given their
+                age.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -437,8 +439,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Change of tenancy</strong> — a new EICR is required before a new tenant
-                moves into any privately rented Coventry property, even if the current EICR has
-                not expired.
+                moves into any privately rented Coventry property, even if the current EICR has not
+                expired.
               </span>
             </li>
           </ul>
@@ -487,8 +489,8 @@ const sections = [
       <>
         <p>
           Coventry's large private rented sector, two universities, and substantial stock of aging
-          post-war housing create consistent demand for EICR work. The high proportion of 1960s
-          and 1970s wiring that is now approaching the end of its design life means that EICRs
+          post-war housing create consistent demand for EICR work. The high proportion of 1960s and
+          1970s wiring that is now approaching the end of its design life means that EICRs
           frequently identify remedial work.
         </p>
         <div className="space-y-4 my-4">
@@ -515,13 +517,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Instantly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When the EICR identifies C1 or C2 observations, quote the remedial work on
-                  the day using the{' '}
+                  When the EICR identifies C1 or C2 observations, quote the remedial work on the day
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Coventry landlords face a 28-day deadline — quoting immediately gives you
-                  the best chance of winning the follow-on work.
+                  . Coventry landlords face a 28-day deadline — quoting immediately gives you the
+                  best chance of winning the follow-on work.
                 </p>
               </div>
             </div>
@@ -529,7 +531,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -566,7 +568,7 @@ export default function EICRCoventryPage() {
       faqHeading="Frequently Asked Questions About EICRs in Coventry"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

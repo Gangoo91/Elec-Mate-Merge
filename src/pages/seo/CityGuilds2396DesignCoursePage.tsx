@@ -115,7 +115,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/level-4-electrical-qualification',
     title: 'Level 4 Electrical Qualification',
-    description: 'The next step up from the 2396 for electricians pursuing design and management careers.',
+    description:
+      'The next step up from the 2396 for electricians pursuing design and management careers.',
     icon: Award,
     category: 'Guide',
   },
@@ -162,8 +163,8 @@ const sections = [
         </p>
         <p>
           It is a Level 4 equivalent qualification — a significant step up from the Level 3
-          qualifications that most electricians hold. It demonstrates that you can think
-          through an installation before it is built, not just wire what is on the drawing.
+          qualifications that most electricians hold. It demonstrates that you can think through an
+          installation before it is built, not just wire what is on the drawing.
         </p>
       </>
     ),
@@ -198,8 +199,8 @@ const sections = [
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Self-employed electricians growing their business</strong> — offering design
-                and installation as a package commands higher rates and attracts larger projects that
-                install-only electricians cannot compete for.
+                and installation as a package commands higher rates and attracts larger projects
+                that install-only electricians cannot compete for.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,8 +274,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Circuit Arrangements</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Designing circuit layouts for different installation types. Distribution board
-                  schedules, sub-main calculations, ring and radial circuit design, three-phase
-                  load balancing, and emergency lighting circuits.
+                  schedules, sub-main calculations, ring and radial circuit design, three-phase load
+                  balancing, and emergency lighting circuits.
                 </p>
               </div>
             </div>
@@ -285,9 +286,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Design Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Producing the paperwork: circuit schedules, cable schedules, design specifications,
-                  and supporting calculations. Understanding what documentation is needed for
-                  Building Control, the client, and the installing electrician.
+                  Producing the paperwork: circuit schedules, cable schedules, design
+                  specifications, and supporting calculations. Understanding what documentation is
+                  needed for Building Control, the client, and the installing electrician.
                 </p>
               </div>
             </div>
@@ -326,8 +327,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Show your working</strong> — marks are awarded for the calculation method
-                as well as the correct answer. Even if your final cable size is wrong, you can still
+                <strong>Show your working</strong> — marks are awarded for the calculation method as
+                well as the correct answer. Even if your final cable size is wrong, you can still
                 pick up marks for using the correct formula and approach.
               </span>
             </li>
@@ -349,9 +350,7 @@ const sections = [
     heading: 'Prerequisites and Entry Requirements',
     content: (
       <>
-        <p>
-          The 2396 is not an entry-level qualification. Training providers typically require:
-        </p>
+        <p>The 2396 is not an entry-level qualification. Training providers typically require:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -372,8 +371,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Practical experience</strong> — the course is much easier to follow if you
-                have real-world installation experience. Most providers recommend at least 2 years of
-                on-site experience.
+                have real-world installation experience. Most providers recommend at least 2 years
+                of on-site experience.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -506,7 +505,7 @@ export default function CityGuilds2396DesignCoursePage() {
       faqHeading="Frequently Asked Questions About the C&G 2396"
       relatedPages={relatedPages}
       ctaHeading="Design Electrical Installations With Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, voltage drop calculations, and AI-powered circuit design. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -525,7 +525,7 @@ export default function AsbestosAwarenessCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Protect yourself — complete your asbestos awareness training"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 5 focused modules, interactive quizzes, visual identification guide, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 5 focused modules, interactive quizzes, visual identification guide, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/asbestos-awareness"
     />

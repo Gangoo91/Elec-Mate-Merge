@@ -90,48 +90,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/health-safety-policy-electrician',
     title: 'Health and Safety Policy',
-    description:
-      'Multi-trade sites require robust H&S procedures and RAMS.',
+    description: 'Multi-trade sites require robust H&S procedures and RAMS.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-project-handover-guide',
     title: 'Project Handover Guide',
-    description:
-      'Coordinated handover with all trades for a professional finish.',
+    description: 'Coordinated handover with all trades for a professional finish.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'Commercial sites involve more trade coordination — be prepared.',
+    description: 'Commercial sites involve more trade coordination — be prepared.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-estimating-guide',
     title: 'Electrical Estimating Guide',
-    description:
-      'Factor coordination time into your estimates for multi-trade projects.',
+    description: 'Factor coordination time into your estimates for multi-trade projects.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete your certificates on site during the handover process.',
+    description: 'Complete your certificates on site during the handover process.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/hiring-first-employee-electrician',
     title: 'Hiring Your First Employee',
-    description:
-      'Grow your team for larger projects requiring multi-trade coordination.',
+    description: 'Grow your team for larger projects requiring multi-trade coordination.',
     icon: Users,
     category: 'Guide',
   },
@@ -148,21 +142,20 @@ const sections = [
     content: (
       <>
         <p>
-          On any project involving more than one trade — which is most projects — your work
-          will overlap with plumbers, builders, plasterers, carpenters, decorators, and others.
-          How well you coordinate determines whether the project runs smoothly or descends
-          into finger-pointing and delays.
+          On any project involving more than one trade — which is most projects — your work will
+          overlap with plumbers, builders, plasterers, carpenters, decorators, and others. How well
+          you coordinate determines whether the project runs smoothly or descends into
+          finger-pointing and delays.
         </p>
         <p>
-          Poor coordination leads to cables being damaged, access being blocked, work being
-          ripped out and redone, and relationships being destroyed. Good coordination means
-          agreeing routes, respecting timings, protecting each other&apos;s work, and
-          communicating clearly.
+          Poor coordination leads to cables being damaged, access being blocked, work being ripped
+          out and redone, and relationships being destroyed. Good coordination means agreeing
+          routes, respecting timings, protecting each other&apos;s work, and communicating clearly.
         </p>
         <p>
           This guide covers the practical realities of working alongside other trades on both
-          domestic and commercial projects — from first fix timing to protecting your cables
-          to handling disputes when things go wrong.
+          domestic and commercial projects — from first fix timing to protecting your cables to
+          handling disputes when things go wrong.
         </p>
       </>
     ),
@@ -178,36 +171,61 @@ const sections = [
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center shrink-0">1</span>
-              <span><strong>Structural work complete</strong> — walls, roof, windows, external doors</span>
+              <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center shrink-0">
+                1
+              </span>
+              <span>
+                <strong>Structural work complete</strong> — walls, roof, windows, external doors
+              </span>
             </div>
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center shrink-0">2</span>
-              <span><strong>First fix plumbing</strong> — hot/cold pipes, waste runs, underfloor heating pipes</span>
+              <span className="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex items-center justify-center shrink-0">
+                2
+              </span>
+              <span>
+                <strong>First fix plumbing</strong> — hot/cold pipes, waste runs, underfloor heating
+                pipes
+              </span>
             </div>
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-bold flex items-center justify-center shrink-0">3</span>
-              <span><strong>First fix electrical</strong> — cable runs, back boxes, consumer unit wiring</span>
+              <span className="w-6 h-6 rounded-full bg-yellow-500/20 text-yellow-400 text-xs font-bold flex items-center justify-center shrink-0">
+                3
+              </span>
+              <span>
+                <strong>First fix electrical</strong> — cable runs, back boxes, consumer unit wiring
+              </span>
             </div>
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center shrink-0">4</span>
-              <span><strong>Insulation</strong> — cavity, stud wall, and loft insulation</span>
+              <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center shrink-0">
+                4
+              </span>
+              <span>
+                <strong>Insulation</strong> — cavity, stud wall, and loft insulation
+              </span>
             </div>
             <div className="flex items-start gap-3 border-b border-white/10 pb-2">
-              <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center shrink-0">5</span>
-              <span><strong>Plasterboard and plastering</strong></span>
+              <span className="w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center shrink-0">
+                5
+              </span>
+              <span>
+                <strong>Plasterboard and plastering</strong>
+              </span>
             </div>
             <div className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center shrink-0">6</span>
-              <span><strong>Second fix</strong> — all trades fit their final accessories and fittings</span>
+              <span className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center shrink-0">
+                6
+              </span>
+              <span>
+                <strong>Second fix</strong> — all trades fit their final accessories and fittings
+              </span>
             </div>
           </div>
         </div>
         <p>
           <strong>If you miss first fix:</strong> You either have to chase finished walls
-          (expensive, messy, and the customer will not be happy) or surface-mount cables
-          (which may not be acceptable). Always confirm your first fix date at least 2 weeks
-          in advance and chase the week before.
+          (expensive, messy, and the customer will not be happy) or surface-mount cables (which may
+          not be acceptable). Always confirm your first fix date at least 2 weeks in advance and
+          chase the week before.
         </p>
       </>
     ),
@@ -257,36 +275,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mark your cable routes before bricklaying and plastering.</strong> Use
-                cable markers, photographs, or a simple sketch showing cable positions relative
-                to fixed points. This protects you if a builder later drills through a cable
-                and claims they did not know it was there.
+                <strong>Mark your cable routes before bricklaying and plastering.</strong> Use cable
+                markers, photographs, or a simple sketch showing cable positions relative to fixed
+                points. This protects you if a builder later drills through a cable and claims they
+                did not know it was there.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Agree chase sizes and routes before the builder cuts them.</strong> If
-                the builder is chasing walls for you, specify the depth (minimum 25mm for
-                twin and earth in capping), width, and route. Supervise if possible — a
-                builder who chases too deep in a load-bearing wall creates a structural problem.
+                <strong>Agree chase sizes and routes before the builder cuts them.</strong> If the
+                builder is chasing walls for you, specify the depth (minimum 25mm for twin and earth
+                in capping), width, and route. Supervise if possible — a builder who chases too deep
+                in a load-bearing wall creates a structural problem.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ducting and conduit before concrete floors are poured.</strong> If you
-                need cables under a concrete floor, get your conduit or ducting in before the
-                pour. Once the concrete is down, you cannot retrofit cables without breaking
-                it up.
+                <strong>Ducting and conduit before concrete floors are poured.</strong> If you need
+                cables under a concrete floor, get your conduit or ducting in before the pour. Once
+                the concrete is down, you cannot retrofit cables without breaking it up.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Hammer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lintels and steels.</strong> Cable routes that cross above windows and
-                doors will encounter lintels and steel beams. Plan your route to avoid drilling
-                through structural steel — route above, below, or around.
+                <strong>Lintels and steels.</strong> Cable routes that cross above windows and doors
+                will encounter lintels and steel beams. Plan your route to avoid drilling through
+                structural steel — route above, below, or around.
               </span>
             </li>
           </ul>
@@ -306,9 +323,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Before Plasterboard Goes Up</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Check all cables are clipped, all back boxes are positioned correctly, all
-                  cable entries are clear, and all first fix is complete. Once plasterboard is
-                  up, you cannot access anything without pulling boards off.
+                  Check all cables are clipped, all back boxes are positioned correctly, all cable
+                  entries are clear, and all first fix is complete. Once plasterboard is up, you
+                  cannot access anything without pulling boards off.
                 </p>
               </div>
             </div>
@@ -319,11 +336,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Back Box Depth</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Back boxes must be set to the correct depth for the finished plaster
-                  surface. For plasterboard with skim (approximately 13mm total), the front
-                  edge of the back box should sit 13mm behind the face of the stud. If the
-                  plasterer has to build up around proud back boxes or your boxes are recessed
-                  too deep, second fix will be a nightmare.
+                  Back boxes must be set to the correct depth for the finished plaster surface. For
+                  plasterboard with skim (approximately 13mm total), the front edge of the back box
+                  should sit 13mm behind the face of the stud. If the plasterer has to build up
+                  around proud back boxes or your boxes are recessed too deep, second fix will be a
+                  nightmare.
                 </p>
               </div>
             </div>
@@ -334,10 +351,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Plaster in Back Boxes</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The most common frustration: the plasterer fills your back boxes with
-                  plaster. Use box blanks or tape over your back boxes before the plasterer
-                  starts. It takes 5 minutes and saves hours of chiselling plaster out of
-                  boxes during second fix.
+                  The most common frustration: the plasterer fills your back boxes with plaster. Use
+                  box blanks or tape over your back boxes before the plasterer starts. It takes 5
+                  minutes and saves hours of chiselling plaster out of boxes during second fix.
                 </p>
               </div>
             </div>
@@ -356,34 +372,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Install within safe zones (BS 7671 Reg 522.6)</strong> — horizontally
-                within 150mm of the ceiling or floor, vertically within 150mm of corners, and
-                within the zone running directly up or across from accessories.
+                <strong>Install within safe zones (BS 7671 Reg 522.6)</strong> — horizontally within
+                150mm of the ceiling or floor, vertically within 150mm of corners, and within the
+                zone running directly up or across from accessories.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use cable covers in chases</strong> — galvanised steel capping over
-                cables in wall chases provides mechanical protection and satisfies the
-                requirement for earthed metallic covering in safe zones.
+                <strong>Use cable covers in chases</strong> — galvanised steel capping over cables
+                in wall chases provides mechanical protection and satisfies the requirement for
+                earthed metallic covering in safe zones.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Photograph cable routes</strong> — before plasterboard or plaster
-                covers your cables, photograph every route. These photos are invaluable for
-                second fix, future alterations, and dispute resolution if someone damages a
-                cable.
+                <strong>Photograph cable routes</strong> — before plasterboard or plaster covers
+                your cables, photograph every route. These photos are invaluable for second fix,
+                future alterations, and dispute resolution if someone damages a cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use joist notching guards</strong> — metal plates over notches in
-                joists prevent nails and screws from penetrating cables when floorboards are
-                refixed.
+                <strong>Use joist notching guards</strong> — metal plates over notches in joists
+                prevent nails and screws from penetrating cables when floorboards are refixed.
               </span>
             </li>
           </ul>
@@ -397,35 +411,35 @@ const sections = [
     content: (
       <>
         <p>
-          Most problems between trades come down to poor communication. A 2-minute message
-          can prevent a 2-day problem.
+          Most problems between trades come down to poor communication. A 2-minute message can
+          prevent a 2-day problem.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use the site WhatsApp group.</strong> Most multi-trade projects have a
-                group chat. Use it to confirm dates, flag issues, and share photos of progress.
-                If there is not one, create one.
+                <strong>Use the site WhatsApp group.</strong> Most multi-trade projects have a group
+                chat. Use it to confirm dates, flag issues, and share photos of progress. If there
+                is not one, create one.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm your schedule in writing.</strong> "I will be on site Monday and
-                Tuesday for first fix. I need clear access to all rooms. Please ensure first
-                fix plumbing is complete before I arrive." This sets expectations and gives you
-                a record if things go wrong.
+                Tuesday for first fix. I need clear access to all rooms. Please ensure first fix
+                plumbing is complete before I arrive." This sets expectations and gives you a record
+                if things go wrong.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flag problems immediately.</strong> If you arrive on site and the
-                conditions are not what was agreed (plumbing not done, walls not ready, access
-                blocked), notify the builder or project manager immediately in writing. Do not
-                just turn around and go home — communicate.
+                <strong>Flag problems immediately.</strong> If you arrive on site and the conditions
+                are not what was agreed (plumbing not done, walls not ready, access blocked), notify
+                the builder or project manager immediately in writing. Do not just turn around and
+                go home — communicate.
               </span>
             </li>
           </ul>
@@ -469,10 +483,10 @@ const sections = [
     content: (
       <>
         <p>
-          The electricians who get the most repeat work from builders and main contractors
-          are the ones who communicate clearly, turn up when they say they will, protect
-          other trades&apos; work, and solve problems instead of creating them. Your technical
-          skill gets you the first job — your professionalism gets you every job after that.
+          The electricians who get the most repeat work from builders and main contractors are the
+          ones who communicate clearly, turn up when they say they will, protect other trades&apos;
+          work, and solve problems instead of creating them. Your technical skill gets you the first
+          job — your professionalism gets you every job after that.
         </p>
         <SEOAppBridge
           title="Schedule and manage multi-trade projects"
@@ -513,7 +527,7 @@ export default function WorkingWithOtherTradesPage() {
       faqHeading="Frequently Asked Questions About Working with Other Trades"
       relatedPages={relatedPages}
       ctaHeading="Manage Multi-Trade Projects with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for scheduling, job management, and on-site documentation. Stay organised across every project. 7-day free trial, cancel anytime."
     />
   );
 }

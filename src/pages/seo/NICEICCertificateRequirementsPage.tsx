@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'Complete guide to all 8 certificate types every UK electrician needs to know.',
+    description: 'Complete guide to all 16 certificate types every UK electrician needs to know.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -592,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce NICEIC-ready certificates every time"
-          description="Elec-Mate validates every field, flags missing data, and ensures your certificates are complete and accurate before you send them. 8 certificate types, AI board scanner, voice entry, and defect code AI. 7-day free trial."
+          description="Elec-Mate validates every field, flags missing data, and ensures your certificates are complete and accurate before you send them. 16 certificate types, AI board scanner, voice entry, and defect code AI. 7-day free trial."
           icon={Shield}
         />
       </>
@@ -629,7 +629,7 @@ export default function NICEICCertificateRequirementsPage() {
       faqHeading="Frequently Asked Questions About NICEIC Certificate Requirements"
       relatedPages={relatedPages}
       ctaHeading="Produce Assessment-Ready Certificates"
-      ctaSubheading="Join 430+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating NICEIC-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

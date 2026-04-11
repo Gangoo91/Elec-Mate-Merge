@@ -547,7 +547,7 @@ export default function HNCElectricalCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Get the study support you need for your HNC"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. AI-powered explanations for engineering maths, circuit analysis, and electrical principles. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. AI-powered explanations for engineering maths, circuit analysis, and electrical principles. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/hnc-electrical"
     />

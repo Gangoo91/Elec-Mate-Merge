@@ -87,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for long vertical runs from consumer unit to loft, including voltage drop check.',
+    description:
+      'Size cables for long vertical runs from consumer unit to loft, including voltage drop check.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for loft conversion circuits on site.',
+    description:
+      'Complete Electrical Installation Certificates for loft conversion circuits on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -176,25 +178,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Basic dormer (existing consumer unit with spare capacity)</strong> — £1,800 to
-                £2,800. Lighting, sockets, smoke alarms, testing, and Part P notification for a
+                <strong>Basic dormer (existing consumer unit with spare capacity)</strong> — £1,800
+                to £2,800. Lighting, sockets, smoke alarms, testing, and Part P notification for a
                 straightforward dormer with standard stud wall construction.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard loft with consumer unit upgrade</strong> — £2,800 to £4,000.
-                All of the above plus a new 18th edition split-load consumer unit, additional circuits
-                for en-suite extraction and underfloor heating.
+                <strong>Standard loft with consumer unit upgrade</strong> — £2,800 to £4,000. All of
+                the above plus a new 18th edition split-load consumer unit, additional circuits for
+                en-suite extraction and underfloor heating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large or complex loft (hip-to-gable, mansard, or double loft)</strong> — £3,500
-                to £5,000+. Longer cable runs, more circuits, potentially a sub-consumer unit in the
-                loft, underfloor heating across a larger area, and data/TV circuits for a home office.
+                <strong>Large or complex loft (hip-to-gable, mansard, or double loft)</strong> —
+                £3,500 to £5,000+. Longer cable runs, more circuits, potentially a sub-consumer unit
+                in the loft, underfloor heating across a larger area, and data/TV circuits for a
+                home office.
               </span>
             </li>
           </ul>
@@ -230,18 +233,20 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Is RCD protection present?</strong> — All circuits in a loft conversion
-                (which is a new floor of the dwelling) must have 30mA RCD protection. If the existing
-                board has no RCD or uses a single RCD covering all circuits, adding RCBOs for new
-                circuits is acceptable as an interim measure, but a full upgrade is recommended.
+                (which is a new floor of the dwelling) must have 30mA RCD protection. If the
+                existing board has no RCD or uses a single RCD covering all circuits, adding RCBOs
+                for new circuits is acceptable as an interim measure, but a full upgrade is
+                recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Is the board a metal-clad consumer unit?</strong> — The 18th edition of BS
-                7671 requires consumer units in domestic premises to be of non-combustible construction.
-                If the existing board is a plastic consumer unit (which does not meet this requirement),
-                a new metal-clad unit should be installed as part of any consumer unit work.
+                7671 requires consumer units in domestic premises to be of non-combustible
+                construction. If the existing board is a plastic consumer unit (which does not meet
+                this requirement), a new metal-clad unit should be installed as part of any consumer
+                unit work.
               </span>
             </li>
           </ul>
@@ -317,11 +322,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dormer loft</strong> — new stud walls and flat-ceiling section allow standard
-                first-fix cable installation in wall and ceiling cavities. Cables drop vertically
-                through the original ceiling into the floor below, then vertically through the house
-                to the consumer unit. Total run from consumer unit to loft: 12 to 20m depending on
-                house height.
+                <strong>Dormer loft</strong> — new stud walls and flat-ceiling section allow
+                standard first-fix cable installation in wall and ceiling cavities. Cables drop
+                vertically through the original ceiling into the floor below, then vertically
+                through the house to the consumer unit. Total run from consumer unit to loft: 12 to
+                20m depending on house height.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,8 +350,8 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mansard loft</strong> — essentially a new floor with near-vertical walls.
-                Most flexibility for cable routing. Co-ordinate with the structural engineer on
-                the positions of structural steels before planning cable routes.
+                Most flexibility for cable routing. Co-ordinate with the structural engineer on the
+                positions of structural steels before planning cable routes.
               </span>
             </li>
           </ul>
@@ -356,8 +361,8 @@ const sections = [
           <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
-          to verify that the cable run from the consumer unit to the loft lighting and socket circuits
-          does not exceed the 3% voltage drop limit for final circuits.
+          to verify that the cable run from the consumer unit to the loft lighting and socket
+          circuits does not exceed the 3% voltage drop limit for final circuits.
         </p>
       </>
     ),
@@ -385,8 +390,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Heat alarm in kitchen</strong> — if the escape route passes through or
-                adjacent to the kitchen, a heat alarm (rather than a smoke alarm) should be installed
-                to avoid false alarms from cooking. Interlink with the smoke alarm system.
+                adjacent to the kitchen, a heat alarm (rather than a smoke alarm) should be
+                installed to avoid false alarms from cooking. Interlink with the smoke alarm system.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -401,8 +406,8 @@ const sections = [
         </div>
         <p>
           The smoke alarm circuit must be included in the EIC. Use a dedicated 6A or 10A MCB for the
-          smoke alarm circuit, wired from the consumer unit on a 1.0mm or 1.5mm twin and earth cable.
-          Do not wire smoke alarms as spurs from lighting circuits.
+          smoke alarm circuit, wired from the consumer unit on a 1.0mm or 1.5mm twin and earth
+          cable. Do not wire smoke alarms as spurs from lighting circuits.
         </p>
       </>
     ),
@@ -414,8 +419,9 @@ const sections = [
       <>
         <p>
           Loft conversions are high-value projects for electricians: the electrical package is
-          typically one of the larger sub-contract elements, and builders value reliable, professional
-          electrical contractors who can co-ordinate with the build programme. Key differentiators:
+          typically one of the larger sub-contract elements, and builders value reliable,
+          professional electrical contractors who can co-ordinate with the build programme. Key
+          differentiators:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -425,8 +431,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">First-Fix Programme</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Provide the builder with a written first-fix programme — which circuits you will
-                  install in which sequence. Builders love sub-contractors who make their lives easier.
-                  Use the Elec-Mate quoting app to generate a materials list for the first-fix package.
+                  install in which sequence. Builders love sub-contractors who make their lives
+                  easier. Use the Elec-Mate quoting app to generate a materials list for the
+                  first-fix package.
                 </p>
               </div>
             </div>
@@ -437,10 +444,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Paperwork on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EIC
-                  </SEOInternalLink>{' '}
+                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
                   after testing and submit to your competent person scheme before leaving site. The
                   homeowner and builder both need the Part P certificate to sign off the Building
                   Regulations application — delays cost them money and damage your reputation.
@@ -467,7 +471,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, cable-size, and certify loft conversion electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for loft conversion projects. 7-day free trial."
           icon={Home}
         />
       </>

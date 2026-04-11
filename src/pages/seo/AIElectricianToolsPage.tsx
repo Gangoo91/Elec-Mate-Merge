@@ -580,7 +580,7 @@ export default function AIElectricianToolsPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="8 AI Specialists + All Your Electrical Tools"
-            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70 calculators, 8 certificate types, and 36+ training courses in one mobile-first platform. Start your free 7-day trial today."
+            description="Elec-Mate gives you 8 BS 7671-trained AI agents, 70+ calculators, 16 certificate types, and 46+ training courses in one mobile-first platform. Start your free 7-day trial today."
             icon={Brain}
           />
           <p className="text-white mt-4 text-sm">
@@ -596,7 +596,7 @@ export default function AIElectricianToolsPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Ask your first question in 30 seconds"
-        subheading="Join 430+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using AI to save hours on design, quoting, and documentation. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

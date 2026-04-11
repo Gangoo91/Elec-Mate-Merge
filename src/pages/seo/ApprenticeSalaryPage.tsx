@@ -473,7 +473,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Your Free Trial Today"
-          description="Join 430+ UK apprentices accelerating their qualification with Elec-Mate. Flashcards, mock exams, portfolio builder, and career tools — all from £5.99/month after your 7-day free trial."
+          description="Join 1,000+ UK apprentices accelerating their qualification with Elec-Mate. Flashcards, mock exams, portfolio builder, and career tools — all from £5.99/month after your 7-day free trial."
           icon={GraduationCap}
         />
       </>
@@ -506,7 +506,7 @@ export default function ApprenticeSalaryPage() {
       faqHeading="Frequently Asked Questions About Apprentice Electrician Pay"
       relatedPages={relatedPages}
       ctaHeading="Qualify faster, earn more sooner"
-      ctaSubheading="Join 430+ UK apprentices accelerating their qualification with Elec-Mate. Pass first time with flashcards, mock exams, and career planning tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices accelerating their qualification with Elec-Mate. Pass first time with flashcards, mock exams, and career planning tools. 7-day free trial, cancel anytime."
     />
   );
 }

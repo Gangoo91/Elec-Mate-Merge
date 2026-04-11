@@ -132,8 +132,8 @@ const sections = [
       <>
         <p>
           Emergency lighting testing is not optional — it is a legal requirement for every
-          non-domestic premises with an emergency lighting installation. The legal obligations
-          come from two sources:
+          non-domestic premises with an emergency lighting installation. The legal obligations come
+          from two sources:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -141,11 +141,11 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — Article 17 requires
-                the responsible person to ensure fire safety equipment, including emergency lighting,
-                is maintained in efficient working order and good repair. Article 13 requires
-                adequate emergency routes and exits to be equipped with emergency lighting. Failure
-                to comply is a criminal offence carrying unlimited fines and up to two years'
-                imprisonment.
+                the responsible person to ensure fire safety equipment, including emergency
+                lighting, is maintained in efficient working order and good repair. Article 13
+                requires adequate emergency routes and exits to be equipped with emergency lighting.
+                Failure to comply is a criminal offence carrying unlimited fines and up to two
+                years' imprisonment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -153,8 +153,8 @@ const sections = [
               <span>
                 <strong>BS 5266-1:2016</strong> — defines the specific testing regime: monthly
                 function tests, annual full-duration tests, and the record-keeping requirements.
-                Compliance with BS 5266-1 is the accepted means of demonstrating compliance with
-                the Fire Safety Order.
+                Compliance with BS 5266-1 is the accepted means of demonstrating compliance with the
+                Fire Safety Order.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -168,9 +168,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          The responsible person is typically the employer, building owner, managing agent, or
-          the person who has control of the premises. In multi-occupancy buildings, responsibility
-          for communal areas usually falls on the building owner or managing agent.
+          The responsible person is typically the employer, building owner, managing agent, or the
+          person who has control of the premises. In multi-occupancy buildings, responsibility for
+          communal areas usually falls on the building owner or managing agent.
         </p>
       </>
     ),
@@ -193,16 +193,16 @@ const sections = [
               <span>
                 <strong>Step 1 — Use the test key or inhibit switch</strong> — most modern
                 self-contained luminaires have a keyswitch or push-button that simulates mains
-                failure without operating the main circuit breaker. This is the preferred method
-                as it does not disrupt other equipment or normal lighting.
+                failure without operating the main circuit breaker. This is the preferred method as
+                it does not disrupt other equipment or normal lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — Duration approximately 1 minute</strong> — hold the test for
-                long enough to confirm every luminaire illuminates. Walk the escape route and
-                check each fitting is lit. For large premises, a second person may be needed.
+                <strong>Step 2 — Duration approximately 1 minute</strong> — hold the test for long
+                enough to confirm every luminaire illuminates. Walk the escape route and check each
+                fitting is lit. For large premises, a second person may be needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -217,9 +217,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Record results immediately</strong> — note the date, result
-                (pass or fail for each luminaire), and your name in the BS 5266-1 log book.
-                Any failed luminaires must be listed by reference number and location.
+                <strong>Step 4 — Record results immediately</strong> — note the date, result (pass
+                or fail for each luminaire), and your name in the BS 5266-1 log book. Any failed
+                luminaires must be listed by reference number and location.
               </span>
             </li>
           </ul>
@@ -247,39 +247,39 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test duration</strong> — the test must run for the full rated duration
-                of the fittings: 1 hour, 2 hours, or 3 hours. Installations with mixed duration
-                ratings require each group to be tested for its own rated duration. Most commercial
-                premises specify 3-hour rated fittings.
+                <strong>Test duration</strong> — the test must run for the full rated duration of
+                the fittings: 1 hour, 2 hours, or 3 hours. Installations with mixed duration ratings
+                require each group to be tested for its own rated duration. Most commercial premises
+                specify 3-hour rated fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building must be unoccupied</strong> — the normal lighting must be
-                switched off to simulate true emergency conditions. This makes the emergency
-                lighting the only source of illumination. The test must be performed out of
-                hours when the premises are empty. For 3-hour fittings, start no later than
-                3 hours before any scheduled overnight occupation.
+                <strong>Building must be unoccupied</strong> — the normal lighting must be switched
+                off to simulate true emergency conditions. This makes the emergency lighting the
+                only source of illumination. The test must be performed out of hours when the
+                premises are empty. For 3-hour fittings, start no later than 3 hours before any
+                scheduled overnight occupation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>All luminaires must remain illuminated</strong> — any luminaire that
-                fails or extinguishes before the end of the rated duration fails the test.
-                Walk the full escape route at regular intervals during the test to identify
-                early failures. Note the time of any failure, not just that a failure occurred.
+                <strong>All luminaires must remain illuminated</strong> — any luminaire that fails
+                or extinguishes before the end of the rated duration fails the test. Walk the full
+                escape route at regular intervals during the test to identify early failures. Note
+                the time of any failure, not just that a failure occurred.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recharge time</strong> — after the full-duration test, batteries require
-                a minimum recharge period before returning to full capacity. For most
-                self-contained fittings this is 24 hours. Until fully recharged, the emergency
-                lighting system is degraded. Do not perform the annual test the night before
-                a period of extended overnight occupancy.
+                <strong>Recharge time</strong> — after the full-duration test, batteries require a
+                minimum recharge period before returning to full capacity. For most self-contained
+                fittings this is 24 hours. Until fully recharged, the emergency lighting system is
+                degraded. Do not perform the annual test the night before a period of extended
+                overnight occupancy.
               </span>
             </li>
           </ul>
@@ -302,20 +302,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Half-duration test</strong> — where a full-duration test cannot be
-                carried out, BS 5266-1 permits a test of half the rated duration every six
-                months (e.g., 1.5 hours for a 3-hour system). This is not a substitute for
-                the full-duration test — it is an interim measure where full testing is
-                genuinely impractical.
+                <strong>Half-duration test</strong> — where a full-duration test cannot be carried
+                out, BS 5266-1 permits a test of half the rated duration every six months (e.g., 1.5
+                hours for a 3-hour system). This is not a substitute for the full-duration test — it
+                is an interim measure where full testing is genuinely impractical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full test every three years minimum</strong> — even where six-monthly
-                half-duration tests are performed, a full-duration test must be carried out
-                at least every three years to confirm the batteries can genuinely sustain the
-                full rated duration.
+                half-duration tests are performed, a full-duration test must be carried out at least
+                every three years to confirm the batteries can genuinely sustain the full rated
+                duration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -339,8 +338,8 @@ const sections = [
       <>
         <p>
           The log book is the legal record of emergency lighting testing. It must be kept on the
-          premises, be readily available for inspection by the fire authority, and be maintained
-          for the life of the installation.
+          premises, be readily available for inspection by the fire authority, and be maintained for
+          the life of the installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -349,18 +348,18 @@ const sections = [
               <span>
                 <strong>What to record</strong> — date and time of test; type of test (monthly
                 function / annual duration / intermediate); test duration; reference numbers and
-                locations of all luminaires tested; pass/fail result for each luminaire; the time
-                of any failure during a duration test; name and signature of the person conducting
-                the test; any remedial action taken.
+                locations of all luminaires tested; pass/fail result for each luminaire; the time of
+                any failure during a duration test; name and signature of the person conducting the
+                test; any remedial action taken.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Log book format</strong> — BS 5266-1 does not prescribe a specific log
-                book format, but pre-printed log books aligned with the standard are available
-                from electrical wholesalers and industry bodies. Digital records are acceptable
-                provided they are backed up and accessible on the premises.
+                <strong>Log book format</strong> — BS 5266-1 does not prescribe a specific log book
+                format, but pre-printed log books aligned with the standard are available from
+                electrical wholesalers and industry bodies. Digital records are acceptable provided
+                they are backed up and accessible on the premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -375,9 +374,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire authority inspection</strong> — fire safety officers from the local
-                fire and rescue service may inspect the premises at any time. The log book is one
-                of the first documents they will request. An incomplete or missing log book is
-                strong evidence of non-compliance.
+                fire and rescue service may inspect the premises at any time. The log book is one of
+                the first documents they will request. An incomplete or missing log book is strong
+                evidence of non-compliance.
               </span>
             </li>
           </ul>
@@ -417,19 +416,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Implement compensatory measures if needed</strong> — if the failed
-                luminaire covers a mandatory escape route location and cannot be replaced
-                immediately, the responsible person may need to restrict building occupancy
-                in the affected area or provide temporary portable lighting as an interim
-                measure.
+                <strong>Implement compensatory measures if needed</strong> — if the failed luminaire
+                covers a mandatory escape route location and cannot be replaced immediately, the
+                responsible person may need to restrict building occupancy in the affected area or
+                provide temporary portable lighting as an interim measure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <XCircle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replace and re-test</strong> — once the luminaire is replaced, perform
-                a function test to confirm it operates correctly. Record the repair date, the
-                nature of the repair, and the re-test result in the log book.
+                <strong>Replace and re-test</strong> — once the luminaire is replaced, perform a
+                function test to confirm it operates correctly. Record the repair date, the nature
+                of the repair, and the re-test result in the log book.
               </span>
             </li>
           </ul>
@@ -449,19 +447,19 @@ const sections = [
       <>
         <p>
           BS 5266-1 requires that emergency lighting systems are tested and maintained by a
-          competent person. The standard does not specify formal qualifications, but competence
-          is assessed against knowledge of the standard, the specific installation, and the
-          equipment in use.
+          competent person. The standard does not specify formal qualifications, but competence is
+          assessed against knowledge of the standard, the specific installation, and the equipment
+          in use.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly tests</strong> — may be carried out by a trained member of staff
-                who understands the test procedure, knows how to identify failures, and can
-                complete the log book correctly. The responsible person must ensure the person
-                is properly trained.
+                <strong>Monthly tests</strong> — may be carried out by a trained member of staff who
+                understands the test procedure, knows how to identify failures, and can complete the
+                log book correctly. The responsible person must ensure the person is properly
+                trained.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,9 +495,8 @@ const sections = [
       <>
         <p>
           Addressable emergency lighting systems with built-in automatic test functionality
-          represent the modern approach to BS 5266-1 compliance in larger or more complex
-          buildings. These systems perform all required tests automatically and log results
-          electronically.
+          represent the modern approach to BS 5266-1 compliance in larger or more complex buildings.
+          These systems perform all required tests automatically and log results electronically.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -507,36 +504,35 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic function tests</strong> — the system performs monthly function
-                tests at a programmed time, tests each luminaire individually, and logs the
-                result. Failed luminaires are reported to the monitoring panel and can trigger
-                an alert to the responsible person or facilities team.
+                tests at a programmed time, tests each luminaire individually, and logs the result.
+                Failed luminaires are reported to the monitoring panel and can trigger an alert to
+                the responsible person or facilities team.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Automatic duration tests</strong> — the system can perform full or
-                half-duration tests at programmed times (typically overnight or at weekends)
-                without manual intervention. This removes the practical difficulty of performing
-                3-hour tests in 24-hour premises.
+                half-duration tests at programmed times (typically overnight or at weekends) without
+                manual intervention. This removes the practical difficulty of performing 3-hour
+                tests in 24-hour premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electronic log book</strong> — results are stored in the system's memory
-                and can be downloaded or printed on demand. This electronic log satisfies the
-                BS 5266-1 record-keeping requirement provided the data is accessible on the
-                premises.
+                <strong>Electronic log book</strong> — results are stored in the system's memory and
+                can be downloaded or printed on demand. This electronic log satisfies the BS 5266-1
+                record-keeping requirement provided the data is accessible on the premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reduced maintenance burden</strong> — automatic systems significantly
-                reduce the time required for compliance management. The responsible person still
-                needs to review reports and action failures promptly, but the testing itself
-                is handled autonomously.
+                <strong>Reduced maintenance burden</strong> — automatic systems significantly reduce
+                the time required for compliance management. The responsible person still needs to
+                review reports and action failures promptly, but the testing itself is handled
+                autonomously.
               </span>
             </li>
           </ul>
@@ -552,9 +548,9 @@ const sections = [
         <p>
           Annual emergency lighting testing and maintenance is recurring contracted revenue that
           pairs naturally with{' '}
-          <SEOInternalLink href="/guides/eicr-for-landlords">EICR work</SEOInternalLink>,
-          fire alarm servicing, and PAT testing. Every non-domestic premises with emergency
-          lighting requires annual attention — this is a large, stable market.
+          <SEOInternalLink href="/guides/eicr-for-landlords">EICR work</SEOInternalLink>, fire alarm
+          servicing, and PAT testing. Every non-domestic premises with emergency lighting requires
+          annual attention — this is a large, stable market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -568,8 +564,8 @@ const sections = [
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
                   to issue BS 5266-1 Emergency Lighting Certificates and annual test records on
-                  site. Send the completed documentation to the client before you leave the
-                  building — no evening admin, no lost paperwork.
+                  site. Send the completed documentation to the client before you leave the building
+                  — no evening admin, no lost paperwork.
                 </p>
               </div>
             </div>
@@ -580,11 +576,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Typical Testing Costs (2026)</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Annual testing per luminaire: £5–£15 including log book entry. A 30-fitting
-                  office installation typically generates £150–£450 per year in testing revenue.
-                  Battery replacement (typically needed every 4–7 years): £8–£25 per unit plus
-                  labour. A proactive battery replacement programme is an excellent upsell
-                  opportunity during annual test visits.
+                  Annual testing per luminaire: £5–£15 including log book entry. A 30-fitting office
+                  installation typically generates £150–£450 per year in testing revenue. Battery
+                  replacement (typically needed every 4–7 years): £8–£25 per unit plus labour. A
+                  proactive battery replacement programme is an excellent upsell opportunity during
+                  annual test visits.
                 </p>
               </div>
             </div>
@@ -592,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site electrical certification. Issue BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -629,7 +625,7 @@ export default function EmergencyLightingTestingPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Testing"
       relatedPages={relatedPages}
       ctaHeading="Issue Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site electrical certification. BS 5266-1 emergency lighting certificates with instant PDF export and automatic client delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical certification. BS 5266-1 emergency lighting certificates with instant PDF export and automatic client delivery. 7-day free trial, cancel anytime."
     />
   );
 }

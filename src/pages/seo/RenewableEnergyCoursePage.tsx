@@ -531,7 +531,7 @@ export default function RenewableEnergyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to enter the renewable energy market?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 10 structured modules, interactive quizzes, video content, and an AI tutor for any solar PV or battery storage question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 10 structured modules, interactive quizzes, video content, and an AI tutor for any solar PV or battery storage question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/renewable-energy"
     />

@@ -108,8 +108,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
-    description:
-      'Complete fire alarm installation and commissioning certificates on your phone.',
+    description: 'Complete fire alarm installation and commissioning certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -166,11 +165,9 @@ const sections = [
           For electricians, fire alarm work is a growing and profitable specialism. The combination
           of regulatory pressure, new-build requirements, and retrofit demand means there is no
           shortage of work. But you need to understand{' '}
-          <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">
-            BS 5839
-          </SEOInternalLink>{' '}
-          (both Part 1 for commercial and Part 6 for domestic), the wiring requirements under BS
-          7671, and how to certify the work correctly.
+          <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">BS 5839</SEOInternalLink> (both
+          Part 1 for commercial and Part 6 for domestic), the wiring requirements under BS 7671, and
+          how to certify the work correctly.
         </p>
       </>
     ),
@@ -188,9 +185,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic (BS 5839 Part 6)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Covers houses, flats, and HMOs. Systems range from standalone battery smoke alarms
-              to fully hardwired interlinked systems with mains power and battery backup. Grades
-              LD1, LD2, and LD3 define the coverage level. Detection is typically by optical smoke
+              Covers houses, flats, and HMOs. Systems range from standalone battery smoke alarms to
+              fully hardwired interlinked systems with mains power and battery backup. Grades LD1,
+              LD2, and LD3 define the coverage level. Detection is typically by optical smoke
               detectors in circulation spaces and heat detectors in kitchens. The system alerts
               occupants to evacuate — there is no control panel in the simplest systems.
             </p>
@@ -291,9 +288,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains-powered heat detector</strong> — £20 to £40 each. Fixed temperature
-                or rate-of-rise detection (trade prices from £22.75 for Activ series heat
-                detectors). Used in kitchens where smoke detectors would cause nuisance alarms.
+                <strong>Mains-powered heat detector</strong> — £20 to £40 each. Fixed temperature or
+                rate-of-rise detection (trade prices from £22.75 for Activ series heat detectors).
+                Used in kitchens where smoke detectors would cause nuisance alarms.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -309,8 +306,8 @@ const sections = [
               <span>
                 <strong>Cable (for hardwired systems)</strong> — 1.5mm2 fire-resistant cable (FP200
                 or equivalent): £1.50 to £3.00 per metre. A typical domestic installation requires
-                20 to 40 metres. Dedicated fused connection unit marked "Smoke Detector": £16 to
-                £24 trade (Crabtree/Volex).
+                20 to 40 metres. Dedicated fused connection unit marked "Smoke Detector": £16 to £24
+                trade (Crabtree/Volex).
               </span>
             </li>
           </ul>
@@ -343,8 +340,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sounders and beacons</strong> — £20 to £80 each. Wall-mounted or
-                ceiling-mounted alarm sounders, with visual beacons for areas with high ambient noise
-                or for hearing-impaired occupants.
+                ceiling-mounted alarm sounders, with visual beacons for areas with high ambient
+                noise or for hearing-impaired occupants.
               </span>
             </li>
           </ul>
@@ -432,8 +429,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Domestic LD1 (comprehensive coverage)</strong> — £1,000 to £2,000 total.
-                8 to 12 detectors covering every habitable room, hardwired with fire-resistant cable.
+                <strong>Domestic LD1 (comprehensive coverage)</strong> — £1,000 to £2,000 total. 8
+                to 12 detectors covering every habitable room, hardwired with fire-resistant cable.
                 Required for many HMOs and supported housing.
               </span>
             </li>
@@ -449,8 +446,8 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial addressable (medium premises)</strong> — £5,000 to £15,000+
-                total. Addressable panel, 30 to 100+ devices, loop wiring, integration with
-                building systems, and full BS 5839 Part 1 commissioning.
+                total. Addressable panel, 30 to 100+ devices, loop wiring, integration with building
+                systems, and full BS 5839 Part 1 commissioning.
               </span>
             </li>
           </ul>
@@ -477,10 +474,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Part 1: Non-Domestic Premises</h3>
             <p className="text-white text-sm leading-relaxed">
               Covers the design, installation, commissioning, and maintenance of fire detection and
-              alarm systems in all non-domestic buildings. Defines system categories: L1 to L5
-              (life protection) and M (manual system — call points only with no automatic
-              detection). Specifies requirements for control panels, detection, alarming, wiring,
-              power supplies, and interfacing with other fire safety systems.
+              alarm systems in all non-domestic buildings. Defines system categories: L1 to L5 (life
+              protection) and M (manual system — call points only with no automatic detection).
+              Specifies requirements for control panels, detection, alarming, wiring, power
+              supplies, and interfacing with other fire safety systems.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -530,7 +527,8 @@ const sections = [
               <span>
                 <strong>Commercial systems</strong> — a BS 5839 Part 1 commissioning certificate
                 including system verification, zone testing, sounder level measurements, and cause
-                and effect testing. A full set of as-built drawings and zone charts must be provided.
+                and effect testing. A full set of as-built drawings and zone charts must be
+                provided.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -563,8 +561,8 @@ const sections = [
         <p>
           Fire alarm installation is specialist work that commands premium rates. The regulatory
           requirements are strict, the consequences of poor installation are serious, and customers
-          (especially landlords and commercial property managers) understand that they are paying for
-          compliance and life safety — not just a few smoke detectors.
+          (especially landlords and commercial property managers) understand that they are paying
+          for compliance and life safety — not just a few smoke detectors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -578,8 +576,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for fire alarm installations. Detectors, call points,
-                  cable, panel, sounders, labour, testing, and certification — all itemised with your
-                  margins. Professional PDF quotes that win work.
+                  cable, panel, sounders, labour, testing, and certification — all itemised with
+                  your margins. Professional PDF quotes that win work.
                 </p>
               </div>
             </div>
@@ -603,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify fire alarm systems"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, fire alarm certification, and on-site documentation. 7-day free trial."
           icon={Flame}
         />
       </>
@@ -640,7 +638,7 @@ export default function FireAlarmInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Fire Alarm Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for fire alarm quoting, certification, and on-site documentation. Professional results, every time. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -477,7 +477,7 @@ export default function NuisanceTrippingPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Diagnose RCD Issues Faster with Elec-Mate"
-      ctaSubheading="Board scanner, AI fault diagnosis, RCD testing capture, and digital EICR forms. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Board scanner, AI fault diagnosis, RCD testing capture, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

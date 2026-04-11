@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,9 +129,9 @@ const sections = [
         <p>
           An Electrical Installation Condition Report (EICR) is a formal document produced by a
           qualified electrician following a thorough inspection and test of a property's fixed
-          electrical installation. The inspection assesses all wiring, consumer units, earthing
-          and bonding, sockets, switches, light fittings, and fixed electrical equipment against
-          the requirements of{' '}
+          electrical installation. The inspection assesses all wiring, consumer units, earthing and
+          bonding, sockets, switches, light fittings, and fixed electrical equipment against the
+          requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
@@ -151,8 +152,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory</strong> — the inspection has found C1 (danger present) or
-                C2 (potentially dangerous) observations. Landlords must arrange all remedial work
+                <strong>Unsatisfactory</strong> — the inspection has found C1 (danger present) or C2
+                (potentially dangerous) observations. Landlords must arrange all remedial work
                 within 28 days. The property cannot continue under a new tenancy without evidence
                 that remedial work is underway or complete.
               </span>
@@ -160,8 +161,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The EICR replaced the older Periodic Inspection Report (PIR) format and is carried out
-          in accordance with BS 7671 Section 631. It is the document required by the 2020 private
+          The EICR replaced the older Periodic Inspection Report (PIR) format and is carried out in
+          accordance with BS 7671 Section 631. It is the document required by the 2020 private
           rented sector regulations and by HMO licensing conditions administered by North Yorkshire
           Council across the former Harrogate Borough Council area.
         </p>
@@ -187,32 +188,32 @@ const sections = [
               <span>
                 <strong>Who must comply</strong> — all private landlords letting under assured
                 shorthold tenancies, assured tenancies, or regulated tenancies within the Harrogate
-                area. Social housing has separate obligations. Live-in landlord arrangements
-                are excluded.
+                area. Social housing has separate obligations. Live-in landlord arrangements are
+                excluded.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection frequency</strong> — before each new tenancy begins and at
-                least every five years. The inspector may recommend an earlier re-inspection date
-                on the EICR itself, particularly for older period property installations.
+                <strong>Inspection frequency</strong> — before each new tenancy begins and at least
+                every five years. The inspector may recommend an earlier re-inspection date on the
+                EICR itself, particularly for older period property installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Document distribution</strong> — copies must be provided to existing
-                tenants within 28 days, to new tenants before they occupy the property, and to
-                North Yorkshire Council within seven days if requested.
+                <strong>Document distribution</strong> — copies must be provided to existing tenants
+                within 28 days, to new tenants before they occupy the property, and to North
+                Yorkshire Council within seven days if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Civil penalties</strong> — North Yorkshire Council can impose fines of up
-                to £30,000 per breach. Each individual failure to comply is a separate breach
-                carrying its own potential penalty.
+                <strong>Civil penalties</strong> — North Yorkshire Council can impose fines of up to
+                £30,000 per breach. Each individual failure to comply is a separate breach carrying
+                its own potential penalty.
               </span>
             </li>
           </ul>
@@ -226,9 +227,9 @@ const sections = [
     content: (
       <>
         <p>
-          Harrogate landlords have clear legal obligations under the 2020 Regulations. Compliance
-          is straightforward for landlords who plan ahead and maintain a relationship with a
-          qualified local electrician.
+          Harrogate landlords have clear legal obligations under the 2020 Regulations. Compliance is
+          straightforward for landlords who plan ahead and maintain a relationship with a qualified
+          local electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -267,8 +268,8 @@ const sections = [
         </div>
         <p>
           Harrogate landlords who have not provided the EICR to their tenant cannot serve a valid
-          Section 21 (no-fault eviction) notice — an important practical consequence beyond the
-          risk of civil penalties.
+          Section 21 (no-fault eviction) notice — an important practical consequence beyond the risk
+          of civil penalties.
         </p>
       </>
     ),
@@ -289,10 +290,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                30mA RCD protection on all socket-outlet circuits rated up to 32A. Consumer units
-                that have been replaced without RCD-protected ways are common across Harrogate's
-                older housing stock. This is typically coded C2.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA
+                RCD protection on all socket-outlet circuits rated up to 32A. Consumer units that
+                have been replaced without RCD-protected ways are common across Harrogate's older
+                housing stock. This is typically coded C2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -300,26 +301,26 @@ const sections = [
               <span>
                 <strong>Missing or inadequate main protective bonding</strong> — Regulation 544.1
                 requires main protective bonding conductors connecting gas, water, and other
-                extraneous conductive parts to the main earthing terminal. This is frequently
-                absent or undersized in older Harrogate period properties.
+                extraneous conductive parts to the main earthing terminal. This is frequently absent
+                or undersized in older Harrogate period properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Deteriorated wiring insulation</strong> — insulation resistance testing
-                (per BS 7671 Section 612) on circuits with aged rubber-sheathed or early PVC
-                cabling frequently reveals insulation breakdown. Values below 1MΩ indicate
-                degraded insulation and an elevated risk of shock or fire.
+                <strong>Deteriorated wiring insulation</strong> — insulation resistance testing (per
+                BS 7671 Section 612) on circuits with aged rubber-sheathed or early PVC cabling
+                frequently reveals insulation breakdown. Values below 1MΩ indicate degraded
+                insulation and an elevated risk of shock or fire.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-compliant consumer units</strong> — consumer units in combustible
-                plastic enclosures that do not meet the requirements now incorporated in BS 7671:2018
-                are commonly found in properties where partial updates were made between 2000 and
-                2015. These are recorded as C2.
+                plastic enclosures that do not meet the requirements now incorporated in BS
+                7671:2018 are commonly found in properties where partial updates were made between
+                2000 and 2015. These are recorded as C2.
               </span>
             </li>
           </ul>
@@ -346,9 +347,9 @@ const sections = [
               <span>
                 <strong>Multiple rewiring generations</strong> — a large Victorian villa may have
                 been rewired in the 1960s, had extensions added in the 1990s, and undergone
-                piecemeal consumer unit replacement in the 2010s. Each phase uses different
-                cable types and standards. Establishing what is in place requires patient tracing
-                and documentation by the inspector.
+                piecemeal consumer unit replacement in the 2010s. Each phase uses different cable
+                types and standards. Establishing what is in place requires patient tracing and
+                documentation by the inspector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,18 +365,18 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation area considerations</strong> — many of Harrogate's period
-                properties are within designated conservation areas. Remedial work, including
-                new cable runs and consumer unit replacement, must be carried out in a manner
-                that does not affect the character of the property or require listed building
-                consent where applicable.
+                properties are within designated conservation areas. Remedial work, including new
+                cable runs and consumer unit replacement, must be carried out in a manner that does
+                not affect the character of the property or require listed building consent where
+                applicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Higher inspection cost</strong> — the additional time required to inspect
-                complex period property installations means that EICRs for Harrogate Victorian
-                and Edwardian properties typically cost more than equivalent modern properties.
+                complex period property installations means that EICRs for Harrogate Victorian and
+                Edwardian properties typically cost more than equivalent modern properties.
                 Landlords should not choose inspectors based purely on lowest price.
               </span>
             </li>
@@ -390,34 +391,34 @@ const sections = [
     content: (
       <>
         <p>
-          Harrogate EICR prices reflect North Yorkshire and Yorkshire and Humber labour rates,
-          which are broadly moderate — lower than London and the South East but slightly higher
-          than some northern cities. The premium Harrogate property market means some electricians
-          charge towards the higher end of regional rates.
+          Harrogate EICR prices reflect North Yorkshire and Yorkshire and Humber labour rates, which
+          are broadly moderate — lower than London and the South East but slightly higher than some
+          northern cities. The premium Harrogate property market means some electricians charge
+          towards the higher end of regional rates.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat (modern)</strong> — £110 to £170. Typically 3 to 5
-                circuits with a single consumer unit.
+                <strong>One-bedroom flat (modern)</strong> — £110 to £170. Typically 3 to 5 circuits
+                with a single consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £120 to £210. The most common private
-                rented sector property type in Harrogate. Period properties command the higher end
-                of this range.
+                <strong>Two-bedroom property</strong> — £120 to £210. The most common private rented
+                sector property type in Harrogate. Period properties command the higher end of this
+                range.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £190 to £320. Duchy Estate and Starbeck
-                Victorian properties frequently take longer due to installation complexity and
-                may cost towards the top of this range.
+                Victorian properties frequently take longer due to installation complexity and may
+                cost towards the top of this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -454,9 +455,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Search official scheme registers</strong> — use the NICEIC, NAPIT, or
-                ELECSA online registers to find registered electricians in Harrogate and the wider
-                North Yorkshire area. Registration confirms qualifications, professional indemnity
+                <strong>Search official scheme registers</strong> — use the NICEIC, NAPIT, or ELECSA
+                online registers to find registered electricians in Harrogate and the wider North
+                Yorkshire area. Registration confirms qualifications, professional indemnity
                 insurance, and regular quality assessment.
               </span>
             </li>
@@ -485,8 +486,8 @@ const sections = [
                 <strong>Period property experience</strong> — for Duchy Estate and Starbeck period
                 properties, look for electricians who have specific experience with Victorian and
                 Edwardian installations. These properties present challenges not encountered in
-                standard modern domestic work, including complex cable tracing and assessment
-                of multiple-era installations.
+                standard modern domestic work, including complex cable tracing and assessment of
+                multiple-era installations.
               </span>
             </li>
           </ul>
@@ -532,14 +533,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, raise a remedial work quote on the day
-                  using the{' '}
+                  When C1 or C2 observations are found, raise a remedial work quote on the day using
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Harrogate landlords must act within 28 days — quoting on the day of the
-                  inspection gives you the best chance of winning the remedial contract, which
-                  in period properties is often substantial.
+                  inspection gives you the best chance of winning the remedial contract, which in
+                  period properties is often substantial.
                 </p>
               </div>
             </div>
@@ -547,7 +548,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Harrogate with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -584,7 +585,7 @@ export default function EICRHarogatePage() {
       faqHeading="Frequently Asked Questions About EICRs in Harrogate"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Harrogate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

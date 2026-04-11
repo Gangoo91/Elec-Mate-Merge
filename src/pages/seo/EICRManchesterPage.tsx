@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed wiring, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed wiring, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It assesses whether the installation is safe and identifies any defects using observation codes (C1, C2, C3, FI).",
   'Manchester EICR costs are competitive compared to London. Expect £120 to £200 for a two-bedroom flat, £180 to £300 for a three-bedroom terraced house, and £250 to £400 for a four-bedroom detached house.',
   'Since 1 April 2021, landlords in England must have a valid EICR for every private rented property, renewed at least every five years. Manchester City Council enforces this through its Private Rented Sector team with fines of up to £30,000.',
   'Selective licensing schemes in Manchester (including parts of Moss Side, Rusholme, Fallowfield, and Old Moat) require landlords to hold a property licence with a valid EICR as a condition.',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -121,7 +122,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -147,16 +149,16 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an Electrical Installation Condition Report
-          must be used for periodic inspection and testing of existing installations. Each defect is
+          (Section 631), which specifies that an Electrical Installation Condition Report must be
+          used for periodic inspection and testing of existing installations. Each defect is
           classified using observation codes (C1, C2, C3, FI) and the overall installation is
           assessed as Satisfactory or Unsatisfactory.
         </p>
         <p>
           The inspector carries out a visual inspection followed by testing including insulation
           resistance, earth fault loop impedance, RCD operation, and continuity of protective
-          conductors. Results are recorded on Schedules of Circuit Details and Test Results that form
-          part of the formal report.
+          conductors. Results are recorded on Schedules of Circuit Details and Test Results that
+          form part of the formal report.
         </p>
       </>
     ),
@@ -205,9 +207,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £300 to £600+. Student HMOs
-                in Fallowfield and Rusholme are common. Multiple consumer units, fire alarm
-                systems, and emergency lighting all form part of the scope.
+                <strong>HMO (House in Multiple Occupation)</strong> — £300 to £600+. Student HMOs in
+                Fallowfield and Rusholme are common. Multiple consumer units, fire alarm systems,
+                and emergency lighting all form part of the scope.
               </span>
             </li>
           </ul>
@@ -237,8 +239,8 @@ const sections = [
               <span>
                 <strong>Mandatory EICR</strong> — landlords must have a valid EICR for every private
                 rented property. The EICR must be carried out by a qualified person and renewed at
-                least every five years. BS 7671 Section 6 requires periodic inspection
-                regimes to confirm installations remain safe.
+                least every five years. BS 7671 Section 6 requires periodic inspection regimes to
+                confirm installations remain safe.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,9 +344,7 @@ const sections = [
         <p>
           Every defect or concern noted during an EICR is classified using one of four observation
           codes. These are defined in the model forms accompanying{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            BS 7671
-          </SEOInternalLink>
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">BS 7671</SEOInternalLink>
           :
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -361,9 +361,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 observations in
-              Manchester include lack of RCD protection on socket circuits,
-              absent or defective earthing, and obsolete rewirable fuse boards with incorrect fuse
-              ratings.
+              Manchester include lack of RCD protection on socket circuits, absent or defective
+              earthing, and obsolete rewirable fuse boards with incorrect fuse ratings.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -501,9 +500,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR with Schedules
-                of Circuit Details and Test Results as required by Section 631. The
-                report includes observations, classification codes, an overall assessment, and a
-                recommended date for the next periodic inspection.
+                of Circuit Details and Test Results as required by Section 631. The report includes
+                observations, classification codes, an overall assessment, and a recommended date
+                for the next periodic inspection.
               </span>
             </li>
           </ul>
@@ -523,9 +522,8 @@ const sections = [
     content: (
       <>
         <p>
-          The frequency depends on property type. BS 7671 Section 6 establishes that
-          installations must be periodically inspected at intervals suited to the property type and
-          its use:
+          The frequency depends on property type. BS 7671 Section 6 establishes that installations
+          must be periodically inspected at intervals suited to the property type and its use:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -589,16 +587,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — look for C&G 2391 (Inspection and Testing) or
-                C&G 2394/2395, plus a current BS 7671 qualification (C&G 2382 18th Edition).
+                <strong>Qualifications</strong> — look for C&G 2391 (Inspection and Testing) or C&G
+                2394/2395, plus a current BS 7671 qualification (C&G 2382 18th Edition).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local experience</strong> — an inspector familiar with Manchester property
-                types (terraces, HMOs, converted mills) will be more efficient and accurate than
-                one unfamiliar with the local housing stock.
+                types (terraces, HMOs, converted mills) will be more efficient and accurate than one
+                unfamiliar with the local housing stock.
               </span>
             </li>
           </ul>
@@ -659,7 +657,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -684,8 +682,7 @@ export default function EICRManchesterPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          EICR Manchester:{' '}
-          <span className="text-yellow-400">Electrical Inspection Cost 2026</span>
+          EICR Manchester: <span className="text-yellow-400">Electrical Inspection Cost 2026</span>
         </>
       }
       heroSubtitle="Complete guide to EICRs in Manchester — costs by property type, landlord legal requirements, selective licensing areas, terraced house challenges, observation codes, and how to find a qualified inspector."
@@ -696,7 +693,7 @@ export default function EICRManchesterPage() {
       faqHeading="Frequently Asked Questions About EICRs in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

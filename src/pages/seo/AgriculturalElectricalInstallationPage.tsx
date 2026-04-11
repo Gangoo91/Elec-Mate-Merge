@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/caravan-park-electrical',
     title: 'Caravan Park Electrical (Section 708)',
-    description: 'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
+    description:
+      'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
     icon: Plug,
     category: 'Guide',
   },
   {
     href: '/guides/ip-ratings-explained',
     title: 'IP Ratings Explained',
-    description: 'Understanding IP ratings for electrical equipment — what IP44, IP55, and IP65 mean in practice.',
+    description:
+      'Understanding IP ratings for electrical equipment — what IP44, IP55, and IP65 mean in practice.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -147,20 +149,20 @@ const sections = [
               <span>
                 <strong>Specific hazards</strong> — agricultural electrical installations face a
                 combination of hazards: damp and corrosive environments (ammonia from livestock,
-                moisture, cleaning chemicals), rodent and livestock damage to cables, UV
-                degradation of outdoor equipment, dust and chaff in grain handling areas,
-                flammable materials (hay, straw, grain), elevated fire risk, and the particular
-                sensitivity of livestock to electric shock.
+                moisture, cleaning chemicals), rodent and livestock damage to cables, UV degradation
+                of outdoor equipment, dust and chaff in grain handling areas, flammable materials
+                (hay, straw, grain), elevated fire risk, and the particular sensitivity of livestock
+                to electric shock.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Priority modifications</strong> — the key modifications Section 705 makes
-                to the general requirements are: enhanced RCD protection (30 mA for all socket
-                outlets and 300 mA for fixed equipment in livestock buildings), exclusion of
-                accessible metalwork from livestock buildings, mandatory armoured or protected
-                cables, and enhanced IP ratings for all electrical equipment.
+                <strong>Priority modifications</strong> — the key modifications Section 705 makes to
+                the general requirements are: enhanced RCD protection (30 mA for all socket outlets
+                and 300 mA for fixed equipment in livestock buildings), exclusion of accessible
+                metalwork from livestock buildings, mandatory armoured or protected cables, and
+                enhanced IP ratings for all electrical equipment.
               </span>
             </li>
           </ul>
@@ -203,31 +205,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Livestock shock sensitivity</strong> — cattle are particularly sensitive
-                to low voltages. Touch voltages that a human would barely notice (as low as 1–2 V
-                AC in some studies) can cause behavioural changes in dairy cows, affecting milk
-                yield and causing distress. Livestock buildings should be designed to minimise
-                all potential touch voltages, including those arising from earthing arrangements.
+                <strong>Livestock shock sensitivity</strong> — cattle are particularly sensitive to
+                low voltages. Touch voltages that a human would barely notice (as low as 1–2 V AC in
+                some studies) can cause behavioural changes in dairy cows, affecting milk yield and
+                causing distress. Livestock buildings should be designed to minimise all potential
+                touch voltages, including those arising from earthing arrangements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional RCD protection</strong> — in livestock buildings, fixed
-                electrical equipment (heating lamps, ventilation fans, automatic feeding
-                equipment, milking machines) must be protected by RCDs. Where 30 mA protection
-                is impractical due to normal operating leakage currents (large motors), 300 mA
-                time-delayed RCDs may be used, but a risk assessment should justify this decision.
+                electrical equipment (heating lamps, ventilation fans, automatic feeding equipment,
+                milking machines) must be protected by RCDs. Where 30 mA protection is impractical
+                due to normal operating leakage currents (large motors), 300 mA time-delayed RCDs
+                may be used, but a risk assessment should justify this decision.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable protection</strong> — cables in livestock buildings must be
-                mechanically protected against damage by animals. Steel wire armoured (SWA)
-                cable in heavy-gauge conduit mounted at height, or cables buried in concrete,
-                are the standard approaches. PVC-sheathed flat cables clipped to surfaces
-                accessible to animals are entirely unsuitable.
+                mechanically protected against damage by animals. Steel wire armoured (SWA) cable in
+                heavy-gauge conduit mounted at height, or cables buried in concrete, are the
+                standard approaches. PVC-sheathed flat cables clipped to surfaces accessible to
+                animals are entirely unsuitable.
               </span>
             </li>
           </ul>
@@ -241,9 +243,9 @@ const sections = [
     content: (
       <>
         <p>
-          Ingress protection (IP) ratings indicate a piece of electrical equipment's resistance
-          to solid particle and liquid ingress, as defined in BS EN 60529. Selecting the correct
-          IP rating for agricultural applications is critical to equipment longevity and safety.
+          Ingress protection (IP) ratings indicate a piece of electrical equipment's resistance to
+          solid particle and liquid ingress, as defined in BS EN 60529. Selecting the correct IP
+          rating for agricultural applications is critical to equipment longevity and safety.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -251,38 +253,37 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 — minimum for agricultural buildings</strong> — protection against
-                solid objects greater than 1 mm and water splashing from any direction. Suitable
-                for general use in dry and moderately damp agricultural buildings such as hay
-                stores and machinery sheds. Not suitable for areas subject to regular hosing down.
+                solid objects greater than 1 mm and water splashing from any direction. Suitable for
+                general use in dry and moderately damp agricultural buildings such as hay stores and
+                machinery sheds. Not suitable for areas subject to regular hosing down.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP55 — for hosing-down areas</strong> — protection against dust ingress
-                (no harmful deposits) and water jets from any direction. Required in dairy parlours,
-                poultry houses, pig units, and any area subject to regular cleaning with hoses
-                or pressure washers. Also recommended for outdoor equipment subject to driving
-                rain.
+                <strong>IP55 — for hosing-down areas</strong> — protection against dust ingress (no
+                harmful deposits) and water jets from any direction. Required in dairy parlours,
+                poultry houses, pig units, and any area subject to regular cleaning with hoses or
+                pressure washers. Also recommended for outdoor equipment subject to driving rain.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP65 — for dust-heavy environments</strong> — complete dust protection
-                and water jet protection. Required in grain stores, feed mills, and other locations
-                with heavy dust. Also appropriate for outdoor socket outlets and distribution
-                boards where a higher level of protection is desired.
+                <strong>IP65 — for dust-heavy environments</strong> — complete dust protection and
+                water jet protection. Required in grain stores, feed mills, and other locations with
+                heavy dust. Also appropriate for outdoor socket outlets and distribution boards
+                where a higher level of protection is desired.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Corrosion resistance</strong> — IP rating alone does not address
-                chemical resistance. In poultry and pig units, high ammonia concentrations
-                corrode standard metalwork and degrade standard PVC enclosures over time.
-                Equipment in these environments should have GRP or stainless steel enclosures
-                and be rated for use in high-ammonia environments.
+                <strong>Corrosion resistance</strong> — IP rating alone does not address chemical
+                resistance. In poultry and pig units, high ammonia concentrations corrode standard
+                metalwork and degrade standard PVC enclosures over time. Equipment in these
+                environments should have GRP or stainless steel enclosures and be rated for use in
+                high-ammonia environments.
               </span>
             </li>
           </ul>
@@ -296,19 +297,19 @@ const sections = [
     content: (
       <>
         <p>
-          Section 705 imposes comprehensive RCD protection requirements that go beyond the
-          general requirements of BS 7671. Both socket outlet circuits and fixed equipment
-          in livestock buildings require RCD protection.
+          Section 705 imposes comprehensive RCD protection requirements that go beyond the general
+          requirements of BS 7671. Both socket outlet circuits and fixed equipment in livestock
+          buildings require RCD protection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA for socket outlets</strong> — Regulation 705.411.1 requires
-                all socket outlet circuits in agricultural premises to be protected by 30 mA
-                RCDs. This is a mandatory requirement with no exceptions, reflecting the
-                risk of portable tools and equipment being used in damp or wet conditions.
+                <strong>30 mA for socket outlets</strong> — Regulation 705.411.1 requires all socket
+                outlet circuits in agricultural premises to be protected by 30 mA RCDs. This is a
+                mandatory requirement with no exceptions, reflecting the risk of portable tools and
+                equipment being used in damp or wet conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,25 +317,25 @@ const sections = [
               <span>
                 <strong>300 mA for fixed equipment</strong> — in livestock buildings, circuits
                 supplying fixed equipment must also have RCD protection. Where 30 mA protection
-                causes nuisance tripping (due to normal operational leakage from large motors
-                or long cable runs), a maximum of 300 mA time-delayed RCD protection is
-                permitted as an alternative. The time delay must not exceed 1 s.
+                causes nuisance tripping (due to normal operational leakage from large motors or
+                long cable runs), a maximum of 300 mA time-delayed RCD protection is permitted as an
+                alternative. The time delay must not exceed 1 s.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Type A RCDs</strong> — variable-speed motor drives, soft starters,
-                and electronic control equipment on agricultural machinery can produce DC
-                residual currents. Type A RCDs are recommended for circuits supplying
-                such equipment to ensure reliable detection of all fault current types.
+                <strong>Type A RCDs</strong> — variable-speed motor drives, soft starters, and
+                electronic control equipment on agricultural machinery can produce DC residual
+                currents. Type A RCDs are recommended for circuits supplying such equipment to
+                ensure reliable detection of all fault current types.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Annual or three-yearly RCD testing is an essential part of the periodic inspection.
-          Record all RCD test results — operating time at IΔn and at 5× IΔn — in the{' '}
+          Annual or three-yearly RCD testing is an essential part of the periodic inspection. Record
+          all RCD test results — operating time at IΔn and at 5× IΔn — in the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">
             EICR schedule of test results
           </SEOInternalLink>
@@ -349,8 +350,8 @@ const sections = [
     content: (
       <>
         <p>
-          Damp and wet conditions are normal in many agricultural buildings. Wiring methods
-          and equipment selection must reflect the actual environment in which they are installed.
+          Damp and wet conditions are normal in many agricultural buildings. Wiring methods and
+          equipment selection must reflect the actual environment in which they are installed.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -358,30 +359,30 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Armoured cable</strong> — steel wire armoured (SWA) or aluminium wire
-                armoured (AWA) cable is the standard for fixed wiring in agricultural buildings.
-                The armouring provides both mechanical protection against rodent damage and
-                physical abuse, and an additional conductive layer for fault protection. All
-                cable glands and terminations must maintain the IP rating of the enclosure.
+                armoured (AWA) cable is the standard for fixed wiring in agricultural buildings. The
+                armouring provides both mechanical protection against rodent damage and physical
+                abuse, and an additional conductive layer for fault protection. All cable glands and
+                terminations must maintain the IP rating of the enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conduit systems</strong> — heavy-gauge galvanised steel conduit or
-                IP67-rated plastic conduit systems (not standard domestic white conduit) may
-                be used where cables require additional protection. All conduit fittings and
-                boxes must be rated for the environment. Conduit routes must include inspection
-                points and must drain condensation rather than trap it.
+                IP67-rated plastic conduit systems (not standard domestic white conduit) may be used
+                where cables require additional protection. All conduit fittings and boxes must be
+                rated for the environment. Conduit routes must include inspection points and must
+                drain condensation rather than trap it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>External wiring between buildings</strong> — cables between separate
-                farm buildings must be armoured and either buried at the correct depth with
-                suitable protection (tiles or marker tape) or routed overhead as an aerial
-                cable with adequate support and sag allowance. All buried cables must be
-                recorded on an as-installed drawing retained on site.
+                <strong>External wiring between buildings</strong> — cables between separate farm
+                buildings must be armoured and either buried at the correct depth with suitable
+                protection (tiles or marker tape) or routed overhead as an aerial cable with
+                adequate support and sag allowance. All buried cables must be recorded on an
+                as-installed drawing retained on site.
               </span>
             </li>
           </ul>
@@ -408,30 +409,30 @@ const sections = [
                 <strong>Risk assessment under BS EN 62305-2</strong> — whether a lightning
                 protection system is required depends on a formal risk assessment. The assessment
                 considers the thunderstorm days per year at the location, the dimensions and
-                construction of the building, the consequences of a strike (fire risk from
-                stored hay, loss of livestock), and nearby earthing arrangements. Electricians
-                should be familiar with the risk assessment process.
+                construction of the building, the consequences of a strike (fire risk from stored
+                hay, loss of livestock), and nearby earthing arrangements. Electricians should be
+                familiar with the risk assessment process.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surge protective devices (SPDs)</strong> — even where a formal lightning
-                protection system is not required, surge protective devices (SPDs) complying with
-                BS EN 61643-11 are recommended at the main distribution board and at sub-boards
-                supplying sensitive electronic equipment (control systems, instrumentation,
-                milking equipment electronics). SPDs divert conducted surge energy to earth
-                before it can damage connected equipment.
+                protection system is not required, surge protective devices (SPDs) complying with BS
+                EN 61643-11 are recommended at the main distribution board and at sub-boards
+                supplying sensitive electronic equipment (control systems, instrumentation, milking
+                equipment electronics). SPDs divert conducted surge energy to earth before it can
+                damage connected equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipotential bonding</strong> — all metallic structural elements of
-                farm buildings (steel portal frames, metal roofing, water pipes, grain handling
-                equipment) should be bonded together and connected to the electrical earth.
-                This limits potential differences between metalwork during a lightning event
-                and reduces the risk of side-flash between metalwork and conductors.
+                <strong>Equipotential bonding</strong> — all metallic structural elements of farm
+                buildings (steel portal frames, metal roofing, water pipes, grain handling
+                equipment) should be bonded together and connected to the electrical earth. This
+                limits potential differences between metalwork during a lightning event and reduces
+                the risk of side-flash between metalwork and conductors.
               </span>
             </li>
           </ul>
@@ -446,8 +447,8 @@ const sections = [
       <>
         <p>
           Earthing on agricultural sites requires careful attention, particularly where multiple
-          buildings are supplied from a single incoming supply and where livestock sensitivity
-          to potential differences must be managed.
+          buildings are supplied from a single incoming supply and where livestock sensitivity to
+          potential differences must be managed.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -455,10 +456,10 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT vs. TN-C-S</strong> — many rural farms are supplied from overhead
-                networks where PME (TN-C-S) earthing may not be reliably available. TT earthing
-                with a local earth electrode is common. Earth electrode resistance must be measured
-                at commissioning and at each inspection. The earth electrode and conductor must
-                be protected against corrosion and mechanical damage.
+                networks where PME (TN-C-S) earthing may not be reliably available. TT earthing with
+                a local earth electrode is common. Earth electrode resistance must be measured at
+                commissioning and at each inspection. The earth electrode and conductor must be
+                protected against corrosion and mechanical damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -474,11 +475,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple building sites</strong> — where a single supply feeds multiple
-                farm buildings, the main earthing terminal and the earth electrode for the whole
-                site should be at the main incoming distribution board. Each building's earthing
-                should be taken from this common point via the armoured cable armouring or a
-                separate protective conductor.
+                <strong>Multiple building sites</strong> — where a single supply feeds multiple farm
+                buildings, the main earthing terminal and the earth electrode for the whole site
+                should be at the main incoming distribution board. Each building's earthing should
+                be taken from this common point via the armoured cable armouring or a separate
+                protective conductor.
               </span>
             </li>
           </ul>
@@ -492,8 +493,8 @@ const sections = [
     content: (
       <>
         <p>
-          Agricultural electrical work is a specialist and rewarding area for electricians with
-          the right knowledge and experience. Farm installations are large, complex, and require
+          Agricultural electrical work is a specialist and rewarding area for electricians with the
+          right knowledge and experience. Farm installations are large, complex, and require
           inspection every 3 years — providing valuable recurring work in rural areas where
           competition is often lower than in urban centres.
         </p>
@@ -508,10 +509,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete farm inspection reports building-by-building on your phone.
-                  Record RCD test results, earth electrode resistance, and equipment IP
-                  rating observations in the schedule. Generate the PDF report before leaving
-                  the farm.
+                  to complete farm inspection reports building-by-building on your phone. Record RCD
+                  test results, earth electrode resistance, and equipment IP rating observations in
+                  the schedule. Generate the PDF report before leaving the farm.
                 </p>
               </div>
             </div>
@@ -526,9 +526,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to offer 3-year maintenance and inspection packages to farm operators.
-                  A large farm with multiple buildings represents a substantial single-client
-                  contract.
+                  to offer 3-year maintenance and inspection packages to farm operators. A large
+                  farm with multiple buildings represents a substantial single-client contract.
                 </p>
               </div>
             </div>
@@ -536,7 +535,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Agricultural inspection work made simple with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for farm and agricultural inspections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for farm and agricultural inspections. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -573,7 +572,7 @@ export default function AgriculturalElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result entry, and instant PDF export. Perfect for farm and agricultural inspections. 7-day free trial."
     />
   );
 }

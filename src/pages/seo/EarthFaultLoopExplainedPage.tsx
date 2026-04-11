@@ -677,7 +677,7 @@ export default function EarthFaultLoopExplainedPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate Zs against BS 7671 automatically on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Zs lookup by protective device, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

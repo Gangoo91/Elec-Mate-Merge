@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Dundee is in Scotland — Part P of the Building Regulations does not apply. Electrical work is governed by Scottish Building Standards (Technical Handbook Section 4: Safety). Building warrants are required for notifiable work. BS 7671 applies UK-wide.',
   'SSEN (Scottish and Southern Electricity Networks) is the Distribution Network Operator for Dundee and the Tayside area. G98/G99 notifications for generation equipment and new connection applications go through SSEN.',
   'Dundee has a significant stock of 1950s–1980s local authority housing — multi-storey flats, maisonettes, and cottage flats — alongside Victorian stone tenements in the city centre and suburbs.',
-  'Dundee\'s ongoing city centre regeneration, including the waterfront development and V&A Museum area, is creating consistent demand for commercial electrical work alongside domestic upgrades.',
+  "Dundee's ongoing city centre regeneration, including the waterfront development and V&A Museum area, is creating consistent demand for commercial electrical work alongside domestic upgrades.",
   'SELECT registration is the recommended trade body for Dundee electricians, offering a certification route that simplifies the Scottish building warrant process.',
 ];
 
@@ -67,10 +67,10 @@ const faqs = [
   {
     question: 'Do Dundee electricians need SELECT registration?',
     answer:
-      'SELECT registration is strongly recommended for electricians working in Dundee and the rest of Scotland. SELECT is Scotland\'s principal trade association for the electrical industry, and SELECT-registered contractors can use the SELECT Certification Services scheme to certify work, simplifying the building warrant process. Many Dundee customers, letting agents, and housing associations specifically request SELECT registration. NICEIC and NAPIT are also accepted in Scotland but are less widely recognised in the local market.',
+      "SELECT registration is strongly recommended for electricians working in Dundee and the rest of Scotland. SELECT is Scotland's principal trade association for the electrical industry, and SELECT-registered contractors can use the SELECT Certification Services scheme to certify work, simplifying the building warrant process. Many Dundee customers, letting agents, and housing associations specifically request SELECT registration. NICEIC and NAPIT are also accepted in Scotland but are less widely recognised in the local market.",
   },
   {
-    question: 'Are there any challenges specific to Dundee\'s multi-storey flats?',
+    question: "Are there any challenges specific to Dundee's multi-storey flats?",
     answer:
       'Dundee has a number of surviving multi-storey tower blocks and high-density housing from the 1960s and 1970s. Electrical work in these properties presents several challenges: common area wiring (stairwells, lifts, fire alarms) is managed by Dundee City Council or a housing association; individual flats have limited consumer unit space; asbestos is likely in pre-1985 buildings and must be surveyed before invasive work; and access for materials and equipment requires coordination. Electricians should allow additional time and cost for multi-storey flat work.',
   },
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables correctly for rewires and new circuits in Dundee\'s varied housing stock.',
+      "Size cables correctly for rewires and new circuits in Dundee's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 with structured training modules covering EICR procedures.',
+    description: 'Study for C&G 2391 with structured training modules covering EICR procedures.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -143,10 +142,10 @@ const sections = [
     content: (
       <>
         <p>
-          Dundee is Scotland's fourth-largest city, with a population of around 150,000 on the
-          north bank of the Firth of Tay. Once known as the "three Js" (jute, jam, and journalism),
-          Dundee has reinvented itself as a hub for life sciences, gaming technology (Rockstar North
-          grew out of Dundee's DMA Design), and creative industries. The waterfront regeneration —
+          Dundee is Scotland's fourth-largest city, with a population of around 150,000 on the north
+          bank of the Firth of Tay. Once known as the "three Js" (jute, jam, and journalism), Dundee
+          has reinvented itself as a hub for life sciences, gaming technology (Rockstar North grew
+          out of Dundee's DMA Design), and creative industries. The waterfront regeneration —
           including the V&A Dundee museum and ongoing commercial development — is transforming the
           city centre.
         </p>
@@ -158,8 +157,8 @@ const sections = [
           attractive for early-career electricians building their first practice.
         </p>
         <p>
-          This guide covers Scottish Building Standards (not Part P), the local DNO (SSEN),
-          Dundee's property types, pricing, and practical advice for electricians working in the city.
+          This guide covers Scottish Building Standards (not Part P), the local DNO (SSEN), Dundee's
+          property types, pricing, and practical advice for electricians working in the city.
         </p>
       </>
     ),
@@ -179,17 +178,17 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No Part P in Scotland</strong> — the Scottish Technical Handbook Section 4
-                (Safety) sets the regulatory requirement. The electrical standard is the same
-                (BS 7671:2018+A3:2024), but the certification and compliance route is through
-                building warrants, not the Part P competent person scheme self-certification model.
+                (Safety) sets the regulatory requirement. The electrical standard is the same (BS
+                7671:2018+A3:2024), but the certification and compliance route is through building
+                warrants, not the Part P competent person scheme self-certification model.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building warrants from Dundee City Council</strong> — required before
-                starting notifiable work. Applications are submitted to the Building Standards
-                team online or in person. A fee is payable based on the estimated cost of the work.
+                starting notifiable work. Applications are submitted to the Building Standards team
+                online or in person. A fee is payable based on the estimated cost of the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -204,9 +203,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SELECT certification</strong> — SELECT-registered electricians can
-                certify work through SELECT Certification Services, streamlining the completion
-                certificate process. Recommended for all Dundee electricians doing domestic work.
+                <strong>SELECT certification</strong> — SELECT-registered electricians can certify
+                work through SELECT Certification Services, streamlining the completion certificate
+                process. Recommended for all Dundee electricians doing domestic work.
               </span>
             </li>
           </ul>
@@ -220,25 +219,25 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>SSEN (Scottish and Southern Electricity Networks)</strong> is the DNO for
-          Dundee and Tayside. Key contacts for Dundee electricians:
+          <strong>SSEN (Scottish and Southern Electricity Networks)</strong> is the DNO for Dundee
+          and Tayside. Key contacts for Dundee electricians:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections</strong> — new supplies, service upgrades, and diversity
-                of supply queries for multi-occupancy properties. Apply through the SSEN
-                connections portal.
+                <strong>New connections</strong> — new supplies, service upgrades, and diversity of
+                supply queries for multi-occupancy properties. Apply through the SSEN connections
+                portal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar PV and battery storage</strong> — G98 notification for systems
-                up to 16A per phase (online, no prior approval needed). G99 application for
-                larger systems, typically taking several weeks for approval.
+                <strong>Solar PV and battery storage</strong> — G98 notification for systems up to
+                16A per phase (online, no prior approval needed). G99 application for larger
+                systems, typically taking several weeks for approval.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,8 +266,8 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Stone Tenements</h3>
             <p className="text-white text-sm leading-relaxed">
-              Stone-built tenements in areas such as Lochee, Hilltown, and the West End. Solid
-              walls require surface-mounted trunking for rewires. Pre-1985 properties may contain
+              Stone-built tenements in areas such as Lochee, Hilltown, and the West End. Solid walls
+              require surface-mounted trunking for rewires. Pre-1985 properties may contain
               asbestos. Common stairwell wiring is a shared responsibility. EICRs on these
               properties frequently reveal C2 items needing remediation.
             </p>
@@ -276,18 +275,18 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Local Authority Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large post-war estates in Whitfield, Kirkton, and Fintry. 1950s–1970s properties
-              often have original wiring needing replacement, rewirable fuse boards, and asbestos
-              risks. Multi-storey flats in these areas require coordination with the council or
-              housing association for common area access.
+              Large post-war estates in Whitfield, Kirkton, and Fintry. 1950s–1970s properties often
+              have original wiring needing replacement, rewirable fuse boards, and asbestos risks.
+              Multi-storey flats in these areas require coordination with the council or housing
+              association for common area access.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Suburban Semis and Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              More recent housing in Broughty Ferry, Barnhill, and Monifieth (just outside the
-              city) is cavity-wall construction. These are more amenable to concealed wiring and
-              represent a higher-value market. EV charger demand is strong in these areas.
+              More recent housing in Broughty Ferry, Barnhill, and Monifieth (just outside the city)
+              is cavity-wall construction. These are more amenable to concealed wiring and represent
+              a higher-value market. EV charger demand is strong in these areas.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -309,8 +308,8 @@ const sections = [
     content: (
       <>
         <p>
-          The most in-demand electrical services in Dundee reflect both the age of the housing
-          stock and the growing rental and commercial market:
+          The most in-demand electrical services in Dundee reflect both the age of the housing stock
+          and the growing rental and commercial market:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -325,24 +324,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewires</strong> — essential on pre-1970s local authority housing
-                and older tenement flats. Allow additional time for surface-mounted trunking
-                work in solid-wall properties.
+                <strong>Full rewires</strong> — essential on pre-1970s local authority housing and
+                older tenement flats. Allow additional time for surface-mounted trunking work in
+                solid-wall properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for the rental market</strong> — Dundee has a large student
-                population (University of Dundee, Abertay University) and a substantial HMO
-                market. EICRs are in consistent demand from private landlords and HMO licence holders.
+                <strong>EICRs for the rental market</strong> — Dundee has a large student population
+                (University of Dundee, Abertay University) and a substantial HMO market. EICRs are
+                in consistent demand from private landlords and HMO licence holders.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charger installations</strong> — growing demand in suburban areas.
-                SSEN notification required where supply capacity is upgraded.
+                <strong>EV charger installations</strong> — growing demand in suburban areas. SSEN
+                notification required where supply capacity is upgraded.
               </span>
             </li>
           </ul>
@@ -425,12 +424,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Scottish building warrant completion requires professional
-                  documentation — issue it from your phone before leaving the property.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Scottish building warrant completion requires professional documentation —
+                  issue it from your phone before leaving the property.
                 </p>
               </div>
             </div>
@@ -469,7 +465,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Dundee electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Scottish Building Standards compliance. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -494,8 +490,7 @@ export default function ElectricianDundeePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Dundee:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Dundee: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Dundee's mix of Victorian tenements, post-war social housing, and a growing waterfront commercial district creates steady demand for rewires, EICRs, and commercial electrical work. Find SELECT and NICEIC registered electricians in Dundee."
@@ -506,7 +501,7 @@ export default function ElectricianDundeePage() {
       faqHeading="Frequently Asked Questions About Electricians in Dundee"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Dundee Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards and the challenges of Dundee's housing stock. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Scottish Building Standards and the challenges of Dundee's housing stock. 7-day free trial."
     />
   );
 }

@@ -110,7 +110,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -417,13 +417,13 @@ export default function JobProfitabilityCalculatorPage() {
               Elec-Mate is not a generic business tool — it is built exclusively for UK
               electricians. The Job Profitability Calculator is one of 14 business calculators in
               the Business Hub, sitting alongside 56 technical calculators (cable sizing, voltage
-              drop, fault current, Zs values, and more), 8 certificate types ({' '}
+              drop, fault current, Zs values, and more), 16 certificate types ({' '}
               <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
-              Works, EV charger, and more), 8 Elec-AI agents with 12 AI tools, and 36+ training
+              Works, EV charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training
               courses. Everything works together in one platform. Quotes from the{' '}
-              <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink>{' '}
-              feed directly into profit tracking, giving you real margin data per job.
+              <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink> feed
+              directly into profit tracking, giving you real margin data per job.
             </p>
             <p>
               The profitability data you generate feeds into your business reports, helping you spot
@@ -487,7 +487,7 @@ export default function JobProfitabilityCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Make Every Job Profitable"
-        subheading="Join 430+ UK electricians using Elec-Mate to track job profitability, calculate true margins, and price with confidence. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate to track job profitability, calculate true margins, and price with confidence. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

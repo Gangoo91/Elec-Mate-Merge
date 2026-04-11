@@ -564,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="EICR, bonding observations, remedial quotes — all on your phone"
-          description="Join 430+ UK electricians completing EICR certificates with AI observation coding, remedial quoting, and instant delivery. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians completing EICR certificates with AI observation coding, remedial quoting, and instant delivery. 7-day free trial, cancel anytime."
           icon={Droplet}
         />
       </>
@@ -600,7 +600,7 @@ export default function BondingInBathroomPage() {
       faqHeading="Frequently Asked Questions About Bathroom Bonding"
       relatedPages={relatedPages}
       ctaHeading="Record Bonding Observations on Your Phone"
-      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="EICR certificates with AI observation coding, remedial quoting, and instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -95,7 +95,7 @@ const features = [
     icon: Award,
     title: 'Part of 36+ Training Courses',
     description:
-      'IPAF training sits within a library of 36+ courses in Elec-Mate, covering everything from BS 7671:2018+A3:2024 to PASMA, asbestos awareness, and first aid.',
+      'IPAF training sits within a library of 46+ courses in Elec-Mate, covering everything from BS 7671:2018+A3:2024 to PASMA, asbestos awareness, and first aid.',
   },
 ];
 
@@ -112,7 +112,7 @@ const courseSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'From £5.99/month — access all 36+ training courses',
+    description: 'From £5.99/month — access all 46+ training courses',
   },
   courseMode: 'online',
   educationalLevel: 'Professional',
@@ -184,14 +184,14 @@ export default function IPAFTrainingPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              430+ electricians learning
+              1,000+ electricians learning
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />8 Elec-AI agents
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              70 calculators included
+              70+ calculators included
             </span>
           </div>
         </div>
@@ -235,9 +235,13 @@ export default function IPAFTrainingPage() {
               protective equipment correctly, and knowing the emergency procedures for every
               scenario — from hydraulic failure to operator incapacitation. IPAF is often studied
               alongside other safety qualifications such as{' '}
-              <SEOInternalLink href="/study/pasma-training">PASMA scaffold tower training</SEOInternalLink>{' '}
+              <SEOInternalLink href="/study/pasma-training">
+                PASMA scaffold tower training
+              </SEOInternalLink>{' '}
               and pairs with technical qualifications like the{' '}
-              <SEOInternalLink href="/study/inspection-testing-course">C&G 2391 Inspection and Testing</SEOInternalLink>{' '}
+              <SEOInternalLink href="/study/inspection-testing-course">
+                C&G 2391 Inspection and Testing
+              </SEOInternalLink>{' '}
               for a well-rounded professional profile.
             </p>
           </div>
@@ -449,7 +453,7 @@ export default function IPAFTrainingPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start Your IPAF Study Today"
-        subheading="Join 430+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

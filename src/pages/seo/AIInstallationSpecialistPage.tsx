@@ -495,7 +495,7 @@ export default function AIInstallationSpecialistPage() {
       faqHeading="Frequently Asked Questions About the AI Installation Specialist"
       relatedPages={relatedPages}
       ctaHeading="Get Expert Installation Guidance"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Installation Specialist for step-by-step guidance on every task. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Installation Specialist for step-by-step guidance on every task. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-installation-specialist"
     />
   );

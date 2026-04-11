@@ -97,40 +97,35 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-business-plan-template',
     title: 'Electrical Business Plan',
-    description:
-      'Financial projections and cash flow forecasting for your business plan.',
+    description: 'Financial projections and cash flow forecasting for your business plan.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/guides/pricing-electrical-work-per-point',
     title: 'Pricing Per Point Guide',
-    description:
-      'Set the right per-point rates to maintain healthy margins and cash flow.',
+    description: 'Set the right per-point rates to maintain healthy margins and cash flow.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/partnership-vs-sole-trader-vs-ltd-electrician',
     title: 'Sole Trader vs Ltd',
-    description:
-      'Tax structure affects your cash flow — understand the differences.',
+    description: 'Tax structure affects your cash flow — understand the differences.',
     icon: TrendingUp,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Send professional quotes and invoices that get paid faster.',
+    description: 'Send professional quotes and invoices that get paid faster.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete certificates on site so you can invoice the same day.',
+    description: 'Complete certificates on site so you can invoice the same day.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -147,21 +142,20 @@ const sections = [
     content: (
       <>
         <p>
-          Cash flow is the movement of money in and out of your business. Money comes in
-          when customers pay you. Money goes out for materials, van costs, fuel, insurance,
-          tools, and your own wages. If more money goes out than comes in during any given
-          month, you have a cash flow problem — even if your business is technically
-          profitable over the year.
+          Cash flow is the movement of money in and out of your business. Money comes in when
+          customers pay you. Money goes out for materials, van costs, fuel, insurance, tools, and
+          your own wages. If more money goes out than comes in during any given month, you have a
+          cash flow problem — even if your business is technically profitable over the year.
         </p>
         <p>
-          This is the most common way trade businesses fail. The electrician is busy, the
-          work is profitable, but they run out of cash because they are paying for materials
-          and fuel today while waiting 30 to 60 days for customers to pay their invoices.
+          This is the most common way trade businesses fail. The electrician is busy, the work is
+          profitable, but they run out of cash because they are paying for materials and fuel today
+          while waiting 30 to 60 days for customers to pay their invoices.
         </p>
         <p>
-          Managing cash flow is not complicated, but it requires discipline: invoice
-          immediately, take deposits, use staged payments, chase debt aggressively, and save
-          for tax. This guide covers each of these in detail.
+          Managing cash flow is not complicated, but it requires discipline: invoice immediately,
+          take deposits, use staged payments, chase debt aggressively, and save for tax. This guide
+          covers each of these in detail.
         </p>
       </>
     ),
@@ -172,8 +166,8 @@ const sections = [
     content: (
       <>
         <p>
-          The speed at which you get paid starts with the speed at which you invoice. Every
-          day between completing a job and sending the invoice is a day of free credit.
+          The speed at which you get paid starts with the speed at which you invoice. Every day
+          between completing a job and sending the invoice is a day of free credit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
@@ -203,10 +197,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Invoice on the day of completion.</strong> Use an invoicing app on your
-          phone so you can invoice from site. Include your bank details, a clear description
-          of the work, and your payment terms. The easier you make it to pay, the faster
-          you get paid.
+          <strong>Invoice on the day of completion.</strong> Use an invoicing app on your phone so
+          you can invoice from site. Include your bank details, a clear description of the work, and
+          your payment terms. The easier you make it to pay, the faster you get paid.
         </p>
       </>
     ),
@@ -217,8 +210,8 @@ const sections = [
     content: (
       <>
         <p>
-          Taking a deposit is standard practice and protects both you and the customer. It
-          covers your material costs and confirms the booking.
+          Taking a deposit is standard practice and protects both you and the customer. It covers
+          your material costs and confirms the booking.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
@@ -244,11 +237,11 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Legal note:</strong> Under consumer protection law, a deposit should be
-          reasonable and proportionate. 25% to 40% is widely accepted as reasonable for
-          trade work where you need to purchase materials. Do not take more than 50% as a
-          deposit — this could be challenged as unfair. Deposits should be clearly stated as
-          non-refundable if the customer cancels after materials have been ordered.
+          <strong>Legal note:</strong> Under consumer protection law, a deposit should be reasonable
+          and proportionate. 25% to 40% is widely accepted as reasonable for trade work where you
+          need to purchase materials. Do not take more than 50% as a deposit — this could be
+          challenged as unfair. Deposits should be clearly stated as non-refundable if the customer
+          cancels after materials have been ordered.
         </p>
       </>
     ),
@@ -259,9 +252,9 @@ const sections = [
     content: (
       <>
         <p>
-          For any job lasting more than a week or costing more than £2,000, use staged
-          payments. This keeps your cash flow positive throughout the project instead of
-          waiting until completion.
+          For any job lasting more than a week or costing more than £2,000, use staged payments.
+          This keeps your cash flow positive throughout the project instead of waiting until
+          completion.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Example: 3-Bed Rewire (£5,500 total)</h4>
@@ -285,9 +278,9 @@ const sections = [
           </div>
         </div>
         <p>
-          State the staging schedule clearly in your quote. This is not unusual — customers
-          expect it on larger jobs. It also protects you if the customer has financial
-          problems mid-project: you are never more than one stage ahead of payments received.
+          State the staging schedule clearly in your quote. This is not unusual — customers expect
+          it on larger jobs. It also protects you if the customer has financial problems
+          mid-project: you are never more than one stage ahead of payments received.
         </p>
       </>
     ),
@@ -304,9 +297,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Day 7 Overdue: Friendly Reminder</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Send a polite email or text: "Just a quick reminder that invoice #123 for
-                  £X was due on [date]. Would you be able to arrange payment this week?" Most
-                  late payments are resolved at this stage — the customer simply forgot.
+                  Send a polite email or text: "Just a quick reminder that invoice #123 for £X was
+                  due on [date]. Would you be able to arrange payment this week?" Most late payments
+                  are resolved at this stage — the customer simply forgot.
                 </p>
               </div>
             </div>
@@ -317,9 +310,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Day 14 Overdue: Phone Call</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Call the customer directly. A phone call is harder to ignore than an email.
-                  Be firm but professional: confirm the amount, ask when you can expect
-                  payment, and note what was agreed.
+                  Call the customer directly. A phone call is harder to ignore than an email. Be
+                  firm but professional: confirm the amount, ask when you can expect payment, and
+                  note what was agreed.
                 </p>
               </div>
             </div>
@@ -331,9 +324,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Day 21 Overdue: Formal Letter</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send a formal letter stating the amount, original due date, that statutory
-                  interest is now accruing (8% + Bank of England base rate = 12.5% in 2026),
-                  and that you will take further action if payment is not received within 7
-                  days.
+                  interest is now accruing (8% + Bank of England base rate = 12.5% in 2026), and
+                  that you will take further action if payment is not received within 7 days.
                 </p>
               </div>
             </div>
@@ -344,12 +336,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Day 30+ Overdue: Letter Before Action</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A Letter Before Action (LBA) gives the debtor 14 days to pay before you
-                  issue court proceedings. This letter must be sent before you can use the
-                  Small Claims Court. Use Money Claim Online (HMCTS) for debts up to £10,000 —
-                  the court fee is £35 for claims up to £300, £115 for claims up to £5,000.
-                  Most debtors pay when they receive an LBA because they know court action is
-                  next.
+                  A Letter Before Action (LBA) gives the debtor 14 days to pay before you issue
+                  court proceedings. This letter must be sent before you can use the Small Claims
+                  Court. Use Money Claim Online (HMCTS) for debts up to £10,000 — the court fee is
+                  £35 for claims up to £300, £115 for claims up to £5,000. Most debtors pay when
+                  they receive an LBA because they know court action is next.
                 </p>
               </div>
             </div>
@@ -364,9 +355,9 @@ const sections = [
     content: (
       <>
         <p>
-          A cash flow forecast is a month-by-month projection of money in and money out.
-          It shows you in advance when you might run short — so you can take action (chase
-          payments, delay a purchase, push for a deposit) before the crisis arrives.
+          A cash flow forecast is a month-by-month projection of money in and money out. It shows
+          you in advance when you might run short — so you can take action (chase payments, delay a
+          purchase, push for a deposit) before the crisis arrives.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Monthly Cash Flow Template</h4>
@@ -410,8 +401,8 @@ const sections = [
           </div>
         </div>
         <p>
-          Update this forecast weekly with actual figures. If you see a negative month
-          approaching, act now — not when the bank account hits zero.
+          Update this forecast weekly with actual figures. If you see a negative month approaching,
+          act now — not when the bank account hits zero.
         </p>
       </>
     ),
@@ -422,9 +413,9 @@ const sections = [
     content: (
       <>
         <p>
-          The single biggest cash flow surprise for self-employed electricians is their tax
-          bill. HMRC does not deduct tax from your earnings like an employer does — you
-          receive the full amount and must save the tax portion yourself.
+          The single biggest cash flow surprise for self-employed electricians is their tax bill.
+          HMRC does not deduct tax from your earnings like an employer does — you receive the full
+          amount and must save the tax portion yourself.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
@@ -432,10 +423,9 @@ const sections = [
           </h4>
           <div className="space-y-3 text-white text-sm">
             <p className="text-white">
-              In your first year of self-employment, your January tax bill includes your
-              actual tax for the year PLUS a "payment on account" (50% advance payment for
-              the next year). This means your first bill is approximately 150% of your normal
-              annual tax.
+              In your first year of self-employment, your January tax bill includes your actual tax
+              for the year PLUS a "payment on account" (50% advance payment for the next year). This
+              means your first bill is approximately 150% of your normal annual tax.
             </p>
             <div className="flex justify-between border-b border-white/10 pb-2 mt-4">
               <span>Example: Year 1 profit</span>
@@ -456,10 +446,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>The solution is simple:</strong> set aside 25% to 30% of every payment you
-          receive into a separate savings account from day one. By the time your tax bill
-          arrives, the money is already there. This is non-negotiable discipline for
-          self-employed survival.
+          <strong>The solution is simple:</strong> set aside 25% to 30% of every payment you receive
+          into a separate savings account from day one. By the time your tax bill arrives, the money
+          is already there. This is non-negotiable discipline for self-employed survival.
         </p>
       </>
     ),
@@ -470,10 +459,10 @@ const sections = [
     content: (
       <>
         <p>
-          Cash flow management is not glamorous, but it is the difference between a business
-          that thrives and one that is always scraping by. Invoice immediately, take deposits,
-          use staged payments, chase debt promptly, and save for tax. These five habits will
-          keep your business solvent.
+          Cash flow management is not glamorous, but it is the difference between a business that
+          thrives and one that is always scraping by. Invoice immediately, take deposits, use staged
+          payments, chase debt promptly, and save for tax. These five habits will keep your business
+          solvent.
         </p>
         <SEOAppBridge
           title="Invoice and get paid faster"
@@ -514,7 +503,7 @@ export default function CashFlowManagementElectricianPage() {
       faqHeading="Frequently Asked Questions About Cash Flow for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Invoice Faster, Get Paid Sooner"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for invoicing, quoting, and job management. Send invoices from site and get paid on the day. 7-day free trial, cancel anytime."
     />
   );
 }

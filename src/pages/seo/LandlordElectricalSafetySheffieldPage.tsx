@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Sheffield', href: '/guides/landlord-electrical-safety-sheffield' },
+  {
+    label: 'Landlord Electrical Safety Sheffield',
+    href: '/guides/landlord-electrical-safety-sheffield',
+  },
 ];
 
 const tocItems = [
@@ -76,7 +79,7 @@ const faqs = [
   {
     question: 'Can a Sheffield tenant request an electrical safety check?',
     answer:
-      'Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report to Sheffield City Council\'s environmental health or private rented sector team. The council can require the landlord to arrange an inspection and can arrange the work itself if the landlord fails to comply with a remedial notice, recovering costs from the landlord.',
+      "Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report to Sheffield City Council's environmental health or private rented sector team. The council can require the landlord to arrange an inspection and can arrange the work itself if the landlord fails to comply with a remedial notice, recovering costs from the landlord.",
   },
   {
     question: 'What qualifications must an EICR inspector have in Sheffield?',
@@ -94,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,7 +132,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -143,8 +148,8 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — landlords must obtain an Electrical Installation
-                Condition Report before a new tenancy begins and at least every five years. The
-                EICR is documented in accordance with{' '}
+                Condition Report before a new tenancy begins and at least every five years. The EICR
+                is documented in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
@@ -169,9 +174,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualified person</strong> — the EICR must be carried out by a qualified
-                and competent person, in practice meaning registration with NICEIC, NAPIT, ELECSA,
-                or equivalent.
+                <strong>Qualified person</strong> — the EICR must be carried out by a qualified and
+                competent person, in practice meaning registration with NICEIC, NAPIT, ELECSA, or
+                equivalent.
               </span>
             </li>
           </ul>
@@ -195,10 +200,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented sector team</strong> — Sheffield City Council's
-                environmental health and private rented sector team investigates complaints
-                about property conditions including electrical safety. The team can request
-                the EICR from a landlord and take enforcement action.
+                <strong>Private rented sector team</strong> — Sheffield City Council's environmental
+                health and private rented sector team investigates complaints about property
+                conditions including electrical safety. The team can request the EICR from a
+                landlord and take enforcement action.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -212,18 +217,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Civil penalties</strong> — Sheffield City Council can impose civil
-                penalties of up to £30,000 per breach under the 2020 Regulations. Each separate
-                failure — not obtaining an EICR, not providing it to the tenant, not completing
-                remedial work — constitutes a separate breach.
+                <strong>Civil penalties</strong> — Sheffield City Council can impose civil penalties
+                of up to £30,000 per breach under the 2020 Regulations. Each separate failure — not
+                obtaining an EICR, not providing it to the tenant, not completing remedial work —
+                constitutes a separate breach.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action power</strong> — if a landlord fails to comply with a
-                remedial notice, the council can arrange for the work to be carried out and
-                recover costs from the landlord.
+                remedial notice, the council can arrange for the work to be carried out and recover
+                costs from the landlord.
               </span>
             </li>
           </ul>
@@ -246,36 +251,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing</strong> — applies to properties with five or
-                more occupants forming two or more households. A valid EICR is a mandatory
-                licence condition. The EICR must cover all fixed electrical installations
-                including communal areas, fire alarm systems, and emergency lighting.
+                <strong>Mandatory HMO licensing</strong> — applies to properties with five or more
+                occupants forming two or more households. A valid EICR is a mandatory licence
+                condition. The EICR must cover all fixed electrical installations including communal
+                areas, fire alarm systems, and emergency lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional licensing</strong> — Sheffield City Council operates additional
-                HMO licensing covering smaller HMOs in specified areas. Check the council's
-                website for the current additional licensing areas. EICR compliance is a condition
-                of additional licences.
+                HMO licensing covering smaller HMOs in specified areas. Check the council's website
+                for the current additional licensing areas. EICR compliance is a condition of
+                additional licences.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety requirements</strong> — HMO fire alarm systems and emergency
-                lighting are part of the fixed electrical installation inspected during an EICR.
-                The grade and category of fire alarm required depends on the size and layout of
-                the HMO.
+                lighting are part of the fixed electrical installation inspected during an EICR. The
+                grade and category of fire alarm required depends on the size and layout of the HMO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unlicensed HMO consequences</strong> — operating an unlicensed HMO
-                in Sheffield is a criminal offence and can result in prosecution, an unlimited
-                fine, and civil penalties under the 2020 Regulations.
+                <strong>Unlicensed HMO consequences</strong> — operating an unlicensed HMO in
+                Sheffield is a criminal offence and can result in prosecution, an unlimited fine,
+                and civil penalties under the 2020 Regulations.
               </span>
             </li>
           </ul>
@@ -297,33 +301,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing
-                to provide it to the tenant, failing to supply it to the council, and failing to
+                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing to
+                provide it to the tenant, failing to supply it to the council, and failing to
                 complete remedial work are each separate breaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid
-                Section 21 notice without providing the tenant with a copy of the current EICR.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                notice without providing the tenant with a copy of the current EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO licence implications</strong> — failure to comply with EICR
-                requirements can result in licence refusal or revocation, making it unlawful
-                to continue operating the HMO.
+                <strong>HMO licence implications</strong> — failure to comply with EICR requirements
+                can result in licence refusal or revocation, making it unlawful to continue
+                operating the HMO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rent repayment orders</strong> — where a landlord commits certain housing
-                offences (such as operating an unlicensed HMO), tenants can apply to the
-                First-tier Tribunal (Property Chamber) for a rent repayment order of up to
-                12 months' rent.
+                offences (such as operating an unlicensed HMO), tenants can apply to the First-tier
+                Tribunal (Property Chamber) for a rent repayment order of up to 12 months' rent.
               </span>
             </li>
           </ul>
@@ -336,24 +339,22 @@ const sections = [
     heading: 'Tenant Rights Under the Regulations',
     content: (
       <>
-        <p>
-          Sheffield tenants have specific rights under the 2020 Regulations.
-        </p>
+        <p>Sheffield tenants have specific rights under the 2020 Regulations.</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days. New tenants must receive a copy before moving in.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days. New tenants must receive a copy before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Right to report non-compliance</strong> — tenants can report to Sheffield
-                City Council's environmental health team if the landlord has not obtained an EICR
-                or completed required remedial work.
+                City Council's environmental health team if the landlord has not obtained an EICR or
+                completed required remedial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,8 +369,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Protection from retaliatory eviction</strong> — landlords cannot serve a
-                valid Section 21 notice without providing the EICR. The Deregulation Act 2015
-                also protects tenants who raise legitimate complaints about property conditions.
+                valid Section 21 notice without providing the EICR. The Deregulation Act 2015 also
+                protects tenants who raise legitimate complaints about property conditions.
               </span>
             </li>
           </ul>
@@ -383,17 +384,17 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations, Sheffield landlords must complete
-          remedial work within the timescales set by the 2020 Regulations.
+          When an EICR identifies C1 or C2 observations, Sheffield landlords must complete remedial
+          work within the timescales set by the 2020 Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>28 days maximum</strong> — all remedial work must be completed within
-                28 days of the EICR, unless the inspector specifies a shorter timescale. The
-                clock starts from the date of the inspection.
+                <strong>28 days maximum</strong> — all remedial work must be completed within 28
+                days of the EICR, unless the inspector specifies a shorter timescale. The clock
+                starts from the date of the inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -406,18 +407,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation required</strong> — once remedial work is complete,
-                a qualified person must confirm the work in writing. This must be provided to
-                the tenant and to the council within 28 days of the work being completed.
+                <strong>Written confirmation required</strong> — once remedial work is complete, a
+                qualified person must confirm the work in writing. This must be provided to the
+                tenant and to the council within 28 days of the work being completed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common Sheffield remedial work</strong> — fitting RCD protection
-                (Regulation 411.3.3), replacing plastic consumer units with metal enclosures
-                (Regulation 421.1.201), upgrading earthing and bonding, and replacing
-                deteriorated wiring in Victorian and Edwardian terraces.
+                <strong>Common Sheffield remedial work</strong> — fitting RCD protection (Regulation
+                411.3.3), replacing plastic consumer units with metal enclosures (Regulation
+                421.1.201), upgrading earthing and bonding, and replacing deteriorated wiring in
+                Victorian and Edwardian terraces.
               </span>
             </li>
           </ul>
@@ -439,9 +440,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's
-                online register for Sheffield-based inspectors. Scheme membership provides
-                assurance of qualifications, insurance, and regular assessment.
+                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's online
+                register for Sheffield-based inspectors. Scheme membership provides assurance of
+                qualifications, insurance, and regular assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -463,9 +464,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid unusually cheap quotes</strong> — a thorough EICR for a Sheffield
-                two-bedroom terraced house requires 2 to 4 hours and calibrated equipment.
-                Prices substantially below £110 for a one-bedroom flat may indicate inadequate
-                testing.
+                two-bedroom terraced house requires 2 to 4 hours and calibrated equipment. Prices
+                substantially below £110 for a one-bedroom flat may indicate inadequate testing.
               </span>
             </li>
           </ul>
@@ -479,8 +479,8 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield EICR costs are competitive, reflecting Yorkshire labour rates that are
-          generally lower than London and the South East.
+          Sheffield EICR costs are competitive, reflecting Yorkshire labour rates that are generally
+          lower than London and the South East.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -493,22 +493,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat or small terraced house</strong> — £160 to £290.
-                Usually 5 to 8 circuits.
+                <strong>Two-bedroom flat or small terraced house</strong> — £160 to £290. Usually 5
+                to 8 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £230 to £400. Victorian terraces in
-                Broomhall and Walkley may take longer due to complex layouts and aged wiring.
+                <strong>Three-bedroom house</strong> — £230 to £400. Victorian terraces in Broomhall
+                and Walkley may take longer due to complex layouts and aged wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO</strong> — £330 to £650+. Multiple consumer units, fire alarm
-                systems, and emergency lighting increase the inspection scope.
+                <strong>HMO</strong> — £330 to £650+. Multiple consumer units, fire alarm systems,
+                and emergency lighting increase the inspection scope.
               </span>
             </li>
           </ul>
@@ -542,8 +542,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork.
                 </p>
               </div>
             </div>
@@ -567,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Sheffield with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -604,7 +604,7 @@ export default function LandlordElectricalSafetySheffieldPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

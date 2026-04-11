@@ -452,7 +452,7 @@ export default function AIDiagramBuilderPage() {
       faqHeading="Frequently Asked Questions About AI Diagram Building"
       relatedPages={relatedPages}
       ctaHeading="Create Professional Diagrams in Seconds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Diagram Builder. Circuit schematics, board layouts, and as-built drawings from plain English descriptions. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Diagram Builder. Circuit schematics, board layouts, and as-built drawings from plain English descriptions. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-diagram-builder"
     />
   );

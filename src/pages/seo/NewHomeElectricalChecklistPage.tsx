@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'How do I register a meter when moving into a new home?',
     answer:
-      'Take meter readings for all fuel types (electricity, gas) on the day you take possession. Photograph each meter showing the reading and the meter serial number (MPAN for electricity, MPRN for gas). Contact the existing supplier to transfer the account to your name or switch to your preferred supplier. You are not obliged to stay with the vendor\'s supplier. If you switch, give the opening readings to both the old and new supplier to ensure you are billed correctly from the start.',
+      "Take meter readings for all fuel types (electricity, gas) on the day you take possession. Photograph each meter showing the reading and the meter serial number (MPAN for electricity, MPRN for gas). Contact the existing supplier to transfer the account to your name or switch to your preferred supplier. You are not obliged to stay with the vendor's supplier. If you switch, give the opening readings to both the old and new supplier to ensure you are billed correctly from the start.",
   },
   {
     question: 'Should I commission an EICR when moving into a property I have just bought?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/buying-house-electrical-guide',
     title: 'Buying a House Electrical Checklist',
-    description: 'What to check at viewing, signs of DIY work, and rewire costs to factor into your offer.',
+    description:
+      'What to check at viewing, signs of DIY work, and rewire costs to factor into your offer.',
     icon: Home,
     category: 'Guide',
   },
@@ -103,7 +104,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/home-office-electrical-guide',
     title: 'Home Office Electrical Guide',
-    description: 'Dedicated circuits, data points, garden office power, and UPS for working from home.',
+    description:
+      'Dedicated circuits, data points, garden office power, and UPS for working from home.',
     icon: Zap,
     category: 'Guide',
   },
@@ -134,37 +136,37 @@ const sections = [
     content: (
       <>
         <p>
-          The consumer unit (often called the fuse box) is the central hub of your home's
-          electrical installation. Knowing where it is and how to operate it is the single most
-          important piece of electrical knowledge for any new homeowner.
+          The consumer unit (often called the fuse box) is the central hub of your home's electrical
+          installation. Knowing where it is and how to operate it is the single most important piece
+          of electrical knowledge for any new homeowner.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Find it on day one</strong> — consumer units are commonly located under
-                the stairs, in a hallway cupboard, in the kitchen, or in a utility room. In
-                flats, it may be in a hallway cabinet. Make sure every member of your household
-                knows where it is.
+                <strong>Find it on day one</strong> — consumer units are commonly located under the
+                stairs, in a hallway cupboard, in the kitchen, or in a utility room. In flats, it
+                may be in a hallway cabinet. Make sure every member of your household knows where it
+                is.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Identify the main switch</strong> — this is usually on the left side of
-                the consumer unit and is typically larger than the individual circuit breakers.
-                Switching it off isolates the entire electrical installation. In an emergency,
-                this is the switch to operate.
+                <strong>Identify the main switch</strong> — this is usually on the left side of the
+                consumer unit and is typically larger than the individual circuit breakers.
+                Switching it off isolates the entire electrical installation. In an emergency, this
+                is the switch to operate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check the circuit labels</strong> — modern consumer units should have
-                each circuit breaker labelled (lighting, sockets, cooker, shower, etc.). If
-                labels are missing or unreadable, test and label each circuit yourself by
-                switching off one breaker at a time and noting which sockets and lights go off.
+                <strong>Check the circuit labels</strong> — modern consumer units should have each
+                circuit breaker labelled (lighting, sockets, cooker, shower, etc.). If labels are
+                missing or unreadable, test and label each circuit yourself by switching off one
+                breaker at a time and noting which sockets and lights go off.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -186,45 +188,45 @@ const sections = [
     content: (
       <>
         <p>
-          Residual Current Devices (RCDs) are the primary protection against electric shock.
-          They detect small imbalances in electrical current (which occur when current flows
-          through a person to earth) and disconnect the circuit within 300 milliseconds —
-          fast enough to prevent cardiac fibrillation in most cases.
+          Residual Current Devices (RCDs) are the primary protection against electric shock. They
+          detect small imbalances in electrical current (which occur when current flows through a
+          person to earth) and disconnect the circuit within 300 milliseconds — fast enough to
+          prevent cardiac fibrillation in most cases.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Press the T (Test) button on each RCD</strong> — the RCD should trip
-                (switch off) immediately. If your consumer unit has two RCDs (a split-load
-                board), test both. If it has individual RCBOs (one per circuit), test each one.
+                <strong>Press the T (Test) button on each RCD</strong> — the RCD should trip (switch
+                off) immediately. If your consumer unit has two RCDs (a split-load board), test
+                both. If it has individual RCBOs (one per circuit), test each one.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If the RCD does not trip</strong> — this is a serious fault. The RCD
-                is not providing protection. Do not use the circuits it covers until a qualified
+                <strong>If the RCD does not trip</strong> — this is a serious fault. The RCD is not
+                providing protection. Do not use the circuits it covers until a qualified
                 electrician has inspected and replaced the faulty device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If the RCD will not reset</strong> — there is likely a fault on one of
-                the circuits it protects. Switch off all the individual circuit breakers on that
-                side of the board, then reset the RCD. Switch each breaker back on one at a time
-                until the RCD trips again — the last circuit switched on is the faulty one.
-                Disconnect appliances from that circuit and try again.
+                <strong>If the RCD will not reset</strong> — there is likely a fault on one of the
+                circuits it protects. Switch off all the individual circuit breakers on that side of
+                the board, then reset the RCD. Switch each breaker back on one at a time until the
+                RCD trips again — the last circuit switched on is the faulty one. Disconnect
+                appliances from that circuit and try again.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test RCDs every six months</strong> — the Electricity at Work Regulations
-                1989 recommend regular testing of protective devices. Press the T button every
-                six months to confirm the RCD continues to operate correctly.
+                1989 recommend regular testing of protective devices. Press the T button every six
+                months to confirm the RCD continues to operate correctly.
               </span>
             </li>
           </ul>
@@ -232,8 +234,8 @@ const sections = [
         <p>
           Under Regulation 411.3.3 of BS 7671, socket-outlet circuits rated up to 32A must be
           protected by a 30mA RCD. If your consumer unit has no RCDs at all, commission an{' '}
-          <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink> as
-          a priority — this is a C2 (potentially dangerous) finding.
+          <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink> as a
+          priority — this is a C2 (potentially dangerous) finding.
         </p>
       </>
     ),
@@ -262,28 +264,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat detector in the kitchen</strong> — optical smoke detectors in
-                kitchens cause false alarms from cooking. Fit a heat detector instead, which
-                triggers on temperature rise rather than particles.
+                <strong>Heat detector in the kitchen</strong> — optical smoke detectors in kitchens
+                cause false alarms from cooking. Fit a heat detector instead, which triggers on
+                temperature rise rather than particles.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Carbon monoxide detector in rooms with combustion appliances</strong> —
-                fit a CO detector in any room containing a gas boiler, gas fire, wood-burning
-                stove, solid fuel appliance, or oil appliance. Under the Smoke and Carbon
-                Monoxide Alarm (England) Regulations 2022, this is mandatory in rented
-                properties and strongly recommended for owner-occupiers.
+                <strong>Carbon monoxide detector in rooms with combustion appliances</strong> — fit
+                a CO detector in any room containing a gas boiler, gas fire, wood-burning stove,
+                solid fuel appliance, or oil appliance. Under the Smoke and Carbon Monoxide Alarm
+                (England) Regulations 2022, this is mandatory in rented properties and strongly
+                recommended for owner-occupiers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test every detector</strong> — press the test button on each smoke and
-                CO detector on moving-in day. Replace batteries if the alarm is faint. Replace
-                the entire unit if it is more than 10 years old (smoke detectors) or more than
-                7 years old (CO detectors). Check the manufacture date on the back of the unit.
+                <strong>Test every detector</strong> — press the test button on each smoke and CO
+                detector on moving-in day. Replace batteries if the alarm is faint. Replace the
+                entire unit if it is more than 10 years old (smoke detectors) or more than 7 years
+                old (CO detectors). Check the manufacture date on the back of the unit.
               </span>
             </li>
           </ul>
@@ -297,16 +299,16 @@ const sections = [
     content: (
       <>
         <p>
-          In an electrical emergency, every member of the household needs to know how to isolate
-          the electricity supply safely and quickly.
+          In an electrical emergency, every member of the household needs to know how to isolate the
+          electricity supply safely and quickly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical fire</strong> — switch off the main switch on the consumer
-                unit immediately. Never use water on an electrical fire. Use a CO2 or dry powder
+                <strong>Electrical fire</strong> — switch off the main switch on the consumer unit
+                immediately. Never use water on an electrical fire. Use a CO2 or dry powder
                 extinguisher. If the fire is large, evacuate and call 999. Do not re-enter the
                 building until the fire service has confirmed it is safe.
               </span>
@@ -314,28 +316,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric shock</strong> — do not touch the person while they may still be
-                in contact with the electrical source. Switch off the main switch or remove the
-                plug from the socket. Call 999. If the person is not breathing, begin CPR if
-                trained to do so.
+                <strong>Electric shock</strong> — do not touch the person while they may still be in
+                contact with the electrical source. Switch off the main switch or remove the plug
+                from the socket. Call 999. If the person is not breathing, begin CPR if trained to
+                do so.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flooding</strong> — if water enters areas near electrical equipment,
-                switch off the main switch before entering any flooded area. Do not operate
-                electrical switches or enter flooded areas before the power is off. Call a
-                qualified electrician before restoring the supply after any flooding incident.
+                <strong>Flooding</strong> — if water enters areas near electrical equipment, switch
+                off the main switch before entering any flooded area. Do not operate electrical
+                switches or enter flooded areas before the power is off. Call a qualified
+                electrician before restoring the supply after any flooding incident.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Note emergency contact numbers</strong> — save your electricity
-                distributor's 24-hour emergency line (National Grid: 0800 816 9176, or your
-                regional distributor) and a reliable local electrician's number in your phone
-                before you need them.
+                distributor's 24-hour emergency line (National Grid: 0800 816 9176, or your regional
+                distributor) and a reliable local electrician's number in your phone before you need
+                them.
               </span>
             </li>
           </ul>
@@ -349,42 +351,42 @@ const sections = [
     content: (
       <>
         <p>
-          Within your first week, test every circuit in the property to confirm it is working and
-          to understand the layout of the installation.
+          Within your first week, test every circuit in the property to confirm it is working and to
+          understand the layout of the installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket circuits</strong> — plug a lamp or charger into every socket
-                outlet in the property to confirm it is live. Mark any dead sockets and report
-                them to a qualified electrician.
+                <strong>Socket circuits</strong> — plug a lamp or charger into every socket outlet
+                in the property to confirm it is live. Mark any dead sockets and report them to a
+                qualified electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuits</strong> — test every light fitting in the property.
-                Replace any blown lamps. Note any fittings that are damaged, missing covers,
-                or where the lampshade shows signs of heat damage.
+                Replace any blown lamps. Note any fittings that are damaged, missing covers, or
+                where the lampshade shows signs of heat damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cooker and shower circuits</strong> — confirm the cooker circuit breaker
-                is correctly rated for your cooker (typically 32A or 40A for a full electric
-                range). Test the electric shower if fitted. Note the shower's rated power (kW)
-                and confirm the circuit breaker matches.
+                <strong>Cooker and shower circuits</strong> — confirm the cooker circuit breaker is
+                correctly rated for your cooker (typically 32A or 40A for a full electric range).
+                Test the electric shower if fitted. Note the shower's rated power (kW) and confirm
+                the circuit breaker matches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Immersion heater</strong> — if the property has an immersion heater,
-                confirm the circuit breaker is operational and the timer (if fitted) is correctly
-                set. Immersion heaters typically operate on a dedicated 15A or 16A circuit.
+                <strong>Immersion heater</strong> — if the property has an immersion heater, confirm
+                the circuit breaker is operational and the timer (if fitted) is correctly set.
+                Immersion heaters typically operate on a dedicated 15A or 16A circuit.
               </span>
             </li>
           </ul>
@@ -416,8 +418,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection required</strong> — all outdoor socket outlets must be
-                protected by a 30mA RCD under Regulation 411.3.3 of BS 7671. Check that the
-                outdoor sockets are on a circuit protected by an RCD in the consumer unit.
+                protected by a 30mA RCD under Regulation 411.3.3 of BS 7671. Check that the outdoor
+                sockets are on a circuit protected by an RCD in the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -432,9 +434,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Garden lighting and outbuildings</strong> — check any garden lighting
-                circuits and external wiring to outbuildings, sheds, or garages. Look for
-                armoured cable (SWA) where cables are buried underground or surface-mounted in
-                exposed locations. Inadequate outdoor wiring is a common EICR finding.
+                circuits and external wiring to outbuildings, sheds, or garages. Look for armoured
+                cable (SWA) where cables are buried underground or surface-mounted in exposed
+                locations. Inadequate outdoor wiring is a common EICR finding.
               </span>
             </li>
           </ul>
@@ -456,10 +458,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Take photos of the meter reading</strong> — photograph your electricity
-                (and gas) meter on the day you take possession, showing the reading and the meter
-                serial number. Photograph the MPAN (electricity) and MPRN (gas) numbers from
-                the meter label.
+                <strong>Take photos of the meter reading</strong> — photograph your electricity (and
+                gas) meter on the day you take possession, showing the reading and the meter serial
+                number. Photograph the MPAN (electricity) and MPRN (gas) numbers from the meter
+                label.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -467,24 +469,24 @@ const sections = [
               <span>
                 <strong>Contact the existing supplier</strong> — call or email the energy supplier
                 currently serving the property to give them your opening meter reading and to
-                transfer the account to your name. You can find the current supplier using the
-                Meter Point Administration Service (MPAS) by calling 0870 608 1524.
+                transfer the account to your name. You can find the current supplier using the Meter
+                Point Administration Service (MPAS) by calling 0870 608 1524.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consider switching supplier</strong> — you are not obliged to stay with
-                the current supplier. Once you have established the supply in your name, you can
-                switch to a tariff and supplier of your choice using a comparison site.
+                <strong>Consider switching supplier</strong> — you are not obliged to stay with the
+                current supplier. Once you have established the supply in your name, you can switch
+                to a tariff and supplier of your choice using a comparison site.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter upgrade</strong> — if the property has an old-style analogue
-                meter, ask your supplier about a free smart meter installation. Smart meters
-                provide real-time energy usage data and eliminate estimated bills.
+                meter, ask your supplier about a free smart meter installation. Smart meters provide
+                real-time energy usage data and eliminate estimated bills.
               </span>
             </li>
           </ul>
@@ -498,35 +500,35 @@ const sections = [
     content: (
       <>
         <p>
-          Setting up your energy account correctly at the start avoids billing problems later
-          and ensures you are on the right tariff for your usage.
+          Setting up your energy account correctly at the start avoids billing problems later and
+          ensures you are on the right tariff for your usage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Economy 7 or Economy 10</strong> — if the property has storage heaters or
-                an off-peak hot water cylinder, it may be on an Economy 7 or Economy 10 tariff
-                with cheaper overnight electricity. Confirm whether the meter is single-rate or
+                <strong>Economy 7 or Economy 10</strong> — if the property has storage heaters or an
+                off-peak hot water cylinder, it may be on an Economy 7 or Economy 10 tariff with
+                cheaper overnight electricity. Confirm whether the meter is single-rate or
                 multi-rate and choose a tariff accordingly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Direct debit</strong> — set up a direct debit for your energy bill.
-                Most suppliers offer a discount for direct debit customers. Review the direct
-                debit amount after two or three months to ensure it reflects your actual usage.
+                <strong>Direct debit</strong> — set up a direct debit for your energy bill. Most
+                suppliers offer a discount for direct debit customers. Review the direct debit
+                amount after two or three months to ensure it reflects your actual usage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charger and solar PV</strong> — if you plan to install an EV charger
-                or solar panels, discuss EV tariffs and Smart Export Guarantee (SEG) options
-                with your supplier before installation. Some tariffs significantly reduce the
-                cost of overnight EV charging.
+                <strong>EV charger and solar PV</strong> — if you plan to install an EV charger or
+                solar panels, discuss EV tariffs and Smart Export Guarantee (SEG) options with your
+                supplier before installation. Some tariffs significantly reduce the cost of
+                overnight EV charging.
               </span>
             </li>
           </ul>
@@ -541,14 +543,16 @@ const sections = [
       <>
         <p>
           If you commissioned an{' '}
-          <SEOInternalLink href="/electrical-survey-before-buying">EICR during the purchase process</SEOInternalLink>{' '}
+          <SEOInternalLink href="/electrical-survey-before-buying">
+            EICR during the purchase process
+          </SEOInternalLink>{' '}
           and the result was Satisfactory, you do not need to commission another one immediately.
           File it and note the next recommended inspection date.
         </p>
         <p>
           If you did not commission an EICR during purchase — which is common — consider
-          commissioning one within your first year of ownership, particularly for properties over
-          25 years old. An EICR costs £150 to £400 and gives you a comprehensive picture of the
+          commissioning one within your first year of ownership, particularly for properties over 25
+          years old. An EICR costs £150 to £400 and gives you a comprehensive picture of the
           installation's condition, including any issues that should be addressed proactively.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -565,17 +569,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Properties over 25 years old</strong> — commission an EICR within the
-                first year if you did not obtain one during purchase. This gives you a baseline
-                and identifies any work needed before it becomes urgent.
+                <strong>Properties over 25 years old</strong> — commission an EICR within the first
+                year if you did not obtain one during purchase. This gives you a baseline and
+                identifies any work needed before it becomes urgent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before making alterations</strong> — always get an EICR before starting
-                any significant electrical work such as adding circuits, installing an EV charger,
-                or rewiring a kitchen. Knowing the existing installation's condition helps the
+                <strong>Before making alterations</strong> — always get an EICR before starting any
+                significant electrical work such as adding circuits, installing an EV charger, or
+                rewiring a kitchen. Knowing the existing installation's condition helps the
                 electrician plan the work correctly.
               </span>
             </li>
@@ -590,9 +594,9 @@ const sections = [
     content: (
       <>
         <p>
-          New homeowners who discover electrical issues soon after moving in are a strong source
-          of remedial work. Many commission an EICR in their first year of ownership, and those
-          who found issues during purchase need the work carried out promptly.
+          New homeowners who discover electrical issues soon after moving in are a strong source of
+          remedial work. Many commission an EICR in their first year of ownership, and those who
+          found issues during purchase need the work carried out promptly.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -618,8 +622,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial and Upgrade Work</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  New homeowners often want upgrades as well as remedial work — extra sockets,
-                  EV charger points, outdoor circuits. Use the{' '}
+                  New homeowners often want upgrades as well as remedial work — extra sockets, EV
+                  charger points, outdoor circuits. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -631,7 +635,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win new homeowner electrical work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Deliver reports on the day and quote upgrade work immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Deliver reports on the day and quote upgrade work immediately. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -668,7 +672,7 @@ export default function NewHomeElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Electrical Safety in a New Home"
       relatedPages={relatedPages}
       ctaHeading="Complete Home Electrical Inspections on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning and instant PDF export. Deliver reports to new homeowners before you leave. 7-day free trial."
     />
   );
 }

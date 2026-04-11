@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Southampton', href: '/landlord-electrical-safety-southampton' },
+  {
+    label: 'Landlord Electrical Safety Southampton',
+    href: '/landlord-electrical-safety-southampton',
+  },
 ];
 
 const tocItems = [
@@ -76,7 +79,7 @@ const faqs = [
   {
     question: 'Can a Southampton tenant request an electrical safety check?',
     answer:
-      'Yes. Tenants have the right to request a copy of the current EICR from their landlord. If the landlord cannot provide one, the tenant can report this to Southampton City Council\'s housing enforcement team, which can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange for the work to be done and recover costs from the landlord.',
+      "Yes. Tenants have the right to request a copy of the current EICR from their landlord. If the landlord cannot provide one, the tenant can report this to Southampton City Council's housing enforcement team, which can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange for the work to be done and recover costs from the landlord.",
   },
   {
     question: 'What qualifications must an EICR inspector have in Southampton?',
@@ -94,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -115,7 +119,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'The wiring regulations explained — what changed and what it means for landlord compliance.',
+    description:
+      'The wiring regulations explained — what changed and what it means for landlord compliance.',
     icon: Scale,
     category: 'Guide',
   },
@@ -135,15 +140,15 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
           The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
           are the primary legislation governing landlord electrical safety obligations in
-          Southampton. These regulations came into force on 1 June 2020 for new tenancies and
-          1 April 2021 for all existing tenancies. Every private landlord in Southampton must
-          comply.
+          Southampton. These regulations came into force on 1 June 2020 for new tenancies and 1
+          April 2021 for all existing tenancies. Every private landlord in Southampton must comply.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -201,8 +206,8 @@ const sections = [
       <>
         <p>
           Southampton City Council is the local housing authority responsible for enforcing the 2020
-          Regulations across Southampton. The council's housing enforcement team investigates
-          tenant complaints and carries out proactive inspections, particularly in areas with high
+          Regulations across Southampton. The council's housing enforcement team investigates tenant
+          complaints and carries out proactive inspections, particularly in areas with high
           concentrations of HMOs serving Southampton's large student population.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -211,17 +216,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Student rental hotspots</strong> — Portswood, Swaythling, St Denys, and
-                Shirley have large concentrations of student rental properties and HMOs. The
-                council enforcement team is active in these areas, and landlords operating
-                unlicensed HMOs face prosecution as well as civil penalties.
+                Shirley have large concentrations of student rental properties and HMOs. The council
+                enforcement team is active in these areas, and landlords operating unlicensed HMOs
+                face prosecution as well as civil penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Southampton City Council operates mandatory HMO
-                licensing for properties with five or more occupants in two or more households.
-                A valid EICR is a condition of the licence. The council also has powers to operate
+                licensing for properties with five or more occupants in two or more households. A
+                valid EICR is a condition of the licence. The council also has powers to operate
                 additional licensing in designated areas covering smaller HMOs.
               </span>
             </li>
@@ -229,9 +234,9 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complaint-driven enforcement</strong> — when tenants report absent or
-                out-of-date EICRs, the council triggers formal enforcement action. The council
-                can require the landlord to provide the EICR, issue a remedial notice where
-                problems are found, and impose a civil penalty for non-compliance.
+                out-of-date EICRs, the council triggers formal enforcement action. The council can
+                require the landlord to provide the EICR, issue a remedial notice where problems are
+                found, and impose a civil penalty for non-compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -270,24 +275,24 @@ const sections = [
               <span>
                 <strong>Mandatory HMO licensing</strong> — applies to properties with five or more
                 occupants forming two or more households. A valid EICR is a condition of the
-                licence, covering all fixed electrical installations including communal areas,
-                fire alarm systems, and emergency lighting.
+                licence, covering all fixed electrical installations including communal areas, fire
+                alarm systems, and emergency lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shorter inspection intervals</strong> — many Southampton HMO licence
-                conditions require EICRs at intervals shorter than the standard five years.
-                Check your specific licence conditions carefully and diarise renewal dates.
+                conditions require EICRs at intervals shorter than the standard five years. Check
+                your specific licence conditions carefully and diarise renewal dates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire safety integration</strong> — HMO fire alarm systems and emergency
-                lighting are part of the fixed electrical installation and must be tested as part
-                of the EICR. Grade D LD2 interlinked systems are typically required in Southampton
+                lighting are part of the fixed electrical installation and must be tested as part of
+                the EICR. Grade D LD2 interlinked systems are typically required in Southampton
                 HMOs, with Grade A systems required for larger or higher-risk properties.
               </span>
             </li>
@@ -296,16 +301,16 @@ const sections = [
               <span>
                 <strong>RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires RCD
                 protection on socket-outlet circuits rated up to 32A. Many older Southampton
-                terraced HMOs lack this protection, making C2 findings very common during
-                first inspections of older Portswood properties.
+                terraced HMOs lack this protection, making C2 findings very common during first
+                inspections of older Portswood properties.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Operating an unlicensed HMO in Southampton is a criminal offence. Southampton City
-          Council has been active in pursuing unlicensed HMO operators, and prosecution in the
-          Magistrates' Court can result in an unlimited fine in addition to civil penalties.
+          Operating an unlicensed HMO in Southampton is a criminal offence. Southampton City Council
+          has been active in pursuing unlicensed HMO operators, and prosecution in the Magistrates'
+          Court can result in an unlimited fine in addition to civil penalties.
         </p>
       </>
     ),
@@ -327,15 +332,15 @@ const sections = [
               <span>
                 <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing to
                 provide it to the tenant, failing to supply it to Southampton City Council on
-                request, and failing to complete remedial work are each separate breaches.
-                Multiple failures can result in cumulative penalties well in excess of £30,000.
+                request, and failing to complete remedial work are each separate breaches. Multiple
+                failures can result in cumulative penalties well in excess of £30,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Repeat offences</strong> — local authorities can impose higher penalties
-                for repeat non-compliance. Southampton City Council maintains records of previous
+                <strong>Repeat offences</strong> — local authorities can impose higher penalties for
+                repeat non-compliance. Southampton City Council maintains records of previous
                 breaches and may escalate penalties for landlords with a history of non-compliance.
               </span>
             </li>
@@ -361,8 +366,8 @@ const sections = [
         </div>
         <p>
           The cost of a five-yearly EICR is a fraction of the potential penalties. Southampton
-          landlords should treat EICR renewals as a routine operating cost and maintain records
-          of every inspection and remedial work completion.
+          landlords should treat EICR renewals as a routine operating cost and maintain records of
+          every inspection and remedial work completion.
         </p>
       </>
     ),
@@ -374,36 +379,36 @@ const sections = [
       <>
         <p>
           The 2020 Regulations give tenants in Southampton specific rights regarding electrical
-          safety. Students — who form a large proportion of Southampton's rental market — should
-          be particularly aware of these rights when signing tenancy agreements.
+          safety. Students — who form a large proportion of Southampton's rental market — should be
+          particularly aware of these rights when signing tenancy agreements.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days of the inspection. New tenants must receive a copy before
-                moving in. Request it in writing from your landlord or letting agent if you have
-                not received one.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days of the inspection. New tenants must receive a copy before moving in.
+                Request it in writing from your landlord or letting agent if you have not received
+                one.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Right to report non-compliance</strong> — if your landlord has not obtained
-                an EICR or has not completed required remedial work, report this to Southampton
-                City Council's housing enforcement team. The council has the power to investigate
-                and take enforcement action including civil penalties against the landlord.
+                an EICR or has not completed required remedial work, report this to Southampton City
+                Council's housing enforcement team. The council has the power to investigate and
+                take enforcement action including civil penalties against the landlord.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Right to safe electrics</strong> — if the EICR identifies urgent safety
-                issues (C1 or C2 observations), the landlord must arrange remedial work promptly.
-                If the landlord fails to act, the council can arrange for the work to be done.
-                Tenants must not be charged for any remedial work.
+                issues (C1 or C2 observations), the landlord must arrange remedial work promptly. If
+                the landlord fails to act, the council can arrange for the work to be done. Tenants
+                must not be charged for any remedial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -432,8 +437,8 @@ const sections = [
     content: (
       <>
         <p>
-          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631),
-          the landlord is legally required to complete remedial work within strict timescales.
+          When an EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), the
+          landlord is legally required to complete remedial work within strict timescales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -449,18 +454,18 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate</strong> — where a C1 (danger present)
-                observation is recorded, the inspector may recommend immediate disconnection of
-                the affected circuit. Landlords should arrange emergency remedial work as soon
-                as possible.
+                observation is recorded, the inspector may recommend immediate disconnection of the
+                affected circuit. Landlords should arrange emergency remedial work as soon as
+                possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation</strong> — once remedial work is complete, the
-                landlord must obtain written confirmation from a qualified person that the work
-                has been done satisfactorily. This must be provided to the tenant and to
-                Southampton City Council within 28 days of the work being completed.
+                <strong>Written confirmation</strong> — once remedial work is complete, the landlord
+                must obtain written confirmation from a qualified person that the work has been done
+                satisfactorily. This must be provided to the tenant and to Southampton City Council
+                within 28 days of the work being completed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,8 +494,8 @@ const sections = [
       <>
         <p>
           Southampton and the wider Hampshire area have a well-established electrical contracting
-          sector. Landlords should verify qualifications and registration before commissioning
-          an EICR.
+          sector. Landlords should verify qualifications and registration before commissioning an
+          EICR.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -505,27 +510,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Required qualifications</strong> — the inspector should hold City and
-                Guilds 2391 (Inspection and Testing) or equivalent, plus a current BS 7671
-                qualification (C&G 2382 18th Edition). Experience with older terraced properties
-                common in Portswood and St Denys is important.
+                <strong>Required qualifications</strong> — the inspector should hold City and Guilds
+                2391 (Inspection and Testing) or equivalent, plus a current BS 7671 qualification
+                (C&G 2382 18th Edition). Experience with older terraced properties common in
+                Portswood and St Denys is important.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance</strong> — verify that the inspector carries professional
-                indemnity insurance. This is a requirement of competent person scheme membership
-                and protects both parties if an error is made on the report.
+                indemnity insurance. This is a requirement of competent person scheme membership and
+                protects both parties if an error is made on the report.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Avoid suspiciously cheap quotes</strong> — a thorough EICR for a
-                Southampton property takes 2 to 4 hours and requires calibrated test instruments.
-                Quotes significantly below £150 should raise concerns about the thoroughness of
-                the inspection.
+                <strong>Avoid suspiciously cheap quotes</strong> — a thorough EICR for a Southampton
+                property takes 2 to 4 hours and requires calibrated test instruments. Quotes
+                significantly below £150 should raise concerns about the thoroughness of the
+                inspection.
               </span>
             </li>
           </ul>
@@ -540,39 +545,38 @@ const sections = [
       <>
         <p>
           Southampton EICR costs are slightly above the national average for English provincial
-          cities, reflecting the city's proximity to the South East and the mix of terraced
-          houses, converted flats, and purpose-built student accommodation in the local rental
-          stock.
+          cities, reflecting the city's proximity to the South East and the mix of terraced houses,
+          converted flats, and purpose-built student accommodation in the local rental stock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £150 to £230. Typically 3 to 5 circuits
-                with a single consumer unit.
+                <strong>One-bedroom flat</strong> — £150 to £230. Typically 3 to 5 circuits with a
+                single consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom house</strong> — £200 to £320. Common in Portswood and
-                St Denys. Older terraced houses may take longer due to non-standard wiring.
+                <strong>Two-bedroom house</strong> — £200 to £320. Common in Portswood and St Denys.
+                Older terraced houses may take longer due to non-standard wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom terraced house</strong> — £260 to £420. Victorian and
-                Edwardian properties with ageing wiring installations often require more time
-                for thorough testing.
+                Edwardian properties with ageing wiring installations often require more time for
+                thorough testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Student HMO</strong> — £380 to £680+. Multiple consumer units, fire
-                alarm systems, and emergency lighting increase inspection scope and time.
+                <strong>Student HMO</strong> — £380 to £680+. Multiple consumer units, fire alarm
+                systems, and emergency lighting increase inspection scope and time.
               </span>
             </li>
           </ul>
@@ -607,9 +611,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork. Send the
-                  report to the landlord before you leave the property.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork. Send the report to
+                  the landlord before you leave the property.
                 </p>
               </div>
             </div>
@@ -625,8 +629,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Landlords must act within 28 days — the electrician who quotes on the day of
-                  the EICR wins the work.
+                  . Landlords must act within 28 days — the electrician who quotes on the day of the
+                  EICR wins the work.
                 </p>
               </div>
             </div>
@@ -634,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -671,7 +675,7 @@ export default function LandlordElectricalSafetySouthamptonPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

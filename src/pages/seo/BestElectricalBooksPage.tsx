@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="OSG tables on your phone with Elec-Mate"
-          description="All the cable sizing tables, Zs limits, correction factors, and disconnection times from the OSG are built into Elec-Mate's 70 calculators. Faster than flicking through a book, always up to date with the latest amendment."
+          description="All the cable sizing tables, Zs limits, correction factors, and disconnection times from the OSG are built into Elec-Mate's 70+ calculators. Faster than flicking through a book, always up to date with the latest amendment."
           icon={Calculator}
         />
       </>
@@ -608,7 +608,7 @@ export default function BestElectricalBooksPage() {
       faqHeading="Frequently Asked Questions About Electrical Books"
       relatedPages={relatedPages}
       ctaHeading="Your bookshelf on your phone"
-      ctaSubheading="BS 7671 regulation references, Zs limits, cable sizing tables, and 70 calculators — all accessible on site without carrying books. 7-day free trial, cancel anytime."
+      ctaSubheading="BS 7671 regulation references, Zs limits, cable sizing tables, and 70+ calculators — all accessible on site without carrying books. 7-day free trial, cancel anytime."
     />
   );
 }

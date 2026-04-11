@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cis-guide-electrician',
     title: 'CIS Guide for Electricians',
-    description: 'How CIS works, deduction rates, and the link between CIS and VAT domestic reverse charge.',
+    description:
+      'How CIS works, deduction rates, and the link between CIS and VAT domestic reverse charge.',
     icon: ClipboardCheck,
     category: 'Finance Guide',
   },
@@ -132,39 +133,39 @@ const sections = [
     content: (
       <>
         <p>
-          VAT registration is mandatory once your taxable turnover exceeds £85,000 in any
-          rolling 12-month period. This is not a calendar year limit — HMRC looks at any
-          12-month window ending on any given day. Once you realise your turnover will exceed
-          £85,000, you have 30 days to register.
+          VAT registration is mandatory once your taxable turnover exceeds £85,000 in any rolling
+          12-month period. This is not a calendar year limit — HMRC looks at any 12-month window
+          ending on any given day. Once you realise your turnover will exceed £85,000, you have 30
+          days to register.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What counts towards the threshold</strong> — all taxable supplies,
-                including standard-rated (20%) work, zero-rated work (such as new build
-                residential), and reduced-rate work. Exempt supplies and income outside the
-                scope of VAT do not count. For most electricians, nearly all income is
-                taxable and counts towards the threshold.
+                <strong>What counts towards the threshold</strong> — all taxable supplies, including
+                standard-rated (20%) work, zero-rated work (such as new build residential), and
+                reduced-rate work. Exempt supplies and income outside the scope of VAT do not count.
+                For most electricians, nearly all income is taxable and counts towards the
+                threshold.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monitor monthly</strong> — check your rolling 12-month turnover at the
-                end of each month. Many electricians approach the threshold gradually and miss
-                the point at which they were required to register, leading to retrospective
-                VAT liability and penalties.
+                <strong>Monitor monthly</strong> — check your rolling 12-month turnover at the end
+                of each month. Many electricians approach the threshold gradually and miss the point
+                at which they were required to register, leading to retrospective VAT liability and
+                penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties for late registration</strong> — if you fail to register on
-                time, HMRC will assess the VAT you should have charged on all supplies made
-                since your registration date. You cannot retrospectively charge this VAT to
-                customers, so the liability comes out of your own income.
+                <strong>Penalties for late registration</strong> — if you fail to register on time,
+                HMRC will assess the VAT you should have charged on all supplies made since your
+                registration date. You cannot retrospectively charge this VAT to customers, so the
+                liability comes out of your own income.
               </span>
             </li>
           </ul>
@@ -172,8 +173,8 @@ const sections = [
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <p className="text-white text-sm">
             <strong>Disclaimer:</strong> VAT rules are complex and subject to change. The
-            information in this guide is general in nature. Always consult a qualified
-            accountant or VAT specialist for advice tailored to your business.
+            information in this guide is general in nature. Always consult a qualified accountant or
+            VAT specialist for advice tailored to your business.
           </p>
         </div>
       </>
@@ -185,8 +186,8 @@ const sections = [
     content: (
       <>
         <p>
-          You can register for VAT voluntarily at any time, even if your turnover is below
-          £85,000. Whether this is beneficial depends on who your customers are.
+          You can register for VAT voluntarily at any time, even if your turnover is below £85,000.
+          Whether this is beneficial depends on who your customers are.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,27 +195,27 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Benefits — mainly commercial customers</strong> — if your clients are
-                businesses or contractors who can reclaim VAT, charging VAT has no net cost to
-                them. You benefit from reclaiming input VAT on all your purchases, which can
-                be a significant saving on materials and tools.
+                businesses or contractors who can reclaim VAT, charging VAT has no net cost to them.
+                You benefit from reclaiming input VAT on all your purchases, which can be a
+                significant saving on materials and tools.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Downsides — mainly domestic customers</strong> — domestic householders
-                cannot reclaim VAT. If you register voluntarily, your prices effectively
-                increase by 20% unless you absorb the VAT yourself. This makes you less
-                competitive on domestic work below the threshold.
+                cannot reclaim VAT. If you register voluntarily, your prices effectively increase by
+                20% unless you absorb the VAT yourself. This makes you less competitive on domestic
+                work below the threshold.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Administration burden</strong> — VAT registration brings quarterly
-                return obligations, the requirement to keep digital records under Making Tax
-                Digital, and ongoing compliance. This administration cost must be weighed
-                against the financial benefit.
+                <strong>Administration burden</strong> — VAT registration brings quarterly return
+                obligations, the requirement to keep digital records under Making Tax Digital, and
+                ongoing compliance. This administration cost must be weighed against the financial
+                benefit.
               </span>
             </li>
           </ul>
@@ -228,10 +229,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Flat Rate Scheme (FRS) is available to VAT-registered businesses with taxable
-          turnover under £150,000. It simplifies VAT by replacing standard VAT accounting with
-          a single percentage applied to gross turnover. The flat rate for electrical installation
-          work is 9.5%.
+          The Flat Rate Scheme (FRS) is available to VAT-registered businesses with taxable turnover
+          under £150,000. It simplifies VAT by replacing standard VAT accounting with a single
+          percentage applied to gross turnover. The flat rate for electrical installation work is
+          9.5%.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -239,43 +240,42 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>How it works</strong> — you still charge your customer 20% VAT on your
-                invoice. But instead of calculating output VAT minus input VAT, you simply pay
-                9.5% of your gross (VAT-inclusive) turnover to HMRC. The difference between
-                the 20% you charge and the 9.5% you pay is your flat rate profit.
+                invoice. But instead of calculating output VAT minus input VAT, you simply pay 9.5%
+                of your gross (VAT-inclusive) turnover to HMRC. The difference between the 20% you
+                charge and the 9.5% you pay is your flat rate profit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Example</strong> — on a £1,000 net invoice, you charge £1,200 (including
-                20% VAT). Under FRS, you pay 9.5% of £1,200 = £114 to HMRC, keeping £86 more
-                than the VAT you collected. Over a year, this can be a meaningful additional
-                income.
+                <strong>Example</strong> — on a £1,000 net invoice, you charge £1,200 (including 20%
+                VAT). Under FRS, you pay 9.5% of £1,200 = £114 to HMRC, keeping £86 more than the
+                VAT you collected. Over a year, this can be a meaningful additional income.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>First year discount</strong> — in your first year of VAT registration,
-                HMRC offers a 1% discount on the flat rate. Electricians in their first year
-                pay 8.5% instead of 9.5%.
+                <strong>First year discount</strong> — in your first year of VAT registration, HMRC
+                offers a 1% discount on the flat rate. Electricians in their first year pay 8.5%
+                instead of 9.5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limited cost trader rules</strong> — if your spend on goods (not
-                services) is less than 2% of your gross turnover, you are classified as a
-                "limited cost trader" and must use a flat rate of 16.5% instead of 9.5%.
-                This significantly reduces the FRS benefit and means most material-heavy
-                electrical jobs still benefit, but check with an accountant.
+                <strong>Limited cost trader rules</strong> — if your spend on goods (not services)
+                is less than 2% of your gross turnover, you are classified as a "limited cost
+                trader" and must use a flat rate of 16.5% instead of 9.5%. This significantly
+                reduces the FRS benefit and means most material-heavy electrical jobs still benefit,
+                but check with an accountant.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The FRS cannot be used alongside the Domestic Reverse Charge. If DRC applies to most
-          of your supplies (because you primarily work as a CIS subcontractor for VAT-registered
+          The FRS cannot be used alongside the Domestic Reverse Charge. If DRC applies to most of
+          your supplies (because you primarily work as a CIS subcontractor for VAT-registered
           contractors), the FRS may not be suitable.
         </p>
       </>
@@ -296,24 +296,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cash flow benefit</strong> — you only pay VAT to HMRC when your
-                customer pays you, not when you raise the invoice. For electricians with
-                slow-paying commercial clients, this can significantly ease cash flow.
+                <strong>Cash flow benefit</strong> — you only pay VAT to HMRC when your customer
+                pays you, not when you raise the invoice. For electricians with slow-paying
+                commercial clients, this can significantly ease cash flow.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Automatic bad debt relief</strong> — if a customer does not pay, you
-                never pay the VAT to HMRC in the first place. Under standard VAT accounting,
-                you must claim bad debt relief separately.
+                <strong>Automatic bad debt relief</strong> — if a customer does not pay, you never
+                pay the VAT to HMRC in the first place. Under standard VAT accounting, you must
+                claim bad debt relief separately.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Input VAT</strong> — under cash accounting, you also only reclaim input
-                VAT when you pay your suppliers. This partially offsets the output VAT benefit.
+                <strong>Input VAT</strong> — under cash accounting, you also only reclaim input VAT
+                when you pay your suppliers. This partially offsets the output VAT benefit.
               </span>
             </li>
           </ul>
@@ -327,36 +327,36 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding how VAT applies differently to materials and labour is important for
-          correct invoicing and for maximising your input VAT reclaims.
+          Understanding how VAT applies differently to materials and labour is important for correct
+          invoicing and for maximising your input VAT reclaims.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labour — standard rated at 20%</strong> — charges for your time and
-                skill are standard-rated in most circumstances. You charge 20% VAT on your labour
-                element. Exceptions include new build residential work (zero-rated) and certain
-                reduced-rate energy-saving works.
+                <strong>Labour — standard rated at 20%</strong> — charges for your time and skill
+                are standard-rated in most circumstances. You charge 20% VAT on your labour element.
+                Exceptions include new build residential work (zero-rated) and certain reduced-rate
+                energy-saving works.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Materials — standard rated at 20%</strong> — materials sold as part of
-                an electrical installation are generally standard-rated. Materials themselves
-                (consumer units, cables, accessories) carry 20% VAT when you buy them, which
-                you can reclaim. You then charge 20% on the materials to your customer.
+                <strong>Materials — standard rated at 20%</strong> — materials sold as part of an
+                electrical installation are generally standard-rated. Materials themselves (consumer
+                units, cables, accessories) carry 20% VAT when you buy them, which you can reclaim.
+                You then charge 20% on the materials to your customer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Receipt className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New build residential — zero-rated</strong> — electrical installation
-                work carried out as part of the construction of a new residential dwelling is
-                zero-rated. You charge 0% VAT to the main contractor or developer. You can still
-                reclaim input VAT on materials and costs related to the zero-rated work.
+                <strong>New build residential — zero-rated</strong> — electrical installation work
+                carried out as part of the construction of a new residential dwelling is zero-rated.
+                You charge 0% VAT to the main contractor or developer. You can still reclaim input
+                VAT on materials and costs related to the zero-rated work.
               </span>
             </li>
           </ul>
@@ -379,8 +379,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How DRC changes your invoice</strong> — instead of charging VAT on your
-                CIS invoice, you show the net amount and include a note: "Domestic reverse charge
+                <strong>How DRC changes your invoice</strong> — instead of charging VAT on your CIS
+                invoice, you show the net amount and include a note: "Domestic reverse charge
                 applies. Customer to account for VAT to HMRC at the standard rate of 20%." The
                 contractor (your customer) then accounts for the VAT themselves.
               </span>
@@ -388,37 +388,37 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cash flow impact</strong> — under DRC, you do not collect VAT from your
-                CIS contractor clients. This means the VAT element of your invoice never passes
-                through your business. However, you still reclaim input VAT on your purchases.
-                This can create a persistent VAT repayment position, which means HMRC owes you
-                money each quarter.
+                <strong>Cash flow impact</strong> — under DRC, you do not collect VAT from your CIS
+                contractor clients. This means the VAT element of your invoice never passes through
+                your business. However, you still reclaim input VAT on your purchases. This can
+                create a persistent VAT repayment position, which means HMRC owes you money each
+                quarter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When DRC does NOT apply</strong> — DRC does not apply when supplying
-                to an end user (a business that uses the building for its own purposes rather
-                than selling it on), when the supplier and customer are in the same VAT group,
-                or when the customer is not VAT-registered or not working under CIS.
+                <strong>When DRC does NOT apply</strong> — DRC does not apply when supplying to an
+                end user (a business that uses the building for its own purposes rather than selling
+                it on), when the supplier and customer are in the same VAT group, or when the
+                customer is not VAT-registered or not working under CIS.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Repayment returns</strong> — if DRC applies to most of your supplies,
-                you will likely be in a VAT repayment position. Consider switching to monthly
-                VAT returns to reclaim input VAT more frequently and improve cash flow.
+                <strong>Repayment returns</strong> — if DRC applies to most of your supplies, you
+                will likely be in a VAT repayment position. Consider switching to monthly VAT
+                returns to reclaim input VAT more frequently and improve cash flow.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The DRC rules are complex and the consequences of getting them wrong — either charging
-          VAT when DRC applies, or failing to apply DRC when it should be used — can result in
-          penalties. Many electricians consult an accountant specifically about DRC when they
-          first encounter it.
+          The DRC rules are complex and the consequences of getting them wrong — either charging VAT
+          when DRC applies, or failing to apply DRC when it should be used — can result in
+          penalties. Many electricians consult an accountant specifically about DRC when they first
+          encounter it.
         </p>
       </>
     ),
@@ -429,9 +429,8 @@ const sections = [
     content: (
       <>
         <p>
-          All VAT-registered electricians must comply with Making Tax Digital (MTD) for VAT.
-          This means keeping digital records and submitting VAT returns using MTD-compatible
-          software.
+          All VAT-registered electricians must comply with Making Tax Digital (MTD) for VAT. This
+          means keeping digital records and submitting VAT returns using MTD-compatible software.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -439,27 +438,26 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Quarterly deadline — one month and seven days</strong> — for most
-                electricians, VAT returns and payment are due one month and seven days after the
-                end of the VAT quarter. For example, a quarter ending 31 March has a deadline of
-                7 May.
+                electricians, VAT returns and payment are due one month and seven days after the end
+                of the VAT quarter. For example, a quarter ending 31 March has a deadline of 7 May.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MTD-compatible software required</strong> — you must use software such
-                as QuickBooks, Xero, FreeAgent, or Sage to keep your VAT records and submit
-                returns. Paper returns are not accepted. Spreadsheets must use bridging software
-                to connect to HMRC.
+                <strong>MTD-compatible software required</strong> — you must use software such as
+                QuickBooks, Xero, FreeAgent, or Sage to keep your VAT records and submit returns.
+                Paper returns are not accepted. Spreadsheets must use bridging software to connect
+                to HMRC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly returns option</strong> — if you regularly have more input VAT
-                than output VAT (common for electricians working under DRC), you can opt for
-                monthly returns. HMRC will then repay any overpaid VAT monthly rather than
-                quarterly, improving cash flow.
+                <strong>Monthly returns option</strong> — if you regularly have more input VAT than
+                output VAT (common for electricians working under DRC), you can opt for monthly
+                returns. HMRC will then repay any overpaid VAT monthly rather than quarterly,
+                improving cash flow.
               </span>
             </li>
           </ul>
@@ -473,10 +471,10 @@ const sections = [
     content: (
       <>
         <p>
-          Correct VAT invoicing is a legal requirement. A valid VAT invoice must include your
-          VAT registration number, the date, a description of services, the net amount, the VAT
-          rate, the VAT amount, and the gross total. For DRC supplies, the invoice must also
-          include the DRC notation.
+          Correct VAT invoicing is a legal requirement. A valid VAT invoice must include your VAT
+          registration number, the date, a description of services, the net amount, the VAT rate,
+          the VAT amount, and the gross total. For DRC supplies, the invoice must also include the
+          DRC notation.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -489,9 +487,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate's invoicing tool
                   </SEOInternalLink>{' '}
-                  to create professional, VAT-compliant invoices in seconds on your phone.
-                  Include your VAT number, correctly separate labour and materials, and
-                  send professional PDFs to clients before you leave site.
+                  to create professional, VAT-compliant invoices in seconds on your phone. Include
+                  your VAT number, correctly separate labour and materials, and send professional
+                  PDFs to clients before you leave site.
                 </p>
               </div>
             </div>
@@ -500,11 +498,13 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete Income Records for Your Accountant</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete Income Records for Your Accountant
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every invoice raised in Elec-Mate is stored with the full breakdown of net
-                  amounts, VAT, and gross totals. Hand your accountant a complete record at
-                  quarter end — no manual reconciliation required.
+                  amounts, VAT, and gross totals. Hand your accountant a complete record at quarter
+                  end — no manual reconciliation required.
                 </p>
               </div>
             </div>
@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional VAT invoicing for electricians — Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits, sent from your phone in seconds. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. VAT-compliant invoices with correct labour/materials splits, sent from your phone in seconds. 7-day free trial."
           icon={Receipt}
         />
       </>
@@ -549,7 +549,7 @@ export default function VATForElectriciansPage() {
       faqHeading="Frequently Asked Questions About VAT for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional VAT Invoicing on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for VAT-compliant invoicing. Correctly separated labour and materials, sent as professional PDFs from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

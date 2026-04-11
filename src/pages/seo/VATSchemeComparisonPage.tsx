@@ -431,7 +431,7 @@ export default function VATSchemeComparisonPage() {
         },
       ]}
       ctaHeading="Choose the Right VAT Scheme for Your Business"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to track VAT, compare schemes, and keep more of what you earn. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track VAT, compare schemes, and keep more of what you earn. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',
@@ -450,7 +450,7 @@ export default function VATSchemeComparisonPage() {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
-            ratingCount: '430',
+            ratingCount: '1000',
             bestRating: '5',
           },
         },

@@ -109,8 +109,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate App',
-    description:
-      'Complete emergency lighting installation and test certificates on your phone.',
+    description: 'Complete emergency lighting installation and test certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -153,19 +152,19 @@ const sections = [
         <p>
           Emergency lighting exists for one purpose: to ensure that people can find their way out of
           a building safely when the normal lighting fails. It is a legal requirement in all
-          commercial and non-domestic premises, and the consequences of an inadequate system during a
-          real emergency are severe — both in human terms and in regulatory enforcement.
+          commercial and non-domestic premises, and the consequences of an inadequate system during
+          a real emergency are severe — both in human terms and in regulatory enforcement.
         </p>
         <p>
           For electricians, emergency lighting is steady, recurring work. Every commercial building
           needs it. Every system needs regular testing. Every few years, batteries need replacing.
           And every building renovation or change of use triggers a review of the emergency lighting
-          design. Understanding the costs, the standards, and the certification requirements puts you
-          in a strong position to win and deliver this work.
+          design. Understanding the costs, the standards, and the certification requirements puts
+          you in a strong position to win and deliver this work.
         </p>
         <p>
-          This guide covers the real costs of emergency lighting installation in the UK in 2026,
-          the different system types, the requirements of{' '}
+          This guide covers the real costs of emergency lighting installation in the UK in 2026, the
+          different system types, the requirements of{' '}
           <SEOInternalLink href="/guides/bs5266-emergency-lighting-standard">
             BS 5266
           </SEOInternalLink>
@@ -224,8 +223,8 @@ const sections = [
       <>
         <p>
           The second key design decision is whether to use self-contained luminaires (each with its
-          own battery) or a central battery system that powers all emergency luminaires from a single
-          battery bank.
+          own battery) or a central battery system that powers all emergency luminaires from a
+          single battery bank.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -257,10 +256,10 @@ const sections = [
         </div>
         <p>
           For most small to medium commercial premises (up to approximately 40 luminaires),
-          self-contained systems are more cost-effective and practical. For larger buildings (hotels,
-          hospitals, shopping centres) with 50+ luminaires, central battery systems offer advantages
-          in maintenance and monitoring. Modern self-test luminaires with automated reporting are
-          narrowing the maintenance advantage of central systems.
+          self-contained systems are more cost-effective and practical. For larger buildings
+          (hotels, hospitals, shopping centres) with 50+ luminaires, central battery systems offer
+          advantages in maintenance and monitoring. Modern self-test luminaires with automated
+          reporting are narrowing the maintenance advantage of central systems.
         </p>
       </>
     ),
@@ -376,8 +375,8 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Design and documentation</strong> — £200 to £500 for a professional
-                emergency lighting design including luminaire layout, illuminance calculations,
-                and as-built drawings. Often included in larger project quotes.
+                emergency lighting design including luminaire layout, illuminance calculations, and
+                as-built drawings. Often included in larger project quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -472,10 +471,10 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Illuminance levels</strong> — escape routes: minimum 1 lux along the centre
-                line. Open areas: minimum 0.5 lux over the floor area. High-risk task areas:
-                minimum 10% of normal or 15 lux, whichever is greater. The illuminance must be
-                achieved within 5 seconds of mains failure (60 seconds for secondary battery systems
-                in high-risk areas).
+                line. Open areas: minimum 0.5 lux over the floor area. High-risk task areas: minimum
+                10% of normal or 15 lux, whichever is greater. The illuminance must be achieved
+                within 5 seconds of mains failure (60 seconds for secondary battery systems in
+                high-risk areas).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -491,8 +490,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Exit signs</strong> — emergency exit signs must conform to BS 5499 and be
-                illuminated (maintained) during all occupied hours. The signs must be clearly visible
-                from the maximum viewing distance and include the running man pictogram.
+                illuminated (maintained) during all occupied hours. The signs must be clearly
+                visible from the maximum viewing distance and include the running man pictogram.
               </span>
             </li>
           </ul>
@@ -535,8 +534,8 @@ const sections = [
                 battery power for the full rated duration (1 hour or 3 hours). Check that all
                 luminaires are still illuminated at the end of the test period. This confirms that
                 the batteries can sustain the required duration. Allow the batteries to fully
-                recharge before normal occupation resumes (typically 24 hours). Estimated cost:
-                £150 to £400 depending on system size.
+                recharge before normal occupation resumes (typically 24 hours). Estimated cost: £150
+                to £400 depending on system size.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -555,9 +554,9 @@ const sections = [
           Modern self-test luminaires automate much of this process. They perform automatic monthly
           and annual tests, record the results internally, and indicate pass or fail via LED
           indicators. Networked self-test systems (such as the Luceco Elevate Wireless platform)
-          report results to a central monitoring system, eliminating the need for physical inspection
-          of every luminaire. Self-test luminaires cost more upfront but significantly reduce the
-          ongoing maintenance cost.
+          report results to a central monitoring system, eliminating the need for physical
+          inspection of every luminaire. Self-test luminaires cost more upfront but significantly
+          reduce the ongoing maintenance cost.
         </p>
       </>
     ),
@@ -627,8 +626,8 @@ const sections = [
         <p>
           Emergency lighting is reliable, recurring revenue. Every commercial building needs it,
           every system needs annual testing, and batteries need periodic replacement. Building a
-          portfolio of emergency lighting maintenance contracts provides predictable income alongside
-          the one-off installation work.
+          portfolio of emergency lighting maintenance contracts provides predictable income
+          alongside the one-off installation work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -668,7 +667,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and maintain emergency lighting systems"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation. Build recurring revenue from testing contracts. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, emergency lighting certification, and maintenance documentation. Build recurring revenue from testing contracts. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -705,7 +704,7 @@ export default function EmergencyLightingCostPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Emergency Lighting on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for emergency lighting quoting, certification, and test documentation. Professional results every time. 7-day free trial, cancel anytime."
     />
   );
 }

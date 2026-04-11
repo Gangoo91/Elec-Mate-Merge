@@ -197,8 +197,8 @@ const sections = [
               52), switching devices (Chapter 53), earthing arrangements and protective conductors
               (Chapter 54), other equipment (Chapter 55), and safety services (Chapter 56). This is
               where you find the regulations for cable selection, installation methods, minimum
-              conductor sizes, and equipment ratings. Amendment 3's new requirement on
-              bidirectional devices (within Section 530) sits in this part.
+              conductor sizes, and equipment ratings. Amendment 3's new requirement on bidirectional
+              devices (within Section 530) sits in this part.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -397,12 +397,14 @@ const sections = [
           direction, from the installation back through the consumer unit towards the supply.
         </p>
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
-          <h3 className="font-bold text-white text-lg mb-3">What the Amendment 3 Section 530 requirement covers</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            What the Amendment 3 Section 530 requirement covers
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Standard MCBs, RCDs, and RCBOs are designed to interrupt fault current flowing in one
             direction — from the supply, through the device, to the load. When a battery or V2G
-            charger exports energy, fault current can flow in the opposite direction. The Amendment 3
-            requirement within Section 530 states that:
+            charger exports energy, fault current can flow in the opposite direction. The Amendment
+            3 requirement within Section 530 states that:
           </p>
           <ul className="space-y-2 text-white text-sm leading-relaxed">
             <li className="flex items-start gap-3">
@@ -482,11 +484,12 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h3 className="font-bold text-white mb-2">AFDD Requirements</h3>
             <p className="text-white text-sm leading-relaxed">
-              The current BS 7671 Chapter 42 guidance recommends AFDDs but does not mandate them in all cases. There is
-              ongoing industry discussion about strengthening this to a requirement for specific
-              circuit types or building types — particularly in HMOs, care homes, and buildings of
-              historical significance where the fire risk is elevated. Amendment 4 may move AFDDs
-              from a recommendation to a requirement in defined circumstances.
+              The current BS 7671 Chapter 42 guidance recommends AFDDs but does not mandate them in
+              all cases. There is ongoing industry discussion about strengthening this to a
+              requirement for specific circuit types or building types — particularly in HMOs, care
+              homes, and buildings of historical significance where the fire risk is elevated.
+              Amendment 4 may move AFDDs from a recommendation to a requirement in defined
+              circumstances.
             </p>
           </div>
         </div>
@@ -667,7 +670,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 regulation, always in your pocket"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 8 certificate types — all built to BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site regulation references, 70+ calculators, and 16 certificate types — all built to BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/gold-card-requirements-electrician',
     title: 'Gold Card Requirements',
-    description: 'Detailed breakdown of the qualifications and experience needed for the ECS Gold Card.',
+    description:
+      'Detailed breakdown of the qualifications and experience needed for the ECS Gold Card.',
     icon: Award,
     category: 'Guide',
   },
@@ -176,20 +177,26 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Provisional (Yellow)</h3>
-            <p className="text-white text-sm">For qualified electricians who have not yet passed the AM2.</p>
+            <p className="text-white text-sm">
+              For qualified electricians who have not yet passed the AM2.
+            </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Installation Electrician (Blue)</h3>
-            <p className="text-white text-sm">Fully qualified electrician with NVQ3 + 2382 + AM2.</p>
+            <p className="text-white text-sm">
+              Fully qualified electrician with NVQ3 + 2382 + AM2.
+            </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">Gold Card</h3>
-            <p className="text-white text-sm">Senior electrician with additional design and testing qualifications.</p>
+            <p className="text-white text-sm">
+              Senior electrician with additional design and testing qualifications.
+            </p>
           </div>
         </div>
         <p>
-          There are also specialist cards for maintenance electricians, highway electrical operatives,
-          and other specific roles, but the four above are the most common.
+          There are also specialist cards for maintenance electricians, highway electrical
+          operatives, and other specific roles, but the four above are the most common.
         </p>
       </>
     ),
@@ -288,8 +295,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements:</strong> Level 3 NVQ in Electrotechnical Services (or
-                equivalent), C&G 2382 (18th Edition), AM2 assessment, and the ECS Health, Safety
-                and Environmental Assessment.
+                equivalent), C&G 2382 (18th Edition), AM2 assessment, and the ECS Health, Safety and
+                Environmental Assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,9 +371,13 @@ const sections = [
               <span>
                 <strong>Requirements:</strong> Everything needed for the blue card PLUS additional
                 qualifications. Typically this means{' '}
-                <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">C&G 2382</SEOInternalLink>
+                <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
+                  C&G 2382
+                </SEOInternalLink>
                 , C&G 2391 (Inspection and Testing), and a design qualification such as the{' '}
-                <SEOInternalLink href="/guides/city-guilds-2396-design-course">C&G 2396</SEOInternalLink>
+                <SEOInternalLink href="/guides/city-guilds-2396-design-course">
+                  C&G 2396
+                </SEOInternalLink>
                 . See the{' '}
                 <SEOInternalLink href="/guides/gold-card-requirements-electrician">
                   full Gold Card requirements guide
@@ -386,9 +397,9 @@ const sections = [
               <Award className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Benefits:</strong> Higher{' '}
-                <SEOInternalLink href="/guides/jib-grading-explained">JIB grading</SEOInternalLink>
-                {' '}and pay rates, credibility with clients and main contractors, and career
-                progression to supervisory and management roles.
+                <SEOInternalLink href="/guides/jib-grading-explained">JIB grading</SEOInternalLink>{' '}
+                and pay rates, credibility with clients and main contractors, and career progression
+                to supervisory and management roles.
               </span>
             </li>
           </ul>
@@ -401,9 +412,7 @@ const sections = [
     heading: 'How to Apply for an ECS Card',
     content: (
       <>
-        <p>
-          Applying for an ECS card is straightforward:
-        </p>
+        <p>Applying for an ECS card is straightforward:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -417,8 +426,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2:</strong> Gather your qualification certificates — NVQ Level 3,
-                C&G 2382, AM2 certificate, and any additional qualifications for Gold Card.
+                <strong>Step 2:</strong> Gather your qualification certificates — NVQ Level 3, C&G
+                2382, AM2 certificate, and any additional qualifications for Gold Card.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -465,8 +474,7 @@ export default function ECSCardTypesExplainedPage() {
       badgeIcon={CreditCard}
       heroTitle={
         <>
-          ECS Card Types Explained:{' '}
-          <span className="text-yellow-400">Which Card Do You Need?</span>
+          ECS Card Types Explained: <span className="text-yellow-400">Which Card Do You Need?</span>
         </>
       }
       heroSubtitle="The ECS card is your electrician's passport to UK construction sites. This guide explains every card type — Apprentice, Provisional, Installation, Maintenance, and Gold — with the qualifications needed for each."
@@ -477,7 +485,7 @@ export default function ECSCardTypesExplainedPage() {
       faqHeading="Frequently Asked Questions About ECS Cards"
       relatedPages={relatedPages}
       ctaHeading="Build Your Electrical Career With Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for training, certification, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for training, certification, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

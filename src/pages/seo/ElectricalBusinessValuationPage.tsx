@@ -88,14 +88,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/self-assessment-electrician',
     title: 'Self-Assessment for Electricians',
-    description: 'Clean accounts prepared for self-assessment are the foundation of a good business valuation.',
+    description:
+      'Clean accounts prepared for self-assessment are the foundation of a good business valuation.',
     icon: FileText,
     category: 'Finance Guide',
   },
   {
     href: '/vat-for-electricians',
     title: 'VAT for Electricians',
-    description: 'VAT registration, flat rate scheme, and domestic reverse charge for CIS subcontractors.',
+    description:
+      'VAT registration, flat rate scheme, and domestic reverse charge for CIS subcontractors.',
     icon: PoundSterling,
     category: 'Finance Guide',
   },
@@ -133,11 +135,11 @@ const sections = [
     content: (
       <>
         <p>
-          The value of an electrical contracting business is determined by its ability to
-          generate sustainable profit, the quality and repeatability of that income, and the
-          degree to which the business can operate without its owner. There is no single formula —
-          buyers and sellers negotiate based on several valuation methods, market conditions,
-          and deal-specific factors.
+          The value of an electrical contracting business is determined by its ability to generate
+          sustainable profit, the quality and repeatability of that income, and the degree to which
+          the business can operate without its owner. There is no single formula — buyers and
+          sellers negotiate based on several valuation methods, market conditions, and deal-specific
+          factors.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -164,8 +166,8 @@ const sections = [
               <span>
                 <strong>Who buys electrical businesses?</strong> — trade buyers (other electrical
                 contractors looking to expand their area, capacity, or client base), management
-                buyouts (your own staff buying the business), regional consolidators (multi-trade
-                or electrical groups building scale), and occasionally private equity (for larger
+                buyouts (your own staff buying the business), regional consolidators (multi-trade or
+                electrical groups building scale), and occasionally private equity (for larger
                 businesses with significant recurring revenue).
               </span>
             </li>
@@ -173,11 +175,11 @@ const sections = [
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <p className="text-white text-sm">
-            <strong>Disclaimer:</strong> Business valuation is complex and situation-specific.
-            The figures and multiples in this guide are general industry guidance only. Always
-            obtain a professional valuation from a qualified business broker or accountant
-            experienced in trade business sales before making any decisions about buying or
-            selling your electrical business.
+            <strong>Disclaimer:</strong> Business valuation is complex and situation-specific. The
+            figures and multiples in this guide are general industry guidance only. Always obtain a
+            professional valuation from a qualified business broker or accountant experienced in
+            trade business sales before making any decisions about buying or selling your electrical
+            business.
           </p>
         </div>
       </>
@@ -189,9 +191,9 @@ const sections = [
     content: (
       <>
         <p>
-          EBITDA (Earnings Before Interest, Tax, Depreciation, and Amortisation) is the most
-          widely used profit measure for valuing small and medium-sized businesses. It represents
-          the underlying operating profit of the business, stripped of financing and accounting
+          EBITDA (Earnings Before Interest, Tax, Depreciation, and Amortisation) is the most widely
+          used profit measure for valuing small and medium-sized businesses. It represents the
+          underlying operating profit of the business, stripped of financing and accounting
           decisions.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -201,26 +203,26 @@ const sections = [
               <span>
                 <strong>Calculating your EBITDA</strong> — start with your net profit. Add back:
                 depreciation (on vehicles, equipment, etc.); amortisation (on intangible assets);
-                interest paid on finance or loans; income tax; and any owner's salary above what
-                a market-rate manager would be paid. The result is a "normalised" EBITDA that
-                shows what the business would earn under new ownership.
+                interest paid on finance or loans; income tax; and any owner's salary above what a
+                market-rate manager would be paid. The result is a "normalised" EBITDA that shows
+                what the business would earn under new ownership.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple applied</strong> — buyers multiply normalised EBITDA by a
-                multiple to arrive at an enterprise value. For small electrical contractors,
-                the multiple is typically 1 to 3 times. The quality of the business determines
-                where in this range the multiple falls.
+                <strong>Multiple applied</strong> — buyers multiply normalised EBITDA by a multiple
+                to arrive at an enterprise value. For small electrical contractors, the multiple is
+                typically 1 to 3 times. The quality of the business determines where in this range
+                the multiple falls.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Example</strong> — a sole trader electrical contractor with normalised
-                EBITDA of £80,000 per year might be valued at £80,000 to £240,000 (1x to 3x).
-                A business at the higher end of the range would have recurring contracts, trained
+                EBITDA of £80,000 per year might be valued at £80,000 to £240,000 (1x to 3x). A
+                business at the higher end of the range would have recurring contracts, trained
                 staff, and systems that allow it to operate without the owner.
               </span>
             </li>
@@ -236,8 +238,8 @@ const sections = [
       <>
         <p>
           Revenue multiples express business value as a proportion of annual turnover. For
-          electrical contractors, the range is typically 0.3 to 0.8 times annual turnover,
-          but this varies significantly with profitability and business quality.
+          electrical contractors, the range is typically 0.3 to 0.8 times annual turnover, but this
+          varies significantly with profitability and business quality.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -253,10 +255,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limitations</strong> — revenue tells you nothing about profitability.
-                A business with £600,000 turnover and 5% net margin is worth far less than one
-                with £400,000 turnover and 20% margin. Never use revenue multiples as your sole
-                valuation basis.
+                <strong>Limitations</strong> — revenue tells you nothing about profitability. A
+                business with £600,000 turnover and 5% net margin is worth far less than one with
+                £400,000 turnover and 20% margin. Never use revenue multiples as your sole valuation
+                basis.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,18 +281,18 @@ const sections = [
     content: (
       <>
         <p>
-          Asset value is the most basic valuation approach and represents the floor value of
-          an electrical business — what it is worth if all assets are liquidated and liabilities
-          settled. For most viable businesses, the EBITDA or revenue multiple will produce a
-          higher value than the asset approach.
+          Asset value is the most basic valuation approach and represents the floor value of an
+          electrical business — what it is worth if all assets are liquidated and liabilities
+          settled. For most viable businesses, the EBITDA or revenue multiple will produce a higher
+          value than the asset approach.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tangible assets included</strong> — vehicles (current market value, not
-                book value), tools and test equipment, stock (materials and spares), trade debtors
+                <strong>Tangible assets included</strong> — vehicles (current market value, not book
+                value), tools and test equipment, stock (materials and spares), trade debtors
                 (invoices outstanding from customers), and any owned property.
               </span>
             </li>
@@ -306,10 +308,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When asset value is relevant</strong> — asset value is the primary
-                method when a business is loss-making or when a buyer is primarily interested in
-                the vehicles, equipment, and workforce rather than the customer base. It is also
-                used in distressed sales.
+                <strong>When asset value is relevant</strong> — asset value is the primary method
+                when a business is loss-making or when a buyer is primarily interested in the
+                vehicles, equipment, and workforce rather than the customer base. It is also used in
+                distressed sales.
               </span>
             </li>
           </ul>
@@ -324,8 +326,8 @@ const sections = [
       <>
         <p>
           Buyers pay premiums for businesses that are easier to own, less risky, and more
-          profitable. The following factors consistently increase valuation multiples for
-          electrical contractors:
+          profitable. The following factors consistently increase valuation multiples for electrical
+          contractors:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -341,17 +343,18 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Trained and certificated staff</strong> — a team that holds current
-                qualifications (18th Edition, inspection and testing C&G 2391, EV charging,
-                solar PV) and can win and complete work without the owner is significantly
-                more valuable than a business where the owner is the only qualified person.
+                qualifications (18th Edition, inspection and testing C&G 2391, EV charging, solar
+                PV) and can win and complete work without the owner is significantly more valuable
+                than a business where the owner is the only qualified person.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plant and vehicles</strong> — owned (not leased) vehicles and well-maintained
-                test equipment add to asset value. Buyers prefer businesses where the tools of
-                the trade are assets of the business, not personal property of the owner.
+                <strong>Plant and vehicles</strong> — owned (not leased) vehicles and
+                well-maintained test equipment add to asset value. Buyers prefer businesses where
+                the tools of the trade are assets of the business, not personal property of the
+                owner.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,9 +377,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Systems and processes</strong> — documented job management systems,
-                standard operating procedures, and use of job management software demonstrate
-                a business that can be handed over and operated without the founder.
+                <strong>Systems and processes</strong> — documented job management systems, standard
+                operating procedures, and use of job management software demonstrate a business that
+                can be handed over and operated without the founder.
               </span>
             </li>
           </ul>
@@ -390,37 +393,37 @@ const sections = [
     content: (
       <>
         <p>
-          The EBITDA multiple achievable depends on business size, profitability, recurring
-          revenue, and how dependent the business is on the owner. Here is a general guide to
-          multiples for UK electrical contracting businesses in 2026:
+          The EBITDA multiple achievable depends on business size, profitability, recurring revenue,
+          and how dependent the business is on the owner. Here is a general guide to multiples for
+          UK electrical contracting businesses in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1x EBITDA — Owner-operator, no recurring contracts</strong> — a sole
-                trader who personally carries out most of the work, with no recurring contracts
-                and customer relationships held entirely by the owner. High earn-out risk; buyers
-                price in the uncertainty.
+                <strong>1x EBITDA — Owner-operator, no recurring contracts</strong> — a sole trader
+                who personally carries out most of the work, with no recurring contracts and
+                customer relationships held entirely by the owner. High earn-out risk; buyers price
+                in the uncertainty.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1.5–2x EBITDA — Small team, some recurring revenue</strong> — a business
-                with 2 to 5 employees or subcontractors, some recurring maintenance contracts,
-                and a degree of systematisation. The owner is still involved but is not the only
+                with 2 to 5 employees or subcontractors, some recurring maintenance contracts, and a
+                degree of systematisation. The owner is still involved but is not the only
                 technically qualified person.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>2–3x EBITDA — Established business with strong recurring revenue</strong>
-                — a business with significant recurring maintenance contracts (representing 30%
-                or more of turnover), multiple certificated staff, documented systems, and a
-                track record of consistent profitability.
+                <strong>2–3x EBITDA — Established business with strong recurring revenue</strong>— a
+                business with significant recurring maintenance contracts (representing 30% or more
+                of turnover), multiple certificated staff, documented systems, and a track record of
+                consistent profitability.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,8 +431,8 @@ const sections = [
               <span>
                 <strong>3x+ EBITDA — Specialist or high-growth business</strong> — specialist
                 electrical businesses (data centres, healthcare, commercial with significant
-                contracted maintenance) or businesses with strong growth in emerging markets
-                (EV charging, solar PV) can achieve multiples above 3x.
+                contracted maintenance) or businesses with strong growth in emerging markets (EV
+                charging, solar PV) can achieve multiples above 3x.
               </span>
             </li>
           </ul>
@@ -448,7 +451,8 @@ const sections = [
       <>
         <p>
           The most successful business sales are those planned 2 to 3 years in advance. Last-minute
-          sales typically achieve lower multiples and require more earn-out protection for the buyer.
+          sales typically achieve lower multiples and require more earn-out protection for the
+          buyer.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -456,16 +460,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Clean accounts — 2 to 3 years before sale</strong> — work with your
-                accountant to remove personal expenses from the business accounts, show a clear
-                and growing profit trend, and prepare formal financial statements that will
-                withstand buyer due diligence.
+                accountant to remove personal expenses from the business accounts, show a clear and
+                growing profit trend, and prepare formal financial statements that will withstand
+                buyer due diligence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Convert customers to contracts</strong> — approach regular customers
-                and offer annual electrical maintenance contracts. Even relatively modest recurring
+                <strong>Convert customers to contracts</strong> — approach regular customers and
+                offer annual electrical maintenance contracts. Even relatively modest recurring
                 revenue dramatically improves your multiple and reduces earn-out risk.
               </span>
             </li>
@@ -480,10 +484,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reduce owner dependency</strong> — transfer customer relationships to
-                staff where possible. Train your team to handle technical queries and client
-                communication. A business that can run without you is worth more and easier
-                to sell.
+                <strong>Reduce owner dependency</strong> — transfer customer relationships to staff
+                where possible. Train your team to handle technical queries and client
+                communication. A business that can run without you is worth more and easier to sell.
               </span>
             </li>
           </ul>
@@ -506,9 +509,9 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Typical structure</strong> — 50 to 70% of the agreed price paid on
-                completion. The remaining 30 to 50% paid over 12 to 24 months, tied to the
-                business meeting revenue or profit targets. The seller often stays involved for
-                a transition period (6 to 12 months) to facilitate handover.
+                completion. The remaining 30 to 50% paid over 12 to 24 months, tied to the business
+                meeting revenue or profit targets. The seller often stays involved for a transition
+                period (6 to 12 months) to facilitate handover.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -516,18 +519,18 @@ const sections = [
               <span>
                 <strong>When earn-outs are negotiated down</strong> — the more systemised and
                 contract-based your business is, the less earn-out a buyer needs. If 60% of your
-                revenue comes from annual maintenance contracts, the buyer has confidence the
-                income will continue and can pay a higher proportion upfront.
+                revenue comes from annual maintenance contracts, the buyer has confidence the income
+                will continue and can pay a higher proportion upfront.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Key considerations for sellers</strong> — ensure earn-out targets are
-                realistic and based on factors within your control during the handover period.
-                Agree clearly defined metrics (gross revenue, gross profit, or EBITDA) and the
-                measurement period. Always have the earn-out terms reviewed by a commercial
-                solicitor before signing.
+                realistic and based on factors within your control during the handover period. Agree
+                clearly defined metrics (gross revenue, gross profit, or EBITDA) and the measurement
+                period. Always have the earn-out terms reviewed by a commercial solicitor before
+                signing.
               </span>
             </li>
           </ul>
@@ -551,16 +554,18 @@ const sections = [
             <div className="flex items-start gap-4">
               <BarChart2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Professional Systems That Buyers Value</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Professional Systems That Buyers Value
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate's quoting and invoicing tools
                   </SEOInternalLink>{' '}
-                  to run a professional, organised business. Buyers see a business with proper
-                  job management systems as lower risk — and price accordingly. Every job quoted,
-                  invoiced, and tracked in a system is evidence of a business that can survive
-                  under new ownership.
+                  to run a professional, organised business. Buyers see a business with proper job
+                  management systems as lower risk — and price accordingly. Every job quoted,
+                  invoiced, and tracked in a system is evidence of a business that can survive under
+                  new ownership.
                 </p>
               </div>
             </div>
@@ -569,15 +574,17 @@ const sections = [
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Certification Records That Transfer With the Business</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Certification Records That Transfer With the Business
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate's certificate tools
                   </SEOInternalLink>{' '}
                   to maintain digital records of every EICR, EIC, and test certificate. This
-                  historical work record is a tangible asset — evidence of the client base, the
-                  type of work you carry out, and the quality of your documentation.
+                  historical work record is a tangible asset — evidence of the client base, the type
+                  of work you carry out, and the quality of your documentation.
                 </p>
               </div>
             </div>
@@ -585,7 +592,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a more valuable electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and electrical certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial."
           icon={BarChart2}
         />
       </>
@@ -622,7 +629,7 @@ export default function ElectricalBusinessValuationPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Valuation"
       relatedPages={relatedPages}
       ctaHeading="Build a More Valuable Electrical Business"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoicing, and certification. Build the systems and records that make your business more valuable and easier to sell. 7-day free trial, cancel anytime."
     />
   );
 }

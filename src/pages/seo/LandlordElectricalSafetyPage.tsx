@@ -780,7 +780,7 @@ export default function LandlordElectricalSafetyPage() {
         },
       ]}
       ctaHeading="Win More Landlord Work With Elec-Mate"
-      ctaSubheading="EICR forms with auto-unsatisfactory flagging, remedial estimator, certificate and invoice sending from site, and property tracking. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="EICR forms with auto-unsatisfactory flagging, remedial estimator, certificate and invoice sending from site, and property tracking. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -145,8 +145,8 @@ const sections = [
           Leeds is the largest city in West Yorkshire with over 340,000 households, and the wider
           Leeds City Region (including Bradford, Wakefield, and Harrogate) has over 1.2 million
           homes. The electrical contracting market serves a diverse range of properties — from
-          Yorkshire stone terraces built in the 1800s to modern city centre apartments and
-          suburban new-build estates.
+          Yorkshire stone terraces built in the 1800s to modern city centre apartments and suburban
+          new-build estates.
         </p>
         <p>
           The Leeds economy has grown significantly in recent years, with the financial and legal
@@ -159,8 +159,8 @@ const sections = [
           For any notifiable electrical work in Leeds, you need an electrician registered with a{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           competent person scheme. The main schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          and ELECSA. NAPIT has a particularly strong presence across Yorkshire, with many local
+          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT, and
+          ELECSA. NAPIT has a particularly strong presence across Yorkshire, with many local
           electricians registered under this scheme.
         </p>
       </>
@@ -168,12 +168,12 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
-          Before hiring an electrician in Leeds, carry out these checks to protect yourself and
-          your property:
+          Before hiring an electrician in Leeds, carry out these checks to protect yourself and your
+          property:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -197,8 +197,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public liability insurance</strong> — minimum £1 million cover, ideally
-                £2 million. Higher cover is advisable for work in period properties where accidental
+                <strong>Public liability insurance</strong> — minimum £1 million cover, ideally £2
+                million. Higher cover is advisable for work in period properties where accidental
                 damage to original features could be expensive to repair. Ask for a copy of the
                 certificate.
               </span>
@@ -274,8 +274,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £90 to £160 for the first hour including
-                travel, plus £35 to £55 per additional hour. Evening and weekend surcharges of
-                30% to 50% are standard.
+                travel, plus £35 to £55 per additional hour. Evening and weekend surcharges of 30%
+                to 50% are standard.
               </span>
             </li>
           </ul>
@@ -302,25 +302,25 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Yorkshire Stone Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Leeds' signature property type — stone-built terraces with thick masonry walls,
-              found across Headingley, Chapel Allerton, Meanwood, and Harehills. The stone walls
+              Leeds' signature property type — stone-built terraces with thick masonry walls, found
+              across Headingley, Chapel Allerton, Meanwood, and Harehills. The stone walls
               (typically 350mm to 500mm thick) make cable chasing extremely difficult and slow. Many
               electricians working in these properties use a combination of chasing in plaster
               (where it exists), surface-mounted mini-trunking in less visible areas, and cable
-              routing through cellars and loft spaces to minimise stone cutting. Rewires take
-              longer and cost more than equivalent brick-built properties.
+              routing through cellars and loft spaces to minimise stone cutting. Rewires take longer
+              and cost more than equivalent brick-built properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Back-to-Back Houses</h3>
             <p className="text-white text-sm leading-relaxed">
-              Leeds has the largest remaining stock of back-to-back houses in the UK. These
-              compact terraces (common in Harehills, Beeston, Armley, and Holbeck) share three
-              walls with neighbours, leaving only the front elevation for windows and access. This
-              severely limits cable routes — cables can only enter through the front wall or
-              from above. Many back-to-backs have no cellar, further reducing routing options.
-              Electrical work requires creative solutions and often more surface-mounted wiring
-              than would be typical in a through-terrace.
+              Leeds has the largest remaining stock of back-to-back houses in the UK. These compact
+              terraces (common in Harehills, Beeston, Armley, and Holbeck) share three walls with
+              neighbours, leaving only the front elevation for windows and access. This severely
+              limits cable routes — cables can only enter through the front wall or from above. Many
+              back-to-backs have no cellar, further reducing routing options. Electrical work
+              requires creative solutions and often more surface-mounted wiring than would be
+              typical in a through-terrace.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -340,8 +340,8 @@ const sections = [
               New-build estates in areas like Garforth, Rothwell, Guiseley, and Yeadon have modern
               installations with compliant consumer units and well-documented circuits. Electrical
               work here is typically additions — EV charger circuits, garden electrics, home office
-              circuits, lighting upgrades, and smart home installations. The original builder's
-              EIC provides a baseline for any additional work.
+              circuits, lighting upgrades, and smart home installations. The original builder's EIC
+              provides a baseline for any additional work.
             </p>
           </div>
         </div>
@@ -354,9 +354,9 @@ const sections = [
     content: (
       <>
         <p>
-          Northern Powergrid is the Distribution Network Operator for Leeds, West Yorkshire, and
-          the wider Yorkshire and North East England region. Northern Powergrid owns and maintains
-          the electricity network infrastructure — cables, substations, and the service to your
+          Northern Powergrid is the Distribution Network Operator for Leeds, West Yorkshire, and the
+          wider Yorkshire and North East England region. Northern Powergrid owns and maintains the
+          electricity network infrastructure — cables, substations, and the service to your
           property.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -392,11 +392,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          compliance, notifiable electrical work in Leeds is overseen by Leeds City Council
-          building control or an approved inspector. If your electrician is registered with a
-          competent person scheme, they handle the notification directly.
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          compliance, notifiable electrical work in Leeds is overseen by Leeds City Council building
+          control or an approved inspector. If your electrician is registered with a competent
+          person scheme, they handle the notification directly.
         </p>
       </>
     ),
@@ -409,8 +408,8 @@ const sections = [
         <p>
           Leeds is home to the University of Leeds and Leeds Beckett University, with a combined
           student population of over 60,000. The traditional student areas — Headingley, Hyde Park,
-          Woodhouse, and Burley — have some of the highest concentrations of HMOs in the city.
-          These properties have specific electrical requirements that landlords must meet.
+          Woodhouse, and Burley — have some of the highest concentrations of HMOs in the city. These
+          properties have specific electrical requirements that landlords must meet.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -473,16 +472,16 @@ const sections = [
         </p>
         <p>
           Commercial electrical work in Leeds includes office fit-outs and Cat A/Cat B
-          installations, retail electrical installations (the Victoria Quarter, Trinity Leeds,
-          White Rose Shopping Centre), industrial installations on the surrounding business parks,
-          hospitality sector work (Leeds has a growing hotel and restaurant market), and data
-          centre and communications infrastructure.
+          installations, retail electrical installations (the Victoria Quarter, Trinity Leeds, White
+          Rose Shopping Centre), industrial installations on the surrounding business parks,
+          hospitality sector work (Leeds has a growing hotel and restaurant market), and data centre
+          and communications infrastructure.
         </p>
         <p>
           Electricians moving into commercial work in Leeds need additional competencies beyond
-          domestic qualifications: C&G 2391 for inspection and testing, familiarity with
-          three-phase distribution, commercial fire alarm systems (BS 5839-1), emergency lighting
-          to BS 5266, and CSCS cards for construction sites.
+          domestic qualifications: C&G 2391 for inspection and testing, familiarity with three-phase
+          distribution, commercial fire alarm systems (BS 5839-1), emergency lighting to BS 5266,
+          and CSCS cards for construction sites.
         </p>
         <SEOAppBridge
           title="Manage your Leeds electrical business from one app"
@@ -539,7 +538,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Leeds electrical business"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -564,8 +563,7 @@ export default function ElectricianLeedsPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Leeds:{' '}
-          <span className="text-yellow-400">Local Electricians in 2026</span>
+          Electrician in Leeds: <span className="text-yellow-400">Local Electricians in 2026</span>
         </>
       }
       heroSubtitle="How to find a registered electrician in Leeds, realistic local pricing, and the specific challenges of Yorkshire stone terraces and back-to-backs. Covers Northern Powergrid connections, student HMO compliance, Part P, and the commercial market."
@@ -576,7 +574,7 @@ export default function ElectricianLeedsPage() {
       faqHeading="Frequently Asked Questions About Electricians in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Leeds letting agents and landlords. 7-day free trial."
     />
   );
 }

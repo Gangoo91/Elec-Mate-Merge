@@ -113,7 +113,7 @@ export default function BestQuotingAppPage() {
             <>
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform for UK electricians with quoting,
-                invoicing, Stripe payments, Xero integration, plus 8 certificate types, 50+
+                invoicing, Stripe payments, Xero integration, plus 16 certificate types, 50+
                 calculators, AI tools, and 46+ training courses. From £5.99/month.
               </p>
               <p>
@@ -330,7 +330,7 @@ export default function BestQuotingAppPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

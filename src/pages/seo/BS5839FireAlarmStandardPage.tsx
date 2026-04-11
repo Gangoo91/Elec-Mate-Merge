@@ -703,7 +703,7 @@ export default function BS5839FireAlarmStandardPage() {
       faqHeading="Frequently Asked Questions About BS 5839"
       relatedPages={relatedPages}
       ctaHeading="Fire Alarm Certificates on Your Phone"
-      ctaSubheading="Create professional BS 5839-compliant fire alarm certificates with Elec-Mate. AI board scanner, defect code AI, and instant PDF delivery. Plus 46+ training courses and 50+ calculators. 7-day free trial."
+      ctaSubheading="Create professional BS 5839-compliant fire alarm certificates with Elec-Mate. AI board scanner, defect code AI, and instant PDF delivery. Plus 46+ training courses and 70+ calculators. 7-day free trial."
     />
   );
 }

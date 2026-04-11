@@ -66,7 +66,8 @@ const faqs = [
       'Leakage current (also called earth leakage or protective conductor current) is a small current that flows through the protective earth conductor or insulation of an electrical system under normal operating conditions. It arises from the capacitance of long cable runs, EMC filters in variable speed drives, and imperfect insulation. Excessive leakage current causes nuisance tripping of RCDs — the RCD detects the leakage current as an imbalance between line and neutral and trips unnecessarily. To measure leakage current with a clamp meter, you need a clamp with a low-current range — typically a 200mA or 40mA range. Clamp around all conductors of the circuit together (line and neutral in a single-phase circuit, or all three phases plus neutral in three-phase). The algebraic sum of currents in a healthy circuit is zero. Any imbalance displayed is the leakage current. Pre-testing leakage current before connecting a new RCD can confirm whether the protected circuits are likely to cause nuisance tripping.',
   },
   {
-    question: 'Can I use a clamp meter to measure the current in all conductors of a multi-core cable?',
+    question:
+      'Can I use a clamp meter to measure the current in all conductors of a multi-core cable?',
     answer:
       'If you clamp around all conductors of a circuit together — line and neutral for single phase, or all three phases and neutral for three phase — the magnetic fields cancel and the meter reads approximately zero (any non-zero reading is leakage current, as described above). To measure the load current in a multi-core cable, you must either split the cable and clamp around individual conductors, or clamp around the cable where it splits into individual cores at a joint or termination. Some clamp meters come with clamp jaw adapters or flex-jaw probes to reach into tight termination boxes. Where cables cannot be physically separated, consider installing a temporary split-core current transformer on a single conductor during load measurements.',
   },
@@ -146,16 +147,16 @@ const sections = [
         <p>
           The key advantage over a series ammeter (measuring current by inserting the meter into the
           circuit) is safety and convenience. There is no need to isolate the circuit, break a
-          connection, or expose live terminals to insert test leads. The clamp meter jaws simply clip
-          around the conductor in the cable run, at the circuit breaker termination, or at the motor
-          terminal box.
+          connection, or expose live terminals to insert test leads. The clamp meter jaws simply
+          clip around the conductor in the cable run, at the circuit breaker termination, or at the
+          motor terminal box.
         </p>
         <p>
-          Clamp meters are indispensable for load measurement on live circuits, identifying overloaded
-          circuits, assessing three-phase load balance, measuring harmonic distortion, and detecting
-          leakage currents that cause nuisance RCD tripping. Combined with a standard multimeter for
-          voltage and resistance measurements, the clamp meter completes the essential two-tool kit
-          for electrical installation and maintenance work.
+          Clamp meters are indispensable for load measurement on live circuits, identifying
+          overloaded circuits, assessing three-phase load balance, measuring harmonic distortion,
+          and detecting leakage currents that cause nuisance RCD tripping. Combined with a standard
+          multimeter for voltage and resistance measurements, the clamp meter completes the
+          essential two-tool kit for electrical installation and maintenance work.
         </p>
       </>
     ),
@@ -173,10 +174,10 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">AC Clamp (Inductive)</h3>
             <p className="text-white text-sm leading-relaxed mb-3">
-              Uses electromagnetic induction in the clamp jaw transformer core. The changing magnetic
-              field produced by AC current induces a proportional current in the clamp jaw winding.
-              Only works with alternating current — DC produces a static field that the inductive
-              clamp cannot detect.
+              Uses electromagnetic induction in the clamp jaw transformer core. The changing
+              magnetic field produced by AC current induces a proportional current in the clamp jaw
+              winding. Only works with alternating current — DC produces a static field that the
+              inductive clamp cannot detect.
             </p>
             <p className="text-white text-sm leading-relaxed">
               Suitable for: mains circuit load measurement, three-phase current balance, motor
@@ -192,8 +193,8 @@ const sections = [
               measurement to cancel any residual offset.
             </p>
             <p className="text-white text-sm leading-relaxed">
-              Essential for: solar PV DC current measurement, battery storage, EV charger DC circuits,
-              DC motor drives, telecomms/data centre DC supplies.
+              Essential for: solar PV DC current measurement, battery storage, EV charger DC
+              circuits, DC motor drives, telecomms/data centre DC supplies.
             </p>
           </div>
         </div>
@@ -224,15 +225,16 @@ const sections = [
               <span>
                 <strong>Conductor position:</strong> For best accuracy, centre the conductor in the
                 jaw opening. Conductors pressed against the jaw wall can read 1–2% low. Modern
-                professional clamp meters compensate for off-centre conductors using multiple sensors.
+                professional clamp meters compensate for off-centre conductors using multiple
+                sensors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Jaw gap:</strong> Ensure the jaw closes fully and cleanly. Any debris, paint,
-                or damage to the jaw mating surfaces creates a gap in the magnetic circuit and reduces
-                measurement accuracy. Keep jaw contact surfaces clean.
+                <strong>Jaw gap:</strong> Ensure the jaw closes fully and cleanly. Any debris,
+                paint, or damage to the jaw mating surfaces creates a gap in the magnetic circuit
+                and reduces measurement accuracy. Keep jaw contact surfaces clean.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -248,16 +250,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Adjacent conductors:</strong> Strong magnetic fields from adjacent current-
-                carrying conductors can add to the clamp's reading. Where possible, keep the measured
-                conductor separated from other conductors by at least one conductor diameter.
+                carrying conductors can add to the clamp's reading. Where possible, keep the
+                measured conductor separated from other conductors by at least one conductor
+                diameter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Harmonics and waveform:</strong> Use a True RMS clamp meter for circuits with
-                non-linear loads. Average-sensing clamps read incorrectly on distorted waveforms
-                common in circuits feeding VSDs, LED drivers, and IT equipment.
+                <strong>Harmonics and waveform:</strong> Use a True RMS clamp meter for circuits
+                with non-linear loads. Average-sensing clamps read incorrectly on distorted
+                waveforms common in circuits feeding VSDs, LED drivers, and IT equipment.
               </span>
             </li>
           </ul>
@@ -271,25 +274,25 @@ const sections = [
     content: (
       <>
         <p>
-          The clamp meter is the correct tool for the following situations in electrical installation
-          and maintenance work:
+          The clamp meter is the correct tool for the following situations in electrical
+          installation and maintenance work:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Load measurement on live circuits:</strong> Verify actual current draw against
-                the design value. Identify overloaded circuits before they cause breaker trips or
-                cable damage. Document actual loading for energy surveys.
+                <strong>Load measurement on live circuits:</strong> Verify actual current draw
+                against the design value. Identify overloaded circuits before they cause breaker
+                trips or cable damage. Document actual loading for energy surveys.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase load balance:</strong> Measure current on each phase of a
-                three-phase distribution board. Identify imbalanced loading and redistribute circuits
-                to equalise phase currents and reduce neutral current.
+                three-phase distribution board. Identify imbalanced loading and redistribute
+                circuits to equalise phase currents and reduce neutral current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -303,9 +306,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Neutral current in three-phase systems:</strong> In a system with significant
-                harmonic loading, the neutral conductor may carry current exceeding the phase
-                conductors. Clamp the neutral to verify it is not overloaded.
+                <strong>Neutral current in three-phase systems:</strong> In a system with
+                significant harmonic loading, the neutral conductor may carry current exceeding the
+                phase conductors. Clamp the neutral to verify it is not overloaded.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -334,9 +337,9 @@ const sections = [
         <p>
           Harmonic assessment is increasingly important in UK commercial and industrial electrical
           installations. The proliferation of variable speed drives, LED lighting, UPS systems, and
-          EV chargers creates significant harmonic currents that can cause cable overheating, neutral
-          overloading, transformer heating, voltage distortion, and interference with sensitive
-          electronic equipment.
+          EV chargers creates significant harmonic currents that can cause cable overheating,
+          neutral overloading, transformer heating, voltage distortion, and interference with
+          sensitive electronic equipment.
         </p>
         <p>
           A clamp meter with harmonic measurement capability can display total harmonic distortion
@@ -348,7 +351,9 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>Neutral conductor carrying current equal to or exceeding a phase conductor</span>
+              <span>
+                Neutral conductor carrying current equal to or exceeding a phase conductor
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
@@ -386,25 +391,37 @@ const sections = [
         <p>
           Leakage current measurement with a clamp meter is a valuable technique before connecting a
           new RCD or investigating nuisance tripping of an existing RCD. The technique measures the
-          imbalance between the line and neutral conductors in a single-phase circuit (or all
-          phase conductors and neutral in three-phase).
+          imbalance between the line and neutral conductors in a single-phase circuit (or all phase
+          conductors and neutral in three-phase).
         </p>
-        <p>
-          To measure leakage current:
-        </p>
+        <p>To measure leakage current:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-3 text-white list-decimal list-inside">
-            <li>Select a clamp meter with a 40mA or 200mA range (standard current ranges are too coarse for leakage measurement).</li>
-            <li>Clamp around all circuit conductors simultaneously — line and neutral for single phase; all three phases and neutral for three phase. Do NOT include the protective earth conductor.</li>
+            <li>
+              Select a clamp meter with a 40mA or 200mA range (standard current ranges are too
+              coarse for leakage measurement).
+            </li>
+            <li>
+              Clamp around all circuit conductors simultaneously — line and neutral for single
+              phase; all three phases and neutral for three phase. Do NOT include the protective
+              earth conductor.
+            </li>
             <li>Energise the circuit with all connected loads switched on.</li>
-            <li>Read the displayed current. In a perfectly balanced circuit this would be zero; in practice, values below 1mA are normal. Values above 5–10mA may cause a 30mA RCD to trip, particularly when the circuit also carries leakage from other sources.</li>
-            <li>Identify and isolate individual loads to find the primary source of leakage if the total is excessive.</li>
+            <li>
+              Read the displayed current. In a perfectly balanced circuit this would be zero; in
+              practice, values below 1mA are normal. Values above 5–10mA may cause a 30mA RCD to
+              trip, particularly when the circuit also carries leakage from other sources.
+            </li>
+            <li>
+              Identify and isolate individual loads to find the primary source of leakage if the
+              total is excessive.
+            </li>
           </ol>
         </div>
         <p>
           Type A RCDs (standard 30mA devices) detect sinusoidal AC leakage. Type F and Type B RCDs
-          also detect pulsating DC and smooth DC leakage respectively — important for EV chargers and
-          inverter-driven equipment where the leakage current may have DC components.
+          also detect pulsating DC and smooth DC leakage respectively — important for EV chargers
+          and inverter-driven equipment where the leakage current may have DC components.
         </p>
       </>
     ),
@@ -479,8 +496,8 @@ const sections = [
     content: (
       <>
         <p>
-          Clamp meter readings feed directly into the certification and fault analysis workflow
-          that Elec-Mate supports:
+          Clamp meter readings feed directly into the certification and fault analysis workflow that
+          Elec-Mate supports:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -490,10 +507,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Load Survey Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Record clamp meter load measurements against circuit schedule entries in your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EIC
-                  </SEOInternalLink>{' '}
-                  or EICR. Document actual demand for distribution board design verification.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or EICR.
+                  Document actual demand for distribution board design verification.
                 </p>
               </div>
             </div>
@@ -521,8 +536,8 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  to verify cables are correctly rated. Actual measured current is more accurate than
-                  calculated design current for existing installations.
+                  to verify cables are correctly rated. Actual measured current is more accurate
+                  than calculated design current for existing installations.
                 </p>
               </div>
             </div>
@@ -530,7 +545,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document load measurements and certify installations"
-          description="Join 430+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certification, and AI fault-finding support. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -567,7 +582,7 @@ export default function ClampMeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Clamp Meters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Load Measurements and Certify Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for load survey documentation, EIC and EICR certificates, and AI fault-finding support on site. 7-day free trial, cancel anytime."
     />
   );
 }

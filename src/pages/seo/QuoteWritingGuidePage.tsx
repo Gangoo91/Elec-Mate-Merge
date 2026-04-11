@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What should an electrical quote include?',
     answer:
-      'A professional electrical quote should include: your company name, address, and contact details; your NICEIC or NAPIT registration number; the customer\'s name and address; a detailed description of the works to be carried out; a breakdown of materials (with quantities where practical) and labour; the total price including VAT (if VAT-registered); your payment terms; the period for which the quote is valid (typically 30 days); what is specifically excluded from the price; and the applicable terms and conditions. For domestic customers, include the customer\'s cancellation rights under the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013.',
+      "A professional electrical quote should include: your company name, address, and contact details; your NICEIC or NAPIT registration number; the customer's name and address; a detailed description of the works to be carried out; a breakdown of materials (with quantities where practical) and labour; the total price including VAT (if VAT-registered); your payment terms; the period for which the quote is valid (typically 30 days); what is specifically excluded from the price; and the applicable terms and conditions. For domestic customers, include the customer's cancellation rights under the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013.",
   },
   {
     question: 'Should I give a fixed price or an estimate?',
@@ -78,9 +78,9 @@ const faqs = [
       'On a fixed-price quote, additional time at your cost is your risk if the scope was clearly defined and you priced it incorrectly. However, if the additional work arises from scope changes requested by the customer, unforeseen conditions (e.g. concealed wiring in worse condition than visible inspection suggested), or instructions from the customer during the job, these are variations. Your terms and conditions should clearly state that variations will be quoted separately and that unforeseen conditions may affect the contract price. Issue a written variation order before carrying out any additional work, and get the customer to sign or confirm it in writing.',
   },
   {
-    question: "What are the Consumer Contracts Regulations 2013 and do they apply to my quotes?",
+    question: 'What are the Consumer Contracts Regulations 2013 and do they apply to my quotes?',
     answer:
-      'The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 implement the EU Consumer Rights Directive into UK law (retained post-Brexit). They apply to contracts with domestic (consumer) customers entered into off-premises — meaning in the customer\'s home, on the street, or anywhere other than your business premises. They give the customer a 14-day right to cancel without penalty. For electrical contractors who quote at the customer\'s property and then proceed with work, these regulations apply. If you start work within the 14-day cancellation period (with the customer\'s agreement), and the customer then cancels, they must pay for work completed up to the point of cancellation. Your quote should acknowledge these rights.',
+      "The Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 implement the EU Consumer Rights Directive into UK law (retained post-Brexit). They apply to contracts with domestic (consumer) customers entered into off-premises — meaning in the customer's home, on the street, or anywhere other than your business premises. They give the customer a 14-day right to cancel without penalty. For electrical contractors who quote at the customer's property and then proceed with work, these regulations apply. If you start work within the 14-day cancellation period (with the customer's agreement), and the customer then cancels, they must pay for work completed up to the point of cancellation. Your quote should acknowledge these rights.",
   },
 ];
 
@@ -116,7 +116,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Build professional quotes with materials pricing, labour, and instant PDF export.',
+    description:
+      'Build professional quotes with materials pricing, labour, and instant PDF export.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -136,8 +137,8 @@ const sections = [
           Most electrical disputes — whether about price, scope, or payment — begin with an
           inadequate quote. A formal written quote is not bureaucracy: it is your first line of
           legal protection and your most powerful sales tool. Customers who receive a clear,
-          professional quote are more likely to accept it, less likely to dispute the invoice,
-          and more likely to recommend you to others.
+          professional quote are more likely to accept it, less likely to dispute the invoice, and
+          more likely to recommend you to others.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -177,34 +178,34 @@ const sections = [
     content: (
       <>
         <p>
-          A professional electrical quote follows a consistent structure that makes it easy for
-          the customer to understand and compare, and easy for you to defend if challenged.
+          A professional electrical quote follows a consistent structure that makes it easy for the
+          customer to understand and compare, and easy for you to defend if challenged.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Header</strong> — your company name, logo, address, phone number, email,
-                and company/VAT registration number. Include your NICEIC or NAPIT scheme number.
-                Date of issue and a quote reference number for tracking.
+                <strong>Header</strong> — your company name, logo, address, phone number, email, and
+                company/VAT registration number. Include your NICEIC or NAPIT scheme number. Date of
+                issue and a quote reference number for tracking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Customer details</strong> — full name, property address where the work
-                will be carried out, and contact details. If different from the works address,
-                include a separate billing address.
+                <strong>Customer details</strong> — full name, property address where the work will
+                be carried out, and contact details. If different from the works address, include a
+                separate billing address.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope of works</strong> — describe in plain English what you will do,
-                room by room or system by system. Be specific: "Install one 32A radial circuit
-                in 6mm² cable from consumer unit to garage sub-board" is better than "garage
-                supply". Include cable routes if known.
+                <strong>Scope of works</strong> — describe in plain English what you will do, room
+                by room or system by system. Be specific: "Install one 32A radial circuit in 6mm²
+                cable from consumer unit to garage sub-board" is better than "garage supply".
+                Include cable routes if known.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -234,8 +235,8 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Payment terms and validity</strong> — when payment is due, how payment
-                should be made, and the date by which the customer must accept the quote for
-                the price to be honoured.
+                should be made, and the date by which the customer must accept the quote for the
+                price to be honoured.
               </span>
             </li>
           </ul>
@@ -249,10 +250,10 @@ const sections = [
     content: (
       <>
         <p>
-          Winning the most work at the lowest price is not a sustainable business strategy.
-          Your pricing must recover all your costs, pay you fairly for your skills, and generate
-          a profit that funds investment in your business. Chronic under-pricing is the leading
-          cause of electrical business failure.
+          Winning the most work at the lowest price is not a sustainable business strategy. Your
+          pricing must recover all your costs, pay you fairly for your skills, and generate a profit
+          that funds investment in your business. Chronic under-pricing is the leading cause of
+          electrical business failure.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -268,21 +269,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Price the job, not the hours</strong> — experienced electricians price
-                based on the value of the job to the customer and their knowledge of what similar
-                work costs, not purely on time. A consumer unit upgrade that takes three hours
-                should be priced at what consumer unit upgrades cost, not at three times your
-                day rate.
+                <strong>Price the job, not the hours</strong> — experienced electricians price based
+                on the value of the job to the customer and their knowledge of what similar work
+                costs, not purely on time. A consumer unit upgrade that takes three hours should be
+                priced at what consumer unit upgrades cost, not at three times your day rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Do not discount the quote</strong> — if a customer asks you to lower
-                your price, the correct response is to reduce the scope, not the margin. Offer
-                to exclude making good, or use a different specification cable tray, or carry
-                out the work in two visits rather than one. Discounting trains customers to
-                always ask for discounts.
+                <strong>Do not discount the quote</strong> — if a customer asks you to lower your
+                price, the correct response is to reduce the scope, not the margin. Offer to exclude
+                making good, or use a different specification cable tray, or carry out the work in
+                two visits rather than one. Discounting trains customers to always ask for
+                discounts.
               </span>
             </li>
           </ul>
@@ -296,28 +296,28 @@ const sections = [
     content: (
       <>
         <p>
-          Showing a breakdown of materials and labour in your quote is strongly recommended.
-          It is more transparent for the customer, easier to defend if challenged, and allows
-          you to adjust the quote cleanly if the customer requests changes.
+          Showing a breakdown of materials and labour in your quote is strongly recommended. It is
+          more transparent for the customer, easier to defend if challenged, and allows you to
+          adjust the quote cleanly if the customer requests changes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Materials</strong> — list the key materials: consumer unit (manufacturer
-                and model), cable specifications and approximate quantities, accessories (sockets,
+                <strong>Materials</strong> — list the key materials: consumer unit (manufacturer and
+                model), cable specifications and approximate quantities, accessories (sockets,
                 switches, luminaires), and any specialist items. You do not need to list every
-                fixing and connector, but the major items should be visible. Mark up trade prices
-                to your retail rate (typically 15 to 25 per cent above trade).
+                fixing and connector, but the major items should be visible. Mark up trade prices to
+                your retail rate (typically 15 to 25 per cent above trade).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labour</strong> — show estimated hours and your labour rate, or simply
-                show a labour subtotal. You are not obliged to show your detailed labour build-up,
-                but showing a labour figure separately from materials prevents disputes where the
+                <strong>Labour</strong> — show estimated hours and your labour rate, or simply show
+                a labour subtotal. You are not obliged to show your detailed labour build-up, but
+                showing a labour figure separately from materials prevents disputes where the
                 customer believes you are overcharging for materials you have "already paid for".
               </span>
             </li>
@@ -326,9 +326,9 @@ const sections = [
               <span>
                 <strong>Certification and notification</strong> — include the cost of Part P
                 Building Regulations notification (if required) and any test certificates
-                (Electrical Installation Certificate, EICR) as a visible line item. Many
-                customers do not realise these are a required part of the job and resist paying
-                for them if they appear on the invoice without prior notice.
+                (Electrical Installation Certificate, EICR) as a visible line item. Many customers
+                do not realise these are a required part of the job and resist paying for them if
+                they appear on the invoice without prior notice.
               </span>
             </li>
           </ul>
@@ -351,35 +351,34 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed wiring</strong> — in older properties you cannot know the
-                condition of existing wiring until it is accessed. State in your quote that
-                "price assumes existing wiring is in satisfactory condition. Any additional
-                remedial work required to existing circuits will be quoted separately."
+                condition of existing wiring until it is accessed. State in your quote that "price
+                assumes existing wiring is in satisfactory condition. Any additional remedial work
+                required to existing circuits will be quoted separately."
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Asbestos</strong> — in properties built before 2000, asbestos-containing
-                materials may be present. If you suspect ACMs, the customer must arrange an
-                asbestos survey before electrical work proceeds. State this explicitly in your
-                quote.
+                materials may be present. If you suspect ACMs, the customer must arrange an asbestos
+                survey before electrical work proceeds. State this explicitly in your quote.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Access and working conditions</strong> — if access to the loft, under
-                floor, or plant rooms is required, note any assumptions about accessibility. If
-                a customer has already floored a loft, cabled runs take significantly longer
-                and the additional cost is legitimate.
+                <strong>Access and working conditions</strong> — if access to the loft, under floor,
+                or plant rooms is required, note any assumptions about accessibility. If a customer
+                has already floored a loft, cabled runs take significantly longer and the additional
+                cost is legitimate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Material price validity</strong> — include a statement that material
-                prices are based on current trade prices and are subject to change if the start
-                date is more than 30 days after the quote date.
+                <strong>Material price validity</strong> — include a statement that material prices
+                are based on current trade prices and are subject to change if the start date is
+                more than 30 days after the quote date.
               </span>
             </li>
           </ul>
@@ -393,20 +392,20 @@ const sections = [
     content: (
       <>
         <p>
-          Clear payment terms stated upfront prevent the most common source of cashflow problems
-          for electrical contractors. The Housing Grants, Construction and Regeneration Act 1996
-          gives construction contractors (including subcontractors) statutory rights to interim
-          payments — know these rights even for domestic work.
+          Clear payment terms stated upfront prevent the most common source of cashflow problems for
+          electrical contractors. The Housing Grants, Construction and Regeneration Act 1996 gives
+          construction contractors (including subcontractors) statutory rights to interim payments —
+          know these rights even for domestic work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Deposit</strong> — for jobs over £500, take a deposit of 20 to 30 per
-                cent on acceptance of the quote and before materials are ordered. For bespoke or
-                custom-ordered items, a 50 per cent deposit on those items is reasonable. State
-                the deposit requirement in your quote — customers expect it for professional
+                <strong>Deposit</strong> — for jobs over £500, take a deposit of 20 to 30 per cent
+                on acceptance of the quote and before materials are ordered. For bespoke or
+                custom-ordered items, a 50 per cent deposit on those items is reasonable. State the
+                deposit requirement in your quote — customers expect it for professional
                 contractors.
               </span>
             </li>
@@ -414,18 +413,18 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Staged payments</strong> — for larger domestic jobs (rewires, extensions),
-                stage payments reduce your exposure. A typical structure: 30 per cent deposit,
-                30 per cent on completion of first fix, 30 per cent on completion of second fix,
-                10 per cent on practical completion and handover of certificates.
+                stage payments reduce your exposure. A typical structure: 30 per cent deposit, 30
+                per cent on completion of first fix, 30 per cent on completion of second fix, 10 per
+                cent on practical completion and handover of certificates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Payment method and timing</strong> — state that payment is due on
-                completion (for straightforward jobs) or within seven days of invoice. Accept
-                bank transfer rather than cash for larger jobs — it creates a record and reduces
-                the risk of payment disputes.
+                <strong>Payment method and timing</strong> — state that payment is due on completion
+                (for straightforward jobs) or within seven days of invoice. Accept bank transfer
+                rather than cash for larger jobs — it creates a record and reduces the risk of
+                payment disputes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,8 +433,8 @@ const sections = [
                 <strong>Late payment</strong> — include a statement that late payment may incur
                 interest under the Late Payment of Commercial Debts (Interest) Act 1998 at 8 per
                 cent above base rate. This applies to business-to-business contracts. For domestic
-                customers, state your own late payment terms (e.g. 2 per cent per month after
-                14 days).
+                customers, state your own late payment terms (e.g. 2 per cent per month after 14
+                days).
               </span>
             </li>
           </ul>
@@ -449,9 +448,9 @@ const sections = [
     content: (
       <>
         <p>
-          Most post-completion disputes between electricians and customers arise from ambiguity
-          in the original quote. The following inclusions, clearly stated, prevent the vast
-          majority of disputes.
+          Most post-completion disputes between electricians and customers arise from ambiguity in
+          the original quote. The following inclusions, clearly stated, prevent the vast majority of
+          disputes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -468,9 +467,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Making good</strong> — electrical work requires chasing, drilling, and
-                cutting. State whether making good (plastering, repainting, floor reinstatement)
-                is included or excluded. If excluded, tell the customer who is responsible and
-                what trades will be needed.
+                cutting. State whether making good (plastering, repainting, floor reinstatement) is
+                included or excluded. If excluded, tell the customer who is responsible and what
+                trades will be needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -479,16 +478,15 @@ const sections = [
                 <strong>Certification</strong> — confirm that you will issue the appropriate
                 certificate on completion (Electrical Installation Certificate for new
                 installations, Minor Electrical Installation Works Certificate for additions and
-                alterations) and that Building Regulations notification will be made where
-                required.
+                alterations) and that Building Regulations notification will be made where required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Guarantee</strong> — state the period of your workmanship guarantee
-                (typically 12 months) and what it covers. Distinguish between workmanship
-                (your responsibility) and product failure (manufacturer's warranty).
+                (typically 12 months) and what it covers. Distinguish between workmanship (your
+                responsibility) and product failure (manufacturer's warranty).
               </span>
             </li>
           </ul>
@@ -496,8 +494,8 @@ const sections = [
         <p>
           Link your quote to your standard terms and conditions. For domestic customers, these
           should incorporate your obligations under the Consumer Contracts (Information,
-          Cancellation and Additional Charges) Regulations 2013, including the 14-day
-          cancellation right for off-premises contracts.
+          Cancellation and Additional Charges) Regulations 2013, including the 14-day cancellation
+          right for off-premises contracts.
         </p>
       </>
     ),
@@ -508,8 +506,8 @@ const sections = [
     content: (
       <>
         <p>
-          Sending a quote and waiting is leaving money on the table. A structured follow-up
-          process consistently converts more quotes into accepted work without being pushy or
+          Sending a quote and waiting is leaving money on the table. A structured follow-up process
+          consistently converts more quotes into accepted work without being pushy or
           unprofessional.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -517,26 +515,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Day 1 — send and confirm</strong> — send the quote by email and send a
-                brief text or WhatsApp to let the customer know it has been sent. Confirm they
-                have received it and invite them to call with any questions.
+                <strong>Day 1 — send and confirm</strong> — send the quote by email and send a brief
+                text or WhatsApp to let the customer know it has been sent. Confirm they have
+                received it and invite them to call with any questions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Day 5 to 7 — first follow-up</strong> — call or message to ask if they
-                have had the chance to review the quote and whether they have any questions. Do
-                not ask "have you made a decision?" — ask "is there anything I can clarify?".
-                This keeps the conversation constructive.
+                <strong>Day 5 to 7 — first follow-up</strong> — call or message to ask if they have
+                had the chance to review the quote and whether they have any questions. Do not ask
+                "have you made a decision?" — ask "is there anything I can clarify?". This keeps the
+                conversation constructive.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Day 14 — second follow-up</strong> — if no response, send a brief message
-                noting that the quote validity period is approaching and you wanted to check if
-                they would like to proceed or if they need any additional information.
+                noting that the quote validity period is approaching and you wanted to check if they
+                would like to proceed or if they need any additional information.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -558,9 +556,9 @@ const sections = [
     content: (
       <>
         <p>
-          The fastest way to increase your quote conversion rate is to improve the quality and
-          speed of your quoting process. Professional quotes that arrive the same day as the
-          survey win significantly more work than quotes sent a week later.
+          The fastest way to increase your quote conversion rate is to improve the quality and speed
+          of your quoting process. Professional quotes that arrive the same day as the survey win
+          significantly more work than quotes sent a week later.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -573,9 +571,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
-                  to build professional, branded quotes on your phone while still at the
-                  customer's property. Materials pricing is built in. Export to PDF and send
-                  by email before you leave. See also the{' '}
+                  to build professional, branded quotes on your phone while still at the customer's
+                  property. Materials pricing is built in. Export to PDF and send by email before
+                  you leave. See also the{' '}
                   <SEOInternalLink href="/tender-writing-electrician">
                     tender writing guide
                   </SEOInternalLink>{' '}
@@ -600,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote faster and win more work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI. Send professional quotes from your phone before you leave the customer's property. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, invoice management, and business AI. Send professional quotes from your phone before you leave the customer's property. 7-day free trial."
           icon={FileText}
         />
       </>
@@ -637,7 +635,7 @@ export default function QuoteWritingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Quote Writing"
       relatedPages={relatedPages}
       ctaHeading="Send Professional Electrical Quotes from Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to build and send professional quotes on site. Materials pricing built in. PDF export in seconds. 7-day free trial, cancel anytime."
     />
   );
 }

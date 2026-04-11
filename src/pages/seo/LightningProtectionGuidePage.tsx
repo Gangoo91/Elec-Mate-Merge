@@ -134,17 +134,17 @@ const sections = [
     content: (
       <>
         <p>
-          The UK experiences approximately 200,000 to 300,000 lightning strikes per year.
-          While most strikes occur in open countryside, strikes to buildings and structures cause
-          fires, structural damage, electrical installation damage, destruction of electronic
-          equipment, and risk to life.
+          The UK experiences approximately 200,000 to 300,000 lightning strikes per year. While most
+          strikes occur in open countryside, strikes to buildings and structures cause fires,
+          structural damage, electrical installation damage, destruction of electronic equipment,
+          and risk to life.
         </p>
         <p>
-          A lightning protection system (LPS) provides a preferential path for the lightning
-          current to follow from the point of strike to earth, bypassing the building structure and
-          its contents. The system consists of an air termination network (the conductors on the
-          roof that intercept the lightning), down conductors (that carry the current to ground),
-          and an earth termination system (that disperses the current into the ground).
+          A lightning protection system (LPS) provides a preferential path for the lightning current
+          to follow from the point of strike to earth, bypassing the building structure and its
+          contents. The system consists of an air termination network (the conductors on the roof
+          that intercept the lightning), down conductors (that carry the current to ground), and an
+          earth termination system (that disperses the current into the ground).
         </p>
         <p>
           This guide covers the BS EN 62305 standard, risk assessment methodology, surge protection
@@ -169,8 +169,8 @@ const sections = [
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Part 1: General principles</strong> — covers the physics of lightning,
-                damage mechanisms, and the scope of protection measures. Provides the foundation
-                for understanding why protection is needed and what it achieves.
+                damage mechanisms, and the scope of protection measures. Provides the foundation for
+                understanding why protection is needed and what it achieves.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -233,17 +233,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consequence analysis</strong> — what happens if the building is struck?
-                The assessment considers loss of human life, loss of public service, loss of
-                cultural heritage, and economic loss.
+                <strong>Consequence analysis</strong> — what happens if the building is struck? The
+                assessment considers loss of human life, loss of public service, loss of cultural
+                heritage, and economic loss.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protection level</strong> — if protection is required, the level (Class I
-                to IV) is determined by the risk reduction needed. Class I provides the highest
-                level of protection (98% efficiency), Class IV the lowest (80% efficiency).
+                <strong>Protection level</strong> — if protection is required, the level (Class I to
+                IV) is determined by the risk reduction needed. Class I provides the highest level
+                of protection (98% efficiency), Class IV the lowest (80% efficiency).
               </span>
             </li>
           </ul>
@@ -322,17 +322,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth rods</strong> — vertical copper or copper-clad steel rods driven
-                into the ground to a depth of 2.4m or more. Multiple rods may be needed to achieve
-                the target earth resistance of 10 ohms or less.
+                <strong>Earth rods</strong> — vertical copper or copper-clad steel rods driven into
+                the ground to a depth of 2.4m or more. Multiple rods may be needed to achieve the
+                target earth resistance of 10 ohms or less.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ring earth electrode</strong> — a bare copper conductor (minimum 50mm
-                cross-section) buried at least 0.5m deep around the perimeter of the building.
-                This provides a distributed earth termination with low impedance.
+                cross-section) buried at least 0.5m deep around the perimeter of the building. This
+                provides a distributed earth termination with low impedance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -359,9 +359,7 @@ const sections = [
     heading: 'When Lightning Protection Is Required',
     content: (
       <>
-        <p>
-          Lightning protection is most commonly required for:
-        </p>
+        <p>Lightning protection is most commonly required for:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -395,8 +393,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Buildings of cultural or historical significance</strong> — churches,
-                listed buildings, museums, galleries.
+                <strong>Buildings of cultural or historical significance</strong> — churches, listed
+                buildings, museums, galleries.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -431,8 +429,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Visual inspection</strong> — check all visible components for physical
-                damage, corrosion, loose fixings, and broken conductors. Pay particular attention
-                to bonds, test clamps, and the junction between down conductors and the earth
+                damage, corrosion, loose fixings, and broken conductors. Pay particular attention to
+                bonds, test clamps, and the junction between down conductors and the earth
                 termination.
               </span>
             </li>
@@ -474,10 +472,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">SPD Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Installing SPDs at consumer units and distribution boards is within the scope of
-                  a general electrician. Understanding BS 7671 Chapter 44 and the risk assessment
-                  process enables you to recommend and install SPDs as part of new installations
-                  and upgrades.
+                  Installing SPDs at consumer units and distribution boards is within the scope of a
+                  general electrician. Understanding BS 7671 Chapter 44 and the risk assessment
+                  process enables you to recommend and install SPDs as part of new installations and
+                  upgrades.
                 </p>
               </div>
             </div>
@@ -537,7 +535,7 @@ export default function LightningProtectionGuidePage() {
       faqHeading="Frequently Asked Questions About Lightning Protection"
       relatedPages={relatedPages}
       ctaHeading="Install SPDs and Certify on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, cable sizing, and regulation lookup. 7-day free trial, cancel anytime."
     />
   );
 }

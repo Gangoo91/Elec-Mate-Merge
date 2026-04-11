@@ -549,7 +549,7 @@ export default function MotorStartingCurrentCalculatorPage() {
         },
       ]}
       ctaHeading="Motor Calculations in Seconds on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. DOL, star-delta, soft starter, and VFD starting current calculations plus 50+ other calculators. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. DOL, star-delta, soft starter, and VFD starting current calculations plus 50+ other calculators. 7-day free trial."
     />
   );
 }

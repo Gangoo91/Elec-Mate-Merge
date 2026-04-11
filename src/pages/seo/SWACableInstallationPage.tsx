@@ -628,7 +628,7 @@ export default function SWACableInstallationPage() {
         },
       ]}
       ctaHeading="Size and Certify SWA Installations"
-      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's cable sizing calculator, AI installer, and digital certificates cover every SWA cable job. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

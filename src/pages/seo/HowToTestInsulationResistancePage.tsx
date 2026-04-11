@@ -239,15 +239,21 @@ export default function HowToTestInsulationResistancePage() {
               Insulation deteriorates over time due to heat, moisture, UV exposure, mechanical
               damage, chemical contamination, and simple ageing of the PVC or XLPE material. Regular
               testing during{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">periodic inspections (EICRs)</SEOInternalLink>{' '}
-              catches deterioration before it reaches a
-              dangerous level. For new installations, the insulation resistance test on the{' '}
-              <SEOInternalLink href="/electrical-certification/eic">Electrical Installation Certificate (EIC)</SEOInternalLink>{' '}
-              confirms that cables have not been damaged
-              during installation — which is particularly important given that cables may have been
-              pulled through tight spaces, bent around corners, or clipped to surfaces where nails
-              or screws could have penetrated the sheathing. Always perform{' '}
-              <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">
+                periodic inspections (EICRs)
+              </SEOInternalLink>{' '}
+              catches deterioration before it reaches a dangerous level. For new installations, the
+              insulation resistance test on the{' '}
+              <SEOInternalLink href="/electrical-certification/eic">
+                Electrical Installation Certificate (EIC)
+              </SEOInternalLink>{' '}
+              confirms that cables have not been damaged during installation — which is particularly
+              important given that cables may have been pulled through tight spaces, bent around
+              corners, or clipped to surfaces where nails or screws could have penetrated the
+              sheathing. Always perform{' '}
+              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+                safe isolation
+              </SEOInternalLink>{' '}
               before commencing any insulation resistance test.
             </p>
           </div>
@@ -596,7 +602,7 @@ export default function HowToTestInsulationResistancePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Record Insulation Resistance Results Digitally"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

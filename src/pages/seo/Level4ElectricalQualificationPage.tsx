@@ -151,10 +151,10 @@ const sections = [
           National Certificate) and focuses on design, management, and advanced technical knowledge.
         </p>
         <p>
-          While Level 3 qualifies you to install electrical systems, Level 4 qualifies you to
-          design them, manage projects, and understand the engineering principles behind electrical
-          installations. It is the qualification that takes you from being a competent installer
-          to being a competent designer and manager.
+          While Level 3 qualifies you to install electrical systems, Level 4 qualifies you to design
+          them, manage projects, and understand the engineering principles behind electrical
+          installations. It is the qualification that takes you from being a competent installer to
+          being a competent designer and manager.
         </p>
         <p>
           The most common Level 4 qualifications for electricians are the C&G Level 4 Award in
@@ -184,9 +184,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Advanced Electrical Design</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complex circuit design including three-phase distribution, power factor correction,
-                  harmonic mitigation, and motor circuits. Design of commercial and industrial
-                  installations including sub-main distribution and rising mains.
+                  Complex circuit design including three-phase distribution, power factor
+                  correction, harmonic mitigation, and motor circuits. Design of commercial and
+                  industrial installations including sub-main distribution and rising mains.
                 </p>
               </div>
             </div>
@@ -239,9 +239,7 @@ const sections = [
     heading: 'Entry Requirements',
     content: (
       <>
-        <p>
-          Entry requirements vary by provider, but the typical minimum is:
-        </p>
+        <p>Entry requirements vary by provider, but the typical minimum is:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -278,8 +276,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Work experience</strong> — at least 2 to 3 years of practical experience
-                is strongly recommended. The course content assumes real-world knowledge.
+                <strong>Work experience</strong> — at least 2 to 3 years of practical experience is
+                strongly recommended. The course content assumes real-world knowledge.
               </span>
             </li>
           </ul>
@@ -328,8 +326,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Further education</strong> — progression to HND (Level 5) and then to a
-                BEng or BSc degree (Level 6), potentially leading to chartered engineer status.
+                <strong>Further education</strong> — progression to HND (Level 5) and then to a BEng
+                or BSc degree (Level 6), potentially leading to chartered engineer status.
               </span>
             </li>
           </ul>
@@ -342,9 +340,7 @@ const sections = [
     heading: 'Level 4 Award vs HNC',
     content: (
       <>
-        <p>
-          There is an important distinction between the C&G Level 4 Award and a full HNC:
-        </p>
+        <p>There is an important distinction between the C&G Level 4 Award and a full HNC:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C&G Level 4 Award</h3>
@@ -362,8 +358,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Full HNC</h3>
             <p className="text-white text-sm leading-relaxed">
               Broader qualification covering design, project management, building services, and
-              engineering principles. Takes 1 to 2 years part-time. Provides a clearer pathway
-              to HND and degree. Best for electricians who want to move into design engineering,
+              engineering principles. Takes 1 to 2 years part-time. Provides a clearer pathway to
+              HND and degree. Best for electricians who want to move into design engineering,
               consulting, or management, or who plan to pursue further education.
             </p>
           </div>
@@ -402,9 +398,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Distance learning</strong> — some providers offer online or blended learning.
-                Flexible but requires strong self-discipline. Practical elements may require
-                occasional attendance.
+                <strong>Distance learning</strong> — some providers offer online or blended
+                learning. Flexible but requires strong self-discipline. Practical elements may
+                require occasional attendance.
               </span>
             </li>
           </ul>
@@ -417,9 +413,7 @@ const sections = [
     heading: 'Costs and Funding',
     content: (
       <>
-        <p>
-          Costs depend on the qualification and provider:
-        </p>
+        <p>Costs depend on the qualification and provider:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-lg bg-white/[0.04]">
@@ -437,9 +431,9 @@ const sections = [
           </div>
         </div>
         <p>
-          Funding options include Advanced Learner Loans (for the HNC — repaid through your tax
-          code like a student loan), employer funding, CITB grants (for CITB-registered employers),
-          and personal investment. The qualification is tax-deductible as a business expense for
+          Funding options include Advanced Learner Loans (for the HNC — repaid through your tax code
+          like a student loan), employer funding, CITB grants (for CITB-registered employers), and
+          personal investment. The qualification is tax-deductible as a business expense for
           self-employed electricians.
         </p>
       </>
@@ -451,8 +445,8 @@ const sections = [
     content: (
       <>
         <p>
-          Whether you are studying for a Level 4 or already qualified, Elec-Mate provides the
-          design tools you need for complex installations.
+          Whether you are studying for a Level 4 or already qualified, Elec-Mate provides the design
+          tools you need for complex installations.
         </p>
         <SEOAppBridge
           title="Advanced design tools for qualified electricians"
@@ -493,7 +487,7 @@ export default function Level4ElectricalQualificationPage() {
       faqHeading="Frequently Asked Questions About Level 4 Electrical Qualifications"
       relatedPages={relatedPages}
       ctaHeading="Advanced Design Tools for Qualified Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, circuit design, and professional certification. 7-day free trial, cancel anytime."
     />
   );
 }

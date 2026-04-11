@@ -120,7 +120,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -193,7 +193,7 @@ export default function AICircuitDesignerPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              430+ electricians
+              1,000+ electricians
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
@@ -394,8 +394,8 @@ export default function AICircuitDesignerPage() {
               RCDs detect only AC residual currents, Type A RCDs detect AC and pulsating DC residual
               currents, and Type B RCDs detect AC, pulsating DC, and smooth DC residual currents.
               The designer selects the correct type based on the equipment connected, in accordance
-              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment
-              3:2024 covering bidirectional and unidirectional protective devices.
+              with BS 7671 Regulation 531.3 and the new Regulation 530.3.2 added by Amendment 3:2024
+              covering bidirectional and unidirectional protective devices.
             </p>
           </div>
         </div>
@@ -409,8 +409,8 @@ export default function AICircuitDesignerPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Tailored and trained specifically for UK electrical work. The AI Circuit Designer
-            handles the calculations so you can focus on the installation. Part of 70 calculators, 8
-            AI agents, and 36+ training courses.
+            handles the calculations so you can focus on the installation. Part of 70+ calculators,
+            8 AI agents, and 46+ training courses.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -519,7 +519,7 @@ export default function AICircuitDesignerPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Design your first circuit in 60 seconds"
-        subheading="Join 430+ UK electricians using AI for BS 7671 compliant circuit design. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using AI for BS 7671 compliant circuit design. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/office-electrical-cost',
     title: 'Office Electrical Fit-Out Cost',
-    description: 'Commercial office electrical costs, per-desk estimates, emergency lighting, and fire alarms.',
+    description:
+      'Commercial office electrical costs, per-desk estimates, emergency lighting, and fire alarms.',
     icon: Building2,
     category: 'Cost Guide',
   },
@@ -125,11 +126,11 @@ const sections = [
     content: (
       <>
         <p>
-          A retail electrical fit-out covers everything from the main supply connection through
-          to display lighting, till points, CCTV, and security systems. Retail is a demanding
+          A retail electrical fit-out covers everything from the main supply connection through to
+          display lighting, till points, CCTV, and security systems. Retail is a demanding
           environment — lighting has a direct impact on sales, systems must be reliable, and
-          regulatory compliance (emergency lighting, fire alarms) is non-negotiable. Getting
-          the electrical specification right from the start saves significant cost and disruption
+          regulatory compliance (emergency lighting, fire alarms) is non-negotiable. Getting the
+          electrical specification right from the start saves significant cost and disruption
           compared with retrofitting inadequate systems.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -144,25 +145,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium retail unit (100–300m²)</strong> — £12,000 to £40,000. More
-                extensive display lighting, multiple till points, back-of-house circuits, and
-                a full addressable fire alarm system.
+                <strong>Medium retail unit (100–300m²)</strong> — £12,000 to £40,000. More extensive
+                display lighting, multiple till points, back-of-house circuits, and a full
+                addressable fire alarm system.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Large retail unit or anchor store (over 300m²)</strong> — £40,000 to
-                £120,000+. Three-phase supply, zone-controlled lighting, BMS integration, and
-                full Grade A fire alarm with sprinkler system monitoring.
+                £120,000+. Three-phase supply, zone-controlled lighting, BMS integration, and full
+                Grade A fire alarm with sprinkler system monitoring.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These figures cover the electrical installation only and do not include the cost of
-          the HVAC system, kitchen or café fit-out, or shopfront signage — which are typically
-          priced as separate packages.
+          These figures cover the electrical installation only and do not include the cost of the
+          HVAC system, kitchen or café fit-out, or shopfront signage — which are typically priced as
+          separate packages.
         </p>
       </>
     ),
@@ -180,25 +181,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains and distribution board</strong> — £1,000 to £4,000. Three-phase
-                or single-phase incoming supply, main switch, sub-circuit MCBs, and connection
-                to the building's metering arrangement.
+                <strong>Mains and distribution board</strong> — £1,000 to £4,000. Three-phase or
+                single-phase incoming supply, main switch, sub-circuit MCBs, and connection to the
+                building's metering arrangement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Display and feature lighting circuits</strong> — £1,500 to £5,000.
-                Track lighting bus-bars or circuits, feature accent light wiring, window display
-                lighting, and low-voltage driver installations.
+                <strong>Display and feature lighting circuits</strong> — £1,500 to £5,000. Track
+                lighting bus-bars or circuits, feature accent light wiring, window display lighting,
+                and low-voltage driver installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Till points and EPoS power and data</strong> — £300 to £700 per till
-                position. Counter outlets, floor boxes, Cat6 data to each position, and patch
-                panel connection.
+                position. Counter outlets, floor boxes, Cat6 data to each position, and patch panel
+                connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -211,8 +212,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm system</strong> — £1,500 to £5,000 for a small unit.
-                Panel, detectors, manual call points, sounders, and commissioning to{' '}
+                <strong>Fire alarm system</strong> — £1,500 to £5,000 for a small unit. Panel,
+                detectors, manual call points, sounders, and commissioning to{' '}
                 <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">
                   BS 5839-1
                 </SEOInternalLink>
@@ -222,8 +223,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CCTV and security</strong> — £800 to £2,500 for a complete system.
-                Cameras, NVR, cabling, and configuration. Intruder alarm additional.
+                <strong>CCTV and security</strong> — £800 to £2,500 for a complete system. Cameras,
+                NVR, cabling, and configuration. Intruder alarm additional.
               </span>
             </li>
           </ul>
@@ -237,9 +238,9 @@ const sections = [
     content: (
       <>
         <p>
-          Lighting is one of the most powerful merchandising tools in retail. Well-designed
-          lighting increases dwell time, improves product perception, and directly drives sales.
-          It is also one of the most significant electrical cost elements in a retail fit-out.
+          Lighting is one of the most powerful merchandising tools in retail. Well-designed lighting
+          increases dwell time, improves product perception, and directly drives sales. It is also
+          one of the most significant electrical cost elements in a retail fit-out.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -248,24 +249,24 @@ const sections = [
               <span>
                 <strong>LED track lighting systems</strong> — the most common retail lighting
                 solution. 1-metre or 2-metre track sections cost £60 to £180 per section plus
-                installation. Adjustable spot heads cost £30 to £150 each depending on output
-                and brand. Allow £200 to £500 per track section installed.
+                installation. Adjustable spot heads cost £30 to £150 each depending on output and
+                brand. Allow £200 to £500 per track section installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recessed downlights</strong> — LED downlights with a CRI of 90+ for
-                accurate colour rendering of merchandise. Budget £80 to £200 per downlight
-                fitted, depending on specification.
+                <strong>Recessed downlights</strong> — LED downlights with a CRI of 90+ for accurate
+                colour rendering of merchandise. Budget £80 to £200 per downlight fitted, depending
+                on specification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Window display lighting</strong> — high-output LED spots or strips to
-                attract attention from outside. Must be controllable independently of the main
-                shop lighting to allow display changes. Budget £500 to £1,500 for window lighting.
+                attract attention from outside. Must be controllable independently of the main shop
+                lighting to allow display changes. Budget £500 to £1,500 for window lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,27 +289,26 @@ const sections = [
     content: (
       <>
         <p>
-          Every till point requires both power and data. Poor provision of power and data at
-          till positions is a common failure in retail fit-outs, leading to unsightly trailing
-          extension leads and unreliable EPoS systems.
+          Every till point requires both power and data. Poor provision of power and data at till
+          positions is a common failure in retail fit-outs, leading to unsightly trailing extension
+          leads and unreliable EPoS systems.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShoppingCart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Counter-mounted till point</strong> — six 13A socket outlets (two double
-                and one single) at counter level, one Cat6 data point, and one spare Cat6 for
-                future expansion. Cost per till position: £300 to £500 installed.
+                <strong>Counter-mounted till point</strong> — six 13A socket outlets (two double and
+                one single) at counter level, one Cat6 data point, and one spare Cat6 for future
+                expansion. Cost per till position: £300 to £500 installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShoppingCart className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Freestanding counter or island till</strong> — floor box installation
-                with power and data. A quality floor box with four power outlets and two Cat6
-                data points costs £350 to £600 fitted, including the floor core and box
-                installation.
+                <strong>Freestanding counter or island till</strong> — floor box installation with
+                power and data. A quality floor box with four power outlets and two Cat6 data points
+                costs £350 to £600 fitted, including the floor core and box installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -332,42 +332,41 @@ const sections = [
       <>
         <p>
           Retail CCTV and intruder alarm systems are a standard requirement for most commercial
-          insurers and are a sensible investment for any retail business. The electrical
-          contractor typically installs CCTV alongside the main electrical fit-out, reducing
-          labour costs.
+          insurers and are a sensible investment for any retail business. The electrical contractor
+          typically installs CCTV alongside the main electrical fit-out, reducing labour costs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Basic CCTV system (4–6 cameras)</strong> — £800 to £1,800. Four to six
-                IP cameras, an 8-channel NVR with 2TB storage, remote mobile viewing, and all
-                cabling. Suitable for a small retail unit.
+                <strong>Basic CCTV system (4–6 cameras)</strong> — £800 to £1,800. Four to six IP
+                cameras, an 8-channel NVR with 2TB storage, remote mobile viewing, and all cabling.
+                Suitable for a small retail unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mid-range CCTV system (8–12 cameras)</strong> — £1,800 to £3,500.
-                Higher resolution cameras (4K), larger NVR storage, and integration with access
-                control at the main entrance and stockroom door.
+                <strong>Mid-range CCTV system (8–12 cameras)</strong> — £1,800 to £3,500. Higher
+                resolution cameras (4K), larger NVR storage, and integration with access control at
+                the main entrance and stockroom door.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Intruder alarm</strong> — £600 to £1,500 for a Grade 2 system with
-                PIR sensors, door contacts, siren, and a monitoring centre connection. NACOSS
-                or NSI Gold certification required for most commercial insurance policies.
+                <strong>Intruder alarm</strong> — £600 to £1,500 for a Grade 2 system with PIR
+                sensors, door contacts, siren, and a monitoring centre connection. NACOSS or NSI
+                Gold certification required for most commercial insurance policies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EAS security tagging systems</strong> — electronic article surveillance
-                (EAS) antenna pedestals require a dedicated power supply at the entrance. Allow
-                £200 to £400 for power provision at each pedestal position.
+                (EAS) antenna pedestals require a dedicated power supply at the entrance. Allow £200
+                to £400 for power provision at each pedestal position.
               </span>
             </li>
           </ul>
@@ -381,36 +380,36 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting and fire alarm systems are legal requirements in retail premises
-          and must be installed and commissioned by a competent person. They are non-negotiable
-          elements of any retail electrical fit-out.
+          Emergency lighting and fire alarm systems are legal requirements in retail premises and
+          must be installed and commissioned by a competent person. They are non-negotiable elements
+          of any retail electrical fit-out.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting (BS 5266-1)</strong> — required throughout sales
-                floor, escape routes, back-of-house corridors, and staff welfare areas. Non-maintained
-                LED emergency units with 3-hour duration for premises with over 300m² floor area.
+                <strong>Emergency lighting (BS 5266-1)</strong> — required throughout sales floor,
+                escape routes, back-of-house corridors, and staff welfare areas. Non-maintained LED
+                emergency units with 3-hour duration for premises with over 300m² floor area.
                 Commissioning certificate required on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm system (BS 5839-1)</strong> — L3 or L2 system for most
-                retail premises. Smoke detectors, heat detectors in kitchen and stockroom areas,
-                manual call points at each exit, and sounders throughout. Small retail unit:
-                £1,500 to £4,000. Larger units with addressable systems: £4,000 to £12,000.
+                <strong>Fire alarm system (BS 5839-1)</strong> — L3 or L2 system for most retail
+                premises. Smoke detectors, heat detectors in kitchen and stockroom areas, manual
+                call points at each exit, and sounders throughout. Small retail unit: £1,500 to
+                £4,000. Larger units with addressable systems: £4,000 to £12,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual testing obligations</strong> — the Regulatory Reform (Fire Safety)
-                Order 2005 requires weekly functional tests of the fire alarm, monthly testing
-                of emergency lighting function, and full annual discharge tests of the emergency
+                Order 2005 requires weekly functional tests of the fire alarm, monthly testing of
+                emergency lighting function, and full annual discharge tests of the emergency
                 lighting system. Certificates must be kept on site.
               </span>
             </li>
@@ -426,17 +425,17 @@ const sections = [
       <>
         <p>
           Retail premises are commercial buildings and are not subject to Part P of the Building
-          Regulations (which applies only to domestic dwellings). The key regulatory frameworks
-          for retail electrical work are:
+          Regulations (which applies only to domestic dwellings). The key regulatory frameworks for
+          retail electrical work are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity at Work Regulations 1989</strong> — requires that all
-                electrical systems in retail premises are designed, installed, maintained, and
-                operated safely by competent persons.
+                <strong>Electricity at Work Regulations 1989</strong> — requires that all electrical
+                systems in retail premises are designed, installed, maintained, and operated safely
+                by competent persons.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -450,9 +449,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Regulations Part L</strong> — energy efficiency requirements
-                for new commercial fit-outs. LED lighting with occupancy controls, automatic
-                switching, and daylight linking are required in most new retail fit-outs.
+                <strong>Building Regulations Part L</strong> — energy efficiency requirements for
+                new commercial fit-outs. LED lighting with occupancy controls, automatic switching,
+                and daylight linking are required in most new retail fit-outs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,10 +476,10 @@ const sections = [
     content: (
       <>
         <p>
-          Retail fit-out work is fast-paced and deadline-driven — shop openings are often tied
-          to lease commencement dates. Electricians who can work efficiently within a tight
-          programme, co-ordinate with shopfitters and AV contractors, and deliver all required
-          certification on time win repeat business from retail clients and fit-out contractors.
+          Retail fit-out work is fast-paced and deadline-driven — shop openings are often tied to
+          lease commencement dates. Electricians who can work efficiently within a tight programme,
+          co-ordinate with shopfitters and AV contractors, and deliver all required certification on
+          time win repeat business from retail clients and fit-out contractors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -489,10 +488,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Lighting in Detail</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Retail clients often have a clear idea of the lighting effect they want but
-                  no idea what it costs. Build a detailed lighting schedule — number of tracks,
-                  number of spot heads per track, driver specifications — and price it accurately
-                  using the{' '}
+                  Retail clients often have a clear idea of the lighting effect they want but no
+                  idea what it costs. Build a detailed lighting schedule — number of tracks, number
+                  of spot heads per track, driver specifications — and price it accurately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -508,11 +506,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Retail clients need the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>,
-                  emergency lighting commissioning certificate, and fire alarm commissioning
-                  certificate on the day the shop opens — not two weeks later. Complete all
-                  paperwork on site using Elec-Mate and hand over the full documentation package
-                  before you leave.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, emergency
+                  lighting commissioning certificate, and fire alarm commissioning certificate on
+                  the day the shop opens — not two weeks later. Complete all paperwork on site using
+                  Elec-Mate and hand over the full documentation package before you leave.
                 </p>
               </div>
             </div>
@@ -520,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify retail electrical fit-outs with Elec-Mate"
-          description="Create professional itemised retail electrical fit-out quotes with display lighting, till points, CCTV, emergency lighting, and fire alarm costs. Issue EICs on site. Join 430+ UK electricians. 7-day free trial."
+          description="Create professional itemised retail electrical fit-out quotes with display lighting, till points, CCTV, emergency lighting, and fire alarm costs. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -557,7 +554,7 @@ export default function RetailElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Retail Shop Electrical Fit-Out Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Retail Electrical Fit-Out in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional retail electrical fit-out quotes with display lighting, till points, CCTV, and all certifications. 7-day free trial, cancel anytime."
     />
   );
 }

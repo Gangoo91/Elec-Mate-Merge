@@ -41,8 +41,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
-  'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Plymouth\'s DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
-  'Plymouth\'s marine environment causes accelerated corrosion of external electrical fittings, cable glands, and earthing systems. Installations near the waterfront require marine-grade IP-rated components.',
+  "NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Plymouth's DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.",
+  "Plymouth's marine environment causes accelerated corrosion of external electrical fittings, cable glands, and earthing systems. Installations near the waterfront require marine-grade IP-rated components.",
   'The Barbican and Royal William Yard are conservation areas with strict planning requirements for external electrical work including EV charger installations, external lighting, and solar panels.',
   'Post-war housing estates (Efford, Whitleigh, Ernesettle) often have original 1950s wiring that has never been upgraded, making EICRs and rewires a significant part of Plymouth electrical work.',
 ];
@@ -71,12 +71,12 @@ const faqs = [
   {
     question: 'What is an EICR and do I need one for my Plymouth property?',
     answer:
-      'An Electrical Installation Condition Report (EICR) is a formal inspection and test of the fixed electrical installation in a property. Since April 2021, landlords in England are legally required to have a valid EICR for rented properties, carried out at least every 5 years or at each change of tenancy. For Plymouth properties, an EICR typically costs £180 to £300 for a 2 to 3 bedroom flat, and £250 to £400 for a 3 to 4 bedroom house. Plymouth\'s large student rental market (around the University of Plymouth campus in Drake, Mutley, and Greenbank) means EICR demand is consistently high. Older properties in these areas frequently receive C2 (potentially dangerous) or C3 (improvement recommended) codes due to aged wiring and lack of RCD protection compliant with Regulation 411.3.3.',
+      "An Electrical Installation Condition Report (EICR) is a formal inspection and test of the fixed electrical installation in a property. Since April 2021, landlords in England are legally required to have a valid EICR for rented properties, carried out at least every 5 years or at each change of tenancy. For Plymouth properties, an EICR typically costs £180 to £300 for a 2 to 3 bedroom flat, and £250 to £400 for a 3 to 4 bedroom house. Plymouth's large student rental market (around the University of Plymouth campus in Drake, Mutley, and Greenbank) means EICR demand is consistently high. Older properties in these areas frequently receive C2 (potentially dangerous) or C3 (improvement recommended) codes due to aged wiring and lack of RCD protection compliant with Regulation 411.3.3.",
   },
   {
     question: 'Who is the electricity supplier for Plymouth and how do I get a new connection?',
     answer:
-      'NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Plymouth and the wider South West. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Plymouth are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £7,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.',
+      "NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Plymouth and the wider South West. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Plymouth are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £7,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.",
   },
   {
     question: 'Can I do any electrical work myself in my Plymouth home?',
@@ -145,8 +145,9 @@ const sections = [
           Plymouth is the largest city in Devon and one of the largest on the south coast, with a
           population of around 265,000 and a diverse mix of residential, commercial, and military
           properties. The city's electrical trade is shaped by several distinct factors — the naval
-          dockyard and associated defence industries, a large university student population, extensive
-          post-war housing estates, and an increasingly busy waterfront regeneration programme.
+          dockyard and associated defence industries, a large university student population,
+          extensive post-war housing estates, and an increasingly busy waterfront regeneration
+          programme.
         </p>
         <p>
           The Plymouth electrical market ranges from sole traders handling domestic rewires and
@@ -163,16 +164,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by Plymouth City Council building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -235,15 +235,16 @@ const sections = [
         <p>
           Plymouth electrical work costs are broadly in line with the South West average, which is
           lower than London and the South East but comparable to other regional cities like Exeter
-          and Bristol. Here are realistic Plymouth prices for common domestic electrical work in 2026:
+          and Bristol. Here are realistic Plymouth prices for common domestic electrical work in
+          2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed semi-detached)</strong> — £4,500 to £7,000 including
-                new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
+                <strong>Full rewire (3-bed semi-detached)</strong> — £4,500 to £7,000 including new
+                consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
                 certification. Post-war properties with cavity walls are at the lower end; older
                 stone-built properties near the Hoe or in Stoke are at the upper end.
               </span>
@@ -306,8 +307,8 @@ const sections = [
       <>
         <p>
           Plymouth's property stock is unusually varied for a city of its size, shaped by its naval
-          history, wartime bombing, and post-war rebuilding. Understanding these property types helps
-          you know what to expect when hiring an electrician.
+          history, wartime bombing, and post-war rebuilding. Understanding these property types
+          helps you know what to expect when hiring an electrician.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -315,10 +316,10 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Plymouth was heavily bombed during the Blitz and much of the housing stock was rebuilt
               in the 1940s and 1950s. Estates in Efford, Whitleigh, Ernesettle, and Ham have
-              properties that often retain original wiring — rubber-insulated cables, old fuse
-              boxes with rewirable fuses, and outdated earthing arrangements. These properties are
-              prime candidates for full rewires and consumer unit upgrades. The cavity wall
-              construction makes cable routing easier than in older stone buildings.
+              properties that often retain original wiring — rubber-insulated cables, old fuse boxes
+              with rewirable fuses, and outdated earthing arrangements. These properties are prime
+              candidates for full rewires and consumer unit upgrades. The cavity wall construction
+              makes cable routing easier than in older stone buildings.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -374,8 +375,8 @@ const sections = [
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase (increasingly common for
-                EV chargers and heat pumps), you apply to NGED. Plymouth lead times are typically
-                4 to 8 weeks, shorter than London but longer during summer construction season.
+                EV chargers and heat pumps), you apply to NGED. Plymouth lead times are typically 4
+                to 8 weeks, shorter than London but longer during summer construction season.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -399,8 +400,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Plymouth is overseen by Plymouth City Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf. Plymouth
@@ -474,8 +474,8 @@ const sections = [
                 <strong>External fittings</strong> — standard zinc-plated or mild steel fixings can
                 corrode within 2 to 3 years in exposed coastal positions. Specify marine-grade
                 stainless steel (A4/316 grade) screws, clips, and brackets for any external
-                electrical work. This includes EV charger mounting hardware, external light fittings,
-                and cable cleats.
+                electrical work. This includes EV charger mounting hardware, external light
+                fittings, and cable cleats.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -494,8 +494,8 @@ const sections = [
                 <strong>Earthing and bonding</strong> — corrosion of earth electrodes and bonding
                 connections is a particular risk in the marine environment. Earth electrode
                 resistance should be tested more frequently (every 3 years rather than 5) for
-                properties close to the sea. Copper earthing conductors are preferable to
-                aluminium in coastal installations.
+                properties close to the sea. Copper earthing conductors are preferable to aluminium
+                in coastal installations.
               </span>
             </li>
           </ul>
@@ -517,9 +517,9 @@ const sections = [
         <p>
           Plymouth offers a steady and diverse electrical market. The combination of naval and
           defence industry contracts, university-driven rental compliance, waterfront regeneration,
-          and a large stock of post-war housing needing upgrades means work is varied and consistent.
-          Competition is less intense than in Bristol or Exeter, but margins can be tighter on
-          domestic work.
+          and a large stock of post-war housing needing upgrades means work is varied and
+          consistent. Competition is less intense than in Bristol or Exeter, but margins can be
+          tighter on domestic work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -559,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Plymouth electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -596,7 +596,7 @@ export default function ElectricianPlymouthPage() {
       faqHeading="Frequently Asked Questions About Electricians in Plymouth"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Plymouth and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Plymouth and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

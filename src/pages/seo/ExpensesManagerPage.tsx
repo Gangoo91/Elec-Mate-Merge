@@ -517,7 +517,7 @@ export default function ExpensesManagerPage() {
       faqHeading="Frequently Asked Questions About Expense Tracking"
       relatedPages={relatedPages}
       ctaHeading="Stop Missing Deductible Expenses"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track expenses, maximise tax deductions, and keep HMRC-compliant records. 7-day free trial, cancel anytime."
       pagePath="/tools/expenses-manager-electrician"
     />
   );

@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/transformer-installation-guide',
     title: 'Transformer Installation Guide',
-    description: 'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
+    description:
+      'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
     icon: Zap,
     category: 'Guide',
   },
@@ -108,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-installation-certificate',
     title: 'Electrical Installation Certificate',
-    description: 'Complete EICs on your phone and export PDF instantly for industrial installations.',
+    description:
+      'Complete EICs on your phone and export PDF instantly for industrial installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -136,10 +138,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TN-S</strong> — Terre-Neutre Séparé. The supply neutral is earthed at
-                the source (transformer). A separate protective earth (PE) conductor, independent
-                of the neutral, is provided throughout the installation. Preferred for large
-                industrial premises with private HV/LV substation.
+                <strong>TN-S</strong> — Terre-Neutre Séparé. The supply neutral is earthed at the
+                source (transformer). A separate protective earth (PE) conductor, independent of the
+                neutral, is provided throughout the installation. Preferred for large industrial
+                premises with private HV/LV substation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -147,18 +149,18 @@ const sections = [
               <span>
                 <strong>TN-C-S</strong> — Terre-Neutre Combiné-Séparé. The supply uses a combined
                 PEN conductor (protective and neutral combined). At the point of entry to the
-                premises (or at the main distribution board), PEN is separated into PE and N.
-                Also known as PME (Protective Multiple Earthing) in the UK. The most common
-                system for DNO-supplied commercial premises.
+                premises (or at the main distribution board), PEN is separated into PE and N. Also
+                known as PME (Protective Multiple Earthing) in the UK. The most common system for
+                DNO-supplied commercial premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT</strong> — Terre-Terre. The supply neutral is earthed at the source,
-                but the installation earth uses a local earth electrode with no metallic connection
-                to the supply earth. Used in agricultural premises, marinas, caravan sites, and
-                rural installations where PME is prohibited or unavailable.
+                <strong>TT</strong> — Terre-Terre. The supply neutral is earthed at the source, but
+                the installation earth uses a local earth electrode with no metallic connection to
+                the supply earth. Used in agricultural premises, marinas, caravan sites, and rural
+                installations where PME is prohibited or unavailable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -183,10 +185,10 @@ const sections = [
         <p>
           TN-S is the preferred earthing system for large industrial premises operating their own
           HV/LV substation. With a private transformer, the installer has control over the earthing
-          arrangement and can provide a clean, low-impedance TN-S earth without the complications
-          of PME. The transformer neutral is connected to an earth electrode at the substation,
-          and a copper PE conductor of adequate size is run from the main earth bar to all
-          distribution boards and equipment.
+          arrangement and can provide a clean, low-impedance TN-S earth without the complications of
+          PME. The transformer neutral is connected to an earth electrode at the substation, and a
+          copper PE conductor of adequate size is run from the main earth bar to all distribution
+          boards and equipment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,39 +197,38 @@ const sections = [
               <span>
                 <strong>Earth conductor sizing</strong> — BS 7671 Regulation 543.1 requires the
                 protective conductor to be sized in accordance with Table 54.7 (adiabatic equation)
-                or Table 54.2 (simplified method). For industrial supply cables, the PE conductor
-                is typically 50–300 mm² copper depending on the phase conductor size and the
-                expected fault current.
+                or Table 54.2 (simplified method). For industrial supply cables, the PE conductor is
+                typically 50–300 mm² copper depending on the phase conductor size and the expected
+                fault current.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main earth bar (MEB)</strong> — all earthing conductors, bonding
-                conductors, and protective conductors must terminate at a single main earthing
-                terminal (MET). The MET is connected to the transformer neutral earth via the
-                main protective conductor. The MET must be accessible for testing and clearly
-                labelled.
+                <strong>Main earth bar (MEB)</strong> — all earthing conductors, bonding conductors,
+                and protective conductors must terminate at a single main earthing terminal (MET).
+                The MET is connected to the transformer neutral earth via the main protective
+                conductor. The MET must be accessible for testing and clearly labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main protective bonding</strong> — all extraneous conductive parts
-                entering the building (water pipes, gas pipes, structural steelwork, air
-                conditioning pipework, compressed air lines) must be connected to the MET with
-                main bonding conductors. Size per BS 7671 Table 54.8 — typically 10 mm² copper
-                minimum for domestic, 25 mm² or more for industrial.
+                <strong>Main protective bonding</strong> — all extraneous conductive parts entering
+                the building (water pipes, gas pipes, structural steelwork, air conditioning
+                pipework, compressed air lines) must be connected to the MET with main bonding
+                conductors. Size per BS 7671 Table 54.8 — typically 10 mm² copper minimum for
+                domestic, 25 mm² or more for industrial.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrode design</strong> — the substation earth electrode must achieve
-                a resistance low enough to ensure fault current is sufficient for protective
-                device operation. For TN-S, the electrode resistance contributes to the earth
-                fault loop impedance; this must not be so high that disconnection times exceed
-                BS 7671 requirements.
+                <strong>Electrode design</strong> — the substation earth electrode must achieve a
+                resistance low enough to ensure fault current is sufficient for protective device
+                operation. For TN-S, the electrode resistance contributes to the earth fault loop
+                impedance; this must not be so high that disconnection times exceed BS 7671
+                requirements.
               </span>
             </li>
           </ul>
@@ -242,42 +243,42 @@ const sections = [
       <>
         <p>
           TN-C-S (PME) is the DNO's standard earthing arrangement for most UK commercial and
-          industrial premises supplied at LV. The DNO connects the cable PEN conductor to earth
-          at multiple points along the distribution network and provides an earthing terminal
-          (the DNO earth) at the cut-out. PME is convenient but introduces specific risks in
-          industrial premises that the designer must address.
+          industrial premises supplied at LV. The DNO connects the cable PEN conductor to earth at
+          multiple points along the distribution network and provides an earthing terminal (the DNO
+          earth) at the cut-out. PME is convenient but introduces specific risks in industrial
+          premises that the designer must address.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PEN conductor failure risk</strong> — if the PEN conductor fails between
-                the last earth connection and the premises, the installation neutral floats to
-                line voltage. All metalwork connected to the PME earth becomes live at line
-                voltage. Unbalanced single-phase loads in industrial premises can cause significant
-                neutral current — increasing the risk of PEN conductor failure through overloading
-                or corrosion.
+                <strong>PEN conductor failure risk</strong> — if the PEN conductor fails between the
+                last earth connection and the premises, the installation neutral floats to line
+                voltage. All metalwork connected to the PME earth becomes live at line voltage.
+                Unbalanced single-phase loads in industrial premises can cause significant neutral
+                current — increasing the risk of PEN conductor failure through overloading or
+                corrosion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where PME is prohibited</strong> — BS 7671 Appendix 11 prohibits the
-                use of PME earthing in agricultural premises, caravan parks, marinas, and
-                locations accessible to livestock. In these locations, a TT earthing system
-                with local earth electrode must be used.
+                <strong>Where PME is prohibited</strong> — BS 7671 Appendix 11 prohibits the use of
+                PME earthing in agricultural premises, caravan parks, marinas, and locations
+                accessible to livestock. In these locations, a TT earthing system with local earth
+                electrode must be used.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mitigation measures</strong> — where PME is used in industrial premises
-                with large unbalanced loads, consider: monitoring the neutral-to-earth voltage
-                (alarm if it exceeds 10 V, which indicates stray neutral current on the PE
-                conductor); ensuring all three-phase loads are balanced; limiting the proportion
-                of single-phase load; and considering a private earth electrode as a supplementary
-                earth in addition to the DNO PME earth.
+                <strong>Mitigation measures</strong> — where PME is used in industrial premises with
+                large unbalanced loads, consider: monitoring the neutral-to-earth voltage (alarm if
+                it exceeds 10 V, which indicates stray neutral current on the PE conductor);
+                ensuring all three-phase loads are balanced; limiting the proportion of single-phase
+                load; and considering a private earth electrode as a supplementary earth in addition
+                to the DNO PME earth.
               </span>
             </li>
           </ul>
@@ -301,31 +302,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD requirement</strong> — BS 7671 Regulation 411.5.2 requires that in
-                TT systems, the product Ra × IΔn ≤ 50 V, where Ra is the sum of resistances of
-                the earth electrode and protective conductor, and IΔn is the residual operating
-                current of the RCD. In practice, RCDs must be fitted on all circuits in a TT
-                system to ensure the 50 V safety criterion is met.
+                <strong>RCD requirement</strong> — BS 7671 Regulation 411.5.2 requires that in TT
+                systems, the product Ra × IΔn ≤ 50 V, where Ra is the sum of resistances of the
+                earth electrode and protective conductor, and IΔn is the residual operating current
+                of the RCD. In practice, RCDs must be fitted on all circuits in a TT system to
+                ensure the 50 V safety criterion is met.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode installation</strong> — for TT systems in industrial
-                premises, deep driven rod electrodes (typically 1.2–2.4 m copper-clad steel rods,
-                or sectional rods driven to 6 m or more in high-resistivity soil) or ring
-                electrodes are used. In high-resistivity ground (chalk, rock), chemical earth
-                electrodes or deep bore electrodes may be required to achieve adequate resistance.
+                premises, deep driven rod electrodes (typically 1.2–2.4 m copper-clad steel rods, or
+                sectional rods driven to 6 m or more in high-resistivity soil) or ring electrodes
+                are used. In high-resistivity ground (chalk, rock), chemical earth electrodes or
+                deep bore electrodes may be required to achieve adequate resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrode resistance testing</strong> — earth electrode resistance must
-                be measured at installation and periodically thereafter using the three-terminal
-                fall-of-potential method (BS EN 61557-5). The test must be carried out with
-                any test spikes at a sufficient distance from the electrode to avoid interference.
-                Results should be recorded and trended over time.
+                <strong>Electrode resistance testing</strong> — earth electrode resistance must be
+                measured at installation and periodically thereafter using the three-terminal
+                fall-of-potential method (BS EN 61557-5). The test must be carried out with any test
+                spikes at a sufficient distance from the electrode to avoid interference. Results
+                should be recorded and trended over time.
               </span>
             </li>
           </ul>
@@ -340,42 +341,42 @@ const sections = [
       <>
         <p>
           In industrial process areas, multiple items of plant and pipework are simultaneously
-          accessible. Under earth fault conditions, touch voltages between different items of
-          plant can exceed safe limits unless supplementary equipotential bonding is provided.
-          BS 7671 Regulation 415.2 permits supplementary bonding as an alternative to achieving
-          automatic disconnection within the required time.
+          accessible. Under earth fault conditions, touch voltages between different items of plant
+          can exceed safe limits unless supplementary equipotential bonding is provided. BS 7671
+          Regulation 415.2 permits supplementary bonding as an alternative to achieving automatic
+          disconnection within the required time.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What to bond</strong> — all simultaneously accessible extraneous
-                conductive parts: process pipework (steam, water, chemical), structural
-                steelwork, vessel frames, conveyor structures, cable tray/ladder, and exposed
-                conductive parts of equipment. Bonding must be to the protective conductor of
-                the circuit supplying the equipment (not to a remote earth point).
+                <strong>What to bond</strong> — all simultaneously accessible extraneous conductive
+                parts: process pipework (steam, water, chemical), structural steelwork, vessel
+                frames, conveyor structures, cable tray/ladder, and exposed conductive parts of
+                equipment. Bonding must be to the protective conductor of the circuit supplying the
+                equipment (not to a remote earth point).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conductor sizing</strong> — supplementary bonding conductors must meet
-                the requirement of BS 7671 Regulation 415.2.2: the resistance R of the bonding
-                conductor must satisfy R ≤ 50 V / Ia, where Ia is the operating current of
-                the protective device. In practice, supplementary bonding conductors in industrial
-                premises are typically 4–16 mm² copper, mechanically protected (clipped or
-                in conduit) and labelled "Safety Electrical Connection — Do Not Remove".
+                <strong>Conductor sizing</strong> — supplementary bonding conductors must meet the
+                requirement of BS 7671 Regulation 415.2.2: the resistance R of the bonding conductor
+                must satisfy R ≤ 50 V / Ia, where Ia is the operating current of the protective
+                device. In practice, supplementary bonding conductors in industrial premises are
+                typically 4–16 mm² copper, mechanically protected (clipped or in conduit) and
+                labelled "Safety Electrical Connection — Do Not Remove".
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulating flanges</strong> — process pipework sometimes incorporates
-                insulating flanges (dielectric unions) to prevent galvanic corrosion. If
-                insulating flanges are present, the electrical bonding strategy must be reviewed —
-                bonding across insulating flanges may defeat their purpose, and the earthing of
-                pipework on each side of the flange must be considered separately.
+                insulating flanges (dielectric unions) to prevent galvanic corrosion. If insulating
+                flanges are present, the electrical bonding strategy must be reviewed — bonding
+                across insulating flanges may defeat their purpose, and the earthing of pipework on
+                each side of the flange must be considered separately.
               </span>
             </li>
           </ul>
@@ -390,22 +391,22 @@ const sections = [
       <>
         <p>
           Electronic equipment (PLCs, VFDs, power analysers, SCADA systems, instrumentation)
-          requires a low-impedance, low-noise earth reference for correct operation. Standard
-          safety earthing (which may carry noise currents from contactors, VFDs, and other
-          equipment) is often not suitable as a signal reference without additional measures.
-          BS EN 61000-5-2 provides guidance on earthing and cabling in installations for EMC.
+          requires a low-impedance, low-noise earth reference for correct operation. Standard safety
+          earthing (which may carry noise currents from contactors, VFDs, and other equipment) is
+          often not suitable as a signal reference without additional measures. BS EN 61000-5-2
+          provides guidance on earthing and cabling in installations for EMC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Star-point earthing</strong> — each item of electronic equipment has its
-                own earth conductor running directly back to a central earth reference bar (star
-                point). The star point connects to the main earth bar via a single low-impedance
-                conductor. No earth currents from one piece of equipment can flow through the
-                earth of another. This is the preferred topology for sensitive analogue
-                instrumentation and PLC systems.
+                <strong>Star-point earthing</strong> — each item of electronic equipment has its own
+                earth conductor running directly back to a central earth reference bar (star point).
+                The star point connects to the main earth bar via a single low-impedance conductor.
+                No earth currents from one piece of equipment can flow through the earth of another.
+                This is the preferred topology for sensitive analogue instrumentation and PLC
+                systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -414,19 +415,19 @@ const sections = [
                 <strong>Separate analogue earth bar</strong> — in panels containing both power
                 electronics and precision analogue instrumentation, use a separate analogue earth
                 bar connected to the main earth bar at a single point. VFD earth currents and
-                contactor switching transients on the main earth bar do not then flow through
-                the analogue earth reference.
+                contactor switching transients on the main earth bar do not then flow through the
+                analogue earth reference.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable screen earthing</strong> — screen conductors of signal cables
-                (4–20 mA, 0–10 V, fieldbus) must be terminated at the panel end using 360° EMC
-                cable glands bonded to the panel EMC earth bar. This drains high-frequency
-                induced noise from the cable screen to earth. Screens must remain continuous
-                and must not be pigtailed (pigtail connections have high inductance at RF and
-                are ineffective above a few MHz).
+                <strong>Cable screen earthing</strong> — screen conductors of signal cables (4–20
+                mA, 0–10 V, fieldbus) must be terminated at the panel end using 360° EMC cable
+                glands bonded to the panel EMC earth bar. This drains high-frequency induced noise
+                from the cable screen to earth. Screens must remain continuous and must not be
+                pigtailed (pigtail connections have high inductance at RF and are ineffective above
+                a few MHz).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,10 +435,9 @@ const sections = [
               <span>
                 <strong>Not a floating earth</strong> — EMC star-point earthing must ultimately
                 connect to the main earthing terminal of the installation. A completely separate
-                "clean earth" that is not bonded to the safety earth is dangerous (it can rise
-                to line voltage under fault conditions) and non-compliant with BS 7671 — it is
-                NOT an acceptable arrangement regardless of what some equipment manufacturers
-                specify.
+                "clean earth" that is not bonded to the safety earth is dangerous (it can rise to
+                line voltage under fault conditions) and non-compliant with BS 7671 — it is NOT an
+                acceptable arrangement regardless of what some equipment manufacturers specify.
               </span>
             </li>
           </ul>
@@ -451,56 +451,56 @@ const sections = [
     content: (
       <>
         <p>
-          Lightning protection systems (LPS) must be bonded to all other earthing systems in
-          the structure. BS EN 62305-3 (Lightning Protection — Physical damage to structures and
-          life hazard) is the UK standard for structural lightning protection. BS EN 62305-4
-          covers electrical and electronic systems within structures. The integrated earthing
-          strategy must satisfy both standards.
+          Lightning protection systems (LPS) must be bonded to all other earthing systems in the
+          structure. BS EN 62305-3 (Lightning Protection — Physical damage to structures and life
+          hazard) is the UK standard for structural lightning protection. BS EN 62305-4 covers
+          electrical and electronic systems within structures. The integrated earthing strategy must
+          satisfy both standards.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth termination network bonding</strong> — the LPS earth electrode
-                ring (or system of rods) must be connected to the electrical installation main
-                earth bar, structural steelwork foundation earth, and all other earthing systems
-                at a single point (or at multiple points via the ring conductor). BS EN 62305-3
-                requires earth electrodes to be interconnected where practicable to reduce
-                the overall earth resistance.
+                <strong>Earth termination network bonding</strong> — the LPS earth electrode ring
+                (or system of rods) must be connected to the electrical installation main earth bar,
+                structural steelwork foundation earth, and all other earthing systems at a single
+                point (or at multiple points via the ring conductor). BS EN 62305-3 requires earth
+                electrodes to be interconnected where practicable to reduce the overall earth
+                resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Equipotential bonding at service entry points</strong> — all metallic
-                services entering the structure (power cables, water pipes, gas pipes, data
-                cables, CCTV cables) must be bonded to the LPS at their point of entry into
-                the structure. This prevents step voltages inside the building when a lightning
-                current flows through the earth. SPDs (Surge Protective Devices) are used for
-                conductors that cannot be directly bonded (live power conductors, data cables
-                without earthed screen).
+                services entering the structure (power cables, water pipes, gas pipes, data cables,
+                CCTV cables) must be bonded to the LPS at their point of entry into the structure.
+                This prevents step voltages inside the building when a lightning current flows
+                through the earth. SPDs (Surge Protective Devices) are used for conductors that
+                cannot be directly bonded (live power conductors, data cables without earthed
+                screen).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SPD installation at MDB</strong> — BS EN 62305-4 and BS 7671 Section 534
-                require SPDs at the main distribution board (Type 1 or combined Type 1+2) where
-                the building has a lightning protection system or is in an exposed location.
-                SPDs must be connected between each line conductor and earth with the shortest
-                possible lead lengths (ideally less than 0.5 m total). SPD earth connections
-                must be to the main earth bar, not to a local earth electrode.
+                require SPDs at the main distribution board (Type 1 or combined Type 1+2) where the
+                building has a lightning protection system or is in an exposed location. SPDs must
+                be connected between each line conductor and earth with the shortest possible lead
+                lengths (ideally less than 0.5 m total). SPD earth connections must be to the main
+                earth bar, not to a local earth electrode.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LPS design and risk assessment</strong> — BS EN 62305-2 provides the
-                risk assessment methodology for determining whether an LPS is required and what
-                level of protection (LPL I to LPL IV) is needed. LPS design and installation
-                is specialist work — all LPS installations should be designed and inspected by
-                a competent lightning protection engineer (ATLAS registered or equivalent).
+                <strong>LPS design and risk assessment</strong> — BS EN 62305-2 provides the risk
+                assessment methodology for determining whether an LPS is required and what level of
+                protection (LPL I to LPL IV) is needed. LPS design and installation is specialist
+                work — all LPS installations should be designed and inspected by a competent
+                lightning protection engineer (ATLAS registered or equivalent).
               </span>
             </li>
           </ul>
@@ -514,10 +514,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Electricity at Work Regulations 1989 require that earthing systems are maintained
-          in a condition to prevent danger. This requires periodic measurement and testing.
-          BS EN 61557 series covers electrical safety measurement methods for low-voltage
-          distribution systems, including earthing measurements. Test records must be retained.
+          The Electricity at Work Regulations 1989 require that earthing systems are maintained in a
+          condition to prevent danger. This requires periodic measurement and testing. BS EN 61557
+          series covers electrical safety measurement methods for low-voltage distribution systems,
+          including earthing measurements. Test records must be retained.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -525,41 +525,40 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance testing</strong> — measured using a loop
-                impedance tester at each distribution board and at selected final circuits.
-                Verify that the measured Zs allows the protective device to operate within the
-                required disconnection time (0.4 s for socket outlets, 5 s for fixed equipment
-                in TN systems). Record Zs values and compare with calculated maximum permissible Zs.
+                impedance tester at each distribution board and at selected final circuits. Verify
+                that the measured Zs allows the protective device to operate within the required
+                disconnection time (0.4 s for socket outlets, 5 s for fixed equipment in TN
+                systems). Record Zs values and compare with calculated maximum permissible Zs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth electrode resistance measurement</strong> — four-terminal fall-of-
-                potential method (BS EN 61557-5). Current and voltage spikes driven into the
-                ground at specified distances from the electrode under test. Results sensitive
-                to season (higher in dry summer), so test in dry conditions and record soil
-                conditions. Alternatively use a clamp meter method for in-service testing.
+                potential method (BS EN 61557-5). Current and voltage spikes driven into the ground
+                at specified distances from the electrode under test. Results sensitive to season
+                (higher in dry summer), so test in dry conditions and record soil conditions.
+                Alternatively use a clamp meter method for in-service testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation resistance measurement</strong> — phase-to-earth IR testing
-                (500 VDC for LV circuits) verifies insulation integrity. Deteriorating IR values
-                indicate moisture ingress or insulation degradation. Trend results over successive
-                tests. Very low IR values indicate an earth leakage path that may cause nuisance
-                RCD tripping or fire risk.
+                <strong>Insulation resistance measurement</strong> — phase-to-earth IR testing (500
+                VDC for LV circuits) verifies insulation integrity. Deteriorating IR values indicate
+                moisture ingress or insulation degradation. Trend results over successive tests.
+                Very low IR values indicate an earth leakage path that may cause nuisance RCD
+                tripping or fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Neutral-to-earth voltage monitoring</strong> — in TN-C-S (PME)
-                installations with large unbalanced loads, measure the neutral-to-earth voltage
-                at the main distribution board under maximum loading conditions. Voltage
-                above 10 V indicates significant neutral current flowing on the PE conductor —
-                this should be investigated and corrected to prevent nuisance tripping and
-                potential hazard.
+                <strong>Neutral-to-earth voltage monitoring</strong> — in TN-C-S (PME) installations
+                with large unbalanced loads, measure the neutral-to-earth voltage at the main
+                distribution board under maximum loading conditions. Voltage above 10 V indicates
+                significant neutral current flowing on the PE conductor — this should be
+                investigated and corrected to prevent nuisance tripping and potential hazard.
               </span>
             </li>
           </ul>
@@ -574,8 +573,8 @@ const sections = [
       <>
         <p>
           Industrial earthing system installation and testing is high-value work that requires
-          specialist knowledge. All new earthing installations and major modifications require
-          an Electrical Installation Certificate. Periodic inspections of industrial electrical
+          specialist knowledge. All new earthing installations and major modifications require an
+          Electrical Installation Certificate. Periodic inspections of industrial electrical
           installations (typically every 3–5 years) require an Electrical Installation Condition
           Report (EICR), which must include{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
@@ -595,8 +594,8 @@ const sections = [
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to record earth fault loop impedance test results, electrode resistance values,
-                  insulation resistance measurements, and bonding details on your phone during
-                  the inspection. Export a professional PDF certificate before you leave the site.
+                  insulation resistance measurements, and bonding details on your phone during the
+                  inspection. Export a professional PDF certificate before you leave the site.
                 </p>
               </div>
             </div>
@@ -604,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Industrial earthing system certification with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for industrial EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -641,7 +640,7 @@ export default function IndustrialEarthingSystemsPage() {
       faqHeading="Frequently Asked Questions About Industrial Earthing Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, earthing test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

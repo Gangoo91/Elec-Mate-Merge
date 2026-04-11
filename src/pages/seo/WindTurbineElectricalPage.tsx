@@ -19,9 +19,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [
-  { label: 'Wind Turbine Electrical', href: '/wind-turbine-electrical' },
-];
+const breadcrumbs = [{ label: 'Wind Turbine Electrical', href: '/wind-turbine-electrical' }];
 
 const tocItems = [
   { id: 'micro-wind', label: 'Micro Wind Turbines' },
@@ -95,7 +93,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/hybrid-solar-battery-system',
     title: 'Hybrid Solar Battery System',
-    description: 'Grid-tied solar plus battery — self-consumption optimisation and tariff benefits.',
+    description:
+      'Grid-tied solar plus battery — self-consumption optimisation and tariff benefits.',
     icon: Sun,
     category: 'Guide',
   },
@@ -126,29 +125,29 @@ const sections = [
     content: (
       <>
         <p>
-          Wind turbines under 50 kW are classified as micro-generating technology in the UK
-          and sit within the scope of the Microgeneration Certification Scheme (MCS). This
-          size range covers domestic turbines from 1 kW to small commercial installations
-          producing 50 kW — sufficient to power a farm, estate, or small industrial unit.
+          Wind turbines under 50 kW are classified as micro-generating technology in the UK and sit
+          within the scope of the Microgeneration Certification Scheme (MCS). This size range covers
+          domestic turbines from 1 kW to small commercial installations producing 50 kW — sufficient
+          to power a farm, estate, or small industrial unit.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wind className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Domestic turbines (1–6 kW)</strong> — most commonly used on rural
-                properties with planning permission. Typical hub height 10–18 m. Annual
-                generation 1,000–14,000 kWh depending on site wind speed. Popular manufacturers
-                include Endurance Wind Power, Proven Energy (now Kingspan), and SWIFT (building-mounted).
+                <strong>Domestic turbines (1–6 kW)</strong> — most commonly used on rural properties
+                with planning permission. Typical hub height 10–18 m. Annual generation 1,000–14,000
+                kWh depending on site wind speed. Popular manufacturers include Endurance Wind
+                Power, Proven Energy (now Kingspan), and SWIFT (building-mounted).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wind className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small commercial turbines (6–50 kW)</strong> — suitable for farms,
-                estates, and light commercial premises. Hub heights of 20–35 m. These turbines
-                require a more detailed planning application, G99 DNO approval, and in many
-                cases an environmental statement.
+                <strong>Small commercial turbines (6–50 kW)</strong> — suitable for farms, estates,
+                and light commercial premises. Hub heights of 20–35 m. These turbines require a more
+                detailed planning application, G99 DNO approval, and in many cases an environmental
+                statement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,9 +155,9 @@ const sections = [
               <span>
                 <strong>Building-mounted turbines</strong> — small horizontal or vertical axis
                 turbines mounted on rooftops or walls. Generally produce very little electricity
-                (100–500 W) due to turbulent wind at roof level. Not recommended for urban
-                or suburban properties. SWIFT turbine by Renewalytics is the most widely
-                tested building-mounted UK product.
+                (100–500 W) due to turbulent wind at roof level. Not recommended for urban or
+                suburban properties. SWIFT turbine by Renewalytics is the most widely tested
+                building-mounted UK product.
               </span>
             </li>
           </ul>
@@ -172,20 +171,20 @@ const sections = [
     content: (
       <>
         <p>
-          Planning permission for wind turbines is one of the most common barriers to
-          installation in England. The rules are more restrictive than for solar panels,
-          reflecting visual impact and noise concerns.
+          Planning permission for wind turbines is one of the most common barriers to installation
+          in England. The rules are more restrictive than for solar panels, reflecting visual impact
+          and noise concerns.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Permitted development (England)</strong> — one freestanding turbine
-                may be permitted development if the hub height is under 11.1 m, blade tip
-                under 15 m, not in a sensitive area (conservation area, AONB, SSSI, National
-                Park), not within specified distances from property boundaries and neighbouring
-                properties. In practice, these conditions exclude most domestic sites.
+                <strong>Permitted development (England)</strong> — one freestanding turbine may be
+                permitted development if the hub height is under 11.1 m, blade tip under 15 m, not
+                in a sensitive area (conservation area, AONB, SSSI, National Park), not within
+                specified distances from property boundaries and neighbouring properties. In
+                practice, these conditions exclude most domestic sites.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -193,18 +192,18 @@ const sections = [
               <span>
                 <strong>Full planning application</strong> — required when permitted development
                 conditions cannot be met. The application should include site layout, turbine
-                specification, hub height and blade tip calculations, noise assessment (for
-                larger turbines), shadow flicker assessment, and ecology survey if in or near
-                a designated habitat.
+                specification, hub height and blade tip calculations, noise assessment (for larger
+                turbines), shadow flicker assessment, and ecology survey if in or near a designated
+                habitat.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scotland and Wales</strong> — permitted development rules differ in
-                Scotland (Planning Circular 3/2011) and Wales (TAN 8). Scotland generally
-                has more permissive rules for rural wind in appropriate locations. Always
-                check the applicable national planning guidance.
+                <strong>Scotland and Wales</strong> — permitted development rules differ in Scotland
+                (Planning Circular 3/2011) and Wales (TAN 8). Scotland generally has more permissive
+                rules for rural wind in appropriate locations. Always check the applicable national
+                planning guidance.
               </span>
             </li>
           </ul>
@@ -218,29 +217,28 @@ const sections = [
     content: (
       <>
         <p>
-          Wind speed assessment is the most critical element of wind turbine feasibility.
-          A site with average wind speeds below 5 m/s at hub height will rarely produce
-          enough electricity to justify the capital cost.
+          Wind speed assessment is the most critical element of wind turbine feasibility. A site
+          with average wind speeds below 5 m/s at hub height will rarely produce enough electricity
+          to justify the capital cost.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NOABL database</strong> — the UK's Numerical Objective Analysis
-                Boundary Layer (NOABL) database provides estimated mean wind speeds at 10 m,
-                25 m, and 45 m above ground level for any 1 km grid square. Use this as an
-                initial screening tool — actual site wind speeds may differ due to local
-                topography and obstacles.
+                <strong>NOABL database</strong> — the UK's Numerical Objective Analysis Boundary
+                Layer (NOABL) database provides estimated mean wind speeds at 10 m, 25 m, and 45 m
+                above ground level for any 1 km grid square. Use this as an initial screening tool —
+                actual site wind speeds may differ due to local topography and obstacles.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>On-site anemometry</strong> — for turbines above 6 kW, a 12-month
-                anemometry campaign at hub height using a calibrated anemometer and data
-                logger is strongly recommended. This provides site-specific wind speed
-                distribution data for accurate energy yield assessment.
+                <strong>On-site anemometry</strong> — for turbines above 6 kW, a 12-month anemometry
+                campaign at hub height using a calibrated anemometer and data logger is strongly
+                recommended. This provides site-specific wind speed distribution data for accurate
+                energy yield assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -248,8 +246,8 @@ const sections = [
               <span>
                 <strong>Wind speed thresholds</strong> — 5 m/s average at hub height is the
                 practical minimum for economic viability; 6 m/s delivers good returns; 7 m/s+
-                provides excellent economics. UK highland, coastal, and hill-exposed sites
-                regularly achieve 6–9 m/s.
+                provides excellent economics. UK highland, coastal, and hill-exposed sites regularly
+                achieve 6–9 m/s.
               </span>
             </li>
           </ul>
@@ -265,44 +263,44 @@ const sections = [
         <p>
           All wind turbines connected to the low-voltage distribution network must comply with
           Engineering Recommendation G99 (formerly G59). Unlike solar PV, where many domestic
-          systems qualify for the simpler G98 process, even modest wind turbines typically
-          require full G99 prior approval.
+          systems qualify for the simpler G98 process, even modest wind turbines typically require
+          full G99 prior approval.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 prior approval</strong> — submit application to the relevant DNO
-                with system design documentation, protection relay settings, power quality
-                assessment, and single-line diagram. DNO response typically 6–12 weeks.
-                Do not install before approval is received.
+                <strong>G99 prior approval</strong> — submit application to the relevant DNO with
+                system design documentation, protection relay settings, power quality assessment,
+                and single-line diagram. DNO response typically 6–12 weeks. Do not install before
+                approval is received.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protection relay requirements</strong> — G99 requires a protection
-                relay with loss of mains (LoM) detection using ROCOF (Rate of Change of
-                Frequency) or Vector Shift. The relay must be set to G99 Annex B settings
-                and tested at commissioning. Settings must match those approved by the DNO.
+                <strong>Protection relay requirements</strong> — G99 requires a protection relay
+                with loss of mains (LoM) detection using ROCOF (Rate of Change of Frequency) or
+                Vector Shift. The relay must be set to G99 Annex B settings and tested at
+                commissioning. Settings must match those approved by the DNO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Islanding prevention</strong> — the turbine must disconnect from
-                the grid automatically on loss of grid voltage or frequency excursion.
-                This prevents dangerous islanding (energising the local network during a
-                grid outage while engineers may be working on cables).
+                <strong>Islanding prevention</strong> — the turbine must disconnect from the grid
+                automatically on loss of grid voltage or frequency excursion. This prevents
+                dangerous islanding (energising the local network during a grid outage while
+                engineers may be working on cables).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commissioning test</strong> — a G99 commissioning test must be
-                witnessed (or at least documented) and the results submitted to the DNO.
-                This includes verification of protection relay settings and operation.
+                <strong>Commissioning test</strong> — a G99 commissioning test must be witnessed (or
+                at least documented) and the results submitted to the DNO. This includes
+                verification of protection relay settings and operation.
               </span>
             </li>
           </ul>
@@ -316,36 +314,36 @@ const sections = [
     content: (
       <>
         <p>
-          MCS Wind Turbine Standard MCS 006 governs certification of wind turbine products
-          and installation companies for micro-wind in the UK. MCS certification is a
-          prerequisite for Smart Export Guarantee eligibility and government grant access.
+          MCS Wind Turbine Standard MCS 006 governs certification of wind turbine products and
+          installation companies for micro-wind in the UK. MCS certification is a prerequisite for
+          Smart Export Guarantee eligibility and government grant access.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS 006 product standard</strong> — turbine products must meet
-                IEC 61400-2 (small wind turbines) and be certified to MCS 006. Check the
-                MCS product database for current certified turbines before specifying.
+                <strong>MCS 006 product standard</strong> — turbine products must meet IEC 61400-2
+                (small wind turbines) and be certified to MCS 006. Check the MCS product database
+                for current certified turbines before specifying.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS installer certification</strong> — the installing company must
-                hold MCS accreditation for wind turbine installation. This is separate from
-                solar PV accreditation. Fewer companies hold wind MCS certification than solar,
-                so check availability in your region before quoting.
+                <strong>MCS installer certification</strong> — the installing company must hold MCS
+                accreditation for wind turbine installation. This is separate from solar PV
+                accreditation. Fewer companies hold wind MCS certification than solar, so check
+                availability in your region before quoting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart Export Guarantee</strong> — MCS certification enables the
-                property owner to register for SEG payments on exported electricity. Requires
-                a SMETS2 smart meter with half-hourly export metering. SEG rates for wind
-                exports are paid at the same rates as solar.
+                <strong>Smart Export Guarantee</strong> — MCS certification enables the property
+                owner to register for SEG payments on exported electricity. Requires a SMETS2 smart
+                meter with half-hourly export metering. SEG rates for wind exports are paid at the
+                same rates as solar.
               </span>
             </li>
           </ul>
@@ -359,51 +357,49 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical connection of a wind turbine to the property distribution board
-          (and ultimately the grid) requires careful attention to protective devices,
-          cable sizing, and metering requirements.
+          The electrical connection of a wind turbine to the property distribution board (and
+          ultimately the grid) requires careful attention to protective devices, cable sizing, and
+          metering requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AC output connection</strong> — the turbine inverter output (typically
-                230V single-phase or 400V three-phase) connects via a dedicated circuit to
-                a spare way in the main distribution board or a dedicated generation board.
-                Cable sized for maximum inverter output current with appropriate voltage drop.
+                <strong>AC output connection</strong> — the turbine inverter output (typically 230V
+                single-phase or 400V three-phase) connects via a dedicated circuit to a spare way in
+                the main distribution board or a dedicated generation board. Cable sized for maximum
+                inverter output current with appropriate voltage drop.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation requirements</strong> — a lockable means of isolation
-                (the G99 All Pole Isolator) must be installed close to the point of connection
-                to the grid, accessible to the DNO for maintenance and fault clearance without
-                requiring access to the building. DNO specification varies — check requirements
-                with your specific DNO.
+                <strong>Isolation requirements</strong> — a lockable means of isolation (the G99 All
+                Pole Isolator) must be installed close to the point of connection to the grid,
+                accessible to the DNO for maintenance and fault clearance without requiring access
+                to the building. DNO specification varies — check requirements with your specific
+                DNO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Metering</strong> — a generation meter records total electricity
-                generated. An import/export meter (or SMETS2 smart meter) records import
-                and export for SEG purposes. The DNO may specify meter requirements as
-                part of the G99 approval.
+                <strong>Metering</strong> — a generation meter records total electricity generated.
+                An import/export meter (or SMETS2 smart meter) records import and export for SEG
+                purposes. The DNO may specify meter requirements as part of the G99 approval.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surge protection</strong> — wind turbines in exposed rural locations
-                are susceptible to lightning damage. Surge protection devices (SPD) in
-                accordance with{' '}
+                <strong>Surge protection</strong> — wind turbines in exposed rural locations are
+                susceptible to lightning damage. Surge protection devices (SPD) in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 Section 534
                 </SEOInternalLink>{' '}
-                should be installed at the main distribution board and at the turbine
-                controller if the cable run exceeds 10 m.
+                should be installed at the main distribution board and at the turbine controller if
+                the cable run exceeds 10 m.
               </span>
             </li>
           </ul>
@@ -417,30 +413,30 @@ const sections = [
     content: (
       <>
         <p>
-          Wind turbine inverters differ from solar inverters because the turbine generator
-          produces variable-frequency, variable-voltage AC (or DC after rectification)
-          that must be conditioned to grid-quality 50 Hz AC.
+          Wind turbine inverters differ from solar inverters because the turbine generator produces
+          variable-frequency, variable-voltage AC (or DC after rectification) that must be
+          conditioned to grid-quality 50 Hz AC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Integrated turbine controller/inverter</strong> — most modern small
-                wind turbines include the power electronics in the nacelle or in a separate
-                controller unit supplied with the turbine. The installer connects the
-                grid-quality AC output. The internal AC–DC–AC conversion is handled by
-                the turbine manufacturer's electronics.
+                <strong>Integrated turbine controller/inverter</strong> — most modern small wind
+                turbines include the power electronics in the nacelle or in a separate controller
+                unit supplied with the turbine. The installer connects the grid-quality AC output.
+                The internal AC–DC–AC conversion is handled by the turbine manufacturer's
+                electronics.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DC bus systems (off-grid)</strong> — in off-grid wind + battery systems,
-                the turbine output is typically rectified to DC and fed into the battery bank
-                alongside solar MPPT controllers. A grid-forming inverter then converts DC
-                to AC for the property loads. This approach is common on narrowboats, off-grid
-                farms, and hybrid wind/solar systems.
+                <strong>DC bus systems (off-grid)</strong> — in off-grid wind + battery systems, the
+                turbine output is typically rectified to DC and fed into the battery bank alongside
+                solar MPPT controllers. A grid-forming inverter then converts DC to AC for the
+                property loads. This approach is common on narrowboats, off-grid farms, and hybrid
+                wind/solar systems.
               </span>
             </li>
           </ul>
@@ -454,8 +450,8 @@ const sections = [
     content: (
       <>
         <p>
-          Wind and solar generation profiles are complementary in the UK — wind is strongest
-          in winter when solar is weakest. Combining both with battery storage maximises
+          Wind and solar generation profiles are complementary in the UK — wind is strongest in
+          winter when solar is weakest. Combining both with battery storage maximises
           self-consumption and energy security.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -463,31 +459,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grid-tied wind + battery</strong> — an AC-coupled battery (Tesla
-                Powerwall, GivEnergy) stores surplus wind generation for later use, exactly
-                as it would with solar. The battery inverter measures net import/export
-                via CT clamp and charges from wind surplus automatically.
+                <strong>Grid-tied wind + battery</strong> — an AC-coupled battery (Tesla Powerwall,
+                GivEnergy) stores surplus wind generation for later use, exactly as it would with
+                solar. The battery inverter measures net import/export via CT clamp and charges from
+                wind surplus automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Off-grid wind + solar + battery</strong> — the highest-performing
-                off-grid configuration. Wind provides generation through winter nights and
-                overcast days when solar is absent. LFP battery bank (30–100 kWh) bridges
-                calm, cloudy periods. A backup generator provides emergency charging during
-                extended low-generation events.
+                <strong>Off-grid wind + solar + battery</strong> — the highest-performing off-grid
+                configuration. Wind provides generation through winter nights and overcast days when
+                solar is absent. LFP battery bank (30–100 kWh) bridges calm, cloudy periods. A
+                backup generator provides emergency charging during extended low-generation events.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dump load controller</strong> — in off-grid or battery-integrated
-                wind systems, a dump load (resistive heating element, immersion heater, or
-                space heater) absorbs excess wind generation when the battery is full and
-                loads are light. This prevents overvoltage damage to the battery and turbine
-                electronics. The dump load controller should be rated for the full turbine
-                output.
+                <strong>Dump load controller</strong> — in off-grid or battery-integrated wind
+                systems, a dump load (resistive heating element, immersion heater, or space heater)
+                absorbs excess wind generation when the battery is full and loads are light. This
+                prevents overvoltage damage to the battery and turbine electronics. The dump load
+                controller should be rated for the full turbine output.
               </span>
             </li>
           </ul>
@@ -501,25 +495,26 @@ const sections = [
     content: (
       <>
         <p>
-          Wind turbine electrical installation requires G99 expertise, MCS accreditation,
-          and comfort with both AC and DC systems. Relatively few UK electricians specialise
-          in this area, which means those who do can command premium rates on a less
-          competitive market.
+          Wind turbine electrical installation requires G99 expertise, MCS accreditation, and
+          comfort with both AC and DC systems. Relatively few UK electricians specialise in this
+          area, which means those who do can command premium rates on a less competitive market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Certificate Wind Installations On Site</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Certificate Wind Installations On Site
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/electrical-certificates">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
-                  to complete EIC certificates, G99 commissioning test records, and MCS
-                  installation documentation on your phone. Eliminates evening paperwork
-                  on complex multi-day wind turbine installations.
+                  to complete EIC certificates, G99 commissioning test records, and MCS installation
+                  documentation on your phone. Eliminates evening paperwork on complex multi-day
+                  wind turbine installations.
                 </p>
               </div>
             </div>
@@ -530,13 +525,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote the Full Package</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Wind turbine projects often include battery storage, G99 application, and
-                  surge protection upgrades. Use the{' '}
+                  Wind turbine projects often include battery storage, G99 application, and surge
+                  protection upgrades. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to build comprehensive itemised quotes that clearly show the value of the
-                  full electrical package.
+                  to build comprehensive itemised quotes that clearly show the value of the full
+                  electrical package.
                 </p>
               </div>
             </div>
@@ -544,7 +539,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage wind turbine installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and professional quoting. 7-day free trial, cancel anytime."
           icon={Wind}
         />
       </>
@@ -581,7 +576,7 @@ export default function WindTurbineElectricalPage() {
       faqHeading="Frequently Asked Questions About Small Wind Turbine Installation"
       relatedPages={relatedPages}
       ctaHeading="Certificate Wind Turbine Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC certificates, G99 commissioning records, and MCS documentation. 7-day free trial, cancel anytime."
     />
   );
 }

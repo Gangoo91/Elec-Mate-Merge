@@ -59,7 +59,7 @@ export default function ElectricianAppForAndroidPage() {
         { feature: 'Voice Test Entry', values: [true, false, false, false] },
         { feature: 'Defect Code AI', values: [true, false, false, false] },
         { feature: 'AI Remedial Cost Estimator', values: [true, false, false, false] },
-        { feature: '8 Certificate Types', values: [true, true, true, 'Limited'] },
+        { feature: '16 Certificate Types', values: [true, true, true, 'Limited'] },
         { feature: '50+ BS 7671 Calculators', values: [true, 'Limited', false, false] },
         { feature: '46+ Training Courses', values: [true, false, false, false] },
         { feature: 'Business Tools (Quoting, Invoicing)', values: [true, false, false, false] },
@@ -71,7 +71,7 @@ export default function ElectricianAppForAndroidPage() {
       ]}
       comparisonHeading="Android Electrician App Comparison"
       keyTakeaways={[
-        'Elec-Mate offers the most comprehensive feature set of any electrician app on Android: 8 certificate types, 50+ calculators, 5 AI agents, 12 AI tools, 46+ training courses, and business management.',
+        'Elec-Mate offers the most comprehensive feature set of any electrician app on Android: 16 certificate types, 70+ calculators, 5 AI agents, 12 AI tools, 46+ training courses, and business management.',
         'All four apps work offline on Android, which is essential for basements, plant rooms, and sites without signal. Elec-Mate saves locally every 10 seconds and syncs when connectivity returns.',
         'Elec-Mate is the only Android electrician app with AI Board Scanner, Voice Test Entry, and Defect Code AI — features that transform the certification workflow on site.',
         'iCertifi and CertsApp are certificate-focused apps. Easy EICR concentrates on EICRs. Only Elec-Mate covers certificates plus calculators, AI, training, and business management in a single subscription.',
@@ -111,7 +111,7 @@ export default function ElectricianAppForAndroidPage() {
           content: (
             <>
               <p>
-                <strong>Elec-Mate</strong> — All-in-one platform with 8 certificate types, 50+
+                <strong>Elec-Mate</strong> — All-in-one platform with 16 certificate types, 50+
                 calculators, AI tools, 46+ training courses, and business management. Runs as an
                 optimised PWA on Android with native-like performance. From £5.99/month.
               </p>
@@ -191,7 +191,7 @@ export default function ElectricianAppForAndroidPage() {
               </p>
               <SEOAppBridge
                 title="Your Android Phone Becomes Your Best Tool"
-                description="AI Board Scanner uses your camera. Voice Test Entry uses your microphone. 50+ calculators replace reference books. 46+ courses turn commute time into study time. All in one app."
+                description="AI Board Scanner uses your camera. Voice Test Entry uses your microphone. 70+ calculators replace reference books. 46+ courses turn commute time into study time. All in one app."
                 icon={Smartphone}
               />
               <p>
@@ -210,7 +210,7 @@ export default function ElectricianAppForAndroidPage() {
         <>
           <p>
             For Android users, Elec-Mate offers the most comprehensive electrician app available. It
-            combines 8 certificate types, 50+ calculators, AI-powered tools, 46+ training courses,
+            combines 16 certificate types, 70+ calculators, AI-powered tools, 46+ training courses,
             and business management in a single platform that runs smoothly on Android devices.
           </p>
           <p>
@@ -274,7 +274,7 @@ export default function ElectricianAppForAndroidPage() {
         {
           question: 'What is the best electrician app for Android in 2026?',
           answer:
-            'Elec-Mate is the best overall electrician app for Android in 2026. It offers the widest feature set of any electrician app on the platform: 8 certificate types, 50+ BS 7671 calculators, AI-powered tools (Board Scanner, Voice Test Entry, Defect Code AI), 46+ training courses, and business management (quoting, invoicing, payments). It runs as an optimised PWA that installs to your home screen and works offline.',
+            'Elec-Mate is the best overall electrician app for Android in 2026. It offers the widest feature set of any electrician app on the platform: 16 certificate types, 50+ BS 7671 calculators, AI-powered tools (Board Scanner, Voice Test Entry, Defect Code AI), 46+ training courses, and business management (quoting, invoicing, payments). It runs as an optimised PWA that installs to your home screen and works offline.',
         },
         {
           question: 'Does Elec-Mate work on all Android phones?',
@@ -336,7 +336,7 @@ export default function ElectricianAppForAndroidPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

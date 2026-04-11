@@ -596,7 +596,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage industrial electrical contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -633,7 +633,7 @@ export default function IndustrialElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Industrial Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Industrial Electrical Projects"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for industrial project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

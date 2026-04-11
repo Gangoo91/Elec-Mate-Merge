@@ -88,8 +88,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/regulation-411-automatic-disconnection',
     title: 'Regulation 411 — ADS Explained',
-    description:
-      'The primary fault protection measure that RCD additional protection supplements.',
+    description: 'The primary fault protection measure that RCD additional protection supplements.',
     icon: Zap,
     category: 'Guide',
   },
@@ -120,8 +119,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study RCD testing procedures, trip times, and fault diagnosis for C&G 2391.',
+    description: 'Study RCD testing procedures, trip times, and fault diagnosis for C&G 2391.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -146,10 +144,10 @@ const sections = [
           protection (ADS via MCBs and earthing); it supplements it.
         </p>
         <p>
-          The concept is simple: even with a correctly designed ADS system, there are scenarios where
-          the primary protection may not prevent a dangerous shock. A person might touch a live
-          conductor directly (bypassing the earth fault path entirely), or the equipment earth might
-          be compromised. A 30mA RCD detects current flowing through an unintended path (for
+          The concept is simple: even with a correctly designed ADS system, there are scenarios
+          where the primary protection may not prevent a dangerous shock. A person might touch a
+          live conductor directly (bypassing the earth fault path entirely), or the equipment earth
+          might be compromised. A 30mA RCD detects current flowing through an unintended path (for
           example, through a person to earth) and disconnects within milliseconds — fast enough to
           prevent a fatal shock in most circumstances.
         </p>
@@ -157,7 +155,8 @@ const sections = [
           Section 418 of BS 7671 covers additional protection, but the key requirements for RCD
           additional protection are found in Regulation 411.3.3 and 411.3.4. Understanding which
           circuits require RCD protection, which RCD type to use, and how to avoid nuisance tripping
-          is essential for every electrician working on new installations, additions, and alterations.
+          is essential for every electrician working on new installations, additions, and
+          alterations.
         </p>
       </>
     ),
@@ -185,10 +184,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mobile equipment with a rated current not exceeding 32A for use
-                outdoors</strong> — any portable or transportable equipment intended for outdoor use.
-                This includes garden power tools, outdoor lighting connected via a plug and socket,
-                and construction site equipment.
+                <strong>
+                  Mobile equipment with a rated current not exceeding 32A for use outdoors
+                </strong>{' '}
+                — any portable or transportable equipment intended for outdoor use. This includes
+                garden power tools, outdoor lighting connected via a plug and socket, and
+                construction site equipment.
               </span>
             </li>
           </ul>
@@ -201,8 +202,8 @@ const sections = [
         <p>
           Amendment 3 to BS 7671 (effective January 2024) extended the requirement further.
           Regulation 411.3.4 now requires additional protection by a 30mA RCD for all AC final
-          circuits supplying luminaires within domestic (household) premises. This was a major change
-          that affected consumer unit design for domestic installations.
+          circuits supplying luminaires within domestic (household) premises. This was a major
+          change that affected consumer unit design for domestic installations.
         </p>
       </>
     ),
@@ -242,15 +243,11 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Circuits in swimming pools and hot tubs (Section 702)
-              </span>
+              <span>Circuits in swimming pools and hot tubs (Section 702)</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Circuits in caravans, caravan parks, and marinas (Sections 708, 709, 710)
-              </span>
+              <span>Circuits in caravans, caravan parks, and marinas (Sections 708, 709, 710)</span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -291,8 +288,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Tag className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                The socket outlet is for connection of a <strong>particular item of
-                equipment</strong> (not general use)
+                The socket outlet is for connection of a{' '}
+                <strong>particular item of equipment</strong> (not general use)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,27 +310,28 @@ const sections = [
           </ul>
         </div>
         <p>
-          The most common application of this exemption is the "freezer socket." If a freezer is on a
-          30mA RCD-protected circuit and the RCD trips due to a fault on another circuit (or due to
-          accumulated leakage), the freezer loses power and the food spoils. By placing the freezer
-          socket on a non-RCD circuit (protected by an MCB only), nuisance tripping is eliminated.
+          The most common application of this exemption is the "freezer socket." If a freezer is on
+          a 30mA RCD-protected circuit and the RCD trips due to a fault on another circuit (or due
+          to accumulated leakage), the freezer loses power and the food spoils. By placing the
+          freezer socket on a non-RCD circuit (protected by an MCB only), nuisance tripping is
+          eliminated.
         </p>
         <p>
           However, this exemption must be documented and justified. The risk assessment should
           consider whether the socket could realistically be used for other equipment (defeating the
           purpose), whether the freezer cable is likely to be damaged (creating a shock risk), and
-          whether the consumer understands the reduced protection. The socket must be clearly labelled
-          — for example, "FREEZER ONLY — NOT RCD PROTECTED."
+          whether the consumer understands the reduced protection. The socket must be clearly
+          labelled — for example, "FREEZER ONLY — NOT RCD PROTECTED."
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>Important:</strong> The exemption does not apply to general-purpose socket
-              outlets. You cannot omit RCD protection from a kitchen socket circuit simply because the
-              customer finds tripping inconvenient. The exemption is for a specific socket supplying a
-              specific item of equipment, with a documented risk assessment. Misapplying this exemption
-              is a non-compliance.
+              outlets. You cannot omit RCD protection from a kitchen socket circuit simply because
+              the customer finds tripping inconvenient. The exemption is for a specific socket
+              supplying a specific item of equipment, with a documented risk assessment. Misapplying
+              this exemption is a non-compliance.
             </p>
           </div>
         </div>
@@ -347,8 +345,8 @@ const sections = [
       <>
         <p>
           Not all earth fault currents are sinusoidal. Modern electronic equipment rectifies the
-          mains supply, meaning fault currents can be pulsating DC or even smooth DC. The type of RCD
-          determines which fault current waveforms it can detect:
+          mains supply, meaning fault currents can be pulsating DC or even smooth DC. The type of
+          RCD determines which fault current waveforms it can detect:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -383,12 +381,10 @@ const sections = [
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Type B</h3>
             <p className="text-white text-sm leading-relaxed">
-              Detects all Type A and Type F fault currents plus smooth DC fault currents. Required for
-              three-phase rectifier circuits, some{' '}
-              <SEOInternalLink href="/guides/ev-charger-installation">
-                EV chargers
-              </SEOInternalLink>
-              {' '}(those with three-phase or DC charging), and some inverter-driven equipment. Type B
+              Detects all Type A and Type F fault currents plus smooth DC fault currents. Required
+              for three-phase rectifier circuits, some{' '}
+              <SEOInternalLink href="/guides/ev-charger-installation">EV chargers</SEOInternalLink>{' '}
+              (those with three-phase or DC charging), and some inverter-driven equipment. Type B
               RCDs are significantly more expensive than Type A. Always check the EV charger or
               equipment manufacturer instructions for the required RCD type.
             </p>
@@ -398,8 +394,8 @@ const sections = [
           Regulation 531.3.3 requires that the type of RCD is selected in accordance with the
           characteristics of the installation and the type of fault currents likely to occur. In
           practice, for a standard domestic installation, Type A RCDs or RCBOs are the minimum
-          recommendation. For specific equipment (EV chargers, heat pumps, solar PV inverters), check
-          the manufacturer instructions — they will specify the required RCD type.
+          recommendation. For specific equipment (EV chargers, heat pumps, solar PV inverters),
+          check the manufacturer instructions — they will specify the required RCD type.
         </p>
       </>
     ),
@@ -424,12 +420,16 @@ const sections = [
                 Two (or more) RCDs, each protecting a group of MCBs. Circuits are distributed across
                 the RCDs so that a trip on one side does not affect circuits on the other side.
               </p>
-              <p><strong>Advantages:</strong> Lower cost. Simpler to specify and install. Easier to
-                source components.</p>
-              <p><strong>Disadvantages:</strong> A fault on one circuit trips the RCD, disconnecting
-                all circuits on that side. If circuits are poorly distributed, a single trip can take
-                out lighting and power together. Higher accumulated earth leakage per RCD increases
-                nuisance tripping risk.</p>
+              <p>
+                <strong>Advantages:</strong> Lower cost. Simpler to specify and install. Easier to
+                source components.
+              </p>
+              <p>
+                <strong>Disadvantages:</strong> A fault on one circuit trips the RCD, disconnecting
+                all circuits on that side. If circuits are poorly distributed, a single trip can
+                take out lighting and power together. Higher accumulated earth leakage per RCD
+                increases nuisance tripping risk.
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -442,13 +442,17 @@ const sections = [
                 Every circuit has its own RCBO, providing individual overcurrent and earth fault
                 protection. A fault on one circuit affects only that circuit.
               </p>
-              <p><strong>Advantages:</strong> Maximum discrimination — only the faulty circuit trips.
+              <p>
+                <strong>Advantages:</strong> Maximum discrimination — only the faulty circuit trips.
                 Lower nuisance tripping (each RCBO sees only its own circuit leakage). Easier to
-                identify which circuit has a fault. Better compliance with Regulation 314.2 (avoiding
-                danger from loss of supply).</p>
-              <p><strong>Disadvantages:</strong> Higher cost (RCBOs cost more than MCBs). Must ensure
+                identify which circuit has a fault. Better compliance with Regulation 314.2
+                (avoiding danger from loss of supply).
+              </p>
+              <p>
+                <strong>Disadvantages:</strong> Higher cost (RCBOs cost more than MCBs). Must ensure
                 RCBO type is matched to the load (Type A, F, or B as required). Some consumer units
-                have limited RCBO compatibility.</p>
+                have limited RCBO compatibility.
+              </p>
             </div>
           </div>
         </div>
@@ -482,8 +486,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Accumulated earth leakage</strong> — every electrical appliance and cable has
-                some natural earth leakage current (typically 0.5 to 5mA per appliance). If many
+                <strong>Accumulated earth leakage</strong> — every electrical appliance and cable
+                has some natural earth leakage current (typically 0.5 to 5mA per appliance). If many
                 circuits share one RCD, the total standing leakage can approach the 30mA trip
                 threshold. A transient event (appliance switching on, a surge) pushes the total over
                 30mA and the RCD trips. Solution: reduce the number of circuits per RCD, or use
@@ -495,8 +499,8 @@ const sections = [
               <span>
                 <strong>Faulty appliances</strong> — a single appliance with degraded insulation can
                 leak enough current to trip the RCD. This is particularly common with old washing
-                machines, dishwashers, and immersion heaters. Solution: disconnect appliances one at a
-                time to identify the culprit, or measure individual appliance earth leakage with a
+                machines, dishwashers, and immersion heaters. Solution: disconnect appliances one at
+                a time to identify the culprit, or measure individual appliance earth leakage with a
                 leakage clamp meter.
               </span>
             </li>
@@ -515,9 +519,9 @@ const sections = [
               <span>
                 <strong>Long cable runs</strong> — very long cables (particularly in agricultural or
                 rural installations) have higher capacitive leakage to earth. This is a distributed
-                leakage across the entire cable length. Solution: split the load across multiple RCDs,
-                or use 100mA time-delayed RCDs for distribution circuits (where 30mA is not required
-                for additional protection).
+                leakage across the entire cable length. Solution: split the load across multiple
+                RCDs, or use 100mA time-delayed RCDs for distribution circuits (where 30mA is not
+                required for additional protection).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -570,25 +574,25 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>5x rated current (150mA)</strong> — the RCD must trip within 40ms. This
-                confirms the RCD provides additional protection against electric shock. The 40ms trip
-                time at 150mA is the critical test — it confirms the RCD will disconnect fast enough
-                to prevent fibrillation at higher fault currents.
+                confirms the RCD provides additional protection against electric shock. The 40ms
+                trip time at 150mA is the critical test — it confirms the RCD will disconnect fast
+                enough to prevent fibrillation at higher fault currents.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test button</strong> — press the integral test button on the RCD. It must
-                trip. This is a functional test only (it does not confirm the trip current or time) but
-                verifies the mechanical mechanism operates.
+                trip. This is a functional test only (it does not confirm the trip current or time)
+                but verifies the mechanical mechanism operates.
               </span>
             </li>
           </ul>
         </div>
         <p>
           For time-delayed (Type S) RCDs, the tests are the same but the maximum trip times are
-          longer — 200ms to 500ms at rated current, depending on the delay setting. Time-delayed RCDs
-          are used for discrimination between upstream and downstream devices.
+          longer — 200ms to 500ms at rated current, depending on the delay setting. Time-delayed
+          RCDs are used for discrimination between upstream and downstream devices.
         </p>
         <SEOAppBridge
           title="Record RCD test results digitally"
@@ -617,8 +621,7 @@ export default function Regulation418SupplementaryProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Regulation 418:{' '}
-          <span className="text-yellow-400">Supplementary Protection by RCDs</span>
+          Regulation 418: <span className="text-yellow-400">Supplementary Protection by RCDs</span>
         </>
       }
       heroSubtitle="Additional protection by 30mA RCD is mandatory for most circuits in modern installations. This guide covers which circuits need RCDs, the exemptions, RCD types AC/A/F/B, RCBO vs split-load boards, nuisance tripping causes and solutions, and RCD testing procedures."
@@ -629,7 +632,7 @@ export default function Regulation418SupplementaryProtectionPage() {
       faqHeading="Frequently Asked Questions About RCD Additional Protection"
       relatedPages={relatedPages}
       ctaHeading="Record RCD Tests and Issue Certificates on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for RCD test recording, automatic validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

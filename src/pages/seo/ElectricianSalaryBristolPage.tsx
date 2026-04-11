@@ -610,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Bristol electrical business smarter with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to quote jobs, complete certificates, and manage their business from their phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, complete certificates, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -647,7 +647,7 @@ export default function ElectricianSalaryBristolPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Maximise Your Bristol Electrician Earnings with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to quote faster, certificate on site, and get paid sooner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote faster, certificate on site, and get paid sooner. 7-day free trial, cancel anytime."
     />
   );
 }

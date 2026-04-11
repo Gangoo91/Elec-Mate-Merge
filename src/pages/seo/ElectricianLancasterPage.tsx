@@ -40,7 +40,7 @@ const keyTakeaways = [
   'Electricity North West (ENW) is the Distribution Network Operator for Lancaster. All new connections, supply upgrades, and G98/G99 generation notifications for solar PV and battery storage go through ENW.',
   'Lancaster has a significant student population from Lancaster University and the University of the Arts. This drives demand for EICR work in HMO properties, which must meet specific fire safety and electrical standards.',
   'The city has a Georgian and Victorian heritage housing stock around the city centre, castle, and Quay area. Many properties require careful rewiring to preserve original features.',
-  'Labour rates in Lancaster are among the more modest in the North West, typically £38 to £55 per hour for a qualified registered electrician in 2026, reflecting the city\'s position outside the major urban centres.',
+  "Labour rates in Lancaster are among the more modest in the North West, typically £38 to £55 per hour for a qualified registered electrician in 2026, reflecting the city's position outside the major urban centres.",
 ];
 
 const faqs = [
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Lancaster?',
     answer:
-      'An EICR in Lancaster typically costs £140 to £240 for a standard residential property, depending on size, number of circuits, and the age of the installation. HMO EICRs cost more, reflecting the larger number of circuits and the time required for a thorough inspection. Lancaster rates are broadly in line with the rest of Lancashire but slightly lower than Manchester. Landlords should budget for remedial work costs on top of the EICR fee — old wiring in Lancaster\'s Victorian and Edwardian housing stock often generates C2 (potentially dangerous) observations.',
+      "An EICR in Lancaster typically costs £140 to £240 for a standard residential property, depending on size, number of circuits, and the age of the installation. HMO EICRs cost more, reflecting the larger number of circuits and the time required for a thorough inspection. Lancaster rates are broadly in line with the rest of Lancashire but slightly lower than Manchester. Landlords should budget for remedial work costs on top of the EICR fee — old wiring in Lancaster's Victorian and Edwardian housing stock often generates C2 (potentially dangerous) observations.",
   },
   {
     question: 'Does Lancaster University area generate specific electrical work?',
@@ -143,18 +143,19 @@ const sections = [
     content: (
       <>
         <p>
-          Lancaster is a small city in north Lancashire with a Georgian and Victorian heritage,
-          a castle, and a strong university presence. For electricians, Lancaster offers a mix of
+          Lancaster is a small city in north Lancashire with a Georgian and Victorian heritage, a
+          castle, and a strong university presence. For electricians, Lancaster offers a mix of
           residential work across an older housing stock, significant HMO and student rental
-          electrical compliance work, and a growing demand for renewable energy installations and
-          EV chargers in the surrounding rural and market town areas.
+          electrical compliance work, and a growing demand for renewable energy installations and EV
+          chargers in the surrounding rural and market town areas.
         </p>
         <p>
           The city centre has a concentration of Georgian and Victorian properties, many of which
-          have been converted to student lets or HMOs. The surrounding areas of Morecambe, Carnforth,
-          and the Lune Valley provide additional rural and semi-rural residential work. Electricians
-          based in Lancaster often cover a wide geographical area, including the Forest of Bowland
-          and the southern Lake District fringes, where travel time and access can affect pricing.
+          have been converted to student lets or HMOs. The surrounding areas of Morecambe,
+          Carnforth, and the Lune Valley provide additional rural and semi-rural residential work.
+          Electricians based in Lancaster often cover a wide geographical area, including the Forest
+          of Bowland and the southern Lake District fringes, where travel time and access can affect
+          pricing.
         </p>
         <p>
           This guide covers the regulatory requirements, DNO contacts, local property types, typical
@@ -195,17 +196,17 @@ const sections = [
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with BS
                 7671:2018+A3:2024. RCD protection is required for socket outlet circuits under
-                regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors.
-                Consumer unit replacements require a full RCBO or dual-RCD board.
+                regulation 411.3.3 and for circuits in kitchens, bathrooms, and outdoors. Consumer
+                unit replacements require a full RCBO or dual-RCD board.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS
-                7671 Section 631 (Periodic Inspection and Testing). Landlords in Lancaster are
-                required by The Electrical Safety Standards in the Private Rented Sector
-                (England) Regulations 2020 to have a valid EICR every five years.
+                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS 7671
+                Section 631 (Periodic Inspection and Testing). Landlords in Lancaster are required
+                by The Electrical Safety Standards in the Private Rented Sector (England)
+                Regulations 2020 to have a valid EICR every five years.
               </span>
             </li>
           </ul>
@@ -219,18 +220,20 @@ const sections = [
     content: (
       <>
         <p>
-          Lancaster's housing stock ranges from Georgian city-centre terraces to modern estates
-          and rural farmhouses in the surrounding area. Each has distinct electrical characteristics:
+          Lancaster's housing stock ranges from Georgian city-centre terraces to modern estates and
+          rural farmhouses in the surrounding area. Each has distinct electrical characteristics:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Georgian and Victorian City Centre</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Georgian and Victorian City Centre
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The area around the castle, Dalton Square, and the Quay has Georgian and Victorian
-              properties, many converted to flats or HMOs. Solid stone or brick walls, lath-and-plaster
-              ceilings, and limited floor void access make rewiring challenging. Old rubber-insulated
-              wiring is common. Asbestos surveys are essential before invasive work in pre-1980s
-              properties.
+              properties, many converted to flats or HMOs. Solid stone or brick walls,
+              lath-and-plaster ceilings, and limited floor void access make rewiring challenging.
+              Old rubber-insulated wiring is common. Asbestos surveys are essential before invasive
+              work in pre-1980s properties.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -245,20 +248,20 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Inter-War and Post-War Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Estates in Skerton, Westgate, and Ryelands feature inter-war and post-war housing
-              with wiring that ranges from ageing rubber insulation to early PVC. Consumer unit
-              upgrades and full rewires are common. Partial rewires following C1/C2 EICR
-              observations are a regular job type.
+              Estates in Skerton, Westgate, and Ryelands feature inter-war and post-war housing with
+              wiring that ranges from ageing rubber insulation to early PVC. Consumer unit upgrades
+              and full rewires are common. Partial rewires following C1/C2 EICR observations are a
+              regular job type.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural and Village Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              The Lune Valley, Forest of Bowland, and surrounding villages provide rural
-              residential work. Rural properties often have TT earthing systems with earth rods,
-              requiring appropriate RCD protection. Solar PV installations are popular in rural
-              areas, requiring G98/G99 notification to ENW. Travel time from Lancaster adds cost
-              to rural jobs.
+              The Lune Valley, Forest of Bowland, and surrounding villages provide rural residential
+              work. Rural properties often have TT earthing systems with earth rods, requiring
+              appropriate RCD protection. Solar PV installations are popular in rural areas,
+              requiring G98/G99 notification to ENW. Travel time from Lancaster adds cost to rural
+              jobs.
             </p>
           </div>
         </div>
@@ -270,17 +273,15 @@ const sections = [
     heading: 'Common Electrical Jobs in Lancaster',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Lancaster in 2026:
-        </p>
+        <p>The most in-demand electrical services in Lancaster in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for landlords and HMOs</strong> — the student rental and HMO
-                market generates consistent demand. Landlords must have a valid EICR every five
-                years. HMO licence conditions often specify more frequent testing.
+                <strong>EICRs for landlords and HMOs</strong> — the student rental and HMO market
+                generates consistent demand. Landlords must have a valid EICR every five years. HMO
+                licence conditions often specify more frequent testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,17 +336,17 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Correct documentation</strong> — for notifiable work, you should receive
-                both a Part P Building Regulations compliance certificate and a BS 7671 EIC. For
-                an EICR, you should receive the full report with observations and a overall
+                both a Part P Building Regulations compliance certificate and a BS 7671 EIC. For an
+                EICR, you should receive the full report with observations and a overall
                 satisfactory or unsatisfactory result.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotation</strong> — always get a detailed written quote before
-                work starts. Reputable Lancaster electricians will survey before quoting and will
-                be transparent about any additional costs that may arise.
+                <strong>Written quotation</strong> — always get a detailed written quote before work
+                starts. Reputable Lancaster electricians will survey before quoting and will be
+                transparent about any additional costs that may arise.
               </span>
             </li>
           </ul>
@@ -415,8 +416,8 @@ const sections = [
         <p>
           Rural jobs around Lancaster should include a mileage allowance or higher day rate to
           reflect travel time to villages in the Lune Valley, Forest of Bowland, and surrounding
-          areas. Rural properties with TT earthing and earth rod systems may also require
-          additional testing time.
+          areas. Rural properties with TT earthing and earth rod systems may also require additional
+          testing time.
         </p>
       </>
     ),
@@ -429,8 +430,8 @@ const sections = [
         <p>
           Lancaster is a good market for electricians who understand the HMO and student rental
           sector, can work efficiently in older properties, and are willing to cover the surrounding
-          rural areas. The consistent demand for EICRs and consumer unit upgrades provides a
-          solid base of repeat work.
+          rural areas. The consistent demand for EICRs and consumer unit upgrades provides a solid
+          base of repeat work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -443,12 +444,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. For Lancaster's busy HMO market, fast and professional documentation
-                  keeps landlords compliant and generates repeat business.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. For Lancaster's busy HMO market, fast and professional documentation keeps
+                  landlords compliant and generates repeat business.
                 </p>
               </div>
             </div>
@@ -463,8 +461,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional quotes to Lancaster landlords and homeowners. Include
-                  travel allowances for rural jobs and breakdowns for compliance certification.
+                  to send professional quotes to Lancaster landlords and homeowners. Include travel
+                  allowances for rural jobs and breakdowns for compliance certification.
                 </p>
               </div>
             </div>
@@ -472,7 +470,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Lancaster electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the HMO, student rental, and rural property markets in Lancaster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the HMO, student rental, and rural property markets in Lancaster. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -497,8 +495,7 @@ export default function ElectricianLancasterPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Lancaster:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Lancaster: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Lancaster's student HMO market, Victorian and Georgian housing stock, and rural surroundings demand electricians who understand Part P compliance, Electricity North West connections, and the full range of residential and rental electrical work."
@@ -509,7 +506,7 @@ export default function ElectricianLancasterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Lancaster"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Lancaster Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for HMO compliance, Part P, and the realities of Lancaster's older housing stock. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for HMO compliance, Part P, and the realities of Lancaster's older housing stock. 7-day free trial."
     />
   );
 }

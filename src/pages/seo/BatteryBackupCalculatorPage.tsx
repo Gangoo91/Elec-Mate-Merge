@@ -45,7 +45,7 @@ export default function BatteryBackupCalculatorPage() {
           Battery Bank Correctly
         </>
       }
-      heroSubtitle="Calculate the UPS rating and battery capacity needed to keep critical loads running during a power outage. Enter the load in watts or VA, choose the required runtime, and get an instant recommendation for UPS size and battery Ah. Part of Elec-Mate's 50+ calculators for UK electricians."
+      heroSubtitle="Calculate the UPS rating and battery capacity needed to keep critical loads running during a power outage. Enter the load in watts or VA, choose the required runtime, and get an instant recommendation for UPS size and battery Ah. Part of Elec-Mate's 70+ calculators for UK electricians."
       heroFeaturePills={[
         { icon: Battery, label: 'Battery Sizing' },
         { icon: Server, label: 'UPS Rating' },
@@ -322,7 +322,7 @@ export default function BatteryBackupCalculatorPage() {
           icon: Shield,
           title: 'BS 7671 Circuit Design',
           description:
-            "Recommends MCB rating and cable size for the UPS input circuit, accounting for charging current and load current. Part of Elec-Mate's 50+ calculators.",
+            "Recommends MCB rating and cable size for the UPS input circuit, accounting for charging current and load current. Part of Elec-Mate's 70+ calculators.",
         },
       ]}
       featuresHeading="Battery Backup Calculator Features"
@@ -410,7 +410,7 @@ export default function BatteryBackupCalculatorPage() {
         },
       ]}
       ctaHeading="Size your UPS correctly every time"
-      ctaSubheading="Join UK electricians using Elec-Mate's 50+ calculators for on-site and design work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join UK electricians using Elec-Mate's 70+ calculators for on-site and design work. 7-day free trial, cancel anytime."
       toolPath="/tools/battery-backup-calculator"
     />
   );

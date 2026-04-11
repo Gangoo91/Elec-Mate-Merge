@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Lincoln is in England (Lincolnshire) — Part P of the Building Regulations applies. Notifiable electrical work must be certified by a competent person scheme member (NICEIC, NAPIT, ELECSA) or notified to City of Lincoln Council Building Control.',
   'Northern Powergrid is the Distribution Network Operator for Lincoln and the wider Lincolnshire area. G98/G99 notifications for generation equipment and new connection applications go through Northern Powergrid.',
   'Lincoln has a distinctive two-level geography — Uphill (the medieval hilltop city around the cathedral and castle) and Downhill (the modern commercial and residential lower city). Property types and electrical challenges differ significantly between the two areas.',
-  'The University of Lincoln has significantly grown the city\'s student population over the past two decades, creating strong rental EICR demand and boosting the city\'s economy.',
+  "The University of Lincoln has significantly grown the city's student population over the past two decades, creating strong rental EICR demand and boosting the city's economy.",
   'Lincoln has a significant agricultural and food processing economy in the surrounding county. Commercial and industrial electrical work from this sector supplements domestic work in the city itself.',
 ];
 
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What are the most common electrical jobs in Lincoln?',
     answer:
-      'Consumer unit replacements on Lincoln\'s large stock of pre-1990s housing, full rewires on Victorian terraces and post-war estates, EICRs for the student and private rental market, EV charger installations, socket and lighting additions, and commercial electrical work for city centre premises and the growing Brayford Waterfront development. The medieval Uphill area has listed buildings requiring careful handling for external electrical work.',
+      "Consumer unit replacements on Lincoln's large stock of pre-1990s housing, full rewires on Victorian terraces and post-war estates, EICRs for the student and private rental market, EV charger installations, socket and lighting additions, and commercial electrical work for city centre premises and the growing Brayford Waterfront development. The medieval Uphill area has listed buildings requiring careful handling for external electrical work.",
   },
   {
     question: 'What is the difference between Uphill and Downhill Lincoln for electrical work?',
@@ -75,9 +75,10 @@ const faqs = [
       'The University of Lincoln has grown rapidly since its founding in 1996, and now has over 18,000 students. This has created a large student rental market in areas such as Sincil Bank, West End, and the city centre. Student HMO properties require regular EICRs, fire alarm systems to BS 5839-6, emergency lighting, and adequate socket provision. Many HMO landlords in Lincoln need to renew EICRs, making this a consistent and repeatable revenue stream for electricians.',
   },
   {
-    question: 'Are there specific electrical considerations for Lincolnshire\'s agricultural sector?',
+    question:
+      "Are there specific electrical considerations for Lincolnshire's agricultural sector?",
     answer:
-      'Lincolnshire is one of England\'s most productive agricultural counties, and the Lincoln area has a significant food processing and agricultural machinery sector. Commercial and industrial electrical work in this sector includes three-phase distribution, motor control for processing equipment, agricultural building wiring (BS 7671 Section 705 applies to agricultural premises), and solar PV installations on farm buildings. Electricians with experience of agricultural premises can command higher rates for this specialist work.',
+      "Lincolnshire is one of England's most productive agricultural counties, and the Lincoln area has a significant food processing and agricultural machinery sector. Commercial and industrial electrical work in this sector includes three-phase distribution, motor control for processing equipment, agricultural building wiring (BS 7671 Section 705 applies to agricultural premises), and solar PV installations on farm buildings. Electricians with experience of agricultural premises can command higher rates for this specialist work.",
   },
 ];
 
@@ -102,15 +103,14 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables correctly for rewires and new circuits in Lincoln\'s varied housing stock.',
+      "Size cables correctly for rewires and new circuits in Lincoln's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description:
-      'Replace old fuse boards with modern RCD-protected consumer units — step by step.',
+    description: 'Replace old fuse boards with modern RCD-protected consumer units — step by step.',
     icon: Zap,
     category: 'Guide',
   },
@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
+    description: 'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -183,16 +182,17 @@ const sections = [
               <span>
                 <strong>Competent person scheme</strong> — NICEIC, NAPIT, or ELECSA registration
                 enables self-certification. The scheme notifies City of Lincoln Council Building
-                Control and issues the compliance certificate to the customer within 30 days
-                of completion.
+                Control and issues the compliance certificate to the customer within 30 days of
+                completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A3:2024.
-                RCD protection under Regulation 411.3.3 is mandatory for socket outlets up to 32A
-                and for circuits in locations of increased shock risk (kitchens, bathrooms, outdoors).
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A3:2024. RCD protection under Regulation 411.3.3 is mandatory for socket
+                outlets up to 32A and for circuits in locations of increased shock risk (kitchens,
+                bathrooms, outdoors).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -200,8 +200,8 @@ const sections = [
               <span>
                 <strong>Listed building consent for Uphill properties</strong> — external electrical
                 work on listed buildings requires consent from City of Lincoln Council planning.
-                Lincoln Cathedral and many Uphill properties are listed. Always check before
-                quoting external work.
+                Lincoln Cathedral and many Uphill properties are listed. Always check before quoting
+                external work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -209,8 +209,8 @@ const sections = [
               <span>
                 <strong>EICR for rental properties</strong> — five-yearly EICRs required for all
                 private rented properties under the Electrical Safety Standards in the Private
-                Rented Sector (England) Regulations 2020. Section 631 of BS 7671 covers
-                periodic inspection.
+                Rented Sector (England) Regulations 2020. Section 631 of BS 7671 covers periodic
+                inspection.
               </span>
             </li>
           </ul>
@@ -239,16 +239,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98/G99</strong> — solar PV and battery storage. G98 online notification
-                for systems up to 16A per phase. G99 pre-approval for larger systems (common in
-                the agricultural sector, where large roof areas suit high-capacity solar arrays).
+                <strong>G98/G99</strong> — solar PV and battery storage. G98 online notification for
+                systems up to 16A per phase. G99 pre-approval for larger systems (common in the
+                agricultural sector, where large roof areas suit high-capacity solar arrays).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency number</strong> — 105 for power cuts and emergencies across
-                the Northern Powergrid network.
+                <strong>Emergency number</strong> — 105 for power cuts and emergencies across the
+                Northern Powergrid network.
               </span>
             </li>
           </ul>
@@ -261,9 +261,7 @@ const sections = [
     heading: 'Lincoln Property Types and Electrical Challenges',
     content: (
       <>
-        <p>
-          Lincoln's distinctive geography creates two quite different electrical markets:
-        </p>
+        <p>Lincoln's distinctive geography creates two quite different electrical markets:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Uphill Listed Properties</h3>
@@ -278,15 +276,15 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces (Downhill)</h3>
             <p className="text-white text-sm leading-relaxed">
               Sincil Bank, West End, and areas around the city centre. Solid or cavity brick
-              terraces with ageing wiring. Rewires and consumer unit replacements are common.
-              Strong demand from the student rental market for EICRs and upgrades.
+              terraces with ageing wiring. Rewires and consumer unit replacements are common. Strong
+              demand from the student rental market for EICRs and upgrades.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War and Modern Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              North Hykeham, Skellingthorpe, and suburban areas south and west of the city.
-              Cavity brick semis and modern new-builds. Consumer unit replacements, EV charger
+              North Hykeham, Skellingthorpe, and suburban areas south and west of the city. Cavity
+              brick semis and modern new-builds. Consumer unit replacements, EV charger
               installations, and EICRs are primary work in this stock.
             </p>
           </div>
@@ -322,8 +320,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Student and rental property EICRs</strong> — the University of Lincoln
-                student population drives consistent five-yearly EICR demand. HMO properties
-                also require fire alarm and emergency lighting upgrades.
+                student population drives consistent five-yearly EICR demand. HMO properties also
+                require fire alarm and emergency lighting upgrades.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,9 +334,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Agricultural solar PV</strong> — Lincolnshire's large farm buildings
-                are well-suited to solar PV arrays. G99 applications to Northern Powergrid for
-                systems above 16A per phase are common on farm installations.
+                <strong>Agricultural solar PV</strong> — Lincolnshire's large farm buildings are
+                well-suited to solar PV arrays. G99 applications to Northern Powergrid for systems
+                above 16A per phase are common on farm installations.
               </span>
             </li>
           </ul>
@@ -423,11 +421,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Get landlords their compliance documents the same day.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Get landlords their compliance documents the same day.
                 </p>
               </div>
             </div>
@@ -442,8 +437,8 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  for long cable runs in agricultural buildings and domestic rewires in
-                  Lincoln's larger Victorian properties.
+                  for long cable runs in agricultural buildings and domestic rewires in Lincoln's
+                  larger Victorian properties.
                 </p>
               </div>
             </div>
@@ -466,7 +461,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Lincoln electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -491,8 +486,7 @@ export default function ElectricianLincolnPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Lincoln:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Lincoln: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Lincoln's unique Uphill and Downhill geography, large student rental market, and surrounding agricultural county create a distinctive and varied electrical market. Find NICEIC and NAPIT registered electricians in Lincoln and Lincolnshire."
@@ -503,7 +497,7 @@ export default function ElectricianLincolnPage() {
       faqHeading="Frequently Asked Questions About Electricians in Lincoln"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Lincoln Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Lincolnshire and the East Midlands. 7-day free trial."
     />
   );
 }

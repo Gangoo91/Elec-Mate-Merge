@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'Can I install an EV charger myself in Oxford?',
     answer:
-      'No. EV charger installation is notifiable electrical work under Part P of the Building Regulations. This means it must either be carried out by a registered competent person (such as a NICEIC or NAPIT registered electrician) who self-certifies the work, or be notified to Oxford City Council\'s building control before work begins. Additionally, only OZEV-approved installers can claim the OZEV EV Chargepoint Grant on your behalf. Attempting to self-install risks invalidating your vehicle warranty, home insurance, and the charger manufacturer\'s warranty.',
+      "No. EV charger installation is notifiable electrical work under Part P of the Building Regulations. This means it must either be carried out by a registered competent person (such as a NICEIC or NAPIT registered electrician) who self-certifies the work, or be notified to Oxford City Council's building control before work begins. Additionally, only OZEV-approved installers can claim the OZEV EV Chargepoint Grant on your behalf. Attempting to self-install risks invalidating your vehicle warranty, home insurance, and the charger manufacturer's warranty.",
   },
   {
     question: 'What charger do I need for my electric car in Oxford?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'Do I need planning permission for an EV charger in Oxford?',
     answer:
-      'In most cases, no. Domestic EV charger installations in Oxford are permitted development under the Town and Country Planning (General Permitted Development) (England) Order 2015, provided the charger unit does not protrude more than 0.2 metres from the wall and is not installed on a listed building or in a conservation area without prior consent. Oxford has a number of conservation areas — if your property is within one, contact Oxford City Council\'s planning department before commissioning an installation.',
+      "In most cases, no. Domestic EV charger installations in Oxford are permitted development under the Town and Country Planning (General Permitted Development) (England) Order 2015, provided the charger unit does not protrude more than 0.2 metres from the wall and is not installed on a listed building or in a conservation area without prior consent. Oxford has a number of conservation areas — if your property is within one, contact Oxford City Council's planning department before commissioning an installation.",
   },
   {
     question: 'What is the difference between a 3.6kW and 7kW home charger?',
@@ -92,7 +92,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/ev-charger-installation-brighton',
     title: 'EV Charger Installation Brighton',
-    description: 'OZEV grants, installation costs, and NICEIC-approved installers in Brighton & Hove.',
+    description:
+      'OZEV grants, installation costs, and NICEIC-approved installers in Brighton & Hove.',
     icon: Car,
     category: 'Location Guide',
   },
@@ -150,30 +151,30 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Zero Emission Zone</strong> — Oxford's ZEZ covers the city centre and
-                charges non-zero-emission vehicles to enter. This has driven a significant uplift
-                in EV registrations across Oxford and surrounding Oxfordshire villages, with many
+                charges non-zero-emission vehicles to enter. This has driven a significant uplift in
+                EV registrations across Oxford and surrounding Oxfordshire villages, with many
                 households installing home chargers to reduce running costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property types</strong> — Oxford's housing stock includes Victorian terraces,
-                inter-war semis, modern new-builds, and student accommodation HMOs. Most Victorian
-                and Edwardian properties have off-street parking in rear gardens, which often
-                requires a longer cable run from the consumer unit. New-build properties in areas
-                such as Barton Park and Bicester (nearby) are increasingly supplied with
+                <strong>Property types</strong> — Oxford's housing stock includes Victorian
+                terraces, inter-war semis, modern new-builds, and student accommodation HMOs. Most
+                Victorian and Edwardian properties have off-street parking in rear gardens, which
+                often requires a longer cable run from the consumer unit. New-build properties in
+                areas such as Barton Park and Bicester (nearby) are increasingly supplied with
                 EV-ready infrastructure as standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public vs home charging</strong> — Oxford has a growing network of public
-                EV chargers, but home charging remains significantly cheaper per kWh on a standard
+                <strong>Public vs home charging</strong> — Oxford has a growing network of public EV
+                chargers, but home charging remains significantly cheaper per kWh on a standard
                 tariff and dramatically cheaper on an EV-optimised overnight tariff such as Octopus
-                Go. A 7kW home charger pays for itself in fuel savings within two to three years
-                for a typical Oxford commuter.
+                Go. A 7kW home charger pays for itself in fuel savings within two to three years for
+                a typical Oxford commuter.
               </span>
             </li>
           </ul>
@@ -220,9 +221,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV-approved installers</strong> — you must use an installer registered
-                on the OZEV approved installer list. NICEIC and NAPIT registered electricians who
-                are also OZEV-approved can claim the grant and handle all paperwork on your behalf.
+                <strong>OZEV-approved installers</strong> — you must use an installer registered on
+                the OZEV approved installer list. NICEIC and NAPIT registered electricians who are
+                also OZEV-approved can claim the grant and handle all paperwork on your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,14 +251,16 @@ const sections = [
     content: (
       <>
         <p>
-          A professional EV charger installation in Oxford follows a consistent process from
-          survey through to completion and certification. Understanding what to expect helps you
-          plan around the installation and ensure the work is done correctly.
+          A professional EV charger installation in Oxford follows a consistent process from survey
+          through to completion and certification. Understanding what to expect helps you plan
+          around the installation and ensure the work is done correctly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">1</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                1
+              </span>
               <span>
                 <strong>Survey</strong> — your installer will assess your consumer unit capacity,
                 the route for the new dedicated circuit cable, earthing arrangements (PME or TT
@@ -266,17 +269,21 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">2</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                2
+              </span>
               <span>
                 <strong>Dedicated circuit installation</strong> — a new 32A (7kW) or 16A (3.6kW)
                 radial circuit is run from your consumer unit to the charger location. This circuit
-                must be protected by an MCB and RCD (or RCBO) meeting the requirements of
-                Regulation 722.531.2. Cable routes through Oxford's older properties may require
-                routing through lofts, cavity walls, or externally in trunking.
+                must be protected by an MCB and RCD (or RCBO) meeting the requirements of Regulation
+                722.531.2. Cable routes through Oxford's older properties may require routing
+                through lofts, cavity walls, or externally in trunking.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">3</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                3
+              </span>
               <span>
                 <strong>Charger mounting and connection</strong> — the charger unit is wall-mounted
                 at an appropriate height (typically 0.75 to 1.2 metres for accessibility) and
@@ -285,7 +292,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">4</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                4
+              </span>
               <span>
                 <strong>Testing and commissioning</strong> — the installation is tested in
                 accordance with{' '}
@@ -293,17 +302,19 @@ const sections = [
                   BS 7671 Chapter 61
                 </SEOInternalLink>{' '}
                 (initial verification), and an Electrical Installation Certificate (EIC) is issued.
-                The charger is configured for smart charging (mandatory for grant-funded units)
-                and paired with your vehicle or charging app.
+                The charger is configured for smart charging (mandatory for grant-funded units) and
+                paired with your vehicle or charging app.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">5</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                5
+              </span>
               <span>
                 <strong>Building Regulations notification</strong> — as notifiable electrical work
-                under Part P, the installation is either self-certified by your registered
-                competent person electrician (NICEIC/NAPIT) or notified to Oxford City Council
-                building control. You will receive a Part P certificate.
+                under Part P, the installation is either self-certified by your registered competent
+                person electrician (NICEIC/NAPIT) or notified to Oxford City Council building
+                control. You will receive a Part P certificate.
               </span>
             </li>
           </ul>
@@ -328,8 +339,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation</strong> — £800 to £1,200 all-in. Includes
-                charger unit, dedicated 32A circuit, RCD protection, commissioning, and EIC.
-                After OZEV grant: approximately £450 to £850.
+                charger unit, dedicated 32A circuit, RCD protection, commissioning, and EIC. After
+                OZEV grant: approximately £450 to £850.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,17 +356,16 @@ const sections = [
               <span>
                 <strong>Consumer unit upgrade</strong> — if your existing consumer unit is full or
                 does not meet current standards, a new consumer unit costs an additional £400 to
-                £700. Many Oxford properties built before 2000 have older consumer units without
-                RCD protection that may require upgrading.
+                £700. Many Oxford properties built before 2000 have older consumer units without RCD
+                protection that may require upgrading.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV integration (Zappi or similar)</strong> — solar-diverting smart
-                chargers such as the Myenergi Zappi cost £200 to £400 more than a standard
-                charger unit, but can use surplus solar generation to charge your EV at near-zero
-                cost.
+                chargers such as the Myenergi Zappi cost £200 to £400 more than a standard charger
+                unit, but can use surplus solar generation to charge your EV at near-zero cost.
               </span>
             </li>
           </ul>
@@ -363,8 +373,8 @@ const sections = [
         <p>
           Always obtain at least two quotes from OZEV-approved, NICEIC or NAPIT registered
           installers. Confirm that the quote is all-inclusive (charger unit, cable, protection
-          devices, commissioning, and certification) and that the OZEV grant has been applied
-          where you are eligible.
+          devices, commissioning, and certification) and that the OZEV grant has been applied where
+          you are eligible.
         </p>
       </>
     ),
@@ -385,17 +395,17 @@ const sections = [
               <span>
                 <strong>3.6kW (Mode 3, 16A)</strong> — slower home charging option. Suitable for
                 plug-in hybrids with small batteries (under 20kWh) or where electrical supply
-                capacity is limited. Charges a 60kWh battery EV from 20% to 80% in approximately
-                10 hours. Less commonly installed for pure EVs.
+                capacity is limited. Charges a 60kWh battery EV from 20% to 80% in approximately 10
+                hours. Less commonly installed for pure EVs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>7kW (Mode 3, 32A)</strong> — the standard home EV charger in the UK.
-                Compatible with all EVs sold in the UK. Charges a 60kWh battery EV from 20% to
-                80% in approximately 5 to 6 hours. Most Oxford homes have sufficient supply
-                capacity for a 7kW charger without supply upgrades.
+                Compatible with all EVs sold in the UK. Charges a 60kWh battery EV from 20% to 80%
+                in approximately 5 to 6 hours. Most Oxford homes have sufficient supply capacity for
+                a 7kW charger without supply upgrades.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -403,9 +413,9 @@ const sections = [
               <span>
                 <strong>22kW (Mode 3, three-phase)</strong> — requires a three-phase electricity
                 supply, uncommon in Oxford residential properties but available at some commercial
-                and new-build premises. Charges a compatible EV three times faster than a 7kW
-                unit. Most EVs cap AC acceptance at 7.4kW or 11kW, making 22kW chargers primarily
-                useful for vehicles with 11kW or 22kW on-board chargers.
+                and new-build premises. Charges a compatible EV three times faster than a 7kW unit.
+                Most EVs cap AC acceptance at 7.4kW or 11kW, making 22kW chargers primarily useful
+                for vehicles with 11kW or 22kW on-board chargers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,30 +451,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.411.4 — PME earthing</strong> — where the installation
-                is supplied via a PME (Protective Multiple Earthing) terminal from the distributor's
-                network, the installer must assess the risk of a floating neutral fault and determine
-                whether a PME earth is suitable for the EV charger or whether a separate earth
-                electrode is required.
+                <strong>Regulation 722.411.4 — PME earthing</strong> — where the installation is
+                supplied via a PME (Protective Multiple Earthing) terminal from the distributor's
+                network, the installer must assess the risk of a floating neutral fault and
+                determine whether a PME earth is suitable for the EV charger or whether a separate
+                earth electrode is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits
-                must be protected by an RCD. Where Mode 3 charging equipment incorporates a DC
-                fault current detection device providing equivalent protection to a Type B RCD,
-                a Type A RCD may be acceptable. Otherwise a Type B RCD is required. Most modern
-                OZEV-approved chargers include this functionality.
+                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits must be
+                protected by an RCD. Where Mode 3 charging equipment incorporates a DC fault current
+                detection device providing equivalent protection to a Type B RCD, a Type A RCD may
+                be acceptable. Otherwise a Type B RCD is required. Most modern OZEV-approved
+                chargers include this functionality.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.55 — dedicated circuit</strong> — EV charging circuits
-                should be supplied by a dedicated final circuit. Sharing an EV charger circuit with
-                other loads creates risks of overloading and nuisance tripping, and does not comply
-                with the intent of Section 722.
+                <strong>Regulation 722.55 — dedicated circuit</strong> — EV charging circuits should
+                be supplied by a dedicated final circuit. Sharing an EV charger circuit with other
+                loads creates risks of overloading and nuisance tripping, and does not comply with
+                the intent of Section 722.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -481,8 +491,8 @@ const sections = [
         <p>
           Compliance with Section 722 is verified at the initial verification stage of the
           installation. A competent NICEIC or NAPIT registered installer will complete the
-          verification, issue the EIC, and self-certify the work under Part P without the need
-          for local authority building control involvement.
+          verification, issue the EIC, and self-certify the work under Part P without the need for
+          local authority building control involvement.
         </p>
       </>
     ),
@@ -503,9 +513,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV approved installer list</strong> — only OZEV-registered installers
-                can apply the EVHS grant on your behalf. Verify your installer's OZEV status on
-                the official OZEV installer search at gov.uk before signing any contract.
+                <strong>OZEV approved installer list</strong> — only OZEV-registered installers can
+                apply the EVHS grant on your behalf. Verify your installer's OZEV status on the
+                official OZEV installer search at gov.uk before signing any contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -531,10 +541,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quote</strong> — insist on a written, itemised quote covering
-                the charger unit, all cabling, protection devices, commissioning, EIC, and Part P
-                certification. Confirm that the OZEV grant deduction is shown on the quote if
-                you are eligible.
+                <strong>Written quote</strong> — insist on a written, itemised quote covering the
+                charger unit, all cabling, protection devices, commissioning, EIC, and Part P
+                certification. Confirm that the OZEV grant deduction is shown on the quote if you
+                are eligible.
               </span>
             </li>
           </ul>
@@ -548,10 +558,10 @@ const sections = [
     content: (
       <>
         <p>
-          Oxford's rapid EV adoption creates strong and growing demand for OZEV-approved EV
-          charger installers. Electricians who invest in OZEV approval and EV-specific training
-          can build a highly profitable niche in the Oxford area, with installations typically
-          generating £300 to £600 net margin per job.
+          Oxford's rapid EV adoption creates strong and growing demand for OZEV-approved EV charger
+          installers. Electricians who invest in OZEV approval and EV-specific training can build a
+          highly profitable niche in the Oxford area, with installations typically generating £300
+          to £600 net margin per job.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -565,7 +575,8 @@ const sections = [
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete the EIC and all OZEV documentation on your phone while still on site.
-                  No evening paperwork — send the certificate to your customer before you drive away.
+                  No evening paperwork — send the certificate to your customer before you drive
+                  away.
                 </p>
               </div>
             </div>
@@ -589,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charger installation business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more EV installations per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more EV installations per day. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -626,7 +637,7 @@ export default function EVChargerInstallationOxfordPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Oxford"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

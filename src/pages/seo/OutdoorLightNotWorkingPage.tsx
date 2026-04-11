@@ -146,8 +146,8 @@ const sections = [
         <p>
           The cause could be as simple as a tripped breaker or a failed bulb, or as complex as a
           damaged underground cable or a corroded junction box buried in a garden wall. Outdoor
-          electrical faults also carry a higher safety risk because of the combination of electricity
-          and water.
+          electrical faults also carry a higher safety risk because of the combination of
+          electricity and water.
         </p>
         <p>
           This guide covers every common cause of outdoor light failure, explains what you can check
@@ -166,33 +166,31 @@ const sections = [
     heading: 'Quick Checks You Can Do Yourself',
     content: (
       <>
-        <p>
-          Before investigating further, rule out the simple causes:
-        </p>
+        <p>Before investigating further, rule out the simple causes:</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">1. Check the consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
-              Check whether the MCB or RCD for the outdoor circuit has tripped. If the outdoor lights
-              share a circuit with indoor lights, the shared MCB may have tripped. Reset and see if it
-              holds.
+              Check whether the MCB or RCD for the outdoor circuit has tripped. If the outdoor
+              lights share a circuit with indoor lights, the shared MCB may have tripped. Reset and
+              see if it holds.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">2. Check the switch and timer</h4>
             <p className="text-white text-sm leading-relaxed">
               Outdoor lights may be controlled by an indoor switch, a timer, a photocell, or a
-              combination. Check that the switch is on, the timer is set correctly, and (for photocell
-              lights) it is actually dark enough to trigger the sensor. Some photocells have a
-              sensitivity adjustment.
+              combination. Check that the switch is on, the timer is set correctly, and (for
+              photocell lights) it is actually dark enough to trigger the sensor. Some photocells
+              have a sensitivity adjustment.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">3. Check the bulb or LED</h4>
             <p className="text-white text-sm leading-relaxed">
               If the fitting uses a replaceable bulb, try a new one. For integrated LED fittings
-              where the LED is not replaceable separately, the whole fitting or the LED driver module
-              may need replacing.
+              where the LED is not replaceable separately, the whole fitting or the LED driver
+              module may need replacing.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -249,18 +247,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Condensation build-up</strong> — even without a direct water leak, temperature
-                changes cause condensation inside outdoor fittings. Sealed fittings trap moisture,
-                which accumulates over time and eventually reaches electrical components.
+                <strong>Condensation build-up</strong> — even without a direct water leak,
+                temperature changes cause condensation inside outdoor fittings. Sealed fittings trap
+                moisture, which accumulates over time and eventually reaches electrical components.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When water reaches the internal terminals or driver, it causes short circuits (tripping the
-          MCB), earth faults (tripping the RCD), or corrosion of components (gradual failure). The
-          fix is usually to replace the fitting with a new one of adequate IP rating, ensuring all
-          cable entries are properly sealed.
+          When water reaches the internal terminals or driver, it causes short circuits (tripping
+          the MCB), earth faults (tripping the RCD), or corrosion of components (gradual failure).
+          The fix is usually to replace the fitting with a new one of adequate IP rating, ensuring
+          all cable entries are properly sealed.
         </p>
       </>
     ),
@@ -271,15 +269,15 @@ const sections = [
     content: (
       <>
         <p>
-          Many outdoor lights incorporate sensors for automatic operation. These sensors are the most
-          exposed electronic components and are common failure points:
+          Many outdoor lights incorporate sensors for automatic operation. These sensors are the
+          most exposed electronic components and are common failure points:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Photocell (Light Sensor) Faults</h4>
             <p className="text-white text-sm leading-relaxed mb-3">
-              Photocells detect ambient light levels and switch the light on at dusk and off at dawn.
-              Common faults include:
+              Photocells detect ambient light levels and switch the light on at dusk and off at
+              dawn. Common faults include:
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -296,15 +294,18 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Sensor affected by nearby light source (e.g., street light) — thinks it is always daytime</span>
+                <span>
+                  Sensor affected by nearby light source (e.g., street light) — thinks it is always
+                  daytime
+                </span>
               </li>
             </ul>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h4 className="font-bold text-white mb-2">PIR (Passive Infrared) Sensor Faults</h4>
             <p className="text-white text-sm leading-relaxed mb-3">
-              PIR sensors detect body heat (infrared radiation) from people and animals moving within
-              their detection zone. Common faults include:
+              PIR sensors detect body heat (infrared radiation) from people and animals moving
+              within their detection zone. Common faults include:
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -313,15 +314,21 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Spider webs across the sensor — triggers false activations or blocks detection</span>
+                <span>
+                  Spider webs across the sensor — triggers false activations or blocks detection
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Sensor aimed incorrectly — detection zone does not cover the desired area</span>
+                <span>
+                  Sensor aimed incorrectly — detection zone does not cover the desired area
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Internal electronics failed — no detection at all, or permanently triggered</span>
+                <span>
+                  Internal electronics failed — no detection at all, or permanently triggered
+                </span>
               </li>
             </ul>
           </div>
@@ -335,10 +342,10 @@ const sections = [
     content: (
       <>
         <p>
-          SWA (Steel Wire Armoured) cable is the standard cable type for outdoor underground circuits
-          in the UK. It has a tough steel wire armour layer that provides mechanical protection and
-          acts as the circuit protective conductor (earth). Despite its toughness, SWA cable can be
-          damaged:
+          SWA (Steel Wire Armoured) cable is the standard cable type for outdoor underground
+          circuits in the UK. It has a tough steel wire armour layer that provides mechanical
+          protection and acts as the circuit protective conductor (earth). Despite its toughness,
+          SWA cable can be damaged:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -369,9 +376,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Water ingress through glands</strong> — if the gland seal fails, water enters
-                the cable at the termination point and can track along inside the cable sheath,
-                causing insulation breakdown some distance from the entry point.
+                <strong>Water ingress through glands</strong> — if the gland seal fails, water
+                enters the cable at the termination point and can track along inside the cable
+                sheath, causing insulation breakdown some distance from the entry point.
               </span>
             </li>
           </ul>
@@ -389,37 +396,51 @@ const sections = [
           combination of electrical equipment and weather exposure means earth faults are frequent.
         </p>
         <p>
-          Under Regulation 411.3.3 of BS 7671, additional protection by an RCD with a rated
-          residual operating current not exceeding 30mA is required for socket outlets rated up to
-          32A and for mobile equipment rated up to 32A used outdoors. Outdoor lighting circuits
-          should also have RCD protection as good practice, and this will be required where the
-          circuit supplies socket outlets or where specified by the designer.
+          Under Regulation 411.3.3 of BS 7671, additional protection by an RCD with a rated residual
+          operating current not exceeding 30mA is required for socket outlets rated up to 32A and
+          for mobile equipment rated up to 32A used outdoors. Outdoor lighting circuits should also
+          have RCD protection as good practice, and this will be required where the circuit supplies
+          socket outlets or where specified by the designer.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Common Earth Fault Sources in Outdoor Lighting</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Common Earth Fault Sources in Outdoor Lighting
+          </h3>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Water inside a light fitting — creates a conductive path between live parts and the earthed metal body</span>
+              <span>
+                Water inside a light fitting — creates a conductive path between live parts and the
+                earthed metal body
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Damaged SWA cable — insulation breakdown allows current to leak through the steel armour to earth</span>
+              <span>
+                Damaged SWA cable — insulation breakdown allows current to leak through the steel
+                armour to earth
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Waterlogged junction box — buried or exposed junction boxes that have filled with water</span>
+              <span>
+                Waterlogged junction box — buried or exposed junction boxes that have filled with
+                water
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Failed LED driver — internal insulation breakdown in the driver allows current to leak to the metal housing</span>
+              <span>
+                Failed LED driver — internal insulation breakdown in the driver allows current to
+                leak to the metal housing
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          If your outdoor lights trip the RCD, the fault needs to be found and repaired — not
-          simply reset repeatedly. Each RCD trip indicates current flowing through an unintended
-          path, which could be dangerous.
+          If your outdoor lights trip the RCD, the fault needs to be found and repaired — not simply
+          reset repeatedly. Each RCD trip indicates current flowing through an unintended path,
+          which could be dangerous.
         </p>
       </>
     ),
@@ -431,9 +452,9 @@ const sections = [
       <>
         <p>
           Most modern outdoor lights use LED technology, and the LED driver (also called the
-          transformer or power supply) is the component most likely to fail. LEDs themselves are very
-          long-lived, but the electronic driver that converts mains voltage to the low voltage the
-          LEDs need is more vulnerable.
+          transformer or power supply) is the component most likely to fail. LEDs themselves are
+          very long-lived, but the electronic driver that converts mains voltage to the low voltage
+          the LEDs need is more vulnerable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -441,24 +462,25 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal stress</strong> — LED drivers contain electrolytic capacitors that
-                degrade with heat. Outdoor lights experience wide temperature swings (freezing winter
-                nights to hot summer afternoons in direct sun), accelerating capacitor degradation.
+                degrade with heat. Outdoor lights experience wide temperature swings (freezing
+                winter nights to hot summer afternoons in direct sun), accelerating capacitor
+                degradation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Moisture damage</strong> — even small amounts of moisture reaching the driver
-                PCB can cause component failure or corrosion of solder joints. This is the most
-                common cause of premature LED driver failure in outdoor fittings.
+                <strong>Moisture damage</strong> — even small amounts of moisture reaching the
+                driver PCB can cause component failure or corrosion of solder joints. This is the
+                most common cause of premature LED driver failure in outdoor fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage spikes</strong> — mains voltage transients (from switching, lightning,
-                or supply fluctuations) can damage the input stage of the driver. Quality drivers have
-                surge protection; cheap ones do not.
+                <strong>Voltage spikes</strong> — mains voltage transients (from switching,
+                lightning, or supply fluctuations) can damage the input stage of the driver. Quality
+                drivers have surge protection; cheap ones do not.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -494,9 +516,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Timer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Digital timer lost settings</strong> — after a power cut, many digital timers
-                lose their programmed on/off times and revert to factory defaults (which may be "off"
-                at all times). Reprogram the timer after any power interruption.
+                <strong>Digital timer lost settings</strong> — after a power cut, many digital
+                timers lose their programmed on/off times and revert to factory defaults (which may
+                be "off" at all times). Reprogram the timer after any power interruption.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -545,25 +567,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Terminal screws and connector blocks</strong> — brass and steel screws corrode
-                in damp conditions, increasing resistance at the connection. The connection may work
-                intermittently as corrosion builds up and flakes off.
+                <strong>Terminal screws and connector blocks</strong> — brass and steel screws
+                corrode in damp conditions, increasing resistance at the connection. The connection
+                may work intermittently as corrosion builds up and flakes off.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth connections</strong> — the earth terminal is often the first to corrode
-                because it is typically the most exposed. A corroded earth connection means the safety
-                circuit is compromised — the RCD may not trip fast enough in a fault condition.
+                <strong>Earth connections</strong> — the earth terminal is often the first to
+                corrode because it is typically the most exposed. A corroded earth connection means
+                the safety circuit is compromised — the RCD may not trip fast enough in a fault
+                condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SWA glands</strong> — the glands connecting the SWA cable armour to the
-                enclosure earth corrode over time, particularly in coastal or industrial environments.
-                Corroded glands can break the earth continuity.
+                enclosure earth corrode over time, particularly in coastal or industrial
+                environments. Corroded glands can break the earth continuity.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -571,7 +594,8 @@ const sections = [
               <span>
                 <strong>Dissimilar metal corrosion</strong> — aluminium fittings with steel screws,
                 or copper conductors in steel terminal blocks, create galvanic corrosion that
-                accelerates in wet conditions. Use appropriate materials and anti-corrosion compound.
+                accelerates in wet conditions. Use appropriate materials and anti-corrosion
+                compound.
               </span>
             </li>
           </ul>
@@ -593,32 +617,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Urgent</strong> — the outdoor light trips the RCD (affecting other circuits),
-                you can see exposed wiring or damaged cable, there is a burning smell from any
-                outdoor fitting or junction box, or the SWA cable has been damaged by digging.
+                <strong>Urgent</strong> — the outdoor light trips the RCD (affecting other
+                circuits), you can see exposed wiring or damaged cable, there is a burning smell
+                from any outdoor fitting or junction box, or the SWA cable has been damaged by
+                digging.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Soon</strong> — the outdoor light does not work and the simple checks have
-                not identified the cause, the light works intermittently, or you can see water inside
-                a light fitting.
+                not identified the cause, the light works intermittently, or you can see water
+                inside a light fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Routine</strong> — you want to replace an outdoor light fitting, add new
-                outdoor lighting, or have the outdoor circuit checked as part of a general inspection.
+                outdoor lighting, or have the outdoor circuit checked as part of a general
+                inspection.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          An electrician will test insulation resistance on the outdoor circuit, check all connections
-          and IP-rated enclosures, verify RCD protection is present and operational, and ensure
-          cables are properly routed and protected. They should issue a{' '}
+          An electrician will test insulation resistance on the outdoor circuit, check all
+          connections and IP-rated enclosures, verify RCD protection is present and operational, and
+          ensure cables are properly routed and protected. They should issue a{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
@@ -633,8 +659,8 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor circuit faults require a methodical approach, particularly because access to buried
-          cables and remote fittings can be challenging:
+          Outdoor circuit faults require a methodical approach, particularly because access to
+          buried cables and remote fittings can be challenging:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -643,11 +669,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">1. Isolate the Outdoor Circuit</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Test insulation resistance at the consumer unit end of the outdoor circuit (500V DC,
-                  L-E, N-E, L-N). This immediately tells you whether the fault is in the cable/fittings
-                  or at the supply end. Low IR readings on the outdoor circuit confirm a cable or
-                  fitting fault. Disconnect fittings one at a time to isolate which section has the
-                  fault.
+                  Test insulation resistance at the consumer unit end of the outdoor circuit (500V
+                  DC, L-E, N-E, L-N). This immediately tells you whether the fault is in the
+                  cable/fittings or at the supply end. Low IR readings on the outdoor circuit
+                  confirm a cable or fitting fault. Disconnect fittings one at a time to isolate
+                  which section has the fault.
                 </p>
               </div>
             </div>
@@ -728,8 +754,7 @@ export default function OutdoorLightNotWorkingPage() {
       badgeIcon={Lightbulb}
       heroTitle={
         <>
-          Outdoor Light Not Working:{' '}
-          <span className="text-yellow-400">Troubleshooting Guide</span>
+          Outdoor Light Not Working: <span className="text-yellow-400">Troubleshooting Guide</span>
         </>
       }
       heroSubtitle="Your outdoor light has stopped working. This guide covers every common cause — from moisture ingress and sensor faults to cable damage and LED driver failure — tells you what to check yourself, and explains when to call an electrician."
@@ -740,7 +765,7 @@ export default function OutdoorLightNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Outdoor Light Problems"
       relatedPages={relatedPages}
       ctaHeading="Certify Outdoor Electrical Work on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
     />
   );
 }

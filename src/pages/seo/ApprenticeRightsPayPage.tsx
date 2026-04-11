@@ -605,7 +605,7 @@ export default function ApprenticeRightsPayPage() {
       faqHeading="Frequently Asked Questions About Apprentice Rights and Pay"
       relatedPages={relatedPages}
       ctaHeading="Focus on Your Apprenticeship, Not Your Worries"
-      ctaSubheading="Join 430+ UK apprentices using Elec-Mate's apprentice hub. 46+ courses, flashcards, mock exams, AI tutor, portfolio builder, and OJT tracker. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices using Elec-Mate's apprentice hub. 46+ courses, flashcards, mock exams, AI tutor, portfolio builder, and OJT tracker. 7-day free trial, cancel anytime."
     />
   );
 }

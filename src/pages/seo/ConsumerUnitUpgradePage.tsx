@@ -594,7 +594,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete CU upgrades end-to-end on your phone"
-          description="Join 430+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery. Complete the certificate before you leave the job. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional EICs with AI board scanning, voice test entry, and instant PDF delivery. Complete the certificate before you leave the job. 7-day free trial."
           icon={Camera}
         />
       </>
@@ -631,7 +631,7 @@ export default function ConsumerUnitUpgradePage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Upgrades"
       relatedPages={relatedPages}
       ctaHeading="Professional EICs for Consumer Unit Upgrades"
-      ctaSubheading="Join 430+ UK electricians completing Electrical Installation Certificates on their phones. AI board scanner, voice test entry, and instant delivery. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians completing Electrical Installation Certificates on their phones. AI board scanner, voice test entry, and instant delivery. 7-day free trial, cancel anytime."
     />
   );
 }

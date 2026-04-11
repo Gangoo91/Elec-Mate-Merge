@@ -498,7 +498,7 @@ export default function EmergencyLightingCertificatePage() {
             </p>
             <p>
               Elec-Mate is part of a complete platform for UK electricians that includes 70
-              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 46+ training courses, 8
               certificate types, and integration with Xero and QuickBooks for invoicing. It replaces
               the stack of paper forms, the separate calculator app, and the desktop certificate
               software — all in one mobile-first tool.
@@ -599,12 +599,14 @@ export default function EmergencyLightingCertificatePage() {
             <p>
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, diversity, conduit and trunking fill, prospective fault current, and
-              more. Combined with 8 certificate types — including{' '}
+              more. Combined with 16 certificate types — including{' '}
               <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor Works, emergency
-              lighting, <SEOInternalLink href="/fire-alarm-certificate">fire alarm</SEOInternalLink>, and EV charger certificates — plus 8 Elec-AI agents and 12 AI
-              tools, it replaces multiple separate tools with one integrated system. Xero and
-              QuickBooks integration means you can raise invoices directly from completed jobs.
+              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
+              Works, emergency lighting,{' '}
+              <SEOInternalLink href="/fire-alarm-certificate">fire alarm</SEOInternalLink>, and EV
+              charger certificates — plus 8 Elec-AI agents and 12 AI tools, it replaces multiple
+              separate tools with one integrated system. Xero and QuickBooks integration means you
+              can raise invoices directly from completed jobs.
             </p>
           </div>
         </div>
@@ -651,7 +653,7 @@ export default function EmergencyLightingCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop writing emergency lighting certificates by hand"
-        subheading="Join 430+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

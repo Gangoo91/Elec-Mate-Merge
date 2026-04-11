@@ -654,7 +654,7 @@ export default function BorrowedNeutralPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Identify Wiring Faults Faster with Elec-Mate"
-      ctaSubheading="Ring circuit calculator, AI fault diagnosis, defect code AI, and digital EICR forms. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Ring circuit calculator, AI fault diagnosis, defect code AI, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

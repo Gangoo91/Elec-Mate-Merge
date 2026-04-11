@@ -41,7 +41,7 @@ const keyTakeaways = [
   'ECO4 (Energy Company Obligation) can fund solar PV for low-income and fuel-poor households. Eligibility is means-tested; the homeowner must receive certain qualifying benefits or have a low EPC rating (D, E, F, or G).',
   'LA Flex allows local authorities to extend ECO4 eligibility to households that do not qualify through standard benefit criteria but are in fuel poverty. Coverage and availability vary significantly by local authority.',
   'There is no Feed-in Tariff (FiT) for new solar PV installations in Great Britain. The FiT scheme closed to new applications on 1 April 2019. Systems registered before that date continue to receive FiT payments until their 20-year term ends.',
-  "Home Energy Scotland offers interest-free loans of up to £15,000 for energy efficiency and renewable energy improvements, including solar PV and battery storage. Available to Scottish homeowners and landlords.",
+  'Home Energy Scotland offers interest-free loans of up to £15,000 for energy efficiency and renewable energy improvements, including solar PV and battery storage. Available to Scottish homeowners and landlords.',
 ];
 
 const faqs = [
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Can landlords get solar grants for rental properties?',
     answer:
-      "Landlords can access ECO4 and LA Flex funding for solar PV on rental properties where the tenant meets the qualifying benefit criteria. Home Energy Scotland loans are available to landlords in Scotland. There are no specific landlord grant schemes for solar PV in England and Wales beyond the ECO4 framework. However, landlords can benefit from the 0% VAT rate on installations, and solar PV installed on rental properties may qualify for capital allowances (business landlords should seek advice from an accountant). Some local authority LA Flex schemes have extended eligibility to private rented sector properties regardless of tenant benefit status — check with your local council.",
+      'Landlords can access ECO4 and LA Flex funding for solar PV on rental properties where the tenant meets the qualifying benefit criteria. Home Energy Scotland loans are available to landlords in Scotland. There are no specific landlord grant schemes for solar PV in England and Wales beyond the ECO4 framework. However, landlords can benefit from the 0% VAT rate on installations, and solar PV installed on rental properties may qualify for capital allowances (business landlords should seek advice from an accountant). Some local authority LA Flex schemes have extended eligibility to private rented sector properties regardless of tenant benefit status — check with your local council.',
   },
   {
     question: 'How do I apply for the Smart Export Guarantee?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'Is there a grant for solar panels in Scotland?',
     answer:
-      "Yes. Home Energy Scotland (administered by Energy Saving Trust on behalf of the Scottish Government) offers interest-free loans of up to £15,000 for energy efficiency and renewable energy improvements. Solar PV and battery storage are eligible. The loan is available to Scottish homeowners and some landlords. There is no minimum or maximum system size, and the loan can be repaid over up to 12 years. In addition, some households in Scotland may qualify for the Warmer Homes Scotland grant scheme (for fuel-poor households) and the Area-Based Schemes (ABS) funded by local authorities. Contact Home Energy Scotland on 0808 808 2282 for an assessment.",
+      'Yes. Home Energy Scotland (administered by Energy Saving Trust on behalf of the Scottish Government) offers interest-free loans of up to £15,000 for energy efficiency and renewable energy improvements. Solar PV and battery storage are eligible. The loan is available to Scottish homeowners and some landlords. There is no minimum or maximum system size, and the loan can be repaid over up to 12 years. In addition, some households in Scotland may qualify for the Warmer Homes Scotland grant scheme (for fuel-poor households) and the Area-Based Schemes (ABS) funded by local authorities. Contact Home Energy Scotland on 0808 808 2282 for an assessment.',
   },
 ];
 
@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-system-design',
     title: 'Solar PV System Design',
-    description: 'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
+    description:
+      'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/solar-battery-storage-installation',
     title: 'Solar Battery Storage Installation',
-    description: 'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
+    description:
+      'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
     icon: Zap,
     category: 'Guide',
   },
@@ -107,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-maintenance',
     title: 'Solar Panel Maintenance',
-    description: 'Annual inspection checklist, cleaning, inverter replacement, and monitoring setup.',
+    description:
+      'Annual inspection checklist, cleaning, inverter replacement, and monitoring setup.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -131,10 +134,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Smart Export Guarantee (SEG) is the current mechanism for compensating solar PV
-          owners who export surplus electricity to the grid. Unlike the old Feed-in Tariff, it is
-          not a government-funded subsidy — it is a mandated market mechanism requiring large
-          energy suppliers to offer competitive export rates.
+          The Smart Export Guarantee (SEG) is the current mechanism for compensating solar PV owners
+          who export surplus electricity to the grid. Unlike the old Feed-in Tariff, it is not a
+          government-funded subsidy — it is a mandated market mechanism requiring large energy
+          suppliers to offer competitive export rates.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -161,18 +164,18 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Eligibility:</strong> Your system must be MCS-certified with a maximum
-                capacity of 5 MW. A smart meter or export meter must be installed. The system
-                must use grid-compatible inverter technology with anti-islanding protection.
-                There is no upper limit on how much you can export.
+                capacity of 5 MW. A smart meter or export meter must be installed. The system must
+                use grid-compatible inverter technology with anti-islanding protection. There is no
+                upper limit on how much you can export.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A typical 4 kWp UK home system generates approximately 3,500 kWh/year and exports
-          roughly 40–50% (1,400–1,750 kWh) to the grid. At 10p/kWh SEG rate, this generates
-          £140–£175/year in export income — in addition to the value of self-consumed solar
-          electricity (avoided import cost at 24p+/kWh).
+          A typical 4 kWp UK home system generates approximately 3,500 kWh/year and exports roughly
+          40–50% (1,400–1,750 kWh) to the grid. At 10p/kWh SEG rate, this generates £140–£175/year
+          in export income — in addition to the value of self-consumed solar electricity (avoided
+          import cost at 24p+/kWh).
         </p>
       </>
     ),
@@ -183,46 +186,45 @@ const sections = [
     content: (
       <>
         <p>
-          One of the most significant financial incentives for solar PV in the UK is the zero
-          rate of VAT on qualifying installations. This was introduced in April 2022 and
-          represents a saving of 20% on what was previously a 5% VAT rate.
+          One of the most significant financial incentives for solar PV in the UK is the zero rate
+          of VAT on qualifying installations. This was introduced in April 2022 and represents a
+          saving of 20% on what was previously a 5% VAT rate.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What qualifies at 0%:</strong> Solar PV panels, inverters (string,
-                micro, hybrid), mounting systems, DC and AC wiring, battery storage installed
-                alongside solar PV, monitoring systems, generation meters, and installation
-                labour. Consumer unit upgrades and scaffolding included in a solar installation
-                quote also qualify.
+                <strong>What qualifies at 0%:</strong> Solar PV panels, inverters (string, micro,
+                hybrid), mounting systems, DC and AC wiring, battery storage installed alongside
+                solar PV, monitoring systems, generation meters, and installation labour. Consumer
+                unit upgrades and scaffolding included in a solar installation quote also qualify.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What attracts 20% VAT:</strong> Standalone battery storage installed
-                without solar PV. Solar diverters installed without solar PV. Repairs to
-                existing systems (though MCS-certified maintenance work on qualifying systems
-                may qualify — seek specific VAT advice).
+                <strong>What attracts 20% VAT:</strong> Standalone battery storage installed without
+                solar PV. Solar diverters installed without solar PV. Repairs to existing systems
+                (though MCS-certified maintenance work on qualifying systems may qualify — seek
+                specific VAT advice).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Duration:</strong> The 0% VAT rate applies until at least April 2027
-                under current legislation. The government has indicated an intention to maintain
-                the zero rate through to at least 2035 for energy efficiency measures, though
-                this is subject to future budget decisions.
+                <strong>Duration:</strong> The 0% VAT rate applies until at least April 2027 under
+                current legislation. The government has indicated an intention to maintain the zero
+                rate through to at least 2035 for energy efficiency measures, though this is subject
+                to future budget decisions.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For a typical 4 kWp solar plus 10 kWh battery system costing £11,000 installed, the
-          0% VAT rate compared to the pre-2022 20% rate saves the customer approximately
-          £1,833. This makes the UK one of the most VAT-favourable markets for solar PV in Europe.
+          For a typical 4 kWp solar plus 10 kWh battery system costing £11,000 installed, the 0% VAT
+          rate compared to the pre-2022 20% rate saves the customer approximately £1,833. This makes
+          the UK one of the most VAT-favourable markets for solar PV in Europe.
         </p>
       </>
     ),
@@ -234,9 +236,9 @@ const sections = [
       <>
         <p>
           ECO4 (Energy Company Obligation 4) is the fourth iteration of the government's Energy
-          Company Obligation scheme, running from April 2022 to March 2026. It requires large
-          energy suppliers to fund energy efficiency and renewable energy improvements for
-          low-income and fuel-poor households.
+          Company Obligation scheme, running from April 2022 to March 2026. It requires large energy
+          suppliers to fund energy efficiency and renewable energy improvements for low-income and
+          fuel-poor households.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,18 +247,18 @@ const sections = [
               <span>
                 <strong>Standard eligibility:</strong> The household must receive at least one
                 qualifying benefit (Universal Credit, Pension Credit, Income Support, Working Tax
-                Credit, Child Tax Credit, Housing Benefit, or certain DWP benefits) AND the
-                property must have an EPC rating of D, E, F, or G.
+                Credit, Child Tax Credit, Housing Benefit, or certain DWP benefits) AND the property
+                must have an EPC rating of D, E, F, or G.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar PV under ECO4:</strong> Solar PV is an eligible measure under ECO4
-                but is typically only funded as part of a whole-house improvement plan. The ECO4
-                rules prioritise insulation and heating measures. Solar PV is more likely to be
-                funded where the property already has adequate insulation and a heat pump or
-                electric heating is being installed.
+                <strong>Solar PV under ECO4:</strong> Solar PV is an eligible measure under ECO4 but
+                is typically only funded as part of a whole-house improvement plan. The ECO4 rules
+                prioritise insulation and heating measures. Solar PV is more likely to be funded
+                where the property already has adequate insulation and a heat pump or electric
+                heating is being installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,9 +283,9 @@ const sections = [
       <>
         <p>
           LA Flex (Local Authority Flexible Eligibility) is a mechanism within ECO4 that allows
-          local authorities to declare households eligible for ECO4 funding even if they do not
-          meet the standard benefit criteria. This extends the scheme's reach to households in
-          fuel poverty who are not receiving qualifying benefits.
+          local authorities to declare households eligible for ECO4 funding even if they do not meet
+          the standard benefit criteria. This extends the scheme's reach to households in fuel
+          poverty who are not receiving qualifying benefits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -292,28 +294,26 @@ const sections = [
               <span>
                 <strong>Eligibility criteria:</strong> The local authority sets its own criteria,
                 but typically includes households with a low income (usually defined by household
-                income thresholds), those in fuel poverty, households with a member who has a
-                health condition affected by cold or damp, and households in high-cost-to-heat
-                properties (EPC D, E, F, or G).
+                income thresholds), those in fuel poverty, households with a member who has a health
+                condition affected by cold or damp, and households in high-cost-to-heat properties
+                (EPC D, E, F, or G).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Coverage and availability:</strong> LA Flex coverage varies enormously
-                by local authority. Some councils have proactively used the scheme to fund
-                hundreds of installations; others have not implemented it at all. Contact your
-                local council's housing or energy team to find out whether LA Flex is available
-                in your area.
+                <strong>Coverage and availability:</strong> LA Flex coverage varies enormously by
+                local authority. Some councils have proactively used the scheme to fund hundreds of
+                installations; others have not implemented it at all. Contact your local council's
+                housing or energy team to find out whether LA Flex is available in your area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Declaration process:</strong> If your council operates LA Flex, they
-                will issue a Declaration of Eligibility that allows a registered ECO4 installer
-                to proceed with funded works. The council may conduct a home assessment
-                beforehand.
+                <strong>Declaration process:</strong> If your council operates LA Flex, they will
+                issue a Declaration of Eligibility that allows a registered ECO4 installer to
+                proceed with funded works. The council may conduct a home assessment beforehand.
               </span>
             </li>
           </ul>
@@ -327,20 +327,19 @@ const sections = [
     content: (
       <>
         <p>
-          Scottish homeowners and landlords have access to an interest-free loan through Home
-          Energy Scotland, funded by the Scottish Government and administered by the Energy
-          Saving Trust. This is one of the most generous solar and energy efficiency loan
-          programmes in the UK.
+          Scottish homeowners and landlords have access to an interest-free loan through Home Energy
+          Scotland, funded by the Scottish Government and administered by the Energy Saving Trust.
+          This is one of the most generous solar and energy efficiency loan programmes in the UK.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loan amount:</strong> Up to £15,000 as an interest-free loan for
-                energy efficiency and renewable energy improvements. Solar PV and battery
-                storage are both eligible. The loan can be combined with other measures (e.g.,
-                insulation, heat pump) up to the maximum amount.
+                <strong>Loan amount:</strong> Up to £15,000 as an interest-free loan for energy
+                efficiency and renewable energy improvements. Solar PV and battery storage are both
+                eligible. The loan can be combined with other measures (e.g., insulation, heat pump)
+                up to the maximum amount.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,27 +347,27 @@ const sections = [
               <span>
                 <strong>Cashback element:</strong> In addition to the loan, some measures may
                 qualify for a cashback grant element (currently up to £7,500 for some eligible
-                households). Fuel-poor households may qualify for larger grant support. The
-                exact terms are updated periodically — check the Home Energy Scotland website
-                for current rates.
+                households). Fuel-poor households may qualify for larger grant support. The exact
+                terms are updated periodically — check the Home Energy Scotland website for current
+                rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How to apply:</strong> Call Home Energy Scotland on 0808 808 2282
-                (free from landlines and most mobiles) for an initial assessment. An adviser
-                will discuss your home, your current energy costs, and the best improvements
-                for your situation. If solar PV is appropriate, they will confirm loan
-                eligibility and refer you to MCS-certified installers.
+                <strong>How to apply:</strong> Call Home Energy Scotland on 0808 808 2282 (free from
+                landlines and most mobiles) for an initial assessment. An adviser will discuss your
+                home, your current energy costs, and the best improvements for your situation. If
+                solar PV is appropriate, they will confirm loan eligibility and refer you to
+                MCS-certified installers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Repayment:</strong> Loans are repaid over up to 12 years. There is no
-                interest charge. Early repayment is permitted without penalty. The loan must be
-                used within 12 months of approval and works must be completed by an MCS-certified
+                interest charge. Early repayment is permitted without penalty. The loan must be used
+                within 12 months of approval and works must be completed by an MCS-certified
                 installer.
               </span>
             </li>
@@ -383,9 +382,9 @@ const sections = [
     content: (
       <>
         <p>
-          Homeowners considering solar PV often ask about the Feed-in Tariff. It is important
-          to be clear: the Feed-in Tariff scheme closed to new applications on 1 April 2019
-          and cannot be accessed by new installations.
+          Homeowners considering solar PV often ask about the Feed-in Tariff. It is important to be
+          clear: the Feed-in Tariff scheme closed to new applications on 1 April 2019 and cannot be
+          accessed by new installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -394,19 +393,19 @@ const sections = [
               <span>
                 <strong>Existing FiT installations:</strong> The approximately 850,000 UK
                 installations registered before 1 April 2019 continue to receive FiT generation
-                tariff payments for the remainder of their 20-year term. If you purchased a
-                property with solar panels installed before April 2019, check with the previous
-                owner whether the FiT was registered and whether it transferred with the property.
+                tariff payments for the remainder of their 20-year term. If you purchased a property
+                with solar panels installed before April 2019, check with the previous owner whether
+                the FiT was registered and whether it transferred with the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New installations:</strong> All solar PV systems installed from 1 April
-                2019 onwards use the SEG for export payments. There is no generation tariff —
-                only an export tariff based on metered or estimated export. The economics of
-                solar PV remain very favourable in 2025 due to high electricity import prices,
-                the 0% VAT rate, and competitive SEG tariffs.
+                <strong>New installations:</strong> All solar PV systems installed from 1 April 2019
+                onwards use the SEG for export payments. There is no generation tariff — only an
+                export tariff based on metered or estimated export. The economics of solar PV remain
+                very favourable in 2025 due to high electricity import prices, the 0% VAT rate, and
+                competitive SEG tariffs.
               </span>
             </li>
           </ul>
@@ -420,17 +419,17 @@ const sections = [
     content: (
       <>
         <p>
-          The process for accessing solar PV grants and incentives in the UK varies by scheme.
-          Here is a summary of the application process for each:
+          The process for accessing solar PV grants and incentives in the UK varies by scheme. Here
+          is a summary of the application process for each:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SEG:</strong> Contact your chosen supplier after installation is
-                complete. Provide your MCS certificate number and smart meter details. Processing
-                takes 2–6 weeks. The supplier will contact you with tariff options and start date.
+                <strong>SEG:</strong> Contact your chosen supplier after installation is complete.
+                Provide your MCS certificate number and smart meter details. Processing takes 2–6
+                weeks. The supplier will contact you with tariff options and start date.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -453,8 +452,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Home Energy Scotland loan:</strong> Call 0808 808 2282 or apply online
-                at the Home Energy Scotland website. Complete the application before commissioning
+                <strong>Home Energy Scotland loan:</strong> Call 0808 808 2282 or apply online at
+                the Home Energy Scotland website. Complete the application before commissioning
                 works — retrospective applications are not accepted.
               </span>
             </li>
@@ -476,7 +475,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Manage MCS solar installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates and EICs on your phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -513,7 +512,7 @@ export default function SolarPVGrantsUKPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Grants"
       relatedPages={relatedPages}
       ctaHeading="Install Solar PV with Confidence Using Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for MCS certification, quoting, and job management. Issue solar installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

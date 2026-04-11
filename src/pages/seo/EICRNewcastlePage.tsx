@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Newcastle EICR costs typically range from £100 to £400 depending on property size. A two-bedroom flat costs £130 to £220, while a three-bedroom house costs £180 to £300. Prices are below the national average, reflecting lower labour rates in the North East.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Newcastle City Council.',
   'Newcastle has a distinctive housing stock that includes Tyneside flats — a unique two-storey terraced conversion found almost exclusively in the North East. These properties present specific challenges for EICR inspectors, including shared supplies, complex earthing arrangements, and multiple phases of wiring.',
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,18 +146,18 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -166,8 +168,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -253,8 +255,8 @@ const sections = [
               <span>
                 <strong>Before a new tenancy</strong> — the landlord must ensure the electrical
                 installation is inspected and tested by a qualified person, and obtain an EICR,
-                before a new tenant moves in. This applies to all new tenancies from 1 July 2020
-                and all existing tenancies from 1 April 2021.
+                before a new tenant moves in. This applies to all new tenancies from 1 July 2020 and
+                all existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,10 +333,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Newcastle operates mandatory HMO licensing for
-                larger HMOs and additional licensing in designated areas. A valid EICR is a condition
-                of all HMO licences. Many properties in Jesmond and Heaton that were originally
-                large family houses have been converted to HMOs and must maintain current electrical
-                safety certificates.
+                larger HMOs and additional licensing in designated areas. A valid EICR is a
+                condition of all HMO licences. Many properties in Jesmond and Heaton that were
+                originally large family houses have been converted to HMOs and must maintain current
+                electrical safety certificates.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -384,8 +386,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
               Newcastle include absent or inadequate earthing (particularly in Tyneside flats), lack
-              of RCD protection on socket circuits, overloaded circuits, and
-              deteriorated cable insulation in older terraces.
+              of RCD protection on socket circuits, overloaded circuits, and deteriorated cable
+              insulation in older terraces.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -530,18 +532,18 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Regulation
-                Section 631). The report includes observations with classification codes, an overall
+                Schedules of Circuit Details and Test Results (as required by Regulation Section
+                631). The report includes observations with classification codes, an overall
                 assessment, and a recommended date for the next inspection.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          In Newcastle, tenants and landlords should prepare by ensuring clear access to the consumer
-          unit and meter, removing items stored in front of electrical equipment, and making all
-          rooms accessible. For Tyneside flats, check whether access to the other flat in the
-          building will be needed and arrange this in advance.
+          In Newcastle, tenants and landlords should prepare by ensuring clear access to the
+          consumer unit and meter, removing items stored in front of electrical equipment, and
+          making all rooms accessible. For Tyneside flats, check whether access to the other flat in
+          the building will be needed and arrange this in advance.
         </p>
       </>
     ),
@@ -553,8 +555,8 @@ const sections = [
       <>
         <p>
           The required frequency of EICRs depends on the property type and use. BS 7671 Regulation
-          Section 621 establishes that installations must be periodically inspected at intervals suited to
-          the property type:
+          Section 621 establishes that installations must be periodically inspected at intervals
+          suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -615,8 +617,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. Searching these
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. Searching these
                 registers for Newcastle-based inspectors is the most reliable way to find a
                 qualified person.
               </span>
@@ -636,8 +638,8 @@ const sections = [
                 <strong>Tyneside flat experience</strong> — when choosing an inspector for a
                 Tyneside flat, look for an electrician with specific experience of this property
                 type. The unique challenges of Tyneside flats mean that an inspector unfamiliar with
-                them may miss issues or underestimate the time required. Local Newcastle electricians
-                will typically have extensive experience with Tyneside flats.
+                them may miss issues or underestimate the time required. Local Newcastle
+                electricians will typically have extensive experience with Tyneside flats.
               </span>
             </li>
           </ul>
@@ -657,9 +659,9 @@ const sections = [
     content: (
       <>
         <p>
-          Newcastle offers consistent demand for EICR work. The city's large student population, active
-          council enforcement, extensive stock of Tyneside flats, and growing city centre rental
-          market all contribute to a steady flow of work for qualified inspectors.
+          Newcastle offers consistent demand for EICR work. The city's large student population,
+          active council enforcement, extensive stock of Tyneside flats, and growing city centre
+          rental market all contribute to a steady flow of work for qualified inspectors.
         </p>
         <p>
           To maximise efficiency and professionalism, electricians carrying out EICRs in Newcastle
@@ -704,7 +706,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -741,7 +743,7 @@ export default function EICRNewcastlePage() {
       faqHeading="Frequently Asked Questions About EICRs in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

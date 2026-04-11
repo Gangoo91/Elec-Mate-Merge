@@ -427,7 +427,7 @@ export default function FirstAidCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to learn life-saving first aid skills?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/first-aid-electrical"
     />

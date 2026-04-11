@@ -24,7 +24,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Installation', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Ground Source Heat Pump Electrical', href: '/guides/ground-source-heat-pump-electrical' },
+  {
+    label: 'Ground Source Heat Pump Electrical',
+    href: '/guides/ground-source-heat-pump-electrical',
+  },
 ];
 
 const tocItems = [
@@ -149,16 +152,16 @@ const sections = [
           or trench).
         </p>
         <p>
-          GSHPs are typically installed in larger properties with sufficient land for the ground loop
-          — detached houses, rural properties, and new-build developments. The electrical
+          GSHPs are typically installed in larger properties with sufficient land for the ground
+          loop — detached houses, rural properties, and new-build developments. The electrical
           installation is more complex than air source because of higher power demands, multiple
           circulation pumps, three-phase supply requirements, and the ground loop isolation
           considerations.
         </p>
         <p>
           This guide covers the electrical supply requirements, three-phase considerations,
-          circulation pump and zone valve wiring, buffer tank circuits, ground loop isolation,
-          MCS certification, and the relevant BS 7671 regulations.
+          circulation pump and zone valve wiring, buffer tank circuits, ground loop isolation, MCS
+          certification, and the relevant BS 7671 regulations.
         </p>
       </>
     ),
@@ -293,8 +296,8 @@ const sections = [
               <span>
                 <strong>Ground loop pump</strong> — typically powered from the heat pump controller
                 (which manages the pump speed via a 0-10V signal or PWM control). The electrical
-                connection is usually a 3-pin plug or hardwired connection to the controller terminal
-                strip. Rated at 100 to 500W.
+                connection is usually a 3-pin plug or hardwired connection to the controller
+                terminal strip. Rated at 100 to 500W.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -338,10 +341,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone valves</strong> — 230V motorised valves that control the flow of
-                heated water to different zones (ground floor, first floor, hot water cylinder).
-                Each valve has live, neutral, earth, and a switched live return. Wire to the
-                controller wiring centre per the manufacturer diagram.
+                <strong>Zone valves</strong> — 230V motorised valves that control the flow of heated
+                water to different zones (ground floor, first floor, hot water cylinder). Each valve
+                has live, neutral, earth, and a switched live return. Wire to the controller wiring
+                centre per the manufacturer diagram.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,8 +426,8 @@ const sections = [
           The ground loop introduces a unique electrical safety consideration. The loop pipe is
           buried in direct contact with the earth, and the water-glycol mixture inside the loop is
           in thermal contact with the ground. While HDPE pipe is non-conductive, the metalwork of
-          the heat pump (heat exchanger, compressor casing, manifold connections) is connected to the
-          fluid circuit.
+          the heat pump (heat exchanger, compressor casing, manifold connections) is connected to
+          the fluid circuit.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -432,9 +435,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bonding requirement</strong> — Regulation 411.3.1.2 requires the metallic
-                casings of heat exchangers and heat pumps to be connected to the main bonding system.
-                This ensures that any fault current path via the ground loop is cleared by the
-                protective devices.
+                casings of heat exchangers and heat pumps to be connected to the main bonding
+                system. This ensures that any fault current path via the ground loop is cleared by
+                the protective devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,9 +452,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing systems</strong> — in rural properties with TT earthing (common
-                for properties that need GSHPs), the earth fault loop impedance may be higher. Verify
-                that the protective devices will disconnect within the required time. RCD protection
-                is essential.
+                for properties that need GSHPs), the earth fault loop impedance may be higher.
+                Verify that the protective devices will disconnect within the required time. RCD
+                protection is essential.
               </span>
             </li>
           </ul>
@@ -474,8 +477,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS for GSHP</strong> — the MCS standard for ground source heat pumps is
-                MIS 3005. It covers system design (including ground loop sizing), installation,
+                <strong>MCS for GSHP</strong> — the MCS standard for ground source heat pumps is MIS
+                3005. It covers system design (including ground loop sizing), installation,
                 commissioning, and handover. The MCS installer is responsible for the overall system
                 design and performance.
               </span>
@@ -554,8 +557,8 @@ const sections = [
     content: (
       <>
         <p>
-          Ground source heat pump installations are high-value projects. The electrical package alone
-          is typically worth £1,000 to £2,500, and the overall project values are £20,000 to
+          Ground source heat pump installations are high-value projects. The electrical package
+          alone is typically worth £1,000 to £2,500, and the overall project values are £20,000 to
           £35,000. Building relationships with MCS-certified GSHP installers provides a steady
           stream of well-paid work.
         </p>
@@ -607,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify GSHP electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for ground source heat pump installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for ground source heat pump installations. 7-day free trial."
           icon={Layers}
         />
       </>
@@ -644,7 +647,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About GSHP Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify GSHP Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for ground source heat pump installations. 7-day free trial, cancel anytime."
     />
   );
 }

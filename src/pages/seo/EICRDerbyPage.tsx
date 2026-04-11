@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
     icon: Home,
     category: 'Guide',
   },
@@ -139,49 +140,49 @@ const sections = [
           , the national standard for electrical installations.
         </p>
         <p>
-          Observations identified during the inspection are assigned classification codes based
-          on their severity:
+          Observations identified during the inspection are assigned classification codes based on
+          their severity:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — Danger present:</strong> Immediate risk of injury. The inspector
-                may recommend that the affected circuit is isolated. Emergency remedial action
-                is required.
+                <strong>C1 — Danger present:</strong> Immediate risk of injury. The inspector may
+                recommend that the affected circuit is isolated. Emergency remedial action is
+                required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Potentially dangerous:</strong> Not immediately dangerous but
-                urgent remedial action is required. Landlords must complete rectification
-                within 28 days under the 2020 Regulations.
+                <strong>C2 — Potentially dangerous:</strong> Not immediately dangerous but urgent
+                remedial action is required. Landlords must complete rectification within 28 days
+                under the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C3 — Improvement recommended:</strong> Below current standards but not
-                classified as dangerous. No mandatory action under the regulations, but prudent
-                to address when possible.
+                classified as dangerous. No mandatory action under the regulations, but prudent to
+                address when possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>FI — Further investigation:</strong> An issue exists that cannot be
-                fully assessed without additional investigation. This should be arranged promptly.
+                <strong>FI — Further investigation:</strong> An issue exists that cannot be fully
+                assessed without additional investigation. This should be arranged promptly.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          An EICR is Satisfactory if it contains no C1 or C2 observations. An EICR with any C1
-          or C2 is Unsatisfactory, and landlords must complete remedial work before they are
-          legally compliant. Once remedial work is complete, written confirmation must be provided
-          to the tenant and to Derby City Council.
+          An EICR is Satisfactory if it contains no C1 or C2 observations. An EICR with any C1 or C2
+          is Unsatisfactory, and landlords must complete remedial work before they are legally
+          compliant. Once remedial work is complete, written confirmation must be provided to the
+          tenant and to Derby City Council.
         </p>
       </>
     ),
@@ -202,39 +203,39 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy:</strong> A valid EICR must be provided to new
-                tenants before they take occupation of the property. If no valid EICR exists,
-                one must be obtained before the tenancy begins.
+                <strong>Before a new tenancy:</strong> A valid EICR must be provided to new tenants
+                before they take occupation of the property. If no valid EICR exists, one must be
+                obtained before the tenancy begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Existing tenants:</strong> A copy of the EICR must be provided to
-                existing tenants within 28 days of the inspection.
+                <strong>Existing tenants:</strong> A copy of the EICR must be provided to existing
+                tenants within 28 days of the inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Five-year maximum:</strong> The electrical installation must be inspected
-                at intervals of no more than five years, or sooner if the inspector recommends
-                a shorter period.
+                <strong>Five-year maximum:</strong> The electrical installation must be inspected at
+                intervals of no more than five years, or sooner if the inspector recommends a
+                shorter period.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Council requests:</strong> Derby City Council can request a copy of the
-                EICR and the landlord must provide it within seven days.
+                <strong>Council requests:</strong> Derby City Council can request a copy of the EICR
+                and the landlord must provide it within seven days.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The regulations apply to assured shorthold tenancies, assured tenancies, and regulated
-          tenancies. Owner-occupied properties, social housing, and lodger arrangements where
-          the landlord resides in the property are outside the scope of the regulations.
+          tenancies. Owner-occupied properties, social housing, and lodger arrangements where the
+          landlord resides in the property are outside the scope of the regulations.
         </p>
       </>
     ),
@@ -246,11 +247,11 @@ const sections = [
       <>
         <p>
           Derby City Council is the local housing authority responsible for enforcing the 2020
-          Regulations in Derby. The council's housing enforcement team investigates tenant complaints
-          about electrical safety in private rented properties and can take action against
-          non-compliant landlords. Derby has a significant private rented sector, particularly
-          in inner-city areas such as Normanton, Pear Tree, and Arboretum, as well as student
-          areas around the University of Derby.
+          Regulations in Derby. The council's housing enforcement team investigates tenant
+          complaints about electrical safety in private rented properties and can take action
+          against non-compliant landlords. Derby has a significant private rented sector,
+          particularly in inner-city areas such as Normanton, Pear Tree, and Arboretum, as well as
+          student areas around the University of Derby.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -258,8 +259,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000:</strong> Each breach of the regulations
-                attracts a separate civil penalty. Derby City Council can impose these penalties
-                and escalate enforcement through the tribunal system if necessary.
+                attracts a separate civil penalty. Derby City Council can impose these penalties and
+                escalate enforcement through the tribunal system if necessary.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -274,26 +275,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO licensing:</strong> Derby City Council enforces mandatory HMO
-                licensing for larger HMOs. A valid EICR is a mandatory condition of every
-                HMO licence. Operating without a licence is a criminal offence.
+                <strong>HMO licensing:</strong> Derby City Council enforces mandatory HMO licensing
+                for larger HMOs. A valid EICR is a mandatory condition of every HMO licence.
+                Operating without a licence is a criminal offence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restriction:</strong> A Derby landlord who has not provided
-                the current EICR to their tenant cannot serve a valid Section 21 notice for
-                possession. This can prevent a landlord recovering their property until they
-                achieve compliance.
+                <strong>Section 21 restriction:</strong> A Derby landlord who has not provided the
+                current EICR to their tenant cannot serve a valid Section 21 notice for possession.
+                This can prevent a landlord recovering their property until they achieve compliance.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Landlords with properties in Normanton, Pear Tree, and Arboretum — areas of Derby
-          with high concentrations of privately rented homes — should be aware that these areas
-          attract particular attention from the council's housing enforcement team.
+          Landlords with properties in Normanton, Pear Tree, and Arboretum — areas of Derby with
+          high concentrations of privately rented homes — should be aware that these areas attract
+          particular attention from the council's housing enforcement team.
         </p>
       </>
     ),
@@ -304,25 +304,25 @@ const sections = [
     content: (
       <>
         <p>
-          Derby benefits from East Midlands labour rates, which are moderate compared to London
-          but reflective of a major regional city. Costs vary based on property size and age,
-          the number of circuits, and the electrician's qualifications and scheme membership.
+          Derby benefits from East Midlands labour rates, which are moderate compared to London but
+          reflective of a major regional city. Costs vary based on property size and age, the number
+          of circuits, and the electrician's qualifications and scheme membership.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £150 to £190. Typical for purpose-built
-                flats or converted properties in Derby city centre.
+                <strong>One-bedroom flat</strong> — £150 to £190. Typical for purpose-built flats or
+                converted properties in Derby city centre.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £175 to £260. Inter-war and post-war
-                semis in areas such as Allestree, Mickleover, or Chaddesden typically fall
-                here. Older terraces in Normanton or Pear Tree may be at the higher end.
+                <strong>Two-bedroom property</strong> — £175 to £260. Inter-war and post-war semis
+                in areas such as Allestree, Mickleover, or Chaddesden typically fall here. Older
+                terraces in Normanton or Pear Tree may be at the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,18 +335,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO or large property</strong> — £300 to £500+. Student HMOs near
-                the University of Derby with multiple consumer units, fire alarm systems, and
-                extensive circuits attract higher prices due to increased inspection scope.
+                <strong>HMO or large property</strong> — £300 to £500+. Student HMOs near the
+                University of Derby with multiple consumer units, fire alarm systems, and extensive
+                circuits attract higher prices due to increased inspection scope.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These prices cover the inspection and the EICR report only. Remedial work identified
-          during the inspection is quoted and charged separately. Obtaining quotes from two or
-          three NICEIC or NAPIT registered electricians is recommended to ensure competitive
-          pricing and to verify qualifications.
+          during the inspection is quoted and charged separately. Obtaining quotes from two or three
+          NICEIC or NAPIT registered electricians is recommended to ensure competitive pricing and
+          to verify qualifications.
         </p>
       </>
     ),
@@ -366,9 +366,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants
-                in two or more households require a mandatory HMO licence from Derby City Council.
-                A valid EICR is a mandatory condition of the licence.
+                <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants in
+                two or more households require a mandatory HMO licence from Derby City Council. A
+                valid EICR is a mandatory condition of the licence.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -383,24 +383,23 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Some larger HMOs in Derby require emergency
-                lighting as a licence condition. This also forms part of the EICR inspection
-                scope.
+                lighting as a licence condition. This also forms part of the EICR inspection scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Derby is a
-                criminal offence carrying an unlimited fine, a potential banning order, and
-                exposure to Rent Repayment Orders from tenants.
+                <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Derby is a criminal
+                offence carrying an unlimited fine, a potential banning order, and exposure to Rent
+                Repayment Orders from tenants.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Derby landlords with student HMOs should also be aware that the University of Derby
-          operates an accreditation scheme for student accommodation. EICR compliance is typically
-          a requirement of accreditation.
+          operates an accreditation scheme for student accommodation. EICR compliance is typically a
+          requirement of accreditation.
         </p>
       </>
     ),
@@ -419,9 +418,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard rental properties:</strong> At least every five years under
-                the 2020 Regulations. A new inspection is required when a new tenancy begins
-                if the current EICR has expired.
+                <strong>Standard rental properties:</strong> At least every five years under the
+                2020 Regulations. A new inspection is required when a new tenancy begins if the
+                current EICR has expired.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,17 +433,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Owner-occupied homes:</strong> No legal requirement, but the IET
-                recommends inspection every ten years. An EICR is strongly recommended before
-                purchasing an older Derby property or following any flood or fire event.
+                <strong>Owner-occupied homes:</strong> No legal requirement, but the IET recommends
+                inspection every ten years. An EICR is strongly recommended before purchasing an
+                older Derby property or following any flood or fire event.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inspector-recommended shorter interval:</strong> If the EICR report
-                recommends re-inspection before the five-year standard, the landlord should
-                follow this recommendation to maintain compliance.
+                recommends re-inspection before the five-year standard, the landlord should follow
+                this recommendation to maintain compliance.
               </span>
             </li>
           </ul>
@@ -458,45 +457,45 @@ const sections = [
     content: (
       <>
         <p>
-          Derby's housing stock includes a mix of Victorian terraced properties in inner-city
-          areas, inter-war semis in suburbs such as Allestree and Littleover, and post-war
-          local authority housing that has since entered the private rented sector. Each
-          property type produces characteristic EICR findings.
+          Derby's housing stock includes a mix of Victorian terraced properties in inner-city areas,
+          inter-war semis in suburbs such as Allestree and Littleover, and post-war local authority
+          housing that has since entered the private rented sector. Each property type produces
+          characteristic EICR findings.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer units without RCD protection:</strong> Rewirable fuse boards
-                and early MCB boards without RCD protection are found throughout Derby's older
-                private rented stock. Absence of RCD protection on socket circuits is the most
-                common C2 finding and requires consumer unit replacement.
+                <strong>Consumer units without RCD protection:</strong> Rewirable fuse boards and
+                early MCB boards without RCD protection are found throughout Derby's older private
+                rented stock. Absence of RCD protection on socket circuits is the most common C2
+                finding and requires consumer unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Deteriorated wiring:</strong> Pre-1965 rubber-insulated wiring with
-                perished insulation is found in Derby's Victorian terraces and older semis.
-                Cracked or brittle insulation attracts C2 or C1 observation codes.
+                <strong>Deteriorated wiring:</strong> Pre-1965 rubber-insulated wiring with perished
+                insulation is found in Derby's Victorian terraces and older semis. Cracked or
+                brittle insulation attracts C2 or C1 observation codes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Missing main bonding:</strong> Inadequate or absent main protective
-                bonding to gas and water pipes is a common finding in Derby's inter-war and
-                post-war properties, typically coded C2.
+                <strong>Missing main bonding:</strong> Inadequate or absent main protective bonding
+                to gas and water pipes is a common finding in Derby's inter-war and post-war
+                properties, typically coded C2.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overloaded or improperly extended circuits:</strong> In HMOs and
-                converted properties, circuits are sometimes extended by unqualified persons
-                beyond their designed capacity. Signs of overloading attract C1 or C2
-                observations and require immediate remedial attention.
+                <strong>Overloaded or improperly extended circuits:</strong> In HMOs and converted
+                properties, circuits are sometimes extended by unqualified persons beyond their
+                designed capacity. Signs of overloading attract C1 or C2 observations and require
+                immediate remedial attention.
               </span>
             </li>
           </ul>
@@ -519,34 +518,34 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use official registers:</strong> Search the NICEIC, NAPIT, or ELECSA
-                registers by postcode to find Derby-based approved contractors. Registration
-                with a competent person scheme is the primary quality assurance for EICR work.
+                registers by postcode to find Derby-based approved contractors. Registration with a
+                competent person scheme is the primary quality assurance for EICR work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify inspection qualifications:</strong> The inspector should hold
-                City and Guilds 2391 (Inspection and Testing) or an equivalent qualification,
-                plus a current 18th Edition BS 7671 certificate (C&G 2382). Not all electricians
-                hold inspection and testing qualifications — check before booking.
+                <strong>Verify inspection qualifications:</strong> The inspector should hold City
+                and Guilds 2391 (Inspection and Testing) or an equivalent qualification, plus a
+                current 18th Edition BS 7671 certificate (C&G 2382). Not all electricians hold
+                inspection and testing qualifications — check before booking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Obtain multiple quotes:</strong> Two or three quotes allow you to
-                compare pricing and the inspector's approach. Be cautious of very low prices
-                — a proper EICR on a Derby terrace takes at least two hours and requires
-                calibrated test instruments.
+                <strong>Obtain multiple quotes:</strong> Two or three quotes allow you to compare
+                pricing and the inspector's approach. Be cautious of very low prices — a proper EICR
+                on a Derby terrace takes at least two hours and requires calibrated test
+                instruments.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance:</strong> Confirm that the electrician carries professional
-                indemnity insurance. This is required for competent person scheme membership
-                and protects both parties if an error is made in the report.
+                indemnity insurance. This is required for competent person scheme membership and
+                protects both parties if an error is made in the report.
               </span>
             </li>
           </ul>
@@ -563,8 +562,8 @@ const sections = [
           Derby's private rented sector — spanning student accommodation near the University of
           Derby, inner-city terraced housing in Normanton and Pear Tree, and suburban rentals
           throughout the city — generates consistent demand for EICR inspections and associated
-          remedial work. Electricians who invest in inspection and testing qualifications can
-          build a reliable income stream from Derby's landlord compliance market.
+          remedial work. Electricians who invest in inspection and testing qualifications can build
+          a reliable income stream from Derby's landlord compliance market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -577,10 +576,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the full inspection report on your phone while still on site.
-                  AI board scanning, voice test entry, and instant PDF export mean you can
-                  hand the landlord a professional, compliant report before leaving the
-                  property — no evening admin.
+                  to complete the full inspection report on your phone while still on site. AI board
+                  scanning, voice test entry, and instant PDF export mean you can hand the landlord
+                  a professional, compliant report before leaving the property — no evening admin.
                 </p>
               </div>
             </div>
@@ -597,8 +595,8 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   while the landlord is still on-site and focused on the 28-day deadline. The
-                  electrician who quotes at the EICR wins the remedial work in the vast majority
-                  of cases.
+                  electrician who quotes at the EICR wins the remedial work in the vast majority of
+                  cases.
                 </p>
               </div>
             </div>
@@ -606,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Derby with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -643,7 +641,7 @@ export default function EICRDerbyPage() {
       faqHeading="Frequently Asked Questions About EICR in Derby"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the East Midlands"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

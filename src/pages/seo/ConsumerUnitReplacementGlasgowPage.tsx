@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What is SELECT and do I need a SELECT-registered electrician in Glasgow?',
     answer:
-      'SELECT (the Electrical Contractors\' Association of Scotland) is the trade association for the Scottish electrical contracting industry. SELECT-registered electricians have demonstrated competence and are assessed regularly. In Scotland, electricians must be registered under the Scottish Certifier of Construction (Electrical Installations) scheme to self-certify notifiable work. SELECT registration can support this, but NICEIC and NAPIT also have schemes accepted in Scotland. Always verify the specific certification with your electrician.',
+      "SELECT (the Electrical Contractors' Association of Scotland) is the trade association for the Scottish electrical contracting industry. SELECT-registered electricians have demonstrated competence and are assessed regularly. In Scotland, electricians must be registered under the Scottish Certifier of Construction (Electrical Installations) scheme to self-certify notifiable work. SELECT registration can support this, but NICEIC and NAPIT also have schemes accepted in Scotland. Always verify the specific certification with your electrician.",
   },
   {
     question: 'How long does a consumer unit replacement take in a Glasgow tenement flat?',
@@ -85,8 +85,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -125,8 +124,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -146,8 +144,8 @@ const sections = [
           Glasgow is Scotland's largest city, with a housing stock ranging from Victorian tenement
           flats in the West End and Southside to post-war council housing in Castlemilk, Drumchapel,
           and Pollok. Many properties — particularly tenements and inter-war houses — still have
-          electrical installations that predate current requirements, including rewirable fuse boards
-          and early plastic consumer units.
+          electrical installations that predate current requirements, including rewirable fuse
+          boards and early plastic consumer units.
         </p>
         <p>
           Under{' '}
@@ -161,8 +159,8 @@ const sections = [
         </p>
         <p>
           This guide covers everything you need to know about consumer unit replacement costs and
-          requirements in Glasgow — including how Scottish Building Regulations differ from the
-          Part P regime in England and Wales.
+          requirements in Glasgow — including how Scottish Building Regulations differ from the Part
+          P regime in England and Wales.
         </p>
       </>
     ),
@@ -184,9 +182,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenement flat (6-way board)</strong> — £300 to £400 total. The most
-                common domestic job in central Glasgow. Materials: £110 to £190. Labour: £180 to
-                £200. EIC: £30 to £50.
+                <strong>Tenement flat (6-way board)</strong> — £300 to £400 total. The most common
+                domestic job in central Glasgow. Materials: £110 to £190. Labour: £180 to £200. EIC:
+                £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -201,24 +199,24 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Larger detached (14-way high-integrity with SPD)</strong> — £500 to £780
-                total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £320
-                to £480. Labour: £250 to £300. EIC and certification: £30 to £50.
+                total. For properties with 12+ circuits, EV charger, or solar PV. Materials: £320 to
+                £480. Labour: £250 to £300. EIC and certification: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,000 to £1,600+ total. Required for
-                larger homes or commercial premises with three-phase supply. Materials: £420 to
-                £700. Labour: £380 to £500. EIC and certification: £50 to £80.
+                <strong>Three-phase property</strong> — £1,000 to £1,600+ total. Required for larger
+                homes or commercial premises with three-phase supply. Materials: £420 to £700.
+                Labour: £380 to £500. EIC and certification: £50 to £80.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Areas within the Glasgow city centre (G1 to G5) may carry minor parking surcharges.
-          Outer areas such as Paisley, East Kilbride, and Motherwell have similar or slightly
-          lower rates. Always obtain at least three itemised quotes.
+          Areas within the Glasgow city centre (G1 to G5) may carry minor parking surcharges. Outer
+          areas such as Paisley, East Kilbride, and Motherwell have similar or slightly lower rates.
+          Always obtain at least three itemised quotes.
         </p>
       </>
     ),
@@ -245,15 +243,15 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic consumer unit</strong> — Regulation 421.1.201 of BS 7671 requires
-                non-combustible (metal) enclosures. Plastic enclosures are a fire risk in the
-                event of an internal arc fault.
+                non-combustible (metal) enclosures. Plastic enclosures are a fire risk in the event
+                of an internal arc fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
-                socket circuits and concealed cables. A board without RCDs or RCBOs is a significant
+                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
+                circuits and concealed cables. A board without RCDs or RCBOs is a significant
                 electric shock hazard.
               </span>
             </li>
@@ -284,8 +282,8 @@ const sections = [
       <>
         <p>
           Scotland has its own building regulations framework under the Building (Scotland)
-          Regulations 2004, which is administered separately from the Part P regime in England
-          and Wales. Consumer unit replacement is notifiable work in Scotland.
+          Regulations 2004, which is administered separately from the Part P regime in England and
+          Wales. Consumer unit replacement is notifiable work in Scotland.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -309,8 +307,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Installation Certificate</strong> — an EIC must be issued for
-                the consumer unit replacement under BS 7671. This documents the design, construction,
+                <strong>Electrical Installation Certificate</strong> — an EIC must be issued for the
+                consumer unit replacement under BS 7671. This documents the design, construction,
                 inspection, and testing of the installation and must be retained by the property
                 owner.
               </span>
@@ -327,9 +325,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          For landlords in Glasgow: the Housing (Scotland) Act 2006 Repairing Standard requires
-          that electrical installations in private rented properties be safe and in proper working
-          order. Disputes are handled by the First-tier Tribunal for Scotland (Housing and Property
+          For landlords in Glasgow: the Housing (Scotland) Act 2006 Repairing Standard requires that
+          electrical installations in private rented properties be safe and in proper working order.
+          Disputes are handled by the First-tier Tribunal for Scotland (Housing and Property
           Chamber), not the local council.
         </p>
       </>
@@ -362,8 +360,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit
-                is mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
+                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
+                mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -400,8 +398,8 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common
-              in post-1970s Glasgow housing and modern flats.
+              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common in
+              post-1970s Glasgow housing and modern flats.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -444,8 +442,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC included</strong> — confirm the Electrical Installation Certificate
-                and building regulations notification are included in the price.
+                <strong>EIC included</strong> — confirm the Electrical Installation Certificate and
+                building regulations notification are included in the price.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,7 +495,7 @@ export default function ConsumerUnitReplacementGlasgowPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Glasgow"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

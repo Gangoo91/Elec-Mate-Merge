@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Bristol EICR costs typically range from £120 to £450 depending on property size. A two-bedroom flat costs £150 to £250, while a three-bedroom house costs £200 to £350. Prices are lower than London but slightly above the national average due to strong demand in the private rented sector.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Bristol City Council.',
   'Bristol has a large stock of Georgian and Victorian properties, particularly in Clifton, Redland, and Cotham. These properties frequently present aged wiring, inadequate earthing, and lead-sheathed cables that return C2 observations requiring remedial work.',
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,18 +146,18 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -166,8 +168,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -251,8 +253,8 @@ const sections = [
               <span>
                 <strong>Before a new tenancy</strong> — the landlord must ensure the electrical
                 installation is inspected and tested by a qualified person, and obtain an EICR,
-                before a new tenant moves in. This applies to all new tenancies from 1 July 2020
-                and all existing tenancies from 1 April 2021.
+                before a new tenant moves in. This applies to all new tenancies from 1 July 2020 and
+                all existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,10 +318,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Bristol operates mandatory HMO licensing for larger
-                HMOs (five or more occupants forming two or more households) and additional licensing
-                in designated areas. The city's large student population means many properties in
-                Redland, Cotham, Stokes Croft, Fishponds, and Horfield are licensed HMOs. A valid
-                EICR is a condition of every HMO licence.
+                HMOs (five or more occupants forming two or more households) and additional
+                licensing in designated areas. The city's large student population means many
+                properties in Redland, Cotham, Stokes Croft, Fishponds, and Horfield are licensed
+                HMOs. A valid EICR is a condition of every HMO licence.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,9 +329,9 @@ const sections = [
               <span>
                 <strong>Student housing enforcement</strong> — with two major universities
                 (University of Bristol and UWE Bristol), the city has a high concentration of
-                student lets. Bristol City Council works with both universities and student unions to
-                ensure landlords comply with electrical safety requirements. Student complaints are
-                actively investigated.
+                student lets. Bristol City Council works with both universities and student unions
+                to ensure landlords comply with electrical safety requirements. Student complaints
+                are actively investigated.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -426,10 +428,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple conversions</strong> — many Georgian townhouses in Clifton have been
-                converted into multiple flats over several decades. Each conversion may have added
-                wiring of different eras, leading to a mix of wiring systems and consumer units
-                within a single building. Tracing circuit ownership between flats can be complex.
+                <strong>Multiple conversions</strong> — many Georgian townhouses in Clifton have
+                been converted into multiple flats over several decades. Each conversion may have
+                added wiring of different eras, leading to a mix of wiring systems and consumer
+                units within a single building. Tracing circuit ownership between flats can be
+                complex.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -473,8 +476,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Electricians working in Bristol should allow extra time when quoting EICRs for Georgian and
-          Victorian properties. A three-bedroom Victorian terrace in Bedminster may take 4 to 5
+          Electricians working in Bristol should allow extra time when quoting EICRs for Georgian
+          and Victorian properties. A three-bedroom Victorian terrace in Bedminster may take 4 to 5
           hours compared to 2 to 3 hours for a modern flat of the same size.
         </p>
       </>
@@ -522,8 +525,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Regulation
-                Section 631). The report includes observations with classification codes, an overall
+                Schedules of Circuit Details and Test Results (as required by Regulation Section
+                631). The report includes observations with classification codes, an overall
                 assessment, and a recommended date for the next inspection.
               </span>
             </li>
@@ -532,8 +535,8 @@ const sections = [
         <p>
           In Bristol, tenants and landlords should prepare by ensuring clear access to the consumer
           unit and meter, removing items stored in front of electrical equipment, and making all
-          rooms accessible. In converted Georgian properties, the meter and consumer unit may be in a
-          communal area — check access arrangements with the managing agent beforehand.
+          rooms accessible. In converted Georgian properties, the meter and consumer unit may be in
+          a communal area — check access arrangements with the managing agent beforehand.
         </p>
       </>
     ),
@@ -545,8 +548,8 @@ const sections = [
       <>
         <p>
           The required frequency of EICRs depends on the property type and use. BS 7671 Regulation
-          Section 621 establishes that installations must be periodically inspected at intervals suited to
-          the property type:
+          Section 621 establishes that installations must be periodically inspected at intervals
+          suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -607,8 +610,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. Searching these
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. Searching these
                 registers for Bristol-based inspectors is the most reliable way to find a qualified
                 person.
               </span>
@@ -649,8 +652,8 @@ const sections = [
       <>
         <p>
           Bristol is a strong market for EICR work. The city's large private rented sector, active
-          HMO licensing, two universities generating student housing demand, and substantial stock of
-          older properties create consistent work for qualified inspectors.
+          HMO licensing, two universities generating student housing demand, and substantial stock
+          of older properties create consistent work for qualified inspectors.
         </p>
         <p>
           To maximise efficiency and professionalism, electricians carrying out EICRs in Bristol
@@ -695,7 +698,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -732,7 +735,7 @@ export default function EICRBristolPage() {
       faqHeading="Frequently Asked Questions About EICRs in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

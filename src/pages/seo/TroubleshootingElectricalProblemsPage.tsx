@@ -629,7 +629,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Diagnose and certify faults in one visit"
-          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 430+ UK electricians using Elec-Mate on every callout. 7-day free trial."
+          description="AI-powered fault diagnosis, voice test result entry, and instant certificate generation. Join 1,000+ UK electricians using Elec-Mate on every callout. 7-day free trial."
           icon={Search}
         />
       </>

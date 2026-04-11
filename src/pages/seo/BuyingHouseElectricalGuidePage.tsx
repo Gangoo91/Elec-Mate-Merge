@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A homebuyer\'s survey does not include an electrical inspection. You must commission a separate Electrical Installation Condition Report (EICR) to understand the true condition of the wiring.',
+  "A homebuyer's survey does not include an electrical inspection. You must commission a separate Electrical Installation Condition Report (EICR) to understand the true condition of the wiring.",
   'At viewing, check the consumer unit age and type, count sockets per room, look for visible wiring in unusual materials (rubber, lead, fabric), and note any evidence of DIY electrical work.',
   'Properties built before 1966 may still have original wiring that is now at the end of its serviceable life. Pre-1966 rubber-insulated wiring is brittle, potentially dangerous, and will require a full rewire.',
   'A full house rewire typically costs £3,500 to £10,000 depending on property size. Factor this into your offer or ask the vendor to rectify before exchange.',
@@ -47,7 +47,7 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'Does a homebuyer\'s survey check the electrics?',
+    question: "Does a homebuyer's survey check the electrics?",
     answer:
       'No. A standard RICS Level 2 Homebuyer Survey or Level 3 Building Survey does not include a detailed electrical inspection or testing. The surveyor may note visible concerns (such as an old consumer unit or outdated wiring) as a prompt for further investigation, but they do not carry out continuity tests, insulation resistance tests, or earth fault loop impedance tests. To understand the true condition of the electrical installation, you need a separate EICR carried out by a qualified electrician.',
   },
@@ -160,26 +160,26 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Look at visible wiring</strong> — check under the stairs and in any
-                accessible loft space. Old rubber-insulated cables are dark brown or black and
-                the insulation often appears dry and cracked. Lead-sheathed cables are grey and
-                very heavy. Fabric-braided cables are grey or brown woven material.
+                accessible loft space. Old rubber-insulated cables are dark brown or black and the
+                insulation often appears dry and cracked. Lead-sheathed cables are grey and very
+                heavy. Fabric-braided cables are grey or brown woven material.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check light fittings</strong> — pull-cord switches in bathrooms and
-                kitchen are appropriate; standard switches indicate non-compliant work. Look for
-                shaver sockets in bathrooms — these should be BS EN 61558 shaver supply units,
-                not standard sockets.
+                <strong>Check light fittings</strong> — pull-cord switches in bathrooms and kitchen
+                are appropriate; standard switches indicate non-compliant work. Look for shaver
+                sockets in bathrooms — these should be BS EN 61558 shaver supply units, not standard
+                sockets.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Note any signs of water damage near electrics</strong> — staining around
-                sockets or switches near the kitchen, bathroom, or external walls may indicate
-                water ingress near live wiring.
+                sockets or switches near the kitchen, bathroom, or external walls may indicate water
+                ingress near live wiring.
               </span>
             </li>
           </ul>
@@ -208,9 +208,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Modern split-load or RCBO board (post-2016)</strong> — compliant with the
-                17th Amendment to BS 7671. Look for a metal-clad consumer unit (required since
-                2016 under BS 7671:2008+A3:2015) with individual RCBOs or two RCDs. This is
-                what you want to see.
+                17th Amendment to BS 7671. Look for a metal-clad consumer unit (required since 2016
+                under BS 7671:2008+A3:2015) with individual RCBOs or two RCDs. This is what you want
+                to see.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -219,18 +219,17 @@ const sections = [
                 <strong>White plastic split-load board (2000s–2016)</strong> — has RCD protection
                 but may have a plastic casing that does not comply with current regulations.
                 Functional and reasonably safe, but an{' '}
-                <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink>{' '}
-                will likely note the non-compliant casing as a C3 (improvement recommended).
+                <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink> will
+                likely note the non-compliant casing as a C3 (improvement recommended).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Older MCB-only board (1980s–1990s)</strong> — has miniature circuit
-                breakers but no RCD protection. Regulation 411.3.3 of BS 7671 requires RCD
-                protection on socket-outlet circuits. Absence of RCDs is commonly recorded as
-                a C2 (potentially dangerous) observation. Budget for a consumer unit replacement
-                at £400 to £900.
+                <strong>Older MCB-only board (1980s–1990s)</strong> — has miniature circuit breakers
+                but no RCD protection. Regulation 411.3.3 of BS 7671 requires RCD protection on
+                socket-outlet circuits. Absence of RCDs is commonly recorded as a C2 (potentially
+                dangerous) observation. Budget for a consumer unit replacement at £400 to £900.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -238,9 +237,9 @@ const sections = [
               <span>
                 <strong>Rewirable fuse board (pre-1980s)</strong> — ceramic fuse holders with
                 rewirable fuse wire. No RCD protection. The board itself is serviceable, but its
-                presence strongly suggests the wiring has not been significantly updated. Likely
-                to generate multiple C2 observations and possibly C1 findings if the associated
-                wiring is original rubber-insulated cable.
+                presence strongly suggests the wiring has not been significantly updated. Likely to
+                generate multiple C2 observations and possibly C1 findings if the associated wiring
+                is original rubber-insulated cable.
               </span>
             </li>
           </ul>
@@ -264,8 +263,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Round-pin sockets</strong> — two-pin round-pin sockets indicate pre-1947
-                wiring. Three-pin round-pin sockets indicate 1940s to early 1960s wiring. Both
-                are signs the property requires a full rewire.
+                wiring. Three-pin round-pin sockets indicate 1940s to early 1960s wiring. Both are
+                signs the property requires a full rewire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,10 +287,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visible cables in loft and under floors</strong> — grey PVC-insulated
-                twin and earth cable (T&amp;E) is modern and fine. Older cloth or rubber-sheathed
-                cable is a concern. Lead-sheathed cable should be considered a priority for
-                replacement.
+                <strong>Visible cables in loft and under floors</strong> — grey PVC-insulated twin
+                and earth cable (T&amp;E) is modern and fine. Older cloth or rubber-sheathed cable
+                is a concern. Lead-sheathed cable should be considered a priority for replacement.
               </span>
             </li>
           </ul>
@@ -308,8 +306,8 @@ const sections = [
           Uncertified DIY electrical work is one of the most common findings during house purchase
           inspections. Under Part P of the Building Regulations, most electrical work in a dwelling
           (including fitting new socket circuits, adding a consumer unit, or installing electric
-          showers) must either be carried out by a registered competent person or be inspected
-          and approved by the local authority building control.
+          showers) must either be carried out by a registered competent person or be inspected and
+          approved by the local authority building control.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -318,9 +316,9 @@ const sections = [
               <span>
                 <strong>Ask for electrical certificates</strong> — request copies of any Building
                 Regulations certificates (Minor Works Certificates, Electrical Installation
-                Certificates) for work done in the last 10 years. An extension with a new circuit,
-                a kitchen refit, or an EV charger installation should all have certification.
-                Missing certificates are a red flag.
+                Certificates) for work done in the last 10 years. An extension with a new circuit, a
+                kitchen refit, or an EV charger installation should all have certification. Missing
+                certificates are a red flag.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -352,9 +350,9 @@ const sections = [
         </div>
         <p>
           If you discover uncertified electrical work after purchase, you may be required by your
-          insurer or mortgage lender to have the work inspected and brought into compliance.
-          The cost falls on you as the new owner. This is another reason to commission an EICR
-          before exchange of contracts.
+          insurer or mortgage lender to have the work inspected and brought into compliance. The
+          cost falls on you as the new owner. This is another reason to commission an EICR before
+          exchange of contracts.
         </p>
       </>
     ),
@@ -365,8 +363,8 @@ const sections = [
     content: (
       <>
         <p>
-          Properties built before 1966 are particularly likely to have electrical installations
-          that have reached the end of their serviceable life. The post-war housing boom produced
+          Properties built before 1966 are particularly likely to have electrical installations that
+          have reached the end of their serviceable life. The post-war housing boom produced
           millions of homes with rubber-insulated wiring that is now 60 or more years old.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -374,30 +372,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rubber-insulated wiring (VIR)</strong> — vulcanised india rubber
-                insulation becomes brittle and cracks with age. The earthed conductors in
-                early rubber-insulated systems were often bare copper, creating exposed live
-                conductors in ceiling roses and junction boxes. This is a C1 (danger present)
-                finding under BS 7671 Section 631.
+                <strong>Rubber-insulated wiring (VIR)</strong> — vulcanised india rubber insulation
+                becomes brittle and cracks with age. The earthed conductors in early
+                rubber-insulated systems were often bare copper, creating exposed live conductors in
+                ceiling roses and junction boxes. This is a C1 (danger present) finding under BS
+                7671 Section 631.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No earth on lighting circuits</strong> — pre-1966 lighting circuits
-                often have no earth conductor. This means metal light fittings cannot be safely
-                earthed. Class II (double-insulated) fittings can be used as a workaround,
-                but the underlying lack of earthing is a C2 observation.
+                <strong>No earth on lighting circuits</strong> — pre-1966 lighting circuits often
+                have no earth conductor. This means metal light fittings cannot be safely earthed.
+                Class II (double-insulated) fittings can be used as a workaround, but the underlying
+                lack of earthing is a C2 observation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT earthing systems</strong> — older rural and some suburban properties
-                may have a TT (earth electrode) earthing system rather than the modern TN-S or
-                TN-C-S (PME). TT systems require RCD protection on all circuits under Regulation
-                411.5.3 of BS 7671 and often need the earth electrode to be tested and possibly
-                replaced.
+                <strong>TT earthing systems</strong> — older rural and some suburban properties may
+                have a TT (earth electrode) earthing system rather than the modern TN-S or TN-C-S
+                (PME). TT systems require RCD protection on all circuits under Regulation 411.5.3 of
+                BS 7671 and often need the earth electrode to be tested and possibly replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -412,9 +409,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          For pre-1966 properties, budget for a full rewire as a likely cost. Partial remedial
-          work on 60-year-old wiring is rarely cost-effective — electricians will often recommend
-          a complete rewire rather than attempting piecemeal repairs on an installation that will
+          For pre-1966 properties, budget for a full rewire as a likely cost. Partial remedial work
+          on 60-year-old wiring is rarely cost-effective — electricians will often recommend a
+          complete rewire rather than attempting piecemeal repairs on an installation that will
           continue to generate faults.
         </p>
       </>
@@ -430,44 +427,44 @@ const sections = [
           <SEOInternalLink href="/electrical-survey-before-buying">
             Electrical Installation Condition Report
           </SEOInternalLink>{' '}
-          is after your offer has been accepted but before exchange of contracts. This gives you
-          the information you need to negotiate and the option to withdraw if the findings are
-          serious, without being legally committed to the purchase.
+          is after your offer has been accepted but before exchange of contracts. This gives you the
+          information you need to negotiate and the option to withdraw if the findings are serious,
+          without being legally committed to the purchase.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Who commissions it?</strong> — you commission the EICR at your own cost.
-                The vendor must allow reasonable access for the inspection. Most vendors will
-                cooperate as they understand it is a standard part of the purchase process for
-                informed buyers. Cost is typically £150 to £400 for a typical three-bedroom house.
+                <strong>Who commissions it?</strong> — you commission the EICR at your own cost. The
+                vendor must allow reasonable access for the inspection. Most vendors will cooperate
+                as they understand it is a standard part of the purchase process for informed
+                buyers. Cost is typically £150 to £400 for a typical three-bedroom house.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Who carries it out?</strong> — the EICR must be carried out by a
-                qualified electrician registered with a competent person scheme (NICEIC, NAPIT,
-                ELECSA, or equivalent). Verify qualifications and registration before booking.
+                <strong>Who carries it out?</strong> — the EICR must be carried out by a qualified
+                electrician registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or
+                equivalent). Verify qualifications and registration before booking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What does it cover?</strong> — the EICR tests the condition of fixed
-                electrical wiring, the consumer unit, earthing, bonding, and circuits throughout
-                the property. It does not cover portable appliances. The inspector will carry out
-                visual inspection and a series of electrical tests at each circuit.
+                electrical wiring, the consumer unit, earthing, bonding, and circuits throughout the
+                property. It does not cover portable appliances. The inspector will carry out visual
+                inspection and a series of electrical tests at each circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Satisfactory vs Unsatisfactory</strong> — the EICR is classified as
-                Satisfactory (no C1 or C2 observations) or Unsatisfactory (one or more C1 or
-                C2 observations). A Satisfactory EICR with only C3 (improvement recommended)
+                Satisfactory (no C1 or C2 observations) or Unsatisfactory (one or more C1 or C2
+                observations). A Satisfactory EICR with only C3 (improvement recommended)
                 observations is a good result for an older property.
               </span>
             </li>
@@ -492,36 +489,36 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Get two or three quotes</strong> — before approaching the vendor, obtain
-                written quotes for the remedial work from qualified electricians. This gives you
-                a documented, evidence-based figure for your negotiation.
+                written quotes for the remedial work from qualified electricians. This gives you a
+                documented, evidence-based figure for your negotiation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Price reduction vs vendor remediation</strong> — a price reduction is
-                usually preferable. Vendor-managed remediation may be rushed or carried out by
-                the cheapest available contractor. A price reduction gives you control over the
-                quality of work after completion.
+                usually preferable. Vendor-managed remediation may be rushed or carried out by the
+                cheapest available contractor. A price reduction gives you control over the quality
+                of work after completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Retention</strong> — in some cases, your solicitor can arrange a
-                retention — part of the purchase price held back at completion and released only
-                when the remedial work has been completed and certified. This is less common but
-                worth exploring for substantial works.
+                <strong>Retention</strong> — in some cases, your solicitor can arrange a retention —
+                part of the purchase price held back at completion and released only when the
+                remedial work has been completed and certified. This is less common but worth
+                exploring for substantial works.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When to walk away</strong> — if the vendor refuses any concession and
-                the remedial cost is significant (for example, a full rewire at £7,000 on a
-                property where you have already negotiated to the maximum), withdrawing before
-                exchange may be the right decision. You will lose your survey and EICR costs
-                but avoid a much larger problem post-completion.
+                <strong>When to walk away</strong> — if the vendor refuses any concession and the
+                remedial cost is significant (for example, a full rewire at £7,000 on a property
+                where you have already negotiated to the maximum), withdrawing before exchange may
+                be the right decision. You will lose your survey and EICR costs but avoid a much
+                larger problem post-completion.
               </span>
             </li>
           </ul>
@@ -543,17 +540,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £2,500 to £4,000. Typically 1 to 2 days'
-                work with a team of two. Includes consumer unit replacement, new circuits,
-                sockets, and switches.
+                <strong>One-bedroom flat</strong> — £2,500 to £4,000. Typically 1 to 2 days' work
+                with a team of two. Includes consumer unit replacement, new circuits, sockets, and
+                switches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom house or flat</strong> — £3,500 to £5,500. Two to three
-                days. Redecoration after chasing channels in walls is an additional cost —
-                budget £1,000 to £2,000 for basic redecoration.
+                <strong>Two-bedroom house or flat</strong> — £3,500 to £5,500. Two to three days.
+                Redecoration after chasing channels in walls is an additional cost — budget £1,000
+                to £2,000 for basic redecoration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -567,34 +564,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom house</strong> — £6,000 to £10,000. Four to five days.
-                Complex Victorian properties with solid masonry walls cost more due to the
-                difficulty of chasing channels.
+                <strong>Four-bedroom house</strong> — £6,000 to £10,000. Four to five days. Complex
+                Victorian properties with solid masonry walls cost more due to the difficulty of
+                chasing channels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement only</strong> — £400 to £900. If the wiring
-                is in good condition but the consumer unit is outdated, replacement alone is a
-                much smaller cost.
+                <strong>Consumer unit replacement only</strong> — £400 to £900. If the wiring is in
+                good condition but the consumer unit is outdated, replacement alone is a much
+                smaller cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD retrofit and bonding</strong> — £300 to £700. Fitting a new
-                consumer unit with RCDs plus main bonding conductors, if the wiring itself is
-                otherwise serviceable.
+                <strong>RCD retrofit and bonding</strong> — £300 to £700. Fitting a new consumer
+                unit with RCDs plus main bonding conductors, if the wiring itself is otherwise
+                serviceable.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These costs do not include VAT (which is charged at 5% on residential rewires) or
-          Building Regulations fees. Always ensure the electrician will provide an Electrical
-          Installation Certificate (EIC) on completion — this is the document you will need when
-          you come to sell the property.
+          These costs do not include VAT (which is charged at 5% on residential rewires) or Building
+          Regulations fees. Always ensure the electrician will provide an Electrical Installation
+          Certificate (EIC) on completion — this is the document you will need when you come to sell
+          the property.
         </p>
       </>
     ),
@@ -606,8 +603,8 @@ const sections = [
       <>
         <p>
           House purchase EICRs are a growing and lucrative source of work. Buyers are increasingly
-          commissioning EICRs as part of their due diligence, and a good EICR that reveals
-          remedial work frequently leads directly to a rewire or consumer unit replacement quote.
+          commissioning EICRs as part of their due diligence, and a good EICR that reveals remedial
+          work frequently leads directly to a rewire or consumer unit replacement quote.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -620,9 +617,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the full report on your phone while still at the property. Send
-                  the PDF to the buyer before you leave. House purchase EICRs are often
-                  time-sensitive — buyers need the report quickly to progress their purchase.
+                  to complete the full report on your phone while still at the property. Send the
+                  PDF to the buyer before you leave. House purchase EICRs are often time-sensitive —
+                  buyers need the report quickly to progress their purchase.
                 </p>
               </div>
             </div>
@@ -633,8 +630,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote the Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, quote the remedial work while still on
-                  site using the{' '}
+                  When C1 or C2 observations are found, quote the remedial work while still on site
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting tool
                   </SEOInternalLink>
@@ -647,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete the report before you leave the property. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete the report before you leave the property. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -684,7 +681,7 @@ export default function BuyingHouseElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Checks When Buying a House"
       relatedPages={relatedPages}
       ctaHeading="Complete House Purchase EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. Send the report to buyers before you leave the property. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. Send the report to buyers before you leave the property. 7-day free trial."
     />
   );
 }

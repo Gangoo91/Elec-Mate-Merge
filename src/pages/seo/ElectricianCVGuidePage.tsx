@@ -596,7 +596,7 @@ export default function ElectricianCVGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician CVs"
       relatedPages={relatedPages}
       ctaHeading="Build Your Professional Electrician Profile"
-      ctaSubheading="Create your ElecID digital profile, track your CPD, and access 50+ training courses — all on Elec-Mate. Join 430+ UK electricians building their careers the smart way. 7-day free trial."
+      ctaSubheading="Create your ElecID digital profile, track your CPD, and access 50+ training courses — all on Elec-Mate. Join 1,000+ UK electricians building their careers the smart way. 7-day free trial."
     />
   );
 }

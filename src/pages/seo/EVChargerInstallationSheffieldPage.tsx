@@ -31,7 +31,7 @@ const tocItems = [
   { id: 'section-722', label: 'Section 722 Compliance' },
   { id: 'pme-earthing', label: 'PME Earthing in Sheffield' },
   { id: 'dno-notification', label: 'Northern Powergrid DNO Notification' },
-  { id: 'terrain', label: 'Sheffield\'s Hilly Terrain and Cable Routing' },
+  { id: 'terrain', label: "Sheffield's Hilly Terrain and Cable Routing" },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -42,7 +42,7 @@ const keyTakeaways = [
   'The OZEV EV chargepoint grant provides up to £350 for eligible flat owners and tenants — applied for by an OZEV-approved installer on your behalf.',
   'Northern Powergrid is the DNO for Sheffield. G98 notification is required before energising any domestic 7kW EV charger; G99 approval needed for three-phase 22kW installations.',
   'BS 7671:2018 Section 722 governs all EV charging installations. PME earthing arrangements are common in Sheffield, often requiring an earth rod for outdoor charger locations.',
-  'Sheffield\'s hilly topography means some properties have unusually long cable routes from consumer unit to parking, particularly on steep terrace streets — factor this into quotes.',
+  "Sheffield's hilly topography means some properties have unusually long cable routes from consumer unit to parking, particularly on steep terrace streets — factor this into quotes.",
   'NICEIC and NAPIT-registered electricians can self-certify EV charger installations to Part P of the Building Regulations without a separate building control application.',
 ];
 
@@ -63,9 +63,9 @@ const faqs = [
       'Northern Powergrid is the Distribution Network Operator for Sheffield and the wider South Yorkshire area. All domestic EV charger installations must be notified to Northern Powergrid under Engineering Recommendation G98 before the charger is energised. For 7kW single-phase chargers, G98 is a straightforward notification submitted by your installer — no prior approval is needed. Three-phase 22kW chargers require G99 prior approval, which can take several weeks.',
   },
   {
-    question: 'Does Sheffield\'s hilly topography affect EV charger installation costs?',
+    question: "Does Sheffield's hilly topography affect EV charger installation costs?",
     answer:
-      'It can. Sheffield\'s distinctive hillside terraces — particularly in areas like Crookes, Walkley, Hillsborough, and the Valleys — sometimes have steeply sloped driveways or yards that create challenges for charger mounting and cable routing. Where a property is on a steep slope, cable runs from the consumer unit to a parking position at the bottom of the garden may be longer than expected. Cable containment on steep external walls also needs careful planning. Always ask your installer to assess the specific cable route before agreeing a fixed price.',
+      "It can. Sheffield's distinctive hillside terraces — particularly in areas like Crookes, Walkley, Hillsborough, and the Valleys — sometimes have steeply sloped driveways or yards that create challenges for charger mounting and cable routing. Where a property is on a steep slope, cable runs from the consumer unit to a parking position at the bottom of the garden may be longer than expected. Cable containment on steep external walls also needs careful planning. Always ask your installer to assess the specific cable route before agreeing a fixed price.",
   },
   {
     question: 'Do I need an earth rod for an EV charger in Sheffield?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-cost',
     title: 'EV Charger Installation Cost UK',
-    description: 'National price guide for EV charger installation covering all charger types and regions.',
+    description:
+      'National price guide for EV charger installation covering all charger types and regions.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -124,7 +125,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician/sheffield',
     title: 'Electrician in Sheffield',
-    description: 'Find NICEIC and NAPIT-registered electricians in Sheffield for EV charger installation.',
+    description:
+      'Find NICEIC and NAPIT-registered electricians in Sheffield for EV charger installation.',
     icon: MapPin,
     category: 'Location',
   },
@@ -141,24 +143,24 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield is embracing electric vehicles at a growing rate, with residents across the
-          city replacing petrol and diesel cars ahead of the UK's 2035 zero-emission vehicle
-          mandate. Home EV charger installation provides the most convenient and cost-effective
-          charging solution, allowing a full charge overnight from a dedicated 7kW wallbox.
+          Sheffield is embracing electric vehicles at a growing rate, with residents across the city
+          replacing petrol and diesel cars ahead of the UK's 2035 zero-emission vehicle mandate.
+          Home EV charger installation provides the most convenient and cost-effective charging
+          solution, allowing a full charge overnight from a dedicated 7kW wallbox.
         </p>
         <p>
           Sheffield presents a varied picture for EV charger installation. The city's housing stock
           ranges from post-war semis and modern new builds in the south and west of the city to
           stone-built Victorian terraces on steep hillsides across Hillsborough, Walkley, Crookes,
           and the Valleys. Most properties have off-street parking, which keeps installation
-          feasibility high, though the city's distinctive topography occasionally creates longer
-          or more complex cable routes.
+          feasibility high, though the city's distinctive topography occasionally creates longer or
+          more complex cable routes.
         </p>
         <p>
-          This guide covers the real costs of EV charger installation in Sheffield in 2026, the
-          OZEV grant of up to £350 for eligible residents, the{' '}
-          <strong>Northern Powergrid</strong> DNO notification process, Part P compliance, and how
-          Sheffield's hilly terrain can affect cable routing and costs.
+          This guide covers the real costs of EV charger installation in Sheffield in 2026, the OZEV
+          grant of up to £350 for eligible residents, the <strong>Northern Powergrid</strong> DNO
+          notification process, Part P compliance, and how Sheffield's hilly terrain can affect
+          cable routing and costs.
         </p>
       </>
     ),
@@ -170,8 +172,8 @@ const sections = [
       <>
         <p>
           Sheffield offers competitive pricing for EV charger installation, reflecting Yorkshire's
-          lower-than-London labour rates and the accessibility of most residential properties for
-          a standard cable route installation.
+          lower-than-London labour rates and the accessibility of most residential properties for a
+          standard cable route installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -181,44 +183,44 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (semi or detached, garage or short driveway)</strong>{' '}
-                — £800 to £1,000. Charger mounted close to the consumer unit, cable run of 3 to 8
-                metres, existing board has a spare way. Typical for Sheffield's south-west semis
-                and new builds in areas like Dore, Totley, and Mosborough.
+                <strong>Simple installation (semi or detached, garage or short driveway)</strong> —
+                £800 to £1,000. Charger mounted close to the consumer unit, cable run of 3 to 8
+                metres, existing board has a spare way. Typical for Sheffield's south-west semis and
+                new builds in areas like Dore, Totley, and Mosborough.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (terrace, medium run, earth rod)</strong> — £900
-                to £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB
-                addition. Typical for Sheffield terraces in Hillsborough, Burngreave, or Attercliffe
-                with a front-of-house parking area.
+                <strong>Standard installation (terrace, medium run, earth rod)</strong> — £900 to
+                £1,100. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition.
+                Typical for Sheffield terraces in Hillsborough, Burngreave, or Attercliffe with a
+                front-of-house parking area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (steep terrace, long run, board upgrade)</strong>{' '}
-                — £1,100 to £1,400. Cable run over 15 metres on steep slopes or through the
-                property, full consumer unit upgrade needed, or underground cable route required.
-                More common on Walkley, Crookes, or Rivelin Valley properties.
+                <strong>Complex installation (steep terrace, long run, board upgrade)</strong> —
+                £1,100 to £1,400. Cable run over 15 metres on steep slopes or through the property,
+                full consumer unit upgrade needed, or underground cable route required. More common
+                on Walkley, Crookes, or Rivelin Valley properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires
-                an existing three-phase supply and G99 approval from Northern Powergrid. Typical
-                for commercial premises or high-mileage drivers with a suitable supply.
+                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires an
+                existing three-phase supply and G99 approval from Northern Powergrid. Typical for
+                commercial premises or high-mileage drivers with a suitable supply.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Labour rates for qualified electricians in Sheffield range from £38 to £52 per hour.
-          A typical EV charger installation takes 3 to 5 hours, making it a half-day to full-day
-          job depending on complexity.
+          Labour rates for qualified electricians in Sheffield range from £38 to £52 per hour. A
+          typical EV charger installation takes 3 to 5 hours, making it a half-day to full-day job
+          depending on complexity.
         </p>
       </>
     ),
@@ -239,8 +241,8 @@ const sections = [
               <span>
                 <strong>EV chargepoint grant (OZEV)</strong> — up to £350 for flat owners and
                 tenants who own or lease an eligible plug-in vehicle. Covers 75% of installation
-                cost capped at £350. Applied for by your OZEV-approved installer — no paperwork
-                for the homeowner beyond confirming vehicle ownership.
+                cost capped at £350. Applied for by your OZEV-approved installer — no paperwork for
+                the homeowner beyond confirming vehicle ownership.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,8 +285,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a 32A dedicated
-                circuit from the consumer unit. If no spare way exists, a consumer unit upgrade
-                or separate enclosure is needed.
+                circuit from the consumer unit. If no spare way exists, a consumer unit upgrade or
+                separate enclosure is needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,8 +308,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable sizing and voltage drop</strong> — on longer Sheffield cable runs,
-                use{' '}
+                <strong>Cable sizing and voltage drop</strong> — on longer Sheffield cable runs, use{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
@@ -344,18 +345,18 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Sheffield Solutions</h3>
             <p className="text-white text-sm leading-relaxed">
-              Installing a local earth electrode (earth rod) at the charger to create a TT
-              earthing arrangement is the most common approach for Sheffield outdoor chargers.
-              Alternatively, chargers with built-in PEN fault detection can be used on a PME
-              supply without a separate earth rod. Where the charger is fully inside a garage or
-              enclosed carport, a risk assessment may allow the PME earth to be retained.
+              Installing a local earth electrode (earth rod) at the charger to create a TT earthing
+              arrangement is the most common approach for Sheffield outdoor chargers. Alternatively,
+              chargers with built-in PEN fault detection can be used on a PME supply without a
+              separate earth rod. Where the charger is fully inside a garage or enclosed carport, a
+              risk assessment may allow the PME earth to be retained.
             </p>
           </div>
         </div>
         <p>
           Sheffield's ground conditions are generally favourable for earth rod installation. The
-          typical additional cost is £80 to £150, including the rod, clamp, and testing to
-          confirm adequate earth resistance values.
+          typical additional cost is £80 to £150, including the rod, clamp, and testing to confirm
+          adequate earth resistance values.
         </p>
       </>
     ),
@@ -366,8 +367,8 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>Northern Powergrid</strong> is the Distribution Network Operator for Sheffield
-          and South Yorkshire. Every EV charger installation must be notified to Northern Powergrid
+          <strong>Northern Powergrid</strong> is the Distribution Network Operator for Sheffield and
+          South Yorkshire. Every EV charger installation must be notified to Northern Powergrid
           before the charger is switched on.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -377,26 +378,24 @@ const sections = [
               <span>
                 <strong>G98 notification (7kW single-phase)</strong> — submit online via Northern
                 Powergrid's portal. This is a notification, not an application — the installer
-                proceeds with connection and notifies concurrently. Processing is largely
-                automated for standard domestic installations.
+                proceeds with connection and notifies concurrently. Processing is largely automated
+                for standard domestic installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 application (22kW three-phase)</strong> — prior approval required
-                before installation. Allow 4 to 10 weeks for Northern Powergrid to assess
-                network capacity. More common for commercial premises or multi-unit residential
-                developments.
+                <strong>G99 application (22kW three-phase)</strong> — prior approval required before
+                installation. Allow 4 to 10 weeks for Northern Powergrid to assess network capacity.
+                More common for commercial premises or multi-unit residential developments.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician submits the DNO
-                notification, not the homeowner. Confirm DNO notification is included in the
-                quoted price. Non-notified installations are not compliant and may need to be
-                disconnected.
+                notification, not the homeowner. Confirm DNO notification is included in the quoted
+                price. Non-notified installations are not compliant and may need to be disconnected.
               </span>
             </li>
           </ul>
@@ -406,13 +405,13 @@ const sections = [
   },
   {
     id: 'terrain',
-    heading: 'Sheffield\'s Hilly Terrain and EV Charger Cable Routing',
+    heading: "Sheffield's Hilly Terrain and EV Charger Cable Routing",
     content: (
       <>
         <p>
           Sheffield is famously hilly — a city built across seven hills, much like Rome. This
-          topography has a real impact on EV charger installation, particularly for properties
-          on steep residential streets:
+          topography has a real impact on EV charger installation, particularly for properties on
+          steep residential streets:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -421,17 +420,17 @@ const sections = [
               <span>
                 <strong>Sloped driveways</strong> — steep driveways require careful charger
                 positioning to ensure cable connections remain protected from water ingress and
-                physical damage. The charger may need to be mounted higher on a wall to ensure
-                the cable reaches the vehicle's charge port without trailing on the ground.
+                physical damage. The charger may need to be mounted higher on a wall to ensure the
+                cable reaches the vehicle's charge port without trailing on the ground.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Hillside terrace back entries</strong> — many Sheffield terraces on
-                hillsides have parking accessed through a back entry below the property level.
-                Cable routes from the consumer unit (inside the house) to a charger at the lower
-                rear of the property can be longer and more complex than expected.
+                hillsides have parking accessed through a back entry below the property level. Cable
+                routes from the consumer unit (inside the house) to a charger at the lower rear of
+                the property can be longer and more complex than expected.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -446,9 +445,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Always ask your installer to carry out a site survey before agreeing a fixed price for
-          a Sheffield EV charger installation. Complex terrain can significantly affect the
-          time and materials required.
+          Always ask your installer to carry out a site survey before agreeing a fixed price for a
+          Sheffield EV charger installation. Complex terrain can significantly affect the time and
+          materials required.
         </p>
       </>
     ),
@@ -471,9 +470,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Sheffield EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Factor in Yorkshire labour rates (£38 to £52/hour), site survey time for
-                  complex terrain, earth rod costs, Northern Powergrid notification, and
-                  certification. Use Elec-Mate's{' '}
+                  Factor in Yorkshire labour rates (£38 to £52/hour), site survey time for complex
+                  terrain, earth rod costs, Northern Powergrid notification, and certification. Use
+                  Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     electrical quoting app
                   </SEOInternalLink>{' '}
@@ -492,10 +491,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
-                  from your phone before leaving site. Every EV charger installation requires a
-                  full EIC signed by designer, constructor, and inspector under BS 7671 Section
-                  722. Elec-Mate's certificate app covers all required test fields and can be
-                  emailed to the customer instantly.
+                  from your phone before leaving site. Every EV charger installation requires a full
+                  EIC signed by designer, constructor, and inspector under BS 7671 Section 722.
+                  Elec-Mate's certificate app covers all required test fields and can be emailed to
+                  the customer instantly.
                 </p>
               </div>
             </div>
@@ -503,7 +502,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Sheffield EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Sheffield and South Yorkshire."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Sheffield and South Yorkshire."
           icon={Car}
         />
       </>
@@ -540,7 +539,7 @@ export default function EVChargerInstallationSheffieldPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

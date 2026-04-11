@@ -559,7 +559,7 @@ export default function ElectricalUnionMembershipPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Track your career progression with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for CPD tracking, qualification management, and professional development. Build the evidence you need for JIB grading assessments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for CPD tracking, qualification management, and professional development. Build the evidence you need for JIB grading assessments. 7-day free trial, cancel anytime."
     />
   );
 }

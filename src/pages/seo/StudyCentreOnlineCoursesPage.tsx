@@ -170,8 +170,8 @@ export default function StudyCentreOnlineCoursesPage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  BS 7671:2018+A3:2024 — what changed in Amendment 3, including new Section 530 requirements
-                  for bidirectional and unidirectional devices
+                  BS 7671:2018+A3:2024 — what changed in Amendment 3, including new Section 530
+                  requirements for bidirectional and unidirectional devices
                 </li>
                 <li>
                   <SEOInternalLink href="/guides/ev-charger-installation">
@@ -499,7 +499,7 @@ export default function StudyCentreOnlineCoursesPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'Put your training into practice with 8 certificate types and AI-powered tools.',
+            'Put your training into practice with 16 certificate types and AI-powered tools.',
           icon: FileCheck2,
           category: 'Certificates',
         },

@@ -555,7 +555,7 @@ export default function NAPICertificateGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Work With Any Scheme"
-      ctaSubheading="Join 430+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. Works with NAPIT, NICEIC, ELECSA, and BRE. PDF export, digital signatures, cloud storage. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. Works with NAPIT, NICEIC, ELECSA, and BRE. PDF export, digital signatures, cloud storage. 7-day free trial."
     />
   );
 }

@@ -40,7 +40,7 @@ const keyTakeaways = [
   'National Grid Electricity Distribution (NGED) is the DNO for Worcester and the West Midlands. G98/G99 notifications for generation equipment and new connection applications go through NGED.',
   'Worcester has a mix of medieval timber-framed buildings in the city centre, Victorian and Edwardian terraces, interwar semis, and modern new-build development in the south and east of the city.',
   'The city sits on the River Severn and is subject to regular flooding — a consideration for electrical installations in flood-risk zones, particularly ground floor circuits and consumer unit locations.',
-  'Worcester\'s proximity to Birmingham and the growing West Midlands economy means competitive but sustainable electrician rates, with healthy demand from both the domestic and commercial sectors.',
+  "Worcester's proximity to Birmingham and the growing West Midlands economy means competitive but sustainable electrician rates, with healthy demand from both the domestic and commercial sectors.",
 ];
 
 const faqs = [
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Are there flood-related electrical considerations in Worcester?',
     answer:
-      'Yes. Worcester sits on the River Severn and is one of England\'s most flood-prone cities. Electricians working in flood-risk areas (particularly Diglis, Battenhall, and riverside properties) should consider: consumer unit position (raised above likely flood level), use of waterproof electrical accessories in vulnerable areas, appropriate IP-rated fittings in locations prone to inundation, and the need for full testing after any flood event before reinstatement. Installing consumer units above ground floor level (first floor or high on the ground floor wall) is strongly recommended in flood-risk properties.',
+      "Yes. Worcester sits on the River Severn and is one of England's most flood-prone cities. Electricians working in flood-risk areas (particularly Diglis, Battenhall, and riverside properties) should consider: consumer unit position (raised above likely flood level), use of waterproof electrical accessories in vulnerable areas, appropriate IP-rated fittings in locations prone to inundation, and the need for full testing after any flood event before reinstatement. Installing consumer units above ground floor level (first floor or high on the ground floor wall) is strongly recommended in flood-risk properties.",
   },
   {
     question: 'How often do Worcester rental properties need an EICR?',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables correctly for rewires and new circuits in Worcester\'s varied housing stock.',
+      "Size cables correctly for rewires and new circuits in Worcester's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
+    description: 'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -146,20 +145,21 @@ const sections = [
           Worcester is the county town of Worcestershire, situated on the east bank of the River
           Severn in the West Midlands region, with a population of around 100,000. The city has a
           rich history — its medieval cathedral dominates the skyline, and the city centre contains
-          numerous listed buildings and a conservation area centred on the high street and riverside.
+          numerous listed buildings and a conservation area centred on the high street and
+          riverside.
         </p>
         <p>
           For electricians, Worcester offers a broad and varied workload: Victorian and Edwardian
-          terraces needing upgrade and rewire, a growing student population (University of Worcester)
-          driving rental property EICR demand, commercial work in the city centre and business parks,
-          and residential development in the south and east of the city (Kempsey, Whittington, and
-          Norton). The city's Severn location also creates flood-specific electrical considerations
-          that local electricians need to understand.
+          terraces needing upgrade and rewire, a growing student population (University of
+          Worcester) driving rental property EICR demand, commercial work in the city centre and
+          business parks, and residential development in the south and east of the city (Kempsey,
+          Whittington, and Norton). The city's Severn location also creates flood-specific
+          electrical considerations that local electricians need to understand.
         </p>
         <p>
           This guide covers Part P compliance, the local DNO (NGED), flood-related electrical
-          considerations, pricing, and practical advice for electricians building a practice
-          in Worcester.
+          considerations, pricing, and practical advice for electricians building a practice in
+          Worcester.
         </p>
       </>
     ),
@@ -169,9 +169,7 @@ const sections = [
     heading: 'Part P and Electrical Compliance in Worcester',
     content: (
       <>
-        <p>
-          Worcester is in England, so Part P of the Building Regulations applies:
-        </p>
+        <p>Worcester is in England, so Part P of the Building Regulations applies:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -179,16 +177,16 @@ const sections = [
               <span>
                 <strong>Competent person scheme</strong> — NICEIC, NAPIT, or ELECSA registration
                 allows self-certification of Part P notifiable work without prior council
-                notification. The scheme notifies Worcester City Council Building Control and
-                issues the compliance certificate to the customer.
+                notification. The scheme notifies Worcester City Council Building Control and issues
+                the compliance certificate to the customer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A3:2024.
-                RCD protection under Regulation 411.3.3 is mandatory for socket outlets up to 32A
-                and for circuits in locations of increased shock risk.
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A3:2024. RCD protection under Regulation 411.3.3 is mandatory for socket
+                outlets up to 32A and for circuits in locations of increased shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,23 +218,23 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New connections</strong> — apply through NGED's connections portal.
-                Essential for EV charger installations where supply capacity may need upgrading,
-                and for heat pump installations on larger properties.
+                Essential for EV charger installations where supply capacity may need upgrading, and
+                for heat pump installations on larger properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 for generation</strong> — solar PV and battery storage
-                notifications. G98 online for systems up to 16A per phase. G99 pre-approval
-                for larger systems.
+                notifications. G98 online for systems up to 16A per phase. G99 pre-approval for
+                larger systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency number</strong> — 105 for power cuts and emergencies across
-                the NGED network area.
+                <strong>Emergency number</strong> — 105 for power cuts and emergencies across the
+                NGED network area.
               </span>
             </li>
           </ul>
@@ -253,36 +251,35 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              St Johns, Rainbow Hill, Barbourne, and Arboretum areas. Solid or partial cavity
-              brick walls, ageing wiring, rewirable fuse boards in many. Rewires and consumer
-              unit replacements are common. Asbestos surveys recommended for pre-1985 properties.
-              Some riverside properties in Diglis and Battenhall are in flood-risk zones.
+              St Johns, Rainbow Hill, Barbourne, and Arboretum areas. Solid or partial cavity brick
+              walls, ageing wiring, rewirable fuse boards in many. Rewires and consumer unit
+              replacements are common. Asbestos surveys recommended for pre-1985 properties. Some
+              riverside properties in Diglis and Battenhall are in flood-risk zones.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Interwar and Post-War Semis</h3>
             <p className="text-white text-sm leading-relaxed">
-              Dines Green, Warndon, and Ronkswood estates. Cavity brick construction, more
-              standard cable routing. Consumer unit replacements and EICRs are primary work.
-              University of Worcester student accommodation in these areas drives rental
-              EICR demand.
+              Dines Green, Warndon, and Ronkswood estates. Cavity brick construction, more standard
+              cable routing. Consumer unit replacements and EICRs are primary work. University of
+              Worcester student accommodation in these areas drives rental EICR demand.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Development</h3>
             <p className="text-white text-sm leading-relaxed">
               Kempsey, Whittington, and areas south of the city are seeing ongoing new-build
-              residential development. Modern cavity-wall construction with current consumer
-              units and EV charger provisions. Additions, modifications, and EV charger
-              installation are the primary work.
+              residential development. Modern cavity-wall construction with current consumer units
+              and EV charger provisions. Additions, modifications, and EV charger installation are
+              the primary work.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">City Centre Commercial</h3>
             <p className="text-white text-sm leading-relaxed">
               The historic city centre has retail, hospitality, and office properties, including
-              listed buildings. Commercial electrical work, emergency lighting, fire alarm
-              systems, and periodic inspection of commercial premises are common in this area.
+              listed buildings. Commercial electrical work, emergency lighting, fire alarm systems,
+              and periodic inspection of commercial premises are common in this area.
             </p>
           </div>
         </div>
@@ -299,9 +296,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — very common on Worcester's large
-                stock of pre-1990s housing. Upgrading rewirable fuse boards to modern RCD or
-                RCBO consumer units.
+                <strong>Consumer unit replacements</strong> — very common on Worcester's large stock
+                of pre-1990s housing. Upgrading rewirable fuse boards to modern RCD or RCBO consumer
+                units.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -314,16 +311,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rental property EICRs</strong> — driven by student accommodation and
-                private rented sector. Five-yearly obligation under the 2020 Regulations.
+                <strong>Rental property EICRs</strong> — driven by student accommodation and private
+                rented sector. Five-yearly obligation under the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flood remediation and prevention</strong> — after flood events, testing
-                and reinstatement work. Proactive flood protection installations (raised consumer
-                units, waterproof accessories) in flood-risk areas.
+                <strong>Flood remediation and prevention</strong> — after flood events, testing and
+                reinstatement work. Proactive flood protection installations (raised consumer units,
+                waterproof accessories) in flood-risk areas.
               </span>
             </li>
           </ul>
@@ -402,11 +399,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Get landlords their compliance documents before you leave the property.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Get landlords their compliance documents before you leave the property.
                 </p>
               </div>
             </div>
@@ -429,7 +423,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Worcester electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Worcestershire and the West Midlands. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Worcestershire and the West Midlands. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -454,8 +448,7 @@ export default function ElectricianWorcesterPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Worcester:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Worcester: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Worcester's Victorian terraces, large rental sector, and River Severn flood-risk zones create a distinctive market for qualified electricians. Find NICEIC and NAPIT registered electricians in Worcester and Worcestershire."
@@ -466,7 +459,7 @@ export default function ElectricianWorcesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Worcester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Worcester Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Worcestershire and the West Midlands. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Worcestershire and the West Midlands. 7-day free trial."
     />
   );
 }

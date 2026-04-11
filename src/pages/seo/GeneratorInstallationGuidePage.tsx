@@ -87,28 +87,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/industrial-earthing-systems',
     title: 'Industrial Earthing Systems',
-    description: 'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
+    description:
+      'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/transformer-installation-guide',
     title: 'Transformer Installation Guide',
-    description: 'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
+    description:
+      'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/power-factor-correction',
     title: 'Power Factor Correction',
-    description: 'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
+    description:
+      'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
     icon: Activity,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-installation-certificate',
     title: 'Electrical Installation Certificate',
-    description: 'Complete EICs on your phone and export PDF instantly for generator installations.',
+    description:
+      'Complete EICs on your phone and export PDF instantly for generator installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -125,23 +129,22 @@ const sections = [
     content: (
       <>
         <p>
-          The first step in any generator installation project is correctly specifying whether
-          a standby or prime power machine is required. Specifying a standby-rated generator
-          for an application that requires continuous running will result in premature failure
-          and will almost certainly void the manufacturer's warranty. Standby generators are
-          rated for limited annual hours at 100% load; prime power generators are rated for
-          continuous operation.
+          The first step in any generator installation project is correctly specifying whether a
+          standby or prime power machine is required. Specifying a standby-rated generator for an
+          application that requires continuous running will result in premature failure and will
+          almost certainly void the manufacturer's warranty. Standby generators are rated for
+          limited annual hours at 100% load; prime power generators are rated for continuous
+          operation.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standby power rating (ESP)</strong> — the output available for the
-                duration of a power outage, typically assumed as no more than 200 hours per year.
-                Average load should not exceed 70% of standby rating. No overload rating is
-                available. Suitable for emergency power backup in commercial and industrial
-                premises.
+                <strong>Standby power rating (ESP)</strong> — the output available for the duration
+                of a power outage, typically assumed as no more than 200 hours per year. Average
+                load should not exceed 70% of standby rating. No overload rating is available.
+                Suitable for emergency power backup in commercial and industrial premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,10 +159,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Continuous power rating (COP)</strong> — the maximum output for
-                unlimited hours at 100% load with no variable load capability. The lowest
-                rating for a given engine. Suitable for base load generation and industrial
-                power plant where the generator runs continuously at a constant output.
+                <strong>Continuous power rating (COP)</strong> — the maximum output for unlimited
+                hours at 100% load with no variable load capability. The lowest rating for a given
+                engine. Suitable for base load generation and industrial power plant where the
+                generator runs continuously at a constant output.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -168,8 +171,8 @@ const sections = [
                 <strong>Load assessment</strong> — before specifying generator kVA, calculate the
                 maximum coincident demand including motor starting (which can draw 6–8× running
                 current). The generator must maintain stable voltage and frequency during the
-                largest motor start. Generator sets are typically selected to be at least 1.5×
-                the largest motor starting kVA to maintain voltage above 80% during starting.
+                largest motor start. Generator sets are typically selected to be at least 1.5× the
+                largest motor starting kVA to maintain voltage above 80% during starting.
               </span>
             </li>
           </ul>
@@ -184,10 +187,10 @@ const sections = [
       <>
         <p>
           An Automatic Transfer Switch (ATS) continuously monitors the mains supply voltage and
-          frequency. On detection of a mains failure, the ATS sends a start signal to the
-          generator, waits for the generator to reach stable voltage and frequency, then transfers
-          the load from mains to generator. On mains restoration, the ATS retransfers the load
-          back to mains after a stability timer has confirmed the mains supply has recovered.
+          frequency. On detection of a mains failure, the ATS sends a start signal to the generator,
+          waits for the generator to reach stable voltage and frequency, then transfers the load
+          from mains to generator. On mains restoration, the ATS retransfers the load back to mains
+          after a stability timer has confirmed the mains supply has recovered.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,8 +198,8 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Open transition ATS</strong> — the most common type. Load is disconnected
-                from the mains before being connected to the generator (break-before-make). There
-                is a brief interruption (typically less than 100 ms for the transfer contactor
+                from the mains before being connected to the generator (break-before-make). There is
+                a brief interruption (typically less than 100 ms for the transfer contactor
                 operation) plus the generator start time. Suitable for most commercial and
                 industrial applications.
               </span>
@@ -204,33 +207,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Closed transition ATS</strong> — the generator is synchronised to the
-                mains supply (matched voltage, frequency, and phase angle) before the transfer,
-                allowing a make-before-break transfer with zero interruption. Used for critical
-                loads that cannot tolerate any interruption. Requires G99 compliance as the
-                generator is momentarily paralleled with the mains.
+                <strong>Closed transition ATS</strong> — the generator is synchronised to the mains
+                supply (matched voltage, frequency, and phase angle) before the transfer, allowing a
+                make-before-break transfer with zero interruption. Used for critical loads that
+                cannot tolerate any interruption. Requires G99 compliance as the generator is
+                momentarily paralleled with the mains.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-pole vs three-pole ATS</strong> — a four-pole ATS switches neutral
-                as well as the three phases. This is required where the generator has a separate
-                earth (TN-S) to prevent the mains neutral and generator neutral being connected
-                together during the transfer, which would create a neutral-to-neutral current
-                path. A three-pole ATS leaves the neutral connected to the mains throughout,
-                which is only safe if the generator neutral is bonded to the same earth as the
-                mains.
+                <strong>Four-pole vs three-pole ATS</strong> — a four-pole ATS switches neutral as
+                well as the three phases. This is required where the generator has a separate earth
+                (TN-S) to prevent the mains neutral and generator neutral being connected together
+                during the transfer, which would create a neutral-to-neutral current path. A
+                three-pole ATS leaves the neutral connected to the mains throughout, which is only
+                safe if the generator neutral is bonded to the same earth as the mains.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains monitoring</strong> — the ATS controller monitors voltage on all
-                three phases (configurable thresholds, typically trip below 85% and above 110%
-                of nominal voltage), frequency (typically trip below 47.5 Hz or above 52 Hz),
-                and optionally phase rotation. The mains failure detection time is configurable
-                — a delay of 2–5 seconds prevents nuisance starts from brief transients.
+                <strong>Mains monitoring</strong> — the ATS controller monitors voltage on all three
+                phases (configurable thresholds, typically trip below 85% and above 110% of nominal
+                voltage), frequency (typically trip below 47.5 Hz or above 52 Hz), and optionally
+                phase rotation. The mains failure detection time is configurable — a delay of 2–5
+                seconds prevents nuisance starts from brief transients.
               </span>
             </li>
           </ul>
@@ -244,9 +246,9 @@ const sections = [
     content: (
       <>
         <p>
-          Where automatic starting is not required or practical, a manual changeover switch
-          (also called a generator changeover switch or transfer switch) provides a safe means
-          of connecting a generator to the installation while ensuring that the mains and generator
+          Where automatic starting is not required or practical, a manual changeover switch (also
+          called a generator changeover switch or transfer switch) provides a safe means of
+          connecting a generator to the installation while ensuring that the mains and generator
           supplies can never be connected simultaneously. Manual changeover is common for smaller
           installations, domestic standby, and rental generator connections.
         </p>
@@ -255,41 +257,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Break-before-make operation</strong> — the changeover switch must have
-                a centre-off position (Mains — Off — Generator) or a mechanical interlock that
-                positively prevents both mains and generator being connected simultaneously.
-                Never use two separate isolators as a changeover arrangement — there is no
-                guarantee both cannot be closed at the same time.
+                <strong>Break-before-make operation</strong> — the changeover switch must have a
+                centre-off position (Mains — Off — Generator) or a mechanical interlock that
+                positively prevents both mains and generator being connected simultaneously. Never
+                use two separate isolators as a changeover arrangement — there is no guarantee both
+                cannot be closed at the same time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rating</strong> — the changeover switch must be rated for the full
-                prospective load current on both the mains and generator sides. Use a purpose-
-                made generator changeover switch (e.g., from Socomec, ABB, Lewden), not a
-                general-purpose isolator or double-pole switch. The switch must be AC-23 rated
-                (motor load switching) if motor loads are connected.
+                prospective load current on both the mains and generator sides. Use a purpose- made
+                generator changeover switch (e.g., from Socomec, ABB, Lewden), not a general-purpose
+                isolator or double-pole switch. The switch must be AC-23 rated (motor load
+                switching) if motor loads are connected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Temporary generator connections</strong> — temporary connections to
-                rental generators (via a Ceeform inlet or MK7 inlet connector) must use a
-                purpose-made changeover panel, not a trailing lead plugged into an existing
-                socket outlet. The inlet connector must be lockable and protected from
-                accidental contact when not in use.
+                <strong>Temporary generator connections</strong> — temporary connections to rental
+                generators (via a Ceeform inlet or MK7 inlet connector) must use a purpose-made
+                changeover panel, not a trailing lead plugged into an existing socket outlet. The
+                inlet connector must be lockable and protected from accidental contact when not in
+                use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notification and labelling</strong> — the changeover panel must be
-                clearly labelled to indicate the mains and generator positions and the
-                changeover procedure. The generator connection point and the changeover switch
-                must be included in the EICR inspection scope. The presence of a generator
-                changeover must be noted in the Electrical Installation Certificate.
+                <strong>Notification and labelling</strong> — the changeover panel must be clearly
+                labelled to indicate the mains and generator positions and the changeover procedure.
+                The generator connection point and the changeover switch must be included in the
+                EICR inspection scope. The presence of a generator changeover must be noted in the
+                Electrical Installation Certificate.
               </span>
             </li>
           </ul>
@@ -303,8 +305,8 @@ const sections = [
     content: (
       <>
         <p>
-          Engineering Recommendation G99 (Requirements for the Connection of Generation Equipment
-          in Parallel with Public Distribution Networks Operated by Distribution Network Operators)
+          Engineering Recommendation G99 (Requirements for the Connection of Generation Equipment in
+          Parallel with Public Distribution Networks Operated by Distribution Network Operators)
           governs the connection of all generators above 16 A per phase (approximately 11 kW
           three-phase) that are capable of operating in parallel with the mains supply. Compliance
           with G99 is a legal requirement under the Electricity Safety, Quality and Continuity
@@ -315,45 +317,43 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loss of mains (LoM) protection</strong> — G99 requires that generators
-                above the threshold are fitted with loss of mains detection to disconnect from
-                the network if the mains supply fails (anti-islanding protection). The generator
-                must not continue to supply the network when mains power has been lost, as this
-                creates a hazard for DNO staff working on the network under the belief that it
-                is de-energised.
+                <strong>Loss of mains (LoM) protection</strong> — G99 requires that generators above
+                the threshold are fitted with loss of mains detection to disconnect from the network
+                if the mains supply fails (anti-islanding protection). The generator must not
+                continue to supply the network when mains power has been lost, as this creates a
+                hazard for DNO staff working on the network under the belief that it is
+                de-energised.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Frequency and voltage protection</strong> — G99 specifies minimum
-                operating frequency and voltage ranges (Stage 1: 47.5–52 Hz, +10%/−15% voltage;
-                Stage 2: 47.0–52 Hz, +10%/−20% voltage for Type A generators). Generators
-                must automatically disconnect if operating conditions fall outside these ranges.
-                Protection relay settings must be agreed with the DNO as part of the G99
-                application.
+                <strong>Frequency and voltage protection</strong> — G99 specifies minimum operating
+                frequency and voltage ranges (Stage 1: 47.5–52 Hz, +10%/−15% voltage; Stage 2:
+                47.0–52 Hz, +10%/−20% voltage for Type A generators). Generators must automatically
+                disconnect if operating conditions fall outside these ranges. Protection relay
+                settings must be agreed with the DNO as part of the G99 application.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Application process</strong> — submit a G99 connection application to
-                the DNO before installation. The DNO assesses the impact on the network and
-                provides connection conditions (protection relay settings, power factor
-                requirements, monitoring requirements). The connection cannot be energised
-                until the DNO has issued a connection agreement. Commissioning of the protection
-                system must be witnessed or verified by the DNO or their representative.
+                <strong>Application process</strong> — submit a G99 connection application to the
+                DNO before installation. The DNO assesses the impact on the network and provides
+                connection conditions (protection relay settings, power factor requirements,
+                monitoring requirements). The connection cannot be energised until the DNO has
+                issued a connection agreement. Commissioning of the protection system must be
+                witnessed or verified by the DNO or their representative.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Island mode generators — G99 applicability</strong> — a generator that
-                only operates in island mode (no electrical connection to the mains at any time
-                during operation, achieved by an interlocked break-before-make changeover switch)
-                does not export to the network and does not require G99 compliance. The
-                changeover interlock must be robust — a simultaneous connection, even briefly,
-                brings G99 into scope.
+                <strong>Island mode generators — G99 applicability</strong> — a generator that only
+                operates in island mode (no electrical connection to the mains at any time during
+                operation, achieved by an interlocked break-before-make changeover switch) does not
+                export to the network and does not require G99 compliance. The changeover interlock
+                must be robust — a simultaneous connection, even briefly, brings G99 into scope.
               </span>
             </li>
           </ul>
@@ -369,53 +369,52 @@ const sections = [
         <p>
           Generator earthing requires careful design to ensure safe operation both when the
           generator is running in island mode (mains disconnected) and during changeover. The
-          earthing approach depends on whether the ATS is three-pole or four-pole, and on the
-          site mains earthing system (TN-S, TN-C-S, or TT).
+          earthing approach depends on whether the ATS is three-pole or four-pole, and on the site
+          mains earthing system (TN-S, TN-C-S, or TT).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Generator earth electrode</strong> — the generator neutral is connected
-                to a local earth electrode sited near the generator (typically a driven copper-
-                clad rod or a ring electrode). The electrode resistance must be low enough to
-                allow earth fault protection to operate — typically less than 1 Ω for HV and
-                less than 10 Ω for LV generators. The generator earth must be tested at
-                commissioning.
+                <strong>Generator earth electrode</strong> — the generator neutral is connected to a
+                local earth electrode sited near the generator (typically a driven copper- clad rod
+                or a ring electrode). The electrode resistance must be low enough to allow earth
+                fault protection to operate — typically less than 1 Ω for HV and less than 10 Ω for
+                LV generators. The generator earth must be tested at commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-pole ATS earthing</strong> — with a four-pole ATS, the neutral
-                is switched between mains and generator. When on mains, the installation neutral
-                is connected to the mains PEN (TN-C-S) or mains neutral (TN-S). When on
-                generator, the installation neutral is connected to the generator neutral.
-                The generator neutral is bonded to the generator earth electrode via a removable
-                link that is only closed when the generator is selected.
+                <strong>Four-pole ATS earthing</strong> — with a four-pole ATS, the neutral is
+                switched between mains and generator. When on mains, the installation neutral is
+                connected to the mains PEN (TN-C-S) or mains neutral (TN-S). When on generator, the
+                installation neutral is connected to the generator neutral. The generator neutral is
+                bonded to the generator earth electrode via a removable link that is only closed
+                when the generator is selected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-pole ATS earthing</strong> — with a three-pole ATS, the neutral
-                remains permanently connected to the mains PEN terminal. The generator neutral
-                is also connected to this same neutral bar. This is acceptable where both the
-                mains and generator use the same earth (common on sites with private HV/LV
-                substation where the generator shares the transformer earth). Not suitable
-                where the generator has a separate independent earth.
+                remains permanently connected to the mains PEN terminal. The generator neutral is
+                also connected to this same neutral bar. This is acceptable where both the mains and
+                generator use the same earth (common on sites with private HV/LV substation where
+                the generator shares the transformer earth). Not suitable where the generator has a
+                separate independent earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PME and generators</strong> — connecting a generator to a site with
-                a TN-C-S (PME) supply requires special consideration. The generator neutral
-                must not be bonded to the PME earth when operating in island mode, as the
-                generator neutral voltage under unbalanced load would cause current to flow
-                through the PME earth network. Consult the DNO earthing requirements and
-                follow IET Guidance Note 7 (Special Locations) Section 3.
+                <strong>PME and generators</strong> — connecting a generator to a site with a TN-C-S
+                (PME) supply requires special consideration. The generator neutral must not be
+                bonded to the PME earth when operating in island mode, as the generator neutral
+                voltage under unbalanced load would cause current to flow through the PME earth
+                network. Consult the DNO earthing requirements and follow IET Guidance Note 7
+                (Special Locations) Section 3.
               </span>
             </li>
           </ul>
@@ -432,8 +431,8 @@ const sections = [
           Diesel fuel storage for generators is regulated in England primarily by the Control of
           Pollution (Oil Storage) (England) Regulations 2001 (for storage above 200 litres at
           non-domestic premises). Additional requirements apply for large storage volumes and
-          storage near watercourses. Non-compliance can result in Environment Agency prosecution
-          and significant clean-up costs if a fuel spill reaches a watercourse.
+          storage near watercourses. Non-compliance can result in Environment Agency prosecution and
+          significant clean-up costs if a fuel spill reaches a watercourse.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -441,40 +440,39 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Secondary containment bund</strong> — must contain at least 110% of the
-                capacity of the largest tank, or 25% of the total capacity of all tanks,
-                whichever is greater. Bund must be impermeable to oil and water, resistant to
-                attack by the stored oil, and strong enough to retain oil under all foreseeable
-                conditions. The bund must not have a drain valve that is left open.
+                capacity of the largest tank, or 25% of the total capacity of all tanks, whichever
+                is greater. Bund must be impermeable to oil and water, resistant to attack by the
+                stored oil, and strong enough to retain oil under all foreseeable conditions. The
+                bund must not have a drain valve that is left open.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pipework and valves</strong> — all fill points must be within the
-                bunded area or have a drip tray. Vent pipes must discharge safely. Sight
-                gauges must be fitted with automatic shut-off valves. Fuel transfer pipes
-                must be secure and where possible run above ground for visual inspection.
-                Underground pipework must be double-skinned with leak detection.
+                <strong>Pipework and valves</strong> — all fill points must be within the bunded
+                area or have a drip tray. Vent pipes must discharge safely. Sight gauges must be
+                fitted with automatic shut-off valves. Fuel transfer pipes must be secure and where
+                possible run above ground for visual inspection. Underground pipework must be
+                double-skinned with leak detection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Planning permission threshold</strong> — diesel storage above 1,500 litres
-                typically requires Planning Permission as permitted development rights do not
-                extend to oil storage above this volume in most commercial and industrial
-                situations. Check with the local planning authority before installing a large
-                base tank.
+                typically requires Planning Permission as permitted development rights do not extend
+                to oil storage above this volume in most commercial and industrial situations. Check
+                with the local planning authority before installing a large base tank.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire safety</strong> — diesel (Class C2 liquid, flash point above 55°C)
-                has a relatively high flash point and is less volatile than petrol, but storage
-                areas must still have adequate ventilation, no ignition sources, appropriate
-                signage, and fire extinguishers. The generator room should have fire detection
-                and, for large installations, automatic suppression.
+                <strong>Fire safety</strong> — diesel (Class C2 liquid, flash point above 55°C) has
+                a relatively high flash point and is less volatile than petrol, but storage areas
+                must still have adequate ventilation, no ignition sources, appropriate signage, and
+                fire extinguishers. The generator room should have fire detection and, for large
+                installations, automatic suppression.
               </span>
             </li>
           </ul>
@@ -489,10 +487,10 @@ const sections = [
       <>
         <p>
           Standby generators that are never tested cannot be relied upon when needed. A structured
-          testing and maintenance regime is required under the Electricity at Work Regulations
-          1989 (which require all electrical equipment to be maintained to prevent danger),
-          and is typically a condition of the building insurance policy and business continuity
-          planning for critical facilities.
+          testing and maintenance regime is required under the Electricity at Work Regulations 1989
+          (which require all electrical equipment to be maintained to prevent danger), and is
+          typically a condition of the building insurance policy and business continuity planning
+          for critical facilities.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -500,20 +498,20 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly automated test</strong> — modern ATS controllers include a
-                programmable exerciser clock that starts and runs the generator for 15–30
-                minutes once a week (typically at a low-impact time such as Saturday morning).
-                This confirms the engine starts, oil pressure builds, and coolant temperature
-                is normal. Results are logged. Alarms must be reviewed promptly.
+                programmable exerciser clock that starts and runs the generator for 15–30 minutes
+                once a week (typically at a low-impact time such as Saturday morning). This confirms
+                the engine starts, oil pressure builds, and coolant temperature is normal. Results
+                are logged. Alarms must be reviewed promptly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly mains failure simulation test</strong> — physically simulate
-                a mains failure (by opening the mains incomer) and verify the ATS operates
-                correctly, the generator starts and reaches stable output, and the transfer
-                occurs within the specified time. Then restore mains and verify the retransfer
-                to mains. Record switchover times and voltage/frequency at transfer.
+                <strong>Monthly mains failure simulation test</strong> — physically simulate a mains
+                failure (by opening the mains incomer) and verify the ATS operates correctly, the
+                generator starts and reaches stable output, and the transfer occurs within the
+                specified time. Then restore mains and verify the retransfer to mains. Record
+                switchover times and voltage/frequency at transfer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -521,20 +519,20 @@ const sections = [
               <span>
                 <strong>Quarterly service</strong> — check engine oil level, coolant level and
                 inhibitor concentration, battery state of charge and electrolyte level (flooded
-                lead-acid), fuel level, fuel contamination (diesel bug), belt tension, and
-                all fluid hoses. Run the generator under available building load for at least
-                30 minutes. Change the oil filter and fuel filter per the engine manufacturer's
-                hours-based schedule.
+                lead-acid), fuel level, fuel contamination (diesel bug), belt tension, and all fluid
+                hoses. Run the generator under available building load for at least 30 minutes.
+                Change the oil filter and fuel filter per the engine manufacturer's hours-based
+                schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual service and load bank test</strong> — full engine service per
-                manufacturer schedule, alternator insulation resistance test, ATS protection
-                relay secondary injection test (confirm trip settings), fuel system inspection,
-                load bank test at 100% rated load for minimum 2 hours. All results recorded
-                in the generator maintenance log and compared to previous results for trending.
+                manufacturer schedule, alternator insulation resistance test, ATS protection relay
+                secondary injection test (confirm trip settings), fuel system inspection, load bank
+                test at 100% rated load for minimum 2 hours. All results recorded in the generator
+                maintenance log and compared to previous results for trending.
               </span>
             </li>
           </ul>
@@ -550,8 +548,8 @@ const sections = [
         <p>
           Load bank testing applies a known resistive or resistive-inductive load to the generator
           to verify its rated output under controlled conditions. A dedicated portable load bank
-          (resistive load units connected to the generator output) is used where the site load
-          is insufficient or unavailable during the test. Load bank testing is the definitive
+          (resistive load units connected to the generator output) is used where the site load is
+          insufficient or unavailable during the test. Load bank testing is the definitive
           verification of generator performance and is essential for burning off wet stacking
           deposits.
         </p>
@@ -560,44 +558,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step loading protocol</strong> — apply load in steps: 25%, 50%, 75%,
-                100% of rated kW. Allow voltage and frequency to stabilise at each step (typically
-                5 minutes) before increasing. Record voltage, frequency, current (all three phases),
-                coolant temperature, oil pressure, exhaust temperature, and fuel consumption at
-                each step. This detects derating issues (overloaded cooling system, fuel starvation)
-                that would not be apparent at light load.
+                <strong>Step loading protocol</strong> — apply load in steps: 25%, 50%, 75%, 100% of
+                rated kW. Allow voltage and frequency to stabilise at each step (typically 5
+                minutes) before increasing. Record voltage, frequency, current (all three phases),
+                coolant temperature, oil pressure, exhaust temperature, and fuel consumption at each
+                step. This detects derating issues (overloaded cooling system, fuel starvation) that
+                would not be apparent at light load.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>100% load duration</strong> — maintain 100% rated load for a minimum
-                of 2 hours. This verifies the cooling system can sustain full-load operation
-                and allows wet stacking deposits to burn off from the exhaust system. Coolant
-                temperature should reach and maintain its normal operating temperature (typically
-                82–90°C for modern diesel engines).
+                <strong>100% load duration</strong> — maintain 100% rated load for a minimum of 2
+                hours. This verifies the cooling system can sustain full-load operation and allows
+                wet stacking deposits to burn off from the exhaust system. Coolant temperature
+                should reach and maintain its normal operating temperature (typically 82–90°C for
+                modern diesel engines).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transient response test</strong> — apply a step load change from 0% to
-                at least 60% of rated load in a single step and record voltage and frequency
-                dip and recovery time. Compare with the generator manufacturer's specification
-                (typically voltage recovery within 10% dip in less than 3 seconds, frequency
-                recovery within 2% in less than 5 seconds). Poor transient response indicates
-                governor or AVR problems.
+                <strong>Transient response test</strong> — apply a step load change from 0% to at
+                least 60% of rated load in a single step and record voltage and frequency dip and
+                recovery time. Compare with the generator manufacturer's specification (typically
+                voltage recovery within 10% dip in less than 3 seconds, frequency recovery within 2%
+                in less than 5 seconds). Poor transient response indicates governor or AVR problems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Load bank connection</strong> — connect the load bank at the generator
-                output terminals (or at the ATS generator bus when the ATS is in generator
-                position and the building load is disconnected). Ensure the load bank is
-                correctly rated and that the connection cables are sized for the full test
-                current. Use temporary cable protection (rubber ramp covers or cable bridges)
-                where cables cross access routes.
+                output terminals (or at the ATS generator bus when the ATS is in generator position
+                and the building load is disconnected). Ensure the load bank is correctly rated and
+                that the connection cables are sized for the full test current. Use temporary cable
+                protection (rubber ramp covers or cable bridges) where cables cross access routes.
               </span>
             </li>
           </ul>
@@ -612,11 +608,11 @@ const sections = [
       <>
         <p>
           Generator installation work — including ATS panels, changeover switches, cable
-          installation, and earthing — requires an Electrical Installation Certificate under
-          BS 7671. Where a G99 connection is made, the commissioning of the G99 protection relay
-          must be documented and a copy provided to the DNO. The EIC must note the presence
-          of a generator and confirm that the changeover arrangement prevents simultaneous
-          connection of mains and generator.
+          installation, and earthing — requires an Electrical Installation Certificate under BS
+          7671. Where a G99 connection is made, the commissioning of the G99 protection relay must
+          be documented and a copy provided to the DNO. The EIC must note the presence of a
+          generator and confirm that the changeover arrangement prevents simultaneous connection of
+          mains and generator.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -632,7 +628,8 @@ const sections = [
                   to record generator installation test results — earth electrode resistance,
                   insulation resistance, loop impedance, ATS transfer time — and complete the
                   Electrical Installation Certificate on your phone. Export a professional PDF
-                  certificate before you leave site, including notes on the G99 connection if applicable.
+                  certificate before you leave site, including notes on the G99 connection if
+                  applicable.
                 </p>
               </div>
             </div>
@@ -640,7 +637,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate generator installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, generator commissioning records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -677,7 +674,7 @@ export default function GeneratorInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Generator Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Generator Installation EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

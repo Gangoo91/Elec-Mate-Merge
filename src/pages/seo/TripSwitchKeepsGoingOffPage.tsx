@@ -111,14 +111,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-certificate',
     title: 'EICR Guide',
-    description: 'How an EICR identifies faults causing repeated tripping and other installation defects.',
+    description:
+      'How an EICR identifies faults causing repeated tripping and other installation defects.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/no-electricity-in-part-of-house',
     title: 'No Electricity in Part of House',
-    description: 'When a tripped breaker leaves part of your home without power — causes and fixes.',
+    description:
+      'When a tripped breaker leaves part of your home without power — causes and fixes.',
     icon: Power,
     category: 'Guide',
   },
@@ -164,9 +166,9 @@ const sections = [
     content: (
       <>
         <p>
-          This is the single most important thing to understand about tripping. Look at your consumer
-          unit (the box with the switches, usually near your front door or under the stairs). You
-          will see two types of switch:
+          This is the single most important thing to understand about tripping. Look at your
+          consumer unit (the box with the switches, usually near your front door or under the
+          stairs). You will see two types of switch:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -194,14 +196,14 @@ const sections = [
             </p>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <p className="text-white text-sm leading-relaxed">
-                <strong>An RCD trips because of an earth fault.</strong> It continuously compares the
-                current flowing out on the live conductor with the current returning on the neutral.
-                If there is a difference (even as small as 30 milliamps), it means current is leaking
-                to earth through an unintended path — possibly through a person. The RCD disconnects
-                in milliseconds to prevent electric shock. Regulation 411.3.3 of BS 7671 requires
-                additional RCD protection (rated residual operating current not exceeding 30mA) for
-                all socket outlets rated up to 32A and for mobile equipment rated up to 32A used
-                outdoors.
+                <strong>An RCD trips because of an earth fault.</strong> It continuously compares
+                the current flowing out on the live conductor with the current returning on the
+                neutral. If there is a difference (even as small as 30 milliamps), it means current
+                is leaking to earth through an unintended path — possibly through a person. The RCD
+                disconnects in milliseconds to prevent electric shock. Regulation 411.3.3 of BS 7671
+                requires additional RCD protection (rated residual operating current not exceeding
+                30mA) for all socket outlets rated up to 32A and for mobile equipment rated up to
+                32A used outdoors.
               </p>
             </div>
           </div>
@@ -210,8 +212,8 @@ const sections = [
           <strong>Why this matters:</strong> If an MCB is tripping, the fault is overcurrent — look
           for overloaded circuits or short circuits. If the RCD is tripping, the fault is earth
           leakage — look for faulty appliances, damaged cables, or moisture ingress. If you have
-          RCBOs (which combine both functions), the tripped device tells you both the circuit and the
-          type of fault.
+          RCBOs (which combine both functions), the tripped device tells you both the circuit and
+          the type of fault.
         </p>
       </>
     ),
@@ -249,7 +251,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>You are using extension leads to plug many appliances into a limited number of sockets</span>
+              <span>
+                You are using extension leads to plug many appliances into a limited number of
+                sockets
+              </span>
             </li>
           </ul>
         </div>
@@ -268,10 +273,10 @@ const sections = [
     content: (
       <>
         <p>
-          An earth fault occurs when current finds an unintended path to earth. This could be through
-          damaged cable insulation allowing the live conductor to touch the metal conduit or back box,
-          a faulty appliance with a breakdown in its internal insulation, or water creating a
-          conductive path between live parts and earth.
+          An earth fault occurs when current finds an unintended path to earth. This could be
+          through damaged cable insulation allowing the live conductor to touch the metal conduit or
+          back box, a faulty appliance with a breakdown in its internal insulation, or water
+          creating a conductive path between live parts and earth.
         </p>
         <p>
           Earth faults cause RCD tripping. The RCD detects the imbalance between live and neutral
@@ -292,8 +297,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Faulty appliances</strong> — washing machines, dishwashers, and tumble dryers
-                are common culprits due to the combination of motors, water, and heat
+                <strong>Faulty appliances</strong> — washing machines, dishwashers, and tumble
+                dryers are common culprits due to the combination of motors, water, and heat
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,9 +336,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor sockets and lights</strong> — rain can enter through damaged gaskets,
-                cracked enclosures, or poorly sealed cable entries. This is the number one cause of
-                RCD tripping in autumn and winter.
+                <strong>Outdoor sockets and lights</strong> — rain can enter through damaged
+                gaskets, cracked enclosures, or poorly sealed cable entries. This is the number one
+                cause of RCD tripping in autumn and winter.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -356,7 +361,8 @@ const sections = [
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Underground cables</strong> — SWA cables supplying garden buildings or
-                outhouses can be damaged by garden work or have corroded glands allowing water entry.
+                outhouses can be damaged by garden work or have corroded glands allowing water
+                entry.
               </span>
             </li>
           </ul>
@@ -375,17 +381,17 @@ const sections = [
     content: (
       <>
         <p>
-          If your RCD or MCB trips repeatedly, a faulty appliance is often the cause. You can identify
-          which appliance is responsible using this simple isolation technique:
+          If your RCD or MCB trips repeatedly, a faulty appliance is often the cause. You can
+          identify which appliance is responsible using this simple isolation technique:
         </p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Step 1: Unplug everything</h4>
             <p className="text-white text-sm leading-relaxed">
-              Go around the house and unplug every appliance from every socket on the affected circuit
-              (or all circuits if the RCD has tripped). Physically unplug them — do not just switch off
-              at the socket, as some faults occur even when the appliance is switched off but still
-              plugged in.
+              Go around the house and unplug every appliance from every socket on the affected
+              circuit (or all circuits if the RCD has tripped). Physically unplug them — do not just
+              switch off at the socket, as some faults occur even when the appliance is switched off
+              but still plugged in.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -407,10 +413,10 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Step 4: Deal with the faulty appliance</h4>
             <p className="text-white text-sm leading-relaxed">
-              Once identified, leave the faulty appliance unplugged. If it is under warranty, contact
-              the manufacturer. If it is an older appliance (washing machine, dishwasher, tumble
-              dryer), it may need repair or replacement. Do not continue using an appliance that trips
-              the RCD — it has an earth fault that could cause a shock.
+              Once identified, leave the faulty appliance unplugged. If it is under warranty,
+              contact the manufacturer. If it is an older appliance (washing machine, dishwasher,
+              tumble dryer), it may need repair or replacement. Do not continue using an appliance
+              that trips the RCD — it has an earth fault that could cause a shock.
             </p>
           </div>
         </div>
@@ -424,8 +430,8 @@ const sections = [
       <>
         <p>
           Sometimes the problem is not a single fault but the consumer unit itself. If your consumer
-          unit is old or inadequate, it may contribute to tripping problems or fail to provide proper
-          protection:
+          unit is old or inadequate, it may contribute to tripping problems or fail to provide
+          proper protection:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -434,26 +440,27 @@ const sections = [
               <span>
                 <strong>Rewirable fuses (no MCBs)</strong> — if your consumer unit still uses
                 rewirable fuses with fuse wire, it provides no RCD protection at all. A fault that
-                would trip an RCD in a modern board goes undetected, creating a shock hazard. Upgrading
-                to a modern consumer unit with MCBs or RCBOs provides circuit-level protection.
+                would trip an RCD in a modern board goes undetected, creating a shock hazard.
+                Upgrading to a modern consumer unit with MCBs or RCBOs provides circuit-level
+                protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single RCD covering all circuits</strong> — a single RCD means one earth fault
-                on any circuit trips the entire house. This is the cause of "the whole house goes off"
-                complaints. Upgrading to a split-load board (two RCDs) or a full RCBO board gives much
-                better selectivity.
+                <strong>Single RCD covering all circuits</strong> — a single RCD means one earth
+                fault on any circuit trips the entire house. This is the cause of "the whole house
+                goes off" complaints. Upgrading to a split-load board (two RCDs) or a full RCBO
+                board gives much better selectivity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic consumer unit</strong> — since January 2016 (Amendment 3 to BS 7671),
-                consumer units in domestic premises must be enclosed in a non-combustible material
-                (metal). A plastic consumer unit does not meet current regulations and should be
-                replaced. See our{' '}
+                <strong>Plastic consumer unit</strong> — since January 2016 (Amendment 3 to BS
+                7671), consumer units in domestic premises must be enclosed in a non-combustible
+                material (metal). A plastic consumer unit does not meet current regulations and
+                should be replaced. See our{' '}
                 <SEOInternalLink href="/guides/consumer-unit-upgrade">
                   consumer unit upgrade guide
                 </SEOInternalLink>{' '}
@@ -464,9 +471,9 @@ const sections = [
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Worn or faulty MCBs</strong> — MCBs can degrade over time, particularly if
-                they have tripped many times. A worn MCB may trip at a lower current than its rating,
-                causing nuisance tripping. An electrician can test the MCB trip characteristics and
-                replace any that are out of specification.
+                they have tripped many times. A worn MCB may trip at a lower current than its
+                rating, causing nuisance tripping. An electrician can test the MCB trip
+                characteristics and replace any that are out of specification.
               </span>
             </li>
           </ul>
@@ -498,8 +505,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Urgent</strong> — the trip switch trips with everything unplugged (fault is
-                in the fixed wiring), the RCD trips randomly with no apparent pattern, or the same MCB
-                trips repeatedly even with reduced load on the circuit.
+                in the fixed wiring), the RCD trips randomly with no apparent pattern, or the same
+                MCB trips repeatedly even with reduced load on the circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -516,10 +523,7 @@ const sections = [
         <p>
           When the electrician visits, they will use insulation resistance testing, earth fault loop
           impedance testing, and circuit-by-circuit isolation to identify the fault. They may
-          recommend a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
-            EICR
-          </SEOInternalLink>{' '}
+          recommend a full <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
           if the installation has not been inspected recently, as repeated tripping can be
           symptomatic of wider installation problems.
         </p>
@@ -544,8 +548,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Confirm whether it is an MCB, RCD, or RCBO tripping. This determines your fault
                   finding path — overcurrent (MCB) or earth fault (RCD). Check all devices in the
-                  consumer unit, not just the one the customer points to. A customer saying "the trip
-                  switch" may not know which device has tripped.
+                  consumer unit, not just the one the customer points to. A customer saying "the
+                  trip switch" may not know which device has tripped.
                 </p>
               </div>
             </div>
@@ -554,13 +558,15 @@ const sections = [
             <div className="flex items-start gap-4">
               <Cable className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">2. Isolate and Test Circuit by Circuit</h4>
+                <h4 className="font-bold text-white mb-1">
+                  2. Isolate and Test Circuit by Circuit
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   For RCD tripping: turn off all MCBs under the tripped RCD. Reset the RCD. Turn on
-                  MCBs one at a time. When the RCD trips, you have identified the faulty circuit. For
-                  that circuit, perform insulation resistance testing at 500V DC (L-E, N-E minimum 1
-                  megohm). Low insulation resistance on L-E or N-E indicates the earth fault location
-                  (further testing or half-split isolation narrows it down).
+                  MCBs one at a time. When the RCD trips, you have identified the faulty circuit.
+                  For that circuit, perform insulation resistance testing at 500V DC (L-E, N-E
+                  minimum 1 megohm). Low insulation resistance on L-E or N-E indicates the earth
+                  fault location (further testing or half-split isolation narrows it down).
                 </p>
               </div>
             </div>
@@ -575,8 +581,8 @@ const sections = [
                   (disconnect and test insulation resistance), cooker connection (check the terminal
                   block behind the cooker for heat damage), and shower (check element insulation).
                   For MCB tripping on ring circuits, check the ring is continuous — a broken ring
-                  concentrates load on one leg and can cause overcurrent tripping at lower-than-expected
-                  loads.
+                  concentrates load on one leg and can cause overcurrent tripping at
+                  lower-than-expected loads.
                 </p>
               </div>
             </div>
@@ -595,7 +601,8 @@ const sections = [
                   is required. For repairs to existing circuits, issue a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
-                  </SEOInternalLink>.
+                  </SEOInternalLink>
+                  .
                 </p>
               </div>
             </div>
@@ -628,8 +635,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Trip Switch Keeps Going Off:{' '}
-          <span className="text-yellow-400">Why and How to Fix</span>
+          Trip Switch Keeps Going Off: <span className="text-yellow-400">Why and How to Fix</span>
         </>
       }
       heroSubtitle="Your trip switch keeps tripping and you want to know why. This guide explains the difference between MCB and RCD tripping, covers every common cause, shows you how to find a faulty appliance, and tells you when to call an electrician."
@@ -640,7 +646,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       faqHeading="Frequently Asked Questions About Trip Switches"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Tripping Faults and Certify Repairs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

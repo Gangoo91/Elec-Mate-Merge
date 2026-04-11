@@ -713,7 +713,7 @@ export default function EICRObservationCodesPage() {
       faqHeading="Frequently Asked Questions About EICR Observation Codes"
       relatedPages={relatedPages}
       ctaHeading="Never second-guess an observation code again"
-      ctaSubheading="Elec-Mate's Defect Code AI describes defects in plain English and returns the correct classification with the matching BS 7671 regulation. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's Defect Code AI describes defects in plain English and returns the correct classification with the matching BS 7671 regulation. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

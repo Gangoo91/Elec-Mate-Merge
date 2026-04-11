@@ -665,7 +665,7 @@ export default function VoltageDropGuideBS7671Page() {
         },
       ]}
       ctaHeading="Calculate Voltage Drop in Seconds"
-      ctaSubheading="Every Appendix 4 table built in. Enter cable type, length, and load — get an instant pass/fail result. Plus 70 more calculators, 8 certificate types, and 8 AI agents. 7-day free trial."
+      ctaSubheading="Every Appendix 4 table built in. Enter cable type, length, and load — get an instant pass/fail result. Plus 70 more calculators, 16 certificate types, and 8 AI agents. 7-day free trial."
     />
   );
 }

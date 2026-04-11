@@ -47,7 +47,8 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'What is GMP and why does it affect electrical installation in pharmaceutical facilities?',
+    question:
+      'What is GMP and why does it affect electrical installation in pharmaceutical facilities?',
     answer:
       'Good Manufacturing Practice (GMP) is the regulatory framework that ensures pharmaceutical products are consistently produced and controlled to quality standards appropriate for their intended use. In the UK, GMP is enforced by the Medicines and Healthcare products Regulatory Agency (MHRA) and follows EU GMP guidelines (retained in UK law post-Brexit). GMP affects electrical installation because all systems that can influence product quality — including HVAC, clean utilities, process equipment, and monitoring systems — must be designed, installed, qualified, and maintained to GMP standards. This means full documentation of the electrical installation, change control procedures for any modifications, and periodic review of maintenance records.',
   },
@@ -57,7 +58,8 @@ const faqs = [
       'Pharmaceutical cleanroom electrical wiring must not generate particles that could contaminate the product. This means no exposed conduit threads or fittings — all conduit must terminate in flush, gasketed fittings. Sockets, switches, and control panels must be flush-mounted with sealed edges. Cable entries through walls and floors must be sealed with appropriate cleanroom-compatible sealants. Trunking and cable management must have smooth, easily cleanable surfaces without crevices where particles could accumulate. Materials must be compatible with cleaning and disinfection agents used in the cleanroom. All penetrations through the cleanroom envelope must be fire-stopped and sealed to maintain the room pressure differential.',
   },
   {
-    question: 'What is Installation Qualification (IQ) and what does it involve for electrical systems?',
+    question:
+      'What is Installation Qualification (IQ) and what does it involve for electrical systems?',
     answer:
       'Installation Qualification (IQ) is the documented verification that electrical equipment and systems have been installed in accordance with the approved design, manufacturer specifications, and GMP requirements. For electrical systems, IQ involves verifying and documenting: the identity and calibration status of all installed instruments and meters, cable sizes and types against design, cable routing against approved drawings, earthing system continuity, motor nameplate data against specifications, fuse and circuit breaker ratings against design, and as-built drawing verification. All deviations from the approved design are formally raised and resolved. IQ is typically carried out jointly by the electrical contractor, the engineering team, and the QA department.',
   },
@@ -87,21 +89,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cleanroom-electrical',
     title: 'Cleanroom Electrical Installation',
-    description: 'ISO 14644 cleanroom classifications, flush-mounted fittings, sealed entries, and HEPA control systems.',
+    description:
+      'ISO 14644 cleanroom classifications, flush-mounted fittings, sealed entries, and HEPA control systems.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/food-processing-electrical',
     title: 'Food Processing Electrical Installation',
-    description: 'IP69K wash-down, ATEX dust zones, hygienic design, and BRC Global Standards compliance.',
+    description:
+      'IP69K wash-down, ATEX dust zones, hygienic design, and BRC Global Standards compliance.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/nuclear-site-electrical',
     title: 'Nuclear Site Electrical Engineering',
-    description: 'Nuclear Baseline QA, BPSS/SC clearance, ECS nuclear card, and pay rates £60–£100+/hr.',
+    description:
+      'Nuclear Baseline QA, BPSS/SC clearance, ECS nuclear card, and pay rates £60–£100+/hr.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -133,40 +138,39 @@ const sections = [
       <>
         <p>
           Pharmaceutical electrical installation is a high-skill, high-accountability specialism
-          that sits at the intersection of electrical engineering, quality assurance, and
-          regulatory compliance. The UK pharmaceutical manufacturing sector — which includes
-          global companies such as AstraZeneca, GlaxoSmithKline, Pfizer, and hundreds of
-          specialist contract manufacturers — requires electrical contractors who understand
-          both the technical requirements of GMP environments and the documentation and
-          validation obligations that come with them.
+          that sits at the intersection of electrical engineering, quality assurance, and regulatory
+          compliance. The UK pharmaceutical manufacturing sector — which includes global companies
+          such as AstraZeneca, GlaxoSmithKline, Pfizer, and hundreds of specialist contract
+          manufacturers — requires electrical contractors who understand both the technical
+          requirements of GMP environments and the documentation and validation obligations that
+          come with them.
         </p>
         <p>
           Unlike standard commercial or industrial electrical work, pharmaceutical electrical
-          installation is subject to a regulatory framework that extends well beyond BS 7671.
-          MHRA inspections, validation protocols, change control procedures, and electronic
-          records requirements all affect how electrical work is planned, carried out, and
-          documented.
+          installation is subject to a regulatory framework that extends well beyond BS 7671. MHRA
+          inspections, validation protocols, change control procedures, and electronic records
+          requirements all affect how electrical work is planned, carried out, and documented.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MHRA regulation</strong> — the Medicines and Healthcare products
-                Regulatory Agency (MHRA) inspects UK pharmaceutical manufacturing facilities
-                against EU GMP guidelines (UK GMP post-Brexit). Non-compliant facilities face
-                warning letters, import restrictions, and licence withdrawal. Electrical systems
-                form part of the MHRA inspection scope.
+                <strong>MHRA regulation</strong> — the Medicines and Healthcare products Regulatory
+                Agency (MHRA) inspects UK pharmaceutical manufacturing facilities against EU GMP
+                guidelines (UK GMP post-Brexit). Non-compliant facilities face warning letters,
+                import restrictions, and licence withdrawal. Electrical systems form part of the
+                MHRA inspection scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EU GMP Annex 1</strong> — the 2022 revision of EU GMP Annex 1
-                (Manufacture of Sterile Medicinal Products) significantly tightened requirements
-                for cleanroom design, monitoring, and contamination control. The electrical
-                installation is directly relevant to compliance with Annex 1 requirements for
-                particle control and environmental monitoring.
+                <strong>EU GMP Annex 1</strong> — the 2022 revision of EU GMP Annex 1 (Manufacture
+                of Sterile Medicinal Products) significantly tightened requirements for cleanroom
+                design, monitoring, and contamination control. The electrical installation is
+                directly relevant to compliance with Annex 1 requirements for particle control and
+                environmental monitoring.
               </span>
             </li>
           </ul>
@@ -181,8 +185,8 @@ const sections = [
       <>
         <p>
           Good Manufacturing Practice (GMP) imposes requirements on pharmaceutical electrical
-          installations that go beyond standard regulatory compliance. The key GMP principles
-          that apply to electrical work are documentation, traceability, change control, and
+          installations that go beyond standard regulatory compliance. The key GMP principles that
+          apply to electrical work are documentation, traceability, change control, and
           qualification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -190,40 +194,39 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Design documentation</strong> — all electrical systems must be designed
-                to approved specifications. Design drawings, cable schedules, equipment
-                data sheets, and load calculations must be formally reviewed and approved
-                before installation commences. Any deviation from approved design must go
-                through a formal deviation or change control process.
+                <strong>Design documentation</strong> — all electrical systems must be designed to
+                approved specifications. Design drawings, cable schedules, equipment data sheets,
+                and load calculations must be formally reviewed and approved before installation
+                commences. Any deviation from approved design must go through a formal deviation or
+                change control process.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Change control</strong> — once a pharmaceutical facility is qualified
-                and in production, any modification to the electrical installation — including
-                changes to circuits, equipment, or cabling — must go through a formal change
-                control process. This involves risk assessment, impact assessment on product
-                quality and system qualification, and may require requalification of affected
-                systems.
+                <strong>Change control</strong> — once a pharmaceutical facility is qualified and in
+                production, any modification to the electrical installation — including changes to
+                circuits, equipment, or cabling — must go through a formal change control process.
+                This involves risk assessment, impact assessment on product quality and system
+                qualification, and may require requalification of affected systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calibration</strong> — all measuring instruments used for GMP-relevant
-                measurements (temperature, humidity, pressure differential, power quality) must
-                be calibrated against traceable standards. Calibration records must be maintained
-                and instruments must be re-calibrated at defined intervals.
+                measurements (temperature, humidity, pressure differential, power quality) must be
+                calibrated against traceable standards. Calibration records must be maintained and
+                instruments must be re-calibrated at defined intervals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Planned preventive maintenance</strong> — all electrical equipment
-                must be subject to a planned preventive maintenance (PPM) programme. Maintenance
-                activities, findings, and corrective actions must be formally documented.
-                PPM records form part of the GMP documentation available for MHRA inspection.
+                <strong>Planned preventive maintenance</strong> — all electrical equipment must be
+                subject to a planned preventive maintenance (PPM) programme. Maintenance activities,
+                findings, and corrective actions must be formally documented. PPM records form part
+                of the GMP documentation available for MHRA inspection.
               </span>
             </li>
           </ul>
@@ -237,52 +240,51 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical installation within a pharmaceutical cleanroom must not compromise
-          the room's ability to maintain its defined particle count classification. This drives
-          a specific approach to materials, methods, and detailing that differs significantly
-          from standard industrial or commercial electrical work.
+          The electrical installation within a pharmaceutical cleanroom must not compromise the
+          room's ability to maintain its defined particle count classification. This drives a
+          specific approach to materials, methods, and detailing that differs significantly from
+          standard industrial or commercial electrical work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No exposed conduit threads or fittings</strong> — conduit systems
-                in cleanrooms must use flush, sealed fittings. Exposed threads are particle
-                sources and cannot be cleaned effectively. All conduit terminations must be
-                made with cleanroom-compatible glands or fittings with smooth, flush surfaces.
+                <strong>No exposed conduit threads or fittings</strong> — conduit systems in
+                cleanrooms must use flush, sealed fittings. Exposed threads are particle sources and
+                cannot be cleaned effectively. All conduit terminations must be made with
+                cleanroom-compatible glands or fittings with smooth, flush surfaces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flush-mounted accessories</strong> — sockets, switches, data outlets,
-                and control panels must be flush-mounted in the cleanroom wall or ceiling.
-                Surface-mounted boxes create ledges that accumulate particles and are difficult
-                to clean effectively. Flush mounting also maintains the integrity of the
-                cleanroom wall surface and the pressure differential.
+                <strong>Flush-mounted accessories</strong> — sockets, switches, data outlets, and
+                control panels must be flush-mounted in the cleanroom wall or ceiling.
+                Surface-mounted boxes create ledges that accumulate particles and are difficult to
+                clean effectively. Flush mounting also maintains the integrity of the cleanroom wall
+                surface and the pressure differential.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sealed cable penetrations</strong> — all cable entries through
-                cleanroom walls, floors, and ceilings must be sealed with cleanroom-compatible
-                sealant (typically silicone-based, particle-free, and compatible with
-                disinfection agents). Seals must be fire-stopped as well as particle-sealed.
-                Unsealed penetrations allow pressurised room air to bypass filtration and
-                contaminated air to enter from adjacent areas.
+                <strong>Sealed cable penetrations</strong> — all cable entries through cleanroom
+                walls, floors, and ceilings must be sealed with cleanroom-compatible sealant
+                (typically silicone-based, particle-free, and compatible with disinfection agents).
+                Seals must be fire-stopped as well as particle-sealed. Unsealed penetrations allow
+                pressurised room air to bypass filtration and contaminated air to enter from
+                adjacent areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cleanable surfaces</strong> — all cable management systems, trunking,
-                and containment within the cleanroom must have smooth, continuous surfaces
-                without crevices or internal ledges. Round-edged stainless steel or
-                smooth-surfaced GRP trunking is preferred over standard PVC trunking.
-                Surfaces must withstand repeated cleaning with pharmaceutical-grade disinfectants
-                including sporicidal agents.
+                <strong>Cleanable surfaces</strong> — all cable management systems, trunking, and
+                containment within the cleanroom must have smooth, continuous surfaces without
+                crevices or internal ledges. Round-edged stainless steel or smooth-surfaced GRP
+                trunking is preferred over standard PVC trunking. Surfaces must withstand repeated
+                cleaning with pharmaceutical-grade disinfectants including sporicidal agents.
               </span>
             </li>
           </ul>
@@ -297,41 +299,40 @@ const sections = [
       <>
         <p>
           ISO 14644-1 defines cleanroom classifications by maximum permitted airborne particle
-          concentrations. The classification of each area in a pharmaceutical facility drives
-          the electrical specification for that area.
+          concentrations. The classification of each area in a pharmaceutical facility drives the
+          electrical specification for that area.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ISO 5 / Grade A (≤3,520 particles/m³ at 0.5µm)</strong> — the most
-                stringent classification, used for filling zones, critical surfaces, and
-                directly exposed product in aseptic manufacturing. Electrical installations
-                must be minimal and flush-mounted. All penetrations must be sealed. No
-                materials that shed particles may be used. Unidirectional (laminar) airflow
-                must not be disrupted by the electrical installation.
+                <strong>ISO 5 / Grade A (≤3,520 particles/m³ at 0.5µm)</strong> — the most stringent
+                classification, used for filling zones, critical surfaces, and directly exposed
+                product in aseptic manufacturing. Electrical installations must be minimal and
+                flush-mounted. All penetrations must be sealed. No materials that shed particles may
+                be used. Unidirectional (laminar) airflow must not be disrupted by the electrical
+                installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ISO 7 / Grade B-C (≤352,000 particles/m³ at 0.5µm)</strong> —
-                background environment for aseptic operations (Grade B) and general
-                aseptic preparation areas (Grade C). Electrical installation requirements
-                are rigorous but somewhat less stringent than Grade A — flush mounting
-                still required, but some surface-mounted equipment with cleanable housings
-                may be acceptable depending on location.
+                <strong>ISO 7 / Grade B-C (≤352,000 particles/m³ at 0.5µm)</strong> — background
+                environment for aseptic operations (Grade B) and general aseptic preparation areas
+                (Grade C). Electrical installation requirements are rigorous but somewhat less
+                stringent than Grade A — flush mounting still required, but some surface-mounted
+                equipment with cleanable housings may be acceptable depending on location.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ISO 8 / Grade D (≤3,520,000 particles/m³ at 0.5µm)</strong> —
-                general pharmaceutical manufacturing areas for non-sterile products and
-                less critical sterile manufacturing steps. Electrical installation is more
-                similar to clean industrial than to cleanroom, but particle generation
-                and cleanability remain important considerations.
+                <strong>ISO 8 / Grade D (≤3,520,000 particles/m³ at 0.5µm)</strong> — general
+                pharmaceutical manufacturing areas for non-sterile products and less critical
+                sterile manufacturing steps. Electrical installation is more similar to clean
+                industrial than to cleanroom, but particle generation and cleanability remain
+                important considerations.
               </span>
             </li>
           </ul>
@@ -345,53 +346,52 @@ const sections = [
     content: (
       <>
         <p>
-          HVAC (Heating, Ventilation, and Air Conditioning) is the defining infrastructure
-          of a pharmaceutical cleanroom. Maintaining the cleanroom classification, temperature,
-          humidity, and pressure differential all depend on the HVAC system — and the HVAC
-          system depends entirely on its electrical installation.
+          HVAC (Heating, Ventilation, and Air Conditioning) is the defining infrastructure of a
+          pharmaceutical cleanroom. Maintaining the cleanroom classification, temperature, humidity,
+          and pressure differential all depend on the HVAC system — and the HVAC system depends
+          entirely on its electrical installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Air handling units (AHUs)</strong> — pharmaceutical AHUs are large,
-                complex items of plant that require substantial electrical supplies for fan
-                motors (often variable speed drives), heating coils, cooling coils, and
-                humidification systems. Motor control centres (MCCs) for AHUs must be
-                accessible for maintenance without entering the cleanroom.
+                <strong>Air handling units (AHUs)</strong> — pharmaceutical AHUs are large, complex
+                items of plant that require substantial electrical supplies for fan motors (often
+                variable speed drives), heating coils, cooling coils, and humidification systems.
+                Motor control centres (MCCs) for AHUs must be accessible for maintenance without
+                entering the cleanroom.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Variable speed drives (VSDs)</strong> — AHU fans are typically
-                controlled by variable speed drives to maintain constant airflow despite
-                filter loading and system pressure variation. VSDs generate harmonic
-                distortion and require appropriate cable screening and earth bonding.
-                EMC compatibility with sensitive instrumentation in the cleanroom must
-                be considered in the VSD installation design.
+                <strong>Variable speed drives (VSDs)</strong> — AHU fans are typically controlled by
+                variable speed drives to maintain constant airflow despite filter loading and system
+                pressure variation. VSDs generate harmonic distortion and require appropriate cable
+                screening and earth bonding. EMC compatibility with sensitive instrumentation in the
+                cleanroom must be considered in the VSD installation design.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pressure differential monitoring</strong> — the positive pressure
-                differential between cleanroom and adjacent areas (typically 10–15 Pascal)
-                is monitored by pressure transducers connected to the BMS. Monitoring data
-                is GMP-critical — any loss of pressure differential must trigger an alarm.
-                The electrical systems supporting pressure monitoring must be highly reliable
-                and their calibration records must be maintained.
+                differential between cleanroom and adjacent areas (typically 10–15 Pascal) is
+                monitored by pressure transducers connected to the BMS. Monitoring data is
+                GMP-critical — any loss of pressure differential must trigger an alarm. The
+                electrical systems supporting pressure monitoring must be highly reliable and their
+                calibration records must be maintained.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HEPA filtration controls</strong> — HEPA (High Efficiency Particulate
-                Air) filters remove 99.97% of particles ≥0.3µm. Filter differential pressure
-                is monitored to detect filter loading. The electrical installation for filter
-                monitoring must be robust and the monitoring data must be available to the
-                BMS for trending and alarm generation.
+                <strong>HEPA filtration controls</strong> — HEPA (High Efficiency Particulate Air)
+                filters remove 99.97% of particles ≥0.3µm. Filter differential pressure is monitored
+                to detect filter loading. The electrical installation for filter monitoring must be
+                robust and the monitoring data must be available to the BMS for trending and alarm
+                generation.
               </span>
             </li>
           </ul>
@@ -414,33 +414,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IT system (isolated terra)</strong> — the secondary winding of an
-                isolation transformer has no connection to earth, creating a floating supply
-                (IT system as defined in BS 7671). A single earth fault on the IT system
-                does not cause a circuit breaker trip because there is no return path for
-                fault current. This prevents the unexpected power loss that could disrupt
-                a critical manufacturing process.
+                <strong>IT system (isolated terra)</strong> — the secondary winding of an isolation
+                transformer has no connection to earth, creating a floating supply (IT system as
+                defined in BS 7671). A single earth fault on the IT system does not cause a circuit
+                breaker trip because there is no return path for fault current. This prevents the
+                unexpected power loss that could disrupt a critical manufacturing process.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation monitoring device (IMD)</strong> — an IT system must be
-                monitored by an IMD (as required by BS 7671 and IEC 61557-8). The IMD detects
-                the first earth fault and raises an alarm, allowing the fault to be located and
-                rectified without interrupting the supply. This is the critical difference from
-                a TN or TT system — the first fault is detected but does not cause supply
-                interruption.
+                <strong>Insulation monitoring device (IMD)</strong> — an IT system must be monitored
+                by an IMD (as required by BS 7671 and IEC 61557-8). The IMD detects the first earth
+                fault and raises an alarm, allowing the fault to be located and rectified without
+                interrupting the supply. This is the critical difference from a TN or TT system —
+                the first fault is detected but does not cause supply interruption.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EMI reduction</strong> — isolation transformers provide galvanic
-                isolation between the supply and the load, which attenuates high-frequency
-                noise conducted from the supply. This is beneficial in pharmaceutical
-                environments with sensitive analytical instruments, GC-MS, HPLC, and
-                other laboratory equipment that is sensitive to supply noise.
+                <strong>EMI reduction</strong> — isolation transformers provide galvanic isolation
+                between the supply and the load, which attenuates high-frequency noise conducted
+                from the supply. This is beneficial in pharmaceutical environments with sensitive
+                analytical instruments, GC-MS, HPLC, and other laboratory equipment that is
+                sensitive to supply noise.
               </span>
             </li>
           </ul>
@@ -454,54 +452,52 @@ const sections = [
     content: (
       <>
         <p>
-          Validation is the formal documented process of demonstrating that systems and
-          equipment do what they are designed to do, consistently and reproducibly.
-          Pharmaceutical electrical systems — particularly those that support or directly
-          affect product quality — must be validated.
+          Validation is the formal documented process of demonstrating that systems and equipment do
+          what they are designed to do, consistently and reproducibly. Pharmaceutical electrical
+          systems — particularly those that support or directly affect product quality — must be
+          validated.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation Qualification (IQ)</strong> — documents that the
-                electrical installation has been installed correctly, in accordance with
-                approved design drawings, manufacturer specifications, and regulatory
-                requirements. Involves verification of cable types and sizes, equipment
-                identity against specification, calibration status of instruments, and
-                earthing system continuity.
+                <strong>Installation Qualification (IQ)</strong> — documents that the electrical
+                installation has been installed correctly, in accordance with approved design
+                drawings, manufacturer specifications, and regulatory requirements. Involves
+                verification of cable types and sizes, equipment identity against specification,
+                calibration status of instruments, and earthing system continuity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Operational Qualification (OQ)</strong> — demonstrates that the
-                electrical system operates correctly throughout its operating range. For a
-                HVAC electrical system, OQ includes testing that the AHU motor runs at the
-                correct speed, that the VSD responds correctly to control signals, that
-                alarms activate at the correct setpoints, and that the system correctly
-                maintains cleanroom conditions within specification.
+                <strong>Operational Qualification (OQ)</strong> — demonstrates that the electrical
+                system operates correctly throughout its operating range. For a HVAC electrical
+                system, OQ includes testing that the AHU motor runs at the correct speed, that the
+                VSD responds correctly to control signals, that alarms activate at the correct
+                setpoints, and that the system correctly maintains cleanroom conditions within
+                specification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Performance Qualification (PQ)</strong> — demonstrates that the
-                system performs consistently in its actual operating environment, under
-                normal operating conditions, over a defined period. For HVAC systems,
-                PQ typically involves monitoring cleanroom conditions over multiple
-                production shifts to demonstrate that classification is consistently
-                maintained.
+                <strong>Performance Qualification (PQ)</strong> — demonstrates that the system
+                performs consistently in its actual operating environment, under normal operating
+                conditions, over a defined period. For HVAC systems, PQ typically involves
+                monitoring cleanroom conditions over multiple production shifts to demonstrate that
+                classification is consistently maintained.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Electricians carrying out work in pharmaceutical facilities during the qualification
-          phase must understand that all activities are formally documented and that any
-          deviations from the approved protocol must be raised as formal deviations before
-          proceeding. The validation mindset — document everything, deviate formally, never
-          improvise — is fundamental to successful pharmaceutical electrical work.
+          Electricians carrying out work in pharmaceutical facilities during the qualification phase
+          must understand that all activities are formally documented and that any deviations from
+          the approved protocol must be raised as formal deviations before proceeding. The
+          validation mindset — document everything, deviate formally, never improvise — is
+          fundamental to successful pharmaceutical electrical work.
         </p>
       </>
     ),
@@ -512,10 +508,10 @@ const sections = [
     content: (
       <>
         <p>
-          FDA 21 CFR Part 11 applies to any computer system used in a pharmaceutical facility
-          that exports to the US or is subject to FDA inspection. It requires that electronic
-          records and electronic signatures be trustworthy and reliable — equivalent in integrity
-          to paper records and handwritten signatures.
+          FDA 21 CFR Part 11 applies to any computer system used in a pharmaceutical facility that
+          exports to the US or is subject to FDA inspection. It requires that electronic records and
+          electronic signatures be trustworthy and reliable — equivalent in integrity to paper
+          records and handwritten signatures.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -523,28 +519,28 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Audit trails</strong> — computer systems must create and maintain
-                time-stamped audit trails of all actions that create, modify, or delete
-                records. Audit trails must not be editable by operators. For BMS and SCADA
-                systems, this means all data changes, alarm acknowledgements, and parameter
-                modifications are permanently recorded.
+                time-stamped audit trails of all actions that create, modify, or delete records.
+                Audit trails must not be editable by operators. For BMS and SCADA systems, this
+                means all data changes, alarm acknowledgements, and parameter modifications are
+                permanently recorded.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Access controls</strong> — computer systems must use individual logins
-                and access controls that prevent unauthorised modification of records. Shared
-                logins are not compliant with 21 CFR Part 11.
+                <strong>Access controls</strong> — computer systems must use individual logins and
+                access controls that prevent unauthorised modification of records. Shared logins are
+                not compliant with 21 CFR Part 11.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Computer system validation (CSV)</strong> — all computer systems
-                subject to 21 CFR Part 11 must be validated. The electrical installation
-                supporting these systems — power supplies, UPS, network infrastructure —
-                must be reliable and its maintenance formally documented, as failures
-                that cause data loss or corruption are a regulatory risk.
+                <strong>Computer system validation (CSV)</strong> — all computer systems subject to
+                21 CFR Part 11 must be validated. The electrical installation supporting these
+                systems — power supplies, UPS, network infrastructure — must be reliable and its
+                maintenance formally documented, as failures that cause data loss or corruption are
+                a regulatory risk.
               </span>
             </li>
           </ul>
@@ -558,23 +554,25 @@ const sections = [
     content: (
       <>
         <p>
-          Pharmaceutical electrical work rewards electricians who combine technical excellence
-          with meticulous documentation discipline. The QA culture is demanding but the work
-          is interesting, the facilities are clean, the pay is good, and the long-term career
-          prospects are excellent in a sector that is growing in the UK.
+          Pharmaceutical electrical work rewards electricians who combine technical excellence with
+          meticulous documentation discipline. The QA culture is demanding but the work is
+          interesting, the facilities are clean, the pay is good, and the long-term career prospects
+          are excellent in a sector that is growing in the UK.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Documentation Is As Important As the Work</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Documentation Is As Important As the Work
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  In pharmaceutical electrical work, an impeccably executed installation with
-                  poor documentation is a compliance risk. Invest time in understanding GMP
-                  documentation requirements, IQ protocols, and change control procedures.
-                  Electricians who can produce clear, accurate as-built drawings and test
-                  records are highly valued in this sector.
+                  In pharmaceutical electrical work, an impeccably executed installation with poor
+                  documentation is a compliance risk. Invest time in understanding GMP documentation
+                  requirements, IQ protocols, and change control procedures. Electricians who can
+                  produce clear, accurate as-built drawings and test records are highly valued in
+                  this sector.
                 </p>
               </div>
             </div>
@@ -583,13 +581,12 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Organise Your Test Records with Elec-Mate</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Organise Your Test Records with Elec-Mate
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Use{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    Elec-Mate
-                  </SEOInternalLink>{' '}
-                  to produce formal test records and inspection reports that meet the documentation
+                  Use <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate</SEOInternalLink> to
+                  produce formal test records and inspection reports that meet the documentation
                   standards expected in GMP environments. Clear, professionally formatted records
                   support IQ protocol completion and give QA departments confidence in the
                   electrical installation.
@@ -600,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce GMP-quality electrical records with Elec-Mate"
-          description="Create professional test records, inspection reports, and certificates that meet pharmaceutical QA documentation standards. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Create professional test records, inspection reports, and certificates that meet pharmaceutical QA documentation standards. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -637,7 +634,7 @@ export default function PharmaceuticalElectricalPage() {
       faqHeading="Frequently Asked Questions About Pharmaceutical Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Produce Professional Electrical Records with Elec-Mate"
-      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Create test records and inspection reports that meet GMP documentation standards. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -650,7 +650,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional symbols on every certificate"
-          description="Join 430+ UK electricians producing certificates with correct BS EN 60617 symbols. Board scanner, voice test entry, AI defect coding, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians producing certificates with correct BS EN 60617 symbols. Board scanner, voice test entry, AI defect coding, and instant PDF delivery. 7-day free trial."
           icon={PenTool}
         />
       </>

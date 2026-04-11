@@ -566,7 +566,7 @@ export default function WhenIsEICRequiredPage() {
               </div>
               <SEOAppBridge
                 title="The Complete EIC — On Your Phone"
-                description="Elec-Mate has 8 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT. All with auto-validation, digital signatures, and instant PDF export. Start your 7-day free trial."
+                description="Elec-Mate has 16 certificate types including the full EIC, Minor Works, EICR, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT. All with auto-validation, digital signatures, and instant PDF export. Start your 7-day free trial."
                 icon={FileCheck2}
               />
             </>
@@ -656,7 +656,7 @@ export default function WhenIsEICRequiredPage() {
         },
       ]}
       ctaHeading="Complete EIC Forms on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital EIC forms with auto-validated test results, Board Scanner, digital signatures, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

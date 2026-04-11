@@ -39,7 +39,7 @@ const tocItems = [
 const keyTakeaways = [
   'Chelmsford is a city in Essex in the South East, with electrician rates of £55 to £72 per hour reflecting the East of England premium and London commuter belt position.',
   'UK Power Networks is the Distribution Network Operator for Chelmsford and all of Essex. All G98/G99 notifications for solar PV, battery storage, and EV chargers go through UK Power Networks.',
-  'Chelmsford has a large stock of 1960s—1990s housing built during the city\'s expansion as a London overspill and commuter destination. Consumer unit upgrades and EICRs are among the most common jobs.',
+  "Chelmsford has a large stock of 1960s—1990s housing built during the city's expansion as a London overspill and commuter destination. Consumer unit upgrades and EICRs are among the most common jobs.",
   'The city has a significant commercial sector including the county council, courts, healthcare, and business parks — generating commercial electrical work alongside the residential market.',
   'All domestic electrical work in Chelmsford must comply with Part P of the Building Regulations. NICEIC and NAPIT registered electricians self-certify notifiable work automatically.',
 ];
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What electrical work is most common in Chelmsford?',
     answer:
-      'Common electrical jobs in Chelmsford include: consumer unit upgrades (the large stock of 1960s—1990s housing has many outdated boards), landlord EICRs for the substantial private rented sector, EV charger installations driven by the large commuter population, solar PV and battery storage in the expanding residential areas, full rewires of older properties, and commercial electrical work in the city centre and on the business parks. Chelmsford\'s University of Essex (Southend campus) and Anglia Ruskin University campuses also generate student HMO EICR demand.',
+      "Common electrical jobs in Chelmsford include: consumer unit upgrades (the large stock of 1960s—1990s housing has many outdated boards), landlord EICRs for the substantial private rented sector, EV charger installations driven by the large commuter population, solar PV and battery storage in the expanding residential areas, full rewires of older properties, and commercial electrical work in the city centre and on the business parks. Chelmsford's University of Essex (Southend campus) and Anglia Ruskin University campuses also generate student HMO EICR demand.",
   },
   {
     question: 'Does Part P apply in Chelmsford?',
@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'Is there good demand for electricians in Chelmsford?',
     answer:
-      'Yes. Chelmsford has a strong and growing demand for electrical services. The city\'s large commuter population drives EV charger installations. The expanding residential areas on the city\'s fringes require new electrical installations and solar PV work. The large stock of 1960s—1990s housing generates ongoing consumer unit upgrades and EICRs. The commercial and public sector — including Essex County Council, Chelmsford hospital, and the business parks — creates consistent commercial electrical demand.',
+      "Yes. Chelmsford has a strong and growing demand for electrical services. The city's large commuter population drives EV charger installations. The expanding residential areas on the city's fringes require new electrical installations and solar PV work. The large stock of 1960s—1990s housing generates ongoing consumer unit upgrades and EICRs. The commercial and public sector — including Essex County Council, Chelmsford hospital, and the business parks — creates consistent commercial electrical demand.",
   },
   {
     question: 'What are the earthing arrangements in Chelmsford properties?',
@@ -126,8 +126,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — essential for EICR work across Chelmsford and Essex.',
+    description: 'Study for C&G 2391 — essential for EICR work across Chelmsford and Essex.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,22 +143,22 @@ const sections = [
     content: (
       <>
         <p>
-          Chelmsford is a city in central Essex with a population of around 180,000. The
-          county town of Essex, Chelmsford is a major commercial centre with excellent rail
-          connections to London Liverpool Street and a large commuter population. It became
-          a city in 2012 as part of the Diamond Jubilee celebrations.
+          Chelmsford is a city in central Essex with a population of around 180,000. The county town
+          of Essex, Chelmsford is a major commercial centre with excellent rail connections to
+          London Liverpool Street and a large commuter population. It became a city in 2012 as part
+          of the Diamond Jubilee celebrations.
         </p>
         <p>
-          For electricians, Chelmsford is a solid South East market with consistent demand
-          across residential and commercial sectors. The large stock of post-war and later
-          housing generates ongoing consumer unit upgrades and EICRs. The commuter population
-          drives EV charger demand. The expanding city fringes create new installation work.
-          The county town commercial sector — including the county council, courts, healthcare,
-          and business parks — provides commercial electrical work.
+          For electricians, Chelmsford is a solid South East market with consistent demand across
+          residential and commercial sectors. The large stock of post-war and later housing
+          generates ongoing consumer unit upgrades and EICRs. The commuter population drives EV
+          charger demand. The expanding city fringes create new installation work. The county town
+          commercial sector — including the county council, courts, healthcare, and business parks —
+          provides commercial electrical work.
         </p>
         <p>
-          This guide covers finding a qualified electrician in Chelmsford, typical costs,
-          common jobs, regulatory requirements, and the key characteristics of the local market.
+          This guide covers finding a qualified electrician in Chelmsford, typical costs, common
+          jobs, regulatory requirements, and the key characteristics of the local market.
         </p>
       </>
     ),
@@ -170,42 +169,40 @@ const sections = [
     content: (
       <>
         <p>
-          To find a qualified and registered electrician in Chelmsford and the surrounding
-          Essex area, use the official scheme search tools:
+          To find a qualified and registered electrician in Chelmsford and the surrounding Essex
+          area, use the official scheme search tools:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC</strong> — the NICEIC "find a contractor" search returns
-                assessed and approved electricians covering Chelmsford and Essex. NICEIC
-                contractors are assessed annually and can self-certify all notifiable work
-                under Part P.
+                <strong>NICEIC</strong> — the NICEIC "find a contractor" search returns assessed and
+                approved electricians covering Chelmsford and Essex. NICEIC contractors are assessed
+                annually and can self-certify all notifiable work under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT</strong> — NAPIT has strong coverage in Essex. Registered
-                electricians self-certify and notify Chelmsford City Council automatically.
+                <strong>NAPIT</strong> — NAPIT has strong coverage in Essex. Registered electricians
+                self-certify and notify Chelmsford City Council automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECA members (commercial)</strong> — for commercial projects on
-                Chelmsford's business parks, look for ECA member firms with relevant commercial
-                and industrial experience.
+                <strong>ECA members (commercial)</strong> — for commercial projects on Chelmsford's
+                business parks, look for ECA member firms with relevant commercial and industrial
+                experience.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Always ask to see the electrician's competent person scheme registration card and
-          check its expiry date before agreeing to work. Ask what certificates they will
-          provide on completion — a registered electrician will issue the correct documentation
-          for every job.
+          Always ask to see the electrician's competent person scheme registration card and check
+          its expiry date before agreeing to work. Ask what certificates they will provide on
+          completion — a registered electrician will issue the correct documentation for every job.
         </p>
       </>
     ),
@@ -215,9 +212,7 @@ const sections = [
     heading: 'Electrician Costs in Chelmsford (2026)',
     content: (
       <>
-        <p>
-          Chelmsford sits in the South East pricing band. Typical 2026 rates:
-        </p>
+        <p>Chelmsford sits in the South East pricing band. Typical 2026 rates:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-3">
@@ -276,39 +271,38 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Chelmsford's large stock of post-war housing contains many outdated consumer
-              units that do not provide the RCD protection required by BS 7671.
-              Consumer unit upgrades are triggered by EICRs, property sales, and
-              EV charger installations. This is one of the most consistently demanded jobs
-              in the Chelmsford residential market.
+              Chelmsford's large stock of post-war housing contains many outdated consumer units
+              that do not provide the RCD protection required by BS 7671. Consumer unit upgrades are
+              triggered by EICRs, property sales, and EV charger installations. This is one of the
+              most consistently demanded jobs in the Chelmsford residential market.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Landlord EICRs</h3>
             <p className="text-white text-sm leading-relaxed">
               Chelmsford has a significant private rented sector. Landlord EICRs are legally
-              required every 5 years under the 2020 Electrical Safety Regulations. Any C1
-              or C2 defects must be remedied within 28 days. Chelmsford City Council enforces
-              the Electrical Safety Regulations and landlords face financial penalties for
+              required every 5 years under the 2020 Electrical Safety Regulations. Any C1 or C2
+              defects must be remedied within 28 days. Chelmsford City Council enforces the
+              Electrical Safety Regulations and landlords face financial penalties for
               non-compliance.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Charger Installation</h3>
             <p className="text-white text-sm leading-relaxed">
-              Chelmsford's large commuter population — with frequent rail and road journeys
-              to London — creates strong demand for home EV charger installations. Home
-              7kW Type 2 chargers on dedicated circuits with UK Power Networks G98 notification
-              are the standard installation. OZEV grant funding is available for eligible customers.
+              Chelmsford's large commuter population — with frequent rail and road journeys to
+              London — creates strong demand for home EV charger installations. Home 7kW Type 2
+              chargers on dedicated circuits with UK Power Networks G98 notification are the
+              standard installation. OZEV grant funding is available for eligible customers.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial City Centre Work</h3>
             <p className="text-white text-sm leading-relaxed">
-              Chelmsford's city centre commercial sector — Essex County Council, Chelmsford
-              Crown Court, Broomfield Hospital, and numerous professional services firms —
-              generates significant commercial electrical demand. Distribution board maintenance,
-              emergency lighting testing, and office fit-out wiring are regular requirements.
+              Chelmsford's city centre commercial sector — Essex County Council, Chelmsford Crown
+              Court, Broomfield Hospital, and numerous professional services firms — generates
+              significant commercial electrical demand. Distribution board maintenance, emergency
+              lighting testing, and office fit-out wiring are regular requirements.
             </p>
           </div>
         </div>
@@ -320,33 +314,30 @@ const sections = [
     heading: 'Part P and BS 7671 in Chelmsford',
     content: (
       <>
-        <p>
-          All domestic electrical work in Chelmsford must comply with Part P and BS 7671:
-        </p>
+        <p>All domestic electrical work in Chelmsford must comply with Part P and BS 7671:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — notifiable work must be self-certified
-                by a registered competent person or notified to Chelmsford City Council building
-                control. Registered electricians notify automatically through their scheme.
+                <strong>Part P notification</strong> — notifiable work must be self-certified by a
+                registered competent person or notified to Chelmsford City Council building control.
+                Registered electricians notify automatically through their scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — BS 7671 requires RCD additional protection
-                for socket outlets and all final circuits in new
-                domestic installations.
+                <strong>RCD protection</strong> — BS 7671 requires RCD additional protection for
+                socket outlets and all final circuits in new domestic installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection</strong> — BS 7671 Section 631 covers periodic
-                inspection requirements. Rental properties must have a valid EICR every 5 years
-                by law. Owner-occupied properties are recommended every 10 years.
+                inspection requirements. Rental properties must have a valid EICR every 5 years by
+                law. Owner-occupied properties are recommended every 10 years.
               </span>
             </li>
           </ul>
@@ -363,38 +354,37 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War and 1960s—1980s Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              The dominant property type in much of Chelmsford — cavity wall semi-detached
-              and terraced houses built during the city's expansion as a London commuter
-              destination. Many have outdated consumer units and wiring approaching the end
-              of their serviceable life. Consumer unit upgrades and EICRs are the most
-              common jobs in these properties.
+              The dominant property type in much of Chelmsford — cavity wall semi-detached and
+              terraced houses built during the city's expansion as a London commuter destination.
+              Many have outdated consumer units and wiring approaching the end of their serviceable
+              life. Consumer unit upgrades and EICRs are the most common jobs in these properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              Victorian terraced and semi-detached properties in the area around the city
-              centre and in Moulsham. Solid brick walls make cable routing more challenging.
-              Pre-1980s properties should be assessed for asbestos. Full rewires are common
-              in this property type when the original wiring has reached the end of its life.
+              Victorian terraced and semi-detached properties in the area around the city centre and
+              in Moulsham. Solid brick walls make cable routing more challenging. Pre-1980s
+              properties should be assessed for asbestos. Full rewires are common in this property
+              type when the original wiring has reached the end of its life.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Significant new residential development in areas like Springfield, Great Baddow,
-              and the fringes of the city. Modern wiring, consumer units, and in many cases
-              EV charger provision already installed by the developer. Work is typically
-              additions and EV charger upgrades rather than rewires.
+              Significant new residential development in areas like Springfield, Great Baddow, and
+              the fringes of the city. Modern wiring, consumer units, and in many cases EV charger
+              provision already installed by the developer. Work is typically additions and EV
+              charger upgrades rather than rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural Essex Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              Villages and rural properties in the wider Chelmsford district. May have TT
-              earthing, older single-phase supplies, and limited supply capacity. Solar PV
-              is popular on south-facing rural and farm buildings. Always survey and verify
-              the earthing arrangement before quoting rural Essex jobs.
+              Villages and rural properties in the wider Chelmsford district. May have TT earthing,
+              older single-phase supplies, and limited supply capacity. Solar PV is popular on
+              south-facing rural and farm buildings. Always survey and verify the earthing
+              arrangement before quoting rural Essex jobs.
             </p>
           </div>
         </div>
@@ -407,10 +397,10 @@ const sections = [
     content: (
       <>
         <p>
-          Chelmsford is a solid South East market with consistent demand across residential
-          and commercial sectors. The large post-war housing stock, growing commuter EV charger
-          market, and active commercial sector make it a reliable and rewarding area for
-          well-qualified electricians.
+          Chelmsford is a solid South East market with consistent demand across residential and
+          commercial sectors. The large post-war housing stock, growing commuter EV charger market,
+          and active commercial sector make it a reliable and rewarding area for well-qualified
+          electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -419,17 +409,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EICs
-                  </SEOInternalLink>{' '}
-                  from your phone on Chelmsford jobs using AI-assisted board scanning.
-                  Issue professional certificates on site and keep your landlord clients
-                  coming back.
+                  Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
+                  and <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> from
+                  your phone on Chelmsford jobs using AI-assisted board scanning. Issue professional
+                  certificates on site and keep your landlord clients coming back.
                 </p>
               </div>
             </div>
@@ -444,8 +427,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Chelmsford customers at accurate
-                  South East rates. Quote on site and send before you drive away.
+                  to produce professional PDF quotes for Chelmsford customers at accurate South East
+                  rates. Quote on site and send before you drive away.
                 </p>
               </div>
             </div>
@@ -453,7 +436,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Chelmsford electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -490,7 +473,7 @@ export default function ElectricianChelmsfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Chelmsford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Chelmsford Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Chelmsford and Essex. 7-day free trial."
     />
   );
 }

@@ -135,10 +135,10 @@ const sections = [
     content: (
       <>
         <p>
-          London is consistently the most expensive region in the UK for electrical work, and rewires
-          are no exception. Electrician day rates in the capital range from £350 to £500+, reflecting
-          higher living costs, commercial rents, vehicle running costs (congestion charge, ULEZ,
-          parking), and the general cost of doing business in London.
+          London is consistently the most expensive region in the UK for electrical work, and
+          rewires are no exception. Electrician day rates in the capital range from £350 to £500+,
+          reflecting higher living costs, commercial rents, vehicle running costs (congestion
+          charge, ULEZ, parking), and the general cost of doing business in London.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -208,10 +208,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Victorian terraces (1850s–1900s):</strong> Found across inner London boroughs
-                — Islington, Hackney, Camberwell, Fulham, Battersea. These properties often have
-                original rubber-insulated wiring hidden behind lath-and-plaster walls, with lead
-                cable sheaths and porcelain fuse holders. The narrow terrace layout makes cable
+                <strong>Victorian terraces (1850s–1900s):</strong> Found across inner London
+                boroughs — Islington, Hackney, Camberwell, Fulham, Battersea. These properties often
+                have original rubber-insulated wiring hidden behind lath-and-plaster walls, with
+                lead cable sheaths and porcelain fuse holders. The narrow terrace layout makes cable
                 routing challenging, and many have had ad-hoc electrical additions over the decades
                 without proper circuits being designed.
               </span>
@@ -221,38 +221,38 @@ const sections = [
               <span>
                 <strong>Edwardian semis (1900s–1910s):</strong> Common in Ealing, Walthamstow,
                 Muswell Hill, and Lee Green. Slightly more spacious than Victorian terraces but
-                similarly built with lath-and-plaster. Many have had ground-floor extensions
-                (side returns) that were wired at different times, creating a patchwork of cable
-                types and standards.
+                similarly built with lath-and-plaster. Many have had ground-floor extensions (side
+                returns) that were wired at different times, creating a patchwork of cable types and
+                standards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1930s–1950s semi-detached and terraced:</strong> Found extensively in outer
-                London — Harrow, Enfield, Bexley, Sutton. Many still have original VIR
-                (vulcanised india rubber) wiring. While less difficult to rewire than Victorian
-                properties (plasterboard walls, accessible loft spaces), the wiring is well past its
-                safe service life.
+                London — Harrow, Enfield, Bexley, Sutton. Many still have original VIR (vulcanised
+                india rubber) wiring. While less difficult to rewire than Victorian properties
+                (plasterboard walls, accessible loft spaces), the wiring is well past its safe
+                service life.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Purpose-built flats (1960s–1980s):</strong> Blocks across London, from
-                council estates to private developments. Common issues include undersized PVC cables,
-                shared risers, and consumer units with BS 3036 rewirable fuses. Rewiring a flat
-                within a block often requires liaison with the freeholder and managing agent, and may
-                need communal area access for cable routes.
+                council estates to private developments. Common issues include undersized PVC
+                cables, shared risers, and consumer units with BS 3036 rewirable fuses. Rewiring a
+                flat within a block often requires liaison with the freeholder and managing agent,
+                and may need communal area access for cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Converted flats:</strong> Period houses split into flats are extremely common
-                in London. These conversions vary wildly in quality — some have proper submains and
-                individual consumer units, while others share circuits with other flats or have
-                wiring that was never designed for the current layout.
+                <strong>Converted flats:</strong> Period houses split into flats are extremely
+                common in London. These conversions vary wildly in quality — some have proper
+                submains and individual consumer units, while others share circuits with other flats
+                or have wiring that was never designed for the current layout.
               </span>
             </li>
           </ul>
@@ -312,8 +312,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR with C1 or C2 observations</strong> — a professional inspection has
-                identified dangerous or potentially dangerous conditions that require urgent remedial
-                work.
+                identified dangerous or potentially dangerous conditions that require urgent
+                remedial work.
               </span>
             </li>
           </ul>
@@ -370,8 +370,8 @@ const sections = [
           competent person scheme — such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
-          the homeowner must notify their local authority building control department before the work
-          starts.
+          the homeowner must notify their local authority building control department before the
+          work starts.
         </p>
         <p>
           Using a registered electrician is strongly recommended. They will self-certify the work,
@@ -396,12 +396,13 @@ const sections = [
   },
   {
     id: 'whats-included',
-    heading: "What Is Included in a London Rewire Quote",
+    heading: 'What Is Included in a London Rewire Quote',
     content: (
       <>
         <p>
           A comprehensive rewire quote should itemise every element of the work. Be wary of
-          single-figure quotes with no breakdown — they make it impossible to compare like with like.
+          single-figure quotes with no breakdown — they make it impossible to compare like with
+          like.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -409,8 +410,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New consumer unit</strong> — metal enclosure with RCBOs or dual-RCD
-                arrangement, SPD (surge protection device), and main switch. The consumer unit is the
-                heart of the new installation.
+                arrangement, SPD (surge protection device), and main switch. The consumer unit is
+                the heart of the new installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -433,15 +434,16 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing and bonding</strong> — main earth conductor, main bonding
-                conductors to gas, water, and oil pipework, and supplementary bonding where required.
+                conductors to gas, water, and oil pipework, and supplementary bonding where
+                required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing and certification</strong> — initial verification testing of every
-                circuit (continuity, insulation resistance, polarity, earth fault loop impedance, RCD
-                operation) plus the EIC and Part P notification.
+                circuit (continuity, insulation resistance, polarity, earth fault loop impedance,
+                RCD operation) plus the EIC and Part P notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -478,25 +480,25 @@ const sections = [
           need to contact building control directly — the notification is handled automatically.
         </p>
         <p>
-          If you are using a non-registered electrician or doing the work yourself, you must submit a
-          building notice to your borough council before starting. Building control inspection fees
-          for electrical work in London boroughs typically range from £200 to £400. The inspector
-          will need to attend the property to inspect and test the installation before it is
-          energised.
+          If you are using a non-registered electrician or doing the work yourself, you must submit
+          a building notice to your borough council before starting. Building control inspection
+          fees for electrical work in London boroughs typically range from £200 to £400. The
+          inspector will need to attend the property to inspect and test the installation before it
+          is energised.
         </p>
         <p>
           In London, building control is particularly important for properties in conservation areas
           or listed buildings. If your property is listed, any work that affects the fabric of the
           building (including chasing walls for cables) may require Listed Building Consent from the
           borough planning department, in addition to the Part P notification. This is a separate
-          process and failure to obtain consent is a criminal offence. Always check with your borough
-          council before starting a rewire in a listed building.
+          process and failure to obtain consent is a criminal offence. Always check with your
+          borough council before starting a rewire in a listed building.
         </p>
         <p>
           The main DNO for London is UK Power Networks (UKPN). If the rewire identifies that the
           supply fuse or meter tails need upgrading, UKPN must be contacted to carry out the supply
-          side work. UKPN supply upgrades in London can take 4-8 weeks to schedule, so plan early
-          if this is likely to be needed.
+          side work. UKPN supply upgrades in London can take 4-8 weeks to schedule, so plan early if
+          this is likely to be needed.
         </p>
       </>
     ),
@@ -580,8 +582,7 @@ export default function RewireCostLondonPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost London:{' '}
-          <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost London: <span className="text-yellow-400">2026 Price Guide</span>
         </>
       }
       heroSubtitle="London rewire costs are the highest in the UK — driven by premium labour rates, complex period housing stock, and the cost of doing business in the capital. This guide breaks down realistic pricing for every London property type."
@@ -592,7 +593,7 @@ export default function RewireCostLondonPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in London"
       relatedPages={relatedPages}
       ctaHeading="Quote London Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

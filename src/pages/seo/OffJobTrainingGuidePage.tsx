@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never Fall Behind on OJT Hours"
-          description="Join 430+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, 46+ training courses, compliance tracking, and Ofsted-ready records. 7-day free trial."
+          description="Join 1,000+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, 46+ training courses, compliance tracking, and Ofsted-ready records. 7-day free trial."
           icon={GraduationCap}
         />
       </>
@@ -641,7 +641,7 @@ export default function OffJobTrainingGuidePage() {
       faqHeading="Frequently Asked Questions About Off-the-Job Training"
       relatedPages={relatedPages}
       ctaHeading="Track Your OJT Hours Effortlessly"
-      ctaSubheading="Join 430+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, compliance dashboard, and Ofsted-ready records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, compliance dashboard, and Ofsted-ready records. 7-day free trial, cancel anytime."
     />
   );
 }

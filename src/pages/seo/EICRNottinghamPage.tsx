@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
   'Nottingham EICR costs are close to the national average. Expect to pay between £150 and £280 for a two-bedroom terraced house and £250 to £400 for a three-bedroom semi-detached property.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Nottingham City Council enforces the regulations and can impose fines of up to £30,000 per breach.',
   'Nottingham operates one of the most extensive selective licensing schemes in England, covering large parts of the city. A valid EICR is a condition of the property licence, and the council actively enforces compliance.',
@@ -82,7 +82,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -117,7 +118,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -131,18 +133,18 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -153,8 +155,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -204,8 +206,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Nottingham has
-                a large student rental market near the two universities, and many HMOs require
-                EICRs covering multiple consumer units and fire alarm systems.
+                a large student rental market near the two universities, and many HMOs require EICRs
+                covering multiple consumer units and fire alarm systems.
               </span>
             </li>
           </ul>
@@ -275,7 +277,8 @@ const sections = [
         <p>
           Landlords with properties in Nottingham's selective licensing areas face a double
           compliance requirement: the national electrical safety regulations and the local licensing
-          conditions. An expired or missing EICR can result in enforcement action under both regimes.
+          conditions. An expired or missing EICR can result in enforcement action under both
+          regimes.
         </p>
       </>
     ),
@@ -342,8 +345,8 @@ const sections = [
       <>
         <p>
           Nottingham's housing stock presents specific challenges for EICR inspectors. The city has
-          a significant proportion of Victorian and Edwardian terraces, post-war council estates, and
-          a large student rental sector:
+          a significant proportion of Victorian and Edwardian terraces, post-war council estates,
+          and a large student rental sector:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -386,8 +389,8 @@ const sections = [
         </div>
         <p>
           Electricians should allow extra time for Victorian terraces and HMO conversions. A
-          two-bedroom Victorian terrace in Hyson Green may take 3 to 4 hours compared to 2 hours
-          for a modern flat in the city centre.
+          two-bedroom Victorian terrace in Hyson Green may take 3 to 4 hours compared to 2 hours for
+          a modern flat in the city centre.
         </p>
       </>
     ),
@@ -502,9 +505,9 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671
-          Section 621 establishes that installations must be periodically inspected at intervals
-          suited to the property type:
+          The required frequency of EICRs depends on the property type and use. BS 7671 Section 621
+          establishes that installations must be periodically inspected at intervals suited to the
+          property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -564,8 +567,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications</strong> — the inspector should hold City & Guilds 2391
-                (Inspection and Testing) or equivalent, plus a current BS 7671 qualification
-                (C&G 2382 18th Edition).
+                (Inspection and Testing) or equivalent, plus a current BS 7671 qualification (C&G
+                2382 18th Edition).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -619,7 +622,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Landlords must act within 28 days — deliver the quote on the day to win the work.
+                  . Landlords must act within 28 days — deliver the quote on the day to win the
+                  work.
                 </p>
               </div>
             </div>
@@ -627,7 +631,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -660,7 +664,7 @@ export default function EICRNottinghamPage() {
       faqHeading="Frequently Asked Questions About EICRs in Nottingham"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

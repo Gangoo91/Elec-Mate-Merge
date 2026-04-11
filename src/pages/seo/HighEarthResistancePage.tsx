@@ -589,7 +589,7 @@ export default function HighEarthResistancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Calculate and Validate Earth Resistance On Site"
-      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate includes an earth rod calculator, validates RA x IΔn against BS 7671, and captures earth resistance on every certificate. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

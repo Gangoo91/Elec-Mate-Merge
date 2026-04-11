@@ -102,15 +102,14 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables correctly for rewires and new circuits across Gloucester\'s varied housing stock.',
+      "Size cables correctly for rewires and new circuits across Gloucester's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description:
-      'Replace old fuse boards with modern RCD-protected consumer units — step by step.',
+    description: 'Replace old fuse boards with modern RCD-protected consumer units — step by step.',
     icon: Zap,
     category: 'Guide',
   },
@@ -125,8 +124,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
+    description: 'Study for C&G 2391 — the qualification required to carry out and issue EICRs.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -143,17 +141,17 @@ const sections = [
     content: (
       <>
         <p>
-          Gloucester is an historic cathedral city in Gloucestershire, on the River Severn,
-          with a population of around 135,000. The city has a proud Roman and medieval heritage
-          — the cathedral is one of England's finest — and a Victorian industrial legacy centred
-          on the docks, which were once the largest inland docks in England.
+          Gloucester is an historic cathedral city in Gloucestershire, on the River Severn, with a
+          population of around 135,000. The city has a proud Roman and medieval heritage — the
+          cathedral is one of England's finest — and a Victorian industrial legacy centred on the
+          docks, which were once the largest inland docks in England.
         </p>
         <p>
           Today, Gloucester is undergoing sustained regeneration. The docks area has been
           transformed into a mixed residential, retail, and leisure destination. The city centre
           benefits from investment, and residential development continues in Quedgeley, Longford,
-          and the A40 corridor. The economy is diverse, with logistics, retail, public sector,
-          and growing professional services.
+          and the A40 corridor. The economy is diverse, with logistics, retail, public sector, and
+          growing professional services.
         </p>
         <p>
           For electricians, Gloucester offers consistent demand across domestic and commercial
@@ -170,9 +168,7 @@ const sections = [
     heading: 'Part P and Electrical Compliance in Gloucester',
     content: (
       <>
-        <p>
-          Gloucester is in England, so Part P of the Building Regulations applies:
-        </p>
+        <p>Gloucester is in England, so Part P of the Building Regulations applies:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -186,17 +182,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A3:2024.
-                RCD protection under Regulation 411.3.3 is mandatory for socket outlets up to 32A
-                and for circuits in locations of increased shock risk.
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A3:2024. RCD protection under Regulation 411.3.3 is mandatory for socket
+                outlets up to 32A and for circuits in locations of increased shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR for rental properties</strong> — five-yearly EICRs required for
-                all private rented properties under the 2020 Regulations. Section 631 of BS 7671
-                governs periodic inspection methodology.
+                <strong>EICR for rental properties</strong> — five-yearly EICRs required for all
+                private rented properties under the 2020 Regulations. Section 631 of BS 7671 governs
+                periodic inspection methodology.
               </span>
             </li>
           </ul>
@@ -218,23 +214,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections</strong> — apply through NGED's connections portal for
-                new supplies, service upgrades, and temporary construction supplies.
+                <strong>New connections</strong> — apply through NGED's connections portal for new
+                supplies, service upgrades, and temporary construction supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98/G99</strong> — solar PV and battery storage notifications. G98
-                for systems up to 16A per phase online. G99 pre-approval for larger systems.
+                <strong>G98/G99</strong> — solar PV and battery storage notifications. G98 for
+                systems up to 16A per phase online. G99 pre-approval for larger systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing</strong> — most Gloucester properties are supplied on TN-C-S
-                (PME) systems. Older city centre properties may have TN-S from original lead
-                service cables. Always confirm at the intake before specifying work.
+                <strong>Earthing</strong> — most Gloucester properties are supplied on TN-C-S (PME)
+                systems. Older city centre properties may have TN-S from original lead service
+                cables. Always confirm at the intake before specifying work.
               </span>
             </li>
           </ul>
@@ -270,8 +266,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Post-War and Modern Estates</h3>
             <p className="text-white text-sm leading-relaxed">
               Quedgeley, Longlevens, and Hucclecote. Cavity brick semis and modern new-builds.
-              Standard cable routing, consumer unit replacements, and EV charger installations
-              are the primary work. Good market for EICR on 1970s–1990s properties.
+              Standard cable routing, consumer unit replacements, and EV charger installations are
+              the primary work. Good market for EICR on 1970s–1990s properties.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -303,22 +299,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewires</strong> — Victorian terraces in Kingsholm and Barton.
-                Allow extra time for asbestos assessment in pre-1985 properties.
+                <strong>Full rewires</strong> — Victorian terraces in Kingsholm and Barton. Allow
+                extra time for asbestos assessment in pre-1985 properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rental property EICRs</strong> — large and growing demand from
-                Gloucester's rental sector. Five-yearly obligation under the 2020 Regulations.
+                <strong>Rental property EICRs</strong> — large and growing demand from Gloucester's
+                rental sector. Five-yearly obligation under the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Docks specialist work</strong> — high-specification electrical fit-out
-                in converted apartments and commercial premises in the regenerated docks area.
+                <strong>Docks specialist work</strong> — high-specification electrical fit-out in
+                converted apartments and commercial premises in the regenerated docks area.
               </span>
             </li>
           </ul>
@@ -375,8 +371,8 @@ const sections = [
         </div>
         <p>
           Docks conversion work commands a premium over standard domestic rates. Specialist
-          high-specification electrical work in converted warehouses typically attracts rates
-          10% to 20% above standard domestic pricing.
+          high-specification electrical work in converted warehouses typically attracts rates 10% to
+          20% above standard domestic pricing.
         </p>
       </>
     ),
@@ -402,11 +398,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Get landlords their compliance documents the same day.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Get landlords their compliance documents the same day.
                 </p>
               </div>
             </div>
@@ -429,7 +422,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Gloucester electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -466,7 +459,7 @@ export default function ElectricianGloucesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Gloucester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Gloucester Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Gloucestershire and the South West. 7-day free trial."
     />
   );
 }

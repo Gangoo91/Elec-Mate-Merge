@@ -160,17 +160,17 @@ const sections = [
           For any electrical work in Birmingham, you need a qualified electrician registered with a{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           competent person scheme. The main schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          and ELECSA. Birmingham has strong representation on all three, and many local electricians
-          are also members of the ECA (Electrical Contractors' Association) or the JIB (Joint
-          Industry Board).
+          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT, and
+          ELECSA. Birmingham has strong representation on all three, and many local electricians are
+          also members of the ECA (Electrical Contractors' Association) or the JIB (Joint Industry
+          Board).
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -275,15 +275,15 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £100 to £180 for the first hour including
-                travel, plus £40 to £60 per additional hour. Weekend and evening surcharges of
-                30% to 50% are standard.
+                travel, plus £40 to £60 per additional hour. Weekend and evening surcharges of 30%
+                to 50% are standard.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Always get at least three written quotes. Prices vary across the city — expect to pay
-          more in Edgbaston, Moseley, and Harborne than in Erdington, Kingstanding, or Castle Bromwich.
+          Always get at least three written quotes. Prices vary across the city — expect to pay more
+          in Edgbaston, Moseley, and Harborne than in Erdington, Kingstanding, or Castle Bromwich.
         </p>
       </>
     ),
@@ -295,33 +295,37 @@ const sections = [
       <>
         <p>
           Birmingham's property stock is diverse, spanning over 150 years of building styles. Each
-          type presents different electrical challenges that affect the scope, cost, and duration
-          of work.
+          type presents different electrical challenges that affect the scope, cost, and duration of
+          work.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces and Back-to-Backs</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian Terraces and Back-to-Backs
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Birmingham has a unique stock of Victorian back-to-back houses — terraces where houses
               share three walls with neighbours, with windows and a door only on the front wall.
               Surviving examples in the Jewellery Quarter and Balsall Heath are often listed or in
-              conservation areas. Rewiring requires creative cable routing with minimal wall chasing.
-              Standard Victorian terraces in Moseley, Stirchley, and Kings Heath have solid brick
-              walls and high ceilings similar to other Victorian cities.
+              conservation areas. Rewiring requires creative cable routing with minimal wall
+              chasing. Standard Victorian terraces in Moseley, Stirchley, and Kings Heath have solid
+              brick walls and high ceilings similar to other Victorian cities.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">1930s Semi-Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              Birmingham's suburbs — Perry Barr, Erdington, Hall Green, Acocks Green, Yardley —
-              are dominated by 1930s semi-detached houses. These typically have cavity walls
-              (easier for cable routing than solid brick), original round-pin socket wiring that
-              needs replacing, and a mix of original and later electrical work. They are generally
-              the most straightforward property type to rewire in Birmingham.
+              Birmingham's suburbs — Perry Barr, Erdington, Hall Green, Acocks Green, Yardley — are
+              dominated by 1930s semi-detached houses. These typically have cavity walls (easier for
+              cable routing than solid brick), original round-pin socket wiring that needs
+              replacing, and a mix of original and later electrical work. They are generally the
+              most straightforward property type to rewire in Birmingham.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">1960s Tower Blocks and Maisonettes</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              1960s Tower Blocks and Maisonettes
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Birmingham has significant numbers of 1960s and 1970s tower blocks and maisonettes,
               many of which have been refurbished by housing associations but some remain in
@@ -351,10 +355,10 @@ const sections = [
     content: (
       <>
         <p>
-          National Grid Electricity Distribution (NGED) — formerly Western Power Distribution
-          (WPD) — is the Distribution Network Operator for Birmingham and the wider West Midlands.
-          NGED manages the electricity network from high-voltage substations down to the service
-          cable entering your property.
+          National Grid Electricity Distribution (NGED) — formerly Western Power Distribution (WPD)
+          — is the Distribution Network Operator for Birmingham and the wider West Midlands. NGED
+          manages the electricity network from high-voltage substations down to the service cable
+          entering your property.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -387,11 +391,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Birmingham is overseen by Birmingham City
-          Council building control or an approved inspector. If your electrician is registered
-          with a competent person scheme, they self-certify and notify the council directly.
+          Council building control or an approved inspector. If your electrician is registered with
+          a competent person scheme, they self-certify and notify the council directly.
         </p>
       </>
     ),
@@ -403,8 +406,8 @@ const sections = [
       <>
         <p>
           Birmingham is home to five universities — the University of Birmingham, Aston University,
-          Birmingham City University, Newman University, and University College Birmingham — with
-          a combined student population of over 80,000. The areas surrounding these institutions,
+          Birmingham City University, Newman University, and University College Birmingham — with a
+          combined student population of over 80,000. The areas surrounding these institutions,
           particularly Selly Oak, Edgbaston, and Aston, have high concentrations of student HMOs.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
@@ -461,8 +464,8 @@ const sections = [
           Birmingham is undergoing one of the largest infrastructure and regeneration programmes in
           the UK. The HS2 high-speed railway terminus at Curzon Street, the Smithfield development
           (on the former wholesale markets site), the Digbeth creative quarter regeneration, and
-          ongoing residential development across the city are all driving demand for electrical
-          work at every scale.
+          ongoing residential development across the city are all driving demand for electrical work
+          at every scale.
         </p>
         <p>
           For domestic customers, this means that qualified electricians are in high demand across
@@ -474,8 +477,8 @@ const sections = [
         <p>
           For electricians, the Birmingham market offers significant opportunities across domestic,
           commercial, and infrastructure work. The combination of a large existing housing stock
-          (much of it requiring upgrades), strict HMO enforcement, and major new development
-          means steady work with good margins for competent, registered contractors.
+          (much of it requiring upgrades), strict HMO enforcement, and major new development means
+          steady work with good margins for competent, registered contractors.
         </p>
       </>
     ),
@@ -516,9 +519,9 @@ const sections = [
                   Birmingham letting agents and property managers expect prompt, professional
                   certificates. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on your
-                  phone and email the PDF before leaving site. This sets you apart from competitors
-                  and speeds up the payment cycle with letting agents.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on your phone
+                  and email the PDF before leaving site. This sets you apart from competitors and
+                  speeds up the payment cycle with letting agents.
                 </p>
               </div>
             </div>
@@ -526,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Birmingham electrical business"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -563,7 +566,7 @@ export default function ElectricianBirminghamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Birmingham landlords and letting agents. 7-day free trial."
     />
   );
 }

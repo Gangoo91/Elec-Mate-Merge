@@ -665,7 +665,7 @@ export default function RCDTypesExplainedPage() {
         },
       ]}
       ctaHeading="Get RCD Type Right Every Time"
-      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures RCD types on every certificate, validates trip times against BS 7671, and scans board labels from photos. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

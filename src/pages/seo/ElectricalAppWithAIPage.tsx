@@ -553,7 +553,7 @@ export default function ElectricalAppWithAIPage() {
       faqHeading="Frequently Asked Questions About Elec-Mate's AI Features"
       relatedPages={relatedPages}
       ctaHeading="Try Every AI Feature Free for 7 Days"
-      ctaSubheading="5 AI agents, 12 AI tools, 8 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No card required to start."
+      ctaSubheading="5 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No card required to start."
     />
   );
 }

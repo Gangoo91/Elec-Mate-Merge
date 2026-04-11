@@ -709,7 +709,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="All restaurant certificates in one app"
-          description="EICR, EIC, Fire Alarm, Emergency Lighting, PAT Testing — complete every certificate a restaurant needs on your phone. AI board scanner, voice test entry, instant PDF delivery. Join 430+ UK electricians using Elec-Mate."
+          description="EICR, EIC, Fire Alarm, Emergency Lighting, PAT Testing — complete every certificate a restaurant needs on your phone. AI board scanner, voice test entry, instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate."
           icon={Building}
         />
       </>
@@ -746,7 +746,7 @@ export default function RestaurantElectricalRequirementsPage() {
       faqHeading="Frequently Asked Questions About Restaurant Electrical Requirements"
       relatedPages={relatedPages}
       ctaHeading="Complete Restaurant Certificates on Your Phone"
-      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="EICR, Fire Alarm, Emergency Lighting, PAT Testing — every certificate a restaurant needs, completed on site with AI-powered tools. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

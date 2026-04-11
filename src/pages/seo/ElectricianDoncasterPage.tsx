@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Doncaster is in South Yorkshire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to City of Doncaster Council Building Control.',
   'Northern Powergrid (NPG) is the Distribution Network Operator for Doncaster and the wider Yorkshire region. All new connections, supply upgrades, and G98/G99 generation notifications go through NPG.',
   'Doncaster has a large social housing and ex-mining community housing stock, much of which has ageing wiring from the 1960s and 1970s. This generates substantial rewiring and consumer unit upgrade work.',
-  'The town has undergone significant economic transformation since the coal industry declined, with new logistics, retail, and commercial development. Doncaster Sheffield Airport\'s development at Waypoint creates additional commercial electrical opportunity.',
+  "The town has undergone significant economic transformation since the coal industry declined, with new logistics, retail, and commercial development. Doncaster Sheffield Airport's development at Waypoint creates additional commercial electrical opportunity.",
   'Labour rates in Doncaster are among the more affordable in England — typically £38 to £54 per hour for a qualified, registered electrician in 2026, reflecting the South Yorkshire regional labour market.',
 ];
 
@@ -57,12 +57,12 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Doncaster?',
     answer:
-      'An EICR in Doncaster typically costs £130 to £230 for a standard residential property, making it one of the more affordable parts of England for EICR work. The town\'s large private rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EICRs must be carried out every five years, with C1/C2 defects remedied within 28 days of an unsatisfactory report.',
+      "An EICR in Doncaster typically costs £130 to £230 for a standard residential property, making it one of the more affordable parts of England for EICR work. The town's large private rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. EICRs must be carried out every five years, with C1/C2 defects remedied within 28 days of an unsatisfactory report.",
   },
   {
-    question: 'What are the electrical challenges in Doncaster\'s mining community estates?',
+    question: "What are the electrical challenges in Doncaster's mining community estates?",
     answer:
-      'Many of Doncaster\'s former coal mining communities — areas such as Armthorpe, Conisbrough, Bentley, and Edlington — have large housing estates built in the 1950s to 1970s to house mining families. These properties commonly contain ageing PVC wiring or earlier rubber-insulated wiring, inadequate consumer units with rewirable fuses, poor earth bonding, and limited socket provision. EICRs in this housing stock frequently generate multiple C2 (potentially dangerous) observations. Full rewires and consumer unit upgrades are common in these areas. Asbestos is also a significant risk in pre-1980s properties — always recommend an asbestos survey before starting invasive work.',
+      "Many of Doncaster's former coal mining communities — areas such as Armthorpe, Conisbrough, Bentley, and Edlington — have large housing estates built in the 1950s to 1970s to house mining families. These properties commonly contain ageing PVC wiring or earlier rubber-insulated wiring, inadequate consumer units with rewirable fuses, poor earth bonding, and limited socket provision. EICRs in this housing stock frequently generate multiple C2 (potentially dangerous) observations. Full rewires and consumer unit upgrades are common in these areas. Asbestos is also a significant risk in pre-1980s properties — always recommend an asbestos survey before starting invasive work.",
   },
   {
     question: 'What is the typical cost of rewiring a Doncaster house?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Is there demand for EV charger installations in Doncaster?',
     answer:
-      'Yes, and it is growing. While Doncaster historically has had high car ownership driven by the lack of a heavy rail commuter network into Sheffield and Leeds, EV charger demand has been growing as EV adoption increases across all income levels. The commercial sector — particularly logistics parks and retail developments — is a significant EV charger market. Residential EV charger demand is strongest in Doncaster\'s more affluent private residential areas (Tickhill, Rossington, Barnby Dun). Northern Powergrid G98 notification is required if the EV charger installation includes solar or battery storage.',
+      "Yes, and it is growing. While Doncaster historically has had high car ownership driven by the lack of a heavy rail commuter network into Sheffield and Leeds, EV charger demand has been growing as EV adoption increases across all income levels. The commercial sector — particularly logistics parks and retail developments — is a significant EV charger market. Residential EV charger demand is strongest in Doncaster's more affluent private residential areas (Tickhill, Rossington, Barnby Dun). Northern Powergrid G98 notification is required if the EV charger installation includes solar or battery storage.",
   },
 ];
 
@@ -101,8 +101,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Size cables for rewires and new circuits in Doncaster\'s varied housing stock.',
+    description: "Size cables for rewires and new circuits in Doncaster's varied housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -143,18 +142,18 @@ const sections = [
     content: (
       <>
         <p>
-          Doncaster is a large town in South Yorkshire with a population of around 310,000. Once
-          at the heart of the Yorkshire coalfields, the town has undergone significant economic
+          Doncaster is a large town in South Yorkshire with a population of around 310,000. Once at
+          the heart of the Yorkshire coalfields, the town has undergone significant economic
           transformation since the closure of its collieries, and today has a diverse economy
-          encompassing logistics (benefiting from its position at the junction of the M1, M18,
-          and A1M), retail, manufacturing, and public sector employment.
+          encompassing logistics (benefiting from its position at the junction of the M1, M18, and
+          A1M), retail, manufacturing, and public sector employment.
         </p>
         <p>
-          For electricians, Doncaster offers a substantial residential market dominated by the
-          need to upgrade ageing wiring in the town's former mining community estates and Victorian
-          terraces, alongside a growing commercial sector driven by logistics and retail development.
-          EICR demand is strong across the town's large private rental sector, and EV charger
-          installations are growing in both residential and commercial settings.
+          For electricians, Doncaster offers a substantial residential market dominated by the need
+          to upgrade ageing wiring in the town's former mining community estates and Victorian
+          terraces, alongside a growing commercial sector driven by logistics and retail
+          development. EICR demand is strong across the town's large private rental sector, and EV
+          charger installations are growing in both residential and commercial settings.
         </p>
         <p>
           This guide covers the regulatory framework, DNO contacts, local property types, typical
@@ -217,36 +216,34 @@ const sections = [
     heading: 'Doncaster Property Types and Electrical Challenges',
     content: (
       <>
-        <p>
-          Doncaster's housing stock reflects its industrial heritage and post-war development:
-        </p>
+        <p>Doncaster's housing stock reflects its industrial heritage and post-war development:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Town Centre Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              The town centre and areas such as Balby, Hexthorpe, and Hyde Park have Victorian
-              and Edwardian terraced properties. These commonly have old rubber-insulated wiring,
-              inadequate consumer units, and poor earthing. Many have been converted to HMOs.
-              Full rewires and consumer unit upgrades are frequent. Asbestos surveys are
-              essential in pre-1980s properties.
+              The town centre and areas such as Balby, Hexthorpe, and Hyde Park have Victorian and
+              Edwardian terraced properties. These commonly have old rubber-insulated wiring,
+              inadequate consumer units, and poor earthing. Many have been converted to HMOs. Full
+              rewires and consumer unit upgrades are frequent. Asbestos surveys are essential in
+              pre-1980s properties.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Former Mining Community Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large estates in Armthorpe, Conisbrough, Bentley, and Edlington were built for
-              mining families in the 1950s–1970s. Wiring from this era is now ageing and often
-              approaching or past its safe life. Consumer unit upgrades and full rewires are
-              extremely common in this stock.
+              Large estates in Armthorpe, Conisbrough, Bentley, and Edlington were built for mining
+              families in the 1950s–1970s. Wiring from this era is now ageing and often approaching
+              or past its safe life. Consumer unit upgrades and full rewires are extremely common in
+              this stock.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Private Development</h3>
             <p className="text-white text-sm leading-relaxed">
-              Areas such as Bessacarr, Cantley, and Auckley have modern private housing built
-              from the 1980s onwards. This stock has better wiring but EV charger installation,
-              consumer unit upgrades, and additional circuits for kitchen extensions are the
-              most common jobs.
+              Areas such as Bessacarr, Cantley, and Auckley have modern private housing built from
+              the 1980s onwards. This stock has better wiring but EV charger installation, consumer
+              unit upgrades, and additional circuits for kitchen extensions are the most common
+              jobs.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -267,41 +264,39 @@ const sections = [
     heading: 'Common Electrical Jobs in Doncaster',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Doncaster in 2026:
-        </p>
+        <p>The most in-demand electrical services in Doncaster in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for landlords</strong> — Doncaster has a large private rental
-                market. EICRs every five years are a legal requirement for landlords. Building
-                relationships with local letting agents generates consistent work.
+                <strong>EICRs for landlords</strong> — Doncaster has a large private rental market.
+                EICRs every five years are a legal requirement for landlords. Building relationships
+                with local letting agents generates consistent work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — old fuse boards are extremely
-                common across Doncaster's older housing stock. Consumer unit upgrades are one
-                of the most frequently requested jobs in the area.
+                <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
+                across Doncaster's older housing stock. Consumer unit upgrades are one of the most
+                frequently requested jobs in the area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full and partial rewires</strong> — Doncaster's 1950s–1970s housing
-                stock generates the highest volume of rewiring work. Many properties have wiring
-                that is decades old and in need of full replacement.
+                <strong>Full and partial rewires</strong> — Doncaster's 1950s–1970s housing stock
+                generates the highest volume of rewiring work. Many properties have wiring that is
+                decades old and in need of full replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing across Doncaster's residential
-                and commercial sectors. Commercial EV charger installations in logistics parks
-                and retail developments are an expanding market.
+                and commercial sectors. Commercial EV charger installations in logistics parks and
+                retail developments are an expanding market.
               </span>
             </li>
           </ul>
@@ -315,8 +310,8 @@ const sections = [
     content: (
       <>
         <p>
-          In Doncaster, as across England, NICEIC or NAPIT registration is the key indicator of
-          a qualified and compliant electrician:
+          In Doncaster, as across England, NICEIC or NAPIT registration is the key indicator of a
+          qualified and compliant electrician:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -324,8 +319,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registered</strong> — search the public registers at
-                niceic.com or napit.org.uk for Doncaster-based electricians. Registration
-                confirms annual technical assessment and Part P self-certification ability.
+                niceic.com or napit.org.uk for Doncaster-based electricians. Registration confirms
+                annual technical assessment and Part P self-certification ability.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -339,9 +334,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written quotation</strong> — always get a written quote before committing
-                to work. Good Doncaster electricians will survey the property and provide a
-                detailed cost breakdown.
+                <strong>Written quotation</strong> — always get a written quote before committing to
+                work. Good Doncaster electricians will survey the property and provide a detailed
+                cost breakdown.
               </span>
             </li>
           </ul>
@@ -417,10 +412,9 @@ const sections = [
     content: (
       <>
         <p>
-          Doncaster offers a solid and consistent market for electricians. The high volume of
-          ageing housing stock generates reliable rewiring and EICR work, and the growing
-          commercial sector provides higher-value opportunities for electricians with commercial
-          experience.
+          Doncaster offers a solid and consistent market for electricians. The high volume of ageing
+          housing stock generates reliable rewiring and EICR work, and the growing commercial sector
+          provides higher-value opportunities for electricians with commercial experience.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -433,12 +427,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Professional documentation builds credibility with Doncaster landlords
-                  and generates referrals.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Professional documentation builds credibility with Doncaster landlords and
+                  generates referrals.
                 </p>
               </div>
             </div>
@@ -453,8 +444,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional quotes. In Doncaster's competitive market, clear and
-                  detailed quotes that include compliance documentation stand out.
+                  to send professional quotes. In Doncaster's competitive market, clear and detailed
+                  quotes that include compliance documentation stand out.
                 </p>
               </div>
             </div>
@@ -462,7 +453,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Doncaster electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Doncaster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Doncaster. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -487,8 +478,7 @@ export default function ElectricianDoncasterPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Doncaster:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Doncaster: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Doncaster's large stock of former mining community estates and Victorian terraces creates strong demand for qualified electricians with EICR expertise, consumer unit upgrade skills, and Part P compliance knowledge."
@@ -499,7 +489,7 @@ export default function ElectricianDoncasterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Doncaster"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Doncaster Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Doncaster. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Doncaster. 7-day free trial."
     />
   );
 }

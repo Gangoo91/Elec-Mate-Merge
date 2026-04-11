@@ -148,8 +148,8 @@ const sections = [
           and your stress levels.
         </p>
         <p>
-          Studies of tradespeople consistently show that disorganised vans cost 30 to 60 minutes
-          per day in wasted time searching for tools, digging through boxes of materials, and making
+          Studies of tradespeople consistently show that disorganised vans cost 30 to 60 minutes per
+          day in wasted time searching for tools, digging through boxes of materials, and making
           unnecessary trips to the wholesaler because you could not find what you already had. Over
           a year, that is 130 to 260 hours — the equivalent of 6 to 11 working weeks. At a charge-
           out rate of £40/hour, a disorganised van costs you £5,200 to £10,400 per year in lost
@@ -176,11 +176,14 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Sortimo</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Price:</strong> £2,500 to £5,000+<br />
+              <strong>Price:</strong> £2,500 to £5,000+
+              <br />
               <strong>Build quality:</strong> Excellent — lightweight aluminium, precision
-              engineering.<br />
+              engineering.
+              <br />
               <strong>Key feature:</strong> L-Boxx system — modular cases that click into the
-              racking and can be removed individually to carry to site.<br />
+              racking and can be removed individually to carry to site.
+              <br />
               <strong>Best for:</strong> Electricians who work in flats, multi-storey buildings, or
               commercial sites where carrying tools from the van is a daily task.
             </p>
@@ -188,10 +191,13 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Bott</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Price:</strong> £800 to £2,500<br />
-              <strong>Build quality:</strong> Very good — steel construction, heavy-duty drawers.<br />
+              <strong>Price:</strong> £800 to £2,500
+              <br />
+              <strong>Build quality:</strong> Very good — steel construction, heavy-duty drawers.
+              <br />
               <strong>Key feature:</strong> SmartVan range with electrician-specific layouts. Strong
-              drawer mechanisms that handle daily abuse.<br />
+              drawer mechanisms that handle daily abuse.
+              <br />
               <strong>Best for:</strong> Sole traders and small firms wanting professional racking
               without the Sortimo price tag. Best value in the mid-range.
             </p>
@@ -199,10 +205,13 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Van Guard</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Price:</strong> £300 to £800<br />
-              <strong>Build quality:</strong> Functional — steel shelving, basic drawers.<br />
+              <strong>Price:</strong> £300 to £800
+              <br />
+              <strong>Build quality:</strong> Functional — steel shelving, basic drawers.
+              <br />
               <strong>Key feature:</strong> Affordable entry point with trade-specific kits
-              available. Easy to install yourself.<br />
+              available. Easy to install yourself.
+              <br />
               <strong>Best for:</strong> New businesses on a budget. A Van Guard system with
               aftermarket organisers and labels can be very effective.
             </p>
@@ -232,10 +241,10 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Power tools</strong> — dedicate a shelf or drawer for drill/drivers, SDS
-                drills, jigsaws, and multi-tools. Each tool should have its own space so you can
-                see at a glance if something is missing. Foam inserts (cut to the shape of each
-                tool) are excellent for this — they protect the tools and make it obvious when
-                something has been left on site.
+                drills, jigsaws, and multi-tools. Each tool should have its own space so you can see
+                at a glance if something is missing. Foam inserts (cut to the shape of each tool)
+                are excellent for this — they protect the tools and make it obvious when something
+                has been left on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,9 +345,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Padded cases</strong> — always store test instruments in their original
-                padded cases. If the manufacturer case is flimsy, upgrade to a hard case (Peli,
-                MAX, or similar). The cost of a £50 case is trivial compared to the cost of a
-                dropped or crushed instrument.
+                padded cases. If the manufacturer case is flimsy, upgrade to a hard case (Peli, MAX,
+                or similar). The cost of a £50 case is trivial compared to the cost of a dropped or
+                crushed instrument.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,8 +386,8 @@ const sections = [
       <>
         <p>
           Tool theft from vans is estimated to cost UK tradespeople £1.7 billion per year. The
-          average claim for tools stolen from a van is £3,000 to £5,000, and the disruption to
-          your business while you replace everything can cost far more.
+          average claim for tools stolen from a van is £3,000 to £5,000, and the disruption to your
+          business while you replace everything can cost far more.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -403,15 +412,15 @@ const sections = [
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Alarm</strong> — a Thatcham-approved alarm with sensors on all doors. Some
-                systems include tilt sensors to detect the van being jacked up or towed. Budget
-                £300 to £500 fitted. Your insurance premium may reduce enough to offset the cost.
+                systems include tilt sensors to detect the van being jacked up or towed. Budget £300
+                to £500 fitted. Your insurance premium may reduce enough to offset the cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Internal vault</strong> — a lockable steel cabinet inside the van provides
-                a second layer of security. Even if a thief gets into the van, they cannot quickly
+                <strong>Internal vault</strong> — a lockable steel cabinet inside the van provides a
+                second layer of security. Even if a thief gets into the van, they cannot quickly
                 access the contents of a bolted-down vault. Van Vault and Tuffbank make popular
                 options from £200 to £500.
               </span>
@@ -428,8 +437,8 @@ const sections = [
         </div>
         <p>
           Visible deterrents also matter. "No tools left in this van overnight" stickers, window
-          tints (prevent thieves seeing inside), and parking in well-lit areas all reduce risk.
-          The best security is layered — no single measure is enough on its own.
+          tints (prevent thieves seeing inside), and parking in well-lit areas all reduce risk. The
+          best security is layered — no single measure is enough on its own.
         </p>
       </>
     ),
@@ -468,26 +477,26 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter</strong> — a 1,000W to 2,000W pure sine wave inverter converts 12V
-                DC from the leisure battery to 240V AC. Use it for charging drill batteries, powering
-                a laptop, running a kettle (a 750W travel kettle works well), and charging your phone.
-                Mount the inverter securely and use appropriately sized cables — a 2,000W inverter
-                draws up to 170A at 12V, requiring 35mm or 50mm cable.
+                DC from the leisure battery to 240V AC. Use it for charging drill batteries,
+                powering a laptop, running a kettle (a 750W travel kettle works well), and charging
+                your phone. Mount the inverter securely and use appropriately sized cables — a
+                2,000W inverter draws up to 170A at 12V, requiring 35mm or 50mm cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>LED strip lighting</strong> — 12V LED strips inside the van make a huge
-                difference in winter when you are loading and unloading in the dark. Wire them to the
-                leisure battery with a switch near the side door. Cost: £10 to £30 for a quality LED
-                strip with a magnetic or adhesive mount.
+                difference in winter when you are loading and unloading in the dark. Wire them to
+                the leisure battery with a switch near the side door. Cost: £10 to £30 for a quality
+                LED strip with a magnetic or adhesive mount.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>USB charging points</strong> — fit one or two USB sockets (12V to USB) in the
-                cabin and cargo area for convenient phone and tablet charging without using the
+                <strong>USB charging points</strong> — fit one or two USB sockets (12V to USB) in
+                the cabin and cargo area for convenient phone and tablet charging without using the
                 inverter. Cost: £5 to £15 each.
               </span>
             </li>
@@ -509,16 +518,18 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Magnetic Signs (Budget)</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Cost:</strong> £50 to £100 for a pair.<br />
-              Removable magnetic signs for the side panels. Include your business name, phone number,
-              and "Part P Registered" or your scheme logo. Easy to remove if you use the van
+              <strong>Cost:</strong> £50 to £100 for a pair.
+              <br />
+              Removable magnetic signs for the side panels. Include your business name, phone
+              number, and "Part P Registered" or your scheme logo. Easy to remove if you use the van
               personally at weekends. A good starting point for a new business.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Vinyl Lettering (Mid-Range)</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Cost:</strong> £200 to £500.<br />
+              <strong>Cost:</strong> £200 to £500.
+              <br />
               Cut vinyl lettering applied to the panels, rear, and sides. More durable and
               professional than magnetics. Include your business name, phone, email, website, and
               competent person scheme logo. Lasts the lifetime of the van.
@@ -527,16 +538,17 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Partial Wrap (Premium)</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Cost:</strong> £800 to £1,500.<br />
-              A partial wrap covers significant panel areas with printed graphics and branding. Very
-              eye-catching and professional. Protects the paintwork underneath. Good investment once
-              your business is established and you want to stand out.
+              <strong>Cost:</strong> £800 to £1,500.
+              <br />A partial wrap covers significant panel areas with printed graphics and
+              branding. Very eye-catching and professional. Protects the paintwork underneath. Good
+              investment once your business is established and you want to stand out.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Full Wrap (Maximum Impact)</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Cost:</strong> £1,500 to £3,000+.<br />
+              <strong>Cost:</strong> £1,500 to £3,000+.
+              <br />
               Full vehicle wrap with complete brand livery. Maximum visual impact. Typically only
               justified for established businesses with multiple vehicles. The wrap protects the
               original paintwork, which can improve resale value.
@@ -573,10 +585,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tool and contents cover</strong> — most standard commercial policies
-                include minimal contents cover (often only £500 to £1,000). An electrician
-                typically carries £3,000 to £10,000 of tools and test instruments. Add tool
-                insurance with an adequate limit — check the single-item limit covers your MFT.
+                <strong>Tool and contents cover</strong> — most standard commercial policies include
+                minimal contents cover (often only £500 to £1,000). An electrician typically carries
+                £3,000 to £10,000 of tools and test instruments. Add tool insurance with an adequate
+                limit — check the single-item limit covers your MFT.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -636,7 +648,7 @@ export default function ElectricianVanSetupGuidePage() {
       faqHeading="Frequently Asked Questions About Electrician Van Setup"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

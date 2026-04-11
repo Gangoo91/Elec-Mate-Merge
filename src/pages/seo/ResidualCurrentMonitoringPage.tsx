@@ -655,7 +655,7 @@ export default function ResidualCurrentMonitoringPage() {
       faqHeading="Frequently Asked Questions About Residual Current Monitoring"
       relatedPages={relatedPages}
       ctaHeading="Document Protection Devices Professionally"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for electrical certificates with full protection device documentation. RCM, RCD, RCMU, and AFDD details captured correctly every time. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for electrical certificates with full protection device documentation. RCM, RCD, RCMU, and AFDD details captured correctly every time. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A domestic 7kW EV charger installation in Bristol typically costs between £750 and £1,400, reflecting South West labour rates and the city\'s mix of Victorian terraces, Edwardian semis, and new-build developments.',
+  "A domestic 7kW EV charger installation in Bristol typically costs between £750 and £1,400, reflecting South West labour rates and the city's mix of Victorian terraces, Edwardian semis, and new-build developments.",
   'Bristol is served by Western Power Distribution (now National Grid Electricity Distribution). All EV charger installations must be notified under G98 before the charger is energised.',
   'The OZEV EV chargepoint grant offers up to £350 for eligible flat owners and tenants in Bristol, reducing net installation costs significantly.',
   'Regulation 722.411.4.1 of BS 7671 requires careful earthing consideration for outdoor EV chargers on PME supplies, which predominate across Bristol.',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Is the OZEV grant available for EV charger installation in Bristol?',
     answer:
-      'Yes. The OZEV EV chargepoint grant is available to flat owners and tenants in Bristol — including those in the city\'s many Victorian terrace conversions — covering up to 75% of eligible installation cost capped at £350. Homeowners in houses do not qualify. The OZEV-approved installer applies on your behalf. Bristol City Council does not currently operate a separate residential EV charger grant scheme, though the city has an active EV infrastructure strategy.',
+      "Yes. The OZEV EV chargepoint grant is available to flat owners and tenants in Bristol — including those in the city's many Victorian terrace conversions — covering up to 75% of eligible installation cost capped at £350. Homeowners in houses do not qualify. The OZEV-approved installer applies on your behalf. Bristol City Council does not currently operate a separate residential EV charger grant scheme, though the city has an active EV infrastructure strategy.",
   },
   {
     question: 'Do I need an earth rod for an EV charger in Bristol?',
@@ -156,9 +156,9 @@ const sections = [
           Bristol's housing stock is varied. The city has extensive Victorian and Edwardian terraced
           streets in areas such as Clifton, Redland, Totterdown, and Montpelier; large inter-war
           council and private estates in Bedminster, Filton, and Knowle; and significant modern
-          development on the city's east and north fringes. The hilly terrain in Clifton, Totterdown,
-          and Kingsdown creates unique cable routing considerations — driveways on steep gradients
-          and properties spread across split levels.
+          development on the city's east and north fringes. The hilly terrain in Clifton,
+          Totterdown, and Kingsdown creates unique cable routing considerations — driveways on steep
+          gradients and properties spread across split levels.
         </p>
         <p>
           All installations must comply with BS 7671 Section 722 and must be notified to{' '}
@@ -186,9 +186,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (modern semi/detached, short cable run)</strong> —
-                £750 to £1,050. Henleaze, Westbury-on-Trym, Fishponds, Keynsham. Modern consumer
-                units with spare capacity and driveway parking close to the board.
+                <strong>Simple installation (modern semi/detached, short cable run)</strong> — £750
+                to £1,050. Henleaze, Westbury-on-Trym, Fishponds, Keynsham. Modern consumer units
+                with spare capacity and driveway parking close to the board.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,9 +229,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">7kW — Best for Bristol Homes</h3>
             <p className="text-white text-sm leading-relaxed">
-              Standard single-phase supply. All Bristol properties. 25–30 miles range per hour.
-              G98 notification only. Typical installed cost £750 to £1,400. Smart tariff
-              scheduling reduces overnight running cost significantly.
+              Standard single-phase supply. All Bristol properties. 25–30 miles range per hour. G98
+              notification only. Typical installed cost £750 to £1,400. Smart tariff scheduling
+              reduces overnight running cost significantly.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -261,8 +261,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Off-peak tariff scheduling</strong> — Bristol households on Octopus Go,
-                OVO, or similar time-of-use tariffs can reduce overnight charging costs by 50 to 70%.
+                <strong>Off-peak tariff scheduling</strong> — Bristol households on Octopus Go, OVO,
+                or similar time-of-use tariffs can reduce overnight charging costs by 50 to 70%.
                 Smart charger scheduling automates this.
               </span>
             </li>
@@ -277,9 +277,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>App control</strong> — schedule, monitor, and control charging remotely.
-                All compliant smart charger brands (Zappi, Ohme, Easee, Wallbox) include
-                smartphone app control as standard.
+                <strong>App control</strong> — schedule, monitor, and control charging remotely. All
+                compliant smart charger brands (Zappi, Ohme, Easee, Wallbox) include smartphone app
+                control as standard.
               </span>
             </li>
           </ul>
@@ -313,16 +313,16 @@ const sections = [
               <span>
                 <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
                 protection including Type B or Type A with 6mA DC RDC-DD where the charger may
-                produce DC residual currents. Most quality charger units include compliant integrated
-                DC protection.
+                produce DC residual currents. Most quality charger units include compliant
+                integrated DC protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PME earthing (Regulation 722.411.4.1)</strong> — most Bristol properties
-                are on PME supplies. Outdoor chargers require an earth rod or charger with PEN
-                fault detection. Assessment required during site survey.
+                <strong>PME earthing (Regulation 722.411.4.1)</strong> — most Bristol properties are
+                on PME supplies. Outdoor chargers require an earth rod or charger with PEN fault
+                detection. Assessment required during site survey.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,16 +364,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 (three-phase/commercial)</strong> — prior approval required. Allow 4
-                to 10 weeks for network capacity assessment. Required for 22kW three-phase
+                <strong>G99 (three-phase/commercial)</strong> — prior approval required. Allow 4 to
+                10 weeks for network capacity assessment. Required for 22kW three-phase
                 installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installer responsibility</strong> — the electrician submits DNO notification.
-                Confirm it is included in your quote before accepting.
+                <strong>Installer responsibility</strong> — the electrician submits DNO
+                notification. Confirm it is included in your quote before accepting.
               </span>
             </li>
           </ul>
@@ -394,9 +394,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and
-                tenants. Not available to homeowners in houses. The OZEV-approved installer applies
-                on your behalf.
+                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
+                Not available to homeowners in houses. The OZEV-approved installer applies on your
+                behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,9 +410,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workplace Charging Scheme</strong> — Bristol businesses can claim up to
-                £350 per socket (up to 40 sockets) for workplace EV charger installations via
-                the OZEV scheme.
+                <strong>Workplace Charging Scheme</strong> — Bristol businesses can claim up to £350
+                per socket (up to 40 sockets) for workplace EV charger installations via the OZEV
+                scheme.
               </span>
             </li>
           </ul>
@@ -468,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Bristol EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
           icon={Car}
         />
       </>
@@ -505,7 +505,7 @@ export default function EVChargerInstallationBristolPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

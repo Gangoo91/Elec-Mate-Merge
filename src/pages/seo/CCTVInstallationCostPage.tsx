@@ -91,48 +91,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/data-cabling-installation-cost',
     title: 'Data Cabling Installation Cost',
-    description:
-      'Cat6 cabling costs — the same infrastructure used for PoE CCTV installations.',
+    description: 'Cat6 cabling costs — the same infrastructure used for PoE CCTV installations.',
     icon: Network,
     category: 'Guide',
   },
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost',
-    description:
-      'Adding a dedicated CCTV circuit may require spare ways in the consumer unit.',
+    description: 'Adding a dedicated CCTV circuit may require spare ways in the consumer unit.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Issue Electrical Installation Certificates for new CCTV power circuits.',
+    description: 'Issue Electrical Installation Certificates for new CCTV power circuits.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Quote CCTV installations with itemised cameras, cabling, and labour costs.',
+    description: 'Quote CCTV installations with itemised cameras, cabling, and labour costs.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/guides/solar-panel-installation-electrical-cost',
     title: 'Solar Panel Electrical Cost',
-    description:
-      'Solar PV can offset the power costs of running a CCTV system 24/7.',
+    description: 'Solar PV can offset the power costs of running a CCTV system 24/7.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/three-phase-installation-cost',
     title: '3-Phase Installation Cost',
-    description:
-      'Large commercial CCTV installations may form part of a wider 3-phase project.',
+    description: 'Large commercial CCTV installations may form part of a wider 3-phase project.',
     icon: Zap,
     category: 'Guide',
   },
@@ -150,9 +144,9 @@ const sections = [
       <>
         <p>
           CCTV installation is one of the fastest-growing areas of work for UK electricians.
-          Homeowners and businesses are investing heavily in security, and the electrical and cabling
-          work required for a professional CCTV installation falls squarely within an electrician's
-          skill set.
+          Homeowners and businesses are investing heavily in security, and the electrical and
+          cabling work required for a professional CCTV installation falls squarely within an
+          electrician's skill set.
         </p>
         <p>
           This guide focuses on the electrical and cabling costs of CCTV installation — the work
@@ -161,9 +155,9 @@ const sections = [
           the installation complies with BS 7671.
         </p>
         <p>
-          Modern IP camera systems have simplified CCTV installation significantly. With PoE
-          (Power over Ethernet), a single Cat6 cable carries both data and power to each camera,
-          reducing cabling work by half compared with traditional analogue systems.
+          Modern IP camera systems have simplified CCTV installation significantly. With PoE (Power
+          over Ethernet), a single Cat6 cable carries both data and power to each camera, reducing
+          cabling work by half compared with traditional analogue systems.
         </p>
       </>
     ),
@@ -205,8 +199,8 @@ const sections = [
         </div>
         <p>
           For new installations, PoE is almost always the better choice. The only situations where
-          traditional power might be preferred are very long cable runs (over 100 metres, though
-          PoE extenders can address this) or integration with existing analogue systems.
+          traditional power might be preferred are very long cable runs (over 100 metres, though PoE
+          extenders can address this) or integration with existing analogue systems.
         </p>
       </>
     ),
@@ -226,8 +220,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cat6 cable (internal run)</strong> — £1 to £2 per metre for cable, plus £30 to
-                £60 per camera for installation labour (routing, clipping, and termination). A
+                <strong>Cat6 cable (internal run)</strong> — £1 to £2 per metre for cable, plus £30
+                to £60 per camera for installation labour (routing, clipping, and termination). A
                 typical domestic run of 15 to 30 metres per camera costs £45 to £120 installed.
               </span>
             </li>
@@ -258,9 +252,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wall penetrations</strong> — each external camera requires a hole through the
-                external wall for the cable. Budget £20 to £40 per penetration including core drilling,
-                sealing, and making good.
+                <strong>Wall penetrations</strong> — each external camera requires a hole through
+                the external wall for the cable. Budget £20 to £40 per penetration including core
+                drilling, sealing, and making good.
               </span>
             </li>
           </ul>
@@ -285,9 +279,9 @@ const sections = [
               <span>
                 <strong>Dedicated power circuit</strong> — a dedicated radial circuit from the
                 consumer unit is recommended for the CCTV system. Protected by an RCBO and clearly
-                labelled at the board. Under BS 7671 Regulation 411.3.3, RCD protection not exceeding
-                30 mA is required for socket-outlet circuits not exceeding 32A. Circuit cost: £100 to
-                £250 depending on cable run length.
+                labelled at the board. Under BS 7671 Regulation 411.3.3, RCD protection not
+                exceeding 30 mA is required for socket-outlet circuits not exceeding 32A. Circuit
+                cost: £100 to £250 depending on cable run length.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -304,9 +298,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PoE switch or NVR with built-in PoE</strong> — a PoE network switch (£50 to
-                £200 for 8 to 16 ports) provides centralised power and data to all cameras. Many NVRs
-                include built-in PoE ports, simplifying the installation. The PoE switch or NVR is
-                connected to the UPS for backup power.
+                £200 for 8 to 16 ports) provides centralised power and data to all cameras. Many
+                NVRs include built-in PoE ports, simplifying the installation. The PoE switch or NVR
+                is connected to the UPS for backup power.
               </span>
             </li>
           </ul>
@@ -325,8 +319,8 @@ const sections = [
     content: (
       <>
         <p>
-          The choice between IP and analogue cameras affects the cabling requirements, image quality,
-          and total installation cost.
+          The choice between IP and analogue cameras affects the cabling requirements, image
+          quality, and total installation cost.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -370,15 +364,19 @@ const sections = [
     content: (
       <>
         <p>
-          A domestic CCTV installation typically involves 2 to 4 cameras covering the front and
-          rear of the property, with an NVR located inside the house.
+          A domestic CCTV installation typically involves 2 to 4 cameras covering the front and rear
+          of the property, with an NVR located inside the house.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Domestic Cost Breakdown (4-Camera PoE System)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Domestic Cost Breakdown (4-Camera PoE System)
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Cat6 cabling to 4 camera positions (installed and terminated): £200 to £480</span>
+              <span>
+                Cat6 cabling to 4 camera positions (installed and terminated): £200 to £480
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -398,12 +396,16 @@ const sections = [
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Electrical and cabling work total: £510 to £1,240</strong></span>
+              <span>
+                <strong>Electrical and cabling work total: £510 to £1,240</strong>
+              </span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Equipment Costs (Customer Supply or Electrician Markup)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Equipment Costs (Customer Supply or Electrician Markup)
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -419,7 +421,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Total system cost (installed): £1,100 to £2,800</strong></span>
+              <span>
+                <strong>Total system cost (installed): £1,100 to £2,800</strong>
+              </span>
             </li>
           </ul>
         </div>
@@ -433,8 +437,8 @@ const sections = [
       <>
         <p>
           Commercial CCTV installations are larger, more complex, and higher value. They often
-          involve longer cable runs, outdoor containment, multiple recording devices, and integration
-          with access control and alarm systems.
+          involve longer cable runs, outdoor containment, multiple recording devices, and
+          integration with access control and alarm systems.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Commercial Cost Ranges</h3>
@@ -451,8 +455,8 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>16-camera system (warehouse or large retail)</strong> — Electrical and
-                cabling work: £3,000 to £6,000. Equipment: £2,500 to £5,000. Total installed:
-                £5,500 to £11,000.
+                cabling work: £3,000 to £6,000. Equipment: £2,500 to £5,000. Total installed: £5,500
+                to £11,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,25 +493,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LED floodlights</strong> — £30 to £80 per light (trade). Position to illuminate
-                the camera's field of view without shining directly into the lens. A 20W to 30W LED
-                floodlight provides excellent coverage for a domestic driveway or garden.
+                <strong>LED floodlights</strong> — £30 to £80 per light (trade). Position to
+                illuminate the camera's field of view without shining directly into the lens. A 20W
+                to 30W LED floodlight provides excellent coverage for a domestic driveway or garden.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PIR-activated lighting</strong> — motion-activated lights serve dual purpose
-                as security deterrent and camera illumination. Most cameras will begin recording when
-                the light activates, providing both an alert and colour footage.
+                as security deterrent and camera illumination. Most cameras will begin recording
+                when the light activates, providing both an alert and colour footage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dusk-to-dawn lighting</strong> — for critical areas such as entrances and car
-                parks, continuous low-level lighting ensures colour CCTV footage at all times. LED
-                bollard lights and wall-mounted downlights provide ambient illumination without
+                <strong>Dusk-to-dawn lighting</strong> — for critical areas such as entrances and
+                car parks, continuous low-level lighting ensures colour CCTV footage at all times.
+                LED bollard lights and wall-mounted downlights provide ambient illumination without
                 excessive glare.
               </span>
             </li>
@@ -528,8 +532,8 @@ const sections = [
       <>
         <p>
           Any CCTV system that captures images of identifiable individuals is processing personal
-          data under the UK General Data Protection Regulation (UK GDPR) and the Data Protection
-          Act 2018. Both domestic and commercial installations have obligations.
+          data under the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act
+          2018. Both domestic and commercial installations have obligations.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -538,26 +542,26 @@ const sections = [
               <span>
                 <strong>Signage</strong> — clearly visible signs must be displayed informing people
                 that CCTV is in operation. Signs should include the purpose of the CCTV, contact
-                details for the operator, and a reference to the right to access footage. Budget £5 to
-                £15 per sign — include these in your installation quote.
+                details for the operator, and a reference to the right to access footage. Budget £5
+                to £15 per sign — include these in your installation quote.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Domestic exemption</strong> — CCTV used purely for domestic purposes within
-                the boundary of your property is exempt from most GDPR requirements. However, if your
-                cameras capture images beyond your property boundary (the pavement, a shared
+                the boundary of your property is exempt from most GDPR requirements. However, if
+                your cameras capture images beyond your property boundary (the pavement, a shared
                 driveway, neighbouring properties), the full obligations apply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial obligations</strong> — businesses must carry out a Data Protection
-                Impact Assessment (DPIA), maintain a record of processing activities, have a
-                documented retention policy (typically 30 days), and respond to subject access
-                requests within one month.
+                <strong>Commercial obligations</strong> — businesses must carry out a Data
+                Protection Impact Assessment (DPIA), maintain a record of processing activities,
+                have a documented retention policy (typically 30 days), and respond to subject
+                access requests within one month.
               </span>
             </li>
           </ul>
@@ -604,9 +608,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Always survey the site before quoting. Walk the perimeter, identify the camera
                   positions, plan the cable routes, and assess the lighting conditions. Use a
-                  smartphone to take photos from the proposed camera positions at the correct height —
-                  show the customer what each camera will see. This builds confidence and justifies
-                  your pricing.
+                  smartphone to take photos from the proposed camera positions at the correct height
+                  — show the customer what each camera will see. This builds confidence and
+                  justifies your pricing.
                 </p>
               </div>
             </div>
@@ -618,10 +622,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Offer Maintenance Plans</h4>
                 <p className="text-white text-sm leading-relaxed">
                   CCTV systems benefit from annual maintenance — cleaning lenses, checking cable
-                  connections, updating firmware, and verifying recording. Offer an annual maintenance
-                  contract at £100 to £200 per year for domestic systems and £200 to £500 for
-                  commercial. This provides recurring revenue and keeps you as the customer's trusted
-                  security installer.
+                  connections, updating firmware, and verifying recording. Offer an annual
+                  maintenance contract at £100 to £200 per year for domestic systems and £200 to
+                  £500 for commercial. This provides recurring revenue and keeps you as the
+                  customer's trusted security installer.
                 </p>
               </div>
             </div>
@@ -629,7 +633,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote CCTV and security installations"
-          description="Join 430+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into CCTV with confidence. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into CCTV with confidence. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -666,7 +670,7 @@ export default function CCTVInstallationCostPage() {
       faqHeading="Frequently Asked Questions About CCTV Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote CCTV Installations with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

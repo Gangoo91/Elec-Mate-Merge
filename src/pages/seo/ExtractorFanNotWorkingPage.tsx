@@ -90,14 +90,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic fault finding approach for diagnosing non-working circuits and equipment.',
+    description:
+      'Systematic fault finding approach for diagnosing non-working circuits and equipment.',
     icon: Search,
     category: 'Guide',
   },
   {
     href: '/guides/bathroom-electrics',
     title: 'Bathroom Electrics Guide',
-    description: 'Zone requirements, IP ratings, and regulations for electrical installations in bathrooms.',
+    description:
+      'Zone requirements, IP ratings, and regulations for electrical installations in bathrooms.',
     icon: Droplets,
     category: 'Guide',
   },
@@ -111,14 +113,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-certificate',
     title: 'EICR Guide',
-    description: 'What an EICR involves and how it identifies wiring faults and non-compliant installations.',
+    description:
+      'What an EICR involves and how it identifies wiring faults and non-compliant installations.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/minor-works-certificate',
     title: 'Minor Works Certificate',
-    description: 'Documentation required when replacing or repairing an extractor fan installation.',
+    description:
+      'Documentation required when replacing or repairing an extractor fan installation.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -135,20 +139,20 @@ const sections = [
     content: (
       <>
         <p>
-          You switch on the bathroom light, wait for the familiar hum of the extractor fan, and nothing
-          happens. Or the fan in the kitchen has gone silent. A non-working extractor fan is one of the
-          most common electrical issues in UK homes — and while it might seem minor, it affects
-          ventilation, condensation, and can indicate a wiring fault.
+          You switch on the bathroom light, wait for the familiar hum of the extractor fan, and
+          nothing happens. Or the fan in the kitchen has gone silent. A non-working extractor fan is
+          one of the most common electrical issues in UK homes — and while it might seem minor, it
+          affects ventilation, condensation, and can indicate a wiring fault.
         </p>
         <p>
-          The good news is that many extractor fan problems have simple causes. The isolator switch may
-          have been turned off accidentally, the timer relay may have failed, or the humidity sensor may
-          need cleaning. Some causes are more serious — wiring faults, motor burnout, or a tripped
-          circuit breaker can all stop a fan from working.
+          The good news is that many extractor fan problems have simple causes. The isolator switch
+          may have been turned off accidentally, the timer relay may have failed, or the humidity
+          sensor may need cleaning. Some causes are more serious — wiring faults, motor burnout, or
+          a tripped circuit breaker can all stop a fan from working.
         </p>
         <p>
-          This guide covers every common cause, explains the difference between bathroom and kitchen fan
-          types, tells you what you can check yourself, and explains when you need a qualified
+          This guide covers every common cause, explains the difference between bathroom and kitchen
+          fan types, tells you what you can check yourself, and explains when you need a qualified
           electrician. If you are an electrician, the later sections cover{' '}
           <SEOInternalLink href="/guides/electrical-fault-finding">
             fault finding techniques
@@ -164,43 +168,44 @@ const sections = [
     content: (
       <>
         <p>
-          Before calling an electrician, run through these checks. They catch the most common causes and
-          could save you a call-out fee:
+          Before calling an electrician, run through these checks. They catch the most common causes
+          and could save you a call-out fee:
         </p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">1. Check the isolator switch</h4>
             <p className="text-white text-sm leading-relaxed">
-              Every extractor fan should have an isolator switch. In bathrooms, this is usually a pull
-              cord on the ceiling or a switched fused connection unit outside the bathroom. Check that it
-              is in the "on" position. Pull cords can be accidentally turned off, and family members may
-              have switched off the isolator without realising it controls the fan.
+              Every extractor fan should have an isolator switch. In bathrooms, this is usually a
+              pull cord on the ceiling or a switched fused connection unit outside the bathroom.
+              Check that it is in the "on" position. Pull cords can be accidentally turned off, and
+              family members may have switched off the isolator without realising it controls the
+              fan.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">2. Check the consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
-              Look at the consumer unit (fuse board) and check whether any circuit breakers have tripped.
-              The fan circuit may share a breaker with the lighting circuit. If a breaker is in the
-              middle or "off" position, try resetting it. If it trips again immediately, there is a
-              fault — do not keep resetting it.
+              Look at the consumer unit (fuse board) and check whether any circuit breakers have
+              tripped. The fan circuit may share a breaker with the lighting circuit. If a breaker
+              is in the middle or "off" position, try resetting it. If it trips again immediately,
+              there is a fault — do not keep resetting it.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">3. Check the fused connection unit</h4>
             <p className="text-white text-sm leading-relaxed">
-              If the fan is supplied through a fused connection unit (FCU), check the fuse inside it.
-              Pull out the fuse carrier and inspect the fuse — replace with a 3A fuse if blown. The FCU
-              is usually mounted on the wall near the fan or just outside the bathroom door.
+              If the fan is supplied through a fused connection unit (FCU), check the fuse inside
+              it. Pull out the fuse carrier and inspect the fuse — replace with a 3A fuse if blown.
+              The FCU is usually mounted on the wall near the fan or just outside the bathroom door.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">4. Listen for a hum</h4>
             <p className="text-white text-sm leading-relaxed">
-              With the fan switched on, listen carefully at the fan grille. If you can hear a faint hum
-              but the fan is not spinning, the motor is receiving power but the bearings have seized or
-              the impeller is jammed. This means the fan unit needs replacing — a humming, non-spinning
-              motor will overheat if left connected.
+              With the fan switched on, listen carefully at the fan grille. If you can hear a faint
+              hum but the fan is not spinning, the motor is receiving power but the bearings have
+              seized or the impeller is jammed. This means the fan unit needs replacing — a humming,
+              non-spinning motor will overheat if left connected.
             </p>
           </div>
         </div>
@@ -221,10 +226,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolator switch fault</strong> — the switch itself may have failed internally.
-                Pull cord switches are mechanical and wear out over thousands of operations. The switch
-                may feel like it is toggling but the internal contacts are no longer making connection.
-                A simple voltage test at the fan terminals confirms whether power is reaching the fan.
+                <strong>Isolator switch fault</strong> — the switch itself may have failed
+                internally. Pull cord switches are mechanical and wear out over thousands of
+                operations. The switch may feel like it is toggling but the internal contacts are no
+                longer making connection. A simple voltage test at the fan terminals confirms
+                whether power is reaching the fan.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -232,48 +238,48 @@ const sections = [
               <span>
                 <strong>Timer relay failure</strong> — in fans wired to run on after the light is
                 switched off, the internal timer relay controls the overrun period. When this relay
-                fails, the fan either stops running on (but works while the light is on), or does not
-                operate at all if the timer controls the main power path. This is very common in fans
-                over 5 years old.
+                fails, the fan either stops running on (but works while the light is on), or does
+                not operate at all if the timer controls the main power path. This is very common in
+                fans over 5 years old.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Humidity sensor failure</strong> — humidistat fans have an internal sensor that
-                activates the fan when moisture levels rise. These sensors degrade over time,
+                <strong>Humidity sensor failure</strong> — humidistat fans have an internal sensor
+                that activates the fan when moisture levels rise. These sensors degrade over time,
                 particularly in high-moisture environments. The fan may stop responding to humidity
-                changes or may not activate at all. Some models allow you to clean the sensor; others
-                require full unit replacement.
+                changes or may not activate at all. Some models allow you to clean the sensor;
+                others require full unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wiring fault</strong> — a broken conductor in the cable between the switch and
-                the fan, or a loose connection at a junction box in the ceiling void, will prevent power
-                reaching the fan. This is invisible from outside and requires an electrician with test
-                equipment to locate.
+                <strong>Wiring fault</strong> — a broken conductor in the cable between the switch
+                and the fan, or a loose connection at a junction box in the ceiling void, will
+                prevent power reaching the fan. This is invisible from outside and requires an
+                electrician with test equipment to locate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Fan className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Motor burnout</strong> — extractor fan motors have a limited lifespan,
-                typically 8 to 15 years depending on usage and quality. Signs of motor failure include
-                humming without spinning, intermittent operation, burning smell, or complete silence.
-                A burned-out motor cannot be repaired — the fan unit must be replaced.
+                typically 8 to 15 years depending on usage and quality. Signs of motor failure
+                include humming without spinning, intermittent operation, burning smell, or complete
+                silence. A burned-out motor cannot be repaired — the fan unit must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tripped RCD</strong> — if the fan has developed an earth fault (often from
-                moisture ingress), it may trip the RCD in the consumer unit. Under Regulation 411.3.3
-                of BS 7671, RCD protection with a rated residual operating current not exceeding 30mA
-                is required for circuits in locations containing a bath or shower. An RCD that trips
-                when the fan circuit is energised indicates an earth fault that must be found and
-                repaired before the fan is used.
+                moisture ingress), it may trip the RCD in the consumer unit. Under Regulation
+                411.3.3 of BS 7671, RCD protection with a rated residual operating current not
+                exceeding 30mA is required for circuits in locations containing a bath or shower. An
+                RCD that trips when the fan circuit is energised indicates an earth fault that must
+                be found and repaired before the fan is used.
               </span>
             </li>
           </ul>
@@ -296,7 +302,8 @@ const sections = [
             <h4 className="font-bold text-white mb-2">Bathroom Extractor Fans</h4>
             <p className="text-white text-sm leading-relaxed mb-3">
               Bathroom fans extract moisture-laden air to prevent condensation and mould. They are
-              typically axial fans (100mm or 150mm diameter) mounted in the ceiling or external wall.
+              typically axial fans (100mm or 150mm diameter) mounted in the ceiling or external
+              wall.
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
@@ -309,28 +316,39 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Require both a permanent live (for the timer) and a switched live (from the light circuit)</span>
+                <span>
+                  Require both a permanent live (for the timer) and a switched live (from the light
+                  circuit)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Minimum extract rate: 15 litres per second (intermittent) per Approved Document F</span>
+                <span>
+                  Minimum extract rate: 15 litres per second (intermittent) per Approved Document F
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400 font-bold shrink-0">•</span>
-                <span>Pull cord isolators are common because standard plate switches are not permitted in bathrooms</span>
+                <span>
+                  Pull cord isolators are common because standard plate switches are not permitted
+                  in bathrooms
+                </span>
               </li>
             </ul>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Kitchen Extractor Fans</h4>
             <p className="text-white text-sm leading-relaxed mb-3">
-              Kitchen fans extract cooking fumes, steam, and grease-laden air. They range from simple
-              wall-mounted axial fans to integrated cooker hoods with centrifugal fans.
+              Kitchen fans extract cooking fumes, steam, and grease-laden air. They range from
+              simple wall-mounted axial fans to integrated cooker hoods with centrifugal fans.
             </p>
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Do not require elevated IP ratings (kitchens are not special locations under BS 7671)</span>
+                <span>
+                  Do not require elevated IP ratings (kitchens are not special locations under BS
+                  7671)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
@@ -338,15 +356,23 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Minimum extract rate: 60 litres per second (intermittent) or 13 l/s (continuous)</span>
+                <span>
+                  Minimum extract rate: 60 litres per second (intermittent) or 13 l/s (continuous)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Grease filters require regular cleaning — blocked filters reduce airflow and strain the motor</span>
+                <span>
+                  Grease filters require regular cleaning — blocked filters reduce airflow and
+                  strain the motor
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 font-bold shrink-0">•</span>
-                <span>Cooker hoods plugged into a socket are simple to diagnose — wall-mounted fans wired in may need an electrician</span>
+                <span>
+                  Cooker hoods plugged into a socket are simple to diagnose — wall-mounted fans
+                  wired in may need an electrician
+                </span>
               </li>
             </ul>
           </div>
@@ -360,28 +386,28 @@ const sections = [
     content: (
       <>
         <p>
-          The type of switch controlling your fan affects both the possible faults and how the fan is
-          wired. Understanding which type you have helps narrow down the problem:
+          The type of switch controlling your fan affects both the possible faults and how the fan
+          is wired. Understanding which type you have helps narrow down the problem:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ceiling pull cord switch</strong> — the most common type in bathrooms. The pull
-                cord mechanically toggles an internal switch. These wear out over time — the internal
-                spring weakens and the contacts corrode, particularly in humid bathroom environments.
-                If pulling the cord does not produce a definite click, the switch mechanism has likely
-                failed. Replacement is straightforward for an electrician.
+                <strong>Ceiling pull cord switch</strong> — the most common type in bathrooms. The
+                pull cord mechanically toggles an internal switch. These wear out over time — the
+                internal spring weakens and the contacts corrode, particularly in humid bathroom
+                environments. If pulling the cord does not produce a definite click, the switch
+                mechanism has likely failed. Replacement is straightforward for an electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ToggleRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fused connection unit (FCU) with switch</strong> — a switched FCU outside the
-                bathroom provides both isolation and fuse protection. The internal 3A fuse can blow,
-                cutting power to the fan. Check the fuse before suspecting a wiring fault. The switch
-                on the FCU may also be turned off accidentally.
+                <strong>Fused connection unit (FCU) with switch</strong> — a switched FCU outside
+                the bathroom provides both isolation and fuse protection. The internal 3A fuse can
+                blow, cutting power to the fan. Check the fuse before suspecting a wiring fault. The
+                switch on the FCU may also be turned off accidentally.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,10 +415,10 @@ const sections = [
               <span>
                 <strong>Linked to light switch</strong> — many bathroom fans are wired so that the
                 light switch provides the switched live to trigger the fan. The fan has a separate
-                permanent live for the timer overrun. If only the overrun has stopped working but the
-                fan runs while the light is on, the permanent live feed may be interrupted (check FCU
-                or dedicated breaker). If the fan does not work at all, the switched live connection may
-                be faulty.
+                permanent live for the timer overrun. If only the overrun has stopped working but
+                the fan runs while the light is on, the permanent live feed may be interrupted
+                (check FCU or dedicated breaker). If the fan does not work at all, the switched live
+                connection may be faulty.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -416,10 +442,9 @@ const sections = [
     content: (
       <>
         <p>
-          A non-working extractor fan is not just an inconvenience — it may mean your property does not
-          comply with{' '}
-          <strong>Building Regulations Approved Document F (Ventilation)</strong>. This matters for
-          your health, your property, and if you are selling or renting.
+          A non-working extractor fan is not just an inconvenience — it may mean your property does
+          not comply with <strong>Building Regulations Approved Document F (Ventilation)</strong>.
+          This matters for your health, your property, and if you are selling or renting.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Key Part F Requirements</h3>
@@ -427,9 +452,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bathrooms and shower rooms</strong> — must have mechanical extract ventilation
-                if there is no openable window. Even with a window, mechanical extract is strongly
-                recommended. Minimum rate: 15 l/s intermittent.
+                <strong>Bathrooms and shower rooms</strong> — must have mechanical extract
+                ventilation if there is no openable window. Even with a window, mechanical extract
+                is strongly recommended. Minimum rate: 15 l/s intermittent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -450,15 +475,15 @@ const sections = [
               <Building2 className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overrun timers</strong> — Part F recommends a minimum 15-minute overrun for
-                intermittent fans in rooms without openable windows. This is why the timer relay is so
-                important.
+                intermittent fans in rooms without openable windows. This is why the timer relay is
+                so important.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For landlords, a non-working extractor fan in a bathroom or kitchen can be flagged during an
-          EICR or a local authority inspection. It may also contribute to condensation and mould
+          For landlords, a non-working extractor fan in a bathroom or kitchen can be flagged during
+          an EICR or a local authority inspection. It may also contribute to condensation and mould
           issues, which fall under the Homes (Fitness for Human Habitation) Act 2018.
         </p>
       </>
@@ -470,8 +495,8 @@ const sections = [
     content: (
       <>
         <p>
-          If the quick checks (isolator, consumer unit, fuse) have not resolved the problem, you need
-          an electrician. Here is the urgency scale:
+          If the quick checks (isolator, consumer unit, fuse) have not resolved the problem, you
+          need an electrician. Here is the urgency scale:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -488,17 +513,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Soon (within a few days)</strong> — the fan has stopped working completely
-                (no hum, no smell, just silent). The fan is not dangerous in this state, but the lack
-                of ventilation will cause condensation and potentially mould growth, especially in
-                bathrooms used daily.
+                (no hum, no smell, just silent). The fan is not dangerous in this state, but the
+                lack of ventilation will cause condensation and potentially mould growth, especially
+                in bathrooms used daily.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Routine (within a week or two)</strong> — the fan works but the timer overrun
-                has stopped, or the fan is noisier than usual. The fan is still providing some
-                ventilation but is not operating correctly and may fail completely soon.
+                <strong>Routine (within a week or two)</strong> — the fan works but the timer
+                overrun has stopped, or the fan is noisier than usual. The fan is still providing
+                some ventilation but is not operating correctly and may fail completely soon.
               </span>
             </li>
           </ul>
@@ -531,9 +556,9 @@ const sections = [
                   Isolate at the consumer unit, remove the fan cover, and identify the terminals.
                   Re-energise and test for 230V between L and N with the switch on. Test both the
                   permanent live (should be live whenever the isolator is on) and the switched live
-                  (should be live when the light/switch is on). No voltage on permanent live? Check the
-                  FCU fuse and wiring back to the junction box. No voltage on switched live? Check the
-                  light switch connections and the switch wire.
+                  (should be live when the light/switch is on). No voltage on permanent live? Check
+                  the FCU fuse and wiring back to the junction box. No voltage on switched live?
+                  Check the light switch connections and the switch wire.
                 </p>
               </div>
             </div>
@@ -545,10 +570,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">2. Check the Timer and Sensor</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If voltage is present but the fan does not operate, the internal timer relay or
-                  humidity sensor has likely failed. Test by bridging the switched live to the permanent
-                  live briefly — if the fan runs, the timer/sensor circuit is the fault. Many fans have
-                  replaceable timer modules; others require full unit replacement. Check the timer
-                  adjustment potentiometer has not been turned to minimum.
+                  humidity sensor has likely failed. Test by bridging the switched live to the
+                  permanent live briefly — if the fan runs, the timer/sensor circuit is the fault.
+                  Many fans have replaceable timer modules; others require full unit replacement.
+                  Check the timer adjustment potentiometer has not been turned to minimum.
                 </p>
               </div>
             </div>
@@ -560,12 +585,13 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">3. Insulation Resistance and Earth</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If the fan trips the RCD, disconnect the fan and test insulation resistance on the
-                  cable (500V DC, L-E and N-E). Minimum 1 megohm. If the cable passes, the fault is in
-                  the fan unit itself — moisture ingress into the motor is common, particularly in
-                  ceiling-mounted bathroom fans where condensation can track along the duct. Replace
-                  the fan and check the duct for condensation traps. Under Regulation 411.3.3,
-                  additional protection by an RCD with a rated residual operating current not exceeding
-                  30mA is required for circuits in locations containing a bath or shower.
+                  cable (500V DC, L-E and N-E). Minimum 1 megohm. If the cable passes, the fault is
+                  in the fan unit itself — moisture ingress into the motor is common, particularly
+                  in ceiling-mounted bathroom fans where condensation can track along the duct.
+                  Replace the fan and check the duct for condensation traps. Under Regulation
+                  411.3.3, additional protection by an RCD with a rated residual operating current
+                  not exceeding 30mA is required for circuits in locations containing a bath or
+                  shower.
                 </p>
               </div>
             </div>
@@ -576,9 +602,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Replace and Certify</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When replacing a fan, ensure the new unit meets the IP rating for the zone, matches
-                  or exceeds the Part F extract rate, and is compatible with the existing wiring
-                  configuration (2-wire, 3-wire, or 4-wire). Issue a{' '}
+                  When replacing a fan, ensure the new unit meets the IP rating for the zone,
+                  matches or exceeds the Part F extract rate, and is compatible with the existing
+                  wiring configuration (2-wire, 3-wire, or 4-wire). Issue a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -615,8 +641,7 @@ export default function ExtractorFanNotWorkingPage() {
       badgeIcon={Fan}
       heroTitle={
         <>
-          Extractor Fan Not Working:{' '}
-          <span className="text-yellow-400">Troubleshooting Guide</span>
+          Extractor Fan Not Working: <span className="text-yellow-400">Troubleshooting Guide</span>
         </>
       }
       heroSubtitle="Your extractor fan has stopped working. This guide covers every common cause — from a switched-off isolator to motor burnout — tells you what to check yourself, and explains when you need an electrician."
@@ -627,7 +652,7 @@ export default function ExtractorFanNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Extractor Fan Problems"
       relatedPages={relatedPages}
       ctaHeading="Certify Fan Replacements on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works Certificates, EICR reports, and AI-powered fault diagnosis. 7-day free trial, cancel anytime."
     />
   );
 }

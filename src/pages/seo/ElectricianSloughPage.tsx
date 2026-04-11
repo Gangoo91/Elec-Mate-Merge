@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'Is Slough a good area for electricians to work?',
     answer:
-      'Slough is an excellent area for electricians. The combination of a large residential population (with a high proportion of rental properties), one of Europe\'s largest trading estates, significant commercial and industrial premises, good transport links, and a high-value South East market creates a diverse and well-paying workload. Electricians with commercial and industrial experience — particularly those familiar with three-phase systems, data centre electrical requirements, and emergency lighting — are particularly well-positioned in the Slough market.',
+      "Slough is an excellent area for electricians. The combination of a large residential population (with a high proportion of rental properties), one of Europe's largest trading estates, significant commercial and industrial premises, good transport links, and a high-value South East market creates a diverse and well-paying workload. Electricians with commercial and industrial experience — particularly those familiar with three-phase systems, data centre electrical requirements, and emergency lighting — are particularly well-positioned in the Slough market.",
   },
   {
     question: 'What are the earthing arrangements like in Slough properties?',
@@ -144,23 +144,23 @@ const sections = [
     content: (
       <>
         <p>
-          Slough is a large town in Berkshire with a population of around 170,000, located in
-          the South East of England between London and Reading. It is home to one of Europe's
-          largest trading estates and has a diverse economy that includes major employers in
-          logistics, retail, food production, and professional services.
+          Slough is a large town in Berkshire with a population of around 170,000, located in the
+          South East of England between London and Reading. It is home to one of Europe's largest
+          trading estates and has a diverse economy that includes major employers in logistics,
+          retail, food production, and professional services.
         </p>
         <p>
-          For electricians, Slough offers a rich and varied workload. The residential sector
-          — with a high proportion of rented properties and a mix of post-war semi-detached
-          houses, 1960s and 1970s estates, and modern developments — generates consistent
-          demand for EICRs, consumer unit upgrades, and rewires. The commercial and industrial
-          sector, centred on Slough Trading Estate and the surrounding business parks, demands
-          electricians with three-phase experience and commercial installation knowledge.
+          For electricians, Slough offers a rich and varied workload. The residential sector — with
+          a high proportion of rented properties and a mix of post-war semi-detached houses, 1960s
+          and 1970s estates, and modern developments — generates consistent demand for EICRs,
+          consumer unit upgrades, and rewires. The commercial and industrial sector, centred on
+          Slough Trading Estate and the surrounding business parks, demands electricians with
+          three-phase experience and commercial installation knowledge.
         </p>
         <p>
-          This guide covers what homeowners and electricians need to know about electrical
-          work in Slough — from finding a registered electrician and typical costs to the
-          regulatory requirements and the characteristics of the local market.
+          This guide covers what homeowners and electricians need to know about electrical work in
+          Slough — from finding a registered electrician and typical costs to the regulatory
+          requirements and the characteristics of the local market.
         </p>
       </>
     ),
@@ -180,17 +180,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC Approved Contractor</strong> — the gold standard for domestic
-                and commercial electrical work. NICEIC carries out regular assessments of
-                contractors' technical competence and requires them to carry liability insurance.
+                <strong>NICEIC Approved Contractor</strong> — the gold standard for domestic and
+                commercial electrical work. NICEIC carries out regular assessments of contractors'
+                technical competence and requires them to carry liability insurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT registered</strong> — a UK-wide scheme with strong representation
-                in the South East. NAPIT-registered electricians can self-certify notifiable
-                domestic work under Part P.
+                <strong>NAPIT registered</strong> — a UK-wide scheme with strong representation in
+                the South East. NAPIT-registered electricians can self-certify notifiable domestic
+                work under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,9 +205,9 @@ const sections = [
         </div>
         <p>
           For commercial projects on Slough Trading Estate or in the business parks, ask for
-          evidence of relevant experience with three-phase systems, emergency lighting testing,
-          and PAT testing in addition to standard registration. For domestic work, check the
-          NICEIC or NAPIT websites using your postcode to find approved local contractors.
+          evidence of relevant experience with three-phase systems, emergency lighting testing, and
+          PAT testing in addition to standard registration. For domestic work, check the NICEIC or
+          NAPIT websites using your postcode to find approved local contractors.
         </p>
       </>
     ),
@@ -218,8 +218,8 @@ const sections = [
     content: (
       <>
         <p>
-          Slough sits firmly in the South East premium pricing band. Rates reflect the high
-          cost of living, commercial demand, and proximity to London. Typical 2026 rates:
+          Slough sits firmly in the South East premium pricing band. Rates reflect the high cost of
+          living, commercial demand, and proximity to London. Typical 2026 rates:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -275,43 +275,41 @@ const sections = [
     heading: 'Common Electrical Jobs in Slough',
     content: (
       <>
-        <p>
-          Slough electricians handle a broad mix of residential and commercial work:
-        </p>
+        <p>Slough electricians handle a broad mix of residential and commercial work:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Landlord EICRs</h3>
             <p className="text-white text-sm leading-relaxed">
-              Slough has one of the highest proportions of rented homes in England. Landlord
-              EICRs are legally required every 5 years under the 2020 Electrical Safety
-              Regulations. The EICR assesses the fixed wiring and consumer unit against BS 7671
-              Section 631. Any C1 or C2 defects must be remedied within 28 days.
+              Slough has one of the highest proportions of rented homes in England. Landlord EICRs
+              are legally required every 5 years under the 2020 Electrical Safety Regulations. The
+              EICR assesses the fixed wiring and consumer unit against BS 7671 Section 631. Any C1
+              or C2 defects must be remedied within 28 days.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Many Slough properties from the 1960s and 1970s have outdated consumer units
-              without adequate RCD protection. Upgrading to a modern unit with RCDs or RCBOs
-              as required by BS 7671 Regulation 411.3.3 is one of the most common jobs in
-              the area, often triggered by a failed EICR or a property sale.
+              Many Slough properties from the 1960s and 1970s have outdated consumer units without
+              adequate RCD protection. Upgrading to a modern unit with RCDs or RCBOs as required by
+              BS 7671 Regulation 411.3.3 is one of the most common jobs in the area, often triggered
+              by a failed EICR or a property sale.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Trading Estate Commercial Work</h3>
             <p className="text-white text-sm leading-relaxed">
-              Slough Trading Estate hosts over 400 companies. Commercial electrical work
-              including three-phase distribution boards, sub-mains, emergency lighting
-              installation and testing, fire alarm interface, and office fit-out wiring is a
-              major part of the local market for larger electrical contractors.
+              Slough Trading Estate hosts over 400 companies. Commercial electrical work including
+              three-phase distribution boards, sub-mains, emergency lighting installation and
+              testing, fire alarm interface, and office fit-out wiring is a major part of the local
+              market for larger electrical contractors.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Charger Installation</h3>
             <p className="text-white text-sm leading-relaxed">
-              With a large commuter population and good transport links, EV adoption in Slough
-              is growing strongly. Home EV charger installations — dedicated 7kW Type 2 units
-              on dedicated circuits with UK Power Networks G98 notification — are an increasingly
+              With a large commuter population and good transport links, EV adoption in Slough is
+              growing strongly. Home EV charger installations — dedicated 7kW Type 2 units on
+              dedicated circuits with UK Power Networks G98 notification — are an increasingly
               common and profitable job for local electricians.
             </p>
           </div>
@@ -325,36 +323,36 @@ const sections = [
     content: (
       <>
         <p>
-          All domestic electrical work in Slough must comply with Part P of the Building
-          Regulations and BS 7671:2018+A3:2024. Key points:
+          All domestic electrical work in Slough must comply with Part P of the Building Regulations
+          and BS 7671:2018+A3:2024. Key points:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — notifiable work must be self-certified
-                by a registered competent person or notified to Slough Borough Council building
-                control. The competent person scheme automatically notifies the council on the
-                electrician's behalf.
+                <strong>Part P notification</strong> — notifiable work must be self-certified by a
+                registered competent person or notified to Slough Borough Council building control.
+                The competent person scheme automatically notifies the council on the electrician's
+                behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection requirements</strong> — BS 7671 Regulation 411.3.3
-                mandates RCD protection for all socket outlets up to 32A and all final circuits
-                in new domestic installations. Consumer units in Slough properties must satisfy
-                this requirement.
+                <strong>RCD protection requirements</strong> — BS 7671 Regulation 411.3.3 mandates
+                RCD protection for all socket outlets up to 32A and all final circuits in new
+                domestic installations. Consumer units in Slough properties must satisfy this
+                requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the
-                requirements for periodic inspection and testing. Rental properties require an
-                EICR every 5 years by law; owner-occupied properties are recommended every
-                10 years or on change of occupancy.
+                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the requirements
+                for periodic inspection and testing. Rental properties require an EICR every 5 years
+                by law; owner-occupied properties are recommended every 10 years or on change of
+                occupancy.
               </span>
             </li>
           </ul>
@@ -368,19 +366,19 @@ const sections = [
     content: (
       <>
         <p>
-          Slough Trading Estate is one of the largest trading estates in Europe, covering
-          over 486 acres and home to more than 400 companies. For electricians, this means
-          a large and diverse commercial market:
+          Slough Trading Estate is one of the largest trading estates in Europe, covering over 486
+          acres and home to more than 400 companies. For electricians, this means a large and
+          diverse commercial market:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase installations</strong> — many trading estate units run
-                on three-phase supplies for machinery, production equipment, and heavy loads.
-                Electricians working in this sector need three-phase experience and an
-                understanding of industrial distribution board design.
+                <strong>Three-phase installations</strong> — many trading estate units run on
+                three-phase supplies for machinery, production equipment, and heavy loads.
+                Electricians working in this sector need three-phase experience and an understanding
+                of industrial distribution board design.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -388,18 +386,18 @@ const sections = [
               <span>
                 <strong>Emergency lighting</strong> — all commercial premises require emergency
                 lighting compliant with BS 5266. Annual testing and certification of emergency
-                lighting systems is a regular maintenance task on the trading estate and in
-                Slough's many office buildings.
+                lighting systems is a regular maintenance task on the trading estate and in Slough's
+                many office buildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data centre electrical infrastructure</strong> — Slough is a major
-                data centre hub, with facilities operated by large cloud and colocation
-                providers. Electrical work in data centres — UPS systems, PDUs, critical power
-                distribution — is specialist high-value work for electricians with the right
-                experience and security clearance.
+                <strong>Data centre electrical infrastructure</strong> — Slough is a major data
+                centre hub, with facilities operated by large cloud and colocation providers.
+                Electrical work in data centres — UPS systems, PDUs, critical power distribution —
+                is specialist high-value work for electricians with the right experience and
+                security clearance.
               </span>
             </li>
           </ul>
@@ -413,10 +411,10 @@ const sections = [
     content: (
       <>
         <p>
-          Slough is one of the most commercially active towns in the South East. Electricians
-          who can serve both the residential and commercial sectors — and who are equipped with
-          professional certification and quoting tools — are well-positioned to build a
-          profitable practice in the area.
+          Slough is one of the most commercially active towns in the South East. Electricians who
+          can serve both the residential and commercial sectors — and who are equipped with
+          professional certification and quoting tools — are well-positioned to build a profitable
+          practice in the area.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -429,12 +427,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site using AI-assisted board scanning. Issue professional certificates
-                  to Slough landlords and homeowners from your phone before you leave site.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site using AI-assisted board scanning. Issue professional certificates to Slough
+                  landlords and homeowners from your phone before you leave site.
                 </p>
               </div>
             </div>
@@ -449,8 +444,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Slough customers. South East pricing
-                  built in — present quotes on site and win more jobs.
+                  to produce professional PDF quotes for Slough customers. South East pricing built
+                  in — present quotes on site and win more jobs.
                 </p>
               </div>
             </div>
@@ -458,7 +453,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Slough electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the South East market. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -483,8 +478,7 @@ export default function ElectricianSloughPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Slough:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Slough: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Slough combines a large residential rental sector with one of Europe's biggest trading estates. Find NICEIC and NAPIT registered electricians in Slough for domestic rewires, EICRs, and commercial electrical work."
@@ -495,7 +489,7 @@ export default function ElectricianSloughPage() {
       faqHeading="Frequently Asked Questions About Electricians in Slough"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Slough Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market and the demands of commercial and residential work in Slough. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the South East market and the demands of commercial and residential work in Slough. 7-day free trial."
     />
   );
 }

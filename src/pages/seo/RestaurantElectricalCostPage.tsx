@@ -627,7 +627,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage restaurant contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects. AI-assisted EIC completion, instant PDF export, and client portal. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote, certificate, and manage commercial fit-out projects. AI-assisted EIC completion, instant PDF export, and client portal. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -664,7 +664,7 @@ export default function RestaurantElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Restaurant Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Restaurant Installations on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for commercial quotes, EIC completion, and emergency lighting certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial quotes, EIC completion, and emergency lighting certification. 7-day free trial, cancel anytime."
     />
   );
 }

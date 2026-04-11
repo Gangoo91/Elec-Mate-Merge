@@ -434,7 +434,7 @@ export default function EarthRodResistanceCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate earth rod resistance in seconds"
-      ctaSubheading="Join UK electricians using Elec-Mate's 50+ calculators on every TT installation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join UK electricians using Elec-Mate's 70+ calculators on every TT installation. 7-day free trial, cancel anytime."
       toolPath="/tools/earth-rod-resistance-calculator"
     />
   );

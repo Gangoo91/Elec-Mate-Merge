@@ -482,7 +482,7 @@ export default function AIClientExplainerPage() {
       faqHeading="Frequently Asked Questions About the AI Client Explainer"
       relatedPages={relatedPages}
       ctaHeading="Explain Every Report in Plain English"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Client Explainer. Turn technical findings into clear client communications. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Client Explainer. Turn technical findings into clear client communications. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-client-explainer"
     />
   );

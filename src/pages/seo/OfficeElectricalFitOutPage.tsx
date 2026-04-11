@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'What regulations apply to an office electrical fit-out in the UK?',
     answer:
-      'An office electrical fit-out must comply with multiple overlapping regulatory requirements. BS 7671:2018+A3:2024 (the IET Wiring Regulations) provides the primary electrical installation standard. Building Regulations Part L2B (energy efficiency for existing buildings other than dwellings) applies to the lighting and electrical services installation. Part B (fire safety) applies to all fire-related systems. The Electricity at Work Regulations 1989 impose duties on the occupier to maintain electrical systems safely. Where the tenant is taking a Category B fit-out in a leased building, the landlord\'s fit-out guide will specify additional requirements for the electrical installation that must be met alongside the statutory standards.',
+      "An office electrical fit-out must comply with multiple overlapping regulatory requirements. BS 7671:2018+A3:2024 (the IET Wiring Regulations) provides the primary electrical installation standard. Building Regulations Part L2B (energy efficiency for existing buildings other than dwellings) applies to the lighting and electrical services installation. Part B (fire safety) applies to all fire-related systems. The Electricity at Work Regulations 1989 impose duties on the occupier to maintain electrical systems safely. Where the tenant is taking a Category B fit-out in a leased building, the landlord's fit-out guide will specify additional requirements for the electrical installation that must be met alongside the statutory standards.",
   },
   {
     question: 'How many power outlets are needed in an office electrical fit-out?',
@@ -76,12 +76,12 @@ const faqs = [
   {
     question: 'What sub-metering is required in an office fit-out under Part L?',
     answer:
-      'Building Regulations Part L2B (existing non-domestic buildings) requires that where more than 1,000 m² of the building is being renovated, sub-metering must be provided so that energy use can be monitored and managed. For office fit-outs this typically requires separate energy meters for: lighting, small power (sockets and equipment), heating and cooling, and any significant process loads. Where an office building has multiple tenants, sub-metering is required to allow each tenant\'s energy consumption to be separately measured. Automatic Meter Reading (AMR) systems that automatically collect and transmit meter data are preferred for buildings above a certain size to facilitate compliance with the Energy Savings Opportunity Scheme (ESOS).',
+      "Building Regulations Part L2B (existing non-domestic buildings) requires that where more than 1,000 m² of the building is being renovated, sub-metering must be provided so that energy use can be monitored and managed. For office fit-outs this typically requires separate energy meters for: lighting, small power (sockets and equipment), heating and cooling, and any significant process loads. Where an office building has multiple tenants, sub-metering is required to allow each tenant's energy consumption to be separately measured. Automatic Meter Reading (AMR) systems that automatically collect and transmit meter data are preferred for buildings above a certain size to facilitate compliance with the Energy Savings Opportunity Scheme (ESOS).",
   },
   {
     question: 'What is a Category A and Category B office fit-out?',
     answer:
-      'In UK commercial property, office fit-out is typically described in two categories. A Category A (Cat A) fit-out is the base building finish provided by the landlord before a tenant takes occupation. It typically includes: raised access floors, suspended ceilings, basic mechanical and electrical services (lighting, ventilation, perimeter power trunking), and decorated walls. The electrical installation at Cat A stage will have a main distribution board, perimeter power trunking, basic general lighting, emergency lighting, and fire alarm with detector heads in the ceiling void. A Category B (Cat B) fit-out is the tenant\'s own fit-out of their space, adding workstation power, data and AV installations, feature lighting, kitchen and breakout areas, and any specialist systems such as a secure server room or AV conference suite.',
+      "In UK commercial property, office fit-out is typically described in two categories. A Category A (Cat A) fit-out is the base building finish provided by the landlord before a tenant takes occupation. It typically includes: raised access floors, suspended ceilings, basic mechanical and electrical services (lighting, ventilation, perimeter power trunking), and decorated walls. The electrical installation at Cat A stage will have a main distribution board, perimeter power trunking, basic general lighting, emergency lighting, and fire alarm with detector heads in the ceiling void. A Category B (Cat B) fit-out is the tenant's own fit-out of their space, adding workstation power, data and AV installations, feature lighting, kitchen and breakout areas, and any specialist systems such as a secure server room or AV conference suite.",
   },
 ];
 
@@ -143,10 +143,10 @@ const sections = [
         <p>
           Office electrical fit-outs involve a wide range of systems: power distribution from the
           incoming supply to individual workstations, structured data cabling and AV systems,
-          high-quality LED lighting with daylight and occupancy controls, emergency lighting,
-          fire alarm integration, EV charging in the car park, and energy metering for Part L
-          compliance. Co-ordination between the electrical contractor, mechanical contractor,
-          data/AV specialist, and fire alarm specialist is essential.
+          high-quality LED lighting with daylight and occupancy controls, emergency lighting, fire
+          alarm integration, EV charging in the car park, and energy metering for Part L compliance.
+          Co-ordination between the electrical contractor, mechanical contractor, data/AV
+          specialist, and fire alarm specialist is essential.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -191,43 +191,40 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution boards:</strong> A sub-main distribution board serves each
-                floor or zone of the office. Sub-main cables from the main distribution board
-                feed these zone boards, which house the MCBs protecting individual final circuits.
-                Zone boards should include spare ways (minimum 25 per cent) for future additions
-                and should be located in accessible positions, typically within server/comms rooms
-                or dedicated electrical risers.
+                floor or zone of the office. Sub-main cables from the main distribution board feed
+                these zone boards, which house the MCBs protecting individual final circuits. Zone
+                boards should include spare ways (minimum 25 per cent) for future additions and
+                should be located in accessible positions, typically within server/comms rooms or
+                dedicated electrical risers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Perimeter trunking:</strong> In Cat A office fit-outs, perimeter trunking
-                (three-compartment: power, data, and open) is typically installed around the
-                office perimeter at desk height. Each trunking section is supplied by a radial
-                final circuit, and socket outlets and data outlets can be added or relocated by
-                the tenant during their Cat B fit-out.
+                (three-compartment: power, data, and open) is typically installed around the office
+                perimeter at desk height. Each trunking section is supplied by a radial final
+                circuit, and socket outlets and data outlets can be added or relocated by the tenant
+                during their Cat B fit-out.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Floor boxes:</strong> Open-plan office layouts use floor boxes in the
-                raised access floor to provide power and data at workstations in the centre of
-                the floor plate (away from perimeter trunking). Floor boxes must be rated for
-                the load they carry and must be sealed against the ingress of water during
-                floor cleaning.
+                <strong>Floor boxes:</strong> Open-plan office layouts use floor boxes in the raised
+                access floor to provide power and data at workstations in the centre of the floor
+                plate (away from perimeter trunking). Floor boxes must be rated for the load they
+                carry and must be sealed against the ingress of water during floor cleaning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection:</strong> All socket outlet circuits in the office must
-                be protected by 30mA RCDs in accordance with Regulation 411.3.3 of{' '}
-                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671
-                </SEOInternalLink>
-                . RCBOs (combined MCB and RCD) are commonly used in office distribution boards
-                to provide individual circuit RCD protection without shared tripping of multiple
+                <strong>RCD protection:</strong> All socket outlet circuits in the office must be
+                protected by 30mA RCDs in accordance with Regulation 411.3.3 of{' '}
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>
+                . RCBOs (combined MCB and RCD) are commonly used in office distribution boards to
+                provide individual circuit RCD protection without shared tripping of multiple
                 circuits.
               </span>
             </li>
@@ -243,9 +240,9 @@ const sections = [
       <>
         <p>
           Although structured data cabling is typically a separate specialist trade, the electrical
-          contractor must co-ordinate closely with the data installer to ensure containment,
-          power supplies, and earthing arrangements are correctly provided. AV systems in
-          conference rooms and presentation areas also require specialist electrical provisions.
+          contractor must co-ordinate closely with the data installer to ensure containment, power
+          supplies, and earthing arrangements are correctly provided. AV systems in conference rooms
+          and presentation areas also require specialist electrical provisions.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -253,29 +250,29 @@ const sections = [
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Structured cabling:</strong> Cat6A or Cat6 structured cabling is the
-                standard for new office data installations in the UK, supporting 10 Gigabit
-                Ethernet to the desktop. Optical fibre (OS2 single-mode or OM4 multimode) is
-                used for backbone connections between communication rooms. The electrical contractor
-                provides the containment (cable tray, trunking, conduit) and the data contractor
-                pulls and terminates the cabling.
+                standard for new office data installations in the UK, supporting 10 Gigabit Ethernet
+                to the desktop. Optical fibre (OS2 single-mode or OM4 multimode) is used for
+                backbone connections between communication rooms. The electrical contractor provides
+                the containment (cable tray, trunking, conduit) and the data contractor pulls and
+                terminates the cabling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power over Ethernet (PoE):</strong> IP phones, wireless access points,
-                CCTV cameras, and access control readers increasingly use PoE (Power over
-                Ethernet) for both power and data via a single Cat6A cable. The network switch
-                provides the PoE power. The electrical contractor must ensure the switch cabinet
-                (patch cabinet) has adequate power supply (typically a dedicated 16A or 32A
-                circuit) to support the PoE budget of all connected devices.
+                <strong>Power over Ethernet (PoE):</strong> IP phones, wireless access points, CCTV
+                cameras, and access control readers increasingly use PoE (Power over Ethernet) for
+                both power and data via a single Cat6A cable. The network switch provides the PoE
+                power. The electrical contractor must ensure the switch cabinet (patch cabinet) has
+                adequate power supply (typically a dedicated 16A or 32A circuit) to support the PoE
+                budget of all connected devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conference room AV:</strong> Conference rooms require a dedicated power
-                zone for AV equipment including projectors, large-format displays, videoconferencing
+                <strong>Conference room AV:</strong> Conference rooms require a dedicated power zone
+                for AV equipment including projectors, large-format displays, videoconferencing
                 systems, and audio amplifiers. AV equipment should be on a separate circuit from
                 general power to prevent interference from other loads. Floor boxes or wall outlets
                 for AV should be positioned to avoid cable trip hazards.
@@ -285,10 +282,10 @@ const sections = [
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Server/comms room:</strong> The IT comms room requires a dedicated power
-                supply (often a UPS-protected circuit), adequate electrical capacity for current
-                and future rack power densities, precision air conditioning, and appropriate
-                fire suppression. The electrical installation in the comms room should be
-                designed to the same principles as a small data centre.
+                supply (often a UPS-protected circuit), adequate electrical capacity for current and
+                future rack power densities, precision air conditioning, and appropriate fire
+                suppression. The electrical installation in the comms room should be designed to the
+                same principles as a small data centre.
               </span>
             </li>
           </ul>
@@ -321,9 +318,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Glare control:</strong> Computer screen glare is a major comfort issue
-                in offices. LED luminaires must be specified with a UGR (Unified Glare Rating)
-                not exceeding 19 for screen-based work environments. Indirect or semi-indirect
+                <strong>Glare control:</strong> Computer screen glare is a major comfort issue in
+                offices. LED luminaires must be specified with a UGR (Unified Glare Rating) not
+                exceeding 19 for screen-based work environments. Indirect or semi-indirect
                 luminaires (uplighting or louvre fittings) are preferred over direct recessed
                 downlighters in open-plan offices.
               </span>
@@ -332,22 +329,21 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting controls:</strong> Part L of the Building Regulations requires
-                automatic lighting controls in offices, including: presence detection (switching
-                off lights in unoccupied areas automatically), daylight dimming (dimming or
-                switching lights near windows in response to available daylight), and local
-                manual override. DALI control systems are widely used for office lighting,
-                allowing individual luminaire addressing and integration with the BMS.
+                automatic lighting controls in offices, including: presence detection (switching off
+                lights in unoccupied areas automatically), daylight dimming (dimming or switching
+                lights near windows in response to available daylight), and local manual override.
+                DALI control systems are widely used for office lighting, allowing individual
+                luminaire addressing and integration with the BMS.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tunable white lighting:</strong> Human-centric lighting (HCL) systems
-                that vary the colour temperature of the office lighting throughout the day
-                (cooler, bluer light in the morning to promote alertness; warmer light in the
-                afternoon to reduce fatigue) are increasingly specified in high-quality office
-                fit-outs. These systems require DALI or DALI-2 control with tunable white
-                (Tw) luminaires.
+                <strong>Tunable white lighting:</strong> Human-centric lighting (HCL) systems that
+                vary the colour temperature of the office lighting throughout the day (cooler, bluer
+                light in the morning to promote alertness; warmer light in the afternoon to reduce
+                fatigue) are increasingly specified in high-quality office fit-outs. These systems
+                require DALI or DALI-2 control with tunable white (Tw) luminaires.
               </span>
             </li>
           </ul>
@@ -362,8 +358,8 @@ const sections = [
       <>
         <p>
           Emergency lighting in offices must ensure that all occupants can safely evacuate the
-          building in the event of a mains power failure, and that security and safety systems
-          can continue to operate. BS 5266-1 and Regulation 560.7 of BS 7671 govern the design,
+          building in the event of a mains power failure, and that security and safety systems can
+          continue to operate. BS 5266-1 and Regulation 560.7 of BS 7671 govern the design,
           installation, and testing of emergency lighting.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -371,41 +367,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting:</strong> Escape route luminaires must provide
-                a minimum maintained illuminance of 1 lux at floor level along the centreline
-                of the escape route, with a uniformity ratio (minimum to average) of not less
-                than 1:40. Luminaires must be positioned at every change of direction, at every
-                exit door, at stairways (at each landing and at each change of direction), and
-                at every fire call point and first-aid station.
+                <strong>Escape route lighting:</strong> Escape route luminaires must provide a
+                minimum maintained illuminance of 1 lux at floor level along the centreline of the
+                escape route, with a uniformity ratio (minimum to average) of not less than 1:40.
+                Luminaires must be positioned at every change of direction, at every exit door, at
+                stairways (at each landing and at each change of direction), and at every fire call
+                point and first-aid station.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Anti-panic lighting:</strong> In open-plan office areas (open areas
-                greater than 60 m²), anti-panic lighting must provide a minimum of 0.5 lux
-                at floor level throughout the area (avoiding fixed obstacles) so that occupants
-                can safely move towards escape routes.
+                <strong>Anti-panic lighting:</strong> In open-plan office areas (open areas greater
+                than 60 m²), anti-panic lighting must provide a minimum of 0.5 lux at floor level
+                throughout the area (avoiding fixed obstacles) so that occupants can safely move
+                towards escape routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Duration:</strong> Emergency lighting in offices must maintain
-                the required illuminance for a minimum duration of one hour. Where the premises
-                are used for entertainment or public gatherings, a minimum of three hours is
-                required. Self-contained maintained luminaires with integrated batteries, or a
-                central battery system, are both acceptable approaches.
+                <strong>Duration:</strong> Emergency lighting in offices must maintain the required
+                illuminance for a minimum duration of one hour. Where the premises are used for
+                entertainment or public gatherings, a minimum of three hours is required.
+                Self-contained maintained luminaires with integrated batteries, or a central battery
+                system, are both acceptable approaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Automated testing:</strong> BS 5266-1 requires monthly functional
-                testing and annual full-duration testing of emergency lighting. Automated
-                self-testing emergency luminaires (addressable self-test systems) simplify
-                compliance by automatically performing tests and generating electronic records,
-                reducing the labour cost of manual testing in large office buildings.
+                <strong>Automated testing:</strong> BS 5266-1 requires monthly functional testing
+                and annual full-duration testing of emergency lighting. Automated self-testing
+                emergency luminaires (addressable self-test systems) simplify compliance by
+                automatically performing tests and generating electronic records, reducing the
+                labour cost of manual testing in large office buildings.
               </span>
             </li>
           </ul>
@@ -420,9 +416,9 @@ const sections = [
       <>
         <p>
           The fire alarm installation is closely integrated with the office electrical fit-out.
-          Electrical contractors must understand the interface between the fire alarm system and
-          the building's electrical services, even where the fire alarm installation itself is
-          carried out by a specialist contractor.
+          Electrical contractors must understand the interface between the fire alarm system and the
+          building's electrical services, even where the fire alarm installation itself is carried
+          out by a specialist contractor.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -430,11 +426,11 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-resistant cable:</strong> Fire alarm cabling must use fire-resistant
-                cable complying with BS 7629 or equivalent, maintaining circuit integrity in
-                fire conditions. Regulation 521.10 of BS 7671 requires fire-resistant wiring
-                systems for safety services. In an office fit-out, the fire alarm contractor
-                typically supplies and installs the fire alarm cable; the electrical contractor
-                provides the power supply circuit to the fire alarm control panel.
+                cable complying with BS 7629 or equivalent, maintaining circuit integrity in fire
+                conditions. Regulation 521.10 of BS 7671 requires fire-resistant wiring systems for
+                safety services. In an office fit-out, the fire alarm contractor typically supplies
+                and installs the fire alarm cable; the electrical contractor provides the power
+                supply circuit to the fire alarm control panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -443,18 +439,18 @@ const sections = [
                 <strong>Electrical interfaces:</strong> The fire alarm system typically interfaces
                 with the building's electrical services to trigger automatic actions on detection,
                 including: releasing fire door magnetic holders, activating smoke extraction fans,
-                shutting down air handling units (to prevent smoke spread), and sending signals
-                to lifts to call them to the ground floor.
+                shutting down air handling units (to prevent smoke spread), and sending signals to
+                lifts to call them to the ground floor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power supply to the fire alarm panel:</strong> The fire alarm panel must
-                be supplied from a dedicated circuit taken directly from the distribution board,
-                protected by a dedicated MCB clearly labelled "FIRE ALARM — DO NOT SWITCH OFF".
-                This circuit must not be connected to a general power distribution circuit that
-                could be switched off by a building occupant.
+                <strong>Power supply to the fire alarm panel:</strong> The fire alarm panel must be
+                supplied from a dedicated circuit taken directly from the distribution board,
+                protected by a dedicated MCB clearly labelled "FIRE ALARM — DO NOT SWITCH OFF". This
+                circuit must not be connected to a general power distribution circuit that could be
+                switched off by a building occupant.
               </span>
             </li>
           </ul>
@@ -468,42 +464,42 @@ const sections = [
     content: (
       <>
         <p>
-          Building Regulations Part S requires EV charging provision for new office buildings
-          and major refurbishments with car parking. Even where Part S does not apply, office
-          occupiers increasingly demand EV charging as a workplace benefit, and it is becoming
-          a standard element of office fit-outs.
+          Building Regulations Part S requires EV charging provision for new office buildings and
+          major refurbishments with car parking. Even where Part S does not apply, office occupiers
+          increasingly demand EV charging as a workplace benefit, and it is becoming a standard
+          element of office fit-outs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part S requirements:</strong> For new office buildings with more than
-                10 car parking spaces, Building Regulations Part S (England) requires at least
-                one active EV charge point and cable routes suitable for charge points for at
-                least one in five of all remaining spaces. The active charge point must be smart
-                (complying with the Electric Vehicles (Smart Charge Points) Regulations 2021).
+                <strong>Part S requirements:</strong> For new office buildings with more than 10 car
+                parking spaces, Building Regulations Part S (England) requires at least one active
+                EV charge point and cable routes suitable for charge points for at least one in five
+                of all remaining spaces. The active charge point must be smart (complying with the
+                Electric Vehicles (Smart Charge Points) Regulations 2021).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 Section 722:</strong> EV charging installations must comply with
-                Section 722 of BS 7671. Key requirements include: 30mA Type B RCD protection
-                for each charge point (or Type A where the manufacturer confirms no DC residual
-                current exceeds 6mA); an isolating switch for each charge point; and appropriate
-                earthing arrangements, including protective earth monitoring where required by
-                the charge point manufacturer.
+                Section 722 of BS 7671. Key requirements include: 30mA Type B RCD protection for
+                each charge point (or Type A where the manufacturer confirms no DC residual current
+                exceeds 6mA); an isolating switch for each charge point; and appropriate earthing
+                arrangements, including protective earth monitoring where required by the charge
+                point manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Load management:</strong> Where multiple charge points are installed,
-                a dynamic load management system should be provided to prevent the aggregate
-                EV charging demand from overloading the office building's incoming supply.
-                The load management system monitors available capacity headroom and distributes
-                charging power among active charge points.
+                <strong>Load management:</strong> Where multiple charge points are installed, a
+                dynamic load management system should be provided to prevent the aggregate EV
+                charging demand from overloading the office building's incoming supply. The load
+                management system monitors available capacity headroom and distributes charging
+                power among active charge points.
               </span>
             </li>
           </ul>
@@ -518,41 +514,40 @@ const sections = [
       <>
         <p>
           Energy efficiency and sub-metering requirements for office electrical fit-outs are
-          governed by Part L of the Building Regulations. Compliance must be demonstrated at
-          the design stage and verified on completion.
+          governed by Part L of the Building Regulations. Compliance must be demonstrated at the
+          design stage and verified on completion.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part L2B sub-metering:</strong> Where more than 1,000 m² of a building
-                is being renovated, Part L2B requires sub-meters for lighting, small power,
-                HVAC, and any significant process loads. In a Cat B office fit-out, the tenant
-                should install sub-metering that allows their energy use to be separately
-                measured from the base building energy (landlord's common areas and services).
+                <strong>Part L2B sub-metering:</strong> Where more than 1,000 m² of a building is
+                being renovated, Part L2B requires sub-meters for lighting, small power, HVAC, and
+                any significant process loads. In a Cat B office fit-out, the tenant should install
+                sub-metering that allows their energy use to be separately measured from the base
+                building energy (landlord's common areas and services).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting energy:</strong> Part L requires that office lighting achieves
-                a target LENI (Lighting Energy Numeric Indicator) value. The LENI is calculated
-                by the lighting designer using a standardised methodology and must meet the
-                target value specified in Part L. LED luminaires with automatic controls (presence
-                detection and daylight dimming) are essential for meeting LENI targets.
+                <strong>Lighting energy:</strong> Part L requires that office lighting achieves a
+                target LENI (Lighting Energy Numeric Indicator) value. The LENI is calculated by the
+                lighting designer using a standardised methodology and must meet the target value
+                specified in Part L. LED luminaires with automatic controls (presence detection and
+                daylight dimming) are essential for meeting LENI targets.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Energy Performance Certificates:</strong> An EPC is required for any
-                office building offered for sale or let (since October 2008). The EPC rating
-                (A++ to G) is based on the asset rating of the building's fixed services,
-                including the electrical installation and lighting. From April 2023, office
-                buildings with an EPC rating below E cannot be let (MEES — Minimum Energy
-                Efficiency Standards). From 2027, the minimum will rise to D, and from 2030
-                to C.
+                <strong>Energy Performance Certificates:</strong> An EPC is required for any office
+                building offered for sale or let (since October 2008). The EPC rating (A++ to G) is
+                based on the asset rating of the building's fixed services, including the electrical
+                installation and lighting. From April 2023, office buildings with an EPC rating
+                below E cannot be let (MEES — Minimum Energy Efficiency Standards). From 2027, the
+                minimum will rise to D, and from 2030 to C.
               </span>
             </li>
           </ul>
@@ -567,9 +562,9 @@ const sections = [
       <>
         <p>
           Office electrical fit-out is a consistently active market for UK electrical contractors.
-          The regular churn of office leases, the expansion of new office developments in UK
-          cities, and the wave of post-pandemic office redesigns all generate significant
-          contracting opportunities.
+          The regular churn of office leases, the expansion of new office developments in UK cities,
+          and the wave of post-pandemic office redesigns all generate significant contracting
+          opportunities.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -579,9 +574,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Working in Occupied Buildings</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Office refurbishments are frequently carried out in occupied buildings, requiring
-                  work to be phased to minimise disruption to tenants. Safe isolation procedures
-                  are particularly important in occupied buildings — always confirm the exact circuit
-                  to be isolated with the building manager before switching off, and use lockout
+                  work to be phased to minimise disruption to tenants. Safe isolation procedures are
+                  particularly important in occupied buildings — always confirm the exact circuit to
+                  be isolated with the building manager before switching off, and use lockout
                   devices to prevent inadvertent re-energisation.
                 </p>
               </div>
@@ -598,9 +593,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certification app
                   </SEOInternalLink>{' '}
-                  to complete Electrical Installation Certificates, test schedules, and
-                  Minor Works Certificates on site, with instant PDF delivery to the main
-                  contractor and client.
+                  to complete Electrical Installation Certificates, test schedules, and Minor Works
+                  Certificates on site, with instant PDF delivery to the main contractor and client.
                 </p>
               </div>
             </div>
@@ -608,7 +602,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage office fit-out electrical projects with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -645,7 +639,7 @@ export default function OfficeElectricalFitOutPage() {
       faqHeading="Frequently Asked Questions — Office Electrical Fit Out"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Office Fit-Out Projects with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

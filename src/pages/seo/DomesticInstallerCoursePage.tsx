@@ -398,11 +398,11 @@ const sections = [
           circuits.
         </p>
         <p>
-          <strong>AFDD (Arc Fault Detection Devices):</strong> BS 7671 Section 421 recommends
-          the use of AFDDs for final circuits in certain domestic premises, including HMOs, care
-          homes, student accommodation, and properties with thatched roofs. While currently a
-          recommendation rather than a requirement, AFDDs are expected to become mandatory in
-          future amendments.
+          <strong>AFDD (Arc Fault Detection Devices):</strong> BS 7671 Section 421 recommends the
+          use of AFDDs for final circuits in certain domestic premises, including HMOs, care homes,
+          student accommodation, and properties with thatched roofs. While currently a
+          recommendation rather than a requirement, AFDDs are expected to become mandatory in future
+          amendments.
         </p>
         <p>
           <strong>Surge protection:</strong> Regulation 443.4 requires a risk assessment for surge
@@ -566,7 +566,7 @@ export default function DomesticInstallerCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to master domestic electrical installation?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 12 structured modules, interactive quizzes, video content, and an AI tutor for any Part P or domestic wiring question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/domestic-installer"
     />

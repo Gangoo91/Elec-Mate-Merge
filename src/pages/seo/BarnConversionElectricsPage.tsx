@@ -170,8 +170,8 @@ const sections = [
         </p>
         <p>
           This guide covers the complete electrical installation process for barn conversions, from
-          supply design through to certification, with practical guidance on the heritage, structural,
-          and technical challenges that make these projects unique.
+          supply design through to certification, with practical guidance on the heritage,
+          structural, and technical challenges that make these projects unique.
         </p>
       </>
     ),
@@ -193,7 +193,8 @@ const sections = [
                 <strong>Cable routing restrictions</strong> — conservation officers may prohibit
                 surface-mounted cables, trunking, or conduit on exposed stonework, brickwork, or
                 beams. Cables must typically be concealed within floor voids, behind dry-lining, or
-                through existing structural voids. This significantly increases first-fix labour time.
+                through existing structural voids. This significantly increases first-fix labour
+                time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -201,8 +202,8 @@ const sections = [
               <span>
                 <strong>Accessory styling</strong> — standard white plastic switches and sockets may
                 not be acceptable in listed buildings. Heritage-style accessories in brushed bronze,
-                antique brass, or black iron may be required. These cost 3x to 5x more than
-                standard accessories but are non-negotiable for listed buildings.
+                antique brass, or black iron may be required. These cost 3x to 5x more than standard
+                accessories but are non-negotiable for listed buildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -243,11 +244,11 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Retain Three-Phase</h3>
             <p className="text-white text-sm leading-relaxed">
               If the barn has an existing three-phase supply, retaining it provides 3x the capacity
-              of single-phase. This is advantageous for large conversions with significant electrical
-              loads: underfloor heating can be balanced across phases, EV chargers can use a
-              dedicated phase, and workshop equipment can run on three-phase power. The consumer unit
-              must be a three-phase distribution board, and circuits must be balanced across L1, L2,
-              and L3. Design diversity carefully to avoid phase imbalance.
+              of single-phase. This is advantageous for large conversions with significant
+              electrical loads: underfloor heating can be balanced across phases, EV chargers can
+              use a dedicated phase, and workshop equipment can run on three-phase power. The
+              consumer unit must be a three-phase distribution board, and circuits must be balanced
+              across L1, L2, and L3. Design diversity carefully to avoid phase imbalance.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -270,10 +271,10 @@ const sections = [
     content: (
       <>
         <p>
-          Voltage drop is the defining technical challenge of barn conversion electrics. Agricultural
-          buildings are large — a typical barn is 15m to 25m long, and some are 30m to 50m. The
-          consumer unit is usually positioned near the meter, which may be at one end of the
-          building. This creates cable runs of 30m to 50m to the furthest points.
+          Voltage drop is the defining technical challenge of barn conversion electrics.
+          Agricultural buildings are large — a typical barn is 15m to 25m long, and some are 30m to
+          50m. The consumer unit is usually positioned near the meter, which may be at one end of
+          the building. This creates cable runs of 30m to 50m to the furthest points.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-4">
@@ -283,10 +284,10 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 BS 7671 allows a maximum 5% voltage drop from the origin of the installation to the
                 furthest point of utilisation (3% is recommended for lighting). At 230V, 5% is
-                11.5V. On a 40m run with 2.5mm² cable carrying 20A, the voltage drop is approximately
-                14.4V — exceeding the limit. The solution is to increase the cable size: 4.0mm² drops
-                to 9.0V, and 6.0mm² drops to 6.0V. Always check voltage drop at the design stage
-                using the{' '}
+                11.5V. On a 40m run with 2.5mm² cable carrying 20A, the voltage drop is
+                approximately 14.4V — exceeding the limit. The solution is to increase the cable
+                size: 4.0mm² drops to 9.0V, and 6.0mm² drops to 6.0V. Always check voltage drop at
+                the design stage using the{' '}
                 <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>
@@ -301,8 +302,8 @@ const sections = [
               <Ruler className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Central consumer unit positioning</strong> — where possible, position the
-                consumer unit centrally in the building to halve the maximum cable run distance. This
-                may require a sub-main from the meter position to a central location.
+                consumer unit centrally in the building to halve the maximum cable run distance.
+                This may require a sub-main from the meter position to a central location.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,18 +343,18 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Stone walls (400mm to 600mm thick)</strong> — core drilling for cable
-                penetrations requires a diamond core drill. Chasing is extremely labour-intensive and
-                may not be permitted in listed buildings. Route cables through dry-lining voids where
-                internal walls are being lined, or through floor voids between levels.
+                penetrations requires a diamond core drill. Chasing is extremely labour-intensive
+                and may not be permitted in listed buildings. Route cables through dry-lining voids
+                where internal walls are being lined, or through floor voids between levels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Exposed beams</strong> — cables cannot simply be clipped to exposed oak or
-                softwood beams without conservation officer approval. Options include routing through
-                the beam (drilling from the hidden side), running along the top of the beam where not
-                visible, or using the beam structure to conceal cables in junction points.
+                softwood beams without conservation officer approval. Options include routing
+                through the beam (drilling from the hidden side), running along the top of the beam
+                where not visible, or using the beam structure to conceal cables in junction points.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,10 +369,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Damp and moisture</strong> — agricultural buildings can have persistent damp,
-                particularly at ground level. Use IP-rated accessories and ensure all cable routes in
-                damp areas are protected. Consider the long-term moisture environment when selecting
-                materials and cable types.
+                <strong>Damp and moisture</strong> — agricultural buildings can have persistent
+                damp, particularly at ground level. Use IP-rated accessories and ensure all cable
+                routes in damp areas are protected. Consider the long-term moisture environment when
+                selecting materials and cable types.
               </span>
             </li>
           </ul>
@@ -394,26 +395,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pendant fittings on beams</strong> — large industrial-style pendants hung from
-                exposed beams are the signature barn conversion lighting look. Use adjustable-height
-                pendants or pulley fittings in double-height spaces. Cable runs concealed along the
-                top of beams.
+                <strong>Pendant fittings on beams</strong> — large industrial-style pendants hung
+                from exposed beams are the signature barn conversion lighting look. Use
+                adjustable-height pendants or pulley fittings in double-height spaces. Cable runs
+                concealed along the top of beams.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Track lighting</strong> — ceiling-mounted or beam-mounted track systems
-                provide flexible directional lighting. They work well in open-plan living spaces where
-                the lighting needs change with furniture arrangement.
+                provide flexible directional lighting. They work well in open-plan living spaces
+                where the lighting needs change with furniture arrangement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LED strip lighting</strong> — concealed LED strips along beam undersides,
-                in coving, or behind stone ledges create indirect ambient lighting that highlights
-                the building texture without visible light fittings.
+                <strong>LED strip lighting</strong> — concealed LED strips along beam undersides, in
+                coving, or behind stone ledges create indirect ambient lighting that highlights the
+                building texture without visible light fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -443,18 +444,18 @@ const sections = [
     content: (
       <>
         <p>
-          Barn conversions almost always include underfloor heating — the large floor areas, stone or
-          concrete substrates, and absence of standard radiator positions make underfloor heating the
-          natural choice. The electrical implications are significant:
+          Barn conversions almost always include underfloor heating — the large floor areas, stone
+          or concrete substrates, and absence of standard radiator positions make underfloor heating
+          the natural choice. The electrical implications are significant:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric underfloor heating</strong> — heating mats or cables embedded in the
-                floor screed. Each zone requires a dedicated circuit (typically 16A to 20A) and a
-                floor thermostat with floor and air sensors. A large barn may have 6 to 10 heating
+                <strong>Electric underfloor heating</strong> — heating mats or cables embedded in
+                the floor screed. Each zone requires a dedicated circuit (typically 16A to 20A) and
+                a floor thermostat with floor and air sensors. A large barn may have 6 to 10 heating
                 zones, each on its own circuit.
               </span>
             </li>
@@ -469,10 +470,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Air source heat pump</strong> — increasingly specified in barn conversions for
-                Part L compliance and running cost efficiency. The electrician provides the outdoor
-                unit supply (typically 32A three-phase or single-phase), indoor unit wiring, zone
-                valve controls, and the controls interface. The heat pump circuit must be on a
+                <strong>Air source heat pump</strong> — increasingly specified in barn conversions
+                for Part L compliance and running cost efficiency. The electrician provides the
+                outdoor unit supply (typically 32A three-phase or single-phase), indoor unit wiring,
+                zone valve controls, and the controls interface. The heat pump circuit must be on a
                 dedicated RCBO.
               </span>
             </li>
@@ -538,8 +539,8 @@ const sections = [
     content: (
       <>
         <p>
-          Barn conversion testing follows the same BS 7671 requirements as any domestic installation,
-          but the scale and complexity are greater. An{' '}
+          Barn conversion testing follows the same BS 7671 requirements as any domestic
+          installation, but the scale and complexity are greater. An{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -549,7 +550,9 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Continuity of protective conductors on all circuits (expect long R1+R2 values)</span>
+              <span>
+                Continuity of protective conductors on all circuits (expect long R1+R2 values)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -569,7 +572,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Earth fault loop impedance on every circuit (Zs values may be higher due to cable length)</span>
+              <span>
+                Earth fault loop impedance on every circuit (Zs values may be higher due to cable
+                length)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -585,7 +591,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional testing of underfloor heating zones, smoke alarms, and extract fans</span>
+              <span>
+                Functional testing of underfloor heating zones, smoke alarms, and extract fans
+              </span>
             </li>
           </ul>
         </div>
@@ -647,9 +655,7 @@ const sections = [
     heading: 'Typical Costs (2026 UK Pricing)',
     content: (
       <>
-        <p>
-          Barn conversion electrical costs reflect the scale, complexity, and specification:
-        </p>
+        <p>Barn conversion electrical costs reflect the scale, complexity, and specification:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -679,8 +685,8 @@ const sections = [
               <span>
                 <strong>Key cost drivers</strong> — heritage accessories: £1,500 to £4,000 premium
                 over standard. Three-phase distribution: £500 to £1,000 premium. Underfloor heating
-                (electric, per zone): £300 to £600. Feature lighting design: £1,000 to £3,000.
-                New DNO connection: £2,000 to £10,000+.
+                (electric, per zone): £300 to £600. Feature lighting design: £1,000 to £3,000. New
+                DNO connection: £2,000 to £10,000+.
               </span>
             </li>
           </ul>
@@ -729,8 +735,8 @@ const sections = [
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to size every circuit with voltage drop verification. Get the cable sizes right at
-                  the design stage — discovering a voltage drop failure at commissioning on a 40m run
-                  in a barn is a costly rework.
+                  the design stage — discovering a voltage drop failure at commissioning on a 40m
+                  run in a barn is a costly rework.
                 </p>
               </div>
             </div>
@@ -752,7 +758,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, size, and certify barn conversion electrics"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Built for complex projects like barn conversions. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Built for complex projects like barn conversions. 7-day free trial."
           icon={Landmark}
         />
       </>
@@ -789,7 +795,7 @@ export default function BarnConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Barn Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Barn Conversion Electrics on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. Built for complex projects. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. Built for complex projects. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -37,10 +37,10 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Harrogate is a prosperous spa town in North Yorkshire, with electrician rates of £42 to £58 per hour — above the Yorkshire average, reflecting the town\'s affluent demographics and premium residential market.',
+  "Harrogate is a prosperous spa town in North Yorkshire, with electrician rates of £42 to £58 per hour — above the Yorkshire average, reflecting the town's affluent demographics and premium residential market.",
   'Northern Powergrid is the Distribution Network Operator for Harrogate and Yorkshire. All G98/G99 notifications for solar PV, battery storage, and EV chargers in Harrogate go through Northern Powergrid.',
   'Harrogate has an exceptional stock of Victorian and Edwardian hotels, guest houses, and residential properties — many of them listed — creating demand for sensitive electrical work in heritage settings.',
-  'The Harrogate Convention Centre and the town\'s large conference and exhibition industry generate significant commercial electrical demand, including temporary power and event electrical installations.',
+  "The Harrogate Convention Centre and the town's large conference and exhibition industry generate significant commercial electrical demand, including temporary power and event electrical installations.",
   'All domestic electrical work in Harrogate must comply with Part P of the Building Regulations. NICEIC and NAPIT registered electricians self-certify notifiable work automatically.',
 ];
 
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What electrical work is most common in Harrogate?',
     answer:
-      'Common electrical jobs in Harrogate include: consumer unit upgrades in the large stock of Victorian and Edwardian properties, landlord EICRs for the town\'s rental sector, EV charger installations (strong demand from the affluent owner-occupier population), solar PV and battery storage in the large detached houses with good roof space, rewires of period properties, and commercial electrical work for the hotels, conference facilities, and healthcare sector. Listed building electrical work is also common given the concentration of Victorian heritage in Harrogate.',
+      "Common electrical jobs in Harrogate include: consumer unit upgrades in the large stock of Victorian and Edwardian properties, landlord EICRs for the town's rental sector, EV charger installations (strong demand from the affluent owner-occupier population), solar PV and battery storage in the large detached houses with good roof space, rewires of period properties, and commercial electrical work for the hotels, conference facilities, and healthcare sector. Listed building electrical work is also common given the concentration of Victorian heritage in Harrogate.",
   },
   {
     question: 'Does Part P apply in Harrogate?',
@@ -68,12 +68,12 @@ const faqs = [
   {
     question: 'Are there listed building requirements for electrical work in Harrogate?',
     answer:
-      'Harrogate has a significant number of listed buildings, particularly in the Victorian spa town centre and the surrounding residential areas developed during the town\'s 19th-century heyday. Listed building consent is required for external electrical work on listed properties — including EV charger mounting, external lighting, and visible cable routes. Internal rewiring in listed buildings must avoid damaging original features. Harrogate conservation areas (covering much of the Victorian town centre) also impose restrictions on external alterations to unlisted buildings.',
+      "Harrogate has a significant number of listed buildings, particularly in the Victorian spa town centre and the surrounding residential areas developed during the town's 19th-century heyday. Listed building consent is required for external electrical work on listed properties — including EV charger mounting, external lighting, and visible cable routes. Internal rewiring in listed buildings must avoid damaging original features. Harrogate conservation areas (covering much of the Victorian town centre) also impose restrictions on external alterations to unlisted buildings.",
   },
   {
     question: 'How do I find a qualified electrician in Harrogate?',
     answer:
-      'Use the NICEIC or NAPIT contractor search on their respective websites, entering your Harrogate postcode. Both registers include only electricians who have been assessed for technical competence and who carry appropriate insurance. In Harrogate\'s premium market, word of mouth and personal recommendation are also important — ask neighbours, friends, or your estate agent for recommendations. Always ask to see the electrician\'s scheme registration card before agreeing to work.',
+      "Use the NICEIC or NAPIT contractor search on their respective websites, entering your Harrogate postcode. Both registers include only electricians who have been assessed for technical competence and who carry appropriate insurance. In Harrogate's premium market, word of mouth and personal recommendation are also important — ask neighbours, friends, or your estate agent for recommendations. Always ask to see the electrician's scheme registration card before agreeing to work.",
   },
   {
     question: 'What are typical earthing arrangements in Harrogate properties?',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
     description:
-      'Study for C&G 2391 — essential for EICR work in Harrogate\'s period property market.',
+      "Study for C&G 2391 — essential for EICR work in Harrogate's period property market.",
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,24 +144,23 @@ const sections = [
     content: (
       <>
         <p>
-          Harrogate is a prosperous spa town in North Yorkshire with a population of around
-          80,000. Famous for its Victorian architecture, beautiful gardens, and the Harrogate
-          Convention Centre, the town developed as a fashionable spa destination in the 19th
-          century and retains a distinctive character of fine Victorian and Edwardian hotels,
-          townhouses, and residential streets.
+          Harrogate is a prosperous spa town in North Yorkshire with a population of around 80,000.
+          Famous for its Victorian architecture, beautiful gardens, and the Harrogate Convention
+          Centre, the town developed as a fashionable spa destination in the 19th century and
+          retains a distinctive character of fine Victorian and Edwardian hotels, townhouses, and
+          residential streets.
         </p>
         <p>
-          For electricians, Harrogate is one of the most attractive markets in Yorkshire.
-          The affluent owner-occupier population invests in quality electrical work — EV
-          chargers, solar PV, consumer unit upgrades, and full rewires of period properties.
-          The large hotel and conference sector generates commercial electrical work. The
-          concentration of listed and heritage buildings creates demand for electricians with
-          experience of working sensitively in historic properties.
+          For electricians, Harrogate is one of the most attractive markets in Yorkshire. The
+          affluent owner-occupier population invests in quality electrical work — EV chargers, solar
+          PV, consumer unit upgrades, and full rewires of period properties. The large hotel and
+          conference sector generates commercial electrical work. The concentration of listed and
+          heritage buildings creates demand for electricians with experience of working sensitively
+          in historic properties.
         </p>
         <p>
-          This guide covers finding a qualified electrician in Harrogate, typical costs,
-          common jobs, regulatory requirements, and the specific characteristics of the
-          Harrogate market.
+          This guide covers finding a qualified electrician in Harrogate, typical costs, common
+          jobs, regulatory requirements, and the specific characteristics of the Harrogate market.
         </p>
       </>
     ),
@@ -180,18 +179,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC</strong> — the NICEIC "find a contractor" search returns
-                assessed and approved electricians covering Harrogate and North Yorkshire.
-                NICEIC approved contractors are assessed annually and self-certify notifiable
-                work under Part P.
+                <strong>NICEIC</strong> — the NICEIC "find a contractor" search returns assessed and
+                approved electricians covering Harrogate and North Yorkshire. NICEIC approved
+                contractors are assessed annually and self-certify notifiable work under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT</strong> — NAPIT has strong coverage across Yorkshire. Registered
-                electricians self-certify and notify the local authority automatically through
-                their scheme.
+                electricians self-certify and notify the local authority automatically through their
+                scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -208,8 +206,8 @@ const sections = [
         <p>
           In Harrogate's premium market, reputation matters greatly. Word of mouth between
           neighbours in the town's residential streets carries significant weight. An electrician
-          who does meticulous work in a Victorian townhouse will often receive referrals to
-          multiple properties in the same street.
+          who does meticulous work in a Victorian townhouse will often receive referrals to multiple
+          properties in the same street.
         </p>
       </>
     ),
@@ -219,9 +217,7 @@ const sections = [
     heading: 'Electrician Costs in Harrogate (2026)',
     content: (
       <>
-        <p>
-          Harrogate commands above-average Yorkshire rates. Typical 2026 rates:
-        </p>
+        <p>Harrogate commands above-average Yorkshire rates. Typical 2026 rates:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-3">
@@ -269,10 +265,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Victorian and listed building rewires in Harrogate command a premium due to the
-          complexity of working in solid-wall period properties with original features to
-          preserve. Large Victorian townhouses with multiple floors and extensive runs can
-          cost significantly more than a standard semi-detached rewire.
+          Victorian and listed building rewires in Harrogate command a premium due to the complexity
+          of working in solid-wall period properties with original features to preserve. Large
+          Victorian townhouses with multiple floors and extensive runs can cost significantly more
+          than a standard semi-detached rewire.
         </p>
       </>
     ),
@@ -286,20 +282,20 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Property Rewires</h3>
             <p className="text-white text-sm leading-relaxed">
-              Harrogate has an exceptional stock of Victorian and Edwardian townhouses, many
-              of which require periodic rewires. Solid stone or brick walls require
-              surface-mounted trunking or careful routing through floor voids. Pre-1980s
-              properties should be assessed for asbestos. Large Harrogate townhouses can
-              take 5 to 10 days for a full rewire.
+              Harrogate has an exceptional stock of Victorian and Edwardian townhouses, many of
+              which require periodic rewires. Solid stone or brick walls require surface-mounted
+              trunking or careful routing through floor voids. Pre-1980s properties should be
+              assessed for asbestos. Large Harrogate townhouses can take 5 to 10 days for a full
+              rewire.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Many Harrogate properties have outdated consumer units that do not provide
-              adequate RCD protection as required by BS 7671 Regulation 411.3.3. Consumer
-              unit upgrades are commonly requested following a failed EICR, a property sale,
-              or when customers are aware that their fuse board is outdated.
+              Many Harrogate properties have outdated consumer units that do not provide adequate
+              RCD protection as required by BS 7671 Regulation 411.3.3. Consumer unit upgrades are
+              commonly requested following a failed EICR, a property sale, or when customers are
+              aware that their fuse board is outdated.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -307,17 +303,17 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Harrogate's affluent population is one of the stronger EV adopter markets in
               Yorkshire. Home 7kW Type 2 charger installations with Northern Powergrid G98
-              notification are the standard. Premium smart chargers with solar divert and
-              load management are popular in the higher-value properties.
+              notification are the standard. Premium smart chargers with solar divert and load
+              management are popular in the higher-value properties.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Hotel and Conference Sector</h3>
             <p className="text-white text-sm leading-relaxed">
-              Harrogate's large hotel and conference industry — centred on the Harrogate
-              Convention Centre and the town's many hotels — generates significant commercial
-              electrical work. Emergency lighting testing, distribution board maintenance,
-              and periodic inspection of commercial premises are regular requirements.
+              Harrogate's large hotel and conference industry — centred on the Harrogate Convention
+              Centre and the town's many hotels — generates significant commercial electrical work.
+              Emergency lighting testing, distribution board maintenance, and periodic inspection of
+              commercial premises are regular requirements.
             </p>
           </div>
         </div>
@@ -338,27 +334,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — notifiable work must be self-certified
-                by a registered competent person or notified to North Yorkshire Council building
-                control (Harrogate area) before work starts. Registered electricians notify
-                automatically.
+                <strong>Part P notification</strong> — notifiable work must be self-certified by a
+                registered competent person or notified to North Yorkshire Council building control
+                (Harrogate area) before work starts. Registered electricians notify automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD
-                protection for all socket outlets up to 32A and all final circuits in new
-                domestic installations. Consumer units in Harrogate properties must satisfy
-                this requirement.
+                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD protection
+                for all socket outlets up to 32A and all final circuits in new domestic
+                installations. Consumer units in Harrogate properties must satisfy this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection</strong> — BS 7671 Section 631 covers periodic
-                inspection requirements. Rental properties must have a valid EICR every 5 years
-                by law. Owner-occupied properties are recommended every 10 years.
+                inspection requirements. Rental properties must have a valid EICR every 5 years by
+                law. Owner-occupied properties are recommended every 10 years.
               </span>
             </li>
           </ul>
@@ -373,40 +367,41 @@ const sections = [
       <>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Townhouses</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian and Edwardian Townhouses
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The defining property type of Harrogate — grand stone-built townhouses on leafy
-              streets in areas like Duchy, Oatlands, and Bilton. Solid stone walls, multiple
-              floors, and original features. Rewiring requires surface-mounted trunking or
-              careful routing through floor voids. Asbestos surveys essential in pre-1980s
-              properties.
+              streets in areas like Duchy, Oatlands, and Bilton. Solid stone walls, multiple floors,
+              and original features. Rewiring requires surface-mounted trunking or careful routing
+              through floor voids. Asbestos surveys essential in pre-1980s properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Converted Hotels and Guest Houses</h3>
             <p className="text-white text-sm leading-relaxed">
-              Many of Harrogate's Victorian hotels and guest houses have been converted to
-              flats or residential use. These properties have complex histories of electrical
-              modifications. Full surveys before quoting are essential — original commercial
-              wiring may have been partially replaced over multiple decades.
+              Many of Harrogate's Victorian hotels and guest houses have been converted to flats or
+              residential use. These properties have complex histories of electrical modifications.
+              Full surveys before quoting are essential — original commercial wiring may have been
+              partially replaced over multiple decades.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War and Modern Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              1950s and 1960s semi-detached houses in areas like Starbeck and Knaresborough
-              Road, and modern developments on the outskirts. Cavity wall construction —
-              easier cable access. Consumer unit upgrades and EV charger installations are
-              the most common work in these properties.
+              1950s and 1960s semi-detached houses in areas like Starbeck and Knaresborough Road,
+              and modern developments on the outskirts. Cavity wall construction — easier cable
+              access. Consumer unit upgrades and EV charger installations are the most common work
+              in these properties.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural North Yorkshire Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              The villages and rural areas surrounding Harrogate — including Knaresborough,
-              Ripon, and the Nidderdale AONB — have older rural properties and farms.
-              Some have TT earthing. Overhead service cables are common in rural areas.
-              Solar PV is popular on south-facing farm buildings and rural properties.
+              The villages and rural areas surrounding Harrogate — including Knaresborough, Ripon,
+              and the Nidderdale AONB — have older rural properties and farms. Some have TT
+              earthing. Overhead service cables are common in rural areas. Solar PV is popular on
+              south-facing farm buildings and rural properties.
             </p>
           </div>
         </div>
@@ -420,9 +415,9 @@ const sections = [
       <>
         <p>
           Harrogate is one of the most rewarding markets in Yorkshire for electricians.
-          Above-average rates, an affluent and quality-conscious customer base, interesting
-          period property work, and a strong commercial hotel and conference sector combine
-          to create an excellent local market for well-qualified, professional electricians.
+          Above-average rates, an affluent and quality-conscious customer base, interesting period
+          property work, and a strong commercial hotel and conference sector combine to create an
+          excellent local market for well-qualified, professional electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -435,13 +430,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  from your phone on Harrogate jobs. Harrogate customers expect professional
-                  documentation to match the quality of the work — deliver it on site before
-                  you leave.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from
+                  your phone on Harrogate jobs. Harrogate customers expect professional
+                  documentation to match the quality of the work — deliver it on site before you
+                  leave.
                 </p>
               </div>
             </div>
@@ -457,8 +449,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce professional PDF quotes for Harrogate customers. Quote Victorian
-                  property rewires, EV charger installations, and consumer unit upgrades at
-                  accurate North Yorkshire rates — send quotes before you leave the survey.
+                  property rewires, EV charger installations, and consumer unit upgrades at accurate
+                  North Yorkshire rates — send quotes before you leave the survey.
                 </p>
               </div>
             </div>
@@ -466,7 +458,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Harrogate electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Harrogate and North Yorkshire. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Harrogate and North Yorkshire. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -491,8 +483,7 @@ export default function ElectricianHarrogatePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Harrogate:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Harrogate: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Harrogate's exceptional Victorian architecture, affluent residential market, and thriving hotel and conference sector create a rewarding and varied market for registered electricians. Find NICEIC and NAPIT approved electricians in Harrogate and North Yorkshire."
@@ -503,7 +494,7 @@ export default function ElectricianHarrogatePage() {
       faqHeading="Frequently Asked Questions About Electricians in Harrogate"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Harrogate Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Harrogate and North Yorkshire. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Harrogate and North Yorkshire. 7-day free trial."
     />
   );
 }

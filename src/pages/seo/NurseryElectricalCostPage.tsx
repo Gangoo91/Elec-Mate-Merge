@@ -132,12 +132,12 @@ const sections = [
         <p>
           Nursery electrical installation requires careful consideration of child safety, fire
           protection, emergency provisions, and Ofsted compliance. It is specialist work where
-          getting the details right is critical — both for the safety of very young children and
-          for the nursery's ability to pass Ofsted registration and ongoing inspections.
+          getting the details right is critical — both for the safety of very young children and for
+          the nursery's ability to pass Ofsted registration and ongoing inspections.
         </p>
         <p>
-          The electrical installation must support a safe environment for children from birth to
-          5 years, including play areas, sleep rooms, nappy changing facilities, a commercial or
+          The electrical installation must support a safe environment for children from birth to 5
+          years, including play areas, sleep rooms, nappy changing facilities, a commercial or
           semi-commercial kitchen, staff areas, and secure entry systems. Fire alarm and emergency
           lighting are legal requirements, not optional extras.
         </p>
@@ -160,23 +160,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                The NHS, RoSPA, the Electrical Safety Council, and FatallyFlawed.org.uk all
-                advise AGAINST the use of socket covers. They are not a safety device.
+                The NHS, RoSPA, the Electrical Safety Council, and FatallyFlawed.org.uk all advise
+                AGAINST the use of socket covers. They are not a safety device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                BS 1363 sockets have integral shutters that prevent access to live parts. A
-                child cannot insert an object into a single hole — both shutters must be
-                operated simultaneously by a plug.
+                BS 1363 sockets have integral shutters that prevent access to live parts. A child
+                cannot insert an object into a single hole — both shutters must be operated
+                simultaneously by a plug.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                Some socket covers can be inserted upside down, opening the shutter mechanism
-                and exposing live contacts — the opposite of the intended safety effect.
+                Some socket covers can be inserted upside down, opening the shutter mechanism and
+                exposing live contacts — the opposite of the intended safety effect.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -193,29 +193,27 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
+              <span>Use standard BS 1363 socket outlets with functioning integral shutters.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Use standard BS 1363 socket outlets with functioning integral shutters.
+                Install socket outlets at a higher level (1,200mm to 1,500mm) in rooms used by
+                under-3s, where practical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Install socket outlets at a higher level (1,200mm to 1,500mm) in rooms used
-                by under-3s, where practical.
+                Ensure all socket circuits have 30mA RCD protection per Regulation 411.3.3 of BS
+                7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Ensure all socket circuits have 30mA RCD protection per Regulation 411.3.3
-                of BS 7671.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>
-                Keep trailing cables out of reach — use wall-mounted equipment and socket
-                positions that minimise cable runs across play areas.
+                Keep trailing cables out of reach — use wall-mounted equipment and socket positions
+                that minimise cable runs across play areas.
               </span>
             </li>
           </ul>
@@ -229,9 +227,9 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting is a critical safety provision in nursery premises. In a power
-          failure, staff must be able to safely evacuate children — including sleeping babies and
-          toddlers — in conditions of adequate illumination.
+          Emergency lighting is a critical safety provision in nursery premises. In a power failure,
+          staff must be able to safely evacuate children — including sleeping babies and toddlers —
+          in conditions of adequate illumination.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Emergency Lighting Provision</h3>
@@ -239,9 +237,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape routes</strong> — Minimum 1 lux on the centre line of all
-                corridors, stairways, and routes to final exits. Self-contained LED fittings
-                with 3-hour duration.
+                <strong>Escape routes</strong> — Minimum 1 lux on the centre line of all corridors,
+                stairways, and routes to final exits. Self-contained LED fittings with 3-hour
+                duration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -255,17 +253,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Nappy changing areas</strong> — Emergency lighting allows staff to
-                safely complete nappy changing and remove a child from the changing table
-                during a power failure.
+                <strong>Nappy changing areas</strong> — Emergency lighting allows staff to safely
+                complete nappy changing and remove a child from the changing table during a power
+                failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Exit signs</strong> — Illuminated emergency exit signs at all exits
-                from the nursery. Internal exit signs above doors between rooms used for
-                emergency egress.
+                <strong>Exit signs</strong> — Illuminated emergency exit signs at all exits from the
+                nursery. Internal exit signs above doors between rooms used for emergency egress.
               </span>
             </li>
           </ul>
@@ -284,33 +281,33 @@ const sections = [
       <>
         <p>
           A fire alarm system to BS 5839-1 is a legal requirement in nursery premises under the
-          Regulatory Reform (Fire Safety) Order 2005. The system category is determined by the
-          fire risk assessment.
+          Regulatory Reform (Fire Safety) Order 2005. The system category is determined by the fire
+          risk assessment.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Category L2 (Typical)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Coverage of escape routes, rooms opening onto escape routes, and high-risk areas.
-              This is the most common requirement for nurseries without sleep rooms. Smoke
-              detectors on escape routes, heat detectors in the kitchen, manual call points at
-              exits, sounders throughout. Cost: £2,000 to £5,000 for a medium nursery.
+              Coverage of escape routes, rooms opening onto escape routes, and high-risk areas. This
+              is the most common requirement for nurseries without sleep rooms. Smoke detectors on
+              escape routes, heat detectors in the kitchen, manual call points at exits, sounders
+              throughout. Cost: £2,000 to £5,000 for a medium nursery.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Category L1 (Sleep Rooms)</h3>
             <p className="text-white text-sm leading-relaxed">
               Full coverage of the entire building. Required where the fire risk assessment
-              identifies sleeping risk — which applies to most nurseries that offer sleep
-              time for babies and toddlers. Smoke detectors in every room, heat detectors in
-              the kitchen, manual call points, sounders, and visual beacons. Cost: £3,000 to
-              £8,000 for a medium nursery.
+              identifies sleeping risk — which applies to most nurseries that offer sleep time for
+              babies and toddlers. Smoke detectors in every room, heat detectors in the kitchen,
+              manual call points, sounders, and visual beacons. Cost: £3,000 to £8,000 for a medium
+              nursery.
             </p>
           </div>
         </div>
         <p>
-          The fire alarm system requires separate commissioning and a commissioning certificate
-          to BS 5839-1. Ongoing weekly testing and annual servicing are mandatory requirements.
+          The fire alarm system requires separate commissioning and a commissioning certificate to
+          BS 5839-1. Ongoing weekly testing and annual servicing are mandatory requirements.
         </p>
       </>
     ),
@@ -322,18 +319,18 @@ const sections = [
       <>
         <p>
           Heating in nursery premises must provide comfortable temperatures whilst protecting
-          children from burn injuries on hot surfaces. Room temperatures of 18 to 22 degrees
-          Celsius are recommended for nursery rooms.
+          children from burn injuries on hot surfaces. Room temperatures of 18 to 22 degrees Celsius
+          are recommended for nursery rooms.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LST panel heaters</strong> — Low-surface-temperature panel heaters
-                (maximum 43 degrees Celsius surface temperature) designed for healthcare and
-                childcare settings. Cost: £200 to £500 per heater installed including dedicated
-                circuit and room thermostat. Manufacturers: Stelrad, Dimplex, Creda.
+                <strong>LST panel heaters</strong> — Low-surface-temperature panel heaters (maximum
+                43 degrees Celsius surface temperature) designed for healthcare and childcare
+                settings. Cost: £200 to £500 per heater installed including dedicated circuit and
+                room thermostat. Manufacturers: Stelrad, Dimplex, Creda.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -371,27 +368,25 @@ const sections = [
     heading: 'Cost Breakdown by Nursery Size',
     content: (
       <>
-        <p>
-          Here are realistic total electrical installation costs for nurseries in 2026:
-        </p>
+        <p>Here are realistic total electrical installation costs for nurseries in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Small nursery, 2 to 3 rooms (£5,000 to £8,000)</strong> — Consumer unit,
-                power and lighting circuits, basic L2 fire alarm, emergency lighting, kitchen
-                power (semi-commercial), entry intercom, socket outlets at raised height in
-                children's rooms. 1 to 2 weeks installation.
+                power and lighting circuits, basic L2 fire alarm, emergency lighting, kitchen power
+                (semi-commercial), entry intercom, socket outlets at raised height in children's
+                rooms. 1 to 2 weeks installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Medium nursery, 4 to 6 rooms (£8,000 to £13,000)</strong> — Distribution
-                board with RCBOs and SPD, L1 or L2 fire alarm with addressable panel, full
-                emergency lighting, commercial kitchen power, LST heating and controls, CCTV
-                provisions, access control wiring, outdoor play area lighting. 2 to 3 weeks.
+                board with RCBOs and SPD, L1 or L2 fire alarm with addressable panel, full emergency
+                lighting, commercial kitchen power, LST heating and controls, CCTV provisions,
+                access control wiring, outdoor play area lighting. 2 to 3 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -427,34 +422,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024</strong> — Full compliance required. RCD protection
-                per Regulation 411.3.3 on all socket outlets. An EIC must be issued on completion.
+                <strong>BS 7671:2018+A3:2024</strong> — Full compliance required. RCD protection per
+                Regulation 411.3.3 on all socket outlets. An EIC must be issued on completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — Fire alarm and
-                emergency lighting are mandatory. The fire risk assessment determines the
-                specific requirements. Regular testing and maintenance records must be kept.
+                emergency lighting are mandatory. The fire risk assessment determines the specific
+                requirements. Regular testing and maintenance records must be kept.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ofsted EYFS framework</strong> — Premises must be safe and suitable.
-                Ofsted inspectors check for valid EIC/EICR, functioning fire alarm and
-                emergency lighting, safe heating, appropriate socket provision, and no socket
-                covers. Maintenance records and test logs are reviewed.
+                <strong>Ofsted EYFS framework</strong> — Premises must be safe and suitable. Ofsted
+                inspectors check for valid EIC/EICR, functioning fire alarm and emergency lighting,
+                safe heating, appropriate socket provision, and no socket covers. Maintenance
+                records and test logs are reviewed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations</strong> — Part P applies if the nursery is in a
-                domestic building conversion. Part B (fire safety) applies to all nursery
-                premises. Fire alarm and emergency lighting must satisfy the Building
-                Regulations as well as BS 5839-1 and BS 5266-1.
+                domestic building conversion. Part B (fire safety) applies to all nursery premises.
+                Fire alarm and emergency lighting must satisfy the Building Regulations as well as
+                BS 5839-1 and BS 5266-1.
               </span>
             </li>
           </ul>
@@ -478,10 +473,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Check the Fire Risk Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The fire risk assessment determines the fire alarm category and emergency
-                  lighting requirements. If the nursery does not have a fire risk assessment,
-                  advise them to commission one before you quote — otherwise you are guessing
-                  the fire alarm specification.
+                  The fire risk assessment determines the fire alarm category and emergency lighting
+                  requirements. If the nursery does not have a fire risk assessment, advise them to
+                  commission one before you quote — otherwise you are guessing the fire alarm
+                  specification.
                 </p>
               </div>
             </div>
@@ -492,10 +487,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Include Fire Alarm Commissioning</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Fire alarm commissioning to BS 5839-1 requires a separate certificate and
-                  zone plan. Budget 1 to 2 days for commissioning a medium nursery system.
-                  Include this in your quote — it is often forgotten and causes disputes at
-                  handover.
+                  Fire alarm commissioning to BS 5839-1 requires a separate certificate and zone
+                  plan. Budget 1 to 2 days for commissioning a medium nursery system. Include this
+                  in your quote — it is often forgotten and causes disputes at handover.
                 </p>
               </div>
             </div>
@@ -507,10 +501,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Ofsted-Ready Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Provide a comprehensive{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, fire
-                  alarm commissioning certificate, emergency lighting commissioning certificate,
-                  and a summary document listing all safety provisions. This helps the nursery
-                  pass Ofsted registration and is a strong selling point for your quote.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, fire alarm
+                  commissioning certificate, emergency lighting commissioning certificate, and a
+                  summary document listing all safety provisions. This helps the nursery pass Ofsted
+                  registration and is a strong selling point for your quote.
                 </p>
               </div>
             </div>
@@ -555,7 +549,7 @@ export default function NurseryElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Nursery Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Nursery Electrical with Fire Safety and Ofsted Compliance"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for nursery quoting with fire alarm specifications, emergency lighting, and Ofsted-ready documentation. 7-day free trial."
     />
   );
 }

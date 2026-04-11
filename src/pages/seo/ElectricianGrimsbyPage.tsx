@@ -38,7 +38,7 @@ const tocItems = [
 const keyTakeaways = [
   'Grimsby and Cleethorpes form the urban core of North East Lincolnshire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to North East Lincolnshire Council Building Control.',
   'Northern Powergrid (NPG) is the Distribution Network Operator for Grimsby and the surrounding area. All new connections, supply upgrades, and G98/G99 generation notifications go through NPG.',
-  'Grimsby is one of the UK\'s premier offshore wind energy hubs, with the Humber offshore wind cluster being one of the largest in the world. This creates significant commercial and industrial electrical opportunities for qualified electricians with offshore or industrial experience.',
+  "Grimsby is one of the UK's premier offshore wind energy hubs, with the Humber offshore wind cluster being one of the largest in the world. This creates significant commercial and industrial electrical opportunities for qualified electricians with offshore or industrial experience.",
   'The housing stock includes large areas of 1930s–1960s terraces and council housing, alongside coastal properties in Cleethorpes. EICRs and consumer unit upgrades are in consistent demand across the older housing stock.',
   'Labour rates in Grimsby are among the most affordable in England — typically £36 to £52 per hour for a qualified, registered electrician in 2026, reflecting the North East Lincolnshire regional market.',
 ];
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Is there offshore wind electrical work available in the Grimsby area?',
     answer:
-      'Yes. Grimsby is the operational and maintenance hub for a significant proportion of the UK\'s offshore wind capacity, including major wind farms in the Humber cluster. Commercial and industrial electrical work in this sector — on-shore substation maintenance, cable installation and testing, switchgear maintenance, and EV charger infrastructure for the growing offshore wind workforce — requires significant commercial and industrial electrical experience. Relevant additional qualifications include CompEx (hazardous areas), GWO (Global Wind Organisation) training, and offshore electrical installation experience. Major employers in the sector typically contract through formal procurement processes.',
+      "Yes. Grimsby is the operational and maintenance hub for a significant proportion of the UK's offshore wind capacity, including major wind farms in the Humber cluster. Commercial and industrial electrical work in this sector — on-shore substation maintenance, cable installation and testing, switchgear maintenance, and EV charger infrastructure for the growing offshore wind workforce — requires significant commercial and industrial electrical experience. Relevant additional qualifications include CompEx (hazardous areas), GWO (Global Wind Organisation) training, and offshore electrical installation experience. Major employers in the sector typically contract through formal procurement processes.",
   },
   {
     question: 'What is the typical cost of an EICR in Grimsby?',
@@ -145,8 +145,8 @@ const sections = [
         <p>
           Grimsby (officially Great Grimsby) and its neighbouring town Cleethorpes together form the
           urban centre of North East Lincolnshire, with a combined population of around 165,000. A
-          historic fishing port that transitioned into a major food processing centre, Grimsby is now
-          also at the heart of the UK's offshore wind energy industry — the Humber offshore wind
+          historic fishing port that transitioned into a major food processing centre, Grimsby is
+          now also at the heart of the UK's offshore wind energy industry — the Humber offshore wind
           cluster is one of the largest concentrations of offshore wind capacity in the world, and
           Grimsby's port and quayside are home to the operations and maintenance bases for multiple
           large-scale wind farms.
@@ -156,13 +156,13 @@ const sections = [
           consistent demand for EICRs, consumer unit upgrades, and rewires across a largely
           affordable housing stock. The offshore wind sector and the town's substantial industrial
           and food processing base create commercial and industrial electrical opportunities for
-          suitably qualified contractors. Cleethorpes' coastal and tourist economy adds a
-          commercial strand with hotels, leisure facilities, and seasonal businesses.
+          suitably qualified contractors. Cleethorpes' coastal and tourist economy adds a commercial
+          strand with hotels, leisure facilities, and seasonal businesses.
         </p>
         <p>
           This guide covers finding a qualified electrician in Grimsby, typical costs, what
-          qualifications matter, common jobs, and the regulatory framework that applies across
-          North East Lincolnshire.
+          qualifications matter, common jobs, and the regulatory framework that applies across North
+          East Lincolnshire.
         </p>
       </>
     ),
@@ -173,7 +173,8 @@ const sections = [
     content: (
       <>
         <p>
-          To find a reliable and qualified electrician in Grimsby or Cleethorpes, follow these steps:
+          To find a reliable and qualified electrician in Grimsby or Cleethorpes, follow these
+          steps:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -191,17 +192,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask to see the scheme card</strong> — NICEIC and NAPIT registered
-                electricians carry a registration card. The card number can be checked online
-                to confirm current registration before work begins.
+                electricians carry a registration card. The card number can be checked online to
+                confirm current registration before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insist on a survey and written quote</strong> — for rewires, consumer
-                unit replacements, and any significant electrical work, a reputable Grimsby
-                electrician will visit to assess the existing installation before providing
-                a fixed-price quote.
+                <strong>Insist on a survey and written quote</strong> — for rewires, consumer unit
+                replacements, and any significant electrical work, a reputable Grimsby electrician
+                will visit to assess the existing installation before providing a fixed-price quote.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,8 +283,8 @@ const sections = [
           </div>
         </div>
         <p>
-          Commercial and industrial electrical work — particularly in the offshore wind sector,
-          food processing, and port-related industries — commands significantly higher rates than
+          Commercial and industrial electrical work — particularly in the offshore wind sector, food
+          processing, and port-related industries — commands significantly higher rates than
           domestic work, reflecting the qualifications, experience, and risk management required.
           Always obtain a fixed-price quote after a proper survey for any domestic job.
         </p>
@@ -296,18 +296,16 @@ const sections = [
     heading: 'Common Electrical Jobs in Grimsby and Cleethorpes',
     content: (
       <>
-        <p>
-          The most in-demand electrical services across Grimsby and Cleethorpes in 2026:
-        </p>
+        <p>The most in-demand electrical services across Grimsby and Cleethorpes in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for landlords</strong> — Grimsby and Cleethorpes have active
-                private rental markets. Landlords must comply with The Electrical Safety Standards
-                in the Private Rented Sector (England) Regulations 2020. Building relationships
-                with local letting agents creates a consistent EICR pipeline.
+                <strong>EICRs for landlords</strong> — Grimsby and Cleethorpes have active private
+                rental markets. Landlords must comply with The Electrical Safety Standards in the
+                Private Rented Sector (England) Regulations 2020. Building relationships with local
+                letting agents creates a consistent EICR pipeline.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -321,26 +319,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full and partial rewires</strong> — ageing wiring in Grimsby's
-                inter-war and post-war housing stock generates rewiring work. Partial rewires
-                following EICR C2 observations are common in properties where the full
-                installation is not yet beyond economic repair.
+                <strong>Full and partial rewires</strong> — ageing wiring in Grimsby's inter-war and
+                post-war housing stock generates rewiring work. Partial rewires following EICR C2
+                observations are common in properties where the full installation is not yet beyond
+                economic repair.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing in residential areas, and
-                particularly in the commercial and logistics sectors associated with the port
-                and offshore wind industry workforce. Northern Powergrid notifications apply
-                for solar PV; EV charger installations comply with BS 7671 and Part P.
+                particularly in the commercial and logistics sectors associated with the port and
+                offshore wind industry workforce. Northern Powergrid notifications apply for solar
+                PV; EV charger installations comply with BS 7671 and Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Offshore wind and industrial</strong> — on-shore electrical work related
-                to the Humber offshore wind cluster, including substation maintenance, cable
+                <strong>Offshore wind and industrial</strong> — on-shore electrical work related to
+                the Humber offshore wind cluster, including substation maintenance, cable
                 installation and testing, and industrial premises maintenance. Requires commercial
                 and industrial electrical qualifications and experience.
               </span>
@@ -356,8 +354,9 @@ const sections = [
     content: (
       <>
         <p>
-          All domestic electrical work in Grimsby must comply with Part P of the Building Regulations
-          and BS 7671:2018+A3:2024. The local authority is North East Lincolnshire Council:
+          All domestic electrical work in Grimsby must comply with Part P of the Building
+          Regulations and BS 7671:2018+A3:2024. The local authority is North East Lincolnshire
+          Council:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -366,34 +365,35 @@ const sections = [
               <span>
                 <strong>Competent person self-certification</strong> — NICEIC, NAPIT, or ELECSA
                 registered electricians self-certify notifiable work and issue Part P compliance
-                certificates directly. This is the standard route for registered Grimsby electricians.
+                certificates directly. This is the standard route for registered Grimsby
+                electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>North East Lincolnshire Building Control</strong> — unregistered
-                electricians must notify NELC Building Control before starting notifiable work.
-                The council inspects and issues a completion certificate. This route is slower
-                and involves a council fee.
+                electricians must notify NELC Building Control before starting notifiable work. The
+                council inspects and issues a completion certificate. This route is slower and
+                involves a council fee.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671:2018+A3:2024 compliance</strong> — all electrical installations
-                must comply with the current edition. RCD protection is required under Regulation
-                411.3.3 for all socket outlet circuits up to 32A and for circuits in kitchens,
-                bathrooms, and outdoors.
+                <strong>BS 7671:2018+A3:2024 compliance</strong> — all electrical installations must
+                comply with the current edition. RCD protection is required under Regulation 411.3.3
+                for all socket outlet circuits up to 32A and for circuits in kitchens, bathrooms,
+                and outdoors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR requirements</strong> — private landlords in Grimsby
-                must comply with The Electrical Safety Standards in the Private Rented Sector
-                (England) Regulations 2020. Valid EICRs every five years, with C1/C2 defects
-                remedied within 28 days of an unsatisfactory report.
+                <strong>Landlord EICR requirements</strong> — private landlords in Grimsby must
+                comply with The Electrical Safety Standards in the Private Rented Sector (England)
+                Regulations 2020. Valid EICRs every five years, with C1/C2 defects remedied within
+                28 days of an unsatisfactory report.
               </span>
             </li>
           </ul>
@@ -411,39 +411,39 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Inter-War and Post-War Housing</h3>
             <p className="text-white text-sm leading-relaxed">
               The majority of Grimsby's residential stock was built between the 1920s and 1970s.
-              Areas including Nunsthorpe, Scartho, and East Marsh have large amounts of
-              inter-war semi-detached and terrace housing. Wiring from the 1930s–1960s is
-              now at or past its expected service life. Consumer unit upgrades and full rewires
-              are among the most common jobs.
+              Areas including Nunsthorpe, Scartho, and East Marsh have large amounts of inter-war
+              semi-detached and terrace housing. Wiring from the 1930s–1960s is now at or past its
+              expected service life. Consumer unit upgrades and full rewires are among the most
+              common jobs.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Cleethorpes Coastal Properties</h3>
             <p className="text-white text-sm leading-relaxed">
               Cleethorpes has a mix of Victorian and Edwardian seafront properties, holiday
-              accommodation, and modern residential areas. Seafront and coastal properties
-              are subject to the damp and salt-spray environment of the Lincolnshire coast —
-              electrical installations in these properties require appropriate IP-rated equipment
-              and more frequent inspection to check for corrosion and moisture damage.
+              accommodation, and modern residential areas. Seafront and coastal properties are
+              subject to the damp and salt-spray environment of the Lincolnshire coast — electrical
+              installations in these properties require appropriate IP-rated equipment and more
+              frequent inspection to check for corrosion and moisture damage.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Private Development</h3>
             <p className="text-white text-sm leading-relaxed">
-              Areas including Laceby Acres, Waltham, and New Waltham on the southern edge of
-              Grimsby have modern private housing built to current standards. Work here focuses
-              on EV charger installations, additional circuits, and kitchen and bathroom
-              electrical work. Customers expect professional documentation and a clean finish.
+              Areas including Laceby Acres, Waltham, and New Waltham on the southern edge of Grimsby
+              have modern private housing built to current standards. Work here focuses on EV
+              charger installations, additional circuits, and kitchen and bathroom electrical work.
+              Customers expect professional documentation and a clean finish.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial and Industrial</h3>
             <p className="text-white text-sm leading-relaxed">
               Grimsby's port, food processing plants, and offshore wind operational base create
-              substantial commercial and industrial electrical demand. Alexandra Dock and
-              Grimsby Docks area hosts operations and maintenance facilities for multiple
-              offshore wind operators. Commercial EICR, distribution board maintenance, and
-              cable installation work are significant markets for commercial electricians.
+              substantial commercial and industrial electrical demand. Alexandra Dock and Grimsby
+              Docks area hosts operations and maintenance facilities for multiple offshore wind
+              operators. Commercial EICR, distribution board maintenance, and cable installation
+              work are significant markets for commercial electricians.
             </p>
           </div>
         </div>
@@ -457,8 +457,8 @@ const sections = [
       <>
         <p>
           Grimsby provides a consistent residential market for domestic electricians, with reliable
-          demand from landlords, homeowners with ageing wiring, and a growing EV charger market.
-          For electricians with commercial and industrial qualifications, the offshore wind and food
+          demand from landlords, homeowners with ageing wiring, and a growing EV charger market. For
+          electricians with commercial and industrial qualifications, the offshore wind and food
           processing sectors offer significant additional opportunity. Cleethorpes' coastal
           commercial sector adds a further strand.
         </p>
@@ -473,10 +473,7 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
                   directly from your phone on Grimsby and Cleethorpes jobs. Same-day documentation
                   sent to landlords keeps them compliant and builds a professional reputation.
                 </p>
@@ -494,8 +491,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to send professional, detailed quotes to Grimsby homeowners and landlords.
-                  Itemised quotes with accurate local pricing win more work in a competitive
-                  and price-sensitive market.
+                  Itemised quotes with accurate local pricing win more work in a competitive and
+                  price-sensitive market.
                 </p>
               </div>
             </div>
@@ -511,8 +508,8 @@ const sections = [
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to accurately size cables for rewires across Grimsby's inter-war and post-war
-                  housing. Accurate voltage drop calculations are important on long cable runs
-                  in the larger semi-detached properties.
+                  housing. Accurate voltage drop calculations are important on long cable runs in
+                  the larger semi-detached properties.
                 </p>
               </div>
             </div>
@@ -520,7 +517,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Grimsby electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -557,7 +554,7 @@ export default function ElectricianGrimsbyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Grimsby"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Grimsby Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Grimsby and Cleethorpes. 7-day free trial."
     />
   );
 }

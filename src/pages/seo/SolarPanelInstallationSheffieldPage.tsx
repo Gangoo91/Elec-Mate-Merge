@@ -501,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar installation business in Sheffield with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote solar PV jobs, manage MCS certificates, and run their business from their phone. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -538,7 +538,7 @@ export default function SolarPanelInstallationSheffieldPage() {
       faqHeading="Frequently Asked Questions About Solar Panels in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Jobs in Sheffield on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business in South Yorkshire. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote solar PV installations, manage MCS certificates, and grow their business in South Yorkshire. 7-day free trial, cancel anytime."
     />
   );
 }

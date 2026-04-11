@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Can I verify an ECS card?',
     answer:
-      'Yes. ECS cards can be verified instantly through the ECS portal at ecscard.org.uk, or by using the CSCS Smart Check app (scan the QR code on the card). Verification confirms the card grade, the holder\'s name, the card expiry date, and the qualifications on record. Site managers and employers routinely verify cards before allowing operatives on site.',
+      "Yes. ECS cards can be verified instantly through the ECS portal at ecscard.org.uk, or by using the CSCS Smart Check app (scan the QR code on the card). Verification confirms the card grade, the holder's name, the card expiry date, and the qualifications on record. Site managers and employers routinely verify cards before allowing operatives on site.",
   },
   {
     question: 'Do I need an ECS card if I am self-employed?',
@@ -98,21 +98,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/jib-gold-card',
     title: 'JIB Gold Card Guide',
-    description: 'The JIB Gold Card in detail — AM2, Level 3 qualifications, and why employers require it.',
+    description:
+      'The JIB Gold Card in detail — AM2, Level 3 qualifications, and why employers require it.',
     icon: Star,
     category: 'Guide',
   },
   {
     href: '/eca-membership-guide',
     title: 'ECA Membership Guide',
-    description: 'The ECA trade body — technical helpline, legal support, and lobbying for UK contractors.',
+    description:
+      'The ECA trade body — technical helpline, legal support, and lobbying for UK contractors.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/part-p-self-certification',
     title: 'Part P Self-Certification Guide',
-    description: 'How competent person schemes work and which domestic work is notifiable under Part P.',
+    description:
+      'How competent person schemes work and which domestic work is notifiable under Part P.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -143,42 +146,39 @@ const sections = [
     content: (
       <>
         <p>
-          The ECS (Electrotechnical Certification Scheme) is the dedicated card scheme for
-          the UK electrotechnical industry. It provides identification and competency cards
-          to electricians, electrical engineers, and other electrotechnical workers, confirming
-          that they hold the qualifications and experience appropriate to their grade.
+          The ECS (Electrotechnical Certification Scheme) is the dedicated card scheme for the UK
+          electrotechnical industry. It provides identification and competency cards to
+          electricians, electrical engineers, and other electrotechnical workers, confirming that
+          they hold the qualifications and experience appropriate to their grade.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Industry governance</strong> — ECS is administered on behalf of
-                the electrotechnical industry by the{' '}
-                <SEOInternalLink href="/jib-gold-card">JIB</SEOInternalLink>{' '}
-                (Joint Industry Board) in England, Wales, and Northern Ireland, and by
-                the SJIB (Scottish Joint Industry Board) in Scotland. The ECS board
-                includes representatives from the JIB, ECA, Unite the Union, and other
-                industry stakeholders.
+                <strong>Industry governance</strong> — ECS is administered on behalf of the
+                electrotechnical industry by the{' '}
+                <SEOInternalLink href="/jib-gold-card">JIB</SEOInternalLink> (Joint Industry Board)
+                in England, Wales, and Northern Ireland, and by the SJIB (Scottish Joint Industry
+                Board) in Scotland. The ECS board includes representatives from the JIB, ECA, Unite
+                the Union, and other industry stakeholders.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Role of the ECS</strong> — the ECS manages the card database,
-                issues physical cards, processes applications and renewals, and provides
-                the verification system that site managers and employers use to check
-                operatives' qualifications. Applications are made through the ECS portal
-                at ecscard.org.uk.
+                <strong>Role of the ECS</strong> — the ECS manages the card database, issues
+                physical cards, processes applications and renewals, and provides the verification
+                system that site managers and employers use to check operatives' qualifications.
+                Applications are made through the ECS portal at ecscard.org.uk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Registered cardholders</strong> — the ECS scheme has several
-                hundred thousand registered cardholders across the UK electrotechnical
-                sector, making it one of the largest trade-specific card schemes in
-                the construction industry.
+                <strong>Registered cardholders</strong> — the ECS scheme has several hundred
+                thousand registered cardholders across the UK electrotechnical sector, making it one
+                of the largest trade-specific card schemes in the construction industry.
               </span>
             </li>
           </ul>
@@ -192,76 +192,74 @@ const sections = [
     content: (
       <>
         <p>
-          The ECS operates a graded card system with different card types for different
-          levels of qualification and experience. Each card type has specific eligibility
-          requirements and a corresponding JIB pay grade for employed operatives.
+          The ECS operates a graded card system with different card types for different levels of
+          qualification and experience. Each card type has specific eligibility requirements and a
+          corresponding JIB pay grade for employed operatives.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Trainee card</strong> — for individuals enrolled in an electrical
-                training programme who have not yet begun a formal apprenticeship. Allows
-                limited site access under supervision. Does not require formal qualifications
-                but requires enrolment with a recognised training provider.
+                <strong>Trainee card</strong> — for individuals enrolled in an electrical training
+                programme who have not yet begun a formal apprenticeship. Allows limited site access
+                under supervision. Does not require formal qualifications but requires enrolment
+                with a recognised training provider.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Apprentice card</strong> — for registered electrical apprentices
-                during their apprenticeship. Issued when an apprenticeship is registered
-                with the JIB. Upgraded to a higher grade on successful completion of
-                Level 3 NVQ and AM2 assessment.
+                <strong>Apprentice card</strong> — for registered electrical apprentices during
+                their apprenticeship. Issued when an apprenticeship is registered with the JIB.
+                Upgraded to a higher grade on successful completion of Level 3 NVQ and AM2
+                assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provisional Operative card (Improver grade)</strong> — for
-                electricians holding Level 2 electrotechnical qualifications who are
-                working towards Level 3. This is an intermediate grade recognised as
-                being above apprentice but below fully qualified.
+                <strong>Provisional Operative card (Improver grade)</strong> — for electricians
+                holding Level 2 electrotechnical qualifications who are working towards Level 3.
+                This is an intermediate grade recognised as being above apprentice but below fully
+                qualified.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualified Operative card — Gold Card (Electrician grade)</strong>
-                — the benchmark card for fully qualified electricians. Requires Level 3
-                NVQ/SVQ in Electrotechnical Technology, AM2 or AM2S pass, and current
-                BS 7671 18th Edition qualification. This is what people mean by the
-                "JIB Gold Card".
+                <strong>Qualified Operative card — Gold Card (Electrician grade)</strong>— the
+                benchmark card for fully qualified electricians. Requires Level 3 NVQ/SVQ in
+                Electrotechnical Technology, AM2 or AM2S pass, and current BS 7671 18th Edition
+                qualification. This is what people mean by the "JIB Gold Card".
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Technician card (Approved Electrician / Technician grade)</strong>
-                — for qualified electricians with additional specialist qualifications
-                or responsibilities. Typically requires the Gold Card plus inspection
-                and testing qualifications (City and Guilds 2391 or equivalent) or
-                other specialist qualifications.
+                <strong>Technician card (Approved Electrician / Technician grade)</strong>— for
+                qualified electricians with additional specialist qualifications or
+                responsibilities. Typically requires the Gold Card plus inspection and testing
+                qualifications (City and Guilds 2391 or equivalent) or other specialist
+                qualifications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manager/Professional card</strong> — for those in engineering,
-                management, or design roles. Requires degree-level or equivalent
-                professional engineering qualifications. Covers electrical engineers,
-                project managers, and senior technical staff.
+                <strong>Manager/Professional card</strong> — for those in engineering, management,
+                or design roles. Requires degree-level or equivalent professional engineering
+                qualifications. Covers electrical engineers, project managers, and senior technical
+                staff.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specialist cards</strong> — ECS also issues specialist cards
-                for defined disciplines including: EV charge point installation;
-                fire alarm installation (tied to BS 5839); highway electrical work;
-                solar PV installation; and others. Each specialist card requires
-                evidence of discipline-specific qualifications.
+                <strong>Specialist cards</strong> — ECS also issues specialist cards for defined
+                disciplines including: EV charge point installation; fire alarm installation (tied
+                to BS 5839); highway electrical work; solar PV installation; and others. Each
+                specialist card requires evidence of discipline-specific qualifications.
               </span>
             </li>
           </ul>
@@ -276,53 +274,50 @@ const sections = [
       <>
         <p>
           All ECS card applications are made online through the ECS portal. The process is
-          straightforward but requires you to have your qualification certificates ready
-          to upload.
+          straightforward but requires you to have your qualification certificates ready to upload.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — Create an account</strong> — register at ecscard.org.uk.
-                You will need a valid email address and basic personal details including
-                your National Insurance number.
+                <strong>Step 1 — Create an account</strong> — register at ecscard.org.uk. You will
+                need a valid email address and basic personal details including your National
+                Insurance number.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — Select your card type</strong> — choose the ECS card
-                grade appropriate to your qualifications. The portal guides you through
-                the eligibility criteria for each card type. If you are unsure which
-                card to apply for, start with the one that matches your highest confirmed
-                qualification.
+                <strong>Step 2 — Select your card type</strong> — choose the ECS card grade
+                appropriate to your qualifications. The portal guides you through the eligibility
+                criteria for each card type. If you are unsure which card to apply for, start with
+                the one that matches your highest confirmed qualification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — Upload evidence</strong> — upload scanned copies or
-                clear photographs of all required qualification certificates. The specific
-                evidence required depends on your card type. See the evidence requirements
-                section below.
+                <strong>Step 3 — Upload evidence</strong> — upload scanned copies or clear
+                photographs of all required qualification certificates. The specific evidence
+                required depends on your card type. See the evidence requirements section below.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Pay the card fee</strong> — approximately £30–£40 for
-                a five-year card, payable by card online. The fee covers the physical
-                card and database registration.
+                <strong>Step 4 — Pay the card fee</strong> — approximately £30–£40 for a five-year
+                card, payable by card online. The fee covers the physical card and database
+                registration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5 — Wait for processing</strong> — the JIB verifies your
-                qualifications, typically within 5–10 working days. The physical card
-                is posted to your registered address and usually arrives within two to
-                three weeks of a successful application.
+                qualifications, typically within 5–10 working days. The physical card is posted to
+                your registered address and usually arrives within two to three weeks of a
+                successful application.
               </span>
             </li>
           </ul>
@@ -336,53 +331,51 @@ const sections = [
     content: (
       <>
         <p>
-          The ECS verifies all qualification claims before issuing cards. You must be able
-          to provide original certificates or verified copies of all required qualifications.
-          The specific evidence requirements by card type are:
+          The ECS verifies all qualification claims before issuing cards. You must be able to
+          provide original certificates or verified copies of all required qualifications. The
+          specific evidence requirements by card type are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Gold Card (Qualified Operative)</strong> — Level 3 NVQ/SVQ
-                Electrotechnical Technology certificate (or equivalent); AM2 or AM2S
-                results certificate; current BS 7671 18th Edition qualification certificate
-                (City and Guilds 2382 or equivalent). All three are mandatory.
+                <strong>Gold Card (Qualified Operative)</strong> — Level 3 NVQ/SVQ Electrotechnical
+                Technology certificate (or equivalent); AM2 or AM2S results certificate; current BS
+                7671 18th Edition qualification certificate (City and Guilds 2382 or equivalent).
+                All three are mandatory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technician card</strong> — all Gold Card evidence plus additional
-                qualification evidence relevant to the technician specialism (e.g., City
-                and Guilds 2391 Inspection and Testing certificate for inspection and
-                testing specialists).
+                qualification evidence relevant to the technician specialism (e.g., City and Guilds
+                2391 Inspection and Testing certificate for inspection and testing specialists).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Apprentice card</strong> — proof of JIB-registered apprenticeship
-                (apprenticeship agreement or employer confirmation). No NVQ certificate
-                required as this is obtained during the apprenticeship.
+                (apprenticeship agreement or employer confirmation). No NVQ certificate required as
+                this is obtained during the apprenticeship.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manager/Professional card</strong> — degree certificate or
-                equivalent professional engineering qualification; evidence of professional
-                body membership (e.g., IET) may be required for some grades.
+                <strong>Manager/Professional card</strong> — degree certificate or equivalent
+                professional engineering qualification; evidence of professional body membership
+                (e.g., IET) may be required for some grades.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          All qualification certificates must be from recognised awarding bodies (City and
-          Guilds, EAL, Pearson/BTEC, or equivalent). Certificates from overseas qualifications
-          may require verification through the relevant UK equivalency process — contact the
-          ECS for guidance.
+          All qualification certificates must be from recognised awarding bodies (City and Guilds,
+          EAL, Pearson/BTEC, or equivalent). Certificates from overseas qualifications may require
+          verification through the relevant UK equivalency process — contact the ECS for guidance.
         </p>
       </>
     ),
@@ -394,46 +387,45 @@ const sections = [
       <>
         <p>
           ECS cards expire after five years and must be renewed to maintain site access and
-          professional status. Failing to renew on time means your card will lapse and you
-          will not be able to work on sites that require a valid ECS card.
+          professional status. Failing to renew on time means your card will lapse and you will not
+          be able to work on sites that require a valid ECS card.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When to renew</strong> — start the renewal process at least three
-                months before your card expires. This gives time to update qualifications
-                if your BS 7671 certificate has also lapsed (18th Edition certificates
-                typically expire after five years — check your certificate's expiry date).
+                <strong>When to renew</strong> — start the renewal process at least three months
+                before your card expires. This gives time to update qualifications if your BS 7671
+                certificate has also lapsed (18th Edition certificates typically expire after five
+                years — check your certificate's expiry date).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Renewal requirements</strong> — for the Gold Card and most other
-                grades, renewal requires a current BS 7671 18th Edition qualification.
-                If your BS 7671 certificate has lapsed, you must re-sit before renewing
-                your ECS card. Some card grades also require a current first aid certificate.
+                <strong>Renewal requirements</strong> — for the Gold Card and most other grades,
+                renewal requires a current BS 7671 18th Edition qualification. If your BS 7671
+                certificate has lapsed, you must re-sit before renewing your ECS card. Some card
+                grades also require a current first aid certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Renewal process</strong> — log in to your ECS account at
-                ecscard.org.uk, select 'renew card', upload updated qualification evidence,
-                and pay the renewal fee. The renewal fee is the same as the initial card
-                fee (approximately £30–£40).
+                <strong>Renewal process</strong> — log in to your ECS account at ecscard.org.uk,
+                select 'renew card', upload updated qualification evidence, and pay the renewal fee.
+                The renewal fee is the same as the initial card fee (approximately £30–£40).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <RefreshCw className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lapsed cards</strong> — if your card has lapsed, you can still
-                renew through the ECS portal with current qualification evidence. A lapsed
-                card is not automatically cancelled — you simply cannot use it for site
-                access until it is renewed. Renewing a recently lapsed card is straightforward;
-                very old lapsed cards may require re-application.
+                <strong>Lapsed cards</strong> — if your card has lapsed, you can still renew through
+                the ECS portal with current qualification evidence. A lapsed card is not
+                automatically cancelled — you simply cannot use it for site access until it is
+                renewed. Renewing a recently lapsed card is straightforward; very old lapsed cards
+                may require re-application.
               </span>
             </li>
           </ul>
@@ -448,46 +440,44 @@ const sections = [
       <>
         <p>
           Both ECS and CSCS cards are used on UK construction sites as competency evidence.
-          Understanding the differences helps electricians know which card to hold and what
-          sites will accept.
+          Understanding the differences helps electricians know which card to hold and what sites
+          will accept.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sector specificity</strong> — ECS is exclusively for the
-                electrotechnical industry. CSCS covers the whole construction sector
-                (bricklayers, carpenters, plumbers, electricians, and many others).
-                An ECS card contains electrotechnical-specific qualification evidence;
-                a CSCS card does not.
+                <strong>Sector specificity</strong> — ECS is exclusively for the electrotechnical
+                industry. CSCS covers the whole construction sector (bricklayers, carpenters,
+                plumbers, electricians, and many others). An ECS card contains
+                electrotechnical-specific qualification evidence; a CSCS card does not.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualification rigour</strong> — the ECS Gold Card requires
-                AM2 practical assessment and a current BS 7671 qualification. The equivalent
-                CSCS skilled worker card for electrical work requires a Level 3 qualification
-                but not the AM2 or a current BS 7671 qualification. ECS is therefore more
-                rigorous for electricians.
+                <strong>Qualification rigour</strong> — the ECS Gold Card requires AM2 practical
+                assessment and a current BS 7671 qualification. The equivalent CSCS skilled worker
+                card for electrical work requires a Level 3 qualification but not the AM2 or a
+                current BS 7671 qualification. ECS is therefore more rigorous for electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Site acceptance</strong> — ECS cards are accepted on all sites
-                that require CSCS for electrical operatives. Sites that specifically require
-                ECS cards may not accept a CSCS card. When in doubt about which to hold,
-                the ECS card is the correct choice for electricians.
+                <strong>Site acceptance</strong> — ECS cards are accepted on all sites that require
+                CSCS for electrical operatives. Sites that specifically require ECS cards may not
+                accept a CSCS card. When in doubt about which to hold, the ECS card is the correct
+                choice for electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verification</strong> — both CSCS and ECS cards can be verified
-                using the CSCS Smart Check app (which covers both schemes). Employers can
-                scan the QR code on any card to confirm its validity and grade.
+                <strong>Verification</strong> — both CSCS and ECS cards can be verified using the
+                CSCS Smart Check app (which covers both schemes). Employers can scan the QR code on
+                any card to confirm its validity and grade.
               </span>
             </li>
           </ul>
@@ -509,37 +499,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial and industrial sites</strong> — virtually all commercial
-                and industrial construction sites require operatives to produce a valid
-                ECS card before being allowed on site. Gate checks are standard. Arriving
-                without a valid card will result in being turned away.
+                <strong>Commercial and industrial sites</strong> — virtually all commercial and
+                industrial construction sites require operatives to produce a valid ECS card before
+                being allowed on site. Gate checks are standard. Arriving without a valid card will
+                result in being turned away.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Subcontracting</strong> — electrical contractors who subcontract
-                from main contractors are typically required by their subcontract agreement
-                to ensure all operatives carry valid ECS cards. This is a standard clause
-                in JCT and NEC subcontracts for electrical work.
+                <strong>Subcontracting</strong> — electrical contractors who subcontract from main
+                contractors are typically required by their subcontract agreement to ensure all
+                operatives carry valid ECS cards. This is a standard clause in JCT and NEC
+                subcontracts for electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public sector frameworks</strong> — government, local authority,
-                housing association, and NHS procurement frameworks frequently specify
-                ECS card requirements for all electrical operatives. Failure to comply
-                risks removal from the framework.
+                <strong>Public sector frameworks</strong> — government, local authority, housing
+                association, and NHS procurement frameworks frequently specify ECS card requirements
+                for all electrical operatives. Failure to comply risks removal from the framework.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insurance</strong> — some commercial site insurance policies
-                require proof that all electrical operatives hold current ECS cards.
-                An incident involving an operative without a valid card could complicate
-                an insurance claim.
+                <strong>Insurance</strong> — some commercial site insurance policies require proof
+                that all electrical operatives hold current ECS cards. An incident involving an
+                operative without a valid card could complicate an insurance claim.
               </span>
             </li>
           </ul>
@@ -553,14 +541,14 @@ const sections = [
     content: (
       <>
         <p>
-          Maintaining a current ECS card and producing compliant certification on every job
-          are two cornerstones of professional electrical contracting. Elec-Mate helps
-          ECS-registered electricians manage the certification and documentation side of
-          their business efficiently.
+          Maintaining a current ECS card and producing compliant certification on every job are two
+          cornerstones of professional electrical contracting. Elec-Mate helps ECS-registered
+          electricians manage the certification and documentation side of their business
+          efficiently.
         </p>
         <SEOAppBridge
           title="Professional certificate management for ECS cardholders"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on their phone. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>

@@ -519,7 +519,7 @@ export default function EVChargerLoadCalculatorPage() {
         },
       ]}
       ctaHeading="Design EV charger installations with confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger load assessment and cable sizing. 7-day free trial, cancel anytime."
       toolPath="/tools/ev-charger-load-calculator"
     />
   );

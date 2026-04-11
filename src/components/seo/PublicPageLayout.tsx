@@ -72,7 +72,7 @@ const footerCalculators = [
   { to: '/tools/rcd-testing-guide', label: 'RCD Testing' },
   { to: '/tools/adiabatic-equation-calculator', label: 'Adiabatic Equation' },
   { to: '/tools/ring-circuit-calculator', label: 'Ring Circuit' },
-  { to: '/tools/electrical-testing-calculators', label: 'All 70 Calculators' },
+  { to: '/tools/electrical-testing-calculators', label: 'All 70+ Calculators' },
 ];
 
 const footerTraining = [
@@ -88,7 +88,7 @@ const footerTraining = [
 ];
 
 const footerAIAndGuides = [
-  { to: '/tools/ai-electrician', label: '8 Elec-AI Specialists' },
+  { to: '/tools/ai-electrician', label: 'AI Agents' },
   { to: '/tools/rams-generator', label: 'RAMS Generator' },
   { to: '/tools/electrical-quoting-app', label: 'Smart Quoting' },
   { to: '/tools/electrician-invoice-app', label: 'Invoice Builder' },
@@ -355,20 +355,20 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         <div className="max-w-6xl mx-auto px-5 py-10">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">70</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">16</div>
+              <div className="text-sm text-white">Certificate Types</div>
+            </div>
+            <div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">70+</div>
               <div className="text-sm text-white">Calculators</div>
             </div>
             <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">36+</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">46+</div>
               <div className="text-sm text-white">Training Courses</div>
             </div>
             <div>
               <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">8</div>
-              <div className="text-sm text-white">Certificate Types</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">8</div>
-              <div className="text-sm text-white">Elec-AI Agents</div>
+              <div className="text-sm text-white">AI Agents</div>
             </div>
           </div>
         </div>

@@ -41,7 +41,7 @@ const keyTakeaways = [
   'Notifiable work under Part P includes new circuits, consumer unit replacements, work in special locations (bathrooms, swimming pools, outside), and most work in kitchens and garages.',
   'Competent person schemes (NICEIC, NAPIT, ELECSA, and others) allow registered electricians to self-certify their own work without building control involvement, issuing a Part P certificate directly to the homeowner.',
   'Carrying out notifiable domestic electrical work without either scheme registration or building control notification is a breach of building regulations, can invalidate home insurance, and creates serious problems at property sale.',
-  'Part P applies in England and Wales only. Scotland uses Building Standards Scotland (with SELECT\'s Approved Certifier scheme), and Northern Ireland uses its own building regulations framework.',
+  "Part P applies in England and Wales only. Scotland uses Building Standards Scotland (with SELECT's Approved Certifier scheme), and Northern Ireland uses its own building regulations framework.",
 ];
 
 const faqs = [
@@ -58,12 +58,12 @@ const faqs = [
   {
     question: 'How does Part P self-certification work?',
     answer:
-      'When a registered electrician carries out notifiable Part P work, they test and inspect the installation on completion, then notify their competent person scheme (e.g., NICEIC, NAPIT, or ELECSA). The scheme notifies the local authority building control department on the electrician\'s behalf and issues a Building Regulations Part P completion certificate to the homeowner. This certificate confirms that the work complies with BS 7671 and Part P. The entire process is handled automatically — there is no need for a building control visit.',
+      "When a registered electrician carries out notifiable Part P work, they test and inspect the installation on completion, then notify their competent person scheme (e.g., NICEIC, NAPIT, or ELECSA). The scheme notifies the local authority building control department on the electrician's behalf and issues a Building Regulations Part P completion certificate to the homeowner. This certificate confirms that the work complies with BS 7671 and Part P. The entire process is handled automatically — there is no need for a building control visit.",
   },
   {
     question: 'What happens if I do Part P notifiable work without scheme registration?',
     answer:
-      'If you carry out notifiable Part P work without scheme registration, you or the homeowner must notify local authority building control before starting the work (or as soon as possible afterwards). Building control will arrange an inspection and may require tests. This adds cost (a building control fee, typically £150–£300) and delay. The homeowner\'s home insurance may not cover incidents related to uninspected or uncertified electrical work. At property sale, solicitors will require evidence of compliance for notifiable work, and absence of a certificate can cause significant delays or price reductions.',
+      "If you carry out notifiable Part P work without scheme registration, you or the homeowner must notify local authority building control before starting the work (or as soon as possible afterwards). Building control will arrange an inspection and may require tests. This adds cost (a building control fee, typically £150–£300) and delay. The homeowner's home insurance may not cover incidents related to uninspected or uncertified electrical work. At property sale, solicitors will require evidence of compliance for notifiable work, and absence of a certificate can cause significant delays or price reductions.",
   },
   {
     question: 'Is Part P the same across all of England and Wales?',
@@ -91,21 +91,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT Comparison',
-    description: 'Compare the main Part P competent person schemes — costs, assessments, and which to choose.',
+    description:
+      'Compare the main Part P competent person schemes — costs, assessments, and which to choose.',
     icon: Scale,
     category: 'Guide',
   },
   {
     href: '/select-electrical-registration',
     title: 'SELECT Electrical Registration Scotland',
-    description: 'The Scottish equivalent of Part P — Building Standards Scotland and SELECT explained.',
+    description:
+      'The Scottish equivalent of Part P — Building Standards Scotland and SELECT explained.',
     icon: MapPin,
     category: 'Guide',
   },
   {
     href: '/eca-membership-guide',
     title: 'ECA Membership Guide',
-    description: 'The ECA trade body — technical helpline, legal support, and lobbying for UK contractors.',
+    description:
+      'The ECA trade body — technical helpline, legal support, and lobbying for UK contractors.',
     icon: Building2,
     category: 'Guide',
   },
@@ -139,35 +142,34 @@ const sections = [
           Part P is the section of the Building Regulations (England and Wales) that deals with
           electrical safety in dwellings. It came into force on 1 January 2005 and requires that
           fixed electrical installations in domestic properties comply with BS 7671 (IET Wiring
-          Regulations) and that notifiable electrical work is either self-certified by a
-          registered competent person or approved by local authority building control.
+          Regulations) and that notifiable electrical work is either self-certified by a registered
+          competent person or approved by local authority building control.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Statutory instrument</strong> — Part P is implemented through Schedule
-                1 and Schedule 4 of the Building Regulations 2010. The technical standard it
-                requires compliance with is BS 7671:2018 (incorporating Amendment 3:2024),
-                the current edition of the IET Wiring Regulations.
+                <strong>Statutory instrument</strong> — Part P is implemented through Schedule 1 and
+                Schedule 4 of the Building Regulations 2010. The technical standard it requires
+                compliance with is BS 7671:2018 (incorporating Amendment 3:2024), the current
+                edition of the IET Wiring Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope — dwellings only</strong> — Part P applies to electrical
-                installations in and around dwellings (houses, flats, maisonettes, and
-                any outbuildings or gardens associated with a dwelling). It does not apply
-                to commercial or industrial premises, which are covered by other building
-                regulations and BS 7671 requirements.
+                <strong>Scope — dwellings only</strong> — Part P applies to electrical installations
+                in and around dwellings (houses, flats, maisonettes, and any outbuildings or gardens
+                associated with a dwelling). It does not apply to commercial or industrial premises,
+                which are covered by other building regulations and BS 7671 requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>England and Wales only</strong> — Part P applies only in England and
-                Wales. Scotland uses Building Standards Scotland;{' '}
+                <strong>England and Wales only</strong> — Part P applies only in England and Wales.
+                Scotland uses Building Standards Scotland;{' '}
                 <SEOInternalLink href="/select-electrical-registration">
                   SELECT operates the Approved Certifier scheme there
                 </SEOInternalLink>
@@ -186,61 +188,60 @@ const sections = [
     content: (
       <>
         <p>
-          Not all domestic electrical work is notifiable under Part P. The notifiable work
-          list is set out in Schedule 4 of the Building Regulations 2010. The key categories
-          are:
+          Not all domestic electrical work is notifiable under Part P. The notifiable work list is
+          set out in Schedule 4 of the Building Regulations 2010. The key categories are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New circuits</strong> — installation of a new electrical circuit
-                is always notifiable, regardless of where in the dwelling it is located.
-                This includes new ring mains, radial circuits, lighting circuits, and
-                dedicated circuits for appliances.
+                <strong>New circuits</strong> — installation of a new electrical circuit is always
+                notifiable, regardless of where in the dwelling it is located. This includes new
+                ring mains, radial circuits, lighting circuits, and dedicated circuits for
+                appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement</strong> — replacement of a consumer unit
-                (fuse board) is notifiable. This is one of the most common notifiable jobs
-                and is the main reason most electricians join a competent person scheme.
+                <strong>Consumer unit replacement</strong> — replacement of a consumer unit (fuse
+                board) is notifiable. This is one of the most common notifiable jobs and is the main
+                reason most electricians join a competent person scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Special locations</strong> — any electrical work in a special
-                location is notifiable. Special locations include: bathrooms (within Zones
-                0, 1, and 2 and in the area outside Zone 2 as defined by BS 7671 Section
-                701); swimming pools and other basins (Section 702); and locations exposed
-                to the weather or in gardens and outbuildings.
+                <strong>Special locations</strong> — any electrical work in a special location is
+                notifiable. Special locations include: bathrooms (within Zones 0, 1, and 2 and in
+                the area outside Zone 2 as defined by BS 7671 Section 701); swimming pools and other
+                basins (Section 702); and locations exposed to the weather or in gardens and
+                outbuildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchens</strong> — electrical work in kitchens is notifiable,
-                with the exception of like-for-like replacement of accessories (sockets,
-                switches) in the same position without altering the wiring.
+                <strong>Kitchens</strong> — electrical work in kitchens is notifiable, with the
+                exception of like-for-like replacement of accessories (sockets, switches) in the
+                same position without altering the wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NOT notifiable</strong> — adding a socket or switch to an existing
-                circuit in a standard room (not kitchen, bathroom, or other special location),
-                replacing a like-for-like socket or switch in the same position, and replacing
-                a damaged cable supplying a single fixed appliance are generally not notifiable.
+                <strong>NOT notifiable</strong> — adding a socket or switch to an existing circuit
+                in a standard room (not kitchen, bathroom, or other special location), replacing a
+                like-for-like socket or switch in the same position, and replacing a damaged cable
+                supplying a single fixed appliance are generally not notifiable.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When in doubt, treat the work as notifiable. The consequences of failing to notify
-          are more serious than unnecessarily notifying.
+          When in doubt, treat the work as notifiable. The consequences of failing to notify are
+          more serious than unnecessarily notifying.
         </p>
       </>
     ),
@@ -251,52 +252,51 @@ const sections = [
     content: (
       <>
         <p>
-          The competent person scheme mechanism is what allows registered electricians to
-          certify their own notifiable Part P work without the cost and delay of building
-          control involvement. Here is how it works in practice:
+          The competent person scheme mechanism is what allows registered electricians to certify
+          their own notifiable Part P work without the cost and delay of building control
+          involvement. Here is how it works in practice:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — carry out and test the work</strong> — complete the
-                installation and carry out all required inspection and testing in accordance
-                with BS 7671. Complete the relevant certification (Electrical Installation
-                Certificate for new installations, Minor Works Certificate for additions to
-                existing circuits).
+                <strong>Step 1 — carry out and test the work</strong> — complete the installation
+                and carry out all required inspection and testing in accordance with BS 7671.
+                Complete the relevant certification (Electrical Installation Certificate for new
+                installations, Minor Works Certificate for additions to existing circuits).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — notify your scheme</strong> — log the completed job on
-                your scheme's portal (NICEIC, NAPIT, ELECSA, or your scheme's online
-                system). Provide the address, nature of work, and date of completion.
+                <strong>Step 2 — notify your scheme</strong> — log the completed job on your
+                scheme's portal (NICEIC, NAPIT, ELECSA, or your scheme's online system). Provide the
+                address, nature of work, and date of completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — scheme notifies building control</strong> — your scheme
-                automatically notifies the local authority building control department
-                on your behalf. The homeowner is issued a Building Regulations Part P
-                completion certificate confirming that the work complies with Part P.
+                automatically notifies the local authority building control department on your
+                behalf. The homeowner is issued a Building Regulations Part P completion certificate
+                confirming that the work complies with Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — homeowner stores the certificate</strong> — the Part P
-                certificate should be kept safely with the property deeds. It will be
-                required by solicitors when the property is sold.
+                <strong>Step 4 — homeowner stores the certificate</strong> — the Part P certificate
+                should be kept safely with the property deeds. It will be required by solicitors
+                when the property is sold.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Government-approved schemes for electrical self-certification include NICEIC,
-          NAPIT, ELECSA, and several others. See the{' '}
+          Government-approved schemes for electrical self-certification include NICEIC, NAPIT,
+          ELECSA, and several others. See the{' '}
           <SEOInternalLink href="/niceic-vs-napit-comparison">
             NICEIC vs NAPIT comparison
           </SEOInternalLink>{' '}
@@ -311,28 +311,28 @@ const sections = [
     content: (
       <>
         <p>
-          If an electrician is not registered with a competent person scheme, notifiable Part P
-          work must go through local authority building control. This is the alternative route
-          and is significantly more burdensome for both the electrician and the homeowner.
+          If an electrician is not registered with a competent person scheme, notifiable Part P work
+          must go through local authority building control. This is the alternative route and is
+          significantly more burdensome for both the electrician and the homeowner.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prior notification required</strong> — the homeowner or contractor
-                must submit a building regulations application or full plans application to
-                building control before work begins (or a building notice immediately before
-                work starts). A building notice fee applies — typically £150–£350 depending
-                on the local authority and the scope of work.
+                <strong>Prior notification required</strong> — the homeowner or contractor must
+                submit a building regulations application or full plans application to building
+                control before work begins (or a building notice immediately before work starts). A
+                building notice fee applies — typically £150–£350 depending on the local authority
+                and the scope of work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection and testing</strong> — a building control officer may
-                visit to inspect the completed work. They may bring their own test instruments
-                or commission a third party to test the installation.
+                <strong>Inspection and testing</strong> — a building control officer may visit to
+                inspect the completed work. They may bring their own test instruments or commission
+                a third party to test the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -359,48 +359,46 @@ const sections = [
     content: (
       <>
         <p>
-          Carrying out notifiable Part P work without either scheme self-certification or
-          building control notification is a breach of building regulations. The consequences
-          can be significant for both the homeowner and the electrician.
+          Carrying out notifiable Part P work without either scheme self-certification or building
+          control notification is a breach of building regulations. The consequences can be
+          significant for both the homeowner and the electrician.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property sale delays</strong> — when a property is sold, solicitors
-                carry out searches that reveal building regulations compliance status. Absence
-                of a Part P certificate for notifiable work can cause significant delays or
-                require the work to be retroactively inspected and certified. This can cost
-                thousands of pounds and delay completion.
+                <strong>Property sale delays</strong> — when a property is sold, solicitors carry
+                out searches that reveal building regulations compliance status. Absence of a Part P
+                certificate for notifiable work can cause significant delays or require the work to
+                be retroactively inspected and certified. This can cost thousands of pounds and
+                delay completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insurance implications</strong> — home insurance policies may not
-                cover damage or injury resulting from uncertified electrical work. If a fire
-                is caused by uninspected notifiable electrical work, the insurer may refuse
-                to pay a claim.
+                <strong>Insurance implications</strong> — home insurance policies may not cover
+                damage or injury resulting from uncertified electrical work. If a fire is caused by
+                uninspected notifiable electrical work, the insurer may refuse to pay a claim.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local authority enforcement</strong> — local authorities have powers
-                to require removal or alteration of non-compliant work and to recover costs
-                from the person responsible. Enforcement action is more commonly triggered
-                by serious safety incidents than by routine compliance checking.
+                <strong>Local authority enforcement</strong> — local authorities have powers to
+                require removal or alteration of non-compliant work and to recover costs from the
+                person responsible. Enforcement action is more commonly triggered by serious safety
+                incidents than by routine compliance checking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Liability for electricians</strong> — electricians who carry out
-                notifiable work without compliance expose themselves to civil liability
-                if the installation subsequently causes harm. Without certification,
-                demonstrating that the work was carried out to a proper standard is
-                more difficult.
+                <strong>Liability for electricians</strong> — electricians who carry out notifiable
+                work without compliance expose themselves to civil liability if the installation
+                subsequently causes harm. Without certification, demonstrating that the work was
+                carried out to a proper standard is more difficult.
               </span>
             </li>
           </ul>
@@ -414,39 +412,38 @@ const sections = [
     content: (
       <>
         <p>
-          Part P applies only in England and Wales. Electricians working in Scotland or
-          Northern Ireland need to understand the different frameworks that apply in
-          those nations.
+          Part P applies only in England and Wales. Electricians working in Scotland or Northern
+          Ireland need to understand the different frameworks that apply in those nations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scotland</strong> — governed by Building Standards (Scotland)
-                Regulations. Electrical work in dwellings is notifiable under Standard 4.5
-                (Electrical safety). Self-certification is through the Approved Certifier
-                of Construction scheme, operated primarily by{' '}
+                <strong>Scotland</strong> — governed by Building Standards (Scotland) Regulations.
+                Electrical work in dwellings is notifiable under Standard 4.5 (Electrical safety).
+                Self-certification is through the Approved Certifier of Construction scheme,
+                operated primarily by{' '}
                 <SEOInternalLink href="/select-electrical-registration">SELECT</SEOInternalLink>.
-                More domestic electrical work is notifiable in Scotland than under Part P
-                in England.
+                More domestic electrical work is notifiable in Scotland than under Part P in
+                England.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Northern Ireland</strong> — governed by The Building Regulations
-                (Northern Ireland) 2012. Technical Booklet E covers electrical safety.
-                Northern Ireland has its own competent person scheme arrangements and
-                building control structure operating through local councils.
+                <strong>Northern Ireland</strong> — governed by The Building Regulations (Northern
+                Ireland) 2012. Technical Booklet E covers electrical safety. Northern Ireland has
+                its own competent person scheme arrangements and building control structure
+                operating through local councils.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wales</strong> — Part P applies in Wales with the same scope as
-                England. Building regulations in Wales are the responsibility of the Welsh
-                Government, though the Part P framework has remained aligned with England.
+                <strong>Wales</strong> — Part P applies in Wales with the same scope as England.
+                Building regulations in Wales are the responsibility of the Welsh Government, though
+                the Part P framework has remained aligned with England.
               </span>
             </li>
           </ul>
@@ -460,9 +457,9 @@ const sections = [
     content: (
       <>
         <p>
-          The main government-approved competent person schemes for electrical self-certification
-          in England and Wales are NICEIC, NAPIT, and ELECSA. There are also smaller schemes
-          for specific sectors (e.g., BESCA for heating and ventilation, Oil Firing Technical
+          The main government-approved competent person schemes for electrical self-certification in
+          England and Wales are NICEIC, NAPIT, and ELECSA. There are also smaller schemes for
+          specific sectors (e.g., BESCA for heating and ventilation, Oil Firing Technical
           Association for oil systems). For electrical work, NICEIC and NAPIT are the dominant
           choices.
         </p>
@@ -471,9 +468,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC</strong> — the most recognisable scheme for consumers.
-                Strong domestic market presence. Offers multiple tiers (Approved Contractor,
-                Domestic Installer, Domestic Part P). See the full{' '}
+                <strong>NICEIC</strong> — the most recognisable scheme for consumers. Strong
+                domestic market presence. Offers multiple tiers (Approved Contractor, Domestic
+                Installer, Domestic Part P). See the full{' '}
                 <SEOInternalLink href="/niceic-vs-napit-comparison">
                   NICEIC vs NAPIT comparison
                 </SEOInternalLink>
@@ -483,17 +480,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT</strong> — multi-discipline coverage (electrical, heating,
-                plumbing, microgeneration). Good value for contractors working across
-                multiple regulated trades. Well accepted by insurers and building control.
+                <strong>NAPIT</strong> — multi-discipline coverage (electrical, heating, plumbing,
+                microgeneration). Good value for contractors working across multiple regulated
+                trades. Well accepted by insurers and building control.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ELECSA</strong> — part of the Certsure group (alongside NICEIC).
-                Similar assessment standard to NICEIC. Some contractors prefer ELECSA's
-                approach or pricing. Fully accepted by building control and insurers.
+                <strong>ELECSA</strong> — part of the Certsure group (alongside NICEIC). Similar
+                assessment standard to NICEIC. Some contractors prefer ELECSA's approach or pricing.
+                Fully accepted by building control and insurers.
               </span>
             </li>
           </ul>
@@ -509,12 +506,11 @@ const sections = [
         <p>
           Staying on top of Part P notifications and certification is a core administrative
           responsibility for any electrician doing domestic work in England and Wales. Elec-Mate
-          helps you generate compliant certificates on site and deliver them to clients
-          immediately.
+          helps you generate compliant certificates on site and deliver them to clients immediately.
         </p>
         <SEOAppBridge
           title="Complete Part P certification on your phone"
-          description="Join 430+ UK electricians using Elec-Mate to complete Electrical Installation Certificates, Minor Works Certificates, and EICRs on site. Instant PDF generation and client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete Electrical Installation Certificates, Minor Works Certificates, and EICRs on site. Instant PDF generation and client delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>

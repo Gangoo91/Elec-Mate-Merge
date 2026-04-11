@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'How long is an EIC valid for a new build?',
     answer:
-      'An EIC does not expire, but it becomes less relevant over time as the installation ages and is modified. The EIC is evidence of the installation\'s condition at the time of completion. For rental purposes, you will need a periodic EICR — the EIC is simply the starting document. Keep the EIC safe as it contains the original test results which are useful for comparison when the first EICR is carried out.',
+      "An EIC does not expire, but it becomes less relevant over time as the installation ages and is modified. The EIC is evidence of the installation's condition at the time of completion. For rental purposes, you will need a periodic EICR — the EIC is simply the starting document. Keep the EIC safe as it contains the original test results which are useful for comparison when the first EICR is carried out.",
   },
   {
     question: 'When does a new build need its first EICR if I am the owner-occupier?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Should I get an independent electrical check when buying a new build?',
     answer:
-      'Yes. An independent snagging inspection by a qualified electrician can identify installation errors that were missed or accepted during the developer\'s own quality checks. This is particularly worthwhile because the NHBC Buildmark warranty (or similar) covers structural and building defects but relies on the developer\'s own certification for electrical installations. An independent check — carried out as a snagging inspection or a full EICR — gives you independent assurance and an actionable snagging list to present to the developer.',
+      "Yes. An independent snagging inspection by a qualified electrician can identify installation errors that were missed or accepted during the developer's own quality checks. This is particularly worthwhile because the NHBC Buildmark warranty (or similar) covers structural and building defects but relies on the developer's own certification for electrical installations. An independent check — carried out as a snagging inspection or a full EICR — gives you independent assurance and an actionable snagging list to present to the developer.",
   },
 ];
 
@@ -85,7 +85,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -106,7 +107,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eicr-tenant-rights',
     title: 'Tenant Rights for EICR',
-    description: 'Tenants\' rights to electrical safety records and how to enforce them.',
+    description: "Tenants' rights to electrical safety records and how to enforce them.",
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -137,31 +138,30 @@ const sections = [
           tested in accordance with the applicable standards at the time of completion.
         </p>
         <p>
-          An EIC is not the same as an Electrical Installation Condition Report (EICR). The EIC
-          is issued at the point of completion and belongs to the property. The EICR is a periodic
-          inspection document issued by a different electrician assessing the installation's
-          ongoing condition. Confusing the two is extremely common — and understanding the
-          distinction is important for landlords, buyers, and solicitors dealing with new build
-          transactions.
+          An EIC is not the same as an Electrical Installation Condition Report (EICR). The EIC is
+          issued at the point of completion and belongs to the property. The EICR is a periodic
+          inspection document issued by a different electrician assessing the installation's ongoing
+          condition. Confusing the two is extremely common — and understanding the distinction is
+          important for landlords, buyers, and solicitors dealing with new build transactions.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC purpose</strong> — certifies that the installation as built meets
-                BS 7671. Issued by the contractor who built the installation. Contains the
-                Schedule of Inspections and Schedule of Test Results completed at installation.
-                Signed by the designer, constructor, and inspector (who may be the same person).
+                <strong>EIC purpose</strong> — certifies that the installation as built meets BS
+                7671. Issued by the contractor who built the installation. Contains the Schedule of
+                Inspections and Schedule of Test Results completed at installation. Signed by the
+                designer, constructor, and inspector (who may be the same person).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR purpose</strong> — periodically assesses the ongoing condition of
-                the installation. Carried out by an independent qualified person. Classifies
-                observations as C1, C2, C3, or FI. Results in an overall assessment of
-                Satisfactory or Unsatisfactory.
+                <strong>EICR purpose</strong> — periodically assesses the ongoing condition of the
+                installation. Carried out by an independent qualified person. Classifies
+                observations as C1, C2, C3, or FI. Results in an overall assessment of Satisfactory
+                or Unsatisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -184,10 +184,10 @@ const sections = [
     content: (
       <>
         <p>
-          The distinction between an EIC and an EICR matters practically in several scenarios:
-          when a new build property is being let for the first time; when a property is being
-          sold and the buyer's solicitor requests electrical safety documentation; and when a
-          landlord is trying to determine whether they are compliant with the 2020 Regulations.
+          The distinction between an EIC and an EICR matters practically in several scenarios: when
+          a new build property is being let for the first time; when a property is being sold and
+          the buyer's solicitor requests electrical safety documentation; and when a landlord is
+          trying to determine whether they are compliant with the 2020 Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -195,39 +195,39 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Who produces it</strong> — an EIC is produced by the contractor who
-                installed the wiring. An EICR is produced by an independent inspector who
-                inspects and tests an existing installation. For objectivity, the same person
-                who installed the wiring should not carry out the periodic inspection — although
-                this is not always practical in small projects.
+                installed the wiring. An EICR is produced by an independent inspector who inspects
+                and tests an existing installation. For objectivity, the same person who installed
+                the wiring should not carry out the periodic inspection — although this is not
+                always practical in small projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What it tests</strong> — the EIC tests the installation at completion:
-                insulation resistance, continuity, polarity, earth fault loop impedance, and
-                RCD trip times are all measured. An EICR repeats these tests on a sampling basis
-                to check that the installation has not deteriorated and remains compliant with
-                the edition of BS 7671 current at the time of inspection.
+                insulation resistance, continuity, polarity, earth fault loop impedance, and RCD
+                trip times are all measured. An EICR repeats these tests on a sampling basis to
+                check that the installation has not deteriorated and remains compliant with the
+                edition of BS 7671 current at the time of inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Observation coding</strong> — the EIC does not use C1/C2/C3/FI
-                observation codes. These codes are specific to the EICR. The EIC records
-                departures from BS 7671 (if any) separately. An EICR will note any departures
-                from the current edition of BS 7671 even if the installation was correctly built
-                to an earlier edition — this is why older installations frequently have C3
-                observations for items that were compliant when installed.
+                <strong>Observation coding</strong> — the EIC does not use C1/C2/C3/FI observation
+                codes. These codes are specific to the EICR. The EIC records departures from BS 7671
+                (if any) separately. An EICR will note any departures from the current edition of BS
+                7671 even if the installation was correctly built to an earlier edition — this is
+                why older installations frequently have C3 observations for items that were
+                compliant when installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Frequency</strong> — an EIC is issued once, at completion. An EICR is
-                issued periodically — typically every 5 years for rental properties, every 10
-                years for owner-occupied homes (or at change of occupancy).
+                <strong>Frequency</strong> — an EIC is issued once, at completion. An EICR is issued
+                periodically — typically every 5 years for rental properties, every 10 years for
+                owner-occupied homes (or at change of occupancy).
               </span>
             </li>
           </ul>
@@ -241,51 +241,49 @@ const sections = [
     content: (
       <>
         <p>
-          The timing of the first EICR for a new build property depends on how the property is
-          used after completion. The answer is different for rental properties and owner-occupied
-          homes.
+          The timing of the first EICR for a new build property depends on how the property is used
+          after completion. The answer is different for rental properties and owner-occupied homes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rental property — at first change of tenancy</strong> — under the
-                Electrical Safety Standards Regulations 2020, an EICR must be obtained before
-                a new tenancy begins and at least every five years. If you purchase a new build
-                from a developer and let it for the first time, you should obtain an EICR before
-                the first tenant moves in, or at the very latest within five years. If the
-                property had an existing tenancy from the developer, the five-year clock is
-                already running.
+                <strong>Rental property — at first change of tenancy</strong> — under the Electrical
+                Safety Standards Regulations 2020, an EICR must be obtained before a new tenancy
+                begins and at least every five years. If you purchase a new build from a developer
+                and let it for the first time, you should obtain an EICR before the first tenant
+                moves in, or at the very latest within five years. If the property had an existing
+                tenancy from the developer, the five-year clock is already running.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied — approximately 10 years</strong> — there is no legal
-                requirement for owner-occupiers to obtain an EICR at a specific interval.
-                The recommended interval under BS 7671 and IET guidance is every 10 years
-                or at change of occupancy. For a new build, the first EICR is therefore
-                recommended at around the 10-year mark.
+                requirement for owner-occupiers to obtain an EICR at a specific interval. The
+                recommended interval under BS 7671 and IET guidance is every 10 years or at change
+                of occupancy. For a new build, the first EICR is therefore recommended at around the
+                10-year mark.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>On sale of the property</strong> — although there is no legal requirement
-                to produce an EICR when selling, buyers increasingly request one as part of their
-                due diligence. If you have an EIC from when the property was built but no EICR,
-                consider commissioning one before marketing the property, particularly if the
-                installation is more than five years old.
+                <strong>On sale of the property</strong> — although there is no legal requirement to
+                produce an EICR when selling, buyers increasingly request one as part of their due
+                diligence. If you have an EIC from when the property was built but no EICR, consider
+                commissioning one before marketing the property, particularly if the installation is
+                more than five years old.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          In practice, many landlords of new build properties obtain an EICR at the outset so
-          that they have a document in the correct format to provide to tenants and, if requested,
-          to the local authority. The cost of an EICR on a modern, correctly installed property
-          is relatively low and the peace of mind is worthwhile.
+          In practice, many landlords of new build properties obtain an EICR at the outset so that
+          they have a document in the correct format to provide to tenants and, if requested, to the
+          local authority. The cost of an EICR on a modern, correctly installed property is
+          relatively low and the peace of mind is worthwhile.
         </p>
       </>
     ),
@@ -297,11 +295,11 @@ const sections = [
       <>
         <p>
           New builds are not immune to electrical installation errors. Developers typically use
-          multiple subcontractors working under time pressure, and the quality of workmanship
-          varies considerably between sites and contractors. Having a qualified electrician carry
-          out an independent snagging inspection — ideally within the first two years while the
-          NHBC or similar warranty is in place — can identify issues the developer must rectify
-          at no cost to you.
+          multiple subcontractors working under time pressure, and the quality of workmanship varies
+          considerably between sites and contractors. Having a qualified electrician carry out an
+          independent snagging inspection — ideally within the first two years while the NHBC or
+          similar warranty is in place — can identify issues the developer must rectify at no cost
+          to you.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -317,8 +315,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unlabelled or incorrectly labelled circuits</strong> — consumer units
-                in new builds sometimes have circuit labels that do not match the actual circuits
+                <strong>Unlabelled or incorrectly labelled circuits</strong> — consumer units in new
+                builds sometimes have circuit labels that do not match the actual circuits
                 connected, or are simply blank. Correct labelling is a requirement of BS 7671
                 (Regulation 514.9.1).
               </span>
@@ -327,9 +325,9 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing or incorrect bonding</strong> — supplementary bonding in bathrooms
-                and main protective bonding to services is sometimes omitted or undersized. This
-                is a common snagging item that is straightforward for the developer to rectify
-                during the defects liability period.
+                and main protective bonding to services is sometimes omitted or undersized. This is
+                a common snagging item that is straightforward for the developer to rectify during
+                the defects liability period.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,8 +335,8 @@ const sections = [
               <span>
                 <strong>Smoke and carbon monoxide detector issues</strong> — mains-wired interlinked
                 smoke detectors are required in new builds under Building Regulations Approved
-                Document B. Snaggers commonly find detectors that are not correctly interlinked,
-                not connected to the mains supply, or positioned incorrectly.
+                Document B. Snaggers commonly find detectors that are not correctly interlinked, not
+                connected to the mains supply, or positioned incorrectly.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -353,8 +351,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          A snagging inspection is best carried out by a qualified electrician who is independent
-          of the developer. Use{' '}
+          A snagging inspection is best carried out by a qualified electrician who is independent of
+          the developer. Use{' '}
           <SEOInternalLink href="/tools/eicr-certificate">
             Elec-Mate's EICR and certificate tools
           </SEOInternalLink>{' '}
@@ -370,9 +368,9 @@ const sections = [
       <>
         <p>
           Landlords who purchase new build properties to let face a common question: does the EIC
-          from the developer satisfy the EICR requirement under the 2020 Regulations? The answer
-          is no. The 2020 Regulations specifically require an EICR — a periodic inspection
-          document — not an installation certificate.
+          from the developer satisfy the EICR requirement under the 2020 Regulations? The answer is
+          no. The 2020 Regulations specifically require an EICR — a periodic inspection document —
+          not an installation certificate.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -389,19 +387,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provide the EICR to the tenant</strong> — new tenants must receive a copy
-                of the EICR before they move in. Existing tenants must receive a copy within 28
-                days of the inspection. The EIC from the developer is not an acceptable substitute.
+                <strong>Provide the EICR to the tenant</strong> — new tenants must receive a copy of
+                the EICR before they move in. Existing tenants must receive a copy within 28 days of
+                the inspection. The EIC from the developer is not an acceptable substitute.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Retain the original EIC</strong> — keep the EIC from the developer as
-                it contains the original test results. When the EICR inspector carries out the
-                periodic inspection, they can compare current test results with the original EIC
-                to identify any deterioration. This comparison is valuable for detecting
-                progressive insulation degradation or earthing problems.
+                <strong>Retain the original EIC</strong> — keep the EIC from the developer as it
+                contains the original test results. When the EICR inspector carries out the periodic
+                inspection, they can compare current test results with the original EIC to identify
+                any deterioration. This comparison is valuable for detecting progressive insulation
+                degradation or earthing problems.
               </span>
             </li>
           </ul>
@@ -417,12 +415,10 @@ const sections = [
         <p>
           Owner-occupiers of new build properties are not covered by the 2020 Regulations (which
           apply to the private rented sector). There is therefore no legal deadline for the first
-          EICR. However, the recommended interval from BS 7671 and the IET is every 10 years for
-          a domestic owner-occupied property.
+          EICR. However, the recommended interval from BS 7671 and the IET is every 10 years for a
+          domestic owner-occupied property.
         </p>
-        <p>
-          In practice, the first EICR on a new build is often prompted by one of the following:
-        </p>
+        <p>In practice, the first EICR on a new build is often prompted by one of the following:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -437,17 +433,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Changing the property's use</strong> — converting an owner-occupied new
-                build to a rental property triggers the 2020 Regulations. An EICR is required
-                before the first tenant moves in.
+                build to a rental property triggers the 2020 Regulations. An EICR is required before
+                the first tenant moves in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Major electrical additions</strong> — adding solar PV, an EV charging
-                point, or a home extension creates new circuits that should be tested. Whilst the
-                new circuits will have their own EIC, it is often prudent to have a full EICR at
-                this point to ensure the main installation remains in good condition.
+                <strong>Major electrical additions</strong> — adding solar PV, an EV charging point,
+                or a home extension creates new circuits that should be tested. Whilst the new
+                circuits will have their own EIC, it is often prudent to have a full EICR at this
+                point to ensure the main installation remains in good condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -470,24 +466,26 @@ const sections = [
         <p>
           New build snagging and first-EICR work for buy-to-let investors is a growing market.
           Portfolio landlords who purchase new build properties from developers need reliable
-          electricians who understand the difference between an EIC and an EICR, and who can
-          produce compliant documentation efficiently.
+          electricians who understand the difference between an EIC and an EICR, and who can produce
+          compliant documentation efficiently.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Produce EICR and EIC Documentation on Site</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Produce EICR and EIC Documentation on Site
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
                   to complete both EICR and EIC documentation on your phone. For snagging
-                  inspections, the app lets you photograph defects, record observations with
-                  C-code classification, and export a professional PDF report the developer
-                  and landlord can act on immediately.
+                  inspections, the app lets you photograph defects, record observations with C-code
+                  classification, and export a professional PDF report the developer and landlord
+                  can act on immediately.
                 </p>
               </div>
             </div>
@@ -495,7 +493,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce EICR and EIC reports on site with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC, and minor works certificates — all on your phone with AI assistance and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certificate completion. EICR, EIC, and minor works certificates — all on your phone with AI assistance and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -532,7 +530,7 @@ export default function EICRForNewBuildPage() {
       faqHeading="Frequently Asked Questions: EICR for New Builds"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certificate production. EICR, EIC, and snagging reports — all on your phone with AI assistance and instant PDF export. 7-day free trial."
     />
   );
 }

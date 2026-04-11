@@ -18,7 +18,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Glasgow', href: '/guides/landlord-electrical-safety-glasgow' },
+  {
+    label: 'Landlord Electrical Safety Glasgow',
+    href: '/guides/landlord-electrical-safety-glasgow',
+  },
 ];
 
 const tocItems = [
@@ -120,36 +123,36 @@ const sections = [
     content: (
       <>
         <p>
-          This is a critical distinction for Glasgow landlords. The Electrical Safety Standards
-          in the Private Rented Sector (England) Regulations 2020 do <strong>not</strong> apply
-          in Scotland. Glasgow is governed by entirely different legislation: the Housing
-          (Scotland) Act 2006 and its associated Repairing Standard.
+          This is a critical distinction for Glasgow landlords. The Electrical Safety Standards in
+          the Private Rented Sector (England) Regulations 2020 do <strong>not</strong> apply in
+          Scotland. Glasgow is governed by entirely different legislation: the Housing (Scotland)
+          Act 2006 and its associated Repairing Standard.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Different legislation</strong> — Scotland uses the Housing (Scotland)
-                Act 2006, not the England 2020 Regulations. The legal requirements, enforcement
+                <strong>Different legislation</strong> — Scotland uses the Housing (Scotland) Act
+                2006, not the England 2020 Regulations. The legal requirements, enforcement
                 mechanisms, and penalties are all different.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Different enforcement body</strong> — in England, local councils enforce
-                the regulations. In Scotland, the First-tier Tribunal for Scotland (Housing and
-                Property Chamber) handles enforcement. Tenants apply directly to the Tribunal.
+                <strong>Different enforcement body</strong> — in England, local councils enforce the
+                regulations. In Scotland, the First-tier Tribunal for Scotland (Housing and Property
+                Chamber) handles enforcement. Tenants apply directly to the Tribunal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No £30,000 civil penalty regime</strong> — Scotland does not have the
-                same civil penalty framework as England. Instead, the Tribunal can issue
-                enforcement orders, and landlords risk losing their landlord registration (which
-                is a criminal matter in Scotland).
+                <strong>No £30,000 civil penalty regime</strong> — Scotland does not have the same
+                civil penalty framework as England. Instead, the Tribunal can issue enforcement
+                orders, and landlords risk losing their landlord registration (which is a criminal
+                matter in Scotland).
               </span>
             </li>
           </ul>
@@ -167,17 +170,17 @@ const sections = [
     content: (
       <>
         <p>
-          The Repairing Standard is set out in Section 13 of the Housing (Scotland) Act 2006.
-          It requires landlords to ensure that the property meets a minimum standard of repair
-          and functionality, including the electrical installation.
+          The Repairing Standard is set out in Section 13 of the Housing (Scotland) Act 2006. It
+          requires landlords to ensure that the property meets a minimum standard of repair and
+          functionality, including the electrical installation.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical installations</strong> — must be in a reasonable state of
-                repair and proper working order. An EICR documented in accordance with{' '}
+                <strong>Electrical installations</strong> — must be in a reasonable state of repair
+                and proper working order. An EICR documented in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
@@ -188,25 +191,25 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Satisfactory EICR</strong> — an EICR with no C1 or C2 observations
-                demonstrates that the installation is in a reasonable state. An Unsatisfactory
-                EICR indicates the landlord may be failing to meet the Repairing Standard.
+                demonstrates that the installation is in a reasonable state. An Unsatisfactory EICR
+                indicates the landlord may be failing to meet the Repairing Standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scottish Landlord Register</strong> — all private landlords in Scotland
-                must be registered. Consistent failure to maintain the Repairing Standard can
-                result in removal from the register, making it illegal to let the property.
+                <strong>Scottish Landlord Register</strong> — all private landlords in Scotland must
+                be registered. Consistent failure to maintain the Repairing Standard can result in
+                removal from the register, making it illegal to let the property.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          While there is no explicit statutory requirement in Scotland for an EICR every five
-          years (unlike England), the practical reality is that a current EICR is the only
-          reliable way to demonstrate that the electrical installation meets the Repairing
-          Standard. Most letting agents and insurers in Glasgow require one.
+          While there is no explicit statutory requirement in Scotland for an EICR every five years
+          (unlike England), the practical reality is that a current EICR is the only reliable way to
+          demonstrate that the electrical installation meets the Repairing Standard. Most letting
+          agents and insurers in Glasgow require one.
         </p>
       </>
     ),
@@ -227,17 +230,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>First-tier Tribunal for Scotland</strong> — tenants apply directly to the
-                Housing and Property Chamber. The Tribunal inspects the property, determines
-                whether the Repairing Standard is met, and can issue a Repairing Standard
-                Enforcement Order (RSEO) requiring specific work within a set timescale.
+                Housing and Property Chamber. The Tribunal inspects the property, determines whether
+                the Repairing Standard is met, and can issue a Repairing Standard Enforcement Order
+                (RSEO) requiring specific work within a set timescale.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Enforcement orders</strong> — an RSEO specifies what work must be done
-                and by when. Failure to comply can be reported to the local authority and can
-                affect the landlord's registration status.
+                <strong>Enforcement orders</strong> — an RSEO specifies what work must be done and
+                by when. Failure to comply can be reported to the local authority and can affect the
+                landlord's registration status.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,18 +248,17 @@ const sections = [
               <span>
                 <strong>Glasgow City Council role</strong> — while the Tribunal handles Repairing
                 Standard enforcement, Glasgow City Council manages landlord registration, HMO
-                licensing, and can take action under other housing legislation. The council can
-                also refer persistent offenders for prosecution.
+                licensing, and can take action under other housing legislation. The council can also
+                refer persistent offenders for prosecution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Glasgow tenement stock</strong> — Glasgow has a large stock of Victorian
-                and Edwardian tenement flats. These properties commonly have aged wiring,
-                inadequate earthing, and lack of RCD protection (Regulation 411.3.3). The
-                Tribunal regularly deals with cases involving electrical defects in Glasgow
-                tenements.
+                <strong>Glasgow tenement stock</strong> — Glasgow has a large stock of Victorian and
+                Edwardian tenement flats. These properties commonly have aged wiring, inadequate
+                earthing, and lack of RCD protection (Regulation 411.3.3). The Tribunal regularly
+                deals with cases involving electrical defects in Glasgow tenements.
               </span>
             </li>
           </ul>
@@ -270,8 +272,8 @@ const sections = [
     content: (
       <>
         <p>
-          HMO licensing in Scotland is governed by the Housing (Scotland) Act 2006 (Part 5).
-          Glasgow City Council is the licensing authority for HMOs in the city.
+          HMO licensing in Scotland is governed by the Housing (Scotland) Act 2006 (Part 5). Glasgow
+          City Council is the licensing authority for HMOs in the city.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -279,9 +281,9 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — in Scotland, an HMO is defined as a property
-                occupied by three or more unrelated persons as their only or main residence. This
-                is a lower threshold than England's mandatory licensing (five persons). A valid
-                EICR is a licence condition.
+                occupied by three or more unrelated persons as their only or main residence. This is
+                a lower threshold than England's mandatory licensing (five persons). A valid EICR is
+                a licence condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -289,8 +291,8 @@ const sections = [
               <span>
                 <strong>Student areas</strong> — the West End (around the University of Glasgow),
                 Partick, Hillhead, and areas near Glasgow Caledonian University have high
-                concentrations of student HMOs. These properties must have valid EICRs covering
-                all fixed installations, fire alarm systems, and emergency lighting.
+                concentrations of student HMOs. These properties must have valid EICRs covering all
+                fixed installations, fire alarm systems, and emergency lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -320,8 +322,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Enforcement orders</strong> — the Tribunal can order specific work within
-                a set timescale. Non-compliance can be referred to the local authority.
+                <strong>Enforcement orders</strong> — the Tribunal can order specific work within a
+                set timescale. Non-compliance can be referred to the local authority.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,24 +331,24 @@ const sections = [
               <span>
                 <strong>Loss of landlord registration</strong> — persistent failure to meet the
                 Repairing Standard can result in removal from the Scottish Landlord Register.
-                Letting property without registration is a criminal offence with fines of up
-                to £50,000.
+                Letting property without registration is a criminal offence with fines of up to
+                £50,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing penalties</strong> — operating an unlicensed HMO in Scotland
-                is a criminal offence. Glasgow City Council can prosecute, and fines are
-                unlimited on conviction.
+                is a criminal offence. Glasgow City Council can prosecute, and fines are unlimited
+                on conviction.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rent penalty orders</strong> — under the Private Housing (Tenancies)
-                (Scotland) Act 2016, unregistered landlords face having rental income seized
-                by the local authority.
+                (Scotland) Act 2016, unregistered landlords face having rental income seized by the
+                local authority.
               </span>
             </li>
           </ul>
@@ -365,16 +367,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Apply to the Tribunal</strong> — tenants can apply directly to the
-                First-tier Tribunal for Scotland if they believe the Repairing Standard is not
-                being met. There is no cost to the tenant.
+                First-tier Tribunal for Scotland if they believe the Repairing Standard is not being
+                met. There is no cost to the tenant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tribunal inspection</strong> — the Tribunal will arrange an inspection
-                of the property and make a determination. If the standard is not met, an
-                enforcement order is issued.
+                <strong>Tribunal inspection</strong> — the Tribunal will arrange an inspection of
+                the property and make a determination. If the standard is not met, an enforcement
+                order is issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,8 +391,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shelter Scotland and Citizens Advice Scotland</strong> — provide free
-                advice to tenants on exercising their rights.
+                <strong>Shelter Scotland and Citizens Advice Scotland</strong> — provide free advice
+                to tenants on exercising their rights.
               </span>
             </li>
           </ul>
@@ -404,8 +406,8 @@ const sections = [
     content: (
       <>
         <p>
-          In Scotland, remedial timescales are set by the Tribunal in the enforcement order,
-          rather than the fixed 28-day period used in England.
+          In Scotland, remedial timescales are set by the Tribunal in the enforcement order, rather
+          than the fixed 28-day period used in England.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -419,17 +421,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Urgent safety issues</strong> — C1 (danger present) observations should
-                be addressed immediately regardless of any formal timescale. Landlords have a
-                common law duty of care.
+                <strong>Urgent safety issues</strong> — C1 (danger present) observations should be
+                addressed immediately regardless of any formal timescale. Landlords have a common
+                law duty of care.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common Glasgow remedial work</strong> — RCD protection (Regulation
-                411.3.3), consumer unit replacements in tenement flats, earthing upgrades,
-                rewiring of deteriorated rubber-insulated cables.
+                <strong>Common Glasgow remedial work</strong> — RCD protection (Regulation 411.3.3),
+                consumer unit replacements in tenement flats, earthing upgrades, rewiring of
+                deteriorated rubber-insulated cables.
               </span>
             </li>
           </ul>
@@ -447,17 +449,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — search NICEIC, NAPIT, SELECT
-                (Scotland's trade association for the electrical industry), or ELECSA for
-                Glasgow-based inspectors.
+                <strong>Competent person schemes</strong> — search NICEIC, NAPIT, SELECT (Scotland's
+                trade association for the electrical industry), or ELECSA for Glasgow-based
+                inspectors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SELECT membership</strong> — SELECT is the Scottish Joint Industry Board
-                (SJIB) trade association. Many Scottish electricians are SELECT members rather
-                than NICEIC or NAPIT. SELECT membership provides equivalent assurance.
+                (SJIB) trade association. Many Scottish electricians are SELECT members rather than
+                NICEIC or NAPIT. SELECT membership provides equivalent assurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -482,22 +484,28 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>One-bedroom flat</strong> — £100 to £180.</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom tenement flat</strong> — £150 to £250. Glasgow's tenement
-                stock often requires extra time due to older wiring and limited access.
+                <strong>One-bedroom flat</strong> — £100 to £180.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Three-bedroom house</strong> — £220 to £360.</span>
+              <span>
+                <strong>Two-bedroom tenement flat</strong> — £150 to £250. Glasgow's tenement stock
+                often requires extra time due to older wiring and limited access.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>HMO</strong> — £300 to £600+.</span>
+              <span>
+                <strong>Three-bedroom house</strong> — £220 to £360.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>HMO</strong> — £300 to £600+.
+              </span>
             </li>
           </ul>
         </div>
@@ -511,8 +519,8 @@ const sections = [
       <>
         <p>
           Glasgow's large private rented sector and extensive tenement stock create consistent
-          demand for EICR work. Electricians familiar with Glasgow tenement wiring, communal
-          supply arrangements, and SP Energy Networks earthing provisions are well positioned.
+          demand for EICR work. Electricians familiar with Glasgow tenement wiring, communal supply
+          arrangements, and SP Energy Networks earthing provisions are well positioned.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -533,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -566,7 +574,7 @@ export default function LandlordElectricalSafetyGlasgowPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

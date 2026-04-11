@@ -48,12 +48,12 @@ const faqs = [
   {
     question: 'How much does EV charger installation cost in York?',
     answer:
-      'A standard 7kW home EV charger installation in York costs between £800 and £1,150 all-in. This includes the charger unit, dedicated 32A radial circuit, RCD protection as required by BS 7671 Section 722, commissioning, and the Electrical Installation Certificate. York\'s pricing is competitive with other Northern England cities, reflecting regional trade labour rates. If you are eligible for the OZEV EV Chargepoint Grant, up to £350 is deducted by your installer, reducing your net cost to approximately £450 to £800.',
+      "A standard 7kW home EV charger installation in York costs between £800 and £1,150 all-in. This includes the charger unit, dedicated 32A radial circuit, RCD protection as required by BS 7671 Section 722, commissioning, and the Electrical Installation Certificate. York's pricing is competitive with other Northern England cities, reflecting regional trade labour rates. If you are eligible for the OZEV EV Chargepoint Grant, up to £350 is deducted by your installer, reducing your net cost to approximately £450 to £800.",
   },
   {
     question: 'Do I need planning permission for an EV charger in York?',
     answer:
-      'Possibly. York has one of the highest concentrations of conservation areas and listed buildings in England. Whilst EV charger installation is generally permitted development (no planning permission required), properties within York\'s conservation areas — including the city walls area, Bootham, Bishopthorpe Road, and The Mount — may have restricted permitted development rights. Listed buildings always require listed building consent for external alterations, including charger installation. Contact City of York Council\'s planning department before commissioning installation if your property is listed or within a conservation area.',
+      "Possibly. York has one of the highest concentrations of conservation areas and listed buildings in England. Whilst EV charger installation is generally permitted development (no planning permission required), properties within York's conservation areas — including the city walls area, Bootham, Bishopthorpe Road, and The Mount — may have restricted permitted development rights. Listed buildings always require listed building consent for external alterations, including charger installation. Contact City of York Council's planning department before commissioning installation if your property is listed or within a conservation area.",
   },
   {
     question: 'What OZEV grant is available for York residents?',
@@ -63,17 +63,17 @@ const faqs = [
   {
     question: 'What earthing arrangement do York properties have?',
     answer:
-      'Most urban York properties are supplied by Northern Powergrid via a PME (Protective Multiple Earthing, TN-C-S) earthing arrangement. Under BS 7671 Regulation 722.411.4, the installer must carry out a PME earthing risk assessment before installing an EV charger. Where the PME earth is assessed as unsuitable (for example, at a detached garage or outdoor location), a separate earth electrode must be installed. York\'s DNO is Northern Powergrid — your installer should be familiar with Northern Powergrid\'s guidance on PME earthing for EV installations.',
+      "Most urban York properties are supplied by Northern Powergrid via a PME (Protective Multiple Earthing, TN-C-S) earthing arrangement. Under BS 7671 Regulation 722.411.4, the installer must carry out a PME earthing risk assessment before installing an EV charger. Where the PME earth is assessed as unsuitable (for example, at a detached garage or outdoor location), a separate earth electrode must be installed. York's DNO is Northern Powergrid — your installer should be familiar with Northern Powergrid's guidance on PME earthing for EV installations.",
   },
   {
     question: 'How long does EV charger installation take in York?',
     answer:
-      'A straightforward 7kW home charger installation in York typically takes 2 to 4 hours. York\'s Victorian and Edwardian properties — particularly in areas such as Acomb, Fulford, and Dringhouses — may have longer cable routes from the consumer unit to the garage or parking area, extending the installation time. Where a consumer unit upgrade is also needed, allow a full working day.',
+      "A straightforward 7kW home charger installation in York typically takes 2 to 4 hours. York's Victorian and Edwardian properties — particularly in areas such as Acomb, Fulford, and Dringhouses — may have longer cable routes from the consumer unit to the garage or parking area, extending the installation time. Where a consumer unit upgrade is also needed, allow a full working day.",
   },
   {
     question: 'Can I install an EV charger at my York terraced house?',
     answer:
-      'Yes, if you have off-street parking (a driveway, garage, or courtyard space). York has a significant proportion of Victorian and Edwardian terraced houses, many of which have rear access to back lanes or yards where parking is available. For these properties, a 7kW charger can be installed at the rear of the property, with the cable routed through the property from the consumer unit. For York terraced houses without any off-street parking, City of York Council\'s EV charging strategy includes on-street charge point options — contact the council for availability on your street.',
+      "Yes, if you have off-street parking (a driveway, garage, or courtyard space). York has a significant proportion of Victorian and Edwardian terraced houses, many of which have rear access to back lanes or yards where parking is available. For these properties, a 7kW charger can be installed at the rear of the property, with the cable routed through the property from the consumer unit. For York terraced houses without any off-street parking, City of York Council's EV charging strategy includes on-street charge point options — contact the council for availability on your street.",
   },
   {
     question: 'What smart charger is best for York homes?',
@@ -83,7 +83,7 @@ const faqs = [
   {
     question: 'Are there additional EV charging incentives in York?',
     answer:
-      'City of York Council has committed funding to expanding public EV charging infrastructure and supports home charger adoption through signposting to OZEV grants. The council\'s Local Transport Plan includes EV charging as a key element of its net zero transport strategy. North Yorkshire also has some rural EV charging grants through the Rural England Prosperity Fund for businesses and rural properties. Contact the council or North Yorkshire County Council for current local scheme availability.',
+      "City of York Council has committed funding to expanding public EV charging infrastructure and supports home charger adoption through signposting to OZEV grants. The council's Local Transport Plan includes EV charging as a key element of its net zero transport strategy. North Yorkshire also has some rural EV charging grants through the Rural England Prosperity Fund for businesses and rural properties. Contact the council or North Yorkshire County Council for current local scheme availability.",
   },
 ];
 
@@ -150,8 +150,8 @@ const sections = [
               <span>
                 <strong>York's EV strategy</strong> — City of York Council has prioritised EV
                 infrastructure as part of its net zero transport plan. The council has installed
-                chargers at council car parks, on residential streets with high EV density, and
-                at park-and-ride sites. The council also actively promotes home charger installation
+                chargers at council car parks, on residential streets with high EV density, and at
+                park-and-ride sites. The council also actively promotes home charger installation
                 and OZEV grant access for York residents.
               </span>
             </li>
@@ -161,8 +161,8 @@ const sections = [
                 <strong>Cost of home vs public charging</strong> — charging a 60kWh EV from
                 near-empty overnight at home on an EV tariff (approximately 7p/kWh) costs roughly
                 £4. The same charge at a York public rapid charger (50p/kWh) costs approximately
-                £30. Over 15,000 miles per year, home charging saves a York EV owner around
-                £1,200 annually versus public rapid charging.
+                £30. Over 15,000 miles per year, home charging saves a York EV owner around £1,200
+                annually versus public rapid charging.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -171,16 +171,16 @@ const sections = [
                 <strong>Housing stock</strong> — York has a varied housing stock including Georgian
                 and Victorian city-centre terraces, inter-war semis, post-war estates, and modern
                 new-builds on the city's outskirts. Many suburban York properties (Acomb,
-                Dringhouses, Fulford, Heslington, Strensall) have garages or driveways suitable
-                for home EV charger installation.
+                Dringhouses, Fulford, Heslington, Strensall) have garages or driveways suitable for
+                home EV charger installation.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Whether you live in the city centre, in one of York's historic suburbs, or in the
-          surrounding North Yorkshire villages, a 7kW home EV charger provides significant
-          cost savings and the convenience of waking up each morning to a fully charged vehicle.
+          surrounding North Yorkshire villages, a 7kW home EV charger provides significant cost
+          savings and the convenience of waking up each morning to a fully charged vehicle.
         </p>
       </>
     ),
@@ -191,9 +191,9 @@ const sections = [
     content: (
       <>
         <p>
-          The OZEV EV Chargepoint Grant reduces the upfront cost of a home EV charger by up to
-          £350 for eligible York residents. Your OZEV-approved installer applies the grant and
-          deducts it from your invoice — no waiting for reimbursement.
+          The OZEV EV Chargepoint Grant reduces the upfront cost of a home EV charger by up to £350
+          for eligible York residents. Your OZEV-approved installer applies the grant and deducts it
+          from your invoice — no waiting for reimbursement.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -201,24 +201,24 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Eligibility</strong> — you must own or have ordered an eligible EV or
-                plug-in hybrid and live in a flat or rented accommodation. The residential grant
-                no longer applies to homeowners in houses. Renters can qualify if their landlord
-                gives permission for the charger to be installed.
+                plug-in hybrid and live in a flat or rented accommodation. The residential grant no
+                longer applies to homeowners in houses. Renters can qualify if their landlord gives
+                permission for the charger to be installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Grant amount</strong> — up to £350 or 75% of the installation cost
-                (whichever is lower). On a typical York installation costing £950, the grant
-                reduces your net cost to £600.
+                (whichever is lower). On a typical York installation costing £950, the grant reduces
+                your net cost to £600.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workplace Charging Scheme</strong> — York businesses can claim up to
-                £350 per socket (maximum 40 sockets) for installing EV charge points at commercial
+                <strong>Workplace Charging Scheme</strong> — York businesses can claim up to £350
+                per socket (maximum 40 sockets) for installing EV charge points at commercial
                 premises, including York city centre offices, industrial sites, and tourist
                 accommodation.
               </span>
@@ -243,39 +243,47 @@ const sections = [
       <>
         <p>
           A home EV charger installation in York follows the same five-step process as all UK
-          installations, with specific considerations for York's historic housing stock and
-          Northern Powergrid's PME supply arrangements.
+          installations, with specific considerations for York's historic housing stock and Northern
+          Powergrid's PME supply arrangements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">1</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                1
+              </span>
               <span>
-                <strong>Pre-installation survey</strong> — assessment of consumer unit capacity
-                and spare ways, earthing arrangement (most York properties are on Northern
-                Powergrid PME supplies), cable route from consumer unit to charger location, and
-                proposed mounting position.
+                <strong>Pre-installation survey</strong> — assessment of consumer unit capacity and
+                spare ways, earthing arrangement (most York properties are on Northern Powergrid PME
+                supplies), cable route from consumer unit to charger location, and proposed mounting
+                position.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">2</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                2
+              </span>
               <span>
                 <strong>PME earthing risk assessment</strong> — required under BS 7671 Regulation
-                722.411.4. The installer assesses whether the PME earth from Northern Powergrid
-                is suitable for the EV charger circuit or whether a supplementary earth electrode
-                is needed.
+                722.411.4. The installer assesses whether the PME earth from Northern Powergrid is
+                suitable for the EV charger circuit or whether a supplementary earth electrode is
+                needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">3</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                3
+              </span>
               <span>
                 <strong>Dedicated circuit installation</strong> — a new 32A radial circuit is
-                installed from the consumer unit to the charger, protected by an appropriate
-                RCBO or MCB with RCD protection per Regulation 722.531.2.
+                installed from the consumer unit to the charger, protected by an appropriate RCBO or
+                MCB with RCD protection per Regulation 722.531.2.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">4</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                4
+              </span>
               <span>
                 <strong>Charger installation and commissioning</strong> — wall mounting, electrical
                 connection, smart feature configuration (scheduling, tariff integration), and
@@ -283,11 +291,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">5</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                5
+              </span>
               <span>
-                <strong>Testing, EIC, and Part P</strong> — verification testing per BS 7671
-                Chapter 61, EIC issued, self-certification under Part P by NICEIC or NAPIT
-                registered installer, and OZEV grant application submitted.
+                <strong>Testing, EIC, and Part P</strong> — verification testing per BS 7671 Chapter
+                61, EIC issued, self-certification under Part P by NICEIC or NAPIT registered
+                installer, and OZEV grant application submitted.
               </span>
             </li>
           </ul>
@@ -310,40 +320,40 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard 7kW home installation</strong> — £800 to £1,150 all-in, including
-                charger unit, dedicated circuit, RCD protection, EIC, and Part P certificate.
-                After OZEV grant (where eligible): approximately £450 to £800.
+                charger unit, dedicated circuit, RCD protection, EIC, and Part P certificate. After
+                OZEV grant (where eligible): approximately £450 to £800.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable run or complex route</strong> — add £100 to £250 for runs
-                exceeding 15 metres or routes requiring threading through Victorian loft spaces
-                and down exterior walls.
+                exceeding 15 metres or routes requiring threading through Victorian loft spaces and
+                down exterior walls.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit upgrade</strong> — £380 to £650 additional. Many York
-                properties built before 1990 have older consumer units without adequate spare
-                ways or modern RCD protection.
+                properties built before 1990 have older consumer units without adequate spare ways
+                or modern RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode installation</strong> — £150 to £300 additional, if
-                required following the PME earthing risk assessment. More common at detached
-                garage or outbuilding locations.
+                <strong>Earth electrode installation</strong> — £150 to £300 additional, if required
+                following the PME earthing risk assessment. More common at detached garage or
+                outbuilding locations.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Obtain two or more written, itemised quotes from OZEV-approved York installers. Ensure
-          all costs are included and the OZEV grant deduction is shown separately where you
-          are eligible.
+          Obtain two or more written, itemised quotes from OZEV-approved York installers. Ensure all
+          costs are included and the OZEV grant deduction is shown separately where you are
+          eligible.
         </p>
       </>
     ),
@@ -354,9 +364,9 @@ const sections = [
     content: (
       <>
         <p>
-          York has one of the highest concentrations of listed buildings and conservation areas
-          in England. This creates specific planning considerations for EV charger installation
-          that do not apply in most other UK cities.
+          York has one of the highest concentrations of listed buildings and conservation areas in
+          England. This creates specific planning considerations for EV charger installation that do
+          not apply in most other UK cities.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -366,9 +376,9 @@ const sections = [
                 <strong>Conservation areas</strong> — York has extensive conservation areas
                 including the city centre (within the walls), Bootham, Gillygate, The Mount,
                 Bishopthorpe Road, and several Victorian suburbs. In these areas, permitted
-                development rights may be restricted. EV charger installation on a visible
-                exterior wall may require planning permission. Contact City of York Council
-                planning before commissioning if in doubt.
+                development rights may be restricted. EV charger installation on a visible exterior
+                wall may require planning permission. Contact City of York Council planning before
+                commissioning if in doubt.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -376,8 +386,8 @@ const sections = [
               <span>
                 <strong>Listed buildings</strong> — any external alteration to a listed building,
                 including mounting a charger on an external wall, requires listed building consent
-                from City of York Council. This applies regardless of whether the building is in
-                a conservation area. York has thousands of listed buildings — check your property's
+                from City of York Council. This applies regardless of whether the building is in a
+                conservation area. York has thousands of listed buildings — check your property's
                 listing status at Historic England's National Heritage List before proceeding.
               </span>
             </li>
@@ -393,10 +403,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pre-application advice</strong> — City of York Council offers pre-application
-                planning advice for a fee. For a listed building installation, this is strongly
-                recommended before commissioning an installer to avoid wasted costs if consent
-                is refused.
+                <strong>Pre-application advice</strong> — City of York Council offers
+                pre-application planning advice for a fee. For a listed building installation, this
+                is strongly recommended before commissioning an installer to avoid wasted costs if
+                consent is refused.
               </span>
             </li>
           </ul>
@@ -421,8 +431,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.411.4 — PME earthing</strong> — most York properties are
-                on Northern Powergrid PME (TN-C-S) supplies. The installer must carry out a PME
+                <strong>Regulation 722.411.4 — PME earthing</strong> — most York properties are on
+                Northern Powergrid PME (TN-C-S) supplies. The installer must carry out a PME
                 earthing risk assessment and determine whether a supplementary earth electrode is
                 required at the charger location.
               </span>
@@ -431,24 +441,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 722.531.2 — RCD protection</strong> — the EV charger circuit
-                requires appropriate RCD protection. Modern OZEV-approved smart chargers with
-                Type B equivalent DC fault protection allow a Type A RCBO to be used at the
-                consumer unit — your installer will specify the correct device.
+                requires appropriate RCD protection. Modern OZEV-approved smart chargers with Type B
+                equivalent DC fault protection allow a Type A RCBO to be used at the consumer unit —
+                your installer will specify the correct device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit</strong> — the EV charger must be on its own dedicated
-                32A final circuit, not shared with other loads.
+                <strong>Dedicated circuit</strong> — the EV charger must be on its own dedicated 32A
+                final circuit, not shared with other loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Regulations Part P</strong> — notifiable electrical work. NICEIC
-                or NAPIT registered installers self-certify under Part P. An EIC must be issued
-                on completion.
+                <strong>Building Regulations Part P</strong> — notifiable electrical work. NICEIC or
+                NAPIT registered installers self-certify under Part P. An EIC must be issued on
+                completion.
               </span>
             </li>
           </ul>
@@ -462,8 +472,8 @@ const sections = [
     content: (
       <>
         <p>
-          York and the surrounding North Yorkshire area have a good number of OZEV-approved
-          EV charger installers. Use the following criteria to select a competent, well-insured
+          York and the surrounding North Yorkshire area have a good number of OZEV-approved EV
+          charger installers. Use the following criteria to select a competent, well-insured
           contractor.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -471,16 +481,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search.
-                Only OZEV-approved installers can claim the EVHS grant on your behalf.
+                <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search. Only
+                OZEV-approved installers can claim the EVHS grant on your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — check the scheme's online register.
-                Registration provides assurance of qualifications, regular technical assessment,
-                and appropriate insurance cover.
+                Registration provides assurance of qualifications, regular technical assessment, and
+                appropriate insurance cover.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,8 +505,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>All-inclusive written quote</strong> — confirm all costs are included:
-                charger unit, cable, protection devices, commissioning, EIC, Part P certificate,
-                and OZEV grant deduction where applicable. No hidden extras.
+                charger unit, cable, protection devices, commissioning, EIC, Part P certificate, and
+                OZEV grant deduction where applicable. No hidden extras.
               </span>
             </li>
           </ul>
@@ -510,8 +520,8 @@ const sections = [
     content: (
       <>
         <p>
-          York's combination of high EV adoption aspirations, significant new-build development,
-          and a growing professional population creates strong demand for OZEV-approved EV charger
+          York's combination of high EV adoption aspirations, significant new-build development, and
+          a growing professional population creates strong demand for OZEV-approved EV charger
           installers. Electricians who understand York's planning environment — particularly the
           conservation area and listed building implications — can command premium prices for
           specialist installations.
@@ -543,8 +553,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . Include OZEV grant deductions, earth electrode costs, and consumer unit upgrades.
-                  Respond to York EV enquiries faster than local competitors.
+                  . Include OZEV grant deductions, earth electrode costs, and consumer unit
+                  upgrades. Respond to York EV enquiries faster than local competitors.
                 </p>
               </div>
             </div>
@@ -552,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in York with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -589,7 +599,7 @@ export default function EVChargerInstallationYorkPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in York"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

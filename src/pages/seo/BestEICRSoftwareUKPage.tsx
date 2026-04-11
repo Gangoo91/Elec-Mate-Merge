@@ -114,9 +114,9 @@ export default function BestEICRSoftwareUKPage() {
             <>
               <p>
                 Elec-Mate is the most comprehensive EICR platform available in the UK. It goes
-                beyond certificates to include everything an electrician needs: 8 certificate types,
-                70+ calculators, 5 AI specialist agents, 12 AI-powered tools, 46+ training courses,
-                and full business management features.
+                beyond certificates to include everything an electrician needs: 16 certificate
+                types, 70+ calculators, 5 AI specialist agents, 12 AI-powered tools, 46+ training
+                courses, and full business management features.
               </p>
               <p>
                 <strong>EICR-specific features:</strong> The EICR workflow includes an{' '}
@@ -477,7 +477,7 @@ export default function BestEICRSoftwareUKPage() {
         {
           question: 'What is the best EICR software in the UK for 2026?',
           answer:
-            'Based on features, AI capability, and value for money, Elec-Mate is the most complete EICR software available in the UK in 2026. It is the only platform that combines AI board scanning, voice test entry, defect code AI, and remedial cost estimation with 8 certificate types, 70+ BS 7671 calculators, 46+ training courses, and business management tools. iCertifi and CertsApp are solid alternatives if you only need certificates and basic calculators. Easy EICR and SimplyEICR are suitable for electricians who want a simple, focused EICR-only tool.',
+            'Based on features, AI capability, and value for money, Elec-Mate is the most complete EICR software available in the UK in 2026. It is the only platform that combines AI board scanning, voice test entry, defect code AI, and remedial cost estimation with 16 certificate types, 70+ BS 7671 calculators, 46+ training courses, and business management tools. iCertifi and CertsApp are solid alternatives if you only need certificates and basic calculators. Easy EICR and SimplyEICR are suitable for electricians who want a simple, focused EICR-only tool.',
         },
         {
           question: 'Can I complete an EICR on my phone?',
@@ -492,7 +492,7 @@ export default function BestEICRSoftwareUKPage() {
         {
           question: 'How much does EICR software cost?',
           answer:
-            'EICR software pricing varies significantly. Per-certificate models charge £2-5 per certificate, which adds up quickly for busy electricians. Subscription models range from free (very limited) to £20+ per month depending on features. Elec-Mate starts from £5.99 per month with unlimited certificates and all features included — 8 certificate types, 70+ calculators, AI tools, training courses, and business management. Traditional desktop software can cost £200-500+ per year. The best value depends on your volume of work and which features you actually use.',
+            'EICR software pricing varies significantly. Per-certificate models charge £2-5 per certificate, which adds up quickly for busy electricians. Subscription models range from free (very limited) to £20+ per month depending on features. Elec-Mate starts from £5.99 per month with unlimited certificates and all features included — 16 certificate types, 70+ calculators, AI tools, training courses, and business management. Traditional desktop software can cost £200-500+ per year. The best value depends on your volume of work and which features you actually use.',
         },
         {
           question: 'What AI features help with EICRs?',
@@ -531,7 +531,7 @@ export default function BestEICRSoftwareUKPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test, defect AI, digital signatures, and PDF export.',
+            'All 16 certificate types with AI board scanner, voice test, defect AI, digital signatures, and PDF export.',
           icon: FileCheck2,
           category: 'Tools',
         },
@@ -561,7 +561,7 @@ export default function BestEICRSoftwareUKPage() {
         },
       ]}
       ctaHeading="Try the most complete EICR software in the UK"
-      ctaSubheading="AI Board Scanner, Voice Test Entry, Defect Code AI, 8 certificate types, 70+ calculators, 46+ training courses. 7-day free trial, cancel anytime."
+      ctaSubheading="AI Board Scanner, Voice Test Entry, Defect Code AI, 16 certificate types, 70+ calculators, 46+ training courses. 7-day free trial, cancel anytime."
     />
   );
 }

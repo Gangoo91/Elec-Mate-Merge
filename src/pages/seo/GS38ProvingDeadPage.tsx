@@ -573,7 +573,7 @@ export default function GS38ProvingDeadPage() {
       faqHeading="Frequently Asked Questions About GS 38 and Proving Dead"
       relatedPages={relatedPages}
       ctaHeading="Stay Safe with Proper Test Procedures"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered RAMS generation, safety training courses, and professional certification tools. GS 38 procedures are built into every assessment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered RAMS generation, safety training courses, and professional certification tools. GS 38 procedures are built into every assessment. 7-day free trial, cancel anytime."
     />
   );
 }

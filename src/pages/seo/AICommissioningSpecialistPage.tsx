@@ -443,7 +443,7 @@ export default function AICommissioningSpecialistPage() {
       faqHeading="Frequently Asked Questions About AI Commissioning"
       relatedPages={relatedPages}
       ctaHeading="Commission Installations with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Commissioning Specialist. Tailored checklists, functional test guidance, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Commissioning Specialist. Tailored checklists, functional test guidance, and professional documentation. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-commissioning-specialist"
     />
   );

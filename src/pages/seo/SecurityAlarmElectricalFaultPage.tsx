@@ -45,7 +45,7 @@ const faqs = [
   {
     question: 'Why is my security alarm beeping intermittently?',
     answer:
-      'Intermittent beeping from a security alarm panel — particularly a series of short beeps or a slow regular tone — almost always indicates a fault condition rather than an intruder alert. The most common causes are a low or failing standby battery (voltage below approximately 11.5 V), a mains power supply fault (power cut, blown fuse, or failed transformer), a tamper alert on a detector or cable, or a communication system fault on a monitored system. Refer to the panel\'s user manual to identify the fault from the LED or display pattern.',
+      "Intermittent beeping from a security alarm panel — particularly a series of short beeps or a slow regular tone — almost always indicates a fault condition rather than an intruder alert. The most common causes are a low or failing standby battery (voltage below approximately 11.5 V), a mains power supply fault (power cut, blown fuse, or failed transformer), a tamper alert on a detector or cable, or a communication system fault on a monitored system. Refer to the panel's user manual to identify the fault from the LED or display pattern.",
   },
   {
     question: 'My alarm has triggered a false alarm — how do I stop it?',
@@ -123,9 +123,9 @@ const sections = [
         <p>
           The tamper circuit is one of the most important security features of a compliant intruder
           alarm installation. Every detection device, cable run, and the panel enclosure itself is
-          monitored by a normally-closed tamper loop. Any break in this loop — whether caused by
-          a detector cover being removed, a cable being cut, or an attempted intrusion into the
-          panel — generates an immediate tamper alert.
+          monitored by a normally-closed tamper loop. Any break in this loop — whether caused by a
+          detector cover being removed, a cable being cut, or an attempted intrusion into the panel
+          — generates an immediate tamper alert.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -143,28 +143,27 @@ const sections = [
               <ShieldAlert className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable tamper / anti-cut</strong> — some installations include anti-cut
-                monitoring on the zone wiring. A cable that has been cut, pinched, or developed
-                an open circuit will trigger this tamper. Cable tampers in accessible locations
-                (loft voids, cupboards) are a known vulnerability — investigate and repair the
-                cable run.
+                monitoring on the zone wiring. A cable that has been cut, pinched, or developed an
+                open circuit will trigger this tamper. Cable tampers in accessible locations (loft
+                voids, cupboards) are a known vulnerability — investigate and repair the cable run.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldAlert className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Panel enclosure tamper</strong> — the panel cabinet has a tamper switch
-                that triggers if the lid is removed. If this alert is showing without a legitimate
-                reason for the panel to have been opened, treat this as a potential security
-                incident — check that the panel has not been interfered with.
+                <strong>Panel enclosure tamper</strong> — the panel cabinet has a tamper switch that
+                triggers if the lid is removed. If this alert is showing without a legitimate reason
+                for the panel to have been opened, treat this as a potential security incident —
+                check that the panel has not been interfered with.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldAlert className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Never disable the tamper circuit</strong> — defeat of the tamper circuit
-                on an alarm system is a security vulnerability. If the tamper alert cannot be
-                cleared after investigation, call an alarm engineer — do not programme out the
-                tamper function.
+                <strong>Never disable the tamper circuit</strong> — defeat of the tamper circuit on
+                an alarm system is a security vulnerability. If the tamper alert cannot be cleared
+                after investigation, call an alarm engineer — do not programme out the tamper
+                function.
               </span>
             </li>
           </ul>
@@ -197,10 +196,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <BatteryLow className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Night-time sounder activation</strong> — a low standby battery causes
-                the alarm to sound intermittently, often in the early hours of the morning when
-                ambient temperature is lowest (cold reduces battery voltage). This is a common
-                and extremely disruptive fault. Replace the battery to resolve it.
+                <strong>Night-time sounder activation</strong> — a low standby battery causes the
+                alarm to sound intermittently, often in the early hours of the morning when ambient
+                temperature is lowest (cold reduces battery voltage). This is a common and extremely
+                disruptive fault. Replace the battery to resolve it.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -208,9 +207,9 @@ const sections = [
               <span>
                 <strong>Wireless detector batteries</strong> — in wireless alarm systems, each
                 detector has its own battery, typically a lithium primary cell rated for 3 to 5
-                years. Battery alerts from wireless detectors are shown on the panel display by
-                zone or device. Replace wireless detector batteries in pairs (where applicable)
-                and record the date.
+                years. Battery alerts from wireless detectors are shown on the panel display by zone
+                or device. Replace wireless detector batteries in pairs (where applicable) and
+                record the date.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -234,10 +233,9 @@ const sections = [
       <>
         <p>
           The mains power supply section of a security alarm panel converts 230 V AC to the
-          low-voltage DC required by the panel electronics, detectors, and sounder circuits.
-          A mains power fault will cause the system to run from the standby battery — a temporary
-          measure that becomes a fault condition if the mains is not restored within a reasonable
-          time.
+          low-voltage DC required by the panel electronics, detectors, and sounder circuits. A mains
+          power fault will cause the system to run from the standby battery — a temporary measure
+          that becomes a fault condition if the mains is not restored within a reasonable time.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,28 +243,28 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mains power loss indication</strong> — most panels display a mains power
-                fault (often a yellow or amber LED labelled AC or MAINS) when the 230 V supply
-                to the panel is interrupted. The system continues to operate from the standby
-                battery. Check for a tripped fused spur or MCB before assuming a panel fault.
+                fault (often a yellow or amber LED labelled AC or MAINS) when the 230 V supply to
+                the panel is interrupted. The system continues to operate from the standby battery.
+                Check for a tripped fused spur or MCB before assuming a panel fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Blown transformer fuse</strong> — the alarm panel transformer or SMPS
-                may have an internal thermal fuse or a replaceable fuse on the panel PCB. A blown
-                fuse is usually caused by a voltage transient, a fault in the bell or detector
-                circuit, or an ageing transformer. This requires engineer attention — working inside
-                an alarm panel on the mains section requires electrical competence.
+                <strong>Blown transformer fuse</strong> — the alarm panel transformer or SMPS may
+                have an internal thermal fuse or a replaceable fuse on the panel PCB. A blown fuse
+                is usually caused by a voltage transient, a fault in the bell or detector circuit,
+                or an ageing transformer. This requires engineer attention — working inside an alarm
+                panel on the mains section requires electrical competence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failed transformer or SMPS</strong> — an alarm panel power supply that
-                fails to charge the battery or provide operating voltage, confirmed by measuring
-                the DC output, indicates a failed transformer or SMPS unit. Replacement requires
-                the correct approved part for the panel model.
+                <strong>Failed transformer or SMPS</strong> — an alarm panel power supply that fails
+                to charge the battery or provide operating voltage, confirmed by measuring the DC
+                output, indicates a failed transformer or SMPS unit. Replacement requires the
+                correct approved part for the panel model.
               </span>
             </li>
           </ul>
@@ -285,10 +283,10 @@ const sections = [
     content: (
       <>
         <p>
-          Monitored alarm systems send alerts to an alarm receiving centre (ARC) via telephone
-          line, broadband, or GSM/4G cellular link. A communication fault means the ARC cannot
-          receive alerts — the alarm will still sound locally, but police or key holder response
-          will not be triggered.
+          Monitored alarm systems send alerts to an alarm receiving centre (ARC) via telephone line,
+          broadband, or GSM/4G cellular link. A communication fault means the ARC cannot receive
+          alerts — the alarm will still sound locally, but police or key holder response will not be
+          triggered.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -296,28 +294,28 @@ const sections = [
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PSTN line fault</strong> — traditional telephone line monitoring is being
-                superseded by IP and cellular communication as the PSTN is phased out across the
-                UK (scheduled completion 2027). Systems relying solely on PSTN should be upgraded
-                to IP or cellular communication before the line is withdrawn.
+                superseded by IP and cellular communication as the PSTN is phased out across the UK
+                (scheduled completion 2027). Systems relying solely on PSTN should be upgraded to IP
+                or cellular communication before the line is withdrawn.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP / broadband communication fault</strong> — broadband outages,
-                router failures, or changes to router settings (firewall rules, IP address
-                changes) can break IP signalling. Most IP alarm communicators require a static
-                IP or a router that supports port forwarding to the alarm panel. Check broadband
-                connectivity and router settings.
+                <strong>IP / broadband communication fault</strong> — broadband outages, router
+                failures, or changes to router settings (firewall rules, IP address changes) can
+                break IP signalling. Most IP alarm communicators require a static IP or a router
+                that supports port forwarding to the alarm panel. Check broadband connectivity and
+                router settings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>GSM / 4G cellular fault</strong> — cellular communicators rely on mobile
-                network coverage. A SIM that has expired, been deactivated, or is out of credit
-                will cause a communication fault. Check the SIM status with the alarm company and
-                verify mobile network coverage at the panel location.
+                network coverage. A SIM that has expired, been deactivated, or is out of credit will
+                cause a communication fault. Check the SIM status with the alarm company and verify
+                mobile network coverage at the panel location.
               </span>
             </li>
           </ul>
@@ -339,30 +337,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe to reset yourself</strong> — a low battery alert where you have
-                already replaced the battery (acknowledging the fault clears the alert),
-                a tamper alert caused by a detector cover you have re-fitted securely,
-                a mains power loss alert following a known power cut that has now been restored,
-                or a false alarm from a zone that you have identified and addressed (clean a dirty
-                detector lens, re-fit a loose magnetic contact).
+                <strong>Safe to reset yourself</strong> — a low battery alert where you have already
+                replaced the battery (acknowledging the fault clears the alert), a tamper alert
+                caused by a detector cover you have re-fitted securely, a mains power loss alert
+                following a known power cut that has now been restored, or a false alarm from a zone
+                that you have identified and addressed (clean a dirty detector lens, re-fit a loose
+                magnetic contact).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Call an alarm engineer</strong> — any fault code you cannot identify from
-                the manual, a tamper alert with no obvious physical cause, the alarm sounding
-                during the set period without a zone trigger, a zone that repeatedly triggers
-                false alarms, or any work that requires opening the panel enclosure and accessing
-                the PCB or mains wiring.
+                the manual, a tamper alert with no obvious physical cause, the alarm sounding during
+                the set period without a zone trigger, a zone that repeatedly triggers false alarms,
+                or any work that requires opening the panel enclosure and accessing the PCB or mains
+                wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Call an electrician (not the alarm company)</strong> — for a blown fuse
-                or tripped MCB on the dedicated mains supply circuit to the alarm panel, damaged
-                mains supply cable, or to advise on surge protection for the supply circuit.
+                <strong>Call an electrician (not the alarm company)</strong> — for a blown fuse or
+                tripped MCB on the dedicated mains supply circuit to the alarm panel, damaged mains
+                supply cable, or to advise on surge protection for the supply circuit.
               </span>
             </li>
           </ul>
@@ -376,10 +374,9 @@ const sections = [
     content: (
       <>
         <p>
-          Electricians are frequently asked to attend security alarm faults — particularly when
-          the fault presents as a mains supply problem. Understanding the boundary between
-          electrical installation work and alarm systems engineering helps set clear expectations
-          with clients.
+          Electricians are frequently asked to attend security alarm faults — particularly when the
+          fault presents as a mains supply problem. Understanding the boundary between electrical
+          installation work and alarm systems engineering helps set clear expectations with clients.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -389,8 +386,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EICR and Security Alarm Systems</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When carrying out an EICR on a property with a security alarm, inspect and test
-                  the dedicated mains supply circuit (typically a fused spur or small MCB). Note
-                  the presence of the alarm system in the schedule of particulars. Use the{' '}
+                  the dedicated mains supply circuit (typically a fused spur or small MCB). Note the
+                  presence of the alarm system in the schedule of particulars. Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
@@ -418,7 +415,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Generate electrical certificates on your phone with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={ShieldAlert}
         />
       </>
@@ -455,7 +452,7 @@ export default function SecurityAlarmElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Security Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Generate Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, minor works certificates, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

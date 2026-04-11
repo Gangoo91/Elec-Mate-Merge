@@ -582,7 +582,7 @@ export default function ElectricalCustomerServicePage() {
         },
       ]}
       ctaHeading="Deliver Five-Star Service With Elec-Mate"
-      ctaSubheading="Professional certificates, instant quotes, branded invoices, and automatic re-inspection reminders. Every customer touchpoint reflects the quality of your work. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Professional certificates, instant quotes, branded invoices, and automatic re-inspection reminders. Every customer touchpoint reflects the quality of your work. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

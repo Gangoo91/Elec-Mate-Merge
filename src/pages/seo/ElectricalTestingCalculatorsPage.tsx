@@ -465,10 +465,15 @@ export default function ElectricalTestingCalculatorsPage() {
               divided by the product of all these factors. You then select a cable from the
               appropriate table in Appendix 4 whose tabulated current rating meets or exceeds this
               value. Finally, you verify that the cable also satisfies the{' '}
-              <SEOInternalLink href="/tools/adiabatic-equation-calculator">adiabatic equation</SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                adiabatic equation
+              </SEOInternalLink>{' '}
               for fault protection, and that the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">volt drop</SEOInternalLink>{' '}
-              is within limits. Our <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/voltage-drop-calculator">volt drop</SEOInternalLink> is
+              within limits. Our{' '}
+              <SEOInternalLink href="/tools/cable-sizing-calculator">
+                cable sizing calculator
+              </SEOInternalLink>{' '}
               performs all of these steps in one go, showing the full working and the selected cable
               size.
             </p>
@@ -526,7 +531,7 @@ export default function ElectricalTestingCalculatorsPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop flipping through tables on site"
-        subheading="Join 430+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate calculators to speed up testing and certification. 7-day free trial, cancel anytime."
       />
     </PublicPageLayout>
   );

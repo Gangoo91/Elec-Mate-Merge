@@ -464,7 +464,7 @@ export default function SolarPVCertificatePage() {
             </p>
             <p>
               Elec-Mate is part of a complete platform for UK electricians that includes 70
-              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 46+ training courses, 8
               certificate types, and integration with Xero and QuickBooks for invoicing. The{' '}
               <SEOInternalLink href="/tools/cable-sizing-calculator">
                 cable sizing calculator
@@ -576,8 +576,8 @@ export default function SolarPVCertificatePage() {
             <p>
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, prospective fault current, and more — plus specific PV calculators for
-              string sizing and expected generation. Combined with 8 certificate types, 8 Elec-AI
-              agents, 12 AI tools, and 36+ training courses, it replaces multiple separate tools.
+              string sizing and expected generation. Combined with 16 certificate types, 8 Elec-AI
+              agents, 12 AI tools, and 46+ training courses, it replaces multiple separate tools.
               Xero and QuickBooks integration means you can raise invoices directly from completed
               installations.
             </p>
@@ -625,7 +625,7 @@ export default function SolarPVCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop wrestling with solar PV paperwork"
-        subheading="Join 430+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

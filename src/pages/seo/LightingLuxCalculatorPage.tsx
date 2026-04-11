@@ -370,7 +370,7 @@ export default function LightingLuxCalculatorPage() {
           icon: Shield,
           title: 'BS EN 12464-1 Compliant',
           description:
-            "All calculations follow BS EN 12464-1 and CIBSE lighting guide recommendations. Part of Elec-Mate's 50+ calculators for UK electricians.",
+            "All calculations follow BS EN 12464-1 and CIBSE lighting guide recommendations. Part of Elec-Mate's 70+ calculators for UK electricians.",
         },
       ]}
       featuresHeading="Lighting Calculator Features"
@@ -458,7 +458,7 @@ export default function LightingLuxCalculatorPage() {
         },
       ]}
       ctaHeading="Calculate lux levels in seconds"
-      ctaSubheading="Join UK electricians using Elec-Mate's 50+ calculators on every job. 7-day free trial, cancel anytime."
+      ctaSubheading="Join UK electricians using Elec-Mate's 70+ calculators on every job. 7-day free trial, cancel anytime."
       toolPath="/tools/lighting-lux-calculator"
     />
   );

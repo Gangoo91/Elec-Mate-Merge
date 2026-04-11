@@ -39,11 +39,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A 7kW home EV charger installation in Cambridge typically costs £850 to £1,300, reflecting the East of England\'s higher-than-average labour rates driven by the technology and biotech sectors.',
-  'The OZEV EV chargepoint grant provides up to £350 for eligible flat owners and tenants. Cambridge\'s large university and college accommodation sector means many residents are eligible.',
+  "A 7kW home EV charger installation in Cambridge typically costs £850 to £1,300, reflecting the East of England's higher-than-average labour rates driven by the technology and biotech sectors.",
+  "The OZEV EV chargepoint grant provides up to £350 for eligible flat owners and tenants. Cambridge's large university and college accommodation sector means many residents are eligible.",
   'UK Power Networks (UKPN) is the DNO for Cambridge and the East of England. G98 notification is required before energising any domestic 7kW EV charger.',
   'BS 7671:2018 Section 722 governs all EV charging installations. PME earthing is common in Cambridge, requiring an earth rod or PEN fault detection for outdoor charger locations.',
-  'Cambridge\'s many conservation areas and listed buildings — including large areas of the city centre and surrounding villages — may require planning permission for visible charger installations.',
+  "Cambridge's many conservation areas and listed buildings — including large areas of the city centre and surrounding villages — may require planning permission for visible charger installations.",
   'NICEIC and NAPIT-registered electricians can self-certify EV charger installations to Part P of the Building Regulations. Cambridge City Council must be notified for listed building works.',
 ];
 
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Do I need an earth rod for an EV charger in Cambridge?',
     answer:
-      'In most cases, yes, if the charger is outdoors. Most Cambridge properties are on PME (TN-C-S) supplies. Regulation 722.411.4.1 requires that where an EV charging point is installed outdoors on a PME supply, a local earth electrode (earth rod) is installed or a charger with integrated PEN fault detection is used. Cambridge\'s flat fenland terrain and clay soils generally provide good earth resistance values for earth rod installations. An earth rod adds approximately £80 to £150 to the installation cost.',
+      "In most cases, yes, if the charger is outdoors. Most Cambridge properties are on PME (TN-C-S) supplies. Regulation 722.411.4.1 requires that where an EV charging point is installed outdoors on a PME supply, a local earth electrode (earth rod) is installed or a charger with integrated PEN fault detection is used. Cambridge's flat fenland terrain and clay soils generally provide good earth resistance values for earth rod installations. An earth rod adds approximately £80 to £150 to the installation cost.",
   },
   {
     question: 'How long does EV charger installation take in Cambridge?',
@@ -94,7 +94,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-cost',
     title: 'EV Charger Installation Cost UK',
-    description: 'National price guide for EV charger installation covering all charger types and cost factors.',
+    description:
+      'National price guide for EV charger installation covering all charger types and cost factors.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -155,20 +156,19 @@ const sections = [
         </p>
         <p>
           Cambridge presents a distinctive installation landscape. The historic city centre is
-          dominated by listed buildings and conservation areas, creating planning considerations
-          for charger installations in visible locations. Beyond the centre, Cambridge's suburbs
-          and surrounding villages have a mix of Victorian terraces, inter-war semis, and modern
-          new builds — the latter, particularly in north Cambridge growth areas, being
-          straightforward to fit with a home charger.
+          dominated by listed buildings and conservation areas, creating planning considerations for
+          charger installations in visible locations. Beyond the centre, Cambridge's suburbs and
+          surrounding villages have a mix of Victorian terraces, inter-war semis, and modern new
+          builds — the latter, particularly in north Cambridge growth areas, being straightforward
+          to fit with a home charger.
         </p>
         <p>
           This guide covers realistic costs for EV charger installation in Cambridge in 2026, the
           OZEV grant of up to £350 for eligible residents, the{' '}
           <strong>UK Power Networks (UKPN)</strong> DNO notification process, PME earthing
           requirements, and the conservation area planning considerations that are unique to
-          Cambridge. Whether you are a Cambridge homeowner getting quotes or an electrician
-          building your East of England EV installation business, this guide reflects 2026
-          market conditions.
+          Cambridge. Whether you are a Cambridge homeowner getting quotes or an electrician building
+          your East of England EV installation business, this guide reflects 2026 market conditions.
         </p>
       </>
     ),
@@ -191,44 +191,43 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (modern detached/semi, garage or driveway)</strong>
-                {' '}— £850 to £1,050. Short cable run, spare consumer unit way, standard earth
-                rod. Common for north Cambridge new builds in Eddington, Northstowe, and
-                Cambourne.
+                <strong>Simple installation (modern detached/semi, garage or driveway)</strong> —
+                £850 to £1,050. Short cable run, spare consumer unit way, standard earth rod. Common
+                for north Cambridge new builds in Eddington, Northstowe, and Cambourne.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (terrace or Victorian semi)</strong> — £1,000
-                to £1,200. Cable run of 8 to 15 metres, PME earth rod required, possible MCB
-                addition to the consumer unit. Typical for terraces in Romsey Town, Mill Road,
-                and Coleridge areas.
+                <strong>Standard installation (terrace or Victorian semi)</strong> — £1,000 to
+                £1,200. Cable run of 8 to 15 metres, PME earth rod required, possible MCB addition
+                to the consumer unit. Typical for terraces in Romsey Town, Mill Road, and Coleridge
+                areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (listed building, conservation area, long run)</strong>
-                {' '}— £1,200 to £1,600+. Internal cable routing required to avoid visible external
-                works, possible consumer unit upgrade, specialist fixings. Conservation areas
-                and listed properties in the city centre and Newnham areas.
+                <strong>Complex installation (listed building, conservation area, long run)</strong>{' '}
+                — £1,200 to £1,600+. Internal cable routing required to avoid visible external
+                works, possible consumer unit upgrade, specialist fixings. Conservation areas and
+                listed properties in the city centre and Newnham areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires
-                a three-phase supply and G99 approval from UKPN. Suitable for technology sector
+                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires a
+                three-phase supply and G99 approval from UKPN. Suitable for technology sector
                 employees with high-mileage requirements and an existing three-phase supply.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Labour rates for qualified electricians in Cambridge and the wider East of England
-          range from £42 to £58 per hour. A standard installation takes 3 to 5 hours; conservation
-          area jobs requiring careful internal cable routing may take a full day.
+          Labour rates for qualified electricians in Cambridge and the wider East of England range
+          from £42 to £58 per hour. A standard installation takes 3 to 5 hours; conservation area
+          jobs requiring careful internal cable routing may take a full day.
         </p>
       </>
     ),
@@ -247,19 +246,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and
-                tenants who own or lease an eligible plug-in vehicle. Cambridge's large student
-                and research community means many city residents in rented accommodation are
-                eligible. Applied for by your OZEV-approved installer.
+                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants
+                who own or lease an eligible plug-in vehicle. Cambridge's large student and research
+                community means many city residents in rented accommodation are eligible. Applied
+                for by your OZEV-approved installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace Charging Scheme</strong> — Cambridge's many tech companies,
-                biotech firms, and research institutions can claim up to £350 per socket
-                (maximum 40 sockets) for workplace EV charger installation. Requires an
-                OZEV-approved commercial installer.
+                biotech firms, and research institutions can claim up to £350 per socket (maximum 40
+                sockets) for workplace EV charger installation. Requires an OZEV-approved commercial
+                installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,9 +266,9 @@ const sections = [
               <span>
                 <strong>Greater Cambridge EV strategy</strong> — the Greater Cambridge Partnership
                 and Cambridgeshire and Peterborough Combined Authority support EV charging
-                infrastructure expansion, including on-street charging rollout in residential
-                areas without off-street parking. Check Cambridge City Council's transport pages
-                for current schemes.
+                infrastructure expansion, including on-street charging rollout in residential areas
+                without off-street parking. Check Cambridge City Council's transport pages for
+                current schemes.
               </span>
             </li>
           </ul>
@@ -294,8 +293,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated
-                32A circuit from the consumer unit. Older Cambridge consumer units in Victorian
+                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
+                circuit from the consumer unit. Older Cambridge consumer units in Victorian
                 properties may not have a spare way, requiring a board upgrade or separate
                 enclosure.
               </span>
@@ -305,8 +304,8 @@ const sections = [
               <span>
                 <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
                 protection covering the EV circuit. Modern smart chargers typically include
-                integrated DC fault protection, satisfying the Type B RCD or Type A with 6mA
-                DC RDC-DD requirement.
+                integrated DC fault protection, satisfying the Type B RCD or Type A with 6mA DC
+                RDC-DD requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -314,8 +313,8 @@ const sections = [
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 requires all new home EV chargers to support smart
-                scheduling, randomised delay, and demand side response. All chargers on the
-                OZEV approved charger list are compliant.
+                scheduling, randomised delay, and demand side response. All chargers on the OZEV
+                approved charger list are compliant.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -325,9 +324,9 @@ const sections = [
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
-                to verify voltage drop is within the 5% limit for the actual cable run length.
-                6mm² is adequate for most Cambridge installations; 10mm² may be needed for
-                runs exceeding 15 metres or where 10mm² is needed for derating.
+                to verify voltage drop is within the 5% limit for the actual cable run length. 6mm²
+                is adequate for most Cambridge installations; 10mm² may be needed for runs exceeding
+                15 metres or where 10mm² is needed for derating.
               </span>
             </li>
           </ul>
@@ -342,8 +341,8 @@ const sections = [
       <>
         <p>
           The majority of Cambridge properties are supplied on PME (TN-C-S) earthing arrangements.
-          Regulation 722.411.4.1 and the IET Code of Practice for EV Charging Equipment
-          Installation require specific protective measures for outdoor EV charging on PME supplies.
+          Regulation 722.411.4.1 and the IET Code of Practice for EV Charging Equipment Installation
+          require specific protective measures for outdoor EV charging on PME supplies.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -361,16 +360,16 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Installing a local earth electrode (earth rod) at the charger location and using an
               appropriate RCD to create a TT arrangement is the standard approach for outdoor
-              Cambridge chargers. Cambridge's clay and alluvial soils typically give excellent
-              earth resistance values. Alternatively, chargers with integrated PEN fault detection
-              avoid the need for an earth rod entirely.
+              Cambridge chargers. Cambridge's clay and alluvial soils typically give excellent earth
+              resistance values. Alternatively, chargers with integrated PEN fault detection avoid
+              the need for an earth rod entirely.
             </p>
           </div>
         </div>
         <p>
           An earth rod installation adds approximately £80 to £150 to the total cost. Your
-          electrician will test earth resistance values to confirm they are within acceptable
-          limits before completing the installation.
+          electrician will test earth resistance values to confirm they are within acceptable limits
+          before completing the installation.
         </p>
       </>
     ),
@@ -383,36 +382,36 @@ const sections = [
         <p>
           <strong>UK Power Networks (UKPN)</strong> — specifically the UKPN East region — is the
           Distribution Network Operator for Cambridge, Cambridgeshire, and the wider East of
-          England. G98 notification to UKPN is a legal requirement before any domestic EV charger
-          is energised.
+          England. G98 notification to UKPN is a legal requirement before any domestic EV charger is
+          energised.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98 notification (7kW single-phase)</strong> — submit online via the
-                UKPN portal. This is a notification, not an application — the installer proceeds
-                with connection and notifies concurrently for standard domestic 7kW installations.
-                No prior approval is required.
+                <strong>G98 notification (7kW single-phase)</strong> — submit online via the UKPN
+                portal. This is a notification, not an application — the installer proceeds with
+                connection and notifies concurrently for standard domestic 7kW installations. No
+                prior approval is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 application (22kW three-phase)</strong> — prior approval required
-                from UKPN before installation. Allow 4 to 10 weeks. Required for three-phase
-                chargers and multiple charger commercial premises. Cambridge's tech employers
-                increasingly need G99 for workplace charging hubs.
+                <strong>G99 application (22kW three-phase)</strong> — prior approval required from
+                UKPN before installation. Allow 4 to 10 weeks. Required for three-phase chargers and
+                multiple charger commercial premises. Cambridge's tech employers increasingly need
+                G99 for workplace charging hubs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Installer responsibility</strong> — the electrician handles UKPN
-                notification. Confirm this is included in the quoted price. Failure to notify
-                UKPN can result in the charger being required to be disconnected until
-                notification is properly submitted.
+                notification. Confirm this is included in the quoted price. Failure to notify UKPN
+                can result in the charger being required to be disconnected until notification is
+                properly submitted.
               </span>
             </li>
           </ul>
@@ -436,11 +435,11 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conservation areas across Cambridge</strong> — Cambridge City Council
-                designates extensive conservation areas covering much of the historic centre,
-                the Backs, Newnham, Chesterton, and parts of Romsey Town. Installations on
-                front elevations of properties in conservation areas may require planning
-                permission, particularly where the charger or cable trunking is prominently
-                visible from the street.
+                designates extensive conservation areas covering much of the historic centre, the
+                Backs, Newnham, Chesterton, and parts of Romsey Town. Installations on front
+                elevations of properties in conservation areas may require planning permission,
+                particularly where the charger or cable trunking is prominently visible from the
+                street.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,28 +448,28 @@ const sections = [
                 <strong>Listed buildings</strong> — Listed Building Consent from Cambridge City
                 Council is required for any works that alter the character of a listed building,
                 including drilling through external walls or mounting equipment on listed
-                elevations. An experienced Cambridge electrician will advise on the consent
-                process and help design an installation that minimises impact.
+                elevations. An experienced Cambridge electrician will advise on the consent process
+                and help design an installation that minimises impact.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Internal cable routing</strong> — for conservation area and listed
-                building properties, running the cable internally (through floors, walls, and
-                ceilings) and exiting at a discreet rear or side elevation avoids the need
-                for planning permission in most cases. This increases installation time and
-                cost but ensures compliance. Always confirm the specific planning requirements
-                for your property before booking an installer.
+                <strong>Internal cable routing</strong> — for conservation area and listed building
+                properties, running the cable internally (through floors, walls, and ceilings) and
+                exiting at a discreet rear or side elevation avoids the need for planning permission
+                in most cases. This increases installation time and cost but ensures compliance.
+                Always confirm the specific planning requirements for your property before booking
+                an installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Village properties in the Cambridge green belt</strong> — surrounding
-                villages including Grantchester, Trumpington, Cherry Hinton, and Histon may
-                have their own conservation designations. Check with South Cambridgeshire
-                District Council for village-specific planning requirements before installation.
+                villages including Grantchester, Trumpington, Cherry Hinton, and Histon may have
+                their own conservation designations. Check with South Cambridgeshire District
+                Council for village-specific planning requirements before installation.
               </span>
             </li>
           </ul>
@@ -484,10 +483,10 @@ const sections = [
     content: (
       <>
         <p>
-          Cambridge and the wider Cambridgeshire area represent a high-value market for EV
-          charger installation. Higher average incomes, strong EV uptake, and a growing base of
-          tech employer workplace charging projects make this a competitive but rewarding area
-          for NICEIC and NAPIT-registered electricians.
+          Cambridge and the wider Cambridgeshire area represent a high-value market for EV charger
+          installation. Higher average incomes, strong EV uptake, and a growing base of tech
+          employer workplace charging projects make this a competitive but rewarding area for NICEIC
+          and NAPIT-registered electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -502,8 +501,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to build itemised, professional quotes that justify Cambridge pricing to
-                  informed customers.
+                  to build itemised, professional quotes that justify Cambridge pricing to informed
+                  customers.
                 </p>
               </div>
             </div>
@@ -518,9 +517,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
-                  under BS 7671 Section 722. Issue it from your phone before leaving site and
-                  email the customer a copy instantly. Elec-Mate's certificate app includes all
-                  required test result fields and supports all charger installation types.
+                  under BS 7671 Section 722. Issue it from your phone before leaving site and email
+                  the customer a copy instantly. Elec-Mate's certificate app includes all required
+                  test result fields and supports all charger installation types.
                 </p>
               </div>
             </div>
@@ -528,7 +527,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Cambridge EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cambridge and the East of England."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Cambridge and the East of England."
           icon={Car}
         />
       </>
@@ -565,7 +564,7 @@ export default function EVChargerInstallationCambridgePage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

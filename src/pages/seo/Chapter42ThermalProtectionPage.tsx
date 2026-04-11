@@ -145,9 +145,9 @@ const sections = [
           This chapter is often overlooked in favour of the more frequently referenced Section 411
           (shock protection) and Section 434 (overcurrent protection). However, thermal effects
           cause real fires. Electrical faults are one of the leading causes of domestic fires in the
-          UK — and many of these fires result from situations that Chapter 42 specifically addresses:
-          cables overheating in insulation, downlighters igniting ceiling timbers, fire barriers
-          breached by cable penetrations, and wiring in escape routes propagating flame.
+          UK — and many of these fires result from situations that Chapter 42 specifically
+          addresses: cables overheating in insulation, downlighters igniting ceiling timbers, fire
+          barriers breached by cable penetrations, and wiring in escape routes propagating flame.
         </p>
         <p>
           For electricians, Chapter 42 has direct practical implications for cable selection, cable
@@ -173,8 +173,8 @@ const sections = [
               <span>
                 <strong>Regulation 421.1.1</strong> — Electrical equipment shall not present a fire
                 hazard to adjacent materials. Equipment must be selected and installed so that its
-                temperature in normal operation and foreseeable fault conditions does not cause ignition
-                of adjacent combustible materials.
+                temperature in normal operation and foreseeable fault conditions does not cause
+                ignition of adjacent combustible materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -182,35 +182,35 @@ const sections = [
               <span>
                 <strong>Regulation 421.1.2</strong> — Where the surface temperature of electrical
                 equipment may cause a fire risk, the equipment must be mounted on or within material
-                that can withstand the temperature. Fixed equipment that may reach temperatures capable
-                of igniting adjacent material must be enclosed in fire-resistant material or mounted
-                with sufficient clearance.
+                that can withstand the temperature. Fixed equipment that may reach temperatures
+                capable of igniting adjacent material must be enclosed in fire-resistant material or
+                mounted with sufficient clearance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 421.1.3</strong> — Where equipment contains flammable liquid (such
-                as oil-filled transformers), precautions must be taken to prevent the spread of liquid,
-                flame, or combustion products. In domestic installations, this is rarely encountered
-                but applies to some older transformer types.
+                <strong>Regulation 421.1.3</strong> — Where equipment contains flammable liquid
+                (such as oil-filled transformers), precautions must be taken to prevent the spread
+                of liquid, flame, or combustion products. In domestic installations, this is rarely
+                encountered but applies to some older transformer types.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 421.1.6</strong> — The consumer unit (or equivalent) in domestic
-                premises must comply with BS EN 61439-3 and be constructed of non-combustible material.
-                This regulation, introduced in Amendment 3 of the 17th Edition, effectively requires
-                metal consumer units in domestic properties.
+                premises must comply with BS EN 61439-3 and be constructed of non-combustible
+                material. This regulation, introduced in Amendment 3 of the 17th Edition,
+                effectively requires metal consumer units in domestic properties.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The practical impact of Section 421 is that every installation decision — cable routing,
-          luminaire selection, enclosure choice, and equipment mounting — must consider the fire risk
-          to adjacent materials. This is not just about compliance; it is about preventing the
+          luminaire selection, enclosure choice, and equipment mounting — must consider the fire
+          risk to adjacent materials. This is not just about compliance; it is about preventing the
           electrical fires that cause deaths and property destruction.
         </p>
       </>
@@ -223,9 +223,9 @@ const sections = [
       <>
         <p>
           BS 7671 Section 421 addresses one of the most common fire safety issues in electrical
-          installations: cables penetrating fire-rated building elements. When a cable passes through
-          a fire-rated wall, floor, or ceiling, the penetration creates a potential path for fire to
-          spread from one compartment to another.
+          installations: cables penetrating fire-rated building elements. When a cable passes
+          through a fire-rated wall, floor, or ceiling, the penetration creates a potential path for
+          fire to spread from one compartment to another.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
@@ -233,15 +233,15 @@ const sections = [
             <div className="text-white text-sm space-y-2">
               <p>
                 <strong>The requirement:</strong> Where a wiring system passes through a building
-                element with a specified fire resistance, the fire resistance of that element must be
-                maintained after the cable penetration. This means fire-stopping the penetration with
-                an appropriate product.
+                element with a specified fire resistance, the fire resistance of that element must
+                be maintained after the cable penetration. This means fire-stopping the penetration
+                with an appropriate product.
               </p>
               <p>
                 <strong>What counts as a fire-rated element?</strong> Party walls between dwellings
-                (typically 60 minutes fire resistance), compartment walls and floors in flats and HMOs,
-                corridor walls in commercial buildings, floors between storeys, and any wall or floor
-                designated as a fire barrier in the building fire strategy.
+                (typically 60 minutes fire resistance), compartment walls and floors in flats and
+                HMOs, corridor walls in commercial buildings, floors between storeys, and any wall
+                or floor designated as a fire barrier in the building fire strategy.
               </p>
             </div>
           </div>
@@ -261,24 +261,25 @@ const sections = [
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire-rated mortar or cement</strong> — used for larger penetrations.
-                Proprietary fire-stopping mortars are tested and certified for specific fire ratings.
-                Standard builders mortar may not provide the required fire resistance.
+                Proprietary fire-stopping mortars are tested and certified for specific fire
+                ratings. Standard builders mortar may not provide the required fire resistance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire pillows</strong> — intumescent pillows placed in cable trays or trunking
-                passing through fire barriers. They expand in a fire to seal the tray. Suitable for
-                commercial installations with multiple cables on trays.
+                <strong>Fire pillows</strong> — intumescent pillows placed in cable trays or
+                trunking passing through fire barriers. They expand in a fire to seal the tray.
+                Suitable for commercial installations with multiple cables on trays.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Proprietary fire collars and sleeves</strong> — pre-formed fire-stopping
-                devices that clamp around the cable or pipe penetration. Quick to install and provide a
-                consistent fire rating. Must be matched to the cable type and aperture size.
+                devices that clamp around the cable or pipe penetration. Quick to install and
+                provide a consistent fire rating. Must be matched to the cable type and aperture
+                size.
               </span>
             </li>
           </ul>
@@ -286,10 +287,8 @@ const sections = [
         <p>
           Fire-stopping is not optional — it is a requirement of both BS 7671 and Building
           Regulations (Approved Document B). During an{' '}
-          <SEOInternalLink href="/guides/eicr-condition-report-guide">
-            EICR
-          </SEOInternalLink>
-          , missing or inadequate fire-stopping at cable penetrations is a common observation,
+          <SEOInternalLink href="/guides/eicr-condition-report-guide">EICR</SEOInternalLink>,
+          missing or inadequate fire-stopping at cable penetrations is a common observation,
           typically coded C3 (improvement recommended) unless the penetration is through a critical
           fire barrier such as a party wall, where C2 may be appropriate.
         </p>
@@ -314,26 +313,26 @@ const sections = [
                 <strong>When fire hoods are needed</strong> — fire hoods are required for recessed
                 luminaires installed in ceilings that form part of a fire barrier. This includes
                 ceilings between ground floor and first floor in houses (30-minute fire resistance),
-                ceilings in flats separating dwellings (60-minute fire resistance), and ceilings below
-                loft conversions.
+                ceilings in flats separating dwellings (60-minute fire resistance), and ceilings
+                below loft conversions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What a fire hood does</strong> — the fire hood is a metal or intumescent
-                enclosure that sits above the downlighter in the ceiling void. In normal operation, it
-                allows heat to dissipate. In a fire, the intumescent material expands to seal the gap
-                around the downlighter, maintaining the fire resistance of the ceiling for the rated
-                period.
+                enclosure that sits above the downlighter in the ceiling void. In normal operation,
+                it allows heat to dissipate. In a fire, the intumescent material expands to seal the
+                gap around the downlighter, maintaining the fire resistance of the ceiling for the
+                rated period.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire hood + thermal insulation</strong> — if thermal insulation (loft
-                insulation) is present above the ceiling, the fire hood also prevents insulation from
-                directly contacting the downlighter. Some fire hoods are rated as "insulation
+                insulation) is present above the ceiling, the fire hood also prevents insulation
+                from directly contacting the downlighter. Some fire hoods are rated as "insulation
                 coverable" (IC-rated), meaning the loft insulation can be placed directly over the
                 hood. Non-IC-rated hoods require a clearance gap.
               </span>
@@ -404,7 +403,8 @@ const sections = [
           C) has a current-carrying capacity of 27A. If the same cable is surrounded by loft
           insulation over a length greater than 500mm, the Ci factor of 0.5 reduces the capacity to
           13.5A — below the 20A MCB that typically protects a radial circuit. This means the circuit
-          does not comply unless the cable size is increased or the cable is kept clear of insulation.
+          does not comply unless the cable size is increased or the cable is kept clear of
+          insulation.
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5 my-4">
           <div className="flex items-start gap-3">
@@ -447,30 +447,31 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Flame propagation</strong> — cables installed in escape routes must not
-                propagate flame. Standard PVC-insulated cables (6242Y T&E) meet the single-cable flame
-                test (IEC 60332-1) but may not meet the requirements for bunched cables in vertical
-                runs (IEC 60332-3). Where multiple cables are bunched on a tray or in a vertical
-                riser, cables with improved flame-propagation characteristics or enclosure in
-                non-combustible trunking/conduit may be required.
+                propagate flame. Standard PVC-insulated cables (6242Y T&E) meet the single-cable
+                flame test (IEC 60332-1) but may not meet the requirements for bunched cables in
+                vertical runs (IEC 60332-3). Where multiple cables are bunched on a tray or in a
+                vertical riser, cables with improved flame-propagation characteristics or enclosure
+                in non-combustible trunking/conduit may be required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable fixings</strong> — cable fixings in escape routes must be fire-resistant.
-                Standard plastic cable clips soften and fail in a fire, allowing cables to drop from
-                the ceiling or wall. Falling cables can obstruct the escape route or cause injury.
-                Metal cable clips, metal conduit, or metal trunking should be used in escape routes.
+                <strong>Cable fixings</strong> — cable fixings in escape routes must be
+                fire-resistant. Standard plastic cable clips soften and fail in a fire, allowing
+                cables to drop from the ceiling or wall. Falling cables can obstruct the escape
+                route or cause injury. Metal cable clips, metal conduit, or metal trunking should be
+                used in escape routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Smoke and toxic fumes</strong> — in higher-risk locations (hospitals, care
-                homes, high-rise buildings), low-smoke halogen-free (LSOH) cables may be specified to
-                reduce toxic fume generation during a fire. Standard PVC cables produce hydrogen
-                chloride gas when burning, which is toxic and reduces visibility. LSOH cables produce
-                significantly less smoke and no halogenated gases.
+                homes, high-rise buildings), low-smoke halogen-free (LSOH) cables may be specified
+                to reduce toxic fume generation during a fire. Standard PVC cables produce hydrogen
+                chloride gas when burning, which is toxic and reduces visibility. LSOH cables
+                produce significantly less smoke and no halogenated gases.
               </span>
             </li>
           </ul>
@@ -513,16 +514,17 @@ const sections = [
                 <strong>Non-domestic enclosures</strong> — in non-domestic premises, the enclosure
                 material depends on the location and fire risk. Distribution boards in areas with
                 combustible construction or contents should be metal. In purpose-built electrical
-                switch rooms with non-combustible construction, plastic enclosures may be acceptable.
+                switch rooms with non-combustible construction, plastic enclosures may be
+                acceptable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Junction boxes and accessories</strong> — junction boxes behind combustible
-                surfaces (such as timber-framed walls) should be metal or mounted in a fire-resistant
-                enclosure. This is a particular consideration in timber-frame buildings where the
-                wall cavity contains combustible insulation.
+                surfaces (such as timber-framed walls) should be metal or mounted in a
+                fire-resistant enclosure. This is a particular consideration in timber-frame
+                buildings where the wall cavity contains combustible insulation.
               </span>
             </li>
           </ul>
@@ -544,9 +546,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable routing</strong> — identify thermal insulation locations before routing
-                cables. Clip cables to joist tops or use standoff clips in insulated loft spaces.
-                Apply Ci derating where cables must pass through insulation.
+                <strong>Cable routing</strong> — identify thermal insulation locations before
+                routing cables. Clip cables to joist tops or use standoff clips in insulated loft
+                spaces. Apply Ci derating where cables must pass through insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -554,16 +556,16 @@ const sections = [
               <span>
                 <strong>Fire-stopping</strong> — fire-stop every cable penetration through a
                 fire-rated building element. Use tested and certified products. Photograph the
-                fire-stopping before it is covered up — this is valuable evidence for building control
-                sign-off and future inspections.
+                fire-stopping before it is covered up — this is valuable evidence for building
+                control sign-off and future inspections.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Downlighters</strong> — install fire hoods on all recessed downlighters in
-                fire-rated ceilings unless the luminaire itself is fire-rated. Check the IC rating if
-                insulation will cover the hood.
+                fire-rated ceilings unless the luminaire itself is fire-rated. Check the IC rating
+                if insulation will cover the hood.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -610,8 +612,7 @@ export default function Chapter42ThermalProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Chapter 42:{' '}
-          <span className="text-yellow-400">Protection Against Thermal Effects</span>
+          Chapter 42: <span className="text-yellow-400">Protection Against Thermal Effects</span>
         </>
       }
       heroSubtitle="Electrical faults are a leading cause of domestic fires. Chapter 42 of BS 7671 sets out the requirements for fire protection from electrical equipment, fire-stopping cable penetrations, fire hoods for downlighters, cable derating in insulation, and wiring in escape routes."
@@ -622,7 +623,7 @@ export default function Chapter42ThermalProtectionPage() {
       faqHeading="Frequently Asked Questions About Chapter 42 and Thermal Effects"
       relatedPages={relatedPages}
       ctaHeading="Size Cables with Correct Derating and Document Fire Protection"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing with Ci derating, on-site EIC/EICR certificates, and professional fire protection documentation. 7-day free trial, cancel anytime."
     />
   );
 }

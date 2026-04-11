@@ -74,7 +74,8 @@ const faqs = [
       'Amendment 4 to BS 7671 is expected in 2026, though the IET has not confirmed a precise publication date. Amendment 4 is anticipated to be more substantial than Amendment 3, potentially addressing areas such as energy storage systems, electric vehicle charging infrastructure, smart home installations, and updates reflecting the latest harmonised European standards. When Amendment 4 is published, there will typically be a transition period during which both the current and amended versions are acceptable. Elec-Mate will update its regulation references, AI agents, and training content as soon as Amendment 4 is officially published.',
   },
   {
-    question: 'How should I document bidirectional device selection on my installation certificate?',
+    question:
+      'How should I document bidirectional device selection on my installation certificate?',
     answer:
       'BS 7671:2018+A3:2024 requires that protective devices in circuits with bidirectional current flow are suitable for bidirectional operation. On the Electrical Installation Certificate (EIC) for a solar PV or battery storage installation, you should record the make, model, and current rating of all protective devices used in the AC and DC circuit paths, and confirm (in the remarks or additional information section) that devices have been checked for bidirectional suitability. The manufacturer\'s datasheet or product specification sheet should confirm this suitability — many manufacturers now explicitly state "bidirectional" on datasheets for devices intended for solar and battery applications. Elec-Mate solar PV and battery storage certificates include a dedicated field for recording bidirectional device details so this information is captured as part of the standard certificate workflow.',
   },
@@ -159,8 +160,8 @@ const sections = [
           did not explicitly address.
         </p>
         <p>
-          The core of Amendment 3 is a new addition within <strong>Section 530 of BS 7671</strong>, which
-          sets out requirements for the selection and installation of protective and switching
+          The core of Amendment 3 is a new addition within <strong>Section 530 of BS 7671</strong>,
+          which sets out requirements for the selection and installation of protective and switching
           devices where bidirectional current flow may occur. The amendment also includes associated
           guidance notes to help designers and installers understand the practical implications.
         </p>
@@ -179,11 +180,11 @@ const sections = [
     content: (
       <>
         <p>
-          The Amendment 3 addition sits within Chapter 53 of BS 7671 (Section 530), which deals with switching and
-          control devices. The requirement states that where an installation includes one or more
-          sources of supply that can cause current to flow in more than one direction through a
-          protective or switching device, the device must be suitable for that bidirectional current
-          flow.
+          The Amendment 3 addition sits within Chapter 53 of BS 7671 (Section 530), which deals with
+          switching and control devices. The requirement states that where an installation includes
+          one or more sources of supply that can cause current to flow in more than one direction
+          through a protective or switching device, the device must be suitable for that
+          bidirectional current flow.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -407,7 +408,8 @@ const sections = [
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 should record that the design accounts for bidirectional current flow where
-                applicable. Reference the A3:2024 Section 530 bidirectional device requirement in the observations if relevant.
+                applicable. Reference the A3:2024 Section 530 bidirectional device requirement in
+                the observations if relevant.
               </span>
             </li>
           </ul>
@@ -496,8 +498,8 @@ const sections = [
         <p>
           Amendment 3 has direct implications for how you complete electrical certificates. When
           issuing an Electrical Installation Certificate (EIC) for a new installation or alteration
-          that includes embedded generation, you must confirm that the design complies with
-          the A3:2024 Section 530 bidirectional device requirements.
+          that includes embedded generation, you must confirm that the design complies with the
+          A3:2024 Section 530 bidirectional device requirements.
         </p>
         <p>
           On the EIC, the design section should note that bidirectional current flow has been
@@ -518,8 +520,8 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New installations with solar PV/BESS</strong> — the EIC must confirm
-                compliance with the A3:2024 Section 530 bidirectional device requirement. Record the inverter model, battery system
-                model, and confirm bidirectional device suitability.
+                compliance with the A3:2024 Section 530 bidirectional device requirement. Record the
+                inverter model, battery system model, and confirm bidirectional device suitability.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -655,7 +657,7 @@ export default function BS7671Amendment3Page() {
       faqHeading="Frequently Asked Questions About BS 7671 Amendment 3"
       relatedPages={relatedPages}
       ctaHeading="Design Solar PV Circuits with A3:2024 Compliance"
-      ctaSubheading="Elec-Mate's AI circuit designer selects bidirectional devices automatically. Plus 50+ calculators, AI board scanner, voice test entry, and 46+ training courses. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's AI circuit designer selects bidirectional devices automatically. Plus 70+ calculators, AI board scanner, voice test entry, and 46+ training courses. 7-day free trial, cancel anytime."
     />
   );
 }

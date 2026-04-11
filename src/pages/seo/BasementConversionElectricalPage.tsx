@@ -105,7 +105,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Complete Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -129,10 +130,10 @@ const sections = [
     content: (
       <>
         <p>
-          Damp is the defining electrical design challenge in a basement conversion. Even a
-          basement that appears dry can experience groundwater ingress during heavy rainfall, rising
-          damp from the floor slab, or condensation forming on cold surfaces. Electrical
-          installations must be designed to be safe in these conditions.
+          Damp is the defining electrical design challenge in a basement conversion. Even a basement
+          that appears dry can experience groundwater ingress during heavy rainfall, rising damp
+          from the floor slab, or condensation forming on cold surfaces. Electrical installations
+          must be designed to be safe in these conditions.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -140,10 +141,10 @@ const sections = [
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Risk assessment before design</strong> — the electrician and waterproofing
-                specialist must agree on the drainage strategy before the electrical installation
-                is designed. If a cavity drain membrane system is used, the drainage channels
-                and sump location must be finalised so that electrical equipment is not positioned
-                in zones where water will collect or be directed.
+                specialist must agree on the drainage strategy before the electrical installation is
+                designed. If a cavity drain membrane system is used, the drainage channels and sump
+                location must be finalised so that electrical equipment is not positioned in zones
+                where water will collect or be directed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -181,8 +182,8 @@ const sections = [
         <p>
           BS 7671:2018+A3:2024 Section 522.3 requires that the selection and erection of electrical
           equipment takes into account the environmental conditions, including moisture. The
-          designer's risk assessment for the basement must justify the IP ratings selected for
-          each zone of the installation.
+          designer's risk assessment for the basement must justify the IP ratings selected for each
+          zone of the installation.
         </p>
       </>
     ),
@@ -195,8 +196,8 @@ const sections = [
         <p>
           The IP (Ingress Protection) rating system, defined in BS EN 60529, classifies the degree
           of protection provided by an enclosure against solid objects and water ingress. In a
-          basement conversion, appropriate IP ratings must be selected for different zones based
-          on the expected moisture exposure.
+          basement conversion, appropriate IP ratings must be selected for different zones based on
+          the expected moisture exposure.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -204,9 +205,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dry habitable areas — IP2X</strong> — standard domestic electrical
-                accessories (IP2X) are acceptable in areas of the basement that are permanently
-                dry, have effective waterproofing, and are not subject to condensation. This
-                is the minimum IP rating for any domestic electrical accessory under BS 7671.
+                accessories (IP2X) are acceptable in areas of the basement that are permanently dry,
+                have effective waterproofing, and are not subject to condensation. This is the
+                minimum IP rating for any domestic electrical accessory under BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -221,10 +222,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Areas subject to water ingress — IP55</strong> — where the basement is
-                known to experience periodic water ingress or where equipment may be subject to
-                water jets (for example, near a washing area or in a utility basement), IP55
-                (protection against low-pressure water jets from any direction) should be specified.
+                <strong>Areas subject to water ingress — IP55</strong> — where the basement is known
+                to experience periodic water ingress or where equipment may be subject to water jets
+                (for example, near a washing area or in a utility basement), IP55 (protection
+                against low-pressure water jets from any direction) should be specified.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -240,8 +241,8 @@ const sections = [
         </div>
         <p>
           The IP rating requirements for each zone should be documented by the electrician in the
-          design records. Where basement bathrooms or wet rooms are included, the zone classification
-          under BS 7671 Section 701 (Special Locations — Bathrooms) also applies.
+          design records. Where basement bathrooms or wet rooms are included, the zone
+          classification under BS 7671 Section 701 (Special Locations — Bathrooms) also applies.
         </p>
       </>
     ),
@@ -263,19 +264,19 @@ const sections = [
               <span>
                 <strong>Dedicated circuit</strong> — the sump pump must be on a dedicated circuit
                 from the consumer unit. It must never share a socket with other appliances. The
-                circuit should be protected by an RCBO (combined RCD and circuit breaker) so that
-                a fault on the pump circuit does not trip the entire board and leave the basement
+                circuit should be protected by an RCBO (combined RCD and circuit breaker) so that a
+                fault on the pump circuit does not trip the entire board and leave the basement
                 without lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery backup or UPS</strong> — a basement flood is most likely during
-                a storm, which may also cause a power cut. A battery-backup sump pump (with a
-                separate battery-powered pump that activates if the mains pump fails) or a UPS
-                on the mains pump circuit provides critical protection when it is most needed.
-                This is strongly recommended for basements where flooding risk is significant.
+                <strong>Battery backup or UPS</strong> — a basement flood is most likely during a
+                storm, which may also cause a power cut. A battery-backup sump pump (with a separate
+                battery-powered pump that activates if the mains pump fails) or a UPS on the mains
+                pump circuit provides critical protection when it is most needed. This is strongly
+                recommended for basements where flooding risk is significant.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -289,10 +290,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-water alarm</strong> — a high-water level alarm connected to the
-                sump provides warning if the pump fails or cannot keep pace with inflow. The alarm
-                should be connected to a circuit separate from the pump circuit — if the pump
-                circuit trips, the alarm must still function.
+                <strong>High-water alarm</strong> — a high-water level alarm connected to the sump
+                provides warning if the pump fails or cannot keep pace with inflow. The alarm should
+                be connected to a circuit separate from the pump circuit — if the pump circuit
+                trips, the alarm must still function.
               </span>
             </li>
           </ul>
@@ -307,8 +308,8 @@ const sections = [
       <>
         <p>
           Emergency lighting activates automatically when the mains supply fails, illuminating
-          escape routes to allow occupants to evacuate safely. BS 5266-1 (Emergency lighting —
-          Code of practice for the emergency lighting of premises) sets out the requirements.
+          escape routes to allow occupants to evacuate safely. BS 5266-1 (Emergency lighting — Code
+          of practice for the emergency lighting of premises) sets out the requirements.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -317,19 +318,18 @@ const sections = [
               <span>
                 <strong>Commercial and mixed-use basements — mandatory</strong> — where a converted
                 basement is used for commercial purposes (a studio, office, gym, or any space
-                accessed by clients or employees), emergency lighting on the escape route is a
-                legal requirement under the Regulatory Reform (Fire Safety) Order 2005 and
-                BS 5266-1.
+                accessed by clients or employees), emergency lighting on the escape route is a legal
+                requirement under the Regulatory Reform (Fire Safety) Order 2005 and BS 5266-1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Residential basements — best practice</strong> — for a basement used
-                purely as domestic living space, emergency lighting is not a strict legal
-                requirement. However, a windowless basement in a power cut is completely dark
-                and represents a real fall and injury risk. Self-contained emergency luminaires
-                (maintained or non-maintained) on the escape route are strongly recommended.
+                <strong>Residential basements — best practice</strong> — for a basement used purely
+                as domestic living space, emergency lighting is not a strict legal requirement.
+                However, a windowless basement in a power cut is completely dark and represents a
+                real fall and injury risk. Self-contained emergency luminaires (maintained or
+                non-maintained) on the escape route are strongly recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,9 +337,9 @@ const sections = [
               <span>
                 <strong>Self-contained luminaires</strong> — self-contained emergency luminaires
                 contain their own battery, charger, and lamp. They connect to a standard lighting
-                circuit and charge continuously. When mains power fails, the battery maintains
-                the lamp for a minimum of one hour (or three hours for higher-risk premises)
-                under BS 5266-1.
+                circuit and charge continuously. When mains power fails, the battery maintains the
+                lamp for a minimum of one hour (or three hours for higher-risk premises) under BS
+                5266-1.
               </span>
             </li>
           </ul>
@@ -358,8 +358,8 @@ const sections = [
       <>
         <p>
           Flood sensors provide early warning of water ingress, allowing homeowners to take action
-          before significant damage occurs. While not a Building Regulations requirement, they are
-          a prudent addition to any converted basement electrical installation.
+          before significant damage occurs. While not a Building Regulations requirement, they are a
+          prudent addition to any converted basement electrical installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -377,9 +377,9 @@ const sections = [
               <span>
                 <strong>Alarm outputs</strong> — flood sensors should connect to an audible alarm
                 (to alert occupants when they are in the basement) and ideally to a smart home
-                system or GSM dialler that sends an alert to the homeowner's phone when they are
-                not present. A flooded basement discovered days later causes far more damage than
-                one detected within hours.
+                system or GSM dialler that sends an alert to the homeowner's phone when they are not
+                present. A flooded basement discovered days later causes far more damage than one
+                detected within hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,9 +423,7 @@ const sections = [
               <span>
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 must be issued covering all new circuits in the basement conversion. Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
-                  Elec-Mate EIC app
-                </SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the certificate on site.
               </span>
             </li>
@@ -440,9 +438,9 @@ const sections = [
     content: (
       <>
         <p>
-          Basement conversion electrical work is specialist and well-remunerated. Electricians
-          with experience in special locations, moisture risk assessment, and emergency lighting
-          can command premium rates on these projects.
+          Basement conversion electrical work is specialist and well-remunerated. Electricians with
+          experience in special locations, moisture risk assessment, and emergency lighting can
+          command premium rates on these projects.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -455,9 +453,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
-                  to produce comprehensive documentation on site. For basement installations, the
-                  IP rating decisions and zone assessments should be clearly recorded — this
-                  protects you if questions arise about the installation in future.
+                  to produce comprehensive documentation on site. For basement installations, the IP
+                  rating decisions and zone assessments should be clearly recorded — this protects
+                  you if questions arise about the installation in future.
                 </p>
               </div>
             </div>
@@ -468,8 +466,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Itemise Your Quotes Thoroughly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Basement projects have higher material costs due to IP-rated accessories,
-                  conduit, emergency luminaires, and sump pump circuits. Use the{' '}
+                  Basement projects have higher material costs due to IP-rated accessories, conduit,
+                  emergency luminaires, and sump pump circuits. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -481,7 +479,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage basement conversion jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Specialist work deserves specialist tools. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Specialist work deserves specialist tools. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -518,7 +516,7 @@ export default function BasementConversionElectricalPage() {
       faqHeading="Frequently Asked Questions About Basement Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Basement Conversion EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

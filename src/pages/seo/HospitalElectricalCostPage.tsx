@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage healthcare electrical contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -679,7 +679,7 @@ export default function HospitalElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Hospital Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Document Healthcare Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EIC and EICR completion, and multi-board inspection management. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -643,7 +643,7 @@ export default function TrunkingInstallationGuidePage() {
         },
       ]}
       ctaHeading="Design and Document Trunking Installations"
-      ctaSubheading="Elec-Mate's trunking fill calculator, cable sizing tools, and commercial certificates support every trunking installation. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's trunking fill calculator, cable sizing tools, and commercial certificates support every trunking installation. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Is consumer unit replacement notifiable under Part P in Leeds?',
     answer:
-      'Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify the work, or you must notify Leeds City Council\'s Building Control before work begins. Failure to notify can cause complications when selling the property.',
+      "Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify the work, or you must notify Leeds City Council's Building Control before work begins. Failure to notify can cause complications when selling the property.",
   },
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Leeds?',
@@ -65,7 +65,8 @@ const faqs = [
       'Leeds has a large concentration of Victorian and Edwardian back-to-back terraced houses in areas such as Headingley, Hyde Park, Chapeltown, and Harehills. Many of these properties still have original rewirable fuse boards (BS 3036) or early plastic consumer units installed in the 1960s to 1980s. These provide no meaningful RCD protection and use combustible enclosures that breach Regulation 421.1.201 of BS 7671:2018+A3:2024.',
   },
   {
-    question: 'Do I need a surge protection device (SPD) during a consumer unit replacement in Leeds?',
+    question:
+      'Do I need a surge protection device (SPD) during a consumer unit replacement in Leeds?',
     answer:
       'In most cases, yes. Since Amendment 2 to BS 7671:2018, the risk assessment under Regulation 443.4 almost always results in SPD installation being required for domestic consumer unit replacements. A Type 2 SPD adds approximately £60 to £120 to the material cost. Your electrician must carry out the assessment and document the outcome on the EIC.',
   },
@@ -85,8 +86,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -145,9 +144,9 @@ const sections = [
         <p>
           Leeds is one of the fastest-growing cities in the UK, with a housing stock that spans
           Victorian back-to-back terraces in Hyde Park and Harehills, Edwardian semis in Chapel
-          Allerton, inter-war housing in Morley and Pudsey, and modern developments in Kirkstall
-          and the city centre. Many older properties across the city still have electrical
-          installations that predate current regulations.
+          Allerton, inter-war housing in Morley and Pudsey, and modern developments in Kirkstall and
+          the city centre. Many older properties across the city still have electrical installations
+          that predate current regulations.
         </p>
         <p>
           Under{' '}
@@ -161,8 +160,8 @@ const sections = [
         </p>
         <p>
           This guide covers everything you need to know about consumer unit replacement costs and
-          requirements in Leeds — whether you are a homeowner in Headingley, a landlord managing
-          HMO properties near the universities, or an electrician working across West Yorkshire.
+          requirements in Leeds — whether you are a homeowner in Headingley, a landlord managing HMO
+          properties near the universities, or an electrician working across West Yorkshire.
         </p>
       </>
     ),
@@ -184,42 +183,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small flat or bedsit (6-way board)</strong> — £350 to £440 total.
-                Common in purpose-built student flats and converted terraces near the universities.
-                Materials: £120 to £200. Labour: £200 to £210. EIC: £30 to £50.
+                <strong>Small flat or bedsit (6-way board)</strong> — £350 to £440 total. Common in
+                purpose-built student flats and converted terraces near the universities. Materials:
+                £120 to £200. Labour: £200 to £210. EIC: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £430 to
-                £550 total. The most common domestic job in Leeds. Materials: £240 to £360.
-                Labour: £240 to £260. EIC and Part P: £30 to £50.
+                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £430 to £550
+                total. The most common domestic job in Leeds. Materials: £240 to £360. Labour: £240
+                to £260. EIC and Part P: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Larger semi or detached (14-way high-integrity with SPD)</strong> — £550 to
-                £800 total. For properties with 12+ circuits or new EV charger. Materials: £350
-                to £500. Labour: £260 to £320. EIC and Part P: £30 to £50.
+                £800 total. For properties with 12+ circuits or new EV charger. Materials: £350 to
+                £500. Labour: £260 to £320. EIC and Part P: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,100 to £1,700+ total. Required for
-                larger homes with three-phase supply, workshops, or commercial premises.
-                Materials: £450 to £750. Labour: £400 to £550. EIC and Part P: £50 to £80.
+                <strong>Three-phase property</strong> — £1,100 to £1,700+ total. Required for larger
+                homes with three-phase supply, workshops, or commercial premises. Materials: £450 to
+                £750. Labour: £400 to £550. EIC and Part P: £50 to £80.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          City centre postcodes (LS1 to LS3) may attract parking surcharges. Properties in
-          outer suburbs such as Wetherby, Otley, and Garforth are served by a range of local
-          electricians with competitive rates. Always request itemised quotes from at least three
-          registered electricians.
+          City centre postcodes (LS1 to LS3) may attract parking surcharges. Properties in outer
+          suburbs such as Wetherby, Otley, and Garforth are served by a range of local electricians
+          with competitive rates. Always request itemised quotes from at least three registered
+          electricians.
         </p>
       </>
     ),
@@ -246,26 +245,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic consumer unit</strong> — since January 2016, Regulation 421.1.201
-                of BS 7671 requires non-combustible (metal) enclosures for domestic consumer units.
+                <strong>Plastic consumer unit</strong> — since January 2016, Regulation 421.1.201 of
+                BS 7671 requires non-combustible (metal) enclosures for domestic consumer units.
                 Plastic enclosures pose a fire risk in the event of an internal arc fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
-                socket circuits and concealed cables. Boards without RCDs or RCBOs present a
-                significant electric shock risk.
+                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
+                circuits and concealed cables. Boards without RCDs or RCBOs present a significant
+                electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR C2 observation</strong> — if an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has
-                returned a C2 (potentially dangerous) observation relating to the consumer unit,
-                replacement is strongly recommended.
+                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has returned
+                a C2 (potentially dangerous) observation relating to the consumer unit, replacement
+                is strongly recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -287,18 +286,18 @@ const sections = [
       <>
         <p>
           Consumer unit replacement is classified as notifiable work under Part P of the Building
-          Regulations in England and Wales. In Leeds, this means the work must either be carried
-          out by an electrician registered with a competent person scheme — such as{' '}
+          Regulations in England and Wales. In Leeds, this means the work must either be carried out
+          by an electrician registered with a competent person scheme — such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Leeds City Council's Building Control department before
-          work starts.
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Leeds City Council's Building Control department before work
+          starts.
         </p>
         <p>
-          An Electrical Installation Certificate (EIC) must be issued for the work under
-          Regulation 421.1.201 of BS 7671. The EIC documents the design, construction, inspection,
-          and testing of the installation. A registered electrician will self-certify the work and
-          submit Part P notification automatically through their scheme provider.
+          An Electrical Installation Certificate (EIC) must be issued for the work under Regulation
+          421.1.201 of BS 7671. The EIC documents the design, construction, inspection, and testing
+          of the installation. A registered electrician will self-certify the work and submit Part P
+          notification automatically through their scheme provider.
         </p>
         <p>
           You should receive a copy of the EIC and a Building Regulations Compliance Certificate
@@ -312,17 +311,15 @@ const sections = [
     heading: 'What to Expect During a Consumer Unit Replacement',
     content: (
       <>
-        <p>
-          Here is what happens during a typical consumer unit replacement in a Leeds property:
-        </p>
+        <p>Here is what happens during a typical consumer unit replacement in a Leeds property:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the existing
-                board, identifies all circuits, and safely isolates the mains at the DNO cutout.
-                All power is off for the duration of the work.
+                board, identifies all circuits, and safely isolates the mains at the DNO cutout. All
+                power is off for the duration of the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,8 +333,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3: Install new consumer unit</strong> — the new metal consumer unit
-                is mounted, fitted with RCBOs and SPD, and all circuits reconnected and labelled.
+                <strong>Step 3: Install new consumer unit</strong> — the new metal consumer unit is
+                mounted, fitted with RCBOs and SPD, and all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,15 +365,15 @@ const sections = [
     content: (
       <>
         <p>
-          A standard like-for-like consumer unit replacement in a Leeds property typically takes
-          4 to 6 hours, including all testing and certification.
+          A standard like-for-like consumer unit replacement in a Leeds property typically takes 4
+          to 6 hours, including all testing and certification.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common
-              in post-1970s Leeds housing, modern flats, and purpose-built student accommodation.
+              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common in
+              post-1970s Leeds housing, modern flats, and purpose-built student accommodation.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -459,8 +456,7 @@ export default function ConsumerUnitReplacementLeedsPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Consumer Unit Replacement Leeds:{' '}
-          <span className="text-yellow-400">Cost Guide 2026</span>
+          Consumer Unit Replacement Leeds: <span className="text-yellow-400">Cost Guide 2026</span>
         </>
       }
       heroSubtitle="Consumer unit replacement in Leeds typically costs £350 to £550. This guide covers local pricing for fuse board upgrades across the city — from Victorian back-to-backs in Hyde Park to semis in Chapel Allerton — including Part P notification, what to expect, and how to choose a registered electrician."
@@ -471,7 +467,7 @@ export default function ConsumerUnitReplacementLeedsPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Leeds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

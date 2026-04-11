@@ -622,7 +622,7 @@ export default function HSEInspectionsElectricalPage() {
       faqHeading="Frequently Asked Questions About HSE Inspections"
       relatedPages={relatedPages}
       ctaHeading="Stay Compliant With Digital Records"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital certificates, test results, and professional documentation. Always inspection-ready. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificates, test results, and professional documentation. Always inspection-ready. 7-day free trial, cancel anytime."
     />
   );
 }

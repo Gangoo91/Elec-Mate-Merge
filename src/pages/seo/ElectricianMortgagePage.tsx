@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'What income do lenders use for a self-employed electrician?',
     answer:
-      'For sole traders, lenders typically use your net profit as shown on your self-assessment return and accounts. For limited company directors, most lenders use salary plus dividends drawn. Some more flexible lenders will also consider retained profit within the company. The income multiple (how much you can borrow relative to your income) is typically 4 to 4.5 times your assessed income, though some lenders offer up to 5 or even 5.5 times in certain circumstances. Your accountant\'s role in presenting your income accurately is important — but note that artificially inflating income for mortgage purposes is mortgage fraud.',
+      "For sole traders, lenders typically use your net profit as shown on your self-assessment return and accounts. For limited company directors, most lenders use salary plus dividends drawn. Some more flexible lenders will also consider retained profit within the company. The income multiple (how much you can borrow relative to your income) is typically 4 to 4.5 times your assessed income, though some lenders offer up to 5 or even 5.5 times in certain circumstances. Your accountant's role in presenting your income accurately is important — but note that artificially inflating income for mortgage purposes is mortgage fraud.",
   },
   {
     question: 'What is a contractor mortgage and is it available for electricians?',
@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'Which mortgage lenders are best for self-employed electricians?',
     answer:
-      'Halifax and Nationwide are among the more self-employed-friendly high-street lenders, particularly for applicants with 2+ years of clean accounts. Halifax will sometimes accept 1 year of accounts in stronger cases. For more complex situations — recent change from employment to self-employment, CIS subcontractors, limited company directors with retained profit — specialist lenders such as Bluestone Mortgages, Precise Mortgages, Aldermore, Kent Reliance, and Pepper Money are often more accommodating. Lenders\' criteria change frequently, so always use a mortgage broker who works with self-employed applicants to identify the right lender for your specific situation.',
+      "Halifax and Nationwide are among the more self-employed-friendly high-street lenders, particularly for applicants with 2+ years of clean accounts. Halifax will sometimes accept 1 year of accounts in stronger cases. For more complex situations — recent change from employment to self-employment, CIS subcontractors, limited company directors with retained profit — specialist lenders such as Bluestone Mortgages, Precise Mortgages, Aldermore, Kent Reliance, and Pepper Money are often more accommodating. Lenders' criteria change frequently, so always use a mortgage broker who works with self-employed applicants to identify the right lender for your specific situation.",
   },
   {
     question: 'How large a deposit do I need as a self-employed electrician?',
@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/self-assessment-electrician',
     title: 'Self-Assessment for Electricians',
-    description: 'SA302 comes from your self-assessment return — complete guide to filing correctly.',
+    description:
+      'SA302 comes from your self-assessment return — complete guide to filing correctly.',
     icon: FileText,
     category: 'Finance Guide',
   },
@@ -115,7 +116,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Professional invoicing to support your income evidence for mortgage applications.',
+    description:
+      'Professional invoicing to support your income evidence for mortgage applications.',
     icon: Zap,
     category: 'Tool',
   },
@@ -132,11 +134,11 @@ const sections = [
     content: (
       <>
         <p>
-          Self-employed electricians face additional steps when applying for a mortgage compared
-          to PAYE employees, but securing a mortgage on competitive terms is entirely achievable
-          with the right preparation. The fundamental challenge is that lenders cannot rely on
-          payslips and P60s — they need to assess your income from self-assessment records and
-          accounts, which requires more documentation and sometimes a specialist lender.
+          Self-employed electricians face additional steps when applying for a mortgage compared to
+          PAYE employees, but securing a mortgage on competitive terms is entirely achievable with
+          the right preparation. The fundamental challenge is that lenders cannot rely on payslips
+          and P60s — they need to assess your income from self-assessment records and accounts,
+          which requires more documentation and sometimes a specialist lender.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -154,25 +156,25 @@ const sections = [
               <span>
                 <strong>Income multiples</strong> — lenders typically offer 4 to 4.5 times your
                 assessed annual income. Some specialist lenders offer up to 5 times for
-                well-qualified applicants. The income used varies by lender — see the sections
-                below on sole trader vs limited company income assessment.
+                well-qualified applicants. The income used varies by lender — see the sections below
+                on sole trader vs limited company income assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Credit score matters</strong> — a clean credit history is important.
-                Check your credit report (Experian, Equifax, or TransUnion) before applying.
-                Resolve any errors, reduce credit card balances, and avoid applying for new
-                credit in the 3 to 6 months before your mortgage application.
+                <strong>Credit score matters</strong> — a clean credit history is important. Check
+                your credit report (Experian, Equifax, or TransUnion) before applying. Resolve any
+                errors, reduce credit card balances, and avoid applying for new credit in the 3 to 6
+                months before your mortgage application.
               </span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <p className="text-white text-sm">
-            <strong>Disclaimer:</strong> This guide provides general information about mortgages
-            for self-employed electricians. Mortgage products, lender criteria, and interest rates
+            <strong>Disclaimer:</strong> This guide provides general information about mortgages for
+            self-employed electricians. Mortgage products, lender criteria, and interest rates
             change frequently. Always consult a qualified, FCA-regulated mortgage broker for advice
             specific to your financial circumstances.
           </p>
@@ -187,8 +189,8 @@ const sections = [
       <>
         <p>
           The SA302 (tax calculation) is the primary income evidence document for self-employed
-          mortgage applicants. Most mainstream lenders require SA302s for the 2 to 3 most recent
-          tax years, plus the corresponding tax year overviews showing that the tax was paid.
+          mortgage applicants. Most mainstream lenders require SA302s for the 2 to 3 most recent tax
+          years, plus the corresponding tax year overviews showing that the tax was paid.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -204,9 +206,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Income used — sole traders</strong> — for sole traders, lenders use your
-                net profit after expenses (as shown on your SA302) as your income. Some lenders
-                average the two or three years; others use the lowest year or the most recent.
+                <strong>Income used — sole traders</strong> — for sole traders, lenders use your net
+                profit after expenses (as shown on your SA302) as your income. Some lenders average
+                the two or three years; others use the lowest year or the most recent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -222,11 +224,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Only 1 year of accounts?</strong> — if you have been self-employed for
-                less than two years, you are limited to specialist lenders who accept 1 year of
-                accounts. You will typically need a larger deposit (15% or more) and may face
-                higher interest rates. Plan ahead — if you are considering buying in 2 or 3 years,
-                start building your accounts history now.
+                <strong>Only 1 year of accounts?</strong> — if you have been self-employed for less
+                than two years, you are limited to specialist lenders who accept 1 year of accounts.
+                You will typically need a larger deposit (15% or more) and may face higher interest
+                rates. Plan ahead — if you are considering buying in 2 or 3 years, start building
+                your accounts history now.
               </span>
             </li>
           </ul>
@@ -240,8 +242,8 @@ const sections = [
     content: (
       <>
         <p>
-          An experienced accountant can make a meaningful difference to your mortgage application
-          — not by inflating your income (which would be fraud) but by ensuring your income is
+          An experienced accountant can make a meaningful difference to your mortgage application —
+          not by inflating your income (which would be fraud) but by ensuring your income is
           presented accurately and completely.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -250,9 +252,9 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Certified accounts</strong> — some lenders accept accountant-certified
-                accounts as an alternative or supplement to SA302s. These are accounts signed
-                off by a qualified accountant (ACCA, ICAEW, or CIMA). Having professionally
-                prepared accounts demonstrates income reliability.
+                accounts as an alternative or supplement to SA302s. These are accounts signed off by
+                a qualified accountant (ACCA, ICAEW, or CIMA). Having professionally prepared
+                accounts demonstrates income reliability.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,17 +262,17 @@ const sections = [
               <span>
                 <strong>Tax efficiency vs mortgage income</strong> — tax-efficient accounting
                 (claiming all allowable expenses, retaining profit in a limited company) often
-                reduces your declared income for mortgage purposes. Discuss this trade-off with
-                your accountant if you are planning a property purchase — you may wish to adjust
-                your approach in the years before applying.
+                reduces your declared income for mortgage purposes. Discuss this trade-off with your
+                accountant if you are planning a property purchase — you may wish to adjust your
+                approach in the years before applying.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reference letter</strong> — some lenders accept a reference letter from
-                your accountant confirming the nature of your self-employment, your income level,
-                and the likelihood of continued trading. This can help in borderline cases.
+                <strong>Reference letter</strong> — some lenders accept a reference letter from your
+                accountant confirming the nature of your self-employment, your income level, and the
+                likelihood of continued trading. This can help in borderline cases.
               </span>
             </li>
           </ul>
@@ -284,8 +286,8 @@ const sections = [
     content: (
       <>
         <p>
-          If you work on fixed-term contracts (common for CIS electricians working long-term with
-          a single main contractor), you may qualify for a contractor mortgage assessment based on
+          If you work on fixed-term contracts (common for CIS electricians working long-term with a
+          single main contractor), you may qualify for a contractor mortgage assessment based on
           your day rate rather than your accounts income.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -303,25 +305,25 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Example</strong> — a day rate of £350, assessed over 46 weeks x 5 days,
-                gives an annualised income of £80,500. At a 4.5x multiple, this supports a
-                mortgage of approximately £362,000. This is often significantly higher than
-                the same electrician's declared profit after expenses.
+                gives an annualised income of £80,500. At a 4.5x multiple, this supports a mortgage
+                of approximately £362,000. This is often significantly higher than the same
+                electrician's declared profit after expenses.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Contract evidence required</strong> — you will need to provide your
-                current contract showing your day rate and contract duration. Most lenders require
-                at least 12 months of contracting history and a contract with remaining duration.
+                <strong>Contract evidence required</strong> — you will need to provide your current
+                contract showing your day rate and contract duration. Most lenders require at least
+                12 months of contracting history and a contract with remaining duration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lenders offering contractor assessment</strong> — Halifax, Barclays,
-                Kensington, and several specialist lenders offer contractor mortgage products.
-                A specialist broker can match you with the most suitable lender.
+                Kensington, and several specialist lenders offer contractor mortgage products. A
+                specialist broker can match you with the most suitable lender.
               </span>
             </li>
           </ul>
@@ -335,20 +337,20 @@ const sections = [
     content: (
       <>
         <p>
-          Lender criteria for self-employed borrowers varies considerably. Some high-street
-          lenders are relatively accommodating; others have rigid requirements that make them
-          unsuitable for many electricians. Here is a general guide — but always use a broker
-          as criteria change frequently.
+          Lender criteria for self-employed borrowers varies considerably. Some high-street lenders
+          are relatively accommodating; others have rigid requirements that make them unsuitable for
+          many electricians. Here is a general guide — but always use a broker as criteria change
+          frequently.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Halifax</strong> — generally considered one of the more flexible
-                mainstream lenders for self-employed. Accepts 1 year of accounts in some
-                circumstances. Can use salary plus dividends plus net profit for limited company
-                directors in some cases. Popular first choice for many self-employed applicants.
+                <strong>Halifax</strong> — generally considered one of the more flexible mainstream
+                lenders for self-employed. Accepts 1 year of accounts in some circumstances. Can use
+                salary plus dividends plus net profit for limited company directors in some cases.
+                Popular first choice for many self-employed applicants.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -362,8 +364,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specialist lenders — Bluestone, Aldermore, Precise, Pepper Money</strong>
-                — these lenders specialise in complex income situations including self-employed,
+                <strong>Specialist lenders — Bluestone, Aldermore, Precise, Pepper Money</strong>—
+                these lenders specialise in complex income situations including self-employed,
                 adverse credit, and non-standard properties. Rates are typically higher than
                 mainstream lenders, but criteria are more accommodating for electricians with
                 complex income, limited accounts history, or mixed CIS and private income.
@@ -372,11 +374,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use a whole-of-market broker</strong> — the single best step you can
-                take is using a whole-of-market mortgage broker who regularly works with
-                self-employed clients. They will identify the right lender for your specific
-                circumstances without you making multiple unsuccessful credit applications that
-                damage your credit score.
+                <strong>Use a whole-of-market broker</strong> — the single best step you can take is
+                using a whole-of-market mortgage broker who regularly works with self-employed
+                clients. They will identify the right lender for your specific circumstances without
+                you making multiple unsuccessful credit applications that damage your credit score.
               </span>
             </li>
           </ul>
@@ -390,26 +391,25 @@ const sections = [
     content: (
       <>
         <p>
-          The size of your deposit has a significant impact on the rates available to you and
-          your likelihood of approval as a self-employed borrower.
+          The size of your deposit has a significant impact on the rates available to you and your
+          likelihood of approval as a self-employed borrower.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5% deposit (95% LTV)</strong> — the minimum available through some
-                schemes, but very few mainstream lenders will accept this for self-employed
-                applicants with only 1 to 2 years of accounts. Limited choice of products and
-                higher rates.
+                <strong>5% deposit (95% LTV)</strong> — the minimum available through some schemes,
+                but very few mainstream lenders will accept this for self-employed applicants with
+                only 1 to 2 years of accounts. Limited choice of products and higher rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>10% deposit (90% LTV)</strong> — the practical minimum for most
-                self-employed mortgage applications on the mainstream market. Opens up a much
-                wider range of lenders and products.
+                self-employed mortgage applications on the mainstream market. Opens up a much wider
+                range of lenders and products.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,10 +423,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          As a self-employed electrician, building your deposit while also managing CIS tax
-          payments and quarterly VAT returns requires careful financial planning. Setting aside
-          money regularly from every job — into a dedicated savings account — is the most
-          reliable approach.
+          As a self-employed electrician, building your deposit while also managing CIS tax payments
+          and quarterly VAT returns requires careful financial planning. Setting aside money
+          regularly from every job — into a dedicated savings account — is the most reliable
+          approach.
         </p>
       </>
     ),
@@ -437,43 +437,42 @@ const sections = [
     content: (
       <>
         <p>
-          The following steps, taken in the months and years before applying, can materially
-          improve your mortgage prospects:
+          The following steps, taken in the months and years before applying, can materially improve
+          your mortgage prospects:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>File returns on time, every year</strong> — late self-assessment returns
-                are a red flag for lenders. A clean HMRC compliance record demonstrates financial
+                <strong>File returns on time, every year</strong> — late self-assessment returns are
+                a red flag for lenders. A clean HMRC compliance record demonstrates financial
                 reliability and also maintains your eligibility for CIS gross payment status.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use a qualified accountant</strong> — professionally prepared and
-                certified accounts carry more weight with lenders than self-prepared returns.
-                Build a relationship with an accountant who understands the trades.
+                <strong>Use a qualified accountant</strong> — professionally prepared and certified
+                accounts carry more weight with lenders than self-prepared returns. Build a
+                relationship with an accountant who understands the trades.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manage your credit score</strong> — check your credit report and resolve
-                any errors. Do not apply for new credit (credit cards, car finance) in the 3 to 6
-                months before your mortgage application. Keep credit card balances below 30% of
-                the limit.
+                <strong>Manage your credit score</strong> — check your credit report and resolve any
+                errors. Do not apply for new credit (credit cards, car finance) in the 3 to 6 months
+                before your mortgage application. Keep credit card balances below 30% of the limit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Keep your business account separate</strong> — use a dedicated business
-                bank account for all business income and expenses. Clear separation between
-                personal and business finances makes accounts preparation easier and cleaner
-                for lenders to review.
+                <strong>Keep your business account separate</strong> — use a dedicated business bank
+                account for all business income and expenses. Clear separation between personal and
+                business finances makes accounts preparation easier and cleaner for lenders to
+                review.
               </span>
             </li>
           </ul>
@@ -496,7 +495,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileText className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete Income Records for Your Accountant</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete Income Records for Your Accountant
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
@@ -513,12 +514,14 @@ const sections = [
             <div className="flex items-start gap-4">
               <Home className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Professional Image Builds Lender Confidence</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Professional Image Builds Lender Confidence
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Professional invoices, consistent use of a business bank account, and organised
-                  records all contribute to the impression of a well-run business. This matters
-                  to mortgage underwriters who are trying to assess whether your income is reliable
-                  and sustainable.
+                  records all contribute to the impression of a well-run business. This matters to
+                  mortgage underwriters who are trying to assess whether your income is reliable and
+                  sustainable.
                 </p>
               </div>
             </div>
@@ -526,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional invoicing and records for your mortgage application"
-          description="Join 430+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your SA302 and mortgage application. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant a clean income record — essential for your SA302 and mortgage application. 7-day free trial."
           icon={Home}
         />
       </>
@@ -563,7 +566,7 @@ export default function ElectricianMortgagePage() {
       faqHeading="Frequently Asked Questions About Mortgages for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Professional Records for Your Mortgage Application"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and job records. Give your accountant everything needed for accurate SA302s and certified accounts. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'What is Rent Smart Wales and how does it relate to EICRs?',
     answer:
-      'Rent Smart Wales is the Welsh Government\'s landlord registration and licensing scheme. All landlords renting property in Wales must register with Rent Smart Wales, and those who manage their own properties must also hold a licence. Compliance with electrical safety obligations — including maintaining a valid EICR — is a condition of registration and licensing. Rent Smart Wales can investigate complaints from tenants and refer cases to Swansea Council\'s enforcement teams where landlords fail to comply.',
+      "Rent Smart Wales is the Welsh Government's landlord registration and licensing scheme. All landlords renting property in Wales must register with Rent Smart Wales, and those who manage their own properties must also hold a licence. Compliance with electrical safety obligations — including maintaining a valid EICR — is a condition of registration and licensing. Rent Smart Wales can investigate complaints from tenants and refer cases to Swansea Council's enforcement teams where landlords fail to comply.",
   },
   {
     question: 'Do Swansea student HMOs need an EICR?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Who can carry out an EICR in Swansea?',
     answer:
-      'The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme, and holding City and Guilds 2391 (Inspection and Testing) or equivalent plus a current BS 7671 18th Edition qualification (C&G 2382). These requirements are the same in Wales as in England. Always verify registration on the scheme\'s public register before commissioning.',
+      "The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme, and holding City and Guilds 2391 (Inspection and Testing) or equivalent plus a current BS 7671 18th Edition qualification (C&G 2382). These requirements are the same in Wales as in England. Always verify registration on the scheme's public register before commissioning.",
   },
 ];
 
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,14 +129,14 @@ const sections = [
         <p>
           An Electrical Installation Condition Report (EICR) is a formal document produced by a
           qualified electrician following a thorough inspection and test of a property's fixed
-          electrical installation. The inspection assesses wiring, consumer units, earthing, bonding,
-          sockets, switches, light fittings, and all fixed electrical equipment against the
+          electrical installation. The inspection assesses wiring, consumer units, earthing,
+          bonding, sockets, switches, light fittings, and all fixed electrical equipment against the
           requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (the 18th Edition IET Wiring Regulations). BS 7671 is the national standard adopted
-          across the United Kingdom, including Wales.
+          (the 18th Edition IET Wiring Regulations). BS 7671 is the national standard adopted across
+          the United Kingdom, including Wales.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -151,18 +152,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory</strong> — C1 (danger present) or C2 (potentially
-                dangerous) observations have been found. Landlords must arrange all remedial work
-                urgently. Occupation contracts in Wales impose a duty to keep the installation
-                in a safe condition, so an Unsatisfactory EICR demands immediate action.
+                <strong>Unsatisfactory</strong> — C1 (danger present) or C2 (potentially dangerous)
+                observations have been found. Landlords must arrange all remedial work urgently.
+                Occupation contracts in Wales impose a duty to keep the installation in a safe
+                condition, so an Unsatisfactory EICR demands immediate action.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The EICR supersedes the older Periodic Inspection Report (PIR) format and is carried out
-          in accordance with BS 7671 Section 631. It is the document required by both Welsh
-          landlord legislation and by HMO licensing conditions in Swansea.
+          in accordance with BS 7671 Section 631. It is the document required by both Welsh landlord
+          legislation and by HMO licensing conditions in Swansea.
         </p>
       </>
     ),
@@ -175,8 +176,8 @@ const sections = [
         <p>
           Wales has its own legislative framework governing landlord electrical safety, which
           differs from the English regulations whilst achieving the same fundamental outcome. The
-          primary piece of legislation is the Renting Homes (Wales) Act 2016, which came fully
-          into force on 1 December 2022 and replaced most of the previous tenancy law in Wales.
+          primary piece of legislation is the Renting Homes (Wales) Act 2016, which came fully into
+          force on 1 December 2022 and replaced most of the previous tenancy law in Wales.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -193,23 +194,23 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical safety obligation</strong> — Welsh landlords must ensure
-                electrical installations are in a safe condition and obtain an EICR before the
-                start of the occupation contract and at intervals of no more than five years.
+                electrical installations are in a safe condition and obtain an EICR before the start
+                of the occupation contract and at intervals of no more than five years.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provision to occupiers</strong> — a copy of the EICR must be provided to
-                the contract holder before they occupy the property and at any time on request.
+                <strong>Provision to occupiers</strong> — a copy of the EICR must be provided to the
+                contract holder before they occupy the property and at any time on request.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technical standard</strong> — the inspection must be carried out to BS 7671,
-                which is identical in Wales and England. The same observation codes, testing methods,
-                and documentation requirements apply.
+                which is identical in Wales and England. The same observation codes, testing
+                methods, and documentation requirements apply.
               </span>
             </li>
           </ul>
@@ -225,8 +226,8 @@ const sections = [
         <p>
           Enforcement of landlord electrical safety in Swansea operates through two complementary
           channels: Swansea Council (the local housing authority) and Rent Smart Wales (the Welsh
-          Government's national landlord registration scheme). Both have enforcement powers that
-          can significantly affect a landlord's ability to operate.
+          Government's national landlord registration scheme). Both have enforcement powers that can
+          significantly affect a landlord's ability to operate.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -234,16 +235,16 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Swansea Council</strong> — can investigate complaints from tenants and
-                occupiers about the condition of rented properties, including electrical safety.
-                The council has powers to require works and to take direct action where a landlord
-                fails to comply.
+                occupiers about the condition of rented properties, including electrical safety. The
+                council has powers to require works and to take direct action where a landlord fails
+                to comply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rent Smart Wales</strong> — the Welsh Government's landlord registration
-                and licensing body. All landlords must register; those who self-manage must hold a
+                <strong>Rent Smart Wales</strong> — the Welsh Government's landlord registration and
+                licensing body. All landlords must register; those who self-manage must hold a
                 licence. Failure to comply with electrical safety obligations can result in licence
                 refusal or revocation, preventing the landlord from legally renting property in
                 Wales.
@@ -278,9 +279,9 @@ const sections = [
     content: (
       <>
         <p>
-          Swansea landlords operating under the Renting Homes (Wales) Act 2016 have clear
-          electrical safety obligations. These are broadly similar to English requirements but
-          operate under Welsh-specific legislation and enforcement mechanisms.
+          Swansea landlords operating under the Renting Homes (Wales) Act 2016 have clear electrical
+          safety obligations. These are broadly similar to English requirements but operate under
+          Welsh-specific legislation and enforcement mechanisms.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -327,30 +328,30 @@ const sections = [
     content: (
       <>
         <p>
-          Swansea's housing stock ranges from Victorian terraces in Uplands, St Thomas, and Sandfields
-          to post-war social housing in Blaenymaes and Portmead, and newer developments in Sketty
-          and Gowerton. The private rented sector is heavily influenced by Swansea University,
-          creating a high density of student lets. The following are the most frequent findings
-          in local EICRs.
+          Swansea's housing stock ranges from Victorian terraces in Uplands, St Thomas, and
+          Sandfields to post-war social housing in Blaenymaes and Portmead, and newer developments
+          in Sketty and Gowerton. The private rented sector is heavily influenced by Swansea
+          University, creating a high density of student lets. The following are the most frequent
+          findings in local EICRs.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                30mA RCD protection on all socket-outlet circuits rated up to 32A. Student let
-                properties in Uplands and Brynmill frequently have consumer units without
-                RCD-protected ways, resulting in C2 observations.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA
+                RCD protection on all socket-outlet circuits rated up to 32A. Student let properties
+                in Uplands and Brynmill frequently have consumer units without RCD-protected ways,
+                resulting in C2 observations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing or inadequate protective bonding</strong> — Regulation 544.1
-                requires main protective bonding conductors to connect gas and water services to
-                the main earthing terminal. This is frequently absent or undersized in older
-                Swansea terraces, resulting in C2 observations.
+                requires main protective bonding conductors to connect gas and water services to the
+                main earthing terminal. This is frequently absent or undersized in older Swansea
+                terraces, resulting in C2 observations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -367,8 +368,8 @@ const sections = [
               <span>
                 <strong>Overloaded circuits in student HMOs</strong> — the high number of occupants
                 in student HMOs creates significant electrical load. Overloaded circuits, undersized
-                protective conductors, and inadequate fire alarm coverage are common findings in
-                the Swansea student rental market.
+                protective conductors, and inadequate fire alarm coverage are common findings in the
+                Swansea student rental market.
               </span>
             </li>
           </ul>
@@ -414,17 +415,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO / large property</strong> — £280 to £480 or more. Multiple consumer
-                units, fire alarm systems, emergency lighting, and increased number of circuits
-                all extend inspection scope and cost.
+                units, fire alarm systems, emergency lighting, and increased number of circuits all
+                extend inspection scope and cost.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These prices are for the inspection and report only. Any remedial work identified during
-          the EICR is quoted and charged separately. Some Swansea electricians offer a package
-          rate for landlords with multiple properties, particularly those with portfolios of student
-          lets that require annual or biennial reinspection.
+          the EICR is quoted and charged separately. Some Swansea electricians offer a package rate
+          for landlords with multiple properties, particularly those with portfolios of student lets
+          that require annual or biennial reinspection.
         </p>
       </>
     ),
@@ -436,18 +437,18 @@ const sections = [
       <>
         <p>
           The same competence requirements that apply in England apply in Wales. The EICR must be
-          carried out by a qualified and competent person — an unqualified inspector's report has
-          no legal standing under Welsh landlord legislation.
+          carried out by a qualified and competent person — an unqualified inspector's report has no
+          legal standing under Welsh landlord legislation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Search official scheme registers</strong> — use the NICEIC, NAPIT, or
-                ELECSA online registers to find registered electricians operating in Swansea and
-                the surrounding area. Registration confirms qualifications, insurance, and
-                ongoing quality assessment.
+                <strong>Search official scheme registers</strong> — use the NICEIC, NAPIT, or ELECSA
+                online registers to find registered electricians operating in Swansea and the
+                surrounding area. Registration confirms qualifications, insurance, and ongoing
+                quality assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,8 +456,8 @@ const sections = [
               <span>
                 <strong>Required qualifications</strong> — City and Guilds 2391 (Inspection and
                 Testing) or equivalent Level 3 Award, plus a current BS 7671 18th Edition
-                qualification (C&G 2382). Experience with older South Wales terraced property
-                types is valuable.
+                qualification (C&G 2382). Experience with older South Wales terraced property types
+                is valuable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -487,12 +488,11 @@ const sections = [
     content: (
       <>
         <p>
-          Swansea's private rented sector — driven by Swansea University and the University of
-          Wales Trinity Saint David, as well as growing professional rental demand — provides
-          consistent, recurring work for electricians specialising in inspection and testing.
-          The Welsh Government's Rent Smart Wales registration requirements mean that Swansea
-          landlords face regulatory pressure to maintain compliance, creating reliable demand
-          for EICR services.
+          Swansea's private rented sector — driven by Swansea University and the University of Wales
+          Trinity Saint David, as well as growing professional rental demand — provides consistent,
+          recurring work for electricians specialising in inspection and testing. The Welsh
+          Government's Rent Smart Wales registration requirements mean that Swansea landlords face
+          regulatory pressure to maintain compliance, creating reliable demand for EICR services.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -517,15 +517,17 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Convert Findings to Quotes Immediately</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Convert Findings to Quotes Immediately
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, raise a remedial work quote on the day
-                  using the{' '}
+                  When C1 or C2 observations are found, raise a remedial work quote on the day using
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Swansea landlords must act promptly under the Renting Homes (Wales) Act 2016
-                  — quoting on inspection day maximises your chance of winning the remedial work.
+                  . Swansea landlords must act promptly under the Renting Homes (Wales) Act 2016 —
+                  quoting on inspection day maximises your chance of winning the remedial work.
                 </p>
               </div>
             </div>
@@ -533,7 +535,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Swansea with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -570,7 +572,7 @@ export default function EICRSwanseaPage() {
       faqHeading="Frequently Asked Questions About EICRs in Swansea"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Swansea"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'Why is my emergency light flashing or showing a red fault indicator?',
     answer:
-      'A red LED indicator on an emergency lighting fitting typically signals one of three conditions: low or failed battery (the most common cause), a failed lamp (the fitting cannot illuminate on test), or a charging circuit fault (the battery is not receiving charge from the maintained circuit). Some fittings indicate a fault by flashing the green charge indicator rather than illuminating a separate red LED. Refer to the fitting manufacturer\'s indicator guide — the pattern is usually in the installation instructions on the fitting itself.',
+      "A red LED indicator on an emergency lighting fitting typically signals one of three conditions: low or failed battery (the most common cause), a failed lamp (the fitting cannot illuminate on test), or a charging circuit fault (the battery is not receiving charge from the maintained circuit). Some fittings indicate a fault by flashing the green charge indicator rather than illuminating a separate red LED. Refer to the fitting manufacturer's indicator guide — the pattern is usually in the installation instructions on the fitting itself.",
   },
   {
     question: 'How long must emergency lighting last in a power cut?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'How often should emergency lighting batteries be replaced?',
     answer:
-      'Emergency lighting batteries should be replaced every 3 to 4 years for sealed lead-acid (SLA/VRLA) batteries, or every 4 to 5 years for NiCd batteries, under normal operating conditions. In practice, the annual duration test will reveal batteries approaching end of life — a fitting that illuminates during the function test but fails before the end of the duration test period needs a battery replacement. Always replace with the exact battery specification from the fitting\'s documentation.',
+      "Emergency lighting batteries should be replaced every 3 to 4 years for sealed lead-acid (SLA/VRLA) batteries, or every 4 to 5 years for NiCd batteries, under normal operating conditions. In practice, the annual duration test will reveal batteries approaching end of life — a fitting that illuminates during the function test but fails before the end of the duration test period needs a battery replacement. Always replace with the exact battery specification from the fitting's documentation.",
   },
   {
     question: 'What is the difference between maintained and non-maintained emergency lighting?',
@@ -105,7 +105,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/hmo-electrical-requirements',
     title: 'HMO Electrical Requirements',
-    description: 'Emergency lighting and fire alarm requirements for Houses in Multiple Occupation.',
+    description:
+      'Emergency lighting and fire alarm requirements for Houses in Multiple Occupation.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -134,38 +135,37 @@ const sections = [
               <BatteryLow className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Symptoms of battery failure</strong> — the fitting illuminates briefly
-                during a test but extinguishes before the test period expires, a red fault
-                indicator is lit on a fitting that otherwise appears to be operating, or the
-                fitting fails to illuminate at all during a simulated mains failure.
+                during a test but extinguishes before the test period expires, a red fault indicator
+                is lit on a fitting that otherwise appears to be operating, or the fitting fails to
+                illuminate at all during a simulated mains failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BatteryLow className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery lifespan</strong> — sealed lead-acid batteries in emergency
-                lighting fittings typically last 3 to 4 years. NiCd batteries (increasingly rare
-                in new fittings due to EU RoHS restrictions) may last slightly longer. Replace
-                batteries proactively at the manufacturer's recommended interval, not just
-                when they fail.
+                <strong>Battery lifespan</strong> — sealed lead-acid batteries in emergency lighting
+                fittings typically last 3 to 4 years. NiCd batteries (increasingly rare in new
+                fittings due to EU RoHS restrictions) may last slightly longer. Replace batteries
+                proactively at the manufacturer's recommended interval, not just when they fail.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BatteryLow className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct replacement specification</strong> — always replace with the
-                battery type and capacity specified in the fitting's documentation. An incorrect
-                capacity (Ah rating) will result in a fitting that either does not reach full
-                charge or provides insufficient duration. An incorrect voltage will damage the
-                charging circuit.
+                <strong>Correct replacement specification</strong> — always replace with the battery
+                type and capacity specified in the fitting's documentation. An incorrect capacity
+                (Ah rating) will result in a fitting that either does not reach full charge or
+                provides insufficient duration. An incorrect voltage will damage the charging
+                circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BatteryLow className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Charge recovery period</strong> — after fitting a new battery, the
-                fitting must be left on mains supply for a full recharge period (typically 24
-                hours for lead-acid, up to 24 hours for NiCd) before a duration test is performed.
-                Testing too soon after battery replacement will give a falsely short duration result.
+                <strong>Charge recovery period</strong> — after fitting a new battery, the fitting
+                must be left on mains supply for a full recharge period (typically 24 hours for
+                lead-acid, up to 24 hours for NiCd) before a duration test is performed. Testing too
+                soon after battery replacement will give a falsely short duration result.
               </span>
             </li>
           </ul>
@@ -191,28 +191,28 @@ const sections = [
               <span>
                 <strong>Identifying a charging fault</strong> — measure the DC voltage across the
                 battery terminals with the mains supply connected. The voltage should be above the
-                battery's nominal voltage (typically 3.6 V to 4.2 V for a NiCd cell, or 2.15 V
-                per cell for a lead-acid battery in float charge). A battery voltage below nominal
-                with the mains supply on indicates a charging circuit fault.
+                battery's nominal voltage (typically 3.6 V to 4.2 V for a NiCd cell, or 2.15 V per
+                cell for a lead-acid battery in float charge). A battery voltage below nominal with
+                the mains supply on indicates a charging circuit fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Failed charging components</strong> — the charging circuit typically
-                consists of a voltage regulator IC, current-limiting resistors, and a diode.
-                Failure of any of these components will prevent charging. Component-level repair
-                of emergency lighting PCBs is generally not cost-effective — replace the fitting.
+                consists of a voltage regulator IC, current-limiting resistors, and a diode. Failure
+                of any of these components will prevent charging. Component-level repair of
+                emergency lighting PCBs is generally not cost-effective — replace the fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains supply interruption</strong> — if the maintained mains circuit to
-                the emergency lighting has been interrupted (tripped MCB, blown fuse, or isolation
-                left on following maintenance), the fittings receive no mains supply and the
-                batteries progressively discharge. Check that the emergency lighting circuit
-                MCB is closed and that no local isolation has been left in the off position.
+                <strong>Mains supply interruption</strong> — if the maintained mains circuit to the
+                emergency lighting has been interrupted (tripped MCB, blown fuse, or isolation left
+                on following maintenance), the fittings receive no mains supply and the batteries
+                progressively discharge. Check that the emergency lighting circuit MCB is closed and
+                that no local isolation has been left in the off position.
               </span>
             </li>
           </ul>
@@ -226,40 +226,40 @@ const sections = [
     content: (
       <>
         <p>
-          Modern emergency lighting fittings use LED light sources with very long service lives
-          — typically 50,000 hours or more — making lamp failure much less common than with
-          older fluorescent or incandescent sources. However, LED modules can still fail,
-          particularly in fittings exposed to heat, vibration, or repeated voltage transients.
+          Modern emergency lighting fittings use LED light sources with very long service lives —
+          typically 50,000 hours or more — making lamp failure much less common than with older
+          fluorescent or incandescent sources. However, LED modules can still fail, particularly in
+          fittings exposed to heat, vibration, or repeated voltage transients.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LED module failure</strong> — a fitting that does not illuminate during
-                a test but has a satisfactory battery voltage is most likely suffering from LED
-                module failure or a driver PCB fault. LED modules in emergency lighting fittings
-                are not typically user-replaceable — replace the fitting.
+                <strong>LED module failure</strong> — a fitting that does not illuminate during a
+                test but has a satisfactory battery voltage is most likely suffering from LED module
+                failure or a driver PCB fault. LED modules in emergency lighting fittings are not
+                typically user-replaceable — replace the fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Maintained lamp vs. emergency lamp</strong> — some combined maintained
-                and emergency fittings have separate lamp circuits for the mains-powered
-                maintained operation and the battery-powered emergency operation. A fault in
-                the maintained lamp circuit does not affect the emergency lamp, and vice versa.
-                Confirm which lamp has failed before replacing the fitting.
+                <strong>Maintained lamp vs. emergency lamp</strong> — some combined maintained and
+                emergency fittings have separate lamp circuits for the mains-powered maintained
+                operation and the battery-powered emergency operation. A fault in the maintained
+                lamp circuit does not affect the emergency lamp, and vice versa. Confirm which lamp
+                has failed before replacing the fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Luminance and lux levels</strong> — BS 5266-1 specifies minimum
-                illuminance levels (typically 1 lux on the centreline of escape routes, higher
-                in high-risk areas). A fitting with degraded LEDs may illuminate but fail to
-                meet the minimum lux requirement. Annual testing should include lux verification
-                at representative points on the escape route.
+                <strong>Luminance and lux levels</strong> — BS 5266-1 specifies minimum illuminance
+                levels (typically 1 lux on the centreline of escape routes, higher in high-risk
+                areas). A fitting with degraded LEDs may illuminate but fail to meet the minimum lux
+                requirement. Annual testing should include lux verification at representative points
+                on the escape route.
               </span>
             </li>
           </ul>
@@ -282,20 +282,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test inhibit left active</strong> — some systems allow a test inhibit
-                to be set (for example, to prevent an automatic test running during an event).
-                An inhibit that has been left active will prevent the scheduled test from running.
-                Check the controller settings and remove any active inhibits.
+                <strong>Test inhibit left active</strong> — some systems allow a test inhibit to be
+                set (for example, to prevent an automatic test running during an event). An inhibit
+                that has been left active will prevent the scheduled test from running. Check the
+                controller settings and remove any active inhibits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Communication fault preventing remote test</strong> — on bus-connected
-                addressable systems, a wiring fault on the bus loop will prevent communication
-                with all downstream fittings. The controller will report a communication fault
-                rather than a test result. The loop wiring must be repaired before testing
-                can proceed.
+                addressable systems, a wiring fault on the bus loop will prevent communication with
+                all downstream fittings. The controller will report a communication fault rather
+                than a test result. The loop wiring must be repaired before testing can proceed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -303,8 +302,8 @@ const sections = [
               <span>
                 <strong>Manual test as alternative</strong> — if the automated test system is
                 faulty, the monthly and annual tests can still be performed manually by simulating
-                mains failure at each fitting. Manual test results must still be recorded in the
-                log book. Restore the automatic test function as soon as practicable.
+                mains failure at each fitting. Manual test results must still be recorded in the log
+                book. Restore the automatic test function as soon as practicable.
               </span>
             </li>
           </ul>
@@ -319,37 +318,37 @@ const sections = [
       <>
         <p>
           BS 5266-1:2016 requires that emergency lighting is subject to a monthly function test.
-          This is a key maintenance obligation for commercial premises, HMOs, and any building
-          where emergency lighting is installed as a fire safety measure.
+          This is a key maintenance obligation for commercial premises, HMOs, and any building where
+          emergency lighting is installed as a fire safety measure.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test procedure</strong> — simulate mains failure by pressing the test
-                button on each self-contained fitting, or by operating the maintained circuit
-                isolator for central battery systems. Each fitting must be visually confirmed to
-                illuminate. The test period should be at least 25% of the rated duration (45
-                minutes for a 3-hour rated fitting).
+                <strong>Test procedure</strong> — simulate mains failure by pressing the test button
+                on each self-contained fitting, or by operating the maintained circuit isolator for
+                central battery systems. Each fitting must be visually confirmed to illuminate. The
+                test period should be at least 25% of the rated duration (45 minutes for a 3-hour
+                rated fitting).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Allow recharge before next test</strong> — after the monthly function
-                test, the battery must be allowed to fully recharge (minimum 24 hours) before
-                the next test or before the premises are closed. Do not carry out multiple tests
-                in quick succession.
+                <strong>Allow recharge before next test</strong> — after the monthly function test,
+                the battery must be allowed to fully recharge (minimum 24 hours) before the next
+                test or before the premises are closed. Do not carry out multiple tests in quick
+                succession.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recording results</strong> — the date of the test, the tester's name,
-                and the result (pass or fail, with the identity of any failed fitting) must be
-                recorded in the emergency lighting log book. Unsigned or undated log book entries
-                are not acceptable evidence of compliance.
+                <strong>Recording results</strong> — the date of the test, the tester's name, and
+                the result (pass or fail, with the identity of any failed fitting) must be recorded
+                in the emergency lighting log book. Unsigned or undated log book entries are not
+                acceptable evidence of compliance.
               </span>
             </li>
           </ul>
@@ -365,18 +364,18 @@ const sections = [
         <p>
           The annual full-rated-duration test is the most rigorous maintenance requirement for
           emergency lighting. It confirms that each fitting can sustain illumination for the
-          complete rated duration — typically 3 hours — following complete mains failure, meeting
-          BS 5266-1:2016.
+          complete rated duration — typically 3 hours — following complete mains failure, meeting BS
+          5266-1:2016.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pre-test battery charge</strong> — all fittings must be fully charged
-                before the annual test begins. This requires at least 24 hours on mains supply
-                following any previous test or mains failure event. Beginning the annual test
-                with partially charged batteries will give misleadingly low duration results.
+                <strong>Pre-test battery charge</strong> — all fittings must be fully charged before
+                the annual test begins. This requires at least 24 hours on mains supply following
+                any previous test or mains failure event. Beginning the annual test with partially
+                charged batteries will give misleadingly low duration results.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -384,27 +383,27 @@ const sections = [
               <span>
                 <strong>Test execution</strong> — simulate complete mains failure across the
                 installation and monitor all fittings throughout the full rated duration. Any
-                fitting that extinguishes before the end of the duration period has failed the
-                test and must be repaired or replaced and retested.
+                fitting that extinguishes before the end of the duration period has failed the test
+                and must be repaired or replaced and retested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Post-test recharge and restrictions</strong> — after the annual test,
-                the batteries are fully discharged. The premises should not be occupied during
-                the recharge period (typically 24 hours) unless alternative emergency lighting
-                arrangements are in place. This is a significant operational consideration for
-                busy commercial premises.
+                <strong>Post-test recharge and restrictions</strong> — after the annual test, the
+                batteries are fully discharged. The premises should not be occupied during the
+                recharge period (typically 24 hours) unless alternative emergency lighting
+                arrangements are in place. This is a significant operational consideration for busy
+                commercial premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Formal certificate</strong> — the annual test should be documented with
-                a formal test certificate signed by the competent person who carried out the test.
-                This certificate forms part of the fire safety record for the premises and may
-                be required by the fire authority or building insurer.
+                <strong>Formal certificate</strong> — the annual test should be documented with a
+                formal test certificate signed by the competent person who carried out the test.
+                This certificate forms part of the fire safety record for the premises and may be
+                required by the fire authority or building insurer.
               </span>
             </li>
           </ul>
@@ -419,9 +418,9 @@ const sections = [
       <>
         <p>
           Emergency lighting testing and maintenance is a steady source of recurring work for
-          commercial electricians. Every commercial and public building, HMO, and licensed
-          premises requires monthly testing and an annual duration test — creating a regular
-          maintenance cycle for every customer on your books.
+          commercial electricians. Every commercial and public building, HMO, and licensed premises
+          requires monthly testing and an annual duration test — creating a regular maintenance
+          cycle for every customer on your books.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -430,10 +429,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Emergency Lighting on the EICR</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When carrying out an EICR on premises with emergency lighting, function-test
-                  each fitting and record any failures as C2 or C3 observations. Record the
-                  results and the date of the last annual test in the schedule of particulars.
-                  Use the{' '}
+                  When carrying out an EICR on premises with emergency lighting, function-test each
+                  fitting and record any failures as C2 or C3 observations. Record the results and
+                  the date of the last annual test in the schedule of particulars. Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
@@ -448,10 +446,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Annual Test Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The annual BS 5266 duration test requires a formal written certificate.
-                  Elec-Mate allows you to capture test results for each fitting, record pass
-                  and fail status, and generate a professional test certificate — all on your
-                  phone, on site. Upsell annual testing contracts to every commercial EICR customer.
+                  The annual BS 5266 duration test requires a formal written certificate. Elec-Mate
+                  allows you to capture test results for each fitting, record pass and fail status,
+                  and generate a professional test certificate — all on your phone, on site. Upsell
+                  annual testing contracts to every commercial EICR customer.
                 </p>
               </div>
             </div>
@@ -459,7 +457,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting testing with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and BS 7671-compliant documentation. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -496,7 +494,7 @@ export default function EmergencyLightingFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Emergency Lighting Testing with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, emergency lighting test records, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -94,7 +94,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -108,7 +109,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eicr-tenant-rights',
     title: 'Tenant Rights for EICR',
-    description: 'Tenants\' rights to electrical safety records and how to enforce them.',
+    description: "Tenants' rights to electrical safety records and how to enforce them.",
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -143,16 +144,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Domestic owner-occupied</strong> — every 10 years (recommended, not
-                legally required). Change of occupancy also triggers a recommended inspection.
+                <strong>Domestic owner-occupied</strong> — every 10 years (recommended, not legally
+                required). Change of occupancy also triggers a recommended inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rental properties</strong> — every 5 years or at change of
-                tenancy, whichever is sooner (legally required under the Electrical Safety
-                Standards Regulations 2020).
+                <strong>Private rental properties</strong> — every 5 years or at change of tenancy,
+                whichever is sooner (legally required under the Electrical Safety Standards
+                Regulations 2020).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -165,8 +166,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial (offices, shops)</strong> — every 5 years recommended under
-                BS 7671 Table 62 guidance.
+                <strong>Commercial (offices, shops)</strong> — every 5 years recommended under BS
+                7671 Table 62 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -179,23 +180,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Swimming pools</strong> — every 1 year under BS 7671 Section 702
-                guidance (Special Location).
+                <strong>Swimming pools</strong> — every 1 year under BS 7671 Section 702 guidance
+                (Special Location).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Caravan parks</strong> — every 1 year under BS 7671 Section 708
-                guidance.
+                <strong>Caravan parks</strong> — every 1 year under BS 7671 Section 708 guidance.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These intervals are the maximum recommended or legally required periods. Factors such
-          as the age of the installation, the type of wiring, and the inspector's findings can
-          all lead to a shorter recommended interval being recorded on the report.
+          These intervals are the maximum recommended or legally required periods. Factors such as
+          the age of the installation, the type of wiring, and the inspector's findings can all lead
+          to a shorter recommended interval being recorded on the report.
         </p>
       </>
     ),
@@ -206,11 +206,11 @@ const sections = [
     content: (
       <>
         <p>
-          For owner-occupied domestic properties, there is no legal obligation to obtain an EICR
-          at any specific interval. The legal requirements under the Electrical Safety Standards
-          Regulations 2020 apply only to the private rented sector. However, the IET (Institution
-          of Engineering and Technology) and BS 7671 Section 634 recommend periodic inspection
-          and testing.
+          For owner-occupied domestic properties, there is no legal obligation to obtain an EICR at
+          any specific interval. The legal requirements under the Electrical Safety Standards
+          Regulations 2020 apply only to the private rented sector. However, the IET (Institution of
+          Engineering and Technology) and BS 7671 Section 634 recommend periodic inspection and
+          testing.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -226,19 +226,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>At change of occupancy</strong> — when selling or buying a property,
-                it is strongly recommended that an EICR is obtained. For buyers, this provides
-                assurance about the electrical installation before completion. For sellers, it
-                can prevent late-stage renegotiation if a buyer's surveyor flags electrical
-                concerns.
+                <strong>At change of occupancy</strong> — when selling or buying a property, it is
+                strongly recommended that an EICR is obtained. For buyers, this provides assurance
+                about the electrical installation before completion. For sellers, it can prevent
+                late-stage renegotiation if a buyer's surveyor flags electrical concerns.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-1970 properties: consider every 5 years</strong> — properties with
-                rubber-insulated wiring (pre-1970) or aluminium wiring degrade more rapidly.
-                For these properties, a five-year inspection interval is prudent even for
+                rubber-insulated wiring (pre-1970) or aluminium wiring degrade more rapidly. For
+                these properties, a five-year inspection interval is prudent even for
                 owner-occupiers.
               </span>
             </li>
@@ -253,49 +252,48 @@ const sections = [
     content: (
       <>
         <p>
-          Private rental properties in England are covered by the Electrical Safety Standards in
-          the Private Rented Sector (England) Regulations 2020. These regulations impose a legal
-          maximum interval of five years between EICRs. The regulations also require an EICR at
-          every change of tenancy — so if a tenancy ends after two years, the landlord must
-          obtain a new EICR before the next tenancy begins if the existing EICR is more than
-          five years old. If the existing EICR is still in date, a new one is not required at
-          change of tenancy, but one must be due within five years of the last inspection.
+          Private rental properties in England are covered by the Electrical Safety Standards in the
+          Private Rented Sector (England) Regulations 2020. These regulations impose a legal maximum
+          interval of five years between EICRs. The regulations also require an EICR at every change
+          of tenancy — so if a tenancy ends after two years, the landlord must obtain a new EICR
+          before the next tenancy begins if the existing EICR is more than five years old. If the
+          existing EICR is still in date, a new one is not required at change of tenancy, but one
+          must be due within five years of the last inspection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Every 5 years maximum</strong> — the absolute legal maximum under the
-                2020 Regulations. This applies to assured shorthold tenancies, assured tenancies,
-                and regulated tenancies in England.
+                <strong>Every 5 years maximum</strong> — the absolute legal maximum under the 2020
+                Regulations. This applies to assured shorthold tenancies, assured tenancies, and
+                regulated tenancies in England.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>At change of tenancy</strong> — an EICR must be in place before a new
-                tenancy starts. If the current EICR is still in date (less than five years old
-                and with no shorter reinspection interval specified), it can cover the new tenancy.
-                The new tenant must receive a copy before moving in.
+                tenancy starts. If the current EICR is still in date (less than five years old and
+                with no shorter reinspection interval specified), it can cover the new tenancy. The
+                new tenant must receive a copy before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sooner if specified by the inspector</strong> — if the EICR records a
-                recommended reinspection interval shorter than five years (e.g., three years due
-                to the age of the installation), the landlord must comply with that shorter
-                interval. The legal five-year maximum is a ceiling, not a guaranteed period.
+                recommended reinspection interval shorter than five years (e.g., three years due to
+                the age of the installation), the landlord must comply with that shorter interval.
+                The legal five-year maximum is a ceiling, not a guaranteed period.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Scotland has its own legislation: the Housing (Scotland) Act 2006 and associated
-          Private Residential Tenancy regime require EICRs every five years for private rented
-          properties. Wales and Northern Ireland have separate requirements. This guide covers
-          England only.
+          Scotland has its own legislation: the Housing (Scotland) Act 2006 and associated Private
+          Residential Tenancy regime require EICRs every five years for private rented properties.
+          Wales and Northern Ireland have separate requirements. This guide covers England only.
         </p>
       </>
     ),
@@ -307,8 +305,8 @@ const sections = [
       <>
         <p>
           HMOs are covered by the same five-year maximum under the 2020 Regulations as standard
-          rental properties. However, HMO licences imposed by local authorities frequently specify
-          a three-year EICR interval as a licence condition. Always read your specific licence
+          rental properties. However, HMO licences imposed by local authorities frequently specify a
+          three-year EICR interval as a licence condition. Always read your specific licence
           conditions — the licence condition overrides the general five-year maximum if it specifies
           a shorter period.
         </p>
@@ -317,25 +315,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard HMOs</strong> — five years under the 2020 Regulations (same
-                as all private rental properties).
+                <strong>Standard HMOs</strong> — five years under the 2020 Regulations (same as all
+                private rental properties).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Licensed HMOs in many London boroughs</strong> — three years. Boroughs
-                including Newham, Tower Hamlets, Camden, Hackney, and others specify three years
-                in their HMO licence conditions.
+                including Newham, Tower Hamlets, Camden, Hackney, and others specify three years in
+                their HMO licence conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why the shorter interval?</strong> — HMOs have higher electrical
-                demand than single-family homes, are more likely to have had modifications made
-                by multiple tenants over time, and have greater fire risk due to the number of
-                occupants. More frequent inspection catches deterioration earlier.
+                <strong>Why the shorter interval?</strong> — HMOs have higher electrical demand than
+                single-family homes, are more likely to have had modifications made by multiple
+                tenants over time, and have greater fire risk due to the number of occupants. More
+                frequent inspection catches deterioration earlier.
               </span>
             </li>
           </ul>
@@ -364,16 +362,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Offices and shops</strong> — five years recommended under BS 7671
-                guidance. Modern, well-maintained office installations rarely deteriorate
-                rapidly, making five years a reasonable interval.
+                <strong>Offices and shops</strong> — five years recommended under BS 7671 guidance.
+                Modern, well-maintained office installations rarely deteriorate rapidly, making five
+                years a reasonable interval.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Industrial premises</strong> — three years. Industrial environments
-                expose wiring to mechanical damage, vibration, and chemical attack. More frequent
+                <strong>Industrial premises</strong> — three years. Industrial environments expose
+                wiring to mechanical damage, vibration, and chemical attack. More frequent
                 inspection is necessary to catch deterioration.
               </span>
             </li>
@@ -381,25 +379,24 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Places of public entertainment</strong> — three years. Frequent
-                modifications to temporary installations, high power loads from audio and
-                lighting equipment, and high pedestrian traffic all increase risk.
+                modifications to temporary installations, high power loads from audio and lighting
+                equipment, and high pedestrian traffic all increase risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Educational establishments</strong> — five years. Science laboratories
-                and workshops may have more frequent requirements depending on the equipment
-                installed.
+                <strong>Educational establishments</strong> — five years. Science laboratories and
+                workshops may have more frequent requirements depending on the equipment installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Hospitals and medical facilities</strong> — five years for general areas;
-                shorter for specialist medical areas (operating theatres, ITUs) where the
-                risk assessment requires it. Medical electrical equipment has its own testing
-                regime under BS EN 62353.
+                shorter for specialist medical areas (operating theatres, ITUs) where the risk
+                assessment requires it. Medical electrical equipment has its own testing regime
+                under BS EN 62353.
               </span>
             </li>
           </ul>
@@ -413,9 +410,9 @@ const sections = [
     content: (
       <>
         <p>
-          Certain types of installation are classified as Special Locations or Special
-          Installations under BS 7671 and require much more frequent inspection because of the
-          elevated risk of electric shock or accelerated deterioration.
+          Certain types of installation are classified as Special Locations or Special Installations
+          under BS 7671 and require much more frequent inspection because of the elevated risk of
+          electric shock or accelerated deterioration.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -450,10 +447,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Marinas (BS 7671 Section 709)</strong> — annual inspection recommended
-                for shore connections and pontoon distribution. The saltwater environment and
-                the connection of boat electrical systems create particular corrosion and earth
-                leakage risks.
+                <strong>Marinas (BS 7671 Section 709)</strong> — annual inspection recommended for
+                shore connections and pontoon distribution. The saltwater environment and the
+                connection of boat electrical systems create particular corrosion and earth leakage
+                risks.
               </span>
             </li>
           </ul>
@@ -467,40 +464,38 @@ const sections = [
     content: (
       <>
         <p>
-          Even if the last EICR is still technically in date, certain circumstances should
-          trigger an earlier inspection. Waiting until the five or ten-year deadline is
-          inappropriate when there is reason to suspect the installation has been damaged or
-          compromised.
+          Even if the last EICR is still technically in date, certain circumstances should trigger
+          an earlier inspection. Waiting until the five or ten-year deadline is inappropriate when
+          there is reason to suspect the installation has been damaged or compromised.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Buying an older property</strong> — always commission an EICR before
-                or immediately after purchasing a property built before 1990. Rubber-insulated
-                wiring (TRS or VIR), aluminium conductors, and old-style consumer units without
-                RCD protection are all common in older properties and pose real risks.
+                <strong>Buying an older property</strong> — always commission an EICR before or
+                immediately after purchasing a property built before 1990. Rubber-insulated wiring
+                (TRS or VIR), aluminium conductors, and old-style consumer units without RCD
+                protection are all common in older properties and pose real risks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After a flood</strong> — water ingress into an electrical installation
-                can cause corrosion, insulation breakdown, and earth faults that develop slowly
-                over months. After any flood affecting electrical areas, obtain an EICR before
-                restoring power. Do not assume the installation is safe because it appears to
-                have dried out.
+                <strong>After a flood</strong> — water ingress into an electrical installation can
+                cause corrosion, insulation breakdown, and earth faults that develop slowly over
+                months. After any flood affecting electrical areas, obtain an EICR before restoring
+                power. Do not assume the installation is safe because it appears to have dried out.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>After major building works</strong> — extensions, loft conversions, and
-                kitchen refits often involve modifications to the electrical installation. Even
-                if the new work has its own Minor Works Certificate or EIC, it is good practice
-                to obtain an EICR of the whole installation to ensure the new work interfaces
-                correctly with the existing wiring.
+                kitchen refits often involve modifications to the electrical installation. Even if
+                the new work has its own Minor Works Certificate or EIC, it is good practice to
+                obtain an EICR of the whole installation to ensure the new work interfaces correctly
+                with the existing wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -508,17 +503,15 @@ const sections = [
               <span>
                 <strong>Suspected storm damage</strong> — lightning strikes near a property, or
                 fallen cables on the roof, can damage the installation's earthing and surge
-                protection. An EICR following suspected storm damage will identify any
-                degradation.
+                protection. An EICR following suspected storm damage will identify any degradation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No recent electrical records</strong> — if you have no documentation
-                for the electrical installation (no EIC, no previous EICR) and the property is
-                more than 10 years old, obtain an EICR regardless of when the last one may
-                have been carried out.
+                <strong>No recent electrical records</strong> — if you have no documentation for the
+                electrical installation (no EIC, no previous EICR) and the property is more than 10
+                years old, obtain an EICR regardless of when the last one may have been carried out.
               </span>
             </li>
           </ul>
@@ -542,14 +535,16 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete and Track EICRs with Elec-Mate</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete and Track EICRs with Elec-Mate
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete inspection reports on site and store them against each property.
-                  The app records the recommended reinspection date from each EICR, so you can
+                  to complete inspection reports on site and store them against each property. The
+                  app records the recommended reinspection date from each EICR, so you can
                   proactively remind landlord clients when their next inspection is due — before
                   they lapse into non-compliance.
                 </p>
@@ -559,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Track EICR due dates for all your landlord clients"
-          description="Join 430+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules. Never let a landlord client lapse into non-compliance. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs and track reinspection schedules. Never let a landlord client lapse into non-compliance. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -596,7 +591,7 @@ export default function EICRFrequencyGuidePage() {
       faqHeading="Frequently Asked Questions: EICR Frequency"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Track reinspection dates, send PDFs to landlords on site, and build a recurring inspection client base. 7-day free trial."
     />
   );
 }

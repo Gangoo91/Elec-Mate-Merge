@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/emergency-lighting-testing',
     title: 'Emergency Lighting Testing Guide',
-    description: 'Monthly and annual testing requirements, log books, and what to do when a luminaire fails.',
+    description:
+      'Monthly and annual testing requirements, log books, and what to do when a luminaire fails.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -223,9 +224,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          The standard also specifies requirements for standby lighting — lighting provided to
-          allow continued work in the event of normal supply failure — though standby lighting is
-          distinct from escape lighting and is subject to different design criteria.
+          The standard also specifies requirements for standby lighting — lighting provided to allow
+          continued work in the event of normal supply failure — though standby lighting is distinct
+          from escape lighting and is subject to different design criteria.
         </p>
       </>
     ),
@@ -236,8 +237,8 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting encompasses several different luminaire and sign types, each serving
-          a specific function within the escape strategy.
+          Emergency lighting encompasses several different luminaire and sign types, each serving a
+          specific function within the escape strategy.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -310,18 +311,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-risk task areas</strong> — minimum 10% of normal maintained
-                illuminance or 15 lux, whichever is greater. Must be achieved within 0.5 seconds
-                of normal supply failure.
+                <strong>High-risk task areas</strong> — minimum 10% of normal maintained illuminance
+                or 15 lux, whichever is greater. Must be achieved within 0.5 seconds of normal
+                supply failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Activation time</strong> — for escape routes and open areas, 50% of the
-                required illuminance must be achieved within 5 seconds of normal supply failure,
-                and 100% within 60 seconds. For high-risk task areas, 100% must be achieved
-                within 0.5 seconds.
+                required illuminance must be achieved within 5 seconds of normal supply failure, and
+                100% within 60 seconds. For high-risk task areas, 100% must be achieved within 0.5
+                seconds.
               </span>
             </li>
           </ul>
@@ -335,17 +336,17 @@ const sections = [
     content: (
       <>
         <p>
-          The two principal system architectures for emergency lighting are self-contained
-          systems (each luminaire has its own battery) and central battery systems (a single
-          battery supplies multiple luminaires via a dedicated wiring circuit).
+          The two principal system architectures for emergency lighting are self-contained systems
+          (each luminaire has its own battery) and central battery systems (a single battery
+          supplies multiple luminaires via a dedicated wiring circuit).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Self-contained (BS EN 60598-2-22)</strong> — the most common type in the
-                UK. Each luminaire contains its own rechargeable battery, charger, and control
+                <strong>Self-contained (BS EN 60598-2-22)</strong> — the most common type in the UK.
+                Each luminaire contains its own rechargeable battery, charger, and control
                 circuitry. Installation is straightforward — just a permanent live feed and neutral
                 to each fitting. Battery life is typically 4 years before replacement is required.
                 Suitable for most commercial and light industrial premises.
@@ -366,9 +367,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Addressable (automatic test) systems</strong> — self-contained or
-                central battery systems with addressable luminaires that perform automatic function
-                and duration tests and report results to a central monitoring panel. These systems
+                <strong>Addressable (automatic test) systems</strong> — self-contained or central
+                battery systems with addressable luminaires that perform automatic function and
+                duration tests and report results to a central monitoring panel. These systems
                 satisfy the BS 5266-1 testing requirements automatically and log results
                 electronically, greatly reducing maintenance burden in large buildings.
               </span>
@@ -402,9 +403,9 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-maintained</strong> — the lamp only illuminates when the normal mains
-                supply fails. Suitable for workplaces where lighting is only needed when the building
-                is occupied during normal working hours and occupants are familiar with the layout.
-                Most appropriate for offices, warehouses, and factories.
+                supply fails. Suitable for workplaces where lighting is only needed when the
+                building is occupied during normal working hours and occupants are familiar with the
+                layout. Most appropriate for offices, warehouses, and factories.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -421,7 +422,9 @@ const sections = [
         </div>
         <p>
           The choice between maintained and non-maintained is determined by the{' '}
-          <SEOInternalLink href="/guides/fire-risk-assessment">fire risk assessment</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/fire-risk-assessment">
+            fire risk assessment
+          </SEOInternalLink>{' '}
           and the type of premises. Where in doubt, maintained fittings are the safer specification
           as they also serve as normal lighting, reducing the total number of fittings required.
         </p>
@@ -447,20 +450,18 @@ const sections = [
                 live feed (not switched) so the battery remains charged at all times. The supply
                 must not be on the same circuit as the normal lighting it is designed to replace.
                 The emergency circuit must be protected by a dedicated{' '}
-                <SEOInternalLink href="/guides/rcd-protection-explained">
-                  RCD
-                </SEOInternalLink>{' '}
-                or RCBO.
+                <SEOInternalLink href="/guides/rcd-protection-explained">RCD</SEOInternalLink> or
+                RCBO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Luminaire positioning</strong> — fittings must be positioned to achieve
-                the required illuminance at floor level. Key locations include: above every final
-                exit door, at changes of direction on escape routes, at stairways (each landing
-                must be lit directly), adjacent to fire alarm call points and fire-fighting
-                equipment, near first-aid points, and in toilet areas exceeding 8 m².
+                <strong>Luminaire positioning</strong> — fittings must be positioned to achieve the
+                required illuminance at floor level. Key locations include: above every final exit
+                door, at changes of direction on escape routes, at stairways (each landing must be
+                lit directly), adjacent to fire alarm call points and fire-fighting equipment, near
+                first-aid points, and in toilet areas exceeding 8 m².
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,18 +469,18 @@ const sections = [
               <span>
                 <strong>Spacing calculations</strong> — the maximum spacing between luminaires
                 depends on the mounting height and the photometric data for the specific fitting.
-                Manufacturers provide spacing data in their technical sheets. Photometric calculations
-                using software (DIALux, Relux, or manufacturer-specific tools) are recommended for
-                larger or complex installations.
+                Manufacturers provide spacing data in their technical sheets. Photometric
+                calculations using software (DIALux, Relux, or manufacturer-specific tools) are
+                recommended for larger or complex installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Exit signs</strong> — internally illuminated exit signs must display the
-                BS EN ISO 7010 E001 running-person pictogram. Arrow direction must be correct for
-                the escape route direction. Signs above final exit doors must be horizontal;
-                directional signs at changes of direction must incorporate an appropriate arrow.
+                <strong>Exit signs</strong> — internally illuminated exit signs must display the BS
+                EN ISO 7010 E001 running-person pictogram. Arrow direction must be correct for the
+                escape route direction. Signs above final exit doors must be horizontal; directional
+                signs at changes of direction must incorporate an appropriate arrow.
               </span>
             </li>
           </ul>
@@ -504,8 +505,8 @@ const sections = [
               <span>
                 <strong>Monthly function test</strong> — simulate a mains failure for a short period
                 (typically 1 minute using a test key or inhibit switch) to confirm each luminaire
-                illuminates. The test must be brief enough not to significantly discharge the battery.
-                Record the date, result, and any failed fittings.
+                illuminates. The test must be brief enough not to significantly discharge the
+                battery. Record the date, result, and any failed fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -521,9 +522,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Six-monthly intermediate test</strong> — where the full-duration test
-                cannot be carried out annually (due to operational constraints), BS 5266-1 permits
-                an intermediate test of half the rated duration. However, a full-duration test must
+                <strong>Six-monthly intermediate test</strong> — where the full-duration test cannot
+                be carried out annually (due to operational constraints), BS 5266-1 permits an
+                intermediate test of half the rated duration. However, a full-duration test must
                 still be performed at least every three years.
               </span>
             </li>
@@ -531,9 +532,9 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commissioning certificate</strong> — on completion of a new or modified
-                installation, the installer must issue a BS 5266-1 Completion Certificate. This is
-                a legal document confirming the system has been designed, installed, and tested
-                in accordance with the standard.
+                installation, the installer must issue a BS 5266-1 Completion Certificate. This is a
+                legal document confirming the system has been designed, installed, and tested in
+                accordance with the standard.
               </span>
             </li>
           </ul>
@@ -555,7 +556,8 @@ const sections = [
         <p>
           Emergency lighting installation and testing is a recurring revenue stream for electricians
           serving commercial, retail, and industrial clients. Every non-domestic premises with
-          emergency lighting requires an annual test and periodic system upgrades as batteries degrade.
+          emergency lighting requires an annual test and periodic system upgrades as batteries
+          degrade.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -568,9 +570,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
-                  to issue BS 5266-1 Emergency Lighting Certificates and log annual test results
-                  on site. Send the completed certificate to the client before you leave the
-                  premises — no evening paperwork.
+                  to issue BS 5266-1 Emergency Lighting Certificates and log annual test results on
+                  site. Send the completed certificate to the client before you leave the premises —
+                  no evening paperwork.
                 </p>
               </div>
             </div>
@@ -582,8 +584,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Typical Costs (2026)</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Self-contained LED emergency luminaire: £15–£60 supply. Installation per fitting
-                  (including cable and commissioning): £40–£100. Annual test per fitting: £5–£15.
-                  A 20-fitting commercial installation is typically worth £1,500–£3,000 in
+                  (including cable and commissioning): £40–£100. Annual test per fitting: £5–£15. A
+                  20-fitting commercial installation is typically worth £1,500–£3,000 in
                   installation revenue plus £200–£400 per year in testing and maintenance.
                 </p>
               </div>
@@ -592,7 +594,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage emergency lighting certificates with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices — all on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to issue electrical certificates on site. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices — all on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -629,7 +631,7 @@ export default function EmergencyLightingInstallationPage() {
       faqHeading="Frequently Asked Questions About Emergency Lighting Installation"
       relatedPages={relatedPages}
       ctaHeading="Issue Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. BS 5266-1 emergency lighting certificates, EICR reports, and minor works notices with instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

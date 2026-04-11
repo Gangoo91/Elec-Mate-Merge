@@ -631,7 +631,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design circuits on your phone with AI"
-          description="Join 430+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop, fault protection — all calculated instantly. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer and BS 7671 calculators. Cable sizing, voltage drop, fault protection — all calculated instantly. 7-day free trial."
           icon={PenTool}
         />
       </>
@@ -668,7 +668,7 @@ export default function ElectricalDesignGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Design"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Electrical Design on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Circuit Designer, cable sizing calculator, and BS 7671 design tools. Complete the design and certificate on site. 7-day free trial."
     />
   );
 }

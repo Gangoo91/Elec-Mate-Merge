@@ -672,7 +672,7 @@ export default function SafeIsolationProcedurePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Safe isolation tools built for site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for safe isolation checklists, AI RAMS generation, testing tools, and 8 certificate types. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for safe isolation checklists, AI RAMS generation, testing tools, and 16 certificate types. 7-day free trial, cancel anytime."
     />
   );
 }

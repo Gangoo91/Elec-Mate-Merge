@@ -50,7 +50,8 @@ const faqs = [
       'Consumer unit replacement in Exeter typically costs £450 to £800. South West Devon labour rates are higher than the national average but lower than London. A straightforward replacement in a standard 3-bedroom Exeter semi-detached house costs £500 to £650 including the metal consumer unit, all labour, testing, and the Electrical Installation Certificate. Larger properties or those requiring earthing upgrades and remedial work will be higher. Obtain at least two written quotes from registered Exeter electricians.',
   },
   {
-    question: 'Who handles Part P Building Control notification for consumer unit replacement in Exeter?',
+    question:
+      'Who handles Part P Building Control notification for consumer unit replacement in Exeter?',
     answer:
       'Consumer unit replacement is Part P notifiable work. For Exeter properties, the local building authority is Exeter City Council, but Part P electrical work is administered through the Devon Building Control Partnership. The simplest approach is to use a registered competent person (NICEIC, NAPIT, ELECSA, or similar scheme) who self-certifies and notifies the partnership automatically on completion. Alternatively, you or your electrician must notify the Devon Building Control Partnership directly before work begins.',
   },
@@ -141,24 +142,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main switch</strong> — isolates the entire installation. Available in
-                single pole (switches the live only) or double pole (switches live and neutral).
-                A double pole main switch is recommended in modern installations.
+                <strong>Main switch</strong> — isolates the entire installation. Available in single
+                pole (switches the live only) or double pole (switches live and neutral). A double
+                pole main switch is recommended in modern installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCBs</strong> — one per circuit, sized to the cable rating. They trip and
-                reset without requiring a fuse wire replacement. Common ratings: 6 A (lighting),
-                20 A (immersion heater), 32 A (sockets, cooker).
+                reset without requiring a fuse wire replacement. Common ratings: 6 A (lighting), 20
+                A (immersion heater), 32 A (sockets, cooker).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCDs and RCBOs</strong> — protect against electric shock by detecting
-                earth leakage current. Under Regulation 411.3.3 of{' '}
+                <strong>RCDs and RCBOs</strong> — protect against electric shock by detecting earth
+                leakage current. Under Regulation 411.3.3 of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>
@@ -179,8 +180,8 @@ const sections = [
         <p>
           Exeter is a historically rich city with a substantial proportion of older housing stock.
           The Victorian and Edwardian terraces of St Thomas, Heavitree, Newtown, and St James,
-          alongside inter-war semis in Pinhoe and Pennsylvania, contain many electrical installations
-          that pre-date modern RCD requirements.
+          alongside inter-war semis in Pinhoe and Pennsylvania, contain many electrical
+          installations that pre-date modern RCD requirements.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -189,8 +190,8 @@ const sections = [
               <span>
                 <strong>Victorian and Edwardian terraces</strong> — properties in EX1–EX4 postcodes
                 frequently have wiring installed in the 1960s and 1970s that may not have been
-                updated since. Rewireable fuse boards and early MCB boards without RCDs are
-                common findings.
+                updated since. Rewireable fuse boards and early MCB boards without RCDs are common
+                findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -206,9 +207,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Holiday lets</strong> — Exeter's proximity to the Jurassic Coast and
-                Dartmoor means a proportion of EX properties are used as holiday lets. These
-                are not covered by the 2020 private rented sector regulations, but electrical
-                safety is a condition of many holiday let accreditation schemes.
+                Dartmoor means a proportion of EX properties are used as holiday lets. These are not
+                covered by the 2020 private rented sector regulations, but electrical safety is a
+                condition of many holiday let accreditation schemes.
               </span>
             </li>
           </ul>
@@ -232,16 +233,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewireable or cartridge fuses</strong> — older fuse boards with ceramic
-                fuse carriers. No RCD protection. A common finding in Exeter Victorian terraces.
+                <strong>Rewireable or cartridge fuses</strong> — older fuse boards with ceramic fuse
+                carriers. No RCD protection. A common finding in Exeter Victorian terraces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Absent RCD protection on socket circuits</strong> — MCB-only boards or
-                split-load boards without RCD on socket outlets. C2 observation under
-                Regulation 411.3.3 of BS 7671.
+                split-load boards without RCD on socket outlets. C2 observation under Regulation
+                411.3.3 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -270,9 +271,9 @@ const sections = [
       <>
         <p>
           Amendment 3 to BS 7671:2008, in force from 1 January 2016, added Regulation 421.1.201
-          requiring that consumer units and similar switchgear assemblies in domestic premises
-          have a non-combustible (metal) enclosure. This requirement is unchanged in
-          BS 7671:2018+A3:2024. Every consumer unit replacement in Exeter must comply.
+          requiring that consumer units and similar switchgear assemblies in domestic premises have
+          a non-combustible (metal) enclosure. This requirement is unchanged in BS
+          7671:2018+A3:2024. Every consumer unit replacement in Exeter must comply.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -280,9 +281,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Purpose</strong> — arc faults inside a consumer unit generate heat
-                sufficient to ignite a plastic enclosure. A metal enclosure contains the arc
-                and prevents it from spreading to surrounding combustible material. Consumer unit
-                fires — several of which resulted in deaths — prompted the amendment.
+                sufficient to ignite a plastic enclosure. A metal enclosure contains the arc and
+                prevents it from spreading to surrounding combustible material. Consumer unit fires
+                — several of which resulted in deaths — prompted the amendment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,8 +300,8 @@ const sections = [
               <span>
                 <strong>Existing plastic boards</strong> — those installed before January 2016 do
                 not require immediate replacement solely on grounds of the enclosure material.
-                However, any replacement must use a metal unit, and the absence of RCD protection
-                on socket circuits (a separate issue) may make replacement necessary regardless.
+                However, any replacement must use a metal unit, and the absence of RCD protection on
+                socket circuits (a separate issue) may make replacement necessary regardless.
               </span>
             </li>
           </ul>
@@ -315,42 +316,42 @@ const sections = [
       <>
         <p>
           Exeter South West labour rates are higher than the national average. The following 2026
-          price ranges cover a complete consumer unit replacement: metal unit, all labour,
-          BS 7671 Chapter 61 testing, Electrical Installation Certificate, and Part P notification
-          via the competent person scheme.
+          price ranges cover a complete consumer unit replacement: metal unit, all labour, BS 7671
+          Chapter 61 testing, Electrical Installation Certificate, and Part P notification via the
+          competent person scheme.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1–2 bedroom flat or terraced house</strong> — £450 to £580. Common in
-                Exeter city centre and the student rental areas. 8 to 12 circuits. Around half
-                a day on site.
+                <strong>1–2 bedroom flat or terraced house</strong> — £450 to £580. Common in Exeter
+                city centre and the student rental areas. 8 to 12 circuits. Around half a day on
+                site.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3–4 bedroom semi or detached</strong> — £580 to £750. Most typical Exeter
-                family home. 12 to 18 circuits. Allow 4 to 8 hours. More if wiring is older
-                and requires extended testing.
+                family home. 12 to 18 circuits. Allow 4 to 8 hours. More if wiring is older and
+                requires extended testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large Victorian terrace or HMO</strong> — £750 to £950+. High circuit
-                count, fire alarm testing, potentially multiple RCD sections or full RCBO board.
-                Earthing upgrades may add cost.
+                <strong>Large Victorian terrace or HMO</strong> — £750 to £950+. High circuit count,
+                fire alarm testing, potentially multiple RCD sections or full RCBO board. Earthing
+                upgrades may add cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Included in all quotes</strong> — metal consumer unit, all labour,
-                circuit reconnection, bonding verification, full testing, EIC with schedule of
-                test results, and Part P self-certification.
+                <strong>Included in all quotes</strong> — metal consumer unit, all labour, circuit
+                reconnection, bonding verification, full testing, EIC with schedule of test results,
+                and Part P self-certification.
               </span>
             </li>
           </ul>
@@ -368,17 +369,17 @@ const sections = [
     content: (
       <>
         <p>
-          A compliant consumer unit replacement in Exeter follows the same structured process
-          as any other Part P notifiable electrical installation.
+          A compliant consumer unit replacement in Exeter follows the same structured process as any
+          other Part P notifiable electrical installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Assessment and circuit survey</strong> — all circuits identified,
-                earthing and bonding checked, accessible wiring inspected. Additional defects
-                noted and quoted separately before work begins.
+                <strong>Assessment and circuit survey</strong> — all circuits identified, earthing
+                and bonding checked, accessible wiring inspected. Additional defects noted and
+                quoted separately before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -393,18 +394,17 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing to BS 7671 Chapter 61</strong> — continuity of protective
-                conductors, ring final circuit continuity, insulation resistance, polarity,
-                earth fault loop impedance, and RCD operating time. Results recorded on
-                the schedule of test results.
+                conductors, ring final circuit continuity, insulation resistance, polarity, earth
+                fault loop impedance, and RCD operating time. Results recorded on the schedule of
+                test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC, notification and compliance certificate</strong> — Electrical
-                Installation Certificate issued, Devon Building Control Partnership notified
-                via the competent person scheme, Building Regulations Compliance Certificate
-                sent to you.
+                Installation Certificate issued, Devon Building Control Partnership notified via the
+                competent person scheme, Building Regulations Compliance Certificate sent to you.
               </span>
             </li>
           </ul>
@@ -420,8 +420,8 @@ const sections = [
         <p>
           Exeter's mix of Victorian terraced housing, University of Exeter student rentals, HMOs,
           and a growing owner-occupier market in areas such as Cranbrook and Topsham creates
-          consistent demand for consumer unit replacement work. The student and HMO rental market
-          in particular generates steady EICR-led remedial enquiries.
+          consistent demand for consumer unit replacement work. The student and HMO rental market in
+          particular generates steady EICR-led remedial enquiries.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -434,8 +434,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-installation-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
-                  to complete the certificate and full schedule of test results on your phone
-                  while still at the property. Send the PDF before you leave — no evening admin.
+                  to complete the certificate and full schedule of test results on your phone while
+                  still at the property. Send the PDF before you leave — no evening admin.
                 </p>
               </div>
             </div>
@@ -450,8 +450,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
-                  to send a quote on the same day. Landlords must act within 28 days — the
-                  first quote sent wins the job.
+                  to send a quote on the same day. Landlords must act within 28 days — the first
+                  quote sent wins the job.
                 </p>
               </div>
             </div>
@@ -459,7 +459,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Exeter electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and professional certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -496,7 +496,7 @@ export default function ConsumerUnitReplacementExeterPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Exeter"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site in Exeter"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

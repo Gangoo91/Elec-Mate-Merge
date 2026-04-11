@@ -101,14 +101,15 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eicr-tenant-rights',
     title: 'Tenant Rights for EICR',
-    description: 'Tenants\' rights to electrical safety records and how to enforce them.',
+    description: "Tenants' rights to electrical safety records and how to enforce them.",
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -135,43 +136,42 @@ const sections = [
           When an EICR inspector identifies a defect or departure from BS 7671, they classify it
           using a standardised observation code. These codes determine whether the EICR is
           Satisfactory or Unsatisfactory and what action is required. Understanding the codes is
-          essential for landlords, tenants, and property professionals who receive or act on
-          EICR reports.
+          essential for landlords, tenants, and property professionals who receive or act on EICR
+          reports.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — Danger Present</strong> — "Risk of injury; immediate remedial
-                action required." C1 is the most serious classification. The inspector records
-                C1 where the installation presents an immediate risk of electric shock, fire,
-                or burns. A single C1 observation makes the entire EICR Unsatisfactory. The
-                inspector may recommend immediate disconnection of the affected circuit. Examples:
-                live exposed conductors, missing consumer unit covers, severely degraded cable
-                insulation with exposed cores.
+                <strong>C1 — Danger Present</strong> — "Risk of injury; immediate remedial action
+                required." C1 is the most serious classification. The inspector records C1 where the
+                installation presents an immediate risk of electric shock, fire, or burns. A single
+                C1 observation makes the entire EICR Unsatisfactory. The inspector may recommend
+                immediate disconnection of the affected circuit. Examples: live exposed conductors,
+                missing consumer unit covers, severely degraded cable insulation with exposed cores.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Potentially Dangerous</strong> — "Urgent remedial action required."
-                C2 is recorded where the installation does not present an immediate danger but
-                could do so if left unaddressed. A C2 makes the EICR Unsatisfactory. Under the
-                2020 Regulations, landlords must complete remediation within 28 days. Examples:
-                absence of RCD protection on socket-outlet circuits, inadequate earthing,
-                overloaded circuits.
+                <strong>C2 — Potentially Dangerous</strong> — "Urgent remedial action required." C2
+                is recorded where the installation does not present an immediate danger but could do
+                so if left unaddressed. A C2 makes the EICR Unsatisfactory. Under the 2020
+                Regulations, landlords must complete remediation within 28 days. Examples: absence
+                of RCD protection on socket-outlet circuits, inadequate earthing, overloaded
+                circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Improvement Recommended</strong> — "Improvement recommended."
-                C3 does not make the EICR Unsatisfactory and is not legally required to be
-                addressed within 28 days. C3 items are typically non-compliances with the
-                current edition of BS 7671 that do not present a danger — for example, absence
-                of arc fault detection (AFDD) which is recommended but not required for existing
-                installations, or cable routes that are not marked but are not damaged.
+                <strong>C3 — Improvement Recommended</strong> — "Improvement recommended." C3 does
+                not make the EICR Unsatisfactory and is not legally required to be addressed within
+                28 days. C3 items are typically non-compliances with the current edition of BS 7671
+                that do not present a danger — for example, absence of arc fault detection (AFDD)
+                which is recommended but not required for existing installations, or cable routes
+                that are not marked but are not damaged.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -179,20 +179,20 @@ const sections = [
               <span>
                 <strong>FI — Further Investigation Required</strong> — "Further investigation
                 required without delay." FI is recorded where the inspector cannot assess the
-                condition of part of the installation during the inspection — for example,
-                because cables are concealed and inaccessible, or because test results suggest
-                a fault that cannot be located without further investigation. FI makes the EICR
-                Unsatisfactory. The investigation must be completed and the affected observations
-                reclassified as C1, C2, C3, or cleared.
+                condition of part of the installation during the inspection — for example, because
+                cables are concealed and inaccessible, or because test results suggest a fault that
+                cannot be located without further investigation. FI makes the EICR Unsatisfactory.
+                The investigation must be completed and the affected observations reclassified as
+                C1, C2, C3, or cleared.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          An EICR is assessed as <strong>Satisfactory</strong> only if it contains no C1, C2,
-          or FI observations. The presence of C3 observations alone does not make an EICR
-          Unsatisfactory. An EICR is <strong>Unsatisfactory</strong> if it contains one or more
-          C1, C2, or FI observations.
+          An EICR is assessed as <strong>Satisfactory</strong> only if it contains no C1, C2, or FI
+          observations. The presence of C3 observations alone does not make an EICR Unsatisfactory.
+          An EICR is <strong>Unsatisfactory</strong> if it contains one or more C1, C2, or FI
+          observations.
         </p>
       </>
     ),
@@ -212,39 +212,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — immediately</strong> — the 2020 Regulations require remediation
-                within 28 days, but C1 observations represent immediate danger and should not
-                be left that long. Where the inspector recommends disconnection of the affected
-                circuit, act on that recommendation immediately. Arrange emergency remedial work
-                as soon as possible. Do not allow tenants to use the affected circuit until it
-                is made safe.
+                <strong>C1 — immediately</strong> — the 2020 Regulations require remediation within
+                28 days, but C1 observations represent immediate danger and should not be left that
+                long. Where the inspector recommends disconnection of the affected circuit, act on
+                that recommendation immediately. Arrange emergency remedial work as soon as
+                possible. Do not allow tenants to use the affected circuit until it is made safe.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — within 28 days</strong> — the 28-day clock starts from the date
-                of the EICR, not from when the landlord receives the report. Arrange remediation
-                promptly; 28 days is not much time if specialist work is needed or contractors
-                are busy.
+                <strong>C2 — within 28 days</strong> — the 28-day clock starts from the date of the
+                EICR, not from when the landlord receives the report. Arrange remediation promptly;
+                28 days is not much time if specialist work is needed or contractors are busy.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>FI — promptly, then reclassify</strong> — FI items should be investigated
-                as soon as possible. Until they are resolved and reclassified, the EICR is
-                Unsatisfactory, which means the landlord is not compliant with the 2020
-                Regulations.
+                <strong>FI — promptly, then reclassify</strong> — FI items should be investigated as
+                soon as possible. Until they are resolved and reclassified, the EICR is
+                Unsatisfactory, which means the landlord is not compliant with the 2020 Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — no legal deadline</strong> — C3 items are not legally required
-                to be addressed within 28 days and do not make the EICR Unsatisfactory. However,
-                they should be addressed at the next convenient opportunity to prevent
-                deterioration.
+                <strong>C3 — no legal deadline</strong> — C3 items are not legally required to be
+                addressed within 28 days and do not make the EICR Unsatisfactory. However, they
+                should be addressed at the next convenient opportunity to prevent deterioration.
               </span>
             </li>
           </ul>
@@ -252,8 +248,8 @@ const sections = [
         <p>
           Once remediation is complete, the landlord must obtain written confirmation from a
           qualified electrician that the work has been satisfactorily completed. This confirmation
-          must be provided to the tenant within 28 days of the work being finished, and to the
-          local authority within seven days if requested.
+          must be provided to the tenant within 28 days of the work being finished, and to the local
+          authority within seven days if requested.
         </p>
       </>
     ),
@@ -264,57 +260,56 @@ const sections = [
     content: (
       <>
         <p>
-          The following types of remediation work are the most commonly required following
-          an Unsatisfactory EICR in a domestic rental property.
+          The following types of remediation work are the most commonly required following an
+          Unsatisfactory EICR in a domestic rental property.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement</strong> — the most common remediation item.
-                Where an older consumer unit lacks RCD protection on socket-outlet circuits
-                (required under Regulation 411.3.3 of BS 7671), the entire consumer unit is
-                typically replaced with a modern dual-RCD or RCBO board. This satisfies the
-                requirement and also modernises overcurrent protection.
+                <strong>Consumer unit replacement</strong> — the most common remediation item. Where
+                an older consumer unit lacks RCD protection on socket-outlet circuits (required
+                under Regulation 411.3.3 of BS 7671), the entire consumer unit is typically replaced
+                with a modern dual-RCD or RCBO board. This satisfies the requirement and also
+                modernises overcurrent protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding</strong> — the main earthing terminal must be
-                connected to all incoming metallic services (gas, water, oil). Missing or
-                undersized bonding conductors are a common C2. The remediation involves
-                installing correctly sized bonding conductors (typically 10mm² for a TN-S or
-                TN-C-S supply) from the main earthing terminal to the gas and water meter
-                pipework.
+                connected to all incoming metallic services (gas, water, oil). Missing or undersized
+                bonding conductors are a common C2. The remediation involves installing correctly
+                sized bonding conductors (typically 10mm² for a TN-S or TN-C-S supply) from the main
+                earthing terminal to the gas and water meter pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary bonding in bathrooms</strong> — where a bathroom has
-                exposed metalwork (metal baths, pipes, waste fittings) that is not covered by
-                the main bonding, supplementary bonding conductors (typically 4mm²) must be
-                installed between simultaneously accessible metal parts.
+                <strong>Supplementary bonding in bathrooms</strong> — where a bathroom has exposed
+                metalwork (metal baths, pipes, waste fittings) that is not covered by the main
+                bonding, supplementary bonding conductors (typically 4mm²) must be installed between
+                simultaneously accessible metal parts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable repairs and replacements</strong> — damaged, overheated, or
-                deteriorated cables must be repaired or replaced. For small sections, a splice
-                in an accessible enclosure is acceptable. For longer runs or cables showing
-                widespread deterioration, replacement is required.
+                deteriorated cables must be repaired or replaced. For small sections, a splice in an
+                accessible enclosure is acceptable. For longer runs or cables showing widespread
+                deterioration, replacement is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correcting amateur additions</strong> — non-professional additions to
-                the electrical installation (DIY sockets, junction boxes not in accessible
-                positions, non-standard cable types) are commonly found in older rental
-                properties and must be corrected by a qualified electrician.
+                <strong>Correcting amateur additions</strong> — non-professional additions to the
+                electrical installation (DIY sockets, junction boxes not in accessible positions,
+                non-standard cable types) are commonly found in older rental properties and must be
+                corrected by a qualified electrician.
               </span>
             </li>
           </ul>
@@ -337,17 +332,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement (standard house)</strong> — £600 to £1,200.
-                This is the most commonly required and most costly single remediation item.
-                The price includes the new consumer unit, installation, testing, and an
-                Electrical Installation Certificate.
+                <strong>Consumer unit replacement (standard house)</strong> — £600 to £1,200. This
+                is the most commonly required and most costly single remediation item. The price
+                includes the new consumer unit, installation, testing, and an Electrical
+                Installation Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main protective bonding (gas + water)</strong> — £150 to £400. Depends
-                on the length of bonding conductor runs and ease of access to the meter locations.
+                <strong>Main protective bonding (gas + water)</strong> — £150 to £400. Depends on
+                the length of bonding conductor runs and ease of access to the meter locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -361,26 +356,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable repair (short section)</strong> — £100 to £300. Replacing a
-                damaged section of cable in an accessible location. More complex repairs with
-                difficult access or chased cables cost more.
+                <strong>Cable repair (short section)</strong> — £100 to £300. Replacing a damaged
+                section of cable in an accessible location. More complex repairs with difficult
+                access or chased cables cost more.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional circuit (from consumer unit)</strong> — £200 to £500 per
-                circuit. Adding a dedicated circuit for a cooker, EV charger, or to separate
-                an overloaded ring main.
+                <strong>Additional circuit (from consumer unit)</strong> — £200 to £500 per circuit.
+                Adding a dedicated circuit for a cooker, EV charger, or to separate an overloaded
+                ring main.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire (2-bed house)</strong> — £3,000 to £6,000. Rarely required
-                purely as EICR remediation but sometimes the most cost-effective option when
-                an installation has multiple serious defects. Includes new consumer unit,
-                all circuit wiring, sockets, and lighting.
+                purely as EICR remediation but sometimes the most cost-effective option when an
+                installation has multiple serious defects. Includes new consumer unit, all circuit
+                wiring, sockets, and lighting.
               </span>
             </li>
           </ul>
@@ -398,8 +393,8 @@ const sections = [
     content: (
       <>
         <p>
-          The 28-day deadline creates time pressure for landlords, but it is still worth getting
-          at least two quotes for significant remediation work — especially for a consumer unit
+          The 28-day deadline creates time pressure for landlords, but it is still worth getting at
+          least two quotes for significant remediation work — especially for a consumer unit
           replacement costing £600 to £1,200 or more.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -407,12 +402,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Get the quote on the day of the EICR</strong> — the electrician who
-                carries out the EICR is already on site, already understands the installation,
-                and is best placed to quote for remediation immediately. This avoids the need
-                for a second site visit and can significantly reduce the total time taken.
-                Many electricians offer competitive pricing for combined EICR and remediation
-                work.
+                <strong>Get the quote on the day of the EICR</strong> — the electrician who carries
+                out the EICR is already on site, already understands the installation, and is best
+                placed to quote for remediation immediately. This avoids the need for a second site
+                visit and can significantly reduce the total time taken. Many electricians offer
+                competitive pricing for combined EICR and remediation work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,10 +422,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provide the EICR to each electrician quoting</strong> — share the full
-                EICR with any electrician providing a remediation quote. This ensures they quote
-                for all items identified and prevents disputes about scope later. The electrician
-                should confirm in writing which observations they are addressing.
+                <strong>Provide the EICR to each electrician quoting</strong> — share the full EICR
+                with any electrician providing a remediation quote. This ensures they quote for all
+                items identified and prevents disputes about scope later. The electrician should
+                confirm in writing which observations they are addressing.
               </span>
             </li>
           </ul>
@@ -445,48 +439,47 @@ const sections = [
     content: (
       <>
         <p>
-          There is no legal requirement to use the same electrician who carried out the EICR for
-          the remediation work. Both options have advantages and disadvantages.
+          There is no legal requirement to use the same electrician who carried out the EICR for the
+          remediation work. Both options have advantages and disadvantages.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Same electrician — advantages</strong> — they already know the
-                installation. They can start the remediation immediately after the inspection
-                (if the work is straightforward). No need for a second site visit. They are
-                accountable for both the inspection findings and the remediation.
+                <strong>Same electrician — advantages</strong> — they already know the installation.
+                They can start the remediation immediately after the inspection (if the work is
+                straightforward). No need for a second site visit. They are accountable for both the
+                inspection findings and the remediation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Different electrician — advantages</strong> — you may get a more
-                competitive price. An independent electrician carries out a second-opinion
-                check on the work. For significant remediation work (consumer unit replacement,
-                partial rewires), competitive quotes can save hundreds of pounds.
+                <strong>Different electrician — advantages</strong> — you may get a more competitive
+                price. An independent electrician carries out a second-opinion check on the work.
+                For significant remediation work (consumer unit replacement, partial rewires),
+                competitive quotes can save hundreds of pounds.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation requirements</strong> — whichever electrician carries out
-                the remediation, you must obtain written confirmation that the work has been
-                done satisfactorily. For notifiable work (consumer unit replacement or new
-                circuits), this will be an Electrical Installation Certificate. For minor work
-                (replacing a socket, adding a bonding conductor), a Minor Works Certificate
-                is appropriate.
+                <strong>Documentation requirements</strong> — whichever electrician carries out the
+                remediation, you must obtain written confirmation that the work has been done
+                satisfactorily. For notifiable work (consumer unit replacement or new circuits),
+                this will be an Electrical Installation Certificate. For minor work (replacing a
+                socket, adding a bonding conductor), a Minor Works Certificate is appropriate.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          After remediation is complete, the EICR is not automatically updated. If you want
-          a new Satisfactory EICR to show full compliance, you must commission a new inspection
-          of the installation. Some landlords choose to do this immediately after remediation;
-          others rely on the written confirmation from the remediation electrician until the
-          next scheduled EICR.
+          After remediation is complete, the EICR is not automatically updated. If you want a new
+          Satisfactory EICR to show full compliance, you must commission a new inspection of the
+          installation. Some landlords choose to do this immediately after remediation; others rely
+          on the written confirmation from the remediation electrician until the next scheduled
+          EICR.
         </p>
       </>
     ),
@@ -500,8 +493,8 @@ const sections = [
           Electricians who carry out EICRs are in the best possible position to win the remediation
           work. The landlord needs to act within 28 days, they trust you because you found the
           defects, and you already understand the installation. Providing a clear, professional
-          quote on the day of the EICR is the single most effective way to win follow-on
-          remediation contracts.
+          quote on the day of the EICR is the single most effective way to win follow-on remediation
+          contracts.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -514,10 +507,10 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
-                  to produce a professional remediation quote while you are still on site.
-                  Landlords under 28-day pressure will almost always accept a professional
-                  same-day quote from the inspector rather than going through the process of
-                  finding and briefing a different electrician.
+                  to produce a professional remediation quote while you are still on site. Landlords
+                  under 28-day pressure will almost always accept a professional same-day quote from
+                  the inspector rather than going through the process of finding and briefing a
+                  different electrician.
                 </p>
               </div>
             </div>
@@ -528,10 +521,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Document Remediation Correctly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  After completing remediation, use Elec-Mate to produce the correct
-                  documentation — EIC for notifiable work, Minor Works Certificate for smaller
-                  jobs. Send the PDF directly to the landlord from site. The landlord has 28
-                  days from completion to provide this to the tenant and local authority.
+                  After completing remediation, use Elec-Mate to produce the correct documentation —
+                  EIC for notifiable work, Minor Works Certificate for smaller jobs. Send the PDF
+                  directly to the landlord from site. The landlord has 28 days from completion to
+                  provide this to the tenant and local authority.
                 </p>
               </div>
             </div>
@@ -539,7 +532,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs and win remediation work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete on-site EICRs, quote for remediation work instantly, and produce all required certificates. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -576,7 +569,7 @@ export default function EICRRemediationPage() {
       faqHeading="Frequently Asked Questions: EICR Remediation"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs and Remediation Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, instant remediation quotes, and all required certificate documentation. 7-day free trial."
     />
   );
 }

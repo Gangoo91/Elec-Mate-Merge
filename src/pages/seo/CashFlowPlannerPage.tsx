@@ -110,7 +110,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -230,9 +230,7 @@ export default function CashFlowPlannerPage() {
                 business analytics dashboard
               </SEOInternalLink>{' '}
               to track profitability alongside cash position, and use the{' '}
-              <SEOInternalLink href="/tools/electrician-invoice-app">
-                invoice app
-              </SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
               to reduce debtor days with automatic payment reminders.
             </p>
           </div>
@@ -364,7 +362,7 @@ export default function CashFlowPlannerPage() {
               specific cash flow patterns of an electrical business. Elec-Mate is different because
               it is purpose-built for UK electricians. The Cash Flow Planner is part of the Business
               Hub, which includes 14 specialist business calculators alongside 56 technical
-              calculators, 8 certificate types, 8 Elec-AI agents, and 36+ training courses.
+              calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses.
               Everything is integrated — your jobs, quotes, invoices, expenses, and certificates all
               feed into the cash flow forecast.
             </p>
@@ -429,7 +427,7 @@ export default function CashFlowPlannerPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Take Control of Your Cash Flow"
-        subheading="Join 430+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate to forecast cash flow, chase invoices, and never be surprised by a cash gap again. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

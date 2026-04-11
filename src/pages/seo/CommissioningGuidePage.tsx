@@ -679,7 +679,7 @@ export default function CommissioningGuidePage() {
       faqHeading="Frequently Asked Questions About Commissioning"
       relatedPages={relatedPages}
       ctaHeading="Commission and Certify from Your Phone"
-      ctaSubheading="Elec-Mate handles the EIC, schedule of test results, and PDF export so you can focus on the testing and functional checks. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate handles the EIC, schedule of test results, and PDF export so you can focus on the testing and functional checks. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

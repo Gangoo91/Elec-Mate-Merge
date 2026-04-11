@@ -89,24 +89,21 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/regulation-411-automatic-disconnection',
     title: 'Regulation 411 — ADS Explained',
-    description:
-      'How circuit design affects earth fault loop impedance and ADS compliance.',
+    description: 'How circuit design affects earth fault loop impedance and ADS compliance.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/regulation-418-supplementary-protection',
     title: 'Regulation 418 — Supplementary Protection',
-    description:
-      'RCD arrangements and how circuit division affects nuisance tripping.',
+    description: 'RCD arrangements and how circuit division affects nuisance tripping.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Size ring and radial circuits with automatic voltage drop and Zs verification.',
+    description: 'Size ring and radial circuits with automatic voltage drop and Zs verification.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -197,9 +194,9 @@ const sections = [
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Minimising inconvenience</strong> — beyond safety, the regulation recognises
-                that loss of an entire installation due to a single circuit fault is unacceptable. Even
-                if not dangerous, losing all power because one appliance faults is an inconvenience
-                that proper circuit division prevents.
+                that loss of an entire installation due to a single circuit fault is unacceptable.
+                Even if not dangerous, losing all power because one appliance faults is an
+                inconvenience that proper circuit division prevents.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -222,8 +219,8 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 314.3 reinforces the safety requirement: separate circuits shall be provided for
-          parts of the installation that need to be separately controlled so that a fault on one
+          Regulation 314.3 reinforces the safety requirement: separate circuits shall be provided
+          for parts of the installation that need to be separately controlled so that a fault on one
           circuit does not affect the safe operation of other circuits. The regulation identifies
           specific circumstances where separate circuits are essential:
         </p>
@@ -241,17 +238,17 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety services</strong> — fire alarm systems, emergency lighting, and smoke
-                detection must be on dedicated circuits, separate from all other loads. These circuits
-                must not be affected by faults elsewhere in the installation.
+                detection must be on dedicated circuits, separate from all other loads. These
+                circuits must not be affected by faults elsewhere in the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High-current dedicated loads</strong> — equipment with high current demand
-                (cooker, electric shower, immersion heater, EV charger) must have dedicated circuits.
-                Sharing a circuit between a high-demand load and other equipment causes voltage
-                fluctuations and nuisance tripping.
+                (cooker, electric shower, immersion heater, EV charger) must have dedicated
+                circuits. Sharing a circuit between a high-demand load and other equipment causes
+                voltage fluctuations and nuisance tripping.
               </span>
             </li>
           </ul>
@@ -369,16 +366,26 @@ const sections = [
             <div className="text-white text-sm leading-relaxed space-y-2">
               <p>
                 Cable runs in a ring from the consumer unit, around the socket outlets, and back to
-                the consumer unit. Both ends of the line, neutral, and earth are connected to the same
-                terminals.
+                the consumer unit. Both ends of the line, neutral, and earth are connected to the
+                same terminals.
               </p>
-              <p><strong>Protection:</strong> 32A MCB</p>
-              <p><strong>Cable:</strong> 2.5mm sq (copper, twin and earth)</p>
-              <p><strong>Maximum floor area:</strong> 100 sq m (Appendix 15)</p>
-              <p><strong>Advantages:</strong> Lower Zs at mid-point (halved impedance), lower voltage
-                drop, can supply multiple 13A sockets over a large area</p>
-              <p><strong>Use when:</strong> Multiple general-purpose socket outlets serving a room or
-                area up to 100 sq m</p>
+              <p>
+                <strong>Protection:</strong> 32A MCB
+              </p>
+              <p>
+                <strong>Cable:</strong> 2.5mm sq (copper, twin and earth)
+              </p>
+              <p>
+                <strong>Maximum floor area:</strong> 100 sq m (Appendix 15)
+              </p>
+              <p>
+                <strong>Advantages:</strong> Lower Zs at mid-point (halved impedance), lower voltage
+                drop, can supply multiple 13A sockets over a large area
+              </p>
+              <p>
+                <strong>Use when:</strong> Multiple general-purpose socket outlets serving a room or
+                area up to 100 sq m
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -391,14 +398,24 @@ const sections = [
                 Cable runs from the consumer unit to the load(s) in a single direction. No return
                 path to the consumer unit — the cable terminates at the last point on the circuit.
               </p>
-              <p><strong>Protection:</strong> Varies (20A, 32A, or matched to load)</p>
-              <p><strong>Cable:</strong> Sized for the design current and length</p>
-              <p><strong>Maximum floor area:</strong> 50 sq m for 20A/2.5mm sq, 75 sq m for
-                32A/4.0mm sq</p>
-              <p><strong>Advantages:</strong> Simpler cable routing, ideal for dedicated loads, no
-                ring continuity issues</p>
-              <p><strong>Use when:</strong> Dedicated load (cooker, shower, EV charger), small area,
-                or where ring routing is impractical</p>
+              <p>
+                <strong>Protection:</strong> Varies (20A, 32A, or matched to load)
+              </p>
+              <p>
+                <strong>Cable:</strong> Sized for the design current and length
+              </p>
+              <p>
+                <strong>Maximum floor area:</strong> 50 sq m for 20A/2.5mm sq, 75 sq m for 32A/4.0mm
+                sq
+              </p>
+              <p>
+                <strong>Advantages:</strong> Simpler cable routing, ideal for dedicated loads, no
+                ring continuity issues
+              </p>
+              <p>
+                <strong>Use when:</strong> Dedicated load (cooker, shower, EV charger), small area,
+                or where ring routing is impractical
+              </p>
             </div>
           </div>
         </div>
@@ -407,10 +424,10 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
               <strong>Common mistake:</strong> Spurs on ring circuits are often misunderstood. A
-              non-fused spur from a ring final circuit may supply one single or one twin socket outlet
-              only. Multiple spurs from the same point on the ring are not permitted. If you need to
-              supply multiple additional sockets, either extend the ring or use a fused connection
-              unit to create a fused spur.
+              non-fused spur from a ring final circuit may supply one single or one twin socket
+              outlet only. Multiple spurs from the same point on the ring are not permitted. If you
+              need to supply multiple additional sockets, either extend the ring or use a fused
+              connection unit to create a fused spur.
             </p>
           </div>
         </div>
@@ -433,36 +450,36 @@ const sections = [
               <span>
                 <strong>Lighting circuits</strong> — must be separate from socket-outlet circuits.
                 Provide at least two lighting circuits in any dwelling (upstairs and downstairs, or
-                front and back). This ensures that a fault on one lighting circuit does not leave the
-                entire property in darkness. Each lighting circuit is typically protected by a 6A MCB
-                with 1.5mm sq cable.
+                front and back). This ensures that a fault on one lighting circuit does not leave
+                the entire property in darkness. Each lighting circuit is typically protected by a
+                6A MCB with 1.5mm sq cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket-outlet circuits</strong> — provide at least two ring or radial circuits
-                for general socket outlets. Distribute them so that a trip on one circuit does not
-                remove all socket power (for example, one circuit for upstairs, one for downstairs; or
-                one for the kitchen/utility and one for living areas).
+                <strong>Socket-outlet circuits</strong> — provide at least two ring or radial
+                circuits for general socket outlets. Distribute them so that a trip on one circuit
+                does not remove all socket power (for example, one circuit for upstairs, one for
+                downstairs; or one for the kitchen/utility and one for living areas).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuits</strong> — the following loads should always have dedicated
-                circuits: cooker, electric shower, immersion heater, electric vehicle charger, heat
-                pump, fire alarm system, security system, and any other load exceeding 2kW or
-                requiring specific control.
+                <strong>Dedicated circuits</strong> — the following loads should always have
+                dedicated circuits: cooker, electric shower, immersion heater, electric vehicle
+                charger, heat pump, fire alarm system, security system, and any other load exceeding
+                2kW or requiring specific control.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor circuits</strong> — outdoor socket outlets, garden lighting, and
-                outbuilding supplies should be on separate circuits from indoor circuits. This limits
-                the impact of outdoor faults (which are more common due to weather exposure) on the
-                indoor installation.
+                outbuilding supplies should be on separate circuits from indoor circuits. This
+                limits the impact of outdoor faults (which are more common due to weather exposure)
+                on the indoor installation.
               </span>
             </li>
           </ul>
@@ -595,8 +612,8 @@ const sections = [
               <span>
                 <strong>Sub-distribution</strong> — large commercial installations use
                 sub-distribution boards to reduce cable lengths and improve discrimination. The main
-                distribution board supplies sub-boards via sub-main cables, and the sub-boards supply
-                final circuits. Each sub-board serves a defined area or function.
+                distribution board supplies sub-boards via sub-main cables, and the sub-boards
+                supply final circuits. Each sub-board serves a defined area or function.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -623,8 +640,8 @@ const sections = [
           The design process for a commercial installation typically starts with a load schedule
           (listing every item of equipment and its power demand), followed by a diversity assessment
           (applying diversity factors from BS 7671 Appendix 4), then circuit allocation (deciding
-          which loads go on which circuits), and finally cable sizing and protective device selection
-          for each circuit. The{' '}
+          which loads go on which circuits), and finally cable sizing and protective device
+          selection for each circuit. The{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -664,7 +681,7 @@ export default function Regulation314CircuitDivisionPage() {
       faqHeading="Frequently Asked Questions About Circuit Division and Design"
       relatedPages={relatedPages}
       ctaHeading="Design Circuit Schedules and Size Cables on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-assisted circuit design, cable sizing, and on-site EIC certificates with professional schedules. 7-day free trial, cancel anytime."
     />
   );
 }

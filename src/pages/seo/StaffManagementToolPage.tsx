@@ -475,7 +475,7 @@ export default function StaffManagementToolPage() {
       faqHeading="Frequently Asked Questions About Staff Management"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Team Professionally"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to manage staff, track compliance, and allocate jobs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to manage staff, track compliance, and allocate jobs. 7-day free trial, cancel anytime."
       pagePath="/tools/staff-management-electrician"
     />
   );

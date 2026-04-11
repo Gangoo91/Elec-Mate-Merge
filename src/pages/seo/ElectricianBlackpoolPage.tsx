@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Blackpool is in Lancashire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Blackpool Council Building Control.',
   'Electricity North West (ENW) is the DNO for Blackpool. All new connections, supply upgrades, and G98/G99 generation notifications go through ENW.',
   'Blackpool has one of the highest concentrations of HMOs, guesthouses, and holiday accommodation in the UK. This drives significant EICR and commercial electrical compliance work.',
-  'The town\'s Victorian and Edwardian guest house stock is a key market for electricians. Many properties have ageing wiring and require upgrading to meet current BS 7671 standards and satisfy licensing requirements.',
+  "The town's Victorian and Edwardian guest house stock is a key market for electricians. Many properties have ageing wiring and require upgrading to meet current BS 7671 standards and satisfy licensing requirements.",
   'Labour rates in Blackpool are among the lower end for the North West — typically £38 to £55 per hour for a qualified registered electrician in 2026, reflecting the local economy.',
 ];
 
@@ -52,12 +52,12 @@ const faqs = [
   {
     question: 'What are the electrical requirements for Blackpool guesthouses and HMOs?',
     answer:
-      'Guesthouses and HMOs in Blackpool must comply with both the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 and Blackpool Council\'s HMO licensing conditions. Requirements include: a valid EICR every five years (or at change of tenancy), fire alarm systems to BS 5839-6 at the appropriate category for the size and risk level of the property, emergency lighting in common areas for larger HMOs, adequate socket provision per room, and appropriate RCD protection under BS 7671 regulation 411.3.3. Blackpool Council actively enforces HMO licensing conditions — non-compliance can result in fines and licence revocation.',
+      "Guesthouses and HMOs in Blackpool must comply with both the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 and Blackpool Council's HMO licensing conditions. Requirements include: a valid EICR every five years (or at change of tenancy), fire alarm systems to BS 5839-6 at the appropriate category for the size and risk level of the property, emergency lighting in common areas for larger HMOs, adequate socket provision per room, and appropriate RCD protection under BS 7671 regulation 411.3.3. Blackpool Council actively enforces HMO licensing conditions — non-compliance can result in fines and licence revocation.",
   },
   {
     question: 'Who is the DNO for Blackpool?',
     answer:
-      'Electricity North West (ENW) is the Distribution Network Operator for Blackpool and the wider Lancashire coast. For new connections, supply upgrades (for EV chargers or heat pumps), and G98/G99 generation notifications for solar PV or battery storage, you deal with ENW. ENW\'s online connections portal handles most application types. G98 notifications are straightforward; G99 applications for larger generation systems require prior approval and typically take 8 to 12 weeks.',
+      "Electricity North West (ENW) is the Distribution Network Operator for Blackpool and the wider Lancashire coast. For new connections, supply upgrades (for EV chargers or heat pumps), and G98/G99 generation notifications for solar PV or battery storage, you deal with ENW. ENW's online connections portal handles most application types. G98 notifications are straightforward; G99 applications for larger generation systems require prior approval and typically take 8 to 12 weeks.",
   },
   {
     question: 'How much does an EICR cost in Blackpool?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What qualifications do I need to work as an electrician in Blackpool?',
     answer:
-      'The requirements are standard across England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P, NICEIC or NAPIT registration is required. Electricians working on Blackpool\'s commercial guesthouse and hospitality sector should also consider additional qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266) to offer a complete compliance service to commercial customers.',
+      "The requirements are standard across England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P, NICEIC or NAPIT registration is required. Electricians working on Blackpool's commercial guesthouse and hospitality sector should also consider additional qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266) to offer a complete compliance service to commercial customers.",
   },
   {
     question: 'Is there a market for electrical work related to the Blackpool Illuminations?',
@@ -93,8 +93,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description:
-      'EICRs for Blackpool guesthouses, HMO landlords, and residential properties.',
+    description: 'EICRs for Blackpool guesthouses, HMO landlords, and residential properties.',
     icon: ShieldCheck,
     category: 'Certificate',
   },
@@ -102,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for guesthouse rewires and new circuits in Blackpool\'s multi-storey Victorian properties.',
+      "Size cables for guesthouse rewires and new circuits in Blackpool's multi-storey Victorian properties.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -143,25 +142,23 @@ const sections = [
     content: (
       <>
         <p>
-          Blackpool is the UK's most visited seaside resort, with a distinctive economy built
-          around tourism, entertainment, and hospitality. For electricians, this creates a unique
-          market dominated by the guesthouse and HMO sector alongside standard residential work.
-          The town has one of the highest concentrations of guest accommodation in the UK —
-          hundreds of Victorian and Edwardian guesthouses, hotels, and holiday lets, many with
-          ageing electrical installations that need upgrading to meet current standards and
-          satisfy council licensing requirements.
+          Blackpool is the UK's most visited seaside resort, with a distinctive economy built around
+          tourism, entertainment, and hospitality. For electricians, this creates a unique market
+          dominated by the guesthouse and HMO sector alongside standard residential work. The town
+          has one of the highest concentrations of guest accommodation in the UK — hundreds of
+          Victorian and Edwardian guesthouses, hotels, and holiday lets, many with ageing electrical
+          installations that need upgrading to meet current standards and satisfy council licensing
+          requirements.
         </p>
         <p>
-          Blackpool also has significant areas of deprived residential housing, with older
-          wiring stock that generates consistent demand for rewiring, consumer unit upgrades,
-          and EICR remedial work. The town's regeneration programme has brought some new
-          residential and commercial development, adding further variety to the local
-          electrician's workload.
+          Blackpool also has significant areas of deprived residential housing, with older wiring
+          stock that generates consistent demand for rewiring, consumer unit upgrades, and EICR
+          remedial work. The town's regeneration programme has brought some new residential and
+          commercial development, adding further variety to the local electrician's workload.
         </p>
         <p>
-          This guide covers the regulatory requirements, DNO contacts, local property types,
-          typical jobs, pricing, and practical advice for electricians working in and around
-          Blackpool.
+          This guide covers the regulatory requirements, DNO contacts, local property types, typical
+          jobs, pricing, and practical advice for electricians working in and around Blackpool.
         </p>
       </>
     ),
@@ -191,10 +188,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Blackpool Council's HMO licensing conditions
-                require a valid EICR every five years, appropriate fire alarm and emergency
-                lighting systems, and adequate socket provision. Blackpool has mandatory HMO
-                licensing for properties occupied by five or more people from two or more
-                households.
+                require a valid EICR every five years, appropriate fire alarm and emergency lighting
+                systems, and adequate socket provision. Blackpool has mandatory HMO licensing for
+                properties occupied by five or more people from two or more households.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -208,10 +204,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR requirements</strong> — private landlords in Blackpool
-                must have a valid EICR every five years under The Electrical Safety Standards
-                in the Private Rented Sector (England) Regulations 2020, with any C1/C2 defects
-                remedied within 28 days.
+                <strong>Landlord EICR requirements</strong> — private landlords in Blackpool must
+                have a valid EICR every five years under The Electrical Safety Standards in the
+                Private Rented Sector (England) Regulations 2020, with any C1/C2 defects remedied
+                within 28 days.
               </span>
             </li>
           </ul>
@@ -232,28 +228,28 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Victorian Guesthouses</h3>
             <p className="text-white text-sm leading-relaxed">
               The large Victorian and Edwardian terraces along and near the promenade were
-              originally built as guesthouses and holiday accommodation. Many still operate as
-              such. These multi-storey properties have complex electrical installations serving
-              multiple bedrooms, communal areas, and commercial kitchens. Ageing wiring is
-              common. Full rewires are significant projects requiring careful planning.
+              originally built as guesthouses and holiday accommodation. Many still operate as such.
+              These multi-storey properties have complex electrical installations serving multiple
+              bedrooms, communal areas, and commercial kitchens. Ageing wiring is common. Full
+              rewires are significant projects requiring careful planning.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">HMO and Bedsit Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              Blackpool has a high concentration of HMOs and bedsit conversions, particularly
-              in the South Shore and Bloomfield areas. These properties require regular EICRs,
-              fire alarm systems, and adequate electrical provision per room. Non-compliance
-              with Blackpool Council HMO licensing conditions can result in enforcement action.
+              Blackpool has a high concentration of HMOs and bedsit conversions, particularly in the
+              South Shore and Bloomfield areas. These properties require regular EICRs, fire alarm
+              systems, and adequate electrical provision per room. Non-compliance with Blackpool
+              Council HMO licensing conditions can result in enforcement action.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Residential Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Away from the tourist areas, Blackpool has extensive residential terraced streets
-              in areas such as Layton, Marton, and Bispham. These properties range from
-              Victorian to inter-war and post-war construction. Consumer unit upgrades, rewires,
-              and EICR compliance work are the primary job types.
+              Away from the tourist areas, Blackpool has extensive residential terraced streets in
+              areas such as Layton, Marton, and Bispham. These properties range from Victorian to
+              inter-war and post-war construction. Consumer unit upgrades, rewires, and EICR
+              compliance work are the primary job types.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -287,10 +283,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Increased hospitality demand</strong> — the Illuminations period brings
-                large numbers of visitors and increases commercial activity across the town.
-                Hotels, guesthouses, bars, and restaurants often use the summer period to
-                carry out electrical maintenance, upgrades, and compliance work before the
-                busy Illuminations season.
+                large numbers of visitors and increases commercial activity across the town. Hotels,
+                guesthouses, bars, and restaurants often use the summer period to carry out
+                electrical maintenance, upgrades, and compliance work before the busy Illuminations
+                season.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,17 +295,17 @@ const sections = [
                 <strong>Festive and temporary lighting</strong> — commercial premises often
                 commission additional external lighting and festive installations for the
                 Illuminations period. Temporary outdoor lighting must comply with BS 7671
-                requirements for outdoor installations, including appropriate weatherproofing
-                and RCD protection.
+                requirements for outdoor installations, including appropriate weatherproofing and
+                RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Year-round ENW collaboration</strong> — the Illuminations require a
-                substantial and reliable power supply. Electricians working on commercial
-                premises near the Promenade should be aware of the DNO's infrastructure in
-                the area and factor in any planned maintenance work when scheduling jobs.
+                substantial and reliable power supply. Electricians working on commercial premises
+                near the Promenade should be aware of the DNO's infrastructure in the area and
+                factor in any planned maintenance work when scheduling jobs.
               </span>
             </li>
           </ul>
@@ -322,42 +318,40 @@ const sections = [
     heading: 'Common Electrical Jobs in Blackpool',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Blackpool in 2026:
-        </p>
+        <p>The most in-demand electrical services in Blackpool in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for guesthouses, HMOs, and landlords</strong> — this is the
-                core of the Blackpool electrician's workload. The enormous volume of rental
-                and holiday accommodation creates consistent and year-round EICR demand.
+                <strong>EICRs for guesthouses, HMOs, and landlords</strong> — this is the core of
+                the Blackpool electrician's workload. The enormous volume of rental and holiday
+                accommodation creates consistent and year-round EICR demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Guesthouse and HMO rewires</strong> — many of Blackpool's guesthouses
-                and HMOs have electrical installations that are decades old and in need of
-                full replacement. These are large and complex projects.
+                <strong>Guesthouse and HMO rewires</strong> — many of Blackpool's guesthouses and
+                HMOs have electrical installations that are decades old and in need of full
+                replacement. These are large and complex projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — old fuse boards are extremely
-                common across Blackpool's residential and commercial property stock. Consumer
-                unit upgrades are among the most frequently requested jobs.
+                <strong>Consumer unit replacements</strong> — old fuse boards are extremely common
+                across Blackpool's residential and commercial property stock. Consumer unit upgrades
+                are among the most frequently requested jobs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm installations and maintenance</strong> — Blackpool's
-                guesthouse and HMO market requires fire alarm systems to BS 5839-6. Installation
-                and annual maintenance contracts are a significant revenue stream for Blackpool
-                electricians who hold the relevant qualifications.
+                <strong>Fire alarm installations and maintenance</strong> — Blackpool's guesthouse
+                and HMO market requires fire alarm systems to BS 5839-6. Installation and annual
+                maintenance contracts are a significant revenue stream for Blackpool electricians
+                who hold the relevant qualifications.
               </span>
             </li>
           </ul>
@@ -425,9 +419,9 @@ const sections = [
           </div>
         </div>
         <p>
-          Commercial guesthouse and hotel electrical work commands a premium over domestic
-          rates, reflecting the scale and complexity of the installations. Multi-storey guesthouse
-          rewires are typically priced on a day-rate basis following a detailed survey.
+          Commercial guesthouse and hotel electrical work commands a premium over domestic rates,
+          reflecting the scale and complexity of the installations. Multi-storey guesthouse rewires
+          are typically priced on a day-rate basis following a detailed survey.
         </p>
       </>
     ),
@@ -453,11 +447,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. For Blackpool's high volume of guesthouse and HMO work, delivering
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. For Blackpool's high volume of guesthouse and HMO work, delivering
                   documentation the same day keeps landlords and operators compliant.
                 </p>
               </div>
@@ -482,7 +473,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Blackpool electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the guesthouse, HMO, and rental market in Blackpool. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the guesthouse, HMO, and rental market in Blackpool. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -507,8 +498,7 @@ export default function ElectricianBlackpoolPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Blackpool:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Blackpool: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Blackpool's unique mix of Victorian guesthouses, HMOs, and a huge hospitality economy demands electricians with expertise in EICR compliance, guesthouse rewiring, fire alarm systems, and Part P documentation."
@@ -519,7 +509,7 @@ export default function ElectricianBlackpoolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Blackpool"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Blackpool Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the guesthouse, HMO, and rental market that defines Blackpool's electrical industry. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the guesthouse, HMO, and rental market that defines Blackpool's electrical industry. 7-day free trial."
     />
   );
 }

@@ -683,7 +683,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Zs is one of over 50 calculators on Elec-Mate. Others include{' '}
+                  Zs is one of over 70+ calculators on Elec-Mate. Others include{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
@@ -749,7 +749,7 @@ export default function EarthFaultLoopImpedancePage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance"
       relatedPages={relatedPages}
       ctaHeading="Zs Calculator on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 50+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including Zs with automatic BS 7671 table lookup, cable sizing, voltage drop, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

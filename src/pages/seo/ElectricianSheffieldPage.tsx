@@ -45,7 +45,7 @@ const keyTakeaways = [
   'Northern Powergrid is the DNO for Sheffield and the wider South Yorkshire region. All new connections, supply upgrades, and G98/G99 notifications go through Northern Powergrid, not National Grid.',
   'Sheffield has a large stock of former steel manufacturing and cutlery factory buildings being converted to residential and commercial use in areas like Kelham Island and Neepsend. These conversions require complete electrical installations with long cable runs, three-phase supply reconfiguration, and fire compartmentation.',
   'Sheffield Hallam University and the University of Sheffield drive high demand for HMO electrical work in Broomhill, Crookesmoor, Ecclesall Road, and Sharrow. HMOs require enhanced fire detection, emergency lighting, and periodic EICR testing.',
-  'Properties on Sheffield\'s western edge border the Peak District National Park, where conservation area restrictions affect external electrical work including EV charger installations, solar PV, and external cable routing.',
+  "Properties on Sheffield's western edge border the Peak District National Park, where conservation area restrictions affect external electrical work including EV charger installations, solar PV, and external cable routing.",
 ];
 
 const faqs = [
@@ -144,9 +144,9 @@ const sections = [
           Sheffield is the fifth-largest city in England by population, with approximately 560,000
           residents and a diverse mix of Victorian stone terraces, post-war council housing, modern
           city centre apartments, and former industrial buildings being converted for residential
-          and commercial use. The city has two major universities, a thriving student rental
-          market, and significant ongoing regeneration across areas like Kelham Island, Neepsend,
-          and Attercliffe.
+          and commercial use. The city has two major universities, a thriving student rental market,
+          and significant ongoing regeneration across areas like Kelham Island, Neepsend, and
+          Attercliffe.
         </p>
         <p>
           For electricians, Sheffield offers a strong and varied workload. The combination of
@@ -170,7 +170,7 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -209,8 +209,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
-                recent Sheffield customers, or check verified reviews on Checkatrade, Trustpilot,
-                or Google Business. Look for reviews mentioning similar work to yours.
+                recent Sheffield customers, or check verified reviews on Checkatrade, Trustpilot, or
+                Google Business. Look for reviews mentioning similar work to yours.
               </span>
             </li>
           </ul>
@@ -284,13 +284,13 @@ const sections = [
   },
   {
     id: 'dno-regulations',
-    heading: 'Northern Powergrid: Sheffield\'s DNO',
+    heading: "Northern Powergrid: Sheffield's DNO",
     content: (
       <>
         <p>
-          Northern Powergrid is the Distribution Network Operator for Sheffield and the wider
-          South Yorkshire, West Yorkshire, North East England, and northern Lincolnshire region,
-          serving approximately 3.9 million homes and businesses.
+          Northern Powergrid is the Distribution Network Operator for Sheffield and the wider South
+          Yorkshire, West Yorkshire, North East England, and northern Lincolnshire region, serving
+          approximately 3.9 million homes and businesses.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -330,12 +330,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          When completing an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
+          When completing an <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> in Sheffield,
           reference Northern Powergrid as the DNO. The earthing arrangement in most Sheffield
-          properties is TN-C-S (PME), though some older properties towards the Peak District may
-          be TT earthing requiring an earth electrode.
+          properties is TN-C-S (PME), though some older properties towards the Peak District may be
+          TT earthing requiring an earth electrode.
         </p>
       </>
     ),
@@ -366,8 +365,8 @@ const sections = [
               <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Long cable runs and thick masonry:</strong> Industrial buildings have cable
-                runs of 30 metres or more and walls of 450mm to 600mm solid stone or brick.
-                Voltage drop calculations are critical — use the{' '}
+                runs of 30 metres or more and walls of 450mm to 600mm solid stone or brick. Voltage
+                drop calculations are critical — use the{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
@@ -378,10 +377,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire compartmentation:</strong> When cables pass through fire-rated walls
-                or floors in multi-dwelling conversions, fire-stopping must be installed using
-                proprietary products (Hilti, Rockwool, Quelfire) appropriate for the cable size
-                and wall construction.
+                <strong>Fire compartmentation:</strong> When cables pass through fire-rated walls or
+                floors in multi-dwelling conversions, fire-stopping must be installed using
+                proprietary products (Hilti, Rockwool, Quelfire) appropriate for the cable size and
+                wall construction.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -420,8 +419,8 @@ const sections = [
               other cities, Sheffield's stone construction makes chasing for cables significantly
               harder — local sandstone is dense and difficult to cut cleanly. Many electricians
               prefer surface-mounted mini trunking or routing through floor voids rather than
-              chasing stone walls. These properties frequently have cellars with original wiring
-              and damp issues that complicate electrical work.
+              chasing stone walls. These properties frequently have cellars with original wiring and
+              damp issues that complicate electrical work.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -429,19 +428,19 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Large council-built estates in Manor, Arbourthorne, Gleadless, and Parson Cross from
               the 1950s and 1960s often have original radial circuits, rewirable fuses, and no RCD
-              protection. Consumer unit upgrades to 18th Edition standards are common work.
-              Some properties have non-standard construction (no-fines concrete, system-built)
-              requiring careful investigation before chasing or drilling.
+              protection. Consumer unit upgrades to 18th Edition standards are common work. Some
+              properties have non-standard construction (no-fines concrete, system-built) requiring
+              careful investigation before chasing or drilling.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Student HMO Areas</h3>
             <p className="text-white text-sm leading-relaxed">
-              Broomhill, Crookesmoor, Ecclesall Road, and Sharrow are dominated by student
-              rentals. Victorian terraces converted to HMOs require fire detection, emergency
-              lighting, RCD protection per Regulation 411.3.3, and five-yearly EICRs. Many have
-              had multiple rounds of partial rewiring over the decades, creating complex and
-              sometimes unsafe wiring arrangements that need careful survey before any work.
+              Broomhill, Crookesmoor, Ecclesall Road, and Sharrow are dominated by student rentals.
+              Victorian terraces converted to HMOs require fire detection, emergency lighting, RCD
+              protection per Regulation 411.3.3, and five-yearly EICRs. Many have had multiple
+              rounds of partial rewiring over the decades, creating complex and sometimes unsafe
+              wiring arrangements that need careful survey before any work.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -450,8 +449,8 @@ const sections = [
               New-build estates at Waverley (former steelworks site), Owlthorpe, and city centre
               apartment blocks offer standard domestic installation work. These are typically
               straightforward jobs with good access, standard construction, and clear
-              specifications. EV charging infrastructure is increasingly specified at the
-              build stage.
+              specifications. EV charging infrastructure is increasingly specified at the build
+              stage.
             </p>
           </div>
         </div>
@@ -475,8 +474,8 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR requirement:</strong> Sheffield City Council requires a satisfactory
-                EICR for all HMO licence applications, no older than 5 years. C1 or C2
-                observations will typically require remedial work before a licence is granted.
+                EICR for all HMO licence applications, no older than 5 years. C1 or C2 observations
+                will typically require remedial work before a licence is granted.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -507,8 +506,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          HMO work is reliable recurring revenue. A landlord with 10 properties needs EICRs every
-          5 years, annual emergency lighting tests, and periodic fire alarm servicing. Building
+          HMO work is reliable recurring revenue. A landlord with 10 properties needs EICRs every 5
+          years, annual emergency lighting tests, and periodic fire alarm servicing. Building
           relationships with HMO landlords and letting agents in Broomhill and Ecclesall Road
           provides consistent year-round work.
         </p>
@@ -555,8 +554,8 @@ const sections = [
               <TreePine className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT earthing:</strong> Some rural properties near the Peak District use TT
-                earthing (earth electrode) rather than TN-C-S (PME). Verify the earthing
-                arrangement during survey and ensure RCD protection is appropriate.
+                earthing (earth electrode) rather than TN-C-S (PME). Verify the earthing arrangement
+                during survey and ensure RCD protection is appropriate.
               </span>
             </li>
           </ul>
@@ -657,11 +656,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete EICRs, EICs, and Minor Works Certificates on your phone during the job.
-                  An{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed
-                  and sent as a PDF before you leave demonstrates professionalism and saves hours
-                  of admin.
+                  An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed and
+                  sent as a PDF before you leave demonstrates professionalism and saves hours of
+                  admin.
                 </p>
               </div>
             </div>
@@ -684,7 +682,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Join 430+ UK electricians using Elec-Mate"
+          title="Join 1,000+ UK electricians using Elec-Mate"
           description="Cable sizing, professional quoting, and on-site certification. Everything a Sheffield electrician needs for HMOs, conversions, and domestic work. 7-day free trial, cancel anytime."
           icon={MapPin}
         />
@@ -722,7 +720,7 @@ export default function ElectricianSheffieldPage() {
       faqHeading="Frequently Asked Questions About Electricians in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Quote, Certify, and Grow Your Sheffield Electrical Business"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

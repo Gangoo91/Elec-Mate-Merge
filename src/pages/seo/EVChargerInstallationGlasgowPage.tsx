@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Can I install an EV charger in a Glasgow tenement flat?',
     answer:
-      'It is possible but involves practical and legal hurdles. Glasgow tenements typically have shared common stairs, shared electrical risers, and communal parking areas or on-street parking only. Installing a charger requires a defined private parking space, permission from the property factors (managing agents), and a viable cable route from the flat\'s electricity supply. Tenement flat residents who own their property are eligible for the OZEV EV chargepoint grant (up to £350). The practical solution in many Glasgow tenements is a communal charging installation with load management, rather than individual chargers.',
+      "It is possible but involves practical and legal hurdles. Glasgow tenements typically have shared common stairs, shared electrical risers, and communal parking areas or on-street parking only. Installing a charger requires a defined private parking space, permission from the property factors (managing agents), and a viable cable route from the flat's electricity supply. Tenement flat residents who own their property are eligible for the OZEV EV chargepoint grant (up to £350). The practical solution in many Glasgow tenements is a communal charging installation with load management, rather than individual chargers.",
   },
   {
     question: 'Is the OZEV grant available for EV charger installation in Glasgow?',
@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'What is SELECT and do I need a SELECT-registered electrician in Glasgow?',
     answer:
-      'SELECT (the Electrical Contractors\' Association of Scotland) is Scotland\'s leading electrical trade body. SELECT-registered electricians are qualified to self-certify electrical work under the Scottish Building Standards system. While SELECT registration is not legally mandatory, using a SELECT-registered electrician in Glasgow is strongly recommended. Alternatively, NICEIC and NAPIT registration is also recognised in Scotland. Always verify that your electrician\'s registration covers Building Standards notification in Scotland — some English competent person schemes do not automatically extend to Scotland.',
+      "SELECT (the Electrical Contractors' Association of Scotland) is Scotland's leading electrical trade body. SELECT-registered electricians are qualified to self-certify electrical work under the Scottish Building Standards system. While SELECT registration is not legally mandatory, using a SELECT-registered electrician in Glasgow is strongly recommended. Alternatively, NICEIC and NAPIT registration is also recognised in Scotland. Always verify that your electrician's registration covers Building Standards notification in Scotland — some English competent person schemes do not automatically extend to Scotland.",
   },
 ];
 
@@ -155,10 +155,10 @@ const sections = [
         </p>
         <p>
           Scotland's regulatory framework differs from England. EV charger installations in Glasgow
-          are subject to the Scottish Building Standards system — not Part P as in England. Electricians
-          working in Glasgow should be familiar with SELECT registration and Scottish local authority
-          building standards requirements. The technical installation requirements, however — including
-          BS 7671 Section 722 — apply equally across the UK.
+          are subject to the Scottish Building Standards system — not Part P as in England.
+          Electricians working in Glasgow should be familiar with SELECT registration and Scottish
+          local authority building standards requirements. The technical installation requirements,
+          however — including BS 7671 Section 722 — apply equally across the UK.
         </p>
         <p>
           The DNO for Glasgow is <strong>SP Energy Networks (SPEN)</strong>. All installations must
@@ -290,13 +290,11 @@ const sections = [
     content: (
       <>
         <p>
-          EV charger installations in Glasgow must comply with BS 7671:2018+A3:2024 Section 722
-          — the same wiring regulations as the rest of the UK. Scotland applies BS 7671 as the
+          EV charger installations in Glasgow must comply with BS 7671:2018+A3:2024 Section 722 —
+          the same wiring regulations as the rest of the UK. Scotland applies BS 7671 as the
           technical standard for electrical installations.
         </p>
-        <p>
-          The key regulatory difference in Scotland is the notification framework:
-        </p>
+        <p>The key regulatory difference in Scotland is the notification framework:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -304,8 +302,8 @@ const sections = [
               <span>
                 <strong>Building Standards (Scotland) — not Part P</strong> — Scotland does not use
                 the English Part P competent person scheme. EV charger installations that involve
-                significant electrical works are notifiable under the Building (Scotland) Regulations
-                2004. Glasgow City Council Building Standards is the relevant authority.
+                significant electrical works are notifiable under the Building (Scotland)
+                Regulations 2004. Glasgow City Council Building Standards is the relevant authority.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,9 +335,9 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>SP Energy Networks (SPEN)</strong> is the Distribution Network Operator for Glasgow
-          and central Scotland. Every EV charger installation must be notified to SPEN before
-          connection.
+          <strong>SP Energy Networks (SPEN)</strong> is the Distribution Network Operator for
+          Glasgow and central Scotland. Every EV charger installation must be notified to SPEN
+          before connection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -377,9 +375,7 @@ const sections = [
     heading: 'OZEV Grant and Glasgow Incentives',
     content: (
       <>
-        <p>
-          Glasgow residents can access the following funding for EV charger installation:
-        </p>
+        <p>Glasgow residents can access the following funding for EV charger installation:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -419,8 +415,8 @@ const sections = [
       <>
         <p>
           Glasgow is a growing market for domestic EV charger installation. The mix of tenement
-          flats, older semis, and new-build estates creates varied job types. Electricians working in
-          Glasgow should be SELECT-registered or hold equivalent recognition under the Scottish
+          flats, older semis, and new-build estates creates varied job types. Electricians working
+          in Glasgow should be SELECT-registered or hold equivalent recognition under the Scottish
           Building Standards system.
         </p>
         <div className="space-y-4 my-4">
@@ -452,7 +448,8 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , SPEN G98 notification, and Building Standards notification under Scottish
-                  regulations. Confirm your registration covers Scotland before quoting Glasgow jobs.
+                  regulations. Confirm your registration covers Scotland before quoting Glasgow
+                  jobs.
                 </p>
               </div>
             </div>
@@ -460,7 +457,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Glasgow EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone."
           icon={Car}
         />
       </>
@@ -497,7 +494,7 @@ export default function EVChargerInstallationGlasgowPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

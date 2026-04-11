@@ -660,7 +660,7 @@ export default function LightsFlickeringPage() {
       faqHeading="Frequently Asked Questions About Flickering Lights"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Electrical Faults with AI"
-      ctaSubheading="AI fault diagnosis, digital EICR certificates, defect code suggestions, and calculators for voltage drop, Zs, and more. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="AI fault diagnosis, digital EICR certificates, defect code suggestions, and calculators for voltage drop, Zs, and more. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

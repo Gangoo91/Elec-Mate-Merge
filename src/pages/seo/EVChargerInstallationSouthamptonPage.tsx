@@ -43,7 +43,7 @@ const keyTakeaways = [
   'The OZEV EV chargepoint grant provides up to £350 for eligible flat owners and tenants. Southampton has a large student and rented-accommodation population who may be eligible.',
   'Scottish and Southern Electricity Networks (SSEN) is the DNO for Southampton. G98 notification is required before energising any domestic 7kW EV charger.',
   'BS 7671:2018 Section 722 governs all EV charging installations. PME earthing is common in Southampton, requiring an earth rod for outdoor charger installations in most properties.',
-  'Southampton\'s high proportion of flats and purpose-built student accommodation means significant opportunity for OZEV grant-funded installations in the city centre.',
+  "Southampton's high proportion of flats and purpose-built student accommodation means significant opportunity for OZEV grant-funded installations in the city centre.",
   'NICEIC and NAPIT-registered electricians can self-certify EV charger installations to Part P of the Building Regulations without a separate building control application.',
 ];
 
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Is the OZEV EV chargepoint grant available in Southampton?',
     answer:
-      'Yes. The OZEV EV chargepoint grant is a UK-wide scheme available to flat owners and tenants in Southampton. Given the city\'s high proportion of university students, purpose-built student accommodation, and private rented sector, many Southampton residents are eligible. The grant provides up to £350 (75% of installation cost) per chargepoint. The grant is applied for by your OZEV-approved installer — you do not contact OZEV directly. You must own or have a confirmed order for an eligible plug-in vehicle.',
+      "Yes. The OZEV EV chargepoint grant is a UK-wide scheme available to flat owners and tenants in Southampton. Given the city's high proportion of university students, purpose-built student accommodation, and private rented sector, many Southampton residents are eligible. The grant provides up to £350 (75% of installation cost) per chargepoint. The grant is applied for by your OZEV-approved installer — you do not contact OZEV directly. You must own or have a confirmed order for an eligible plug-in vehicle.",
   },
   {
     question: 'Do I need an earth rod for an EV charger in Southampton?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-cost',
     title: 'EV Charger Installation Cost UK',
-    description: 'National price guide for EV charger installation covering all charger types and cost factors.',
+    description:
+      'National price guide for EV charger installation covering all charger types and cost factors.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -146,20 +147,20 @@ const sections = [
           Southampton is one of the South Coast's largest cities, a major port, and home to two
           universities with a large student and young professional population. EV adoption in
           Southampton and Hampshire is growing steadily, and home EV charger installation remains
-          the most convenient and cost-effective way for residents with off-street parking to
-          charge their electric vehicles.
+          the most convenient and cost-effective way for residents with off-street parking to charge
+          their electric vehicles.
         </p>
         <p>
           Southampton's housing stock is varied. The city centre and inner suburbs include
           significant Victorian terrace and converted flat stock, while the outer suburbs of
-          Chandler's Ford, Hedge End, and West End have modern detached and semi-detached
-          properties with garages and driveways well-suited to charger installation. Labour
-          rates on the South Coast sit between London and the Midlands, making Southampton
-          installations moderately priced.
+          Chandler's Ford, Hedge End, and West End have modern detached and semi-detached properties
+          with garages and driveways well-suited to charger installation. Labour rates on the South
+          Coast sit between London and the Midlands, making Southampton installations moderately
+          priced.
         </p>
         <p>
-          This guide covers realistic costs for EV charger installation in Southampton in 2026,
-          the OZEV grant of up to £350 for eligible residents, the{' '}
+          This guide covers realistic costs for EV charger installation in Southampton in 2026, the
+          OZEV grant of up to £350 for eligible residents, the{' '}
           <strong>Scottish and Southern Electricity Networks (SSEN)</strong> DNO notification
           process, PME earthing requirements, and Part P compliance under Building Regulations.
         </p>
@@ -184,44 +185,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple installation (modern detached/semi, garage or driveway)</strong>
-                {' '}— £850 to £1,050. Short cable run, spare consumer unit way, straightforward
-                earth rod installation. Common for Chandler's Ford, Hedge End, and West End
-                properties on modern estates.
+                <strong>Simple installation (modern detached/semi, garage or driveway)</strong> —
+                £850 to £1,050. Short cable run, spare consumer unit way, straightforward earth rod
+                installation. Common for Chandler's Ford, Hedge End, and West End properties on
+                modern estates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (terrace or older semi, medium run)</strong> —
-                £1,000 to £1,200. Cable run of 8 to 15 metres, PME earth rod, possible MCB
-                addition. Typical for Shirley, Freemantle, and Bitterne terraces with off-street
-                parking.
+                <strong>Standard installation (terrace or older semi, medium run)</strong> — £1,000
+                to £1,200. Cable run of 8 to 15 metres, PME earth rod, possible MCB addition.
+                Typical for Shirley, Freemantle, and Bitterne terraces with off-street parking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Complex installation (long run, board upgrade)</strong> — £1,200 to
-                £1,500. Consumer unit replacement required, cable run over 15 metres, or
-                underground cable route needed. More common for older Victorian terraces or
-                converted flats with complex cable routes.
+                <strong>Complex installation (long run, board upgrade)</strong> — £1,200 to £1,500.
+                Consumer unit replacement required, cable run over 15 metres, or underground cable
+                route needed. More common for older Victorian terraces or converted flats with
+                complex cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed.
-                Requires a three-phase supply and G99 approval from SSEN. Suitable for
-                commercial premises or very high-mileage users with an existing three-phase
-                supply.
+                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires a
+                three-phase supply and G99 approval from SSEN. Suitable for commercial premises or
+                very high-mileage users with an existing three-phase supply.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Labour rates for qualified electricians in Southampton and Hampshire range from £42 to
-          £55 per hour. A standard installation takes 3 to 5 hours.
+          Labour rates for qualified electricians in Southampton and Hampshire range from £42 to £55
+          per hour. A standard installation takes 3 to 5 hours.
         </p>
       </>
     ),
@@ -239,17 +238,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and
-                tenants. Given Southampton's large student population and high proportion of
-                private rented accommodation, many city residents are eligible. Applied for by
-                your OZEV-approved installer.
+                <strong>OZEV EV chargepoint grant</strong> — up to £350 for flat owners and tenants.
+                Given Southampton's large student population and high proportion of private rented
+                accommodation, many city residents are eligible. Applied for by your OZEV-approved
+                installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workplace Charging Scheme</strong> — Southampton businesses can claim
-                up to £350 per socket (maximum 40 sockets) for workplace EV charger installation.
+                <strong>Workplace Charging Scheme</strong> — Southampton businesses can claim up to
+                £350 per socket (maximum 40 sockets) for workplace EV charger installation.
                 Administered by OZEV and requires an OZEV-approved commercial installer.
               </span>
             </li>
@@ -284,18 +283,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated
-                32A circuit from the consumer unit. Older Southampton consumer units may not have
-                a spare way, requiring a board upgrade or sub-distribution board.
+                <strong>Dedicated final circuit (Regulation 722.533.101)</strong> — a dedicated 32A
+                circuit from the consumer unit. Older Southampton consumer units may not have a
+                spare way, requiring a board upgrade or sub-distribution board.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection (Regulation 722.531.101)</strong> — appropriate RCD
-                protection is required for the EV circuit. Modern smart chargers typically
-                include integrated DC fault protection, satisfying the Type B RCD or Type A
-                with 6mA DC RDC-DD requirement.
+                protection is required for the EV circuit. Modern smart chargers typically include
+                integrated DC fault protection, satisfying the Type B RCD or Type A with 6mA DC
+                RDC-DD requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -303,8 +302,8 @@ const sections = [
               <span>
                 <strong>Smart charger compliance</strong> — the Electric Vehicles (Smart Charge
                 Points) Regulations 2021 requires all new home EV chargers to support smart
-                scheduling, randomised delay, and demand side response. All OZEV-approved
-                charger models are compliant.
+                scheduling, randomised delay, and demand side response. All OZEV-approved charger
+                models are compliant.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -314,8 +313,8 @@ const sections = [
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
-                for the actual cable run length. 6mm² is adequate for runs up to 15 metres;
-                10mm² may be needed for longer runs carrying 32A.
+                for the actual cable run length. 6mm² is adequate for runs up to 15 metres; 10mm²
+                may be needed for longer runs carrying 32A.
               </span>
             </li>
           </ul>
@@ -337,11 +336,11 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">The PME Risk</h3>
             <p className="text-white text-sm leading-relaxed">
-              A broken PEN conductor between the distribution transformer and the property can
-              cause dangerous touch voltages on earthed metalwork, including an EV being charged
-              outdoors. Southampton's coastal location means driveways can be wet and slightly
-              saline — both factors that increase touch voltage risk if the earthing arrangement
-              is not correctly specified.
+              A broken PEN conductor between the distribution transformer and the property can cause
+              dangerous touch voltages on earthed metalwork, including an EV being charged outdoors.
+              Southampton's coastal location means driveways can be wet and slightly saline — both
+              factors that increase touch voltage risk if the earthing arrangement is not correctly
+              specified.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -350,15 +349,15 @@ const sections = [
               Installing a local earth electrode (earth rod) at the charger and creating a TT
               arrangement is the standard approach for outdoor installations. Coastal ground
               conditions in Southampton can sometimes give naturally low earth resistance values,
-              simplifying the rod installation. Chargers with integrated PEN fault detection are
-              an alternative that avoids the need for a separate earth rod entirely.
+              simplifying the rod installation. Chargers with integrated PEN fault detection are an
+              alternative that avoids the need for a separate earth rod entirely.
             </p>
           </div>
         </div>
         <p>
           Earth rod installation in Southampton adds approximately £80 to £150 to the total cost.
-          Your electrician will test earth resistance to confirm adequate values before signing
-          off the installation.
+          Your electrician will test earth resistance to confirm adequate values before signing off
+          the installation.
         </p>
       </>
     ),
@@ -379,19 +378,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98 notification (7kW single-phase)</strong> — submit online via the
-                SSEN portal. This is a notification rather than an application for standard
-                domestic 7kW installations — the installer proceeds with connection and notifies
-                concurrently. No prior approval is required.
+                <strong>G98 notification (7kW single-phase)</strong> — submit online via the SSEN
+                portal. This is a notification rather than an application for standard domestic 7kW
+                installations — the installer proceeds with connection and notifies concurrently. No
+                prior approval is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 application (22kW three-phase)</strong> — prior approval required
-                from SSEN before installation. Allow 4 to 10 weeks for SSEN to assess network
-                capacity in the relevant area. Required for three-phase chargers and commercial
-                premises.
+                <strong>G99 application (22kW three-phase)</strong> — prior approval required from
+                SSEN before installation. Allow 4 to 10 weeks for SSEN to assess network capacity in
+                the relevant area. Required for three-phase chargers and commercial premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,9 +421,9 @@ const sections = [
               <span>
                 <strong>Salt air and coastal proximity</strong> — properties closer to the
                 waterfront and docks may experience accelerated corrosion on exposed electrical
-                components. Specify IP-rated charger units (IP54 minimum, IP65 preferred for
-                exposed locations) and use stainless steel fixings for charger mounting. Check
-                that cable glands and trunking are sealed against salt-laden air.
+                components. Specify IP-rated charger units (IP54 minimum, IP65 preferred for exposed
+                locations) and use stainless steel fixings for charger mounting. Check that cable
+                glands and trunking are sealed against salt-laden air.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,17 +432,17 @@ const sections = [
                 <strong>Waterfront apartments and converted dock buildings</strong> — Southampton
                 has seen significant waterfront residential development. These buildings typically
                 have managed communal areas, underground car parks, and shared electrical
-                infrastructure. Multi-unit EV charger installations in these settings require
-                load management systems and freeholder consent.
+                infrastructure. Multi-unit EV charger installations in these settings require load
+                management systems and freeholder consent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Port and industrial area proximity</strong> — properties near the dock
-                areas may have older or non-standard electrical supplies. Always confirm the
-                supply type and earthing arrangement before pricing an installation in these
-                areas, as TT supplies are more common close to industrial zones.
+                <strong>Port and industrial area proximity</strong> — properties near the dock areas
+                may have older or non-standard electrical supplies. Always confirm the supply type
+                and earthing arrangement before pricing an installation in these areas, as TT
+                supplies are more common close to industrial zones.
               </span>
             </li>
           </ul>
@@ -459,8 +457,8 @@ const sections = [
       <>
         <p>
           Southampton and Hampshire offer steady demand for domestic and commercial EV charger
-          installation. The city's student population, active rental sector, and growing EV
-          uptake across all property types make it an active market for qualified electricians.
+          installation. The city's student population, active rental sector, and growing EV uptake
+          across all property types make it an active market for qualified electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -469,9 +467,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Southampton EV Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Factor in South Coast labour rates (£42 to £55/hour), earth rod costs, SSEN
-                  G98 notification, EIC certification, and coastal corrosion-resistant
-                  components where relevant. Use Elec-Mate's{' '}
+                  Factor in South Coast labour rates (£42 to £55/hour), earth rod costs, SSEN G98
+                  notification, EIC certification, and coastal corrosion-resistant components where
+                  relevant. Use Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -490,9 +488,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
-                  under BS 7671 Section 722. Issue it from your phone before leaving site and
-                  email a copy to the customer instantly. Elec-Mate's certificate app includes
-                  all required test result fields for Section 722 installations.
+                  under BS 7671 Section 722. Issue it from your phone before leaving site and email
+                  a copy to the customer instantly. Elec-Mate's certificate app includes all
+                  required test result fields for Section 722 installations.
                 </p>
               </div>
             </div>
@@ -500,7 +498,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Southampton EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Southampton and Hampshire."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across Southampton and Hampshire."
           icon={Car}
         />
       </>
@@ -537,7 +535,7 @@ export default function EVChargerInstallationSouthamptonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

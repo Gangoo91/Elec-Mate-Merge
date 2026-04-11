@@ -151,8 +151,8 @@ const sections = [
           But London presents unique challenges. The city's housing stock is dominated by Victorian
           and Edwardian terraces, purpose-built flats, and converted period properties — none of
           which were designed with off-street EV charging in mind. Labour rates are higher than the
-          national average, parking is often on-street, and many properties sit in conservation areas
-          with planning restrictions.
+          national average, parking is often on-street, and many properties sit in conservation
+          areas with planning restrictions.
         </p>
         <p>
           This guide covers the real costs of EV charger installation in London, the specific
@@ -175,7 +175,9 @@ const sections = [
           frequency of consumer unit upgrades on ageing installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Typical London Costs (7kW Single-Phase, 2026)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Typical London Costs (7kW Single-Phase, 2026)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -264,8 +266,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ageing consumer units</strong> — many London properties still have older
-                consumer units without RCD protection. Adding a 32A EV charger circuit often triggers
-                a full{' '}
+                consumer units without RCD protection. Adding a 32A EV charger circuit often
+                triggers a full{' '}
                 <SEOInternalLink href="/guides/consumer-unit-regulations">
                   consumer unit upgrade
                 </SEOInternalLink>{' '}
@@ -315,8 +317,8 @@ const sections = [
               <span>
                 <strong>Earthing (Regulation 722.411.4.1)</strong> — earthing arrangements require
                 particular attention. The majority of London properties are on PME supplies, where
-                additional protective measures are needed for outdoor EV charging points. See the PME
-                earthing section below.
+                additional protective measures are needed for outdoor EV charging points. See the
+                PME earthing section below.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,8 +329,8 @@ const sections = [
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
-                to account for voltage drop. A 20-metre run in 6mm2 cable for a 32A load is close
-                to the voltage drop limit; 10mm2 may be needed.
+                to account for voltage drop. A 20-metre run in 6mm2 cable for a 32A load is close to
+                the voltage drop limit; 10mm2 may be needed.
               </span>
             </li>
           </ul>
@@ -363,10 +365,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Solutions</h3>
             <p className="text-white text-sm leading-relaxed">
               The IET Code of Practice offers several approaches: installing a local TT earthing
-              arrangement (earth rod) at the charger with appropriate RCD protection; using a charger
-              with integrated PEN fault detection; or, where the charger is in a building (e.g.
-              inside a garage), the PME earth may be acceptable subject to an assessment. Most London
-              installations for outdoor chargers use an earth rod, tested to confirm adequate
+              arrangement (earth rod) at the charger with appropriate RCD protection; using a
+              charger with integrated PEN fault detection; or, where the charger is in a building
+              (e.g. inside a garage), the PME earth may be acceptable subject to an assessment. Most
+              London installations for outdoor chargers use an earth rod, tested to confirm adequate
               resistance.
             </p>
           </div>
@@ -435,7 +437,8 @@ const sections = [
     content: (
       <>
         <p>
-          Several funding options are available to London residents looking to install an EV charger:
+          Several funding options are available to London residents looking to install an EV
+          charger:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -497,7 +500,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Factor in London labour rates (£50 to £70/hour), longer cable runs (average 12 to
                   18 metres in terraced properties), frequent consumer unit upgrades, parking
-                  restrictions affecting van access, and the time cost of congestion. Use Elec-Mate's{' '}
+                  restrictions affecting van access, and the time cost of congestion. Use
+                  Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -526,7 +530,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify London EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone — built for electricians on the move."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Professional quotes and certificates from your phone — built for electricians on the move."
           icon={Car}
         />
       </>
@@ -563,7 +567,7 @@ export default function EVChargerInstallationLondonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in London"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -560,7 +560,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Issue every certificate from your phone"
-          description="Join 430+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation, and instant delivery. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians producing professional compliance certificates on site. AI board scanner, voice test entry, auto-validation, and instant delivery. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -597,7 +597,7 @@ export default function ElectricalComplianceCertificatePage() {
       faqHeading="Frequently Asked Questions About Electrical Compliance Certificates"
       relatedPages={relatedPages}
       ctaHeading="Produce Every Certificate on Your Phone"
-      ctaSubheading="EIC, MEIWC, EICR — all in one app with AI assistance, voice test entry, and instant delivery to clients. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="EIC, MEIWC, EICR — all in one app with AI assistance, voice test entry, and instant delivery to clients. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

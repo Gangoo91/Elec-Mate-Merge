@@ -42,7 +42,7 @@ const keyTakeaways = [
   'There are two main registration types: Domestic Installer (for domestic-only electricians, lower cost) and Approved Contractor (for all electrical work including commercial, higher credibility).',
   'Registration requires appropriate qualifications (18th Edition, 2391 or equivalent), relevant experience, adequate premises, calibrated test instruments, and public liability insurance.',
   'Annual registration fees range from approximately 400 to 650 pounds or more depending on the scheme type, with additional costs for the initial assessment visit.',
-  'Elec-Mate certificates meet NICEIC scheme requirements with professional PDF output, BS 7671 compliance, and all 8 certificate types ready for upload to the NICEIC portal.',
+  'Elec-Mate certificates meet NICEIC scheme requirements with professional PDF output, BS 7671 compliance, and all 16 certificate types ready for upload to the NICEIC portal.',
 ];
 
 const faqs = [
@@ -272,7 +272,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional certificates ready for NICEIC"
-          description="Elec-Mate generates BS 7671 compliant certificates in professional PDF format — ready to present at your NICEIC assessment or upload to the NICEIC contractor portal. All 8 certificate types with auto-validation and digital signatures."
+          description="Elec-Mate generates BS 7671 compliant certificates in professional PDF format — ready to present at your NICEIC assessment or upload to the NICEIC contractor portal. All 16 certificate types with auto-validation and digital signatures."
           icon={FileCheck2}
         />
       </>
@@ -586,7 +586,7 @@ export default function NICEICRegistrationPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certificates That Meet NICEIC Requirements"
-      ctaSubheading="Join 430+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 8 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians producing professional BS 7671 compliant certificates with Elec-Mate. All 16 certificate types, PDF export, digital signatures. Ready for your NICEIC assessment. 7-day free trial."
     />
   );
 }

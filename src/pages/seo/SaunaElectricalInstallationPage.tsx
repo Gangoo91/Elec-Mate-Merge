@@ -94,7 +94,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for sauna heater circuits with voltage drop and derating calculations.',
+    description:
+      'Size cables for sauna heater circuits with voltage drop and derating calculations.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -108,21 +109,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/hot-tub-electrical-connection',
     title: 'Hot Tub Electrical Connection',
-    description: 'Related special location installation with dedicated circuits and RCD protection.',
+    description:
+      'Related special location installation with dedicated circuits and RCD protection.',
     icon: Thermometer,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for sauna installations on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for sauna installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/bathroom-electrical-regulations',
     title: 'Bathroom Electrical Regulations',
-    description: 'Zoning requirements for bathrooms — relevant if a sauna cabin is installed in a bathroom.',
+    description:
+      'Zoning requirements for bathrooms — relevant if a sauna cabin is installed in a bathroom.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -147,8 +151,9 @@ const sections = [
       <>
         <p>
           Domestic sauna installations have become increasingly popular in the UK. Whether it is a
-          purpose-built sauna room, a barrel sauna in the garden, or a sauna cabin within a bathroom,
-          the electrical installation requires careful attention to heat resistance, zoning, and safety.
+          purpose-built sauna room, a barrel sauna in the garden, or a sauna cabin within a
+          bathroom, the electrical installation requires careful attention to heat resistance,
+          zoning, and safety.
         </p>
         <p>
           Sauna electrical work falls under{' '}
@@ -156,14 +161,14 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           Section 703 (rooms and cabins containing sauna heaters). This section imposes specific
-          requirements on wiring methods, cable types, equipment zoning, and protective measures that go
-          beyond a standard domestic circuit.
+          requirements on wiring methods, cable types, equipment zoning, and protective measures
+          that go beyond a standard domestic circuit.
         </p>
         <p>
           The most critical difference from standard installations is the temperature environment.
-          Sauna rooms routinely reach 80°C to 100°C — well above the maximum operating temperature of
-          standard PVC-insulated cable. Using the wrong cable type inside a sauna is a genuine fire
-          risk.
+          Sauna rooms routinely reach 80°C to 100°C — well above the maximum operating temperature
+          of standard PVC-insulated cable. Using the wrong cable type inside a sauna is a genuine
+          fire risk.
         </p>
       </>
     ),
@@ -174,21 +179,31 @@ const sections = [
     content: (
       <>
         <p>
-          Sauna heater selection is based on the volume of the sauna room. The general rule is 1kW per
-          cubic metre of sauna space, with adjustments for insulation quality and glazing:
+          Sauna heater selection is based on the volume of the sauna room. The general rule is 1kW
+          per cubic metre of sauna space, with adjustments for insulation quality and glazing:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
-            <li><strong>Small sauna (3 to 5m³):</strong> 4.5kW heater — 20A circuit, 4.0mm² cable</li>
-            <li><strong>Medium sauna (5 to 8m³):</strong> 6kW to 8kW heater — 32A circuit, 6.0mm² cable</li>
-            <li><strong>Large sauna (8 to 12m³):</strong> 9kW heater — 40A circuit, 10.0mm² cable</li>
-            <li><strong>Commercial sauna (12m³+):</strong> 12kW to 18kW+ — three-phase supply, consult manufacturer</li>
+            <li>
+              <strong>Small sauna (3 to 5m³):</strong> 4.5kW heater — 20A circuit, 4.0mm² cable
+            </li>
+            <li>
+              <strong>Medium sauna (5 to 8m³):</strong> 6kW to 8kW heater — 32A circuit, 6.0mm²
+              cable
+            </li>
+            <li>
+              <strong>Large sauna (8 to 12m³):</strong> 9kW heater — 40A circuit, 10.0mm² cable
+            </li>
+            <li>
+              <strong>Commercial sauna (12m³+):</strong> 12kW to 18kW+ — three-phase supply, consult
+              manufacturer
+            </li>
           </ul>
         </div>
         <p>
           Verify the existing supply has sufficient spare capacity for the heater. A 9kW heater on a
-          property with a 60A main fuse and existing loads of 40A during peak times may require a supply
-          upgrade. Check maximum demand before committing to the installation.
+          property with a 60A main fuse and existing loads of 40A during peak times may require a
+          supply upgrade. Check maximum demand before committing to the installation.
         </p>
       </>
     ),
@@ -199,42 +214,43 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Section 703 defines the requirements for rooms and cabins containing sauna heaters.
-          The key requirements are:
+          BS 7671 Section 703 defines the requirements for rooms and cabins containing sauna
+          heaters. The key requirements are:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 1</strong> — the area where the sauna heater is installed. Only the heater
-                and its dedicated wiring are permitted in Zone 1. The heater must be installed according
-                to the manufacturer instructions with minimum clearances to combustible materials.
+                <strong>Zone 1</strong> — the area where the sauna heater is installed. Only the
+                heater and its dedicated wiring are permitted in Zone 1. The heater must be
+                installed according to the manufacturer instructions with minimum clearances to
+                combustible materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 2</strong> — the remainder of the sauna room. Luminaires and temperature
-                sensors are permitted in Zone 2 provided they are suitable for the temperature (heat
-                resistant). No socket outlets, junction boxes, or other accessories are permitted inside
-                the sauna room.
+                <strong>Zone 2</strong> — the remainder of the sauna room. Luminaires and
+                temperature sensors are permitted in Zone 2 provided they are suitable for the
+                temperature (heat resistant). No socket outlets, junction boxes, or other
+                accessories are permitted inside the sauna room.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No socket outlets inside</strong> — socket outlets must not be installed inside
-                the sauna room under any circumstances. The sauna control unit and any switching must be
-                located outside the sauna room.
+                <strong>No socket outlets inside</strong> — socket outlets must not be installed
+                inside the sauna room under any circumstances. The sauna control unit and any
+                switching must be located outside the sauna room.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipotential bonding</strong> — accessible extraneous-conductive-parts within
-                the sauna (metal bench supports, metallic door handles, etc.) must be connected by
-                supplementary equipotential bonding.
+                <strong>Equipotential bonding</strong> — accessible extraneous-conductive-parts
+                within the sauna (metal bench supports, metallic door handles, etc.) must be
+                connected by supplementary equipotential bonding.
               </span>
             </li>
           </ul>
@@ -248,12 +264,15 @@ const sections = [
     content: (
       <>
         <p>
-          This is the single most important aspect of sauna electrical installation. Standard PVC cable
-          will fail in a sauna environment. The cable types suitable for sauna installations are:
+          This is the single most important aspect of sauna electrical installation. Standard PVC
+          cable will fail in a sauna environment. The cable types suitable for sauna installations
+          are:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Silicone Rubber Cable (170°C to 180°C)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Silicone Rubber Cable (170°C to 180°C)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The standard choice for wiring inside the sauna room, including the heater connection.
               Silicone rubber insulation withstands the high temperatures in Zone 1 and Zone 2.
@@ -265,16 +284,17 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">XLPE Cable (90°C)</h3>
             <p className="text-white text-sm leading-relaxed">
               Cross-linked polyethylene insulation is rated to 90°C conductor temperature. It can be
-              used in the lower zones of the sauna where ambient temperatures remain below 80°C, but it
-              is not suitable for the upper zones or near the heater. In practice, most electricians use
-              silicone rubber throughout the sauna room for simplicity and safety.
+              used in the lower zones of the sauna where ambient temperatures remain below 80°C, but
+              it is not suitable for the upper zones or near the heater. In practice, most
+              electricians use silicone rubber throughout the sauna room for simplicity and safety.
             </p>
           </div>
         </div>
         <p>
-          Outside the sauna room (from the consumer unit to the wall penetration), standard PVC cable
-          is acceptable as it is in a normal temperature environment. The transition from standard cable
-          to heat-resistant cable should be made in a junction box outside the sauna room.
+          Outside the sauna room (from the consumer unit to the wall penetration), standard PVC
+          cable is acceptable as it is in a normal temperature environment. The transition from
+          standard cable to heat-resistant cable should be made in a junction box outside the sauna
+          room.
         </p>
       </>
     ),
@@ -291,12 +311,12 @@ const sections = [
               consumer unit spare capacity, and earthing arrangement.
             </li>
             <li>
-              <strong>Install RCBO</strong> — fit an appropriately rated RCBO on a dedicated way at the
-              consumer unit. Label as "Sauna Heater".
+              <strong>Install RCBO</strong> — fit an appropriately rated RCBO on a dedicated way at
+              the consumer unit. Label as "Sauna Heater".
             </li>
             <li>
-              <strong>Run cable to sauna room</strong> — standard PVC cable from the consumer unit to a
-              junction box or connection unit outside the sauna room wall.
+              <strong>Run cable to sauna room</strong> — standard PVC cable from the consumer unit
+              to a junction box or connection unit outside the sauna room wall.
             </li>
             <li>
               <strong>Transition to heat-resistant cable</strong> — at the junction box, connect to
@@ -308,20 +328,21 @@ const sections = [
               manufacturer instructions. Ensure minimum clearances to combustible materials.
             </li>
             <li>
-              <strong>Install sauna lighting (if required)</strong> — use heat-resistant luminaires rated
-              for sauna use (typically IP44 minimum, 125°C rated). Wire in silicone rubber cable.
+              <strong>Install sauna lighting (if required)</strong> — use heat-resistant luminaires
+              rated for sauna use (typically IP44 minimum, 125°C rated). Wire in silicone rubber
+              cable.
             </li>
             <li>
               <strong>Install control unit</strong> — mount the sauna control unit outside the sauna
               room in a normal temperature environment.
             </li>
             <li>
-              <strong>Supplementary bonding</strong> — bond any accessible extraneous-conductive-parts
-              within the sauna room.
+              <strong>Supplementary bonding</strong> — bond any accessible
+              extraneous-conductive-parts within the sauna room.
             </li>
             <li>
-              <strong>Test and certify</strong> — complete all initial verification tests and issue an
-              EIC. Notify under Part P.
+              <strong>Test and certify</strong> — complete all initial verification tests and issue
+              an EIC. Notify under Part P.
             </li>
           </ol>
         </div>
@@ -336,8 +357,8 @@ const sections = [
         <p>
           BS 7671 Regulation 411.3.3 requires additional protection by a 30mA RCD for the sauna
           circuit. The sauna is a special location under Section 703, and the combination of high
-          temperatures and moisture (particularly in combined sauna/steam rooms) makes RCD protection
-          essential.
+          temperatures and moisture (particularly in combined sauna/steam rooms) makes RCD
+          protection essential.
         </p>
         <p>
           An RCBO on the dedicated way at the consumer unit is the standard approach. Type A is
@@ -352,9 +373,7 @@ const sections = [
     heading: 'Testing and Certification',
     content: (
       <>
-        <p>
-          The completed installation must be tested in accordance with BS 7671 Chapter 61:
-        </p>
+        <p>The completed installation must be tested in accordance with BS 7671 Chapter 61:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -363,7 +382,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance — 500V DC, minimum 1 megohm (disconnect the heater before testing)</span>
+              <span>
+                Insulation resistance — 500V DC, minimum 1 megohm (disconnect the heater before
+                testing)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -375,11 +397,17 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>RCD operation — 30mA device must trip within 300ms at rated current and within 40ms at 5x rated current</span>
+              <span>
+                RCD operation — 30mA device must trip within 300ms at rated current and within 40ms
+                at 5x rated current
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional testing — verify heater operation, thermostat cut-off, and timer operation</span>
+              <span>
+                Functional testing — verify heater operation, thermostat cut-off, and timer
+                operation
+              </span>
             </li>
           </ul>
         </div>
@@ -388,8 +416,8 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          must be issued. The remarks should reference BS 7671 Section 703. The work must be notified
-          under Part P of the Building Regulations as it involves a special location.
+          must be issued. The remarks should reference BS 7671 Section 703. The work must be
+          notified under Part P of the Building Regulations as it involves a special location.
         </p>
       </>
     ),
@@ -401,11 +429,25 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
-            <li><strong>Small sauna (4.5kW), short run:</strong> £400 to £550 — 20A circuit, RCBO, standard + silicone cable, testing, EIC</li>
-            <li><strong>Medium sauna (6 to 8kW), medium run:</strong> £550 to £700 — 32A circuit, longer cable run, heat-resistant cable and fixings</li>
-            <li><strong>Large sauna (9kW), long run:</strong> £650 to £850 — 40A circuit, 10.0mm² cable, more labour</li>
-            <li><strong>Sauna lighting circuit:</strong> add £150 to £300 — heat-resistant luminaires and silicone cable</li>
-            <li><strong>Consumer unit upgrade:</strong> add £350 to £600 if no spare ways available</li>
+            <li>
+              <strong>Small sauna (4.5kW), short run:</strong> £400 to £550 — 20A circuit, RCBO,
+              standard + silicone cable, testing, EIC
+            </li>
+            <li>
+              <strong>Medium sauna (6 to 8kW), medium run:</strong> £550 to £700 — 32A circuit,
+              longer cable run, heat-resistant cable and fixings
+            </li>
+            <li>
+              <strong>Large sauna (9kW), long run:</strong> £650 to £850 — 40A circuit, 10.0mm²
+              cable, more labour
+            </li>
+            <li>
+              <strong>Sauna lighting circuit:</strong> add £150 to £300 — heat-resistant luminaires
+              and silicone cable
+            </li>
+            <li>
+              <strong>Consumer unit upgrade:</strong> add £350 to £600 if no spare ways available
+            </li>
           </ul>
         </div>
         <p>
@@ -421,8 +463,9 @@ const sections = [
     content: (
       <>
         <p>
-          Sauna installations are specialist work that commands premium pricing. The key differentiator
-          is knowing the Section 703 requirements and using the correct heat-resistant materials.
+          Sauna installations are specialist work that commands premium pricing. The key
+          differentiator is knowing the Section 703 requirements and using the correct
+          heat-resistant materials.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -432,8 +475,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Stock Silicone Cable</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Keep a reel of silicone rubber cable in the van if you are marketing sauna
-                  installations. It is not a standard stock item at most wholesalers and may need to be
-                  ordered. Having it ready saves a return visit.
+                  installations. It is not a standard stock item at most wholesalers and may need to
+                  be ordered. Having it ready saves a return visit.
                 </p>
               </div>
             </div>
@@ -449,8 +492,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise the heat-resistant cable, silicone fixings, fireproof junction box, and
-                  specialist luminaires. These cost more than standard materials — make sure the quote
-                  reflects this.
+                  specialist luminaires. These cost more than standard materials — make sure the
+                  quote reflects this.
                 </p>
               </div>
             </div>
@@ -458,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify sauna electrical installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. 7-day free trial."
           icon={Thermometer}
         />
       </>
@@ -495,7 +538,7 @@ export default function SaunaElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Sauna Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Sauna Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for special location work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for special location work. 7-day free trial, cancel anytime."
     />
   );
 }

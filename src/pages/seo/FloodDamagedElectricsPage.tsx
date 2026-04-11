@@ -142,14 +142,14 @@ const sections = [
       <>
         <p>
           Flooding is one of the most destructive events an electrical installation can experience.
-          Unlike clean water from a burst pipe, floodwater contains sewage, chemicals, silt, oil, and
-          other contaminants that penetrate into every part of the installation they reach — cable
-          insulation, connection points, protective devices, sockets, and switches.
+          Unlike clean water from a burst pipe, floodwater contains sewage, chemicals, silt, oil,
+          and other contaminants that penetrate into every part of the installation they reach —
+          cable insulation, connection points, protective devices, sockets, and switches.
         </p>
         <p>
-          The damage is often worse than it appears. Equipment that looks dry on the outside may have
-          contaminated water trapped inside. Insulation that appears intact may have been chemically
-          degraded. Connections that seem secure may be corroding internally.
+          The damage is often worse than it appears. Equipment that looks dry on the outside may
+          have contaminated water trapped inside. Insulation that appears intact may have been
+          chemically degraded. Connections that seem secure may be corroding internally.
         </p>
         <p>
           This guide covers the essential safety steps for dealing with flood-damaged electrics: why
@@ -225,10 +225,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Power className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If the consumer unit is submerged or inaccessible</strong>, do not attempt to
-                reach it. Call 105 and request the DNO to disconnect the supply at the cutout. This
-                is the DNO equipment (before the meter) and they have the tools and authority to
-                disconnect it safely.
+                <strong>If the consumer unit is submerged or inaccessible</strong>, do not attempt
+                to reach it. Call 105 and request the DNO to disconnect the supply at the cutout.
+                This is the DNO equipment (before the meter) and they have the tools and authority
+                to disconnect it safely.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,9 +268,9 @@ const sections = [
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Timeline</strong> — a typical ground-floor flood in a solid-wall property
-                takes 6 to 12 months to dry out fully. Timber-frame construction dries faster
-                (3 to 6 months). Using industrial dehumidifiers and controlled heating accelerates
-                the process.
+                takes 6 to 12 months to dry out fully. Timber-frame construction dries faster (3 to
+                6 months). Using industrial dehumidifiers and controlled heating accelerates the
+                process.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -440,9 +440,9 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Separate ground and first floor boards</strong> — install a separate
-                consumer unit or sub-board for first-floor circuits. If the ground floor floods,
-                the first-floor supply can be maintained, providing lighting, heating, and power
-                to the occupied parts of the property.
+                consumer unit or sub-board for first-floor circuits. If the ground floor floods, the
+                first-floor supply can be maintained, providing lighting, heating, and power to the
+                occupied parts of the property.
               </span>
             </li>
           </ul>
@@ -531,7 +531,7 @@ export default function FloodDamagedElectricsPage() {
       faqHeading="Frequently Asked Questions About Flood Damaged Electrics"
       relatedPages={relatedPages}
       ctaHeading="Professional Flood Recovery Documentation"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Produce the documentation insurance companies need. 7-day free trial, cancel anytime."
     />
   );
 }

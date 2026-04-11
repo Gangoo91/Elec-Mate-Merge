@@ -788,7 +788,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Generate RAMS with built-in LOTO procedures"
-          description="Elec-Mate's AI Health and Safety agent creates complete RAMS packages with detailed safe isolation and lock off/tagout procedures. Describe your job and get a professional document covering all hazards, control measures, and step-by-step LOTO instructions. Used by 430+ UK electricians."
+          description="Elec-Mate's AI Health and Safety agent creates complete RAMS packages with detailed safe isolation and lock off/tagout procedures. Describe your job and get a professional document covering all hazards, control measures, and step-by-step LOTO instructions. Used by 1,000+ UK electricians."
           icon={Brain}
         />
       </>
@@ -825,7 +825,7 @@ export default function LockOffLOTOPage() {
       faqHeading="Frequently Asked Questions About Lock Off / LOTO for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Safe Isolation Documentation in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety agent to create LOTO-specific risk assessments, method statements, and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
     />
   );
 }

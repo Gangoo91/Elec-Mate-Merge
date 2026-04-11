@@ -605,7 +605,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage care home electrical contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -642,7 +642,7 @@ export default function CareHomeElectricalCostPage() {
       faqHeading="Frequently Asked Questions: Care Home Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate Care Home Electrical Work on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for healthcare sector quoting, EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

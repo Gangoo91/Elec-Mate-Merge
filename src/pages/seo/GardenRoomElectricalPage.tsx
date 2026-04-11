@@ -106,7 +106,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Complete Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -132,8 +133,8 @@ const sections = [
         <p>
           The first design decision for a garden room electrical installation is whether to run a
           single circuit from the house to the garden room (powering everything from one protective
-          device) or to install a sub-board in the garden room with individual circuits for lighting,
-          sockets, and heating.
+          device) or to install a sub-board in the garden room with individual circuits for
+          lighting, sockets, and heating.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -142,19 +143,19 @@ const sections = [
               <span>
                 <strong>Dedicated single circuit — when appropriate</strong> — for a very small
                 garden room (a simple writing shed or storage room with minimal electrical
-                requirements), a single circuit with RCD protection feeding one or two sockets
-                and a lighting point may be sufficient. However, this is the minimum acceptable
-                solution and limits future flexibility significantly.
+                requirements), a single circuit with RCD protection feeding one or two sockets and a
+                lighting point may be sufficient. However, this is the minimum acceptable solution
+                and limits future flexibility significantly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sub-board — the recommended approach</strong> — for any garden room
-                intended as a home office, studio, or habitable space, a sub-board is the correct
-                solution. It provides individual circuit protection (so a heater fault does not
-                take out the lighting), a local main isolator, and room to add circuits in the
-                future without returning to the house consumer unit.
+                <strong>Sub-board — the recommended approach</strong> — for any garden room intended
+                as a home office, studio, or habitable space, a sub-board is the correct solution.
+                It provides individual circuit protection (so a heater fault does not take out the
+                lighting), a local main isolator, and room to add circuits in the future without
+                returning to the house consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -163,8 +164,8 @@ const sections = [
                 <strong>Typical circuits in a garden room sub-board</strong> — a well-specified
                 garden room installation includes: one lighting circuit, one or two socket-outlet
                 circuits, a dedicated heating circuit (for electric panel heaters or underfloor
-                heating), and a spare way for future use. If an EV charger is planned, an
-                additional 32A circuit is required.
+                heating), and a spare way for future use. If an EV charger is planned, an additional
+                32A circuit is required.
               </span>
             </li>
           </ul>
@@ -184,9 +185,9 @@ const sections = [
     content: (
       <>
         <p>
-          Voltage drop is the reduction in voltage that occurs as current flows through a cable.
-          In a long cable run from the house to a garden room, voltage drop can reduce the voltage
-          at the garden room to below the acceptable minimum, causing equipment to operate
+          Voltage drop is the reduction in voltage that occurs as current flows through a cable. In
+          a long cable run from the house to a garden room, voltage drop can reduce the voltage at
+          the garden room to below the acceptable minimum, causing equipment to operate
           inefficiently or fail to start.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -203,21 +204,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Practical cable sizes by distance</strong> — for a typical garden room
-                with a 32A sub-board feed (lighting, sockets, heating), the minimum cable sizes
-                are approximately: up to 20 metres — 6mm² SWA; 20 to 35 metres — 10mm² SWA;
-                35 to 60 metres — 16mm² SWA. These are indicative values — your electrician must
-                calculate the exact voltage drop for the specific installation load and cable route.
+                <strong>Practical cable sizes by distance</strong> — for a typical garden room with
+                a 32A sub-board feed (lighting, sockets, heating), the minimum cable sizes are
+                approximately: up to 20 metres — 6mm² SWA; 20 to 35 metres — 10mm² SWA; 35 to 60
+                metres — 16mm² SWA. These are indicative values — your electrician must calculate
+                the exact voltage drop for the specific installation load and cable route.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth fault loop impedance</strong> — as well as voltage drop, the cable
-                length affects the earth fault loop impedance. For longer runs, the measured Zs
-                may exceed the maximum permitted for the protective device in the house consumer
-                unit. Where this is the case, the protective device rating or cable size must be
-                adjusted, or a local RCD relied upon for additional protection.
+                length affects the earth fault loop impedance. For longer runs, the measured Zs may
+                exceed the maximum permitted for the protective device in the house consumer unit.
+                Where this is the case, the protective device rating or cable size must be adjusted,
+                or a local RCD relied upon for additional protection.
               </span>
             </li>
           </ul>
@@ -233,8 +234,8 @@ const sections = [
         <p>
           Many garden room installations are adjacent to a driveway, and homeowners increasingly
           want to combine the garden room electrical installation with an electric vehicle charging
-          point. Planning for EV charging at the design stage is far more cost-effective than
-          adding it retrospectively.
+          point. Planning for EV charging at the design stage is far more cost-effective than adding
+          it retrospectively.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -251,12 +252,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit</strong> — the EV charger requires a dedicated 32A
-                circuit from the garden room sub-board (or from the house consumer unit if the
-                charger is closer to the house). Under BS 7671 Section 722, the circuit must
-                include appropriate overcurrent protection, and the charger must comply with
-                The Electric Vehicles (Smart Charge Points) Regulations 2021, which requires
-                smart charging capability (load management and remote control).
+                <strong>Dedicated circuit</strong> — the EV charger requires a dedicated 32A circuit
+                from the garden room sub-board (or from the house consumer unit if the charger is
+                closer to the house). Under BS 7671 Section 722, the circuit must include
+                appropriate overcurrent protection, and the charger must comply with The Electric
+                Vehicles (Smart Charge Points) Regulations 2021, which requires smart charging
+                capability (load management and remote control).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,8 +265,8 @@ const sections = [
               <span>
                 <strong>EV charger earthing</strong> — under BS 7671 Regulation 722.411.4, EV
                 charger installations require a protective earth connection and may require a
-                Protective Earth-Neutral (PEN) fault protection device. For TT-earthed garden
-                room installations, a separate RCD on the EV charger circuit provides the required
+                Protective Earth-Neutral (PEN) fault protection device. For TT-earthed garden room
+                installations, a separate RCD on the EV charger circuit provides the required
                 protection.
               </span>
             </li>
@@ -285,8 +286,8 @@ const sections = [
     content: (
       <>
         <p>
-          For a garden room used as a home office, reliable internet connectivity is as important
-          as the electrical supply. Planning data infrastructure at the same time as the electrical
+          For a garden room used as a home office, reliable internet connectivity is as important as
+          the electrical supply. Planning data infrastructure at the same time as the electrical
           installation saves significant money and disruption.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -294,30 +295,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT6 ethernet — the reliable option</strong> — a CAT6 ethernet cable
-                run in conduit alongside or within the SWA cable trench provides a permanent,
-                gigabit-speed internet connection. At the house end, the cable connects to the
-                router or a network switch. At the garden room end, a flush-mounted ethernet
-                socket provides a clean installation. This is the recommended solution for anyone
-                working from home who relies on video conferencing or large file transfers.
+                <strong>CAT6 ethernet — the reliable option</strong> — a CAT6 ethernet cable run in
+                conduit alongside or within the SWA cable trench provides a permanent, gigabit-speed
+                internet connection. At the house end, the cable connects to the router or a network
+                switch. At the garden room end, a flush-mounted ethernet socket provides a clean
+                installation. This is the recommended solution for anyone working from home who
+                relies on video conferencing or large file transfers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conduit for future cabling</strong> — even if a CAT6 cable is not
-                installed immediately, run an empty 32mm conduit in the trench. This allows future
-                data cables (or additional ethernet cables) to be pulled through without excavating
-                the garden again. The cost of the conduit is negligible; the cost of re-excavating
-                the garden is not.
+                <strong>Conduit for future cabling</strong> — even if a CAT6 cable is not installed
+                immediately, run an empty 32mm conduit in the trench. This allows future data cables
+                (or additional ethernet cables) to be pulled through without excavating the garden
+                again. The cost of the conduit is negligible; the cost of re-excavating the garden
+                is not.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wi-Fi mesh systems</strong> — for shorter cable runs or where a CAT6 cable
-                is not practical, a dedicated outdoor Wi-Fi access point mounted on the house or
-                a pole can provide reliable garden room coverage. However, this requires a power
+                is not practical, a dedicated outdoor Wi-Fi access point mounted on the house or a
+                pole can provide reliable garden room coverage. However, this requires a power
                 supply to the access point and does not match the reliability or speed of a wired
                 connection.
               </span>
@@ -333,42 +334,42 @@ const sections = [
     content: (
       <>
         <p>
-          The thermal performance of the garden room and the specification of the consumer unit
-          are closely linked — poor insulation means higher heating loads, which affects the
-          electrical circuit requirements.
+          The thermal performance of the garden room and the specification of the consumer unit are
+          closely linked — poor insulation means higher heating loads, which affects the electrical
+          circuit requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation and heating load</strong> — a well-insulated garden room
-                (75mm wall insulation, 100mm roof insulation, double-glazed windows) may need
-                only 1kW of electric heating to maintain a comfortable temperature. A poorly
-                insulated room may need 3kW or more. Higher heating loads require larger dedicated
-                circuits and a higher-rated SWA feed cable. Investing in good insulation reduces
-                the electrical specification and running costs.
+                <strong>Insulation and heating load</strong> — a well-insulated garden room (75mm
+                wall insulation, 100mm roof insulation, double-glazed windows) may need only 1kW of
+                electric heating to maintain a comfortable temperature. A poorly insulated room may
+                need 3kW or more. Higher heating loads require larger dedicated circuits and a
+                higher-rated SWA feed cable. Investing in good insulation reduces the electrical
+                specification and running costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCBO consumer unit — the best choice</strong> — a metal consumer unit
-                with individual RCBOs for each circuit is the optimal solution for a garden room.
-                Each RCBO provides both overcurrent protection and 30mA RCD protection for its
-                circuit. A fault on one circuit (for example, the heater) does not affect the
-                other circuits (lighting, sockets, computer). Under Regulation 421.1.201 of
-                BS 7671, the enclosure must be non-combustible — metal is the standard.
+                <strong>RCBO consumer unit — the best choice</strong> — a metal consumer unit with
+                individual RCBOs for each circuit is the optimal solution for a garden room. Each
+                RCBO provides both overcurrent protection and 30mA RCD protection for its circuit. A
+                fault on one circuit (for example, the heater) does not affect the other circuits
+                (lighting, sockets, computer). Under Regulation 421.1.201 of BS 7671, the enclosure
+                must be non-combustible — metal is the standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP rating for the consumer unit position</strong> — if the consumer unit
-                is positioned where it could be exposed to moisture (near a door, in an unheated
-                area, or where condensation is possible), the enclosure must have an appropriate
-                IP rating. For most garden room interiors, IP2X is acceptable. Where the unit
-                is in a porch or unheated lobby, IP44 or higher is preferred.
+                <strong>IP rating for the consumer unit position</strong> — if the consumer unit is
+                positioned where it could be exposed to moisture (near a door, in an unheated area,
+                or where condensation is possible), the enclosure must have an appropriate IP
+                rating. For most garden room interiors, IP2X is acceptable. Where the unit is in a
+                porch or unheated lobby, IP44 or higher is preferred.
               </span>
             </li>
           </ul>
@@ -391,10 +392,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person scheme</strong> — use a NICEIC, NAPIT, or ELECSA
-                registered electrician to self-certify the work. They notify the scheme on
-                completion, and you receive a notification certificate. No separate building control
-                inspection of the electrical work is required.
+                <strong>Competent person scheme</strong> — use a NICEIC, NAPIT, or ELECSA registered
+                electrician to self-certify the work. They notify the scheme on completion, and you
+                receive a notification certificate. No separate building control inspection of the
+                electrical work is required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -403,9 +404,7 @@ const sections = [
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire installation — SWA cable, sub-board, all circuits, earthing
                 system, and test results — must be issued on completion. Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
-                  Elec-Mate EIC app
-                </SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the EIC on site, including the earth electrode resistance
                 measurement.
               </span>
@@ -413,10 +412,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property sale implications</strong> — when the property is sold, the
-                buyer's solicitor will ask for evidence that the garden room electrical installation
-                is compliant. Without an EIC and Part P notification, the sale may be delayed or
-                an indemnity insurance policy required. A properly certified installation adds value;
+                <strong>Property sale implications</strong> — when the property is sold, the buyer's
+                solicitor will ask for evidence that the garden room electrical installation is
+                compliant. Without an EIC and Part P notification, the sale may be delayed or an
+                indemnity insurance policy required. A properly certified installation adds value;
                 an uncertified one creates doubt.
               </span>
             </li>
@@ -433,15 +432,17 @@ const sections = [
         <p>
           Garden room and garden office installations are among the most enjoyable domestic
           electrical jobs — a complete new installation from scratch, with interesting design
-          decisions, testing, and full certification. With the growth in home working, demand
-          for quality garden room electrical work continues to increase.
+          decisions, testing, and full certification. With the growth in home working, demand for
+          quality garden room electrical work continues to increase.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete the EIC With Earth Test Results</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete the EIC With Earth Test Results
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eic-certificate">
@@ -461,14 +462,13 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upsell EV and Data Infrastructure</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When quoting a garden room installation, always discuss EV charging and data
-                  infrastructure. A client who is not planning an EV now may be planning one in
-                  two years — upsizing the cable now costs little but saves them thousands later.
-                  Use the{' '}
+                  infrastructure. A client who is not planning an EV now may be planning one in two
+                  years — upsizing the cable now costs little but saves them thousands later. Use
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce clear alternative quotes for standard, EV-ready, and full-spec
-                  options.
+                  to produce clear alternative quotes for standard, EV-ready, and full-spec options.
                 </p>
               </div>
             </div>
@@ -476,7 +476,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage garden room electrical jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, and job management. Complete more jobs with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -513,7 +513,7 @@ export default function GardenRoomElectricalPage() {
       faqHeading="Frequently Asked Questions About Garden Room Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Garden Room EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'What is IET membership and why does it matter?',
     answer:
-      'The Institution of Engineering and Technology (IET) is the UK\'s largest professional engineering body for electrical, electronic, and technology engineers. Membership grades include Student, Associate, Member (MIET), and Fellow (FIET). MIET alongside an accredited degree supports applications for IEng or CEng registration. IET membership provides access to technical resources, CPD tracking, networking events, and industry recognition. Employers in building services, power utilities, and defence frequently list IET membership as desirable.',
+      "The Institution of Engineering and Technology (IET) is the UK's largest professional engineering body for electrical, electronic, and technology engineers. Membership grades include Student, Associate, Member (MIET), and Fellow (FIET). MIET alongside an accredited degree supports applications for IEng or CEng registration. IET membership provides access to technical resources, CPD tracking, networking events, and industry recognition. Employers in building services, power utilities, and defence frequently list IET membership as desirable.",
   },
   {
     question: 'What does a Chartered Electrical Engineer (CEng) earn?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What is the difference between a BEng and MEng?',
     answer:
-      'A BEng (Bachelor of Engineering) is a three-year undergraduate degree. A MEng (Master of Engineering) is an integrated four or five-year programme that includes master\'s level study in the final year and is fully accredited for Chartered Engineer (CEng) registration. A BEng alone satisfies the academic requirement for Incorporated Engineer (IEng) status and partially satisfies CEng — BEng graduates seeking CEng must complete a further learning programme (typically a taught master\'s or recognised CPD programme) to meet the full CEng academic standard.',
+      "A BEng (Bachelor of Engineering) is a three-year undergraduate degree. A MEng (Master of Engineering) is an integrated four or five-year programme that includes master's level study in the final year and is fully accredited for Chartered Engineer (CEng) registration. A BEng alone satisfies the academic requirement for Incorporated Engineer (IEng) status and partially satisfies CEng — BEng graduates seeking CEng must complete a further learning programme (typically a taught master's or recognised CPD programme) to meet the full CEng academic standard.",
   },
 ];
 
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/how-to-become-electrician',
     title: 'How to Become an Electrician',
-    description: 'Routes into the electrical trade: apprenticeships, adult entry, AM2, and getting your first job.',
+    description:
+      'Routes into the electrical trade: apprenticeships, adult entry, AM2, and getting your first job.',
     icon: GraduationCap,
     category: 'Career Guide',
   },
@@ -107,7 +108,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician-salary-benchmarking',
     title: 'Electrician Salary Benchmarking 2026',
-    description: 'Regional salary data for electricians, foremen, and electrical engineers across the UK.',
+    description:
+      'Regional salary data for electricians, foremen, and electrical engineers across the UK.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -131,29 +133,30 @@ const sections = [
     content: (
       <>
         <p>
-          The terms &quot;electrical engineer&quot; and &quot;electrician&quot; are frequently confused by
-          the public and, in some contexts, even within the industry. They are distinct professions
-          with different qualifications, legal authorisations, and day-to-day roles.
+          The terms &quot;electrical engineer&quot; and &quot;electrician&quot; are frequently
+          confused by the public and, in some contexts, even within the industry. They are distinct
+          professions with different qualifications, legal authorisations, and day-to-day roles.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrician</strong> — a skilled tradesperson qualified to install, test, inspect,
-                and certify electrical installations in buildings. Qualifications include apprenticeship,
-                NVQ Level 3 Electrotechnical Installation, City and Guilds 2365, and AM2 assessment.
-                Legally authorised (via competent person scheme registration) to self-certify notifiable
-                work under Part P of the Building Regulations.
+                <strong>Electrician</strong> — a skilled tradesperson qualified to install, test,
+                inspect, and certify electrical installations in buildings. Qualifications include
+                apprenticeship, NVQ Level 3 Electrotechnical Installation, City and Guilds 2365, and
+                AM2 assessment. Legally authorised (via competent person scheme registration) to
+                self-certify notifiable work under Part P of the Building Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical engineer</strong> — a graduate-level professional who designs electrical
-                systems, conducts load calculations, produces specifications and drawings, and manages
-                engineering projects. Typically holds a BEng or MEng in Electrical Engineering and
-                works in consultancies, utility companies, construction, or manufacturing.
+                <strong>Electrical engineer</strong> — a graduate-level professional who designs
+                electrical systems, conducts load calculations, produces specifications and
+                drawings, and manages engineering projects. Typically holds a BEng or MEng in
+                Electrical Engineering and works in consultancies, utility companies, construction,
+                or manufacturing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -168,20 +171,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protected titles</strong> — &quot;Chartered Engineer&quot; and &quot;Incorporated Engineer&quot;
-                are protected titles in the UK, awarded by the Engineering Council through licensed
-                professional bodies (e.g., IET). &quot;Electrician&quot; is not a legally protected title,
-                though registration with NICEIC or NAPIT is required for self-certification of
-                notifiable work.
+                <strong>Protected titles</strong> — &quot;Chartered Engineer&quot; and
+                &quot;Incorporated Engineer&quot; are protected titles in the UK, awarded by the
+                Engineering Council through licensed professional bodies (e.g., IET).
+                &quot;Electrician&quot; is not a legally protected title, though registration with
+                NICEIC or NAPIT is required for self-certification of notifiable work.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Understanding the distinction matters when advising clients, applying for jobs, or
-          planning your career development. If you are a qualified electrician considering engineering,
-          your site experience is a genuine advantage — most engineering graduates have never
-          connected a consumer unit.
+          planning your career development. If you are a qualified electrician considering
+          engineering, your site experience is a genuine advantage — most engineering graduates have
+          never connected a consumer unit.
         </p>
       </>
     ),
@@ -192,17 +195,17 @@ const sections = [
     content: (
       <>
         <p>
-          UK universities offer two primary undergraduate routes in electrical engineering: the
-          BEng (Bachelor of Engineering) and the MEng (Master of Engineering). Both are accredited
-          by the Engineering Council through professional bodies including the IET.
+          UK universities offer two primary undergraduate routes in electrical engineering: the BEng
+          (Bachelor of Engineering) and the MEng (Master of Engineering). Both are accredited by the
+          Engineering Council through professional bodies including the IET.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BEng Electrical Engineering (3 years full-time)</strong> — covers
-                circuit theory, power systems, control systems, electromagnetics, signal processing,
+                <strong>BEng Electrical Engineering (3 years full-time)</strong> — covers circuit
+                theory, power systems, control systems, electromagnetics, signal processing,
                 electronics, and engineering mathematics. Satisfies the academic requirement for
                 Incorporated Engineer (IEng) registration. Partially satisfies CEng — further
                 learning is required.
@@ -212,9 +215,9 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MEng Electrical Engineering (4–5 years full-time)</strong> — includes all
-                BEng content plus advanced master&apos;s level modules in the final year. Fully satisfies
-                the academic requirement for Chartered Engineer (CEng) registration. The preferred
-                route for those targeting senior engineering or leadership positions.
+                BEng content plus advanced master&apos;s level modules in the final year. Fully
+                satisfies the academic requirement for Chartered Engineer (CEng) registration. The
+                preferred route for those targeting senior engineering or leadership positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,9 +232,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Entry requirements</strong> — typical offers are BBB to AAB at A-level,
-                with Mathematics required and Physics or Further Mathematics strongly preferred.
-                UCAS tariff entry exists at some universities for mature students or those with
+                <strong>Entry requirements</strong> — typical offers are BBB to AAB at A-level, with
+                Mathematics required and Physics or Further Mathematics strongly preferred. UCAS
+                tariff entry exists at some universities for mature students or those with
                 alternative qualifications including HNC/HND.
               </span>
             </li>
@@ -240,8 +243,8 @@ const sections = [
               <span>
                 <strong>Costs (2026)</strong> — full tuition fees are £9,535 per year for home
                 students in England under current legislation. Student loans cover fees and
-                maintenance. Apprenticeship-degree routes (where available) can eliminate
-                personal tuition debt entirely.
+                maintenance. Apprenticeship-degree routes (where available) can eliminate personal
+                tuition debt entirely.
               </span>
             </li>
           </ul>
@@ -256,12 +259,12 @@ const sections = [
   },
   {
     id: 'hnc-hnd-top-up',
-    heading: 'HNC/HND to Degree Top-Up: The Electrician\'s Fast Track',
+    heading: "HNC/HND to Degree Top-Up: The Electrician's Fast Track",
     content: (
       <>
         <p>
-          For experienced electricians who already hold an HNC (Higher National Certificate) or
-          HND (Higher National Diploma) in Electrical and Electronic Engineering, a degree top-up
+          For experienced electricians who already hold an HNC (Higher National Certificate) or HND
+          (Higher National Diploma) in Electrical and Electronic Engineering, a degree top-up
           programme offers the most time-efficient route to a full BEng.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -269,9 +272,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HNC to BEng top-up</strong> — typically two years full-time or three to
-                four years part-time. The HNC is recognised as the equivalent of the first year
-                of a degree. You join in year two at most universities offering this route.
+                <strong>HNC to BEng top-up</strong> — typically two years full-time or three to four
+                years part-time. The HNC is recognised as the equivalent of the first year of a
+                degree. You join in year two at most universities offering this route.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -294,23 +297,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prior learning recognition</strong> — most universities will consider
-                your trade experience and any CPD qualifications when assessing your application.
-                A portfolio demonstrating engineering competence can sometimes substitute for
-                formal HNC/HND qualifications.
+                <strong>Prior learning recognition</strong> — most universities will consider your
+                trade experience and any CPD qualifications when assessing your application. A
+                portfolio demonstrating engineering competence can sometimes substitute for formal
+                HNC/HND qualifications.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The HNC/HND is offered by colleges across the UK and can be studied part-time over
-          two to three years while working as an electrician. City and Guilds, Pearson BTEC,
-          and other awarding bodies offer equivalent qualifications. Confirm that the HNC/HND
-          is accredited by the Engineering Council before enrolling if degree top-up is your goal.
+          The HNC/HND is offered by colleges across the UK and can be studied part-time over two to
+          three years while working as an electrician. City and Guilds, Pearson BTEC, and other
+          awarding bodies offer equivalent qualifications. Confirm that the HNC/HND is accredited by
+          the Engineering Council before enrolling if degree top-up is your goal.
         </p>
         <SEOAppBridge
           title="Track your CPD and qualifications with Elec-Mate"
-          description="Elec-Mate helps electricians and engineers manage certificates, CPD records, and professional development in one place. Join 430+ UK electrical professionals."
+          description="Elec-Mate helps electricians and engineers manage certificates, CPD records, and professional development in one place. Join 1,000+ UK electrical professionals."
           icon={BookOpen}
         />
       </>
@@ -331,11 +334,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Academic requirement</strong> — an accredited MEng, or a BEng plus a
-                further learning programme (typically a part-time master&apos;s, a recognised CPD
-                programme, or a technical report demonstrating master&apos;s level learning). The
-                Engineering Council publishes the UK Standard for Professional Engineering
-                Competence (UK-SPEC) which defines the requirements precisely.
+                <strong>Academic requirement</strong> — an accredited MEng, or a BEng plus a further
+                learning programme (typically a part-time master&apos;s, a recognised CPD programme,
+                or a technical report demonstrating master&apos;s level learning). The Engineering
+                Council publishes the UK Standard for Professional Engineering Competence (UK-SPEC)
+                which defines the requirements precisely.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -344,26 +347,26 @@ const sections = [
                 <strong>Experience requirement</strong> — at least four years of progressive
                 professional engineering experience, with demonstrated competence in the five
                 UK-SPEC competency categories: knowledge and understanding, design and innovation,
-                technical and management leadership, professional commitment, and communication
-                and interpersonal skills.
+                technical and management leadership, professional commitment, and communication and
+                interpersonal skills.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Membership of a licensed professional body</strong> — CEng must be
-                applied for through a licensed professional body, most commonly the IET for
-                electrical engineers. The body reviews your application and conducts a
-                professional review interview.
+                <strong>Membership of a licensed professional body</strong> — CEng must be applied
+                for through a licensed professional body, most commonly the IET for electrical
+                engineers. The body reviews your application and conducts a professional review
+                interview.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Incorporated Engineer (IEng)</strong> — a step below CEng, achieved with
-                an accredited BEng alone plus experience. IEng is the professional grade for
-                engineers who apply and adapt established technology. Many senior electricians and
-                project engineers work at IEng level without requiring CEng.
+                <strong>Incorporated Engineer (IEng)</strong> — a step below CEng, achieved with an
+                accredited BEng alone plus experience. IEng is the professional grade for engineers
+                who apply and adapt established technology. Many senior electricians and project
+                engineers work at IEng level without requiring CEng.
               </span>
             </li>
           </ul>
@@ -371,8 +374,8 @@ const sections = [
         <p>
           The full CEng journey from electrician to chartered engineer typically takes ten to
           fifteen years, including trade qualification, HNC/HND study, degree top-up, and
-          professional experience. It is a significant commitment, but one that transforms
-          career prospects and earnings.
+          professional experience. It is a significant commitment, but one that transforms career
+          prospects and earnings.
         </p>
       </>
     ),
@@ -385,8 +388,8 @@ const sections = [
         <p>
           The Institution of Engineering and Technology (IET) is the UK&apos;s largest engineering
           professional body for electrical, electronic, and technology disciplines. It is one of
-          only a small number of bodies licensed by the Engineering Council to award IEng and
-          CEng registrations.
+          only a small number of bodies licensed by the Engineering Council to award IEng and CEng
+          registrations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -394,9 +397,9 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Membership grades</strong> — Student (in full-time education), Associate
-                Member (AMIET, for those developing their career), Member (MIET, for
-                professionally active engineers), and Fellow (FIET, for those with exceptional
-                experience and contributions to the profession).
+                Member (AMIET, for those developing their career), Member (MIET, for professionally
+                active engineers), and Fellow (FIET, for those with exceptional experience and
+                contributions to the profession).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -404,15 +407,15 @@ const sections = [
               <span>
                 <strong>Benefits</strong> — access to the IET online library (standards, journals,
                 and technical guides), CPD tracking tools, career development resources, local and
-                national networking events, mentoring programmes, and the IET Wiring Regulations
-                (BS 7671) at a significant member discount.
+                national networking events, mentoring programmes, and the IET Wiring Regulations (BS
+                7671) at a significant member discount.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual subscription</strong> — MIET subscription is approximately £210
-                per year (2026). Student membership is free. Fellow membership is higher.
+                <strong>Annual subscription</strong> — MIET subscription is approximately £210 per
+                year (2026). Student membership is free. Fellow membership is higher.
                 Employer-sponsored membership is common in larger engineering organisations.
               </span>
             </li>
@@ -436,9 +439,9 @@ const sections = [
     content: (
       <>
         <p>
-          An electrical engineering degree opens doors to several distinct career paths. The
-          three most common for those with an installation background are design engineering,
-          project engineering, and commissioning engineering.
+          An electrical engineering degree opens doors to several distinct career paths. The three
+          most common for those with an installation background are design engineering, project
+          engineering, and commissioning engineering.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -457,9 +460,9 @@ const sections = [
               <span>
                 <strong>Project engineer</strong> — manages the technical delivery of electrical
                 installation projects, coordinating between design teams, site teams, and clients.
-                Responsible for scope management, technical submittals, RFIs, and quality
-                assurance. Salary range: £40,000 to £70,000. Strong site experience is a
-                significant advantage in this role.
+                Responsible for scope management, technical submittals, RFIs, and quality assurance.
+                Salary range: £40,000 to £70,000. Strong site experience is a significant advantage
+                in this role.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,8 +480,8 @@ const sections = [
               <span>
                 <strong>Other routes</strong> — power systems engineering (DNOs, National Grid),
                 building services engineering (M&E consultancies), renewable energy engineering
-                (solar PV, wind), rail electrification, defence and aerospace. Each sector has
-                its own specialisms and salary ranges.
+                (solar PV, wind), rail electrification, defence and aerospace. Each sector has its
+                own specialisms and salary ranges.
               </span>
             </li>
           </ul>
@@ -501,9 +504,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Graduate / junior design engineer (0–3 years)</strong> — £30,000 to
-                £40,000. London roles typically £35,000 to £45,000. Graduate schemes with major
-                contractors and consultancies often include structured development and study support.
+                <strong>Graduate / junior design engineer (0–3 years)</strong> — £30,000 to £40,000.
+                London roles typically £35,000 to £45,000. Graduate schemes with major contractors
+                and consultancies often include structured development and study support.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -518,8 +521,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Senior engineer / principal engineer (7+ years)</strong> — £55,000 to
-                £75,000. CEng holders and those with recognised specialisms can command £75,000
-                to £90,000, particularly in London-based consultancies and specialist contractors.
+                £75,000. CEng holders and those with recognised specialisms can command £75,000 to
+                £90,000, particularly in London-based consultancies and specialist contractors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -533,18 +536,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Day rate contracting</strong> — experienced electrical engineers working
-                as contractors typically charge £350 to £650 per day depending on specialism
-                and sector. HV commissioning, data centre design, and offshore work command the
-                highest day rates.
+                <strong>Day rate contracting</strong> — experienced electrical engineers working as
+                contractors typically charge £350 to £650 per day depending on specialism and
+                sector. HV commissioning, data centre design, and offshore work command the highest
+                day rates.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Electricians working as sole traders in London and the South East regularly earn more
-          than junior electrical engineers. The engineering career path offers long-term progression
-          and access to senior leadership roles that are less accessible from the trade route.
+          Electricians working as sole traders in London and the South East regularly earn more than
+          junior electrical engineers. The engineering career path offers long-term progression and
+          access to senior leadership roles that are less accessible from the trade route.
         </p>
       </>
     ),
@@ -555,9 +558,9 @@ const sections = [
     content: (
       <>
         <p>
-          Whether you are a working electrician tracking your current qualifications or an
-          engineer managing certificates and compliance documentation, having your records in
-          one place makes professional development and client-facing work easier.
+          Whether you are a working electrician tracking your current qualifications or an engineer
+          managing certificates and compliance documentation, having your records in one place makes
+          professional development and client-facing work easier.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -582,8 +585,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote and Invoice Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  As you move into engineering or grow your trade business, professional quoting
-                  and invoicing becomes increasingly important. Use the{' '}
+                  As you move into engineering or grow your trade business, professional quoting and
+                  invoicing becomes increasingly important. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
@@ -595,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Elec-Mate — the app built for UK electrical professionals"
-          description="From apprentice to chartered engineer, Elec-Mate helps you certify, quote, invoice, and manage your electrical business. Join 430+ UK electrical professionals on a 7-day free trial."
+          description="From apprentice to chartered engineer, Elec-Mate helps you certify, quote, invoice, and manage your electrical business. Join 1,000+ UK electrical professionals on a 7-day free trial."
           icon={Zap}
         />
       </>
@@ -632,7 +635,7 @@ export default function ElectricalEngineeringDegreePage() {
       faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Electrical Career with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no credit card required."
+      ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no credit card required."
     />
   );
 }

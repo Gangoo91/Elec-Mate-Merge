@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/rcd-types-guide',
     title: 'RCD Types UK Guide',
-    description: 'RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements and selection guidance.',
+    description:
+      'RCCB, RCBO, SRCD and RCDM explained with BS 7671 requirements and selection guidance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -160,24 +161,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not RCD protection</strong> — standard circuit breakers (MCBs and MCCBs)
-                do not detect earth-fault currents. RCD protection must be provided separately
-                unless an RCBO is used. See the{' '}
-                <SEOInternalLink href="/rcd-types-guide">
-                  RCD types guide
-                </SEOInternalLink>{' '}
-                for full details.
+                <strong>Not RCD protection</strong> — standard circuit breakers (MCBs and MCCBs) do
+                not detect earth-fault currents. RCD protection must be provided separately unless
+                an RCBO is used. See the{' '}
+                <SEOInternalLink href="/rcd-types-guide">RCD types guide</SEOInternalLink> for full
+                details.
               </span>
             </li>
           </ul>
         </div>
         <p>
           In UK electrical installations governed by{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>
-          , the main types of circuit breaker used are MCBs, MCCBs, RCCBs, and RCBOs. Each has
-          specific applications and characteristics that determine where it should be used.
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, the
+          main types of circuit breaker used are MCBs, MCCBs, RCCBs, and RCBOs. Each has specific
+          applications and characteristics that determine where it should be used.
         </p>
       </>
     ),
@@ -199,18 +196,18 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Current ratings</strong> — MCBs for domestic use are typically available in
-                6A, 10A, 16A, 20A, 25A, 32A, 40A, 50A, 63A, and 100A. Standard final circuits
-                use: 6A for lighting, 32A for ring final circuits (sockets), 32A to 40A for cookers,
-                16A or 20A for dedicated circuits.
+                6A, 10A, 16A, 20A, 25A, 32A, 40A, 50A, 63A, and 100A. Standard final circuits use:
+                6A for lighting, 32A for ring final circuits (sockets), 32A to 40A for cookers, 16A
+                or 20A for dedicated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Breaking capacity</strong> — standard domestic MCBs have a breaking
-                capacity of 6kA, which is sufficient for most UK domestic supplies. Higher breaking
-                capacity MCBs (10kA) are available for commercial applications or where prospective
-                fault current is higher.
+                <strong>Breaking capacity</strong> — standard domestic MCBs have a breaking capacity
+                of 6kA, which is sufficient for most UK domestic supplies. Higher breaking capacity
+                MCBs (10kA) are available for commercial applications or where prospective fault
+                current is higher.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -277,9 +274,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase versions</strong> — MCCBs are commonly available in
-                three-pole (three-phase) and four-pole (three-phase plus neutral) configurations,
-                making them essential for three-phase commercial and industrial distribution.
+                <strong>Three-phase versions</strong> — MCCBs are commonly available in three-pole
+                (three-phase) and four-pole (three-phase plus neutral) configurations, making them
+                essential for three-phase commercial and industrial distribution.
               </span>
             </li>
           </ul>
@@ -293,8 +290,8 @@ const sections = [
     content: (
       <>
         <p>
-          An RCCB (Residual Current Circuit Breaker) provides earth-fault protection for a group
-          of circuits. It does not provide overcurrent protection and must always be used in
+          An RCCB (Residual Current Circuit Breaker) provides earth-fault protection for a group of
+          circuits. It does not provide overcurrent protection and must always be used in
           conjunction with individual MCBs. In a split-load consumer unit, an RCCB typically
           protects half the board's circuits from earth faults while individual MCBs on each way
           provide overcurrent protection.
@@ -330,10 +327,7 @@ const sections = [
         </div>
         <p>
           For a detailed explanation of all RCD types including SRCDs and RCDMs, see the{' '}
-          <SEOInternalLink href="/rcd-types-guide">
-            RCD types UK guide
-          </SEOInternalLink>
-          .
+          <SEOInternalLink href="/rcd-types-guide">RCD types UK guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -365,8 +359,8 @@ const sections = [
               <span>
                 <strong>Higher cost per device</strong> — an RCBO costs three to five times more
                 than an equivalent MCB. However, when the cost of the RCCB is removed from the
-                calculation, an all-RCBO board is typically only £150 to £300 more expensive than
-                a split-load RCCB/MCB board for a typical domestic installation.
+                calculation, an all-RCBO board is typically only £150 to £300 more expensive than a
+                split-load RCCB/MCB board for a typical domestic installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,8 +383,8 @@ const sections = [
     content: (
       <>
         <p>
-          The MCB curve type defines the instantaneous magnetic trip threshold — the multiple of
-          the rated current at which the device trips almost instantaneously to clear a short circuit.
+          The MCB curve type defines the instantaneous magnetic trip threshold — the multiple of the
+          rated current at which the device trips almost instantaneously to clear a short circuit.
           Choosing the correct curve type is essential: too sensitive and the breaker nuisance-trips
           on inrush currents; not sensitive enough and the breaker fails to provide adequate
           protection against shock and fire.
@@ -402,8 +396,8 @@ const sections = [
               <span>
                 <strong>Type B — 3 to 5 × In</strong> — trips instantaneously at 3 to 5 times rated
                 current. Used for domestic circuits with resistive and slightly inductive loads:
-                lighting circuits, socket-outlet circuits, immersion heaters, electric showers.
-                The standard choice for most domestic final circuits.
+                lighting circuits, socket-outlet circuits, immersion heaters, electric showers. The
+                standard choice for most domestic final circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -411,8 +405,8 @@ const sections = [
               <span>
                 <strong>Type C — 5 to 10 × In</strong> — trips instantaneously at 5 to 10 times
                 rated current. Used for commercial circuits with moderate inrush loads: fluorescent
-                and LED lighting banks, small motors, power supplies, and HVAC equipment. Common
-                in commercial and light industrial distribution boards.
+                and LED lighting banks, small motors, power supplies, and HVAC equipment. Common in
+                commercial and light industrial distribution boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -446,8 +440,8 @@ const sections = [
         <p>
           Breaking capacity is the maximum fault current a circuit breaker can safely interrupt
           without damage, expressed in kiloamperes (kA). Selecting a device with insufficient
-          breaking capacity can result in catastrophic failure during a fault — the device may
-          be unable to clear the fault, leading to arc flash, fire, or explosion.
+          breaking capacity can result in catastrophic failure during a fault — the device may be
+          unable to clear the fault, leading to arc flash, fire, or explosion.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -455,9 +449,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Measure before specifying</strong> — always measure the prospective fault
-                current (PFC) at the supply origin before specifying protective devices. For domestic
-                consumer units this is typically done at the meter tails / incoming terminals.
-                Record the result on the Electrical Installation Certificate.
+                current (PFC) at the supply origin before specifying protective devices. For
+                domestic consumer units this is typically done at the meter tails / incoming
+                terminals. Record the result on the Electrical Installation Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -499,10 +493,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Domestic consumer unit replacement</strong> — specify an all-RCBO board
-                with Type A, 30mA, 6kA RCBOs. Use Type B curve for all final circuits. This
-                eliminates nuisance tripping, provides BS 7671 18th Edition compliant additional
-                protection, and simplifies certification.
+                <strong>Domestic consumer unit replacement</strong> — specify an all-RCBO board with
+                Type A, 30mA, 6kA RCBOs. Use Type B curve for all final circuits. This eliminates
+                nuisance tripping, provides BS 7671 18th Edition compliant additional protection,
+                and simplifies certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -518,18 +512,18 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging circuit</strong> — use a Type A or Type B RCBO (not Type AC).
-                Check the charge point manufacturer's documentation — some units have built-in Type B
-                RCD protection, in which case a Type A upstream RCBO is acceptable.
+                Check the charge point manufacturer's documentation — some units have built-in Type
+                B RCD protection, in which case a Type A upstream RCBO is acceptable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Retrofit where Zs is marginal</strong> — if measured Zs is close to the
-                maximum for the existing MCB, consider replacing with an RCBO of the same rating
-                and curve type to add RCD protection without changing the overcurrent characteristic.
-                Do not use a lower-rated MCB to improve Zs compliance — always consult the tables
-                in BS 7671.
+                maximum for the existing MCB, consider replacing with an RCBO of the same rating and
+                curve type to add RCD protection without changing the overcurrent characteristic. Do
+                not use a lower-rated MCB to improve Zs compliance — always consult the tables in BS
+                7671.
               </span>
             </li>
           </ul>
@@ -558,9 +552,7 @@ const sections = [
                   Every consumer unit replacement requires an Electrical Installation Certificate
                   (EIC) and a complete Schedule of Test Results including PFC measurement, Zs
                   measurements for each circuit, and RCD test results where applicable. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certification on site with no evening admin.
                 </p>
               </div>
@@ -573,10 +565,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EICR Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
                   During an EICR, circuit breaker type, rating, and breaking capacity must be
-                  verified against the installation's requirements. MCBs without RCD protection
-                  on circuits requiring 30mA additional protection are a C2 observation. Devices
-                  with insufficient breaking capacity relative to the measured PFC are a C2 or C1
-                  finding depending on the severity.
+                  verified against the installation's requirements. MCBs without RCD protection on
+                  circuits requiring 30mA additional protection are a C2 observation. Devices with
+                  insufficient breaking capacity relative to the measured PFC are a C2 or C1 finding
+                  depending on the severity.
                 </p>
               </div>
             </div>
@@ -584,7 +576,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete consumer unit certificates on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -621,7 +613,7 @@ export default function CircuitBreakerTypesPage() {
       faqHeading="Frequently Asked Questions About Circuit Breaker Types"
       relatedPages={relatedPages}
       ctaHeading="Complete Circuit Certificates and EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -524,7 +524,7 @@ export default function ElectricalSiteInductionPage() {
         },
       ]}
       ctaHeading="Turn Up to Every Induction Fully Prepared"
-      ctaSubheading="AI-generated RAMS, digital qualification storage, and instant access to all your site documents from your phone. Join 430+ UK electricians who never get turned away from a site induction. 7-day free trial."
+      ctaSubheading="AI-generated RAMS, digital qualification storage, and instant access to all your site documents from your phone. Join 1,000+ UK electricians who never get turned away from a site induction. 7-day free trial."
     />
   );
 }

@@ -99,7 +99,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/confined-space-electrical',
     title: 'Confined Space Electrical Work',
-    description: 'Safety requirements for electrical work in confined spaces under the 1997 Regulations.',
+    description:
+      'Safety requirements for electrical work in confined spaces under the 1997 Regulations.',
     icon: HardHat,
     category: 'Safety',
   },
@@ -176,9 +177,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          The HSE publication HSG85 (Electricity at Work — Safe Working Practices) provides
-          detailed guidance on implementing the regulations. It is freely available from the HSE
-          website and should be on every electrical contractor's bookshelf.
+          The HSE publication HSG85 (Electricity at Work — Safe Working Practices) provides detailed
+          guidance on implementing the regulations. It is freely available from the HSE website and
+          should be on every electrical contractor's bookshelf.
         </p>
       </>
     ),
@@ -195,7 +196,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                1
+              </span>
               <span>
                 <strong>Identify the circuit</strong> — confirm which circuit serves the equipment
                 to be worked on. Check the distribution board schedule. Test with an approved
@@ -204,14 +207,18 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                2
+              </span>
               <span>
                 <strong>Isolate</strong> — switch off the MCB, withdraw the fuse, or operate the
                 isolator. Confirm the device is in the off or open position visually.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                3
+              </span>
               <span>
                 <strong>Secure the isolation point</strong> — apply your MCB lockout clip and
                 personal padlock, or place the fuse in your personal possession. Attach a warning
@@ -219,23 +226,29 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                4
+              </span>
               <span>
-                <strong>Prove the voltage indicator on a known live source</strong> — before
-                testing the isolated circuit, confirm your approved voltage indicator (AVI) is
-                working correctly by testing it on a known live supply or proving unit.
+                <strong>Prove the voltage indicator on a known live source</strong> — before testing
+                the isolated circuit, confirm your approved voltage indicator (AVI) is working
+                correctly by testing it on a known live supply or proving unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">5</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                5
+              </span>
               <span>
                 <strong>Test the circuit — prove dead</strong> — at the point of work, test between
-                all conductors: L-E, L-N, and N-E. All must read zero volts. On three-phase
-                systems, test all combinations: L1-L2, L2-L3, L3-L1, L1-E, L2-E, L3-E, N-E.
+                all conductors: L-E, L-N, and N-E. All must read zero volts. On three-phase systems,
+                test all combinations: L1-L2, L2-L3, L3-L1, L1-E, L2-E, L3-E, N-E.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">6</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 font-bold text-sm">
+                6
+              </span>
               <span>
                 <strong>Prove the voltage indicator again on the known live source</strong> —
                 confirm the AVI is still working after testing the isolated circuit. Only when this
@@ -277,8 +290,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use a proving unit</strong> — a proving unit (such as the Fluke PRV240,
-                Kewtech KT230, or Martindale PD690) generates a known safe voltage that can be
-                used to prove your AVI is functioning correctly both before and after testing the
+                Kewtech KT230, or Martindale PD690) generates a known safe voltage that can be used
+                to prove your AVI is functioning correctly both before and after testing the
                 isolated circuit. This eliminates the risk of using a faulty indicator.
               </span>
             </li>
@@ -296,16 +309,16 @@ const sections = [
               <span>
                 <strong>Discharge capacitors</strong> — capacitors in motor starters, VSD drives,
                 and power factor correction equipment can retain a dangerous charge for several
-                minutes after isolation. Follow manufacturer discharge procedures before working
-                on this equipment.
+                minutes after isolation. Follow manufacturer discharge procedures before working on
+                this equipment.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The proven dead state only applies at the time of testing and at the point of work. If
-          you move to a different part of the circuit, or if time passes, you must test again
-          before touching conductors.
+          The proven dead state only applies at the time of testing and at the point of work. If you
+          move to a different part of the circuit, or if time passes, you must test again before
+          touching conductors.
         </p>
       </>
     ),
@@ -316,17 +329,17 @@ const sections = [
     content: (
       <>
         <p>
-          Lockout tagout devices physically prevent an isolation point from being re-energised
-          while work is in progress. Selecting the correct device for each type of isolation
-          point is essential.
+          Lockout tagout devices physically prevent an isolation point from being re-energised while
+          work is in progress. Selecting the correct device for each type of isolation point is
+          essential.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Personal padlocks</strong> — each worker must have their own padlock with
-                a unique key. Safety padlocks are typically brightly coloured and have a non-
+                <strong>Personal padlocks</strong> — each worker must have their own padlock with a
+                unique key. Safety padlocks are typically brightly coloured and have a non-
                 conductive shackle. Each person retains their key for the duration of the work.
                 Common brands include Master Lock, ABUS, and Brady.
               </span>
@@ -344,18 +357,18 @@ const sections = [
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCB lockout clips</strong> — snap-on devices that fit over a miniature
-                circuit breaker in the off position and accept a padlock shackle. Available for
-                most common MCB profiles including DIN-rail types. A padlock must also be applied —
-                the clip alone is not lockout.
+                circuit breaker in the off position and accept a padlock shackle. Available for most
+                common MCB profiles including DIN-rail types. A padlock must also be applied — the
+                clip alone is not lockout.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Plug lockouts</strong> — lockout devices that encase a plug so that it
-                cannot be inserted into a socket. Used when the isolation point is a plug and
-                socket rather than a fixed device. Available for 13A, industrial (BS EN 60309),
-                and CEE plug types.
+                cannot be inserted into a socket. Used when the isolation point is a plug and socket
+                rather than a fixed device. Available for 13A, industrial (BS EN 60309), and CEE
+                plug types.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,9 +391,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Warning tags (danger tags) must accompany lockout devices. They should state the
-          reason for isolation, the name of the person who applied the lock, and the date.
-          Tags alone without a physical lock do not constitute lockout.
+          Warning tags (danger tags) must accompany lockout devices. They should state the reason
+          for isolation, the name of the person who applied the lock, and the date. Tags alone
+          without a physical lock do not constitute lockout.
         </p>
       </>
     ),
@@ -391,28 +404,28 @@ const sections = [
     content: (
       <>
         <p>
-          A permit to work (PTW) is a formal documented system for controlling high-risk
-          electrical work. It provides a written authorisation from a responsible person that
-          the equipment has been isolated, tested dead, and is safe to work on.
+          A permit to work (PTW) is a formal documented system for controlling high-risk electrical
+          work. It provides a written authorisation from a responsible person that the equipment has
+          been isolated, tested dead, and is safe to work on.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When PTW is required</strong> — high-voltage systems (above 1,000V AC),
-                work in confined spaces with electrical equipment, complex industrial plant,
-                any situation where multiple trades share the same isolation, and wherever the
-                client's safety management system requires it.
+                <strong>When PTW is required</strong> — high-voltage systems (above 1,000V AC), work
+                in confined spaces with electrical equipment, complex industrial plant, any
+                situation where multiple trades share the same isolation, and wherever the client's
+                safety management system requires it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Authorised person (AP)</strong> — the AP is responsible for issuing
-                the PTW. They must be competent to understand the electrical hazards and confirm
-                that isolation is complete. The AP countersigns the permit when work is complete
-                and authorises re-energisation.
+                <strong>Authorised person (AP)</strong> — the AP is responsible for issuing the PTW.
+                They must be competent to understand the electrical hazards and confirm that
+                isolation is complete. The AP countersigns the permit when work is complete and
+                authorises re-energisation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -420,8 +433,8 @@ const sections = [
               <span>
                 <strong>Permit contents</strong> — scope of work, equipment identification,
                 isolation method and points, tests carried out and results, additional precautions
-                (earthing, barriers, PPE), names of all workers covered by the permit, duration
-                of validity, and sign-off procedures.
+                (earthing, barriers, PPE), names of all workers covered by the permit, duration of
+                validity, and sign-off procedures.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,9 +462,9 @@ const sections = [
     content: (
       <>
         <p>
-          When multiple trades or individuals work on the same isolated system simultaneously,
-          each person must independently control their own safety. The multi-lock hasp system
-          is the approved UK method for managing this.
+          When multiple trades or individuals work on the same isolated system simultaneously, each
+          person must independently control their own safety. The multi-lock hasp system is the
+          approved UK method for managing this.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -478,8 +491,8 @@ const sections = [
                 <strong>Lost key procedure</strong> — if a worker loses their padlock key, a
                 documented emergency procedure must be followed. This typically involves confirming
                 the worker is clear of the circuit, cutting the lock under supervision of the
-                authorising person, and recording the incident. Never remove someone else's
-                padlock without following this procedure.
+                authorising person, and recording the incident. Never remove someone else's padlock
+                without following this procedure.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -519,18 +532,18 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test at the point of work before isolating</strong> — use your AVI to
-                confirm the circuit is live at the point of work, then switch off the suspected
-                MCB and confirm the circuit goes dead at the point of work. This positively
-                identifies the correct isolation device.
+                confirm the circuit is live at the point of work, then switch off the suspected MCB
+                and confirm the circuit goes dead at the point of work. This positively identifies
+                the correct isolation device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Parallel feeds and sub-distribution</strong> — in complex installations,
-                a piece of equipment may be fed from more than one source. Check for sub-boards,
-                local isolators, and UPS systems. Test the equipment terminals for voltage after
-                isolating at the main board before assuming it is dead.
+                <strong>Parallel feeds and sub-distribution</strong> — in complex installations, a
+                piece of equipment may be fed from more than one source. Check for sub-boards, local
+                isolators, and UPS systems. Test the equipment terminals for voltage after isolating
+                at the main board before assuming it is dead.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -556,10 +569,10 @@ const sections = [
     content: (
       <>
         <p>
-          Documenting safe isolation procedures in your RAMS (Risk Assessment and Method
-          Statement) protects you legally and demonstrates to clients that you operate to
-          the highest professional standards. It is also a requirement under the Construction
-          (Design and Management) Regulations 2015 for notifiable projects.
+          Documenting safe isolation procedures in your RAMS (Risk Assessment and Method Statement)
+          protects you legally and demonstrates to clients that you operate to the highest
+          professional standards. It is also a requirement under the Construction (Design and
+          Management) Regulations 2015 for notifiable projects.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-4">
@@ -568,20 +581,18 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Safe Isolation RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">
-                  Elec-Mate RAMS generator
-                </SEOInternalLink>{' '}
-                to create site-specific risk assessments and method statements for electrical
-                work including safe isolation procedures, permit to work requirements, and
-                multi-trade coordination. Compliant with UK health and safety regulations and
-                ready to share with clients in minutes.
+                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                create site-specific risk assessments and method statements for electrical work
+                including safe isolation procedures, permit to work requirements, and multi-trade
+                coordination. Compliant with UK health and safety regulations and ready to share
+                with clients in minutes.
               </p>
             </div>
           </div>
         </div>
         <SEOAppBridge
           title="Professional RAMS and H&S documentation with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation. AI-generated, site-specific, and ready in minutes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site risk assessments, method statements, and health and safety documentation. AI-generated, site-specific, and ready in minutes. 7-day free trial."
           icon={ShieldCheck}
         />
       </>

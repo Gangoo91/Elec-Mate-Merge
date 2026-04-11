@@ -215,10 +215,10 @@ const sections = [
           ample power.
         </p>
         <p>
-          The voltage on the cable is typically 50 to 57V DC — classified as Safety Extra-Low Voltage
-          (SELV). This is a key safety advantage over mains-voltage lighting: there is no risk of
-          lethal electric shock from the lighting cables, and the cabling does not require the same
-          level of protection as mains circuits.
+          The voltage on the cable is typically 50 to 57V DC — classified as Safety Extra-Low
+          Voltage (SELV). This is a key safety advantage over mains-voltage lighting: there is no
+          risk of lethal electric shock from the lighting cables, and the cabling does not require
+          the same level of protection as mains circuits.
         </p>
       </>
     ),
@@ -228,9 +228,7 @@ const sections = [
     heading: 'Advantages Over Traditional Lighting',
     content: (
       <>
-        <p>
-          PoE lighting offers significant advantages in commercial environments:
-        </p>
+        <p>PoE lighting offers significant advantages in commercial environments:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -253,9 +251,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Per-luminaire control</strong> — every luminaire is individually controllable
-                from the network. Dimming, colour temperature, scheduling, scene setting, and
-                emergency mode — all managed per fitting without additional wiring.
+                <strong>Per-luminaire control</strong> — every luminaire is individually
+                controllable from the network. Dimming, colour temperature, scheduling, scene
+                setting, and emergency mode — all managed per fitting without additional wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -304,24 +302,24 @@ const sections = [
               <span>
                 <strong>Cat6 vs Cat6a</strong> — Cat6 supports PoE at up to 100m and is adequate for
                 most installations. Cat6a is recommended for new projects because it has larger
-                conductors (23 AWG vs 24 AWG in some Cat6), better shielding, and lower resistance
-                — which means less heat generation when carrying PoE power and less voltage drop
-                over long runs. Cat6a also supports 10 Gigabit Ethernet for future-proofing.
+                conductors (23 AWG vs 24 AWG in some Cat6), better shielding, and lower resistance —
+                which means less heat generation when carrying PoE power and less voltage drop over
+                long runs. Cat6a also supports 10 Gigabit Ethernet for future-proofing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solid core</strong> — always use solid-core cable for permanent installations
-                (not stranded patch cable). Solid core has lower DC resistance and better PoE
-                performance. Stranded cable is for patch leads only.
+                <strong>Solid core</strong> — always use solid-core cable for permanent
+                installations (not stranded patch cable). Solid core has lower DC resistance and
+                better PoE performance. Stranded cable is for patch leads only.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable bundling</strong> — when many PoE cables are bundled together (in cable
-                trays or conduit), the current flowing through the cables generates heat. This
+                <strong>Cable bundling</strong> — when many PoE cables are bundled together (in
+                cable trays or conduit), the current flowing through the cables generates heat. This
                 increases the cable resistance and can reduce the available power at the luminaire.
                 Limit bundle sizes or derate for bundling. Cat6a handles bundling better than Cat6
                 due to its lower resistance.
@@ -420,8 +418,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The primary market for PoE lighting. Open-plan offices benefit from per-desk lighting
               control, occupancy-based dimming (lights dim when desks are unoccupied), and daylight
-              harvesting (lights reduce output when natural light is sufficient). Reconfiguration
-              is easy when office layouts change — just move the Ethernet cable.
+              harvesting (lights reduce output when natural light is sufficient). Reconfiguration is
+              easy when office layouts change — just move the Ethernet cable.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -487,8 +485,8 @@ const sections = [
               <span>
                 <strong>BMS integration</strong> — PoE lighting platforms integrate with building
                 management systems via BACnet/IP, MQTT, or REST APIs. The lighting system becomes
-                part of the building intelligence layer — coordinating with HVAC, blinds, and
-                access control.
+                part of the building intelligence layer — coordinating with HVAC, blinds, and access
+                control.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -536,10 +534,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 418.2.1</strong> — different circuit types and connected equipment
-                (lighting, power, data) must be considered as potentially exposed or extraneous
-                conductive parts. Segregation, insulation, and bonding decisions depend on the
-                specific circuit and equipment context.
+                <strong>Regulation 418.2.1</strong> — different circuit types and connected
+                equipment (lighting, power, data) must be considered as potentially exposed or
+                extraneous conductive parts. Segregation, insulation, and bonding decisions depend
+                on the specific circuit and equipment context.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -576,8 +574,8 @@ const sections = [
       <>
         <p>
           PoE lighting is a growing market, particularly in commercial new-build and refurbishment
-          projects. Electricians who understand both the mains supply and the data networking aspects
-          are valuable to PoE lighting contractors and building services consultants.
+          projects. Electricians who understand both the mains supply and the data networking
+          aspects are valuable to PoE lighting contractors and building services consultants.
         </p>
         <p>
           To enter this market, consider adding data cabling qualifications to your skillset (City
@@ -632,7 +630,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify PoE lighting mains supply"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Position yourself in the growing PoE lighting market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Position yourself in the growing PoE lighting market. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -669,7 +667,7 @@ export default function PoELightingGuidePage() {
       faqHeading="Frequently Asked Questions About PoE Lighting"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify PoE Lighting Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Position yourself in the growing PoE lighting market. 7-day free trial, cancel anytime."
     />
   );
 }

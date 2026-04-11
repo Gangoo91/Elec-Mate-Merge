@@ -569,7 +569,7 @@ export default function MEWPCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Prepare for your IPAF assessment with confidence"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. MEWP theory modules, interactive quizzes, pre-use checklists, and an AI tutor for any powered access question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. MEWP theory modules, interactive quizzes, pre-use checklists, and an AI tutor for any powered access question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/mewp-course"
     />

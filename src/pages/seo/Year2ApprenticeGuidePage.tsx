@@ -635,7 +635,7 @@ export default function Year2ApprenticeGuidePage() {
       faqHeading="Frequently Asked Questions About Year 2"
       relatedPages={relatedPages}
       ctaHeading="Step Up Your Year 2 with Elec-Mate"
-      ctaSubheading="Join 430+ UK apprentices using Elec-Mate's apprentice hub. AM2 Simulator, 46+ courses, mock exams, portfolio builder, and OJT tracker. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices using Elec-Mate's apprentice hub. AM2 Simulator, 46+ courses, mock exams, portfolio builder, and OJT tracker. 7-day free trial, cancel anytime."
     />
   );
 }

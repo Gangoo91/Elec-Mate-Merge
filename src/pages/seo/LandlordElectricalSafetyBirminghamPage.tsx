@@ -18,7 +18,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Birmingham', href: '/guides/landlord-electrical-safety-birmingham' },
+  {
+    label: 'Landlord Electrical Safety Birmingham',
+    href: '/guides/landlord-electrical-safety-birmingham',
+  },
 ];
 
 const tocItems = [
@@ -80,7 +83,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -110,14 +114,15 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
-          The 2020 Regulations apply to all private rented properties in Birmingham. Landlords
-          must have the electrical installation inspected and tested by a qualified person and
-          obtain an EICR before a new tenancy begins and at least every five years. The EICR is
-          documented in accordance with{' '}
+          The 2020 Regulations apply to all private rented properties in Birmingham. Landlords must
+          have the electrical installation inspected and tested by a qualified person and obtain an
+          EICR before a new tenancy begins and at least every five years. The EICR is documented in
+          accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
@@ -128,9 +133,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before new tenancies</strong> — an EICR must be obtained before a new
-                tenant moves in. This has applied to all new tenancies since 1 July 2020 and all
-                existing tenancies since 1 April 2021.
+                <strong>Before new tenancies</strong> — an EICR must be obtained before a new tenant
+                moves in. This has applied to all new tenancies since 1 July 2020 and all existing
+                tenancies since 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -143,8 +148,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant and council copies</strong> — tenants must receive a copy within
-                28 days. The council must receive a copy within seven days if requested.
+                <strong>Tenant and council copies</strong> — tenants must receive a copy within 28
+                days. The council must receive a copy within seven days if requested.
               </span>
             </li>
           </ul>
@@ -158,9 +163,9 @@ const sections = [
     content: (
       <>
         <p>
-          Birmingham City Council is the largest local authority in Europe by population and has
-          a substantial private rented sector. The council's housing standards team actively
-          enforces the 2020 Regulations.
+          Birmingham City Council is the largest local authority in Europe by population and has a
+          substantial private rented sector. The council's housing standards team actively enforces
+          the 2020 Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -169,8 +174,8 @@ const sections = [
               <span>
                 <strong>Housing standards team</strong> — Birmingham's dedicated enforcement team
                 investigates tenant complaints, conducts proactive inspections in areas of concern,
-                and issues civil penalties and remedial notices. The team focuses on areas with
-                high concentrations of privately rented properties.
+                and issues civil penalties and remedial notices. The team focuses on areas with high
+                concentrations of privately rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -186,8 +191,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Selective and additional licensing</strong> — Birmingham operates selective
-                licensing in designated areas and additional HMO licensing. EICR compliance is
-                a condition of all licences. Operating without a required licence is a criminal
+                licensing in designated areas and additional HMO licensing. EICR compliance is a
+                condition of all licences. Operating without a required licence is a criminal
                 offence.
               </span>
             </li>
@@ -216,15 +221,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing</strong> — properties with five or more occupants
-                in two or more households require a licence. A valid EICR is a condition.
+                <strong>Mandatory HMO licensing</strong> — properties with five or more occupants in
+                two or more households require a licence. A valid EICR is a condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional licensing</strong> — Birmingham operates additional HMO
-                licensing covering smaller HMOs in designated wards. EICR compliance is standard.
+                <strong>Additional licensing</strong> — Birmingham operates additional HMO licensing
+                covering smaller HMOs in designated wards. EICR compliance is standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,9 +250,7 @@ const sections = [
     heading: 'Penalties for Non-Compliance',
     content: (
       <>
-        <p>
-          Birmingham City Council can impose civil penalties of up to £30,000 per breach.
-        </p>
+        <p>Birmingham City Council can impose civil penalties of up to £30,000 per breach.</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -282,16 +285,14 @@ const sections = [
     heading: 'Tenant Rights',
     content: (
       <>
-        <p>
-          Tenants in Birmingham have clear rights under the 2020 Regulations.
-        </p>
+        <p>Tenants in Birmingham have clear rights under the 2020 Regulations.</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — within 28 days of the inspection
-                for existing tenants, before moving in for new tenants.
+                <strong>Right to a copy of the EICR</strong> — within 28 days of the inspection for
+                existing tenants, before moving in for new tenants.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -305,8 +306,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Council intervention</strong> — if a landlord fails to act, the council
-                can arrange remedial work and recover costs from the landlord.
+                <strong>Council intervention</strong> — if a landlord fails to act, the council can
+                arrange remedial work and recover costs from the landlord.
               </span>
             </li>
           </ul>
@@ -320,8 +321,8 @@ const sections = [
     content: (
       <>
         <p>
-          When C1 or C2 observations are identified (classified under BS 7671 Section 631),
-          remedial work must be completed promptly.
+          When C1 or C2 observations are identified (classified under BS 7671 Section 631), remedial
+          work must be completed promptly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -341,9 +342,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common remedial work</strong> — fitting RCD protection (Regulation
-                411.3.3), consumer unit replacements, earthing upgrades, and cable replacements
-                are the most common items in Birmingham.
+                <strong>Common remedial work</strong> — fitting RCD protection (Regulation 411.3.3),
+                consumer unit replacements, earthing upgrades, and cable replacements are the most
+                common items in Birmingham.
               </span>
             </li>
           </ul>
@@ -366,8 +367,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO awareness</strong> — the Distribution Network Operator for Birmingham
-                is National Grid Electricity Distribution (formerly Western Power Distribution).
+                <strong>DNO awareness</strong> — the Distribution Network Operator for Birmingham is
+                National Grid Electricity Distribution (formerly Western Power Distribution).
                 Inspectors should be familiar with their earthing arrangements and the process for
                 reporting supply-side defects.
               </span>
@@ -376,8 +377,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local property knowledge</strong> — experience with Birmingham property
-                types (Victorian terraces in inner wards, 1930s semis in outer suburbs, modern
-                city centre apartments) helps ensure accurate and efficient inspections.
+                types (Victorian terraces in inner wards, 1930s semis in outer suburbs, modern city
+                centre apartments) helps ensure accurate and efficient inspections.
               </span>
             </li>
           </ul>
@@ -390,26 +391,32 @@ const sections = [
     heading: 'EICR Costs in Birmingham (2026 Prices)',
     content: (
       <>
-        <p>
-          Birmingham EICR costs are close to the national average.
-        </p>
+        <p>Birmingham EICR costs are close to the national average.</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>One-bedroom flat</strong> — £120 to £200.</span>
+              <span>
+                <strong>One-bedroom flat</strong> — £120 to £200.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Two-bedroom terraced house</strong> — £170 to £280.</span>
+              <span>
+                <strong>Two-bedroom terraced house</strong> — £170 to £280.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Three-bedroom semi-detached</strong> — £240 to £380.</span>
+              <span>
+                <strong>Three-bedroom semi-detached</strong> — £240 to £380.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>HMO</strong> — £350 to £650+.</span>
+              <span>
+                <strong>HMO</strong> — £350 to £650+.
+              </span>
             </li>
           </ul>
         </div>
@@ -445,7 +452,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -478,7 +485,7 @@ export default function LandlordElectricalSafetyBirminghamPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -73,7 +73,7 @@ export default function BestApprenticeAppPage() {
         'Elec-Mate is the only apprentice app offering 46+ structured training courses covering Level 2, Level 3, AM2, EPA, 18th Edition, and specialist topics like EV charging, solar PV, and fire alarm systems.',
         'The EPA Simulator in Elec-Mate replicates the End-Point Assessment format so apprentices can practise under exam conditions before the real assessment — no other app offers this.',
         'Elec-Mate includes 2,000+ practice questions with flashcards using spaced repetition, ensuring you revise topics at the optimal interval for long-term retention.',
-        'Unlike training-only apps, Elec-Mate also includes 8 certificate types, 50+ BS 7671 calculators, AI tools, and business management — so apprentices keep using it after qualifying.',
+        'Unlike training-only apps, Elec-Mate also includes 16 certificate types, 50+ BS 7671 calculators, AI tools, and business management — so apprentices keep using it after qualifying.',
         "eCertificates focuses on certificate generation, not training. Electrician's Guide covers 18th Edition basics but lacks the structured course format, AM2 prep, and EPA simulation that apprentices need.",
       ]}
       sections={[
@@ -113,7 +113,7 @@ export default function BestApprenticeAppPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform with 46+ training courses covering
                 Level 2/3, AM2, EPA, 18th Edition, and specialist topics. Also includes 8
-                certificate types, 50+ calculators, AI tools, and business management. From
+                certificate types, 70+ calculators, AI tools, and business management. From
                 £5.99/month.
               </p>
               <p>
@@ -213,7 +213,7 @@ export default function BestApprenticeAppPage() {
             simulation that apprentices need.
           </p>
           <p>
-            The additional value of Elec-Mate — 8 certificate types, 50+ calculators, AI tools, and
+            The additional value of Elec-Mate — 16 certificate types, 70+ calculators, AI tools, and
             business management — means you do not need to switch apps when you qualify. One
             subscription from £5.99 per month covers your entire career progression, with a 7-day
             free trial to evaluate every feature.
@@ -283,7 +283,7 @@ export default function BestApprenticeAppPage() {
         {
           question: 'Is Elec-Mate useful after I qualify?',
           answer:
-            'Absolutely. This is one of the biggest advantages of Elec-Mate over other apprentice apps. When you qualify, you start using the 8 certificate types (EICR, EIC, Minor Works, and more), 50+ BS 7671 calculators, AI tools (Board Scanner, Voice Test Entry, Defect Code AI), and business management features (quoting, invoicing, payments). The CPD training courses also help you maintain your professional development after qualification.',
+            'Absolutely. This is one of the biggest advantages of Elec-Mate over other apprentice apps. When you qualify, you start using the 16 certificate types (EICR, EIC, Minor Works, and more), 50+ BS 7671 calculators, AI tools (Board Scanner, Voice Test Entry, Defect Code AI), and business management features (quoting, invoicing, payments). The CPD training courses also help you maintain your professional development after qualification.',
         },
         {
           question: "Does the Electrician's Guide app offer apprentice training?",

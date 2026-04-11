@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'How much does it cost to connect an electric cooker in 2026?',
     answer:
-      'Connecting an electric cooker to an existing cooker circuit costs between £100 and £250 in 2026. This covers the electrician\'s labour (1 to 2 hours), a new cooker connection unit if needed (£10 to £25), any cable extensions or tail connections, testing, and a Minor Electrical Installation Works Certificate. If a new circuit needs to be run from the consumer unit, the total cost is £250 to £500.',
+      "Connecting an electric cooker to an existing cooker circuit costs between £100 and £250 in 2026. This covers the electrician's labour (1 to 2 hours), a new cooker connection unit if needed (£10 to £25), any cable extensions or tail connections, testing, and a Minor Electrical Installation Works Certificate. If a new circuit needs to be run from the consumer unit, the total cost is £250 to £500.",
   },
   {
     question: 'Do I need an electrician to connect an electric cooker?',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What size cable do I need for an electric cooker?',
     answer:
-      'The cable size depends on the cooker\'s power rating and the circuit protection. For cookers up to 13.5kW on a 32A circuit, 6mm² twin and earth cable is standard. For cookers above 13.5kW or on a 45A circuit, 10mm² cable is required. The electrician will apply the diversity calculation from BS 7671 Appendix A to determine the actual design current — a 13kW cooker does not draw 13kW continuously, so diversity allows a smaller cable and protective device than the full rated current would suggest.',
+      "The cable size depends on the cooker's power rating and the circuit protection. For cookers up to 13.5kW on a 32A circuit, 6mm² twin and earth cable is standard. For cookers above 13.5kW or on a 45A circuit, 10mm² cable is required. The electrician will apply the diversity calculation from BS 7671 Appendix A to determine the actual design current — a 13kW cooker does not draw 13kW continuously, so diversity allows a smaller cable and protective device than the full rated current would suggest.",
   },
   {
     question: 'Can I plug an electric cooker into a normal socket?',
@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'How long does it take to connect a cooker?',
     answer:
-      'Connecting a cooker to an existing cooker circuit typically takes 1 to 2 hours. This includes pulling the cooker out, connecting the cooker\'s terminal block to the cooker connection unit cable, testing the circuit (insulation resistance, earth fault loop impedance, RCD trip time if applicable), and completing paperwork. If a new circuit needs to be run from the consumer unit, the job takes 3 to 5 hours depending on the cable run length.',
+      "Connecting a cooker to an existing cooker circuit typically takes 1 to 2 hours. This includes pulling the cooker out, connecting the cooker's terminal block to the cooker connection unit cable, testing the circuit (insulation resistance, earth fault loop impedance, RCD trip time if applicable), and completing paperwork. If a new circuit needs to be run from the consumer unit, the job takes 3 to 5 hours depending on the cable run length.",
   },
 ];
 
@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost',
-    description: 'If a new cooker circuit requires an additional way, a consumer unit upgrade may be needed.',
+    description:
+      'If a new cooker circuit requires an additional way, a consumer unit upgrade may be needed.',
     icon: Zap,
     category: 'Guide',
   },
@@ -108,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote cooker connections and kitchen electrical work with professional PDF output.',
+    description:
+      'Quote cooker connections and kitchen electrical work with professional PDF output.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -136,11 +138,11 @@ const sections = [
           .
         </p>
         <p>
-          This is one of the most common domestic electrical jobs. In many cases, an existing
-          cooker circuit is already in place and the job is simply connecting the new cooker to the
+          This is one of the most common domestic electrical jobs. In many cases, an existing cooker
+          circuit is already in place and the job is simply connecting the new cooker to the
           existing circuit — a straightforward task for a qualified electrician. If no cooker
-          circuit exists (for example, in a property converting from gas to electric cooking), a
-          new dedicated circuit must be installed from the consumer unit.
+          circuit exists (for example, in a property converting from gas to electric cooking), a new
+          dedicated circuit must be installed from the consumer unit.
         </p>
       </>
     ),
@@ -156,8 +158,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Connection to existing circuit</strong> — £100 to £250 total. Labour: £80
-                to £180 (1 to 2 hours). Materials: £15 to £40 (cooker connection unit, cable tail,
+                <strong>Connection to existing circuit</strong> — £100 to £250 total. Labour: £80 to
+                £180 (1 to 2 hours). Materials: £15 to £40 (cooker connection unit, cable tail,
                 connector block). Testing and MEIWC included.
               </span>
             </li>
@@ -196,15 +198,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cookers up to 13.5kW</strong> — 32A circuit with 6mm² twin and earth
-                cable. Protected by a 32A MCB or RCBO at the consumer unit.
+                <strong>Cookers up to 13.5kW</strong> — 32A circuit with 6mm² twin and earth cable.
+                Protected by a 32A MCB or RCBO at the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cookers above 13.5kW</strong> — 45A circuit with 10mm² twin and earth
-                cable. Protected by a 45A MCB or RCBO. Required for large range cookers.
+                <strong>Cookers above 13.5kW</strong> — 45A circuit with 10mm² twin and earth cable.
+                Protected by a 45A MCB or RCBO. Required for large range cookers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -218,17 +220,16 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Flexible cable from connection unit to cooker</strong> — heat-resistant
-                flexible cable rated for the circuit current. Typically 6mm² or 10mm² 3-core
-                flex.
+                flexible cable rated for the circuit current. Typically 6mm² or 10mm² 3-core flex.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          BS 7671 Appendix A provides diversity calculations for cooking appliances. A cooker
-          rated at 13kW does not draw 13kW continuously — the diversity calculation accounts for
-          the fact that all heating elements are rarely on simultaneously at full power, allowing
-          the circuit to be designed for a lower demand current than the full rated current.
+          BS 7671 Appendix A provides diversity calculations for cooking appliances. A cooker rated
+          at 13kW does not draw 13kW continuously — the diversity calculation accounts for the fact
+          that all heating elements are rarely on simultaneously at full power, allowing the circuit
+          to be designed for a lower demand current than the full rated current.
         </p>
       </>
     ),
@@ -249,9 +250,9 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Range Cooker</h3>
             <p className="text-white text-sm leading-relaxed">
-              Often 13kW to 18kW or more. May require a 45A circuit with 10mm² cable if the
-              rating exceeds 13.5kW. Connection cost: £150 to £300 on an existing 45A circuit,
-              or £350 to £500 if a new circuit is needed.
+              Often 13kW to 18kW or more. May require a 45A circuit with 10mm² cable if the rating
+              exceeds 13.5kW. Connection cost: £150 to £300 on an existing 45A circuit, or £350 to
+              £500 if a new circuit is needed.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -265,9 +266,9 @@ const sections = [
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Built-in Oven (Single)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Typically 2kW to 3.5kW. Can be connected to a dedicated 20A radial or to the
-              cooker circuit. Some ovens under 3kW can be connected via a 13A fused connection
-              unit on a ring circuit. Connection cost: £80 to £180.
+              Typically 2kW to 3.5kW. Can be connected to a dedicated 20A radial or to the cooker
+              circuit. Some ovens under 3kW can be connected via a 13A fused connection unit on a
+              ring circuit. Connection cost: £80 to £180.
             </p>
           </div>
         </div>
@@ -284,17 +285,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Existing circuit availability</strong> — if a cooker circuit already
-                exists, the job is quick and inexpensive. If a new circuit is needed, the cost
-                doubles or more.
+                <strong>Existing circuit availability</strong> — if a cooker circuit already exists,
+                the job is quick and inexpensive. If a new circuit is needed, the cost doubles or
+                more.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable run length</strong> — a short run from the consumer unit to the
-                kitchen (under 10m) is straightforward. Longer runs or routes through multiple
-                rooms increase material and labour costs.
+                kitchen (under 10m) is straightforward. Longer runs or routes through multiple rooms
+                increase material and labour costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -322,24 +323,24 @@ const sections = [
     content: (
       <>
         <p>
-          Installing a new cooker circuit is notifiable under Part P of the Building Regulations,
-          as it involves adding a new circuit. The electrician must be registered with a competent
+          Installing a new cooker circuit is notifiable under Part P of the Building Regulations, as
+          it involves adding a new circuit. The electrician must be registered with a competent
           person scheme or Building Control must be notified. An EIC must be issued for new
           circuits.
         </p>
         <p>
           Connecting a cooker to an existing circuit (like-for-like replacement) is not notifiable
-          under Part P, but a Minor Electrical Installation Works Certificate (MEIWC) should
-          still be issued to document the work and test results. This protects both the homeowner
-          and the electrician.
+          under Part P, but a Minor Electrical Installation Works Certificate (MEIWC) should still
+          be issued to document the work and test results. This protects both the homeowner and the
+          electrician.
         </p>
         <p>
           Under Regulation 411.3.3 of BS 7671, 30mA RCD protection is required for socket outlet
-          circuits up to 32A. A cooker connection unit is not a socket outlet, so a dedicated
-          cooker circuit may not strictly require RCD protection under this regulation. However,
-          if the cooker connection unit includes a 13A socket, RCD protection is required for that
-          socket. Current best practice recommends RCD or RCBO protection on all domestic
-          circuits regardless.
+          circuits up to 32A. A cooker connection unit is not a socket outlet, so a dedicated cooker
+          circuit may not strictly require RCD protection under this regulation. However, if the
+          cooker connection unit includes a 13A socket, RCD protection is required for that socket.
+          Current best practice recommends RCD or RCBO protection on all domestic circuits
+          regardless.
         </p>
       </>
     ),
@@ -359,8 +360,9 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <div className="text-white">
-              <p className="font-bold mb-2">We strongly recommend using a qualified electrician for
-              all cooker connections.</p>
+              <p className="font-bold mb-2">
+                We strongly recommend using a qualified electrician for all cooker connections.
+              </p>
               <p className="text-sm">
                 Even connecting to an existing circuit, you should isolate the circuit safely, make
                 secure connections in the cooker's terminal block, verify earth continuity, test
@@ -391,8 +393,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Check Before You Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Ask the customer what cooker they are installing (make, model, kW rating) and
-                  whether there is an existing cooker circuit. This tells you whether you need
-                  6mm² or 10mm² cable, and whether a new circuit is required. Use the{' '}
+                  whether there is an existing cooker circuit. This tells you whether you need 6mm²
+                  or 10mm² cable, and whether a new circuit is required. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -429,8 +431,7 @@ export default function CookerConnectionCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Cooker Connection Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          Cooker Connection Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to connect an electric cooker? Whether you have an existing cooker circuit or need a new one installed, this guide covers realistic 2026 UK pricing, circuit requirements, and the regulations that apply."
@@ -441,7 +442,7 @@ export default function CookerConnectionCostPage() {
       faqHeading="Frequently Asked Questions About Cooker Connection Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Cooker Connections Professionally"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

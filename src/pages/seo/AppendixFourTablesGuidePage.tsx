@@ -43,7 +43,7 @@ const keyTakeaways = [
   'The correct table depends on the cable type (thermoplastic or thermosetting), conductor material (copper or aluminium), and installation reference method (A to G).',
   'Correction factors for ambient temperature (Ca), grouping (Cg), thermal insulation (Ci), and conductor operating temperature must be applied to the tabulated values to find the effective current-carrying capacity (Iz).',
   'Selecting the wrong table or omitting a correction factor is one of the most common causes of incorrectly sized cables in UK installations.',
-  'Elec-Mate automates this process: select the cable type, reference method, and installation conditions — it applies the correct table and correction factors for you from its library of 50+ calculators.',
+  'Elec-Mate automates this process: select the cable type, reference method, and installation conditions — it applies the correct table and correction factors for you from its library of 70+ calculators.',
 ];
 
 const faqs = [
@@ -528,7 +528,7 @@ const sections = [
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>
-          , one of 50+ calculators built into the app.
+          , one of 70+ calculators built into the app.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -580,7 +580,7 @@ const sections = [
                     PFC
                   </SEOInternalLink>
                   , adiabatic equation, conduit fill, trunking fill, power factor, diversity factor,
-                  and three-phase power — over 50 calculators in total.
+                  and three-phase power — over 70+ calculators in total.
                 </p>
               </div>
             </div>
@@ -625,7 +625,7 @@ export default function AppendixFourTablesGuidePage() {
       faqHeading="Frequently Asked Questions About BS 7671 Appendix 4 Tables"
       relatedPages={relatedPages}
       ctaHeading="Size Cables Correctly Every Time"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 50+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including cable sizing with automatic Appendix 4 table selection and correction factor application. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'Complete guide to all 8 certificate types every UK electrician needs to know.',
+    description: 'Complete guide to all 16 certificate types every UK electrician needs to know.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -547,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce NAPIT-compliant certificates on your phone"
-          description="Elec-Mate produces all 8 certificate types with built-in validation, AI board scanning, and voice test entry. Export professional PDFs and upload to the NAPIT portal. 7-day free trial."
+          description="Elec-Mate produces all 16 certificate types with built-in validation, AI board scanning, and voice test entry. Export professional PDFs and upload to the NAPIT portal. 7-day free trial."
           icon={ClipboardCheck}
         />
       </>
@@ -584,7 +584,7 @@ export default function NAPICCertificateGuidePage() {
       faqHeading="Frequently Asked Questions About NAPIT Certification"
       relatedPages={relatedPages}
       ctaHeading="Create NAPIT-Ready Certificates"
-      ctaSubheading="Join 430+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians producing scheme-compliant certificates with AI board scanning, voice test entry, and automatic validation. 7-day free trial, cancel anytime."
     />
   );
 }

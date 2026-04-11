@@ -112,14 +112,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for commercial and domestic installations with automatic derating factors.',
+    description:
+      'Size cables for commercial and domestic installations with automatic derating factors.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Southampton customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Southampton customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -137,16 +139,16 @@ const sections = [
       <>
         <p>
           Southampton is the largest city in Hampshire, with a population of approximately 260,000
-          and a wider urban area of over 850,000 including Eastleigh, Totton, and the Waterside.
-          The city's identity is shaped by its port — the UK's busiest cruise terminal and a major
+          and a wider urban area of over 850,000 including Eastleigh, Totton, and the Waterside. The
+          city's identity is shaped by its port — the UK's busiest cruise terminal and a major
           container port — and by a diverse property stock that ranges from WW2-era rebuilds to
           modern waterfront apartments at Ocean Village.
         </p>
         <p>
           The electrical contracting market in Southampton is driven by several factors: a large
           stock of post-war housing requiring rewiring, two universities creating HMO demand in
-          Portswood and Highfield, ongoing waterfront development, port-related commercial work,
-          and steady domestic demand for EV chargers, consumer unit upgrades, and EICRs across the
+          Portswood and Highfield, ongoing waterfront development, port-related commercial work, and
+          steady domestic demand for EV chargers, consumer unit upgrades, and EICRs across the
           city's suburban areas.
         </p>
         <p>
@@ -157,16 +159,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by local authority building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -304,21 +305,23 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">WW2-Era Rebuilds</h3>
             <p className="text-white text-sm leading-relaxed">
               Southampton was one of the most heavily bombed cities in the UK during the Second
-              World War. Large areas of Shirley, Freemantle, Bitterne, Woolston, and the city
-              centre were rebuilt in the late 1940s and 1950s. These properties have wiring that is
-              now 70 to 80 years old — degraded PVC or rubber insulation, original rewirable fuse
-              boards, and often asbestos-containing materials in meter cupboards. Complete rewiring
-              is usually the only safe option.
+              World War. Large areas of Shirley, Freemantle, Bitterne, Woolston, and the city centre
+              were rebuilt in the late 1940s and 1950s. These properties have wiring that is now 70
+              to 80 years old — degraded PVC or rubber insulation, original rewirable fuse boards,
+              and often asbestos-containing materials in meter cupboards. Complete rewiring is
+              usually the only safe option.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Student HMOs (Portswood/Highfield)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Student HMOs (Portswood/Highfield)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The University of Southampton and Solent University support a large student rental
-              market, concentrated in Portswood, Highfield, Bevois Valley, and parts of Shirley.
-              HMO properties require enhanced fire detection (LD2 to BS 5839-6), emergency
-              lighting, 30mA RCD protection on all circuits per Regulation 411.3.3, and a valid
-              EICR. Southampton City Council actively enforces HMO licensing conditions.
+              market, concentrated in Portswood, Highfield, Bevois Valley, and parts of Shirley. HMO
+              properties require enhanced fire detection (LD2 to BS 5839-6), emergency lighting,
+              30mA RCD protection on all circuits per Regulation 411.3.3, and a valid EICR.
+              Southampton City Council actively enforces HMO licensing conditions.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -326,9 +329,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Ocean Village, Town Quay, Woolston Riverside, and Chapel Riverside are areas of
               ongoing waterfront development. New-build apartments here require standard domestic
-              installations but with enhanced consideration for coastal environment factors —
-              higher IP-rated external accessories, marine-grade stainless steel fixings for
-              balcony lighting, and careful attention to corrosion prevention in exposed areas.
+              installations but with enhanced consideration for coastal environment factors — higher
+              IP-rated external accessories, marine-grade stainless steel fixings for balcony
+              lighting, and careful attention to corrosion prevention in exposed areas.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -351,10 +354,10 @@ const sections = [
     content: (
       <>
         <p>
-          SSEN (Scottish and Southern Electricity Networks) is the Distribution Network Operator
-          for Southampton and the wider central southern England region, covering Hampshire,
-          Berkshire, Dorset, Wiltshire, Oxfordshire, and surrounding areas. Any work affecting the
-          electricity supply to your property involves SSEN. This includes:
+          SSEN (Scottish and Southern Electricity Networks) is the Distribution Network Operator for
+          Southampton and the wider central southern England region, covering Hampshire, Berkshire,
+          Dorset, Wiltshire, Oxfordshire, and surrounding areas. Any work affecting the electricity
+          supply to your property involves SSEN. This includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -387,8 +390,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Southampton is overseen by Southampton City
           Council Building Control or an approved inspector. If your electrician is registered with
           a competent person scheme, they self-certify and notify the council on your behalf.
@@ -444,9 +446,9 @@ const sections = [
         </div>
         <p>
           Port-adjacent work often requires additional safety qualifications including CSCS cards,
-          port security clearance, and in some zones CompEx certification for work near fuel
-          storage areas. The investment is worthwhile — port and marine electrical work commands
-          rates 20% to 40% above standard domestic rates.
+          port security clearance, and in some zones CompEx certification for work near fuel storage
+          areas. The investment is worthwhile — port and marine electrical work commands rates 20%
+          to 40% above standard domestic rates.
         </p>
       </>
     ),
@@ -480,9 +482,9 @@ const sections = [
               <span>
                 <strong>IP ratings for balcony and terrace installations</strong> — balcony
                 lighting, power sockets, and EV charging points on waterfront apartments need
-                minimum IP44 protection (splashproof from all directions), with IP65 recommended
-                for fully exposed locations. Specify marine-grade products at the quoting stage to
-                avoid costly replacements later.
+                minimum IP44 protection (splashproof from all directions), with IP65 recommended for
+                fully exposed locations. Specify marine-grade products at the quoting stage to avoid
+                costly replacements later.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,9 +499,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Waterfront electrical work is premium work. Specifying the right materials from the
-          outset — and being able to explain to the client why marine-grade fixings and higher IP
-          ratings are necessary — demonstrates professionalism and avoids warranty callbacks.
+          Waterfront electrical work is premium work. Specifying the right materials from the outset
+          — and being able to explain to the client why marine-grade fixings and higher IP ratings
+          are necessary — demonstrates professionalism and avoids warranty callbacks.
         </p>
       </>
     ),
@@ -521,8 +523,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Post-War Rewiring Market</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Southampton's large stock of WW2-era housing provides a steady stream of
-                  rewiring work. Many of these properties have never been rewired since original
+                  Southampton's large stock of WW2-era housing provides a steady stream of rewiring
+                  work. Many of these properties have never been rewired since original
                   construction. Target areas like Shirley, Bitterne, and Woolston through local
                   leaflet drops and partnerships with estate agents who flag properties with
                   outdated electrics during surveys.
@@ -537,8 +539,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Southampton landlords and waterfront developers expect professional certificates.
-                  An{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
+                  An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
@@ -549,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Southampton electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -586,7 +587,7 @@ export default function ElectricianSouthamptonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Southampton and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Southampton and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

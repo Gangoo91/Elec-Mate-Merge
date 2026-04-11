@@ -87,28 +87,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
+    description:
+      'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
+    description:
+      'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'Notifiable electrical work in England — what requires notification and how the process works.',
+    description:
+      'Notifiable electrical work in England — what requires notification and how the process works.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/consumer-unit-replacement-newcastle',
     title: 'Consumer Unit Replacement Newcastle',
-    description: 'Consumer unit and fuse box replacement in Newcastle — costs, regulations, and qualified electricians.',
+    description:
+      'Consumer unit and fuse box replacement in Newcastle — costs, regulations, and qualified electricians.',
     icon: Building2,
     category: 'Guide',
   },
@@ -132,20 +136,20 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield has a large proportion of pre-1960s housing, particularly the extensive
-          terraced properties across inner suburbs such as Walkley, Crookes, Hillsborough,
-          Heeley, and Sharrow. Many of these properties still have original or early consumer
-          units that no longer meet current safety standards. Consumer unit replacement is one
-          of the most common electrical jobs carried out by Sheffield electricians.
+          Sheffield has a large proportion of pre-1960s housing, particularly the extensive terraced
+          properties across inner suburbs such as Walkley, Crookes, Hillsborough, Heeley, and
+          Sharrow. Many of these properties still have original or early consumer units that no
+          longer meet current safety standards. Consumer unit replacement is one of the most common
+          electrical jobs carried out by Sheffield electricians.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdated protection</strong> — rewirable fuse wire, cartridge fuses, or
-                old MCBs without accompanying RCD protection leave occupants exposed to electric
-                shock risk that modern{' '}
+                <strong>Outdated protection</strong> — rewirable fuse wire, cartridge fuses, or old
+                MCBs without accompanying RCD protection leave occupants exposed to electric shock
+                risk that modern{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
@@ -155,10 +159,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic enclosure</strong> — a white or grey plastic consumer unit does
-                not meet the non-combustible enclosure requirement introduced in 2016. It must be
-                replaced with a compliant metal enclosure unit when the consumer unit is changed
-                for any reason.
+                <strong>Plastic enclosure</strong> — a white or grey plastic consumer unit does not
+                meet the non-combustible enclosure requirement introduced in 2016. It must be
+                replaced with a compliant metal enclosure unit when the consumer unit is changed for
+                any reason.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -173,9 +177,9 @@ const sections = [
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR findings</strong> — a periodic inspection (EICR) that produces C1
-                (danger present) or C2 (potentially dangerous) observations relating to the
-                consumer unit, overcurrent protection, or RCD protection requires remedial work
-                within 28 days.
+                (danger present) or C2 (potentially dangerous) observations relating to the consumer
+                unit, overcurrent protection, or RCD protection requires remedial work within 28
+                days.
               </span>
             </li>
           </ul>
@@ -189,10 +193,10 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 2 to BS 7671:2008, effective 1 July 2016, introduced Regulation 421.1.201:
-          in domestic premises, consumer units and similar switchgear assemblies shall be
-          installed in a cabinet or enclosure constructed of non-combustible material. This
-          requirement is retained in the current edition, BS 7671:2018+A3:2024.
+          Amendment 2 to BS 7671:2008, effective 1 July 2016, introduced Regulation 421.1.201: in
+          domestic premises, consumer units and similar switchgear assemblies shall be installed in
+          a cabinet or enclosure constructed of non-combustible material. This requirement is
+          retained in the current edition, BS 7671:2018+A3:2024.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -200,10 +204,10 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire containment</strong> — a fault causing arcing inside a consumer unit
-                can generate extreme heat. A steel enclosure contains this heat; a plastic one
-                can melt and ignite, turning an electrical fault into a structural fire. Sheffield
-                Fire and Rescue Service has attended multiple incidents involving domestic consumer
-                unit fires, underlining the importance of the metal enclosure requirement.
+                can generate extreme heat. A steel enclosure contains this heat; a plastic one can
+                melt and ignite, turning an electrical fault into a structural fire. Sheffield Fire
+                and Rescue Service has attended multiple incidents involving domestic consumer unit
+                fires, underlining the importance of the metal enclosure requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -219,11 +223,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR code for existing plastic units</strong> — a plastic consumer unit
-                in an existing installation is typically coded C3 (improvement recommended) on an
-                EICR, meaning the installation is Satisfactory overall but improvement is advised.
-                This becomes a C2 or C1 concern only if the unit shows signs of heat damage or
-                other deterioration.
+                <strong>EICR code for existing plastic units</strong> — a plastic consumer unit in
+                an existing installation is typically coded C3 (improvement recommended) on an EICR,
+                meaning the installation is Satisfactory overall but improvement is advised. This
+                becomes a C2 or C1 concern only if the unit shows signs of heat damage or other
+                deterioration.
               </span>
             </li>
           </ul>
@@ -239,46 +243,44 @@ const sections = [
         <p>
           Regulation 411.3.3 of BS 7671 requires 30mA RCD protection for socket-outlet circuits
           rated up to 32A and for circuits serving bathroom and shower room locations (Regulation
-          701). For Sheffield properties, this means a new consumer unit must incorporate one
-          of the following protection arrangements.
+          701). For Sheffield properties, this means a new consumer unit must incorporate one of the
+          following protection arrangements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dual-RCD consumer unit</strong> — circuits are divided into two groups,
-                each protected by a 30mA RCD. This is the most economical option. The limitation
-                is that a fault on any circuit in a group trips all circuits in that group,
-                potentially causing loss of power to critical loads such as freezers or medical
-                equipment.
+                <strong>Dual-RCD consumer unit</strong> — circuits are divided into two groups, each
+                protected by a 30mA RCD. This is the most economical option. The limitation is that
+                a fault on any circuit in a group trips all circuits in that group, potentially
+                causing loss of power to critical loads such as freezers or medical equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCBO consumer unit</strong> — each circuit has an individual RCBO
-                combining MCB and RCD functions. A fault trips only the affected circuit.
-                This is the preferred arrangement for new installations and costs somewhat more
-                than a dual-RCD board due to the higher unit cost of RCBOs.
+                <strong>RCBO consumer unit</strong> — each circuit has an individual RCBO combining
+                MCB and RCD functions. A fault trips only the affected circuit. This is the
+                preferred arrangement for new installations and costs somewhat more than a dual-RCD
+                board due to the higher unit cost of RCBOs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Nuisance tripping</strong> — older Sheffield properties may have
-                appliances or wiring that causes nuisance RCD tripping. An RCBO arrangement
-                limits the impact of this to a single circuit. If persistent tripping occurs,
-                the underlying cause should be investigated rather than simply increasing
-                the trip threshold.
+                <strong>Nuisance tripping</strong> — older Sheffield properties may have appliances
+                or wiring that causes nuisance RCD tripping. An RCBO arrangement limits the impact
+                of this to a single circuit. If persistent tripping occurs, the underlying cause
+                should be investigated rather than simply increasing the trip threshold.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Your Sheffield electrician should discuss the appropriate protection arrangement for
-          your property during the survey visit. The choice between dual-RCD and full RCBO
-          protection affects both the cost and the resilience of the installation.
+          Your Sheffield electrician should discuss the appropriate protection arrangement for your
+          property during the survey visit. The choice between dual-RCD and full RCBO protection
+          affects both the cost and the resilience of the installation.
         </p>
       </>
     ),
@@ -292,8 +294,8 @@ const sections = [
           Consumer unit replacement is notifiable electrical work under Part P of the Building
           Regulations in England. Sheffield City Council is the local building control authority,
           but in practice the large majority of consumer unit replacements in Sheffield are
-          self-certified by registered competent person electricians without the customer needing
-          to interact with the council at all.
+          self-certified by registered competent person electricians without the customer needing to
+          interact with the council at all.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -316,18 +318,17 @@ const sections = [
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 detailing the new consumer unit and a Schedule of Test Results for all circuits
-                tested. Retain these documents — they are required for property sales and
-                insurance purposes.
+                tested. Retain these documents — they are required for property sales and insurance
+                purposes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unregistered electricians</strong> — using an unregistered electrician
-                means you must notify Sheffield City Council building control before work begins
-                and arrange for an approved inspector to certify the completed work. This is
-                slower and more expensive — always use a registered competent person for
-                consumer unit work.
+                <strong>Unregistered electricians</strong> — using an unregistered electrician means
+                you must notify Sheffield City Council building control before work begins and
+                arrange for an approved inspector to certify the completed work. This is slower and
+                more expensive — always use a registered competent person for consumer unit work.
               </span>
             </li>
           </ul>
@@ -341,21 +342,21 @@ const sections = [
     content: (
       <>
         <p>
-          Consumer units installed in Sheffield properties must comply with BS EN 61439-3,
-          the British Standard for distribution boards intended for use by ordinary persons.
-          This standard sets minimum requirements for design, construction, performance, and
-          marking of consumer units.
+          Consumer units installed in Sheffield properties must comply with BS EN 61439-3, the
+          British Standard for distribution boards intended for use by ordinary persons. This
+          standard sets minimum requirements for design, construction, performance, and marking of
+          consumer units.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prospective short-circuit current</strong> — the consumer unit must be
-                rated to withstand the prospective short-circuit current (PSCC) at the point of
+                <strong>Prospective short-circuit current</strong> — the consumer unit must be rated
+                to withstand the prospective short-circuit current (PSCC) at the point of
                 installation. Most Sheffield domestic supplies have a PSCC below 16kA, but this
-                should be measured and recorded by your electrician. Underrated consumer units
-                can fail catastrophically during a fault.
+                should be measured and recorded by your electrician. Underrated consumer units can
+                fail catastrophically during a fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,9 +390,9 @@ const sections = [
       <>
         <p>
           Sheffield offers competitive pricing for consumer unit replacement compared to larger
-          cities such as Manchester or London. Labour costs in South Yorkshire are generally
-          lower, and Sheffield electricians typically provide all-inclusive quotes covering
-          parts, installation, testing, and certification.
+          cities such as Manchester or London. Labour costs in South Yorkshire are generally lower,
+          and Sheffield electricians typically provide all-inclusive quotes covering parts,
+          installation, testing, and certification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -419,17 +420,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional work</strong> — earthing upgrades, main bonding, meter
-                tails replacement, or smoke alarm installation can add £100 to £400 depending
-                on the scope. Your electrician should identify these during the initial survey.
+                <strong>Additional work</strong> — earthing upgrades, main bonding, meter tails
+                replacement, or smoke alarm installation can add £100 to £400 depending on the
+                scope. Your electrician should identify these during the initial survey.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Obtain at least two written quotations from NICEIC or NAPIT registered electricians
-          in Sheffield. Be cautious of unusually low quotes that do not explicitly include
-          testing and certification — these are non-optional requirements under Part P.
+          Obtain at least two written quotations from NICEIC or NAPIT registered electricians in
+          Sheffield. Be cautious of unusually low quotes that do not explicitly include testing and
+          certification — these are non-optional requirements under Part P.
         </p>
       </>
     ),
@@ -440,8 +441,8 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield's housing stock presents specific challenges for consumer unit replacement.
-          The city has one of the highest proportions of Victorian and Edwardian terraced housing
+          Sheffield's housing stock presents specific challenges for consumer unit replacement. The
+          city has one of the highest proportions of Victorian and Edwardian terraced housing
           outside London, with large concentrations in S3, S6, S7, S10, and S11 postcode areas.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -449,31 +450,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Original wiring</strong> — some Sheffield terraces in areas such as
-                Sharrow or Burngreave retain rubber-insulated or lead-sheathed wiring from
-                pre-1950 rewires. If this wiring is still in situ, a consumer unit replacement
-                alone is insufficient — a full rewire should be considered, as brittle insulation
-                presents risks regardless of how good the new consumer unit is.
+                <strong>Original wiring</strong> — some Sheffield terraces in areas such as Sharrow
+                or Burngreave retain rubber-insulated or lead-sheathed wiring from pre-1950 rewires.
+                If this wiring is still in situ, a consumer unit replacement alone is insufficient —
+                a full rewire should be considered, as brittle insulation presents risks regardless
+                of how good the new consumer unit is.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT earthing systems</strong> — some Sheffield properties, particularly
-                in outlying or rural areas of the city boundary, use TT earthing (earth electrode
+                <strong>TT earthing systems</strong> — some Sheffield properties, particularly in
+                outlying or rural areas of the city boundary, use TT earthing (earth electrode
                 rather than PME). TT installations require an RCD at the origin as well as circuit
-                protection. Your electrician must identify the earthing system before specifying
-                the new consumer unit.
+                protection. Your electrician must identify the earthing system before specifying the
+                new consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Student letting properties</strong> — Sheffield has a very large student
-                population due to the University of Sheffield and Sheffield Hallam University.
-                Many student letting properties in Broomhall, Crookesmoor, and Ecclesall Road
-                require consumer unit upgrades as landlords bring properties up to EICR compliance
-                standard.
+                population due to the University of Sheffield and Sheffield Hallam University. Many
+                student letting properties in Broomhall, Crookesmoor, and Ecclesall Road require
+                consumer unit upgrades as landlords bring properties up to EICR compliance standard.
               </span>
             </li>
           </ul>
@@ -487,10 +487,10 @@ const sections = [
     content: (
       <>
         <p>
-          Consumer unit replacement is consistently one of the highest-demand electrical jobs
-          in Sheffield, driven by the city's large stock of older housing, active private rented
-          sector, and regular EICR-driven remedial work. Efficient on-site documentation
-          lets Sheffield electricians complete more jobs per day and win follow-on work.
+          Consumer unit replacement is consistently one of the highest-demand electrical jobs in
+          Sheffield, driven by the city's large stock of older housing, active private rented
+          sector, and regular EICR-driven remedial work. Efficient on-site documentation lets
+          Sheffield electricians complete more jobs per day and win follow-on work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -500,13 +500,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Paperless EICs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to record all circuit test results, complete the Electrical Installation
-                  Certificate, and generate the PDF while still on site in Sheffield. Send
-                  the certificate to your customer before you leave. No clipboards, no evening
-                  data entry, no transcription errors.
+                  Certificate, and generate the PDF while still on site in Sheffield. Send the
+                  certificate to your customer before you leave. No clipboards, no evening data
+                  entry, no transcription errors.
                 </p>
               </div>
             </div>
@@ -531,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Sheffield electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and win more work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and win more work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -568,7 +566,7 @@ export default function ConsumerUnitReplacementSheffieldPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

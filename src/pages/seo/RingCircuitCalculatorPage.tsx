@@ -112,7 +112,7 @@ const features = [
     icon: BookOpen,
     title: 'GN3 and BS 7671:2018+A3:2024 Compliant',
     description:
-      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A3:2024. Part of 70 calculators in Elec-Mate.',
+      'Testing procedures and pass/fail criteria verified against GN3 (Guidance Note 3: Inspection and Testing, 9th Edition) and BS 7671:2018+A3:2024. Part of 70+ calculators in Elec-Mate.',
   },
 ];
 
@@ -133,7 +133,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -615,7 +615,7 @@ export default function RingCircuitCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Validate Ring Circuit Tests on Site"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site testing calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

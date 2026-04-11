@@ -105,8 +105,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Size SWA cable for garden lighting circuits with automatic voltage drop checks.',
+    description: 'Size SWA cable for garden lighting circuits with automatic voltage drop checks.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -129,8 +128,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Quote garden lighting projects with itemised materials, cable runs, and labour.',
+    description: 'Quote garden lighting projects with itemised materials, cable runs, and labour.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -149,8 +147,8 @@ const sections = [
         <p>
           Garden lighting is one of the most satisfying electrical projects — the results are
           immediately visible, the homeowner gets to enjoy their outdoor space after dark, and the
-          transformation from a dark garden to a professionally lit landscape is dramatic. It is also
-          a high-margin job for electricians who know how to design and quote it properly.
+          transformation from a dark garden to a professionally lit landscape is dramatic. It is
+          also a high-margin job for electricians who know how to design and quote it properly.
         </p>
         <p>
           From subtle pathway bollards to dramatic tree uplighting, from secure motion-activated
@@ -183,8 +181,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Pathway and Bollard Lights</h3>
             <p className="text-white text-sm leading-relaxed">
               LED post lights and bollards for paths, driveways, and garden borders. Typically 2W to
-              10W per fitting, producing 100 to 400 lumens. IP65 rated for outdoor use. Cost: £30
-              to £120 per fitting depending on quality and design. Budget for 4 to 8 fittings for a
+              10W per fitting, producing 100 to 400 lumens. IP65 rated for outdoor use. Cost: £30 to
+              £120 per fitting depending on quality and design. Budget for 4 to 8 fittings for a
               typical garden path.
             </p>
           </div>
@@ -238,9 +236,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1.5mm2 3-core SWA cable</strong> — approximately £2.50 to £4.00 per metre.
-                A typical garden installation requires 20 to 50 metres of SWA cable depending on
-                the garden size and layout. Total cable cost: £50 to £200.
+                <strong>1.5mm2 3-core SWA cable</strong> — approximately £2.50 to £4.00 per metre. A
+                typical garden installation requires 20 to 50 metres of SWA cable depending on the
+                garden size and layout. Total cable cost: £50 to £200.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -280,16 +278,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart lighting controller (WiFi/Zigbee)</strong> — £50 to £200. App-controlled
-                lighting scenes, scheduling, and remote access. Integrates with smart home systems.
+                <strong>Smart lighting controller (WiFi/Zigbee)</strong> — £50 to £200.
+                App-controlled lighting scenes, scheduling, and remote access. Integrates with smart
+                home systems.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Total material costs for a garden lighting installation range from approximately £200 for a
-          simple 4-fitting scheme to £1,500+ for a comprehensive multi-zone installation with premium
-          fittings and smart controls.
+          Total material costs for a garden lighting installation range from approximately £200 for
+          a simple 4-fitting scheme to £1,500+ for a comprehensive multi-zone installation with
+          premium fittings and smart controls.
         </p>
       </>
     ),
@@ -309,10 +308,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Trenching</strong> — hand-digging a 500mm deep cable trench through lawn
-                and flower beds takes approximately 3 to 5 metres per hour depending on soil
-                conditions. A 30-metre trench can take a full day. Labour cost for trenching: £150
-                to £400.
+                <strong>Trenching</strong> — hand-digging a 500mm deep cable trench through lawn and
+                flower beds takes approximately 3 to 5 metres per hour depending on soil conditions.
+                A 30-metre trench can take a full day. Labour cost for trenching: £150 to £400.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -354,8 +352,8 @@ const sections = [
     content: (
       <>
         <p>
-          Here are realistic total costs for different garden lighting projects in 2026, including all
-          materials, labour, testing, and certification.
+          Here are realistic total costs for different garden lighting projects in 2026, including
+          all materials, labour, testing, and certification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -379,8 +377,8 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Comprehensive landscape lighting (15 to 30+ lights)</strong> — £3,000 to
-                £5,000+ total. Multiple zones with independent switching, premium fittings, SWA
-                runs exceeding 50 metres, smart home integration, and professional lighting design.
+                £5,000+ total. Multiple zones with independent switching, premium fittings, SWA runs
+                exceeding 50 metres, smart home integration, and professional lighting design.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -411,9 +409,9 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          contains the specific requirements for outdoor lighting installations. Regulation 714.537.2
-          defines the scope to include luminaires, wiring, and accessories for gardens, parks,
-          driveways, and public places.
+          contains the specific requirements for outdoor lighting installations. Regulation
+          714.537.2 defines the scope to include luminaires, wiring, and accessories for gardens,
+          parks, driveways, and public places.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -430,8 +428,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prohibited protective measures</strong> — Regulation 714.537.2 prohibits
-                the use of "non-conducting location" (Regulation 418.1) and "earth-free local
+                <strong>Prohibited protective measures</strong> — Regulation 714.537.2 prohibits the
+                use of "non-conducting location" (Regulation 418.1) and "earth-free local
                 equipotential bonding" (Regulation 418.2) as protective measures for outdoor
                 lighting installations.
               </span>
@@ -544,9 +542,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to build itemised garden lighting quotes. List each fitting type, cable quantities,
-                  junction boxes, controls, labour for trenching, installation, testing, and
-                  certification. Professional PDF sent to the customer.
+                  to build itemised garden lighting quotes. List each fitting type, cable
+                  quantities, junction boxes, controls, labour for trenching, installation, testing,
+                  and certification. Professional PDF sent to the customer.
                 </p>
               </div>
             </div>
@@ -573,10 +571,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EIC on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on site
-                  after testing. Document the outdoor circuit, SWA cable details, IP ratings of
-                  installed fittings, and test results. Instant PDF export to the homeowner.
+                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  on site after testing. Document the outdoor circuit, SWA cable details, IP ratings
+                  of installed fittings, and test results. Instant PDF export to the homeowner.
                 </p>
               </div>
             </div>
@@ -584,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote garden lighting and outdoor electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Win more garden lighting jobs with itemised, professional quotes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Win more garden lighting jobs with itemised, professional quotes. 7-day free trial."
           icon={TreePine}
         />
       </>
@@ -621,7 +618,7 @@ export default function GardenLightingCostPage() {
       faqHeading="Frequently Asked Questions About Garden Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Garden Lighting Projects with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, itemised quoting, and on-site EIC certification. Win more outdoor lighting work with professional quotes. 7-day free trial, cancel anytime."
     />
   );
 }

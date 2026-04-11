@@ -455,7 +455,7 @@ export default function AIWiringInstructionsPage() {
       faqHeading="Frequently Asked Questions About AI Wiring Instructions"
       relatedPages={relatedPages}
       ctaHeading="Wire Every Circuit with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Wiring Instructions. Step-by-step guidance, connection diagrams, and BS 7671 references. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Wiring Instructions. Step-by-step guidance, connection diagrams, and BS 7671 references. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-wiring-instructions"
     />
   );

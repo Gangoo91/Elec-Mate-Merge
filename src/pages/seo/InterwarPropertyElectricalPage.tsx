@@ -85,14 +85,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/victorian-house-rewire',
     title: 'Victorian House Rewire Guide',
-    description: 'Detailed guide to rewiring Victorian properties — rubber wiring, knob-and-tube, solid walls, and costs.',
+    description:
+      'Detailed guide to rewiring Victorian properties — rubber wiring, knob-and-tube, solid walls, and costs.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/post-war-property-electrical',
     title: '1940s/1950s Property Electrical Guide',
-    description: 'Post-war properties with early PVC wiring, rewirable fuse boxes, and earthing issues.',
+    description:
+      'Post-war properties with early PVC wiring, rewirable fuse boxes, and earthing issues.',
     icon: Home,
     category: 'Guide',
   },
@@ -132,43 +134,42 @@ const sections = [
         <p>
           The interwar period (1918–1939) was a transformative era for UK housing and electricity.
           The post-World War One housing shortage triggered one of the largest house-building
-          programmes in British history, creating millions of new homes across suburban developments,
-          council estates, and private-built semi-detached streets. Simultaneously, the National
-          Grid (established 1926–1933) brought mains electricity to millions of households for
-          the first time.
+          programmes in British history, creating millions of new homes across suburban
+          developments, council estates, and private-built semi-detached streets. Simultaneously,
+          the National Grid (established 1926–1933) brought mains electricity to millions of
+          households for the first time.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Housing types</strong> — interwar housing is dominated by the
-                semi-detached house, particularly in London and the Home Counties, the
-                Midlands, and the industrial North. Council-built terraces, detached
-                bungalows, and purpose-built flats also proliferated. Most interwar
-                properties have cavity wall construction (unlike Victorian solid masonry),
-                making cable routing somewhat easier during rewiring.
+                <strong>Housing types</strong> — interwar housing is dominated by the semi-detached
+                house, particularly in London and the Home Counties, the Midlands, and the
+                industrial North. Council-built terraces, detached bungalows, and purpose-built
+                flats also proliferated. Most interwar properties have cavity wall construction
+                (unlike Victorian solid masonry), making cable routing somewhat easier during
+                rewiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Original electrical specification</strong> — interwar properties
-                were typically wired with rubber-insulated cables in a radial circuit
-                arrangement. Round pin sockets (5A for small appliances, 15A for larger
-                loads) were standard. The ring main circuit was not introduced until 1947,
-                so all original socket circuits in interwar properties are radial rather
-                than ring.
+                <strong>Original electrical specification</strong> — interwar properties were
+                typically wired with rubber-insulated cables in a radial circuit arrangement. Round
+                pin sockets (5A for small appliances, 15A for larger loads) were standard. The ring
+                main circuit was not introduced until 1947, so all original socket circuits in
+                interwar properties are radial rather than ring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Partial modernisation</strong> — many interwar properties have had
-                some electrical work carried out over the decades. Partial upgrades are common:
-                a new consumer unit installed in the 1970s, some circuits rewired in the 1990s,
-                and others still on original 1930s wiring. Mixed-age installations require
-                careful EICR assessment to identify the extent of remaining original wiring.
+                <strong>Partial modernisation</strong> — many interwar properties have had some
+                electrical work carried out over the decades. Partial upgrades are common: a new
+                consumer unit installed in the 1970s, some circuits rewired in the 1990s, and others
+                still on original 1930s wiring. Mixed-age installations require careful EICR
+                assessment to identify the extent of remaining original wiring.
               </span>
             </li>
           </ul>
@@ -182,52 +183,52 @@ const sections = [
     content: (
       <>
         <p>
-          Rubber-insulated cables installed in interwar properties between 1918 and 1939 are
-          now between 85 and 108 years old. Rubber insulation does not have an indefinite
-          service life — it degrades through a combination of oxidation, heat cycling, and
-          the natural breakdown of the rubber compound over time.
+          Rubber-insulated cables installed in interwar properties between 1918 and 1939 are now
+          between 85 and 108 years old. Rubber insulation does not have an indefinite service life —
+          it degrades through a combination of oxidation, heat cycling, and the natural breakdown of
+          the rubber compound over time.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hardening and cracking</strong> — as rubber ages, it loses its
-                elasticity, becomes hard and brittle, and develops surface cracks. These
-                cracks allow moisture ingress and provide pathways for tracking currents
-                between conductors or to earth. In loft spaces, temperature cycling (extreme
-                heat in summer, cold in winter) accelerates this process significantly.
+                <strong>Hardening and cracking</strong> — as rubber ages, it loses its elasticity,
+                becomes hard and brittle, and develops surface cracks. These cracks allow moisture
+                ingress and provide pathways for tracking currents between conductors or to earth.
+                In loft spaces, temperature cycling (extreme heat in summer, cold in winter)
+                accelerates this process significantly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat damage</strong> — cables routed near hot water pipes, boilers,
-                or lighting fixtures accumulate heat damage over decades. Heat-damaged rubber
-                becomes carbonised and may conduct rather than insulate. This is a particular
-                risk in airing cupboards, boiler rooms, and ceiling voids above original
-                incandescent light fittings.
+                <strong>Heat damage</strong> — cables routed near hot water pipes, boilers, or
+                lighting fixtures accumulate heat damage over decades. Heat-damaged rubber becomes
+                carbonised and may conduct rather than insulate. This is a particular risk in airing
+                cupboards, boiler rooms, and ceiling voids above original incandescent light
+                fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation resistance failure</strong> — an insulation resistance
-                test (part of an EICR) measures how well the cable insulation resists current
-                leakage. Degraded rubber cables frequently fail insulation resistance testing,
-                generating a C1 or C2 observation. A reading below 1MΩ between conductors
-                is unacceptable and indicates insulation failure.
+                <strong>Insulation resistance failure</strong> — an insulation resistance test (part
+                of an EICR) measures how well the cable insulation resists current leakage. Degraded
+                rubber cables frequently fail insulation resistance testing, generating a C1 or C2
+                observation. A reading below 1MΩ between conductors is unacceptable and indicates
+                insulation failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire risk from arcing</strong> — degraded insulation allows partial
-                tracking currents that generate heat. In extreme cases this leads to arcing —
-                an electrical discharge that produces temperatures high enough to ignite
-                surrounding materials. Arcing within a wall void or ceiling space may burn
-                for some time before detection. Modern arc fault detection devices (AFDDs),
-                required by BS 7671 for certain applications, can detect these events.
+                <strong>Fire risk from arcing</strong> — degraded insulation allows partial tracking
+                currents that generate heat. In extreme cases this leads to arcing — an electrical
+                discharge that produces temperatures high enough to ignite surrounding materials.
+                Arcing within a wall void or ceiling space may burn for some time before detection.
+                Modern arc fault detection devices (AFDDs), required by BS 7671 for certain
+                applications, can detect these events.
               </span>
             </li>
           </ul>
@@ -241,11 +242,11 @@ const sections = [
     content: (
       <>
         <p>
-          The 5-amp round pin socket outlet (BS 546) was the standard domestic socket type in
-          UK properties from the Edwardian era through to the late 1940s. Its presence in a
-          property is a reliable indicator that the socket circuits have not been modernised
-          since before 1947, when the ring main circuit and the familiar 13-amp square pin
-          socket (BS 1363) were introduced.
+          The 5-amp round pin socket outlet (BS 546) was the standard domestic socket type in UK
+          properties from the Edwardian era through to the late 1940s. Its presence in a property is
+          a reliable indicator that the socket circuits have not been modernised since before 1947,
+          when the ring main circuit and the familiar 13-amp square pin socket (BS 1363) were
+          introduced.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -253,32 +254,29 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Incompatibility with modern appliances</strong> — 5A round pin sockets
-                cannot accept modern 13A square pin plugs. Properties with round pin sockets
-                rely on adaptors to use modern appliances, which are themselves a potential
-                hazard if used to overload 5-amp circuits. Extension leads with square pin
-                sockets plugged into round pin adaptors are a common hazard in unmodernised
-                interwar properties.
+                cannot accept modern 13A square pin plugs. Properties with round pin sockets rely on
+                adaptors to use modern appliances, which are themselves a potential hazard if used
+                to overload 5-amp circuits. Extension leads with square pin sockets plugged into
+                round pin adaptors are a common hazard in unmodernised interwar properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>15-amp sockets for larger appliances</strong> — some interwar
-                properties also have 15-amp round pin sockets on dedicated circuits for
-                larger appliances such as electric fires. 15-amp sockets are larger than
-                5-amp versions and have a distinctive layout. These circuits are also radial
-                and typically unprotected by RCD.
+                <strong>15-amp sockets for larger appliances</strong> — some interwar properties
+                also have 15-amp round pin sockets on dedicated circuits for larger appliances such
+                as electric fires. 15-amp sockets are larger than 5-amp versions and have a
+                distinctive layout. These circuits are also radial and typically unprotected by RCD.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Very few sockets</strong> — interwar properties typically have only
-                1 or 2 socket outlets per room, reflecting the small number of electrical
-                appliances in use at the time of construction. The resulting reliance on
-                multi-way extension leads — particularly problematic when the extension leads
-                are used with older adaptors — is a significant hazard identified during
-                EICR inspections.
+                <strong>Very few sockets</strong> — interwar properties typically have only 1 or 2
+                socket outlets per room, reflecting the small number of electrical appliances in use
+                at the time of construction. The resulting reliance on multi-way extension leads —
+                particularly problematic when the extension leads are used with older adaptors — is
+                a significant hazard identified during EICR inspections.
               </span>
             </li>
           </ul>
@@ -293,8 +291,8 @@ const sections = [
       <>
         <p>
           Interwar semi-detached and detached properties are generally easier to rewire than
-          Victorian or Edwardian solid-wall properties. However, they present their own
-          challenges — particularly those that have had extensions added in later decades.
+          Victorian or Edwardian solid-wall properties. However, they present their own challenges —
+          particularly those that have had extensions added in later decades.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -302,39 +300,39 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cavity wall routing</strong> — most interwar external walls are cavity
-                construction (two skins of brick with an air gap). Cables can often be run
-                through ceiling voids and dropped down internal partitions rather than being
-                chased into brickwork. This reduces disruption and plastering costs compared
-                to solid-wall properties.
+                construction (two skins of brick with an air gap). Cables can often be run through
+                ceiling voids and dropped down internal partitions rather than being chased into
+                brickwork. This reduces disruption and plastering costs compared to solid-wall
+                properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extensions and loft conversions</strong> — many interwar properties
-                have had rear kitchen extensions, garage conversions, and loft conversions
-                added at various points. Each addition may have its own wiring vintage and
-                condition. Extensions sometimes tap off the original circuits without providing
-                adequate overcurrent protection for the extended cable runs.
+                <strong>Extensions and loft conversions</strong> — many interwar properties have had
+                rear kitchen extensions, garage conversions, and loft conversions added at various
+                points. Each addition may have its own wiring vintage and condition. Extensions
+                sometimes tap off the original circuits without providing adequate overcurrent
+                protection for the extended cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Buried cables and unknown routes</strong> — decades of previous
-                electrical work may have left abandoned cables buried in walls, unknown
-                junction boxes behind wallpaper, and circuit routes that bear no logical
-                relationship to the property layout. Tracing the existing installation
-                before a rewire requires patience and experience.
+                <strong>Buried cables and unknown routes</strong> — decades of previous electrical
+                work may have left abandoned cables buried in walls, unknown junction boxes behind
+                wallpaper, and circuit routes that bear no logical relationship to the property
+                layout. Tracing the existing installation before a rewire requires patience and
+                experience.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Suspended timber floors</strong> — interwar properties commonly
-                have suspended timber ground floors, providing convenient underfloor cable
-                routing for socket circuits on the ground floor. This significantly reduces
-                the amount of chasing required in kitchen and living room areas.
+                <strong>Suspended timber floors</strong> — interwar properties commonly have
+                suspended timber ground floors, providing convenient underfloor cable routing for
+                socket circuits on the ground floor. This significantly reduces the amount of
+                chasing required in kitchen and living room areas.
               </span>
             </li>
           </ul>
@@ -350,19 +348,18 @@ const sections = [
         <p>
           Properties built or significantly modified during World War Two (1939–1945) present
           specific challenges. Wartime conditions including material shortages, a reduced skilled
-          workforce, and emergency construction programmes led to some electrical installations
-          that do not meet even the standards of the period.
+          workforce, and emergency construction programmes led to some electrical installations that
+          do not meet even the standards of the period.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Material substitutions</strong> — wartime material shortages led to
-                the use of substitute materials in some electrical installations. Cable
-                sheaths, conduit, and fittings that would normally have met the applicable
-                standards were sometimes replaced with whatever was available. These
-                substitutions are rarely documented.
+                <strong>Material substitutions</strong> — wartime material shortages led to the use
+                of substitute materials in some electrical installations. Cable sheaths, conduit,
+                and fittings that would normally have met the applicable standards were sometimes
+                replaced with whatever was available. These substitutions are rarely documented.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -370,28 +367,28 @@ const sections = [
               <span>
                 <strong>Requisitioned properties</strong> — many private properties were
                 requisitioned for military or government use during the war. Electrical
-                modifications made for military purposes were not always reversed or made
-                good after the war. Properties returning to residential use in 1945 or
-                later may contain remnants of military-era wiring.
+                modifications made for military purposes were not always reversed or made good after
+                the war. Properties returning to residential use in 1945 or later may contain
+                remnants of military-era wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bomb damage repairs</strong> — in areas subject to bombing (London,
-                Coventry, Plymouth, Bristol, and other cities), electrical repairs were
-                sometimes carried out hastily as emergency measures. These repairs may not
-                have been revisited since 1945 and could involve non-standard connections,
-                incorrect cable types, and absent earth conductors.
+                Coventry, Plymouth, Bristol, and other cities), electrical repairs were sometimes
+                carried out hastily as emergency measures. These repairs may not have been revisited
+                since 1945 and could involve non-standard connections, incorrect cable types, and
+                absent earth conductors.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          If you are purchasing or working on a property in an area subject to wartime bombing
-          and the electrical installation has not been professionally assessed in recent years,
-          an EICR is particularly important. The inspector should be asked to note any evidence
-          of non-standard installation methods.
+          If you are purchasing or working on a property in an area subject to wartime bombing and
+          the electrical installation has not been professionally assessed in recent years, an EICR
+          is particularly important. The inspector should be asked to note any evidence of
+          non-standard installation methods.
         </p>
       </>
     ),
@@ -403,50 +400,50 @@ const sections = [
       <>
         <p>
           Interwar properties are generally less expensive to rewire than Victorian or Edwardian
-          equivalents because of their more accessible cavity wall construction and less
-          ornate period features. The following are typical costs for a full rewire.
+          equivalents because of their more accessible cavity wall construction and less ornate
+          period features. The following are typical costs for a full rewire.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom interwar terrace or semi</strong> — £2,800 to £4,500.
-                Cavity wall construction and accessible ceiling voids reduce cable routing
-                difficulty. London prices typically 20 to 25 per cent higher.
+                <strong>Two-bedroom interwar terrace or semi</strong> — £2,800 to £4,500. Cavity
+                wall construction and accessible ceiling voids reduce cable routing difficulty.
+                London prices typically 20 to 25 per cent higher.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom interwar semi-detached</strong> — £3,500 to £6,500.
-                The most common interwar property type. Extensions and loft conversions
-                add to cost. Detached equivalents at the higher end.
+                <strong>Three-bedroom interwar semi-detached</strong> — £3,500 to £6,500. The most
+                common interwar property type. Extensions and loft conversions add to cost. Detached
+                equivalents at the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom interwar detached</strong> — £5,500 to £9,000.
-                Larger footprint, more circuits, and often more complex layouts with
-                garages and outbuildings requiring separate supplies.
+                <strong>Four-bedroom interwar detached</strong> — £5,500 to £9,000. Larger
+                footprint, more circuits, and often more complex layouts with garages and
+                outbuildings requiring separate supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Council-built interwar terrace</strong> — £2,500 to £4,000.
-                Standardised layouts and less ornate construction make these among the
-                most straightforward interwar properties to rewire.
+                <strong>Council-built interwar terrace</strong> — £2,500 to £4,000. Standardised
+                layouts and less ornate construction make these among the most straightforward
+                interwar properties to rewire.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          As with all rewiring projects, obtain a minimum of three written quotes from
-          NICEIC- or NAPIT-registered electricians. Ensure the quote specifies what is
-          included (consumer unit, circuit count, socket and lighting point numbers,
-          making good) to allow meaningful comparison.
+          As with all rewiring projects, obtain a minimum of three written quotes from NICEIC- or
+          NAPIT-registered electricians. Ensure the quote specifies what is included (consumer unit,
+          circuit count, socket and lighting point numbers, making good) to allow meaningful
+          comparison.
         </p>
       </>
     ),
@@ -457,12 +454,9 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            EICR
-          </SEOInternalLink>{' '}
-          on an unmodernised interwar property will typically generate several observations.
-          The following are the most commonly encountered findings.
+          An <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICR</SEOInternalLink>{' '}
+          on an unmodernised interwar property will typically generate several observations. The
+          following are the most commonly encountered findings.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -477,26 +471,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — No RCD protection</strong> — absence of 30mA RCD protection on
-                socket circuits. A requirement under Regulation 411.3.3 of BS 7671. Without
-                RCD protection, the installation is Unsatisfactory.
+                <strong>C2 — No RCD protection</strong> — absence of 30mA RCD protection on socket
+                circuits. A requirement under Regulation 411.3.3 of BS 7671. Without RCD protection,
+                the installation is Unsatisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Inadequate earthing</strong> — missing earth conductors on
-                circuits, inadequate main earthing terminal, or absent main equipotential
-                bonding to gas and water services.
+                <strong>C2 — Inadequate earthing</strong> — missing earth conductors on circuits,
+                inadequate main earthing terminal, or absent main equipotential bonding to gas and
+                water services.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Insufficient socket outlets</strong> — the original number
-                of socket outlets (often 1 or 2 per room) is insufficient for modern
-                living. Recorded as a recommendation rather than a requirement, but associated
-                with the hazard of extension lead overuse.
+                <strong>C3 — Insufficient socket outlets</strong> — the original number of socket
+                outlets (often 1 or 2 per room) is insufficient for modern living. Recorded as a
+                recommendation rather than a requirement, but associated with the hazard of
+                extension lead overuse.
               </span>
             </li>
           </ul>
@@ -510,12 +504,11 @@ const sections = [
     content: (
       <>
         <p>
-          Interwar properties represent a substantial and consistent market for rewiring work.
-          The housing stock is well-defined, the wiring hazards are predictable, and the
-          cavity wall construction makes rewiring more straightforward than solid-wall properties.
-          Building strong relationships with estate agents, conveyancers, and surveyors who
-          deal with 1920s and 1930s properties can generate a reliable flow of EICR and
-          rewire enquiries.
+          Interwar properties represent a substantial and consistent market for rewiring work. The
+          housing stock is well-defined, the wiring hazards are predictable, and the cavity wall
+          construction makes rewiring more straightforward than solid-wall properties. Building
+          strong relationships with estate agents, conveyancers, and surveyors who deal with 1920s
+          and 1930s properties can generate a reliable flow of EICR and rewire enquiries.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -529,9 +522,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to produce a professional report on site. Include clear photographs of
-                  original wiring, round pin sockets, and fuse boards to help buyers and
-                  their solicitors understand the findings.
+                  to produce a professional report on site. Include clear photographs of original
+                  wiring, round pin sockets, and fuse boards to help buyers and their solicitors
+                  understand the findings.
                 </p>
               </div>
             </div>
@@ -542,13 +535,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Convert EICRs to Rewire Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When an EICR on an interwar property produces C1 or C2 observations, quote
-                  the full rewire immediately using the{' '}
+                  When an EICR on an interwar property produces C1 or C2 observations, quote the
+                  full rewire immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . A clear, professional quote on the day of the inspection converts a
-                  £200 EICR into a £4,000 rewire job.
+                  . A clear, professional quote on the day of the inspection converts a £200 EICR
+                  into a £4,000 rewire job.
                 </p>
               </div>
             </div>
@@ -556,7 +549,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your interwar property rewire business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICRs, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -593,7 +586,7 @@ export default function InterwarPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Interwar Property Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Interwar Property EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

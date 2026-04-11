@@ -21,7 +21,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
-  { label: 'Consumer Unit Replacement Southampton', href: '/consumer-unit-replacement-southampton' },
+  {
+    label: 'Consumer Unit Replacement Southampton',
+    href: '/consumer-unit-replacement-southampton',
+  },
 ];
 
 const tocItems = [
@@ -40,9 +43,9 @@ const tocItems = [
 const keyTakeaways = [
   'BS 7671 Regulation 421.1.201 (in force since July 2016) requires all replacement consumer units in domestic premises to have a non-combustible (metal) enclosure. Plastic consumer units are no longer permitted for replacement installations in Southampton.',
   'Consumer unit replacement is notifiable under Part P of the Building Regulations in England. Southampton City Council is the local building control authority, but registered competent persons (NICEIC, NAPIT, ELECSA) self-certify on your behalf.',
-  'Southampton consumer unit replacement costs range from £400 to £800, reflecting the city\'s south coast labour rates which sit between London and the Midlands.',
+  "Southampton consumer unit replacement costs range from £400 to £800, reflecting the city's south coast labour rates which sit between London and the Midlands.",
   'BS EN 61439-3 is the product standard governing consumer units sold in the UK. Only UKCA-marked units from reputable manufacturers should be installed in Southampton properties.',
-  'Southampton\'s mix of post-war council housing, Victorian terraces in areas such as Shirley and St Denys, and modern waterfront developments creates varied consumer unit replacement requirements across the city.',
+  "Southampton's mix of post-war council housing, Victorian terraces in areas such as Shirley and St Denys, and modern waterfront developments creates varied consumer unit replacement requirements across the city.",
 ];
 
 const faqs = [
@@ -82,7 +85,8 @@ const faqs = [
       'Not if you use a registered competent person electrician (NICEIC, NAPIT, ELECSA, or similar). Registered electricians self-certify consumer unit replacement work under the competent person scheme. They notify Southampton City Council building control on your behalf, and building control does not need to inspect the work. You receive a Building Regulations Compliance Certificate from the scheme. If you use an unregistered electrician, Southampton City Council building control must be notified before work begins, and an approved inspector must certify the completed installation.',
   },
   {
-    question: 'What certificates should I receive after a consumer unit replacement in Southampton?',
+    question:
+      'What certificates should I receive after a consumer unit replacement in Southampton?',
     answer:
       'You should receive: an Electrical Installation Certificate (EIC) signed by the designer, installer, and inspector (often the same person for a straight replacement) detailing the installation; a Schedule of Test Results recording measured values for each circuit including insulation resistance, earth fault loop impedance, and RCD operating times; and a Building Regulations Compliance Certificate from the competent person scheme confirming notification to Southampton City Council. Keep all documents with your property records — they are required by solicitors during conveyancing and may be requested by your insurer following an electrical incident.',
   },
@@ -92,28 +96,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
+    description:
+      'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
+    description:
+      'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'Notifiable electrical work in England — what requires notification and how the process works.',
+    description:
+      'Notifiable electrical work in England — what requires notification and how the process works.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/consumer-unit-replacement-cardiff',
     title: 'Consumer Unit Replacement Cardiff',
-    description: 'Consumer unit and fuse box replacement in Cardiff — costs, Welsh regulations, and qualified electricians.',
+    description:
+      'Consumer unit and fuse box replacement in Cardiff — costs, Welsh regulations, and qualified electricians.',
     icon: Building2,
     category: 'Guide',
   },
@@ -138,20 +146,20 @@ const sections = [
       <>
         <p>
           Southampton is one of England's busiest port cities, with a diverse housing stock ranging
-          from Victorian terraces in Shirley and Freemantle to post-war housing in Weston and
-          modern waterfront apartments in the city centre. Consumer unit replacement demand is
-          consistent across the city, particularly in older areas where installations have not
-          been updated in decades.
+          from Victorian terraces in Shirley and Freemantle to post-war housing in Weston and modern
+          waterfront apartments in the city centre. Consumer unit replacement demand is consistent
+          across the city, particularly in older areas where installations have not been updated in
+          decades.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What a consumer unit does</strong> — the consumer unit receives the
-                incoming electricity supply from the meter and distributes it to individual
-                circuits via circuit breakers (MCBs). It also houses the RCD or RCBO devices that
-                provide shock protection. The installation must comply with{' '}
+                <strong>What a consumer unit does</strong> — the consumer unit receives the incoming
+                electricity supply from the meter and distributes it to individual circuits via
+                circuit breakers (MCBs). It also houses the RCD or RCBO devices that provide shock
+                protection. The installation must comply with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>
@@ -169,10 +177,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable work</strong> — consumer unit replacement must be notified
-                under Part P of the Building Regulations. Use an NICEIC, NAPIT, or ELECSA
-                registered electrician who handles the Southampton City Council notification
-                process on your behalf.
+                <strong>Notifiable work</strong> — consumer unit replacement must be notified under
+                Part P of the Building Regulations. Use an NICEIC, NAPIT, or ELECSA registered
+                electrician who handles the Southampton City Council notification process on your
+                behalf.
               </span>
             </li>
           </ul>
@@ -207,17 +215,17 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Replacement trigger</strong> — the regulation applies the moment any
-                consumer unit replacement is carried out. If an existing Southampton property has
-                a plastic consumer unit, it does not need to be proactively replaced immediately —
-                but when it is replaced (for any reason), the replacement must be metal.
+                consumer unit replacement is carried out. If an existing Southampton property has a
+                plastic consumer unit, it does not need to be proactively replaced immediately — but
+                when it is replaced (for any reason), the replacement must be metal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No partial compliance</strong> — fitting a metal fascia plate to an
-                existing plastic enclosure does not satisfy Regulation 421.1.201. The entire
-                enclosure must be non-combustible. A full replacement unit is required.
+                <strong>No partial compliance</strong> — fitting a metal fascia plate to an existing
+                plastic enclosure does not satisfy Regulation 421.1.201. The entire enclosure must
+                be non-combustible. A full replacement unit is required.
               </span>
             </li>
           </ul>
@@ -241,29 +249,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory 30mA protection</strong> — all socket-outlet circuits rated
-                up to 32A must have 30mA RCD protection. All circuits in locations containing a
-                bath or shower (Regulation 701) must also have 30mA RCD protection. No exceptions
-                in a new installation.
+                <strong>Mandatory 30mA protection</strong> — all socket-outlet circuits rated up to
+                32A must have 30mA RCD protection. All circuits in locations containing a bath or
+                shower (Regulation 701) must also have 30mA RCD protection. No exceptions in a new
+                installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dual-RCD vs RCBO</strong> — a dual-RCD consumer unit divides circuits
-                into two groups on two 30mA RCDs. An all-RCBO consumer unit gives each circuit
-                its own RCBO. RCBOs are more expensive but provide better fault discrimination —
-                a single fault trips only the affected circuit, not an entire group.
+                <strong>Dual-RCD vs RCBO</strong> — a dual-RCD consumer unit divides circuits into
+                two groups on two 30mA RCDs. An all-RCBO consumer unit gives each circuit its own
+                RCBO. RCBOs are more expensive but provide better fault discrimination — a single
+                fault trips only the affected circuit, not an entire group.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Nuisance tripping in older properties</strong> — Southampton properties
-                with ageing wiring may experience nuisance RCD tripping due to deteriorating
-                cable insulation or appliances with high leakage currents. RCBOs limit tripping
-                to the affected circuit. Persistent tripping should be investigated as it may
-                indicate wiring in need of repair.
+                <strong>Nuisance tripping in older properties</strong> — Southampton properties with
+                ageing wiring may experience nuisance RCD tripping due to deteriorating cable
+                insulation or appliances with high leakage currents. RCBOs limit tripping to the
+                affected circuit. Persistent tripping should be investigated as it may indicate
+                wiring in need of repair.
               </span>
             </li>
           </ul>
@@ -287,9 +295,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Registered competent person route</strong> — an NICEIC, NAPIT, ELECSA,
-                or equivalent scheme member notifies Southampton City Council on your behalf,
-                issues a Building Regulations Compliance Certificate, and provides the Electrical
+                <strong>Registered competent person route</strong> — an NICEIC, NAPIT, ELECSA, or
+                equivalent scheme member notifies Southampton City Council on your behalf, issues a
+                Building Regulations Compliance Certificate, and provides the Electrical
                 Installation Certificate. This is the standard route for all consumer unit
                 replacements in Southampton.
               </span>
@@ -297,21 +305,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation for conveyancing</strong> — Hampshire solicitors acting
-                on Southampton property transactions routinely request the EIC and Part P
-                compliance certificate for any consumer unit replacement. Missing documentation
-                is a common cause of delay at exchange. Retain all documents provided by your
-                electrician and store them with the property deeds.
+                <strong>Documentation for conveyancing</strong> — Hampshire solicitors acting on
+                Southampton property transactions routinely request the EIC and Part P compliance
+                certificate for any consumer unit replacement. Missing documentation is a common
+                cause of delay at exchange. Retain all documents provided by your electrician and
+                store them with the property deeds.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Retrospective certification</strong> — if a previous owner replaced the
-                consumer unit without Part P compliance documentation, a retrospective regularisation
-                certificate can be obtained from Southampton City Council. This involves an approved
-                inspector visiting the property to assess the installation. It is a more expensive
-                and time-consuming route than doing it correctly in the first place.
+                consumer unit without Part P compliance documentation, a retrospective
+                regularisation certificate can be obtained from Southampton City Council. This
+                involves an approved inspector visiting the property to assess the installation. It
+                is a more expensive and time-consuming route than doing it correctly in the first
+                place.
               </span>
             </li>
           </ul>
@@ -336,26 +345,25 @@ const sections = [
               <span>
                 <strong>PSCC rating</strong> — the consumer unit must be rated for the prospective
                 short-circuit current (PSCC) at the installation address. Southampton's urban
-                network generally presents PSCC values of up to 16kA. Your electrician must
-                measure the PSCC and confirm the selected consumer unit is appropriately rated.
+                network generally presents PSCC values of up to 16kA. Your electrician must measure
+                the PSCC and confirm the selected consumer unit is appropriately rated.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UKCA marking</strong> — consumer units placed on the UK market since
-                January 2022 must carry UKCA marking. Southampton electricians should only
-                install units from established manufacturers such as Hager, Schneider Electric,
-                Wylex, or Contactum that comply with BS EN 61439-3 and carry UKCA marking.
+                <strong>UKCA marking</strong> — consumer units placed on the UK market since January
+                2022 must carry UKCA marking. Southampton electricians should only install units
+                from established manufacturers such as Hager, Schneider Electric, Wylex, or
+                Contactum that comply with BS EN 61439-3 and carry UKCA marking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation testing</strong> — following BS EN 61439-3 factory testing,
-                the installed consumer unit and all connected circuits are tested on site under
-                BS 7671 Part 6. Results are recorded in the Schedule of Test Results forming part
-                of the{' '}
+                <strong>Installation testing</strong> — following BS EN 61439-3 factory testing, the
+                installed consumer unit and all connected circuits are tested on site under BS 7671
+                Part 6. Results are recorded in the Schedule of Test Results forming part of the{' '}
                 <SEOInternalLink href="/tools/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>
@@ -383,29 +391,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One to two-bedroom flat</strong> — £400 to £580. Common in the city
-                centre and waterfront areas. Typically 6 to 8 circuits.
+                <strong>One to two-bedroom flat</strong> — £400 to £580. Common in the city centre
+                and waterfront areas. Typically 6 to 8 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom terraced house</strong> — £500 to £700. The most common
-                job type across Shirley, Freemantle, and St Denys. Up to 12 circuits.
+                <strong>Three-bedroom terraced house</strong> — £500 to £700. The most common job
+                type across Shirley, Freemantle, and St Denys. Up to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four or five-bedroom detached property</strong> — £650 to £900.
-                Common in Bassett, Chilworth, and Chandler's Ford on the city fringe.
+                <strong>Four or five-bedroom detached property</strong> — £650 to £900. Common in
+                Bassett, Chilworth, and Chandler's Ford on the city fringe.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional work</strong> — earthing upgrades, main bonding, smoke
-                alarm systems, and meter tails replacement add £100 to £400 depending on scope.
+                <strong>Additional work</strong> — earthing upgrades, main bonding, smoke alarm
+                systems, and meter tails replacement add £100 to £400 depending on scope.
               </span>
             </li>
           </ul>
@@ -434,11 +442,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Victorian and Edwardian terraces</strong> — Shirley, Freemantle, and
-                St Denys have large amounts of terraced housing with original or early rewired
-                wiring. Some properties retain rubber-insulated or lead-sheathed wiring indicating
-                pre-1960s installations. An EICR should assess the wiring condition before
-                specifying the consumer unit replacement scope.
+                <strong>Victorian and Edwardian terraces</strong> — Shirley, Freemantle, and St
+                Denys have large amounts of terraced housing with original or early rewired wiring.
+                Some properties retain rubber-insulated or lead-sheathed wiring indicating pre-1960s
+                installations. An EICR should assess the wiring condition before specifying the
+                consumer unit replacement scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,9 +463,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>University student lets</strong> — the University of Southampton generates
-                substantial demand for private rented accommodation. Landlords in Portswood, Swaythling,
-                and Highfield frequently require consumer unit replacements as properties are brought
-                into EICR compliance for the private rented sector regulations.
+                substantial demand for private rented accommodation. Landlords in Portswood,
+                Swaythling, and Highfield frequently require consumer unit replacements as
+                properties are brought into EICR compliance for the private rented sector
+                regulations.
               </span>
             </li>
           </ul>
@@ -471,10 +480,10 @@ const sections = [
     content: (
       <>
         <p>
-          Southampton and Hampshire offer consistent demand for consumer unit replacement, driven
-          by older housing stock, an active private rented sector, and a strong local economy.
-          Electricians who complete documentation efficiently and quote follow-on work on the
-          day of the job build stronger customer relationships and higher turnover.
+          Southampton and Hampshire offer consistent demand for consumer unit replacement, driven by
+          older housing stock, an active private rented sector, and a strong local economy.
+          Electricians who complete documentation efficiently and quote follow-on work on the day of
+          the job build stronger customer relationships and higher turnover.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -484,13 +493,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Southampton</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the full Electrical Installation Certificate and Schedule of Test
-                  Results while still at the Southampton property. Record all circuit test values
-                  on your phone, generate the PDF, and send it to your customer before you leave.
-                  No paper certificates, no evening data entry.
+                  Results while still at the Southampton property. Record all circuit test values on
+                  your phone, generate the PDF, and send it to your customer before you leave. No
+                  paper certificates, no evening data entry.
                 </p>
               </div>
             </div>
@@ -506,8 +513,8 @@ const sections = [
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote earthing upgrades, smoke alarm systems, or additional circuits while
-                  still on site. Southampton customers respond far better to quotes that come with
-                  a clear explanation while the issues are visible in front of them.
+                  still on site. Southampton customers respond far better to quotes that come with a
+                  clear explanation while the issues are visible in front of them.
                 </p>
               </div>
             </div>
@@ -515,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Southampton electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -552,7 +559,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Southampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

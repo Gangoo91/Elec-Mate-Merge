@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician-business-website',
     title: 'Electrician Website Guide',
-    description: 'How to build and market your electrician website — builders, trust signals, and costs.',
+    description:
+      'How to build and market your electrician website — builders, trust signals, and costs.',
     icon: Globe,
     category: 'Guide',
   },
@@ -137,10 +138,10 @@ const sections = [
         <p>
           Your Google Business Profile (formerly Google My Business) is the most powerful free SEO
           tool available to a local electrician. When someone searches "electrician near me" or
-          "electrician [your town]", the map pack results — the three businesses shown at the top
-          of the page — come from Google Business Profiles, not from websites. Appearing here is
-          worth more than ranking organically, because map pack results receive more clicks than
-          the organic results below them.
+          "electrician [your town]", the map pack results — the three businesses shown at the top of
+          the page — come from Google Business Profiles, not from websites. Appearing here is worth
+          more than ranking organically, because map pack results receive more clicks than the
+          organic results below them.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -148,9 +149,9 @@ const sections = [
               <MapPin className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complete every field</strong> — business name (exactly as it appears on your
-                invoices and van), address (or service area if you do not have a commercial premises),
-                phone number, website, hours including emergency availability, and a detailed
-                description using your target keywords naturally.
+                invoices and van), address (or service area if you do not have a commercial
+                premises), phone number, website, hours including emergency availability, and a
+                detailed description using your target keywords naturally.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -190,8 +191,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Respond to every review</strong> — responding to reviews (both positive
-                and negative) is a ranking signal. It also demonstrates professionalism to prospective
+                <strong>Respond to every review</strong> — responding to reviews (both positive and
+                negative) is a ranking signal. It also demonstrates professionalism to prospective
                 customers reading your reviews. Never ignore a negative review — respond calmly,
                 professionally, and offer to resolve the issue.
               </span>
@@ -221,12 +222,14 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Purchase-intent local keywords (highest priority)</strong>
+                <strong className="block mb-1">
+                  Purchase-intent local keywords (highest priority)
+                </strong>
                 <span>
                   "Electrician [town]", "emergency electrician [town]", "EICR [town]", "EV charger
                   installation [town]", "consumer unit replacement [town]", "rewire [town]",
-                  "electrical fault finding [town]". These bring customers who are ready to hire now.
-                  Create a dedicated page for each service and location combination.
+                  "electrical fault finding [town]". These bring customers who are ready to hire
+                  now. Create a dedicated page for each service and location combination.
                 </span>
               </div>
             </li>
@@ -249,7 +252,8 @@ const sections = [
                 <span>
                   Generic national terms like "electrician UK" or "electrical contractor England".
                   You cannot compete nationally against established directories and large companies.
-                  Own your local market first — dominate your town, then expand to neighbouring areas.
+                  Own your local market first — dominate your town, then expand to neighbouring
+                  areas.
                 </span>
               </div>
             </li>
@@ -344,8 +348,8 @@ const sections = [
                 <strong className="block mb-1">Trade platforms (paid — dual purpose)</strong>
                 <span>
                   Checkatrade (£600–£1,500/year), MyBuilder (pay-per-lead), Rated People
-                  (pay-per-lead), TrustATrader (£300–£900/year). These generate direct enquiries
-                  AND provide high-authority backlinks. At least one paid listing is typically
+                  (pay-per-lead), TrustATrader (£300–£900/year). These generate direct enquiries AND
+                  provide high-authority backlinks. At least one paid listing is typically
                   worthwhile for the SEO value alone.
                 </span>
               </div>
@@ -355,10 +359,10 @@ const sections = [
               <div>
                 <strong className="block mb-1">Free directories (essential)</strong>
                 <span>
-                  Yell.com, Thomson Local, Yelp, FreeIndex, Bark.com (free basic listing),
-                  Hot Frog, Scoot. Create free listings on all of these with identical NAP
-                  information. Takes two to three hours to set up and has a lasting positive
-                  effect on your local ranking.
+                  Yell.com, Thomson Local, Yelp, FreeIndex, Bark.com (free basic listing), Hot Frog,
+                  Scoot. Create free listings on all of these with identical NAP information. Takes
+                  two to three hours to set up and has a lasting positive effect on your local
+                  ranking.
                 </span>
               </div>
             </li>
@@ -378,8 +382,8 @@ const sections = [
         </div>
         <p>
           Use BrightLocal's free Citation Tracker to see where your business is already listed and
-          identify gaps. Prioritise fixing inconsistencies on existing listings before creating
-          new ones — inconsistent data actively hurts your ranking.
+          identify gaps. Prioritise fixing inconsistencies on existing listings before creating new
+          ones — inconsistent data actively hurts your ranking.
         </p>
       </>
     ),
@@ -391,18 +395,18 @@ const sections = [
       <>
         <p>
           Reviews are the single most powerful signal for local SEO after proximity. Google rewards
-          businesses with more reviews, higher ratings, and more recent reviews. Here is a systematic
-          approach to generating reviews consistently.
+          businesses with more reviews, higher ratings, and more recent reviews. Here is a
+          systematic approach to generating reviews consistently.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ask at the right moment</strong> — the best time to ask is immediately
-                after completing the job, when the customer is satisfied and grateful. Do not wait
-                until you are back in the van or until the next day. Ask in person: "If you are happy
-                with the work, a Google review would really help my business."
+                <strong>Ask at the right moment</strong> — the best time to ask is immediately after
+                completing the job, when the customer is satisfied and grateful. Do not wait until
+                you are back in the van or until the next day. Ask in person: "If you are happy with
+                the work, a Google review would really help my business."
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +414,8 @@ const sections = [
               <span>
                 <strong>Send the link immediately</strong> — follow up your verbal ask with a
                 WhatsApp or SMS containing your Google review short link within one hour. The
-                conversion rate drops significantly after 24 hours. Generate your short link
-                free from your Google Business Profile dashboard.
+                conversion rate drops significantly after 24 hours. Generate your short link free
+                from your Google Business Profile dashboard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -443,9 +447,9 @@ const sections = [
     content: (
       <>
         <p>
-          Backlinks — other websites linking to yours — are one of Google's strongest ranking signals.
-          For a local electrician, you do not need hundreds of links. A small number of relevant,
-          high-authority links will significantly improve your ranking.
+          Backlinks — other websites linking to yours — are one of Google's strongest ranking
+          signals. For a local electrician, you do not need hundreds of links. A small number of
+          relevant, high-authority links will significantly improve your ranking.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -461,9 +465,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Link2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scheme directories</strong> — your NICEIC, NAPIT, or ELECSA profile links
-                to your website. These are trusted industry sites with significant authority.
-                Make sure your profile includes a website link.
+                <strong>Scheme directories</strong> — your NICEIC, NAPIT, or ELECSA profile links to
+                your website. These are trusted industry sites with significant authority. Make sure
+                your profile includes a website link.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -534,16 +538,16 @@ const sections = [
               <span>
                 <strong>6–12 months (competitive areas)</strong> — inner London, Birmingham,
                 Manchester, and other major cities have established competitors with years of SEO
-                investment. Expect 6–12 months of consistent effort to achieve significant map
-                pack presence for core terms.
+                investment. Expect 6–12 months of consistent effort to achieve significant map pack
+                presence for core terms.
               </span>
             </li>
           </ul>
         </div>
         <p>
           SEO compounds over time. An electrician who starts today and is consistent for 12 months
-          will be in a significantly stronger position than a competitor who starts six months later.
-          Start now, even if results are not immediate.
+          will be in a significantly stronger position than a competitor who starts six months
+          later. Start now, even if results are not immediate.
         </p>
       </>
     ),
@@ -554,9 +558,9 @@ const sections = [
     content: (
       <>
         <p>
-          SEO brings customers to your door — but the way you handle them once they arrive determines
-          whether they leave you a five-star review or a complaint. Professional, efficient job
-          management directly feeds your review score, which feeds your SEO ranking.
+          SEO brings customers to your door — but the way you handle them once they arrive
+          determines whether they leave you a five-star review or a complaint. Professional,
+          efficient job management directly feeds your review score, which feeds your SEO ranking.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -582,12 +586,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certificates That Build Trust</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Completing and issuing{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  and other certificates professionally on site — not days later — signals to
-                  customers that you are organised and trustworthy. Happy customers leave reviews.
-                  Reviews improve your Google ranking.
+                  <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> and other
+                  certificates professionally on site — not days later — signals to customers that
+                  you are organised and trustworthy. Happy customers leave reviews. Reviews improve
+                  your Google ranking.
                 </p>
               </div>
             </div>
@@ -595,7 +597,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical business professionally from day one"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Professional operations that generate five-star reviews. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Professional operations that generate five-star reviews. 7-day free trial."
           icon={Search}
         />
       </>
@@ -620,8 +622,7 @@ export default function SEOForElectriciansPage() {
       badgeIcon={Search}
       heroTitle={
         <>
-          SEO for Electricians UK:{' '}
-          <span className="text-yellow-400">How to Rank on Google</span>
+          SEO for Electricians UK: <span className="text-yellow-400">How to Rank on Google</span>
         </>
       }
       heroSubtitle="A practical guide to SEO for UK electricians — from Google Business Profile optimisation (the single most important thing) to local citations, on-page SEO, review generation, link building, and realistic timelines."

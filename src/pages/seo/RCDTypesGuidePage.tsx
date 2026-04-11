@@ -134,8 +134,8 @@ const sections = [
         <p>
           A Residual Current Device (RCD) is a protective device that monitors the balance of
           current flowing in the live and neutral conductors of a circuit. Under normal conditions,
-          the current flowing out through the live conductor equals the current returning through the
-          neutral conductor. If a fault develops — for example, because someone touches a live
+          the current flowing out through the live conductor equals the current returning through
+          the neutral conductor. If a fault develops — for example, because someone touches a live
           conductor and current flows through their body to earth — the balance is disrupted and a
           residual current flows.
         </p>
@@ -150,8 +150,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Personal protection</strong> — 30mA RCDs protect against electric shock
-                from direct or indirect contact. They are the primary means of additional protection
+                <strong>Personal protection</strong> — 30mA RCDs protect against electric shock from
+                direct or indirect contact. They are the primary means of additional protection
                 required by{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 18th Edition
@@ -202,8 +202,8 @@ const sections = [
               <span>
                 <strong>No overcurrent protection</strong> — an RCCB provides only earth-fault
                 protection. Individual MCBs must be provided for each circuit downstream (or
-                upstream, depending on the board design). In a typical split-load consumer unit,
-                the RCCB covers one half of the board while individual MCBs protect each circuit.
+                upstream, depending on the board design). In a typical split-load consumer unit, the
+                RCCB covers one half of the board while individual MCBs protect each circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,9 +226,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Types</strong> — Type AC (responds to sinusoidal AC residual currents),
-                Type A (responds to AC and pulsating DC residual currents), and Type B (responds to
-                AC, pulsating DC, and smooth DC). Type A is now standard for most domestic
+                <strong>Types</strong> — Type AC (responds to sinusoidal AC residual currents), Type
+                A (responds to AC and pulsating DC residual currents), and Type B (responds to AC,
+                pulsating DC, and smooth DC). Type A is now standard for most domestic
                 installations. Type B is required for some EV chargers and inverter-connected
                 equipment.
               </span>
@@ -244,9 +244,9 @@ const sections = [
     content: (
       <>
         <p>
-          An RCBO (Residual Current Breaker with Overcurrent protection) combines the functions of
-          a Miniature Circuit Breaker (MCB) and a Residual Current Device (RCD) in a single
-          device. Each RCBO provides overcurrent protection and 30mA earth-fault protection for one
+          An RCBO (Residual Current Breaker with Overcurrent protection) combines the functions of a
+          Miniature Circuit Breaker (MCB) and a Residual Current Device (RCD) in a single device.
+          Each RCBO provides overcurrent protection and 30mA earth-fault protection for one
           individual circuit, fitting in a single-module consumer unit slot.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -266,8 +266,8 @@ const sections = [
               <span>
                 <strong>Higher cost</strong> — RCBOs cost three to five times more per unit than a
                 comparable MCB. An all-RCBO consumer unit is typically £150 to £300 more expensive
-                than an equivalent split-load RCCB/MCB board, though this gap has narrowed as
-                RCBOs have become more common.
+                than an equivalent split-load RCCB/MCB board, though this gap has narrowed as RCBOs
+                have become more common.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -282,8 +282,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCBO types</strong> — like RCCBs, RCBOs come in Type AC, Type A, and Type
-                B variants. BS 7671 18th Edition (as amended) requires Type A or Type B RCDs for
+                <strong>RCBO types</strong> — like RCCBs, RCBOs come in Type AC, Type A, and Type B
+                variants. BS 7671 18th Edition (as amended) requires Type A or Type B RCDs for
                 circuits supplying EV charge points and equipment with electronic power conversion.
               </span>
             </li>
@@ -316,9 +316,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Point-of-use protection only</strong> — an SRCD protects only the
-                equipment plugged into that socket. It does not protect the cable feeding the
-                socket, other sockets on the same circuit, or provide any overcurrent protection.
+                <strong>Point-of-use protection only</strong> — an SRCD protects only the equipment
+                plugged into that socket. It does not protect the cable feeding the socket, other
+                sockets on the same circuit, or provide any overcurrent protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -349,8 +349,8 @@ const sections = [
     content: (
       <>
         <p>
-          An RCDM (RCD Module) is a modular device that plugs into a spare way in a consumer unit
-          or distribution board to add RCD protection for a specific circuit or group of circuits.
+          An RCDM (RCD Module) is a modular device that plugs into a spare way in a consumer unit or
+          distribution board to add RCD protection for a specific circuit or group of circuits.
           RCDMs are used in retrofit situations where individual circuit protection needs to be
           added to an existing board without full replacement.
         </p>
@@ -433,9 +433,9 @@ const sections = [
         </div>
         <p>
           Selective coordination (discrimination) between RCDs is achieved by ensuring that the
-          upstream device has a higher sensitivity rating and/or a time delay. For example, a
-          300mA time-delayed RCD upstream of multiple 30mA RCDs ensures that a single-circuit fault
-          only trips the 30mA device, not the entire installation.
+          upstream device has a higher sensitivity rating and/or a time delay. For example, a 300mA
+          time-delayed RCD upstream of multiple 30mA RCDs ensures that a single-circuit fault only
+          trips the 30mA device, not the entire installation.
         </p>
       </>
     ),
@@ -448,10 +448,8 @@ const sections = [
         <p>
           BS 7671 18th Edition (as amended) sets out where RCD additional protection is required.
           Understanding these requirements is essential for{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            EICR inspections
-          </SEOInternalLink>{' '}
-          and new installation design alike.
+          <SEOInternalLink href="/tools/eicr-certificate">EICR inspections</SEOInternalLink> and new
+          installation design alike.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -468,10 +466,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mobile equipment circuits ≤32A outdoors</strong> — circuits supplying
-                mobile equipment for use outdoors require 30mA additional protection. This
-                includes garden sockets, garage sockets, and outdoor supplies for garden
-                equipment, power tools, and similar.
+                <strong>Mobile equipment circuits ≤32A outdoors</strong> — circuits supplying mobile
+                equipment for use outdoors require 30mA additional protection. This includes garden
+                sockets, garage sockets, and outdoor supplies for garden equipment, power tools, and
+                similar.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -479,18 +477,18 @@ const sections = [
               <span>
                 <strong>Locations with increased risk</strong> — bathrooms, shower rooms, swimming
                 pools, agricultural premises, construction sites, and caravans all require enhanced
-                RCD protection under their specific BS 7671 chapters. Bathroom circuits require
-                30mA RCD protection for all circuits within the room.
+                RCD protection under their specific BS 7671 chapters. Bathroom circuits require 30mA
+                RCD protection for all circuits within the room.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cables buried in walls</strong> — cables buried in walls at a depth less
-                than 50mm that are not protected by earthed metallic covering, mechanical protection,
-                or a 30mA RCD must be installed in a zone above or beside an accessory. This
-                requirement ensures that anyone drilling into a wall is protected if they strike
-                a cable.
+                than 50mm that are not protected by earthed metallic covering, mechanical
+                protection, or a 30mA RCD must be installed in a zone above or beside an accessory.
+                This requirement ensures that anyone drilling into a wall is protected if they
+                strike a cable.
               </span>
             </li>
           </ul>
@@ -529,9 +527,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charging circuit</strong> — EV charger circuits require a Type A or
-                Type B RCD (not Type AC). If the EV charger has built-in Type B protection, a
-                Type A upstream RCD is acceptable. Check the charger manufacturer's specifications
+                <strong>EV charging circuit</strong> — EV charger circuits require a Type A or Type
+                B RCD (not Type AC). If the EV charger has built-in Type B protection, a Type A
+                upstream RCD is acceptable. Check the charger manufacturer's specifications
                 carefully, as requirements vary between products.
               </span>
             </li>
@@ -577,9 +575,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Every consumer unit replacement or new circuit installation requires an Electrical
                   Installation Certificate (EIC) with a Schedule of Test Results. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certification on site and export a compliant PDF instantly.
                 </p>
               </div>
@@ -592,9 +588,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EICR RCD Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   During an EICR, RCDs must be tested using a calibrated RCD tester. The test
-                  verifies trip time at IΔn (rated current) and at 5 × IΔn. The integral test
-                  button test alone is not sufficient for an EICR. Record all RCD test results on
-                  the Schedule of Test Results.
+                  verifies trip time at IΔn (rated current) and at 5 × IΔn. The integral test button
+                  test alone is not sufficient for an EICR. Record all RCD test results on the
+                  Schedule of Test Results.
                 </p>
               </div>
             </div>
@@ -602,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete RCD certificates and EICRs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export. EIC, EICR, and Minor Works certificates in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, AI board scanning, and instant PDF export. EIC, EICR, and Minor Works certificates in one app. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -639,7 +635,7 @@ export default function RCDTypesGuidePage() {
       faqHeading="Frequently Asked Questions About RCD Types"
       relatedPages={relatedPages}
       ctaHeading="Complete RCD Certificates and EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, RCD test recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion with AI board scanning, RCD test recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

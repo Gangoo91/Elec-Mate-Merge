@@ -610,7 +610,7 @@ export default function SPDSurgeProtectionPage() {
         },
       ]}
       ctaHeading="Specify and Certify SPDs With Confidence"
-      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="SPD fields in every certificate, BS 7671 Section 534 accessible in-app, and AI Circuit Designer includes SPD in designs. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

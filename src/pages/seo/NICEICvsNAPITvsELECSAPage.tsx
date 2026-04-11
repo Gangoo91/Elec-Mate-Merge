@@ -23,7 +23,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Training', href: '/guides/electrical-training-courses-uk' },
-  { label: 'NICEIC vs NAPIT vs ELECSA vs STROMA', href: '/guides/niceic-vs-napit-vs-elecsa-comparison' },
+  {
+    label: 'NICEIC vs NAPIT vs ELECSA vs STROMA',
+    href: '/guides/niceic-vs-napit-vs-elecsa-comparison',
+  },
 ];
 
 const tocItems = [
@@ -74,7 +77,7 @@ const faqs = [
   {
     question: 'Which scheme is best for commercial work?',
     answer:
-      'For commercial and industrial work, NICEIC\'s Approved Contractor scheme has the strongest reputation. Many main contractors and commercial clients specifically require their electrical subcontractors to be NICEIC Approved Contractors. NAPIT also offers a commercial-level registration, and it is accepted on most commercial sites, but NICEIC has a longer history and stronger reputation in the commercial sector. If commercial work is a significant part of your business, NICEIC Approved Contractor status is worth the higher cost.',
+      "For commercial and industrial work, NICEIC's Approved Contractor scheme has the strongest reputation. Many main contractors and commercial clients specifically require their electrical subcontractors to be NICEIC Approved Contractors. NAPIT also offers a commercial-level registration, and it is accepted on most commercial sites, but NICEIC has a longer history and stronger reputation in the commercial sector. If commercial work is a significant part of your business, NICEIC Approved Contractor status is worth the higher cost.",
   },
   {
     question: 'Can I switch from one scheme to another?',
@@ -160,10 +163,10 @@ const sections = [
         <p>
           The good news: all four government-authorised schemes (NICEIC, NAPIT, ELECSA, and STROMA)
           give you the same legal authority to self-certify electrical work under Part P. All four
-          are equally authorised under the same legislation — Building Regulations Part P in England,
-          Building Standards in Scotland. There is no "better" scheme in terms of what you can
-          legally do. The differences are commercial: brand recognition, cost, assessment approach,
-          and additional services.
+          are equally authorised under the same legislation — Building Regulations Part P in
+          England, Building Standards in Scotland. There is no "better" scheme in terms of what you
+          can legally do. The differences are commercial: brand recognition, cost, assessment
+          approach, and additional services.
         </p>
         <p>
           This guide gives you an honest comparison to help you decide which scheme is right for
@@ -178,13 +181,13 @@ const sections = [
     content: (
       <>
         <p>
-          NICEIC (National Inspection Council for Electrical Installation Contracting) is the
-          oldest and most recognised electrical scheme. It has been operating since 1956 and is
-          part of Certsure — a joint venture between NICEIC Group Ltd and ECA (Electrical
-          Contractors&apos; Association) — which also operates ELECSA. This shared ownership is
-          important to understand: NICEIC and ELECSA use the same assessment framework and
-          standards. Choosing ELECSA over NICEIC is primarily a cost and branding decision, not
-          a difference in assessment rigour.
+          NICEIC (National Inspection Council for Electrical Installation Contracting) is the oldest
+          and most recognised electrical scheme. It has been operating since 1956 and is part of
+          Certsure — a joint venture between NICEIC Group Ltd and ECA (Electrical Contractors&apos;
+          Association) — which also operates ELECSA. This shared ownership is important to
+          understand: NICEIC and ELECSA use the same assessment framework and standards. Choosing
+          ELECSA over NICEIC is primarily a cost and branding decision, not a difference in
+          assessment rigour.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -199,9 +202,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two levels:</strong> Domestic Installer (domestic work only, lower cost)
-                and Approved Contractor (domestic and commercial, higher cost, stronger credibility
-                for commercial work).
+                <strong>Two levels:</strong> Domestic Installer (domestic work only, lower cost) and
+                Approved Contractor (domestic and commercial, higher cost, stronger credibility for
+                commercial work).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,8 +217,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Higher cost</strong> — typically the most expensive of the four schemes.
-                The brand premium has a price.
+                <strong>Higher cost</strong> — typically the most expensive of the four schemes. The
+                brand premium has a price.
               </span>
             </li>
           </ul>
@@ -253,8 +256,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Growing recognition</strong> — NAPIT is well-known among tradespeople and
-                is increasingly recognised by homeowners. It is accepted on commercial sites too.
+                <strong>Growing recognition</strong> — NAPIT is well-known among tradespeople and is
+                increasingly recognised by homeowners. It is accepted on commercial sites too.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -278,9 +281,10 @@ const sections = [
         <p>
           ELECSA is operated by Certsure — the same joint venture (NICEIC Group Ltd and ECA) that
           operates NICEIC. This is a genuine differentiator worth understanding: because NICEIC and
-          ELECSA share the same parent organisation, their assessment standards are largely identical.
-          An ELECSA assessment is conducted to the same framework as an NICEIC assessment. The
-          primary difference is the brand name on your van and the annual fee you pay.
+          ELECSA share the same parent organisation, their assessment standards are largely
+          identical. An ELECSA assessment is conducted to the same framework as an NICEIC
+          assessment. The primary difference is the brand name on your van and the annual fee you
+          pay.
         </p>
         <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -301,9 +305,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Less brand recognition</strong> — ELECSA has lower consumer recognition
-                than NICEIC and NAPIT. This may matter less if you rely on word of mouth and
-                referrals rather than brand-driven marketing.
+                <strong>Less brand recognition</strong> — ELECSA has lower consumer recognition than
+                NICEIC and NAPIT. This may matter less if you rely on word of mouth and referrals
+                rather than brand-driven marketing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,16 +331,16 @@ const sections = [
           STROMA is a fourth government-authorised competent person scheme for electrical work. It
           is an Ofqual-regulated body that originally operated in the energy performance certificate
           sector before expanding into electrical installation work. STROMA is equally authorised
-          under the same legislation as NICEIC, NAPIT, and ELECSA — a compliance certificate from
-          a STROMA-registered electrician carries exactly the same legal weight.
+          under the same legislation as NICEIC, NAPIT, and ELECSA — a compliance certificate from a
+          STROMA-registered electrician carries exactly the same legal weight.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lowest cost option</strong> — STROMA is typically the most affordable of
-                the four schemes, making it worth considering for electricians who want
+                <strong>Lowest cost option</strong> — STROMA is typically the most affordable of the
+                four schemes, making it worth considering for electricians who want
                 self-certification authority at the lowest annual cost.
               </span>
             </li>
@@ -344,16 +348,16 @@ const sections = [
               <Star className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fully government-authorised</strong> — equally authorised under Part P
-                (England) and Building Standards (Scotland) alongside NICEIC, NAPIT, and ELECSA.
-                No legal difference in what you can certify.
+                (England) and Building Standards (Scotland) alongside NICEIC, NAPIT, and ELECSA. No
+                legal difference in what you can certify.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ofqual-regulated</strong> — STROMA is regulated by Ofqual, the qualifications
-                regulator, giving it formal regulatory oversight. Its expansion into electrical
-                competent person work is backed by this regulatory framework.
+                <strong>Ofqual-regulated</strong> — STROMA is regulated by Ofqual, the
+                qualifications regulator, giving it formal regulatory oversight. Its expansion into
+                electrical competent person work is backed by this regulatory framework.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,8 +440,8 @@ const sections = [
           </div>
         </div>
         <p>
-          All four schemes are equally authorised under the same legislation. Choosing between
-          them is primarily a matter of cost, service, and personal preference.
+          All four schemes are equally authorised under the same legislation. Choosing between them
+          is primarily a matter of cost, service, and personal preference.
         </p>
       </>
     ),
@@ -540,8 +544,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Target className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Choose STROMA if:</strong> Cost is your primary driver, you do not depend
-                on consumer brand recognition for winning work, and you want full self-certification
+                <strong>Choose STROMA if:</strong> Cost is your primary driver, you do not depend on
+                consumer brand recognition for winning work, and you want full self-certification
                 authority at the lowest available annual fee.
               </span>
             </li>
@@ -549,8 +553,8 @@ const sections = [
         </div>
         <p>
           There is no wrong answer. All four schemes are legitimate, equally government-authorised,
-          and respected within the industry. All four carry the same legal weight under Part P.
-          Pick the one that best fits your business model and budget.
+          and respected within the industry. All four carry the same legal weight under Part P. Pick
+          the one that best fits your business model and budget.
         </p>
       </>
     ),
@@ -633,7 +637,7 @@ export default function NICEICvsNAPITvsELECSAPage() {
       faqHeading="Frequently Asked Questions About NICEIC, NAPIT, ELECSA, and STROMA"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Any Scheme Assessment"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates — assessment-ready documentation accepted by NICEIC, NAPIT, ELECSA, and STROMA. 7-day free trial."
     />
   );
 }

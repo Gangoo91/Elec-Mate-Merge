@@ -660,7 +660,7 @@ export default function WhatToExpectAsApprenticePage() {
       faqHeading="Frequently Asked Questions About Electrical Apprenticeships"
       relatedPages={relatedPages}
       ctaHeading="Make the Most of Your Apprenticeship"
-      ctaSubheading="Join 430+ UK apprentices using Elec-Mate. 46+ courses, flashcards, mock exams, AM2 Simulator, EPA Simulator, AI tutor, site diary, OJT tracker, and portfolio builder. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices using Elec-Mate. 46+ courses, flashcards, mock exams, AM2 Simulator, EPA Simulator, AI tutor, site diary, OJT tracker, and portfolio builder. 7-day free trial, cancel anytime."
     />
   );
 }

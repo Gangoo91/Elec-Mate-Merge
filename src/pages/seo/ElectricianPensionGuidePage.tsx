@@ -102,8 +102,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrician-business-insurance',
     title: 'Business Insurance Guide',
-    description:
-      'Public liability, professional indemnity, and employers liability explained.',
+    description: 'Public liability, professional indemnity, and employers liability explained.',
     icon: Shield,
     category: 'Guide',
   },
@@ -153,9 +152,9 @@ const sections = [
       <>
         <p>
           As a self-employed electrician, you are building a business — but are you building a
-          retirement? Most employees are auto-enrolled into a workplace pension from their first day.
-          Self-employed people are not. If you do not set up a pension yourself, you will have nothing
-          beyond the state pension when you stop working.
+          retirement? Most employees are auto-enrolled into a workplace pension from their first
+          day. Self-employed people are not. If you do not set up a pension yourself, you will have
+          nothing beyond the state pension when you stop working.
         </p>
         <p>
           The full new state pension is £221.20 per week (2026/27) — that is £11,502 per year. It is
@@ -163,9 +162,9 @@ const sections = [
           that a successful electrician is used to.
         </p>
         <p>
-          Electrical work is physically demanding. Most electricians cannot realistically work at the
-          same pace in their 60s and 70s. A pension gives you the freedom to slow down, choose your
-          jobs, or stop entirely when you are ready — not when your body forces you to.
+          Electrical work is physically demanding. Most electricians cannot realistically work at
+          the same pace in their 60s and 70s. A pension gives you the freedom to slow down, choose
+          your jobs, or stop entirely when you are ready — not when your body forces you to.
         </p>
       </>
     ),
@@ -177,8 +176,8 @@ const sections = [
       <>
         <p>
           Auto-enrolment is the system that requires employers to set up workplace pensions and
-          contribute on behalf of their employees. It does not apply to self-employed sole traders or
-          partners.
+          contribute on behalf of their employees. It does not apply to self-employed sole traders
+          or partners.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
@@ -191,7 +190,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span>No employer contributions (employed electricians typically get 3-5% on top of their salary)</span>
+              <span>
+                No employer contributions (employed electricians typically get 3-5% on top of their
+                salary)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
@@ -199,7 +201,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-              <span>You DO still get government tax relief on contributions (25% top-up at basic rate)</span>
+              <span>
+                You DO still get government tax relief on contributions (25% top-up at basic rate)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
@@ -232,10 +236,18 @@ const sections = [
                 <PiggyBank className="w-4 h-4 text-blue-400" /> NEST Pension
               </h4>
               <ul className="space-y-2">
-                <li>Annual charge: <strong className="text-yellow-400">0.3%</strong></li>
-                <li>Min contribution: <strong className="text-yellow-400">£10/month</strong></li>
-                <li>Investment choice: <strong className="text-yellow-400">Limited (5 funds)</strong></li>
-                <li>Setup: <strong className="text-yellow-400">Free, online</strong></li>
+                <li>
+                  Annual charge: <strong className="text-yellow-400">0.3%</strong>
+                </li>
+                <li>
+                  Min contribution: <strong className="text-yellow-400">£10/month</strong>
+                </li>
+                <li>
+                  Investment choice: <strong className="text-yellow-400">Limited (5 funds)</strong>
+                </li>
+                <li>
+                  Setup: <strong className="text-yellow-400">Free, online</strong>
+                </li>
                 <li className="text-white text-xs mt-2">Best for: simplicity and low fees</li>
               </ul>
             </div>
@@ -244,10 +256,19 @@ const sections = [
                 <TrendingUp className="w-4 h-4 text-green-400" /> SIPP
               </h4>
               <ul className="space-y-2">
-                <li>Annual charge: <strong className="text-yellow-400">0.15-0.45%</strong></li>
-                <li>Min contribution: <strong className="text-yellow-400">Varies (often £0)</strong></li>
-                <li>Investment choice: <strong className="text-yellow-400">Full (1000s of funds)</strong></li>
-                <li>Setup: <strong className="text-yellow-400">Free, online</strong></li>
+                <li>
+                  Annual charge: <strong className="text-yellow-400">0.15-0.45%</strong>
+                </li>
+                <li>
+                  Min contribution: <strong className="text-yellow-400">Varies (often £0)</strong>
+                </li>
+                <li>
+                  Investment choice:{' '}
+                  <strong className="text-yellow-400">Full (1000s of funds)</strong>
+                </li>
+                <li>
+                  Setup: <strong className="text-yellow-400">Free, online</strong>
+                </li>
                 <li className="text-white text-xs mt-2">Best for: control and fund choice</li>
               </ul>
             </div>
@@ -256,10 +277,18 @@ const sections = [
                 <Shield className="w-4 h-4 text-purple-400" /> Personal Pension
               </h4>
               <ul className="space-y-2">
-                <li>Annual charge: <strong className="text-yellow-400">0.5-1.5%</strong></li>
-                <li>Min contribution: <strong className="text-yellow-400">£25-50/month</strong></li>
-                <li>Investment choice: <strong className="text-yellow-400">Moderate</strong></li>
-                <li>Setup: <strong className="text-yellow-400">Via provider or adviser</strong></li>
+                <li>
+                  Annual charge: <strong className="text-yellow-400">0.5-1.5%</strong>
+                </li>
+                <li>
+                  Min contribution: <strong className="text-yellow-400">£25-50/month</strong>
+                </li>
+                <li>
+                  Investment choice: <strong className="text-yellow-400">Moderate</strong>
+                </li>
+                <li>
+                  Setup: <strong className="text-yellow-400">Via provider or adviser</strong>
+                </li>
                 <li className="text-white text-xs mt-2">Best for: hands-off with guidance</li>
               </ul>
             </div>
@@ -297,9 +326,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Higher Rate Taxpayer (40%)</h3>
             <p className="text-white text-sm leading-relaxed">
               You get the same 20% top-up at source, PLUS you claim an additional 20% back through
-              your self-assessment tax return. Every £100 in your pension only costs you £60. If
-              you earn over £50,270, pension contributions are one of the most tax-efficient things
-              you can do with your money.
+              your self-assessment tax return. Every £100 in your pension only costs you £60. If you
+              earn over £50,270, pension contributions are one of the most tax-efficient things you
+              can do with your money.
             </p>
           </div>
         </div>
@@ -308,11 +337,20 @@ const sections = [
           <div className="text-white text-sm space-y-2">
             <p>Self-employed electrician, profit £45,000, basic rate taxpayer</p>
             <p>Pays £400/month into NEST pension (£4,800/year)</p>
-            <p>HMRC adds 25% tax relief: £4,800 becomes <strong className="text-yellow-400">£6,000 in the pension</strong></p>
+            <p>
+              HMRC adds 25% tax relief: £4,800 becomes{' '}
+              <strong className="text-yellow-400">£6,000 in the pension</strong>
+            </p>
             <p>Tax saving on self-assessment: reduces taxable profit by £6,000</p>
-            <p>Income tax saved: £6,000 x 20% = <strong className="text-yellow-400">£1,200</strong></p>
-            <p>Class 4 NI saved: £6,000 x 6% = <strong className="text-yellow-400">£360</strong></p>
-            <p className="font-bold text-yellow-400 pt-2">Effective cost of £6,000 pension contribution: £3,240</p>
+            <p>
+              Income tax saved: £6,000 x 20% = <strong className="text-yellow-400">£1,200</strong>
+            </p>
+            <p>
+              Class 4 NI saved: £6,000 x 6% = <strong className="text-yellow-400">£360</strong>
+            </p>
+            <p className="font-bold text-yellow-400 pt-2">
+              Effective cost of £6,000 pension contribution: £3,240
+            </p>
           </div>
         </div>
         <p>
@@ -335,8 +373,8 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">The "Half Your Age" Rule</h4>
           <p className="text-white text-sm mb-4">
-            Take the age you start saving and halve it. That is the percentage of your pre-tax income
-            you should aim to save each year (including tax relief).
+            Take the age you start saving and halve it. That is the percentage of your pre-tax
+            income you should aim to save each year (including tax relief).
           </p>
           <div className="grid gap-3 sm:grid-cols-4 text-white text-sm">
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-3 text-centre">
@@ -363,8 +401,8 @@ const sections = [
         </div>
         <p>
           These amounts include the government tax relief top-up. So "save 15%" means the total
-          going into the pension is 15% of your income — your actual cash outlay is lower because
-          of tax relief.
+          going into the pension is 15% of your income — your actual cash outlay is lower because of
+          tax relief.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-3">What Could Your Pot Be Worth?</h4>
@@ -373,13 +411,16 @@ const sections = [
             <p className="font-bold text-yellow-400 text-lg">Approximately £375,000</p>
             <p>£500/month from age 30 to 67 (37 years) at 5% growth after fees:</p>
             <p className="font-bold text-yellow-400 text-lg">Approximately £625,000</p>
-            <p className="text-xs mt-2">These are illustrative projections. Actual returns will vary based on investment performance.</p>
+            <p className="text-xs mt-2">
+              These are illustrative projections. Actual returns will vary based on investment
+              performance.
+            </p>
           </div>
         </div>
         <p>
-          <strong>The key message:</strong> starting early matters far more than the amount. £200 per
-          month from age 25 will give you a bigger pot than £400 per month from age 40, because of
-          compound growth.
+          <strong>The key message:</strong> starting early matters far more than the amount. £200
+          per month from age 25 will give you a bigger pot than £400 per month from age 40, because
+          of compound growth.
         </p>
       </>
     ),
@@ -398,9 +439,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full state pension:</strong> £221.20 per week (£11,502/year) in 2026/27.
-                You need 35 qualifying years of National Insurance contributions to receive the
-                full amount.
+                <strong>Full state pension:</strong> £221.20 per week (£11,502/year) in 2026/27. You
+                need 35 qualifying years of National Insurance contributions to receive the full
+                amount.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -431,9 +472,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>State pension age:</strong> Currently 66, rising to 67 between 2026 and 2028,
-                and expected to rise further. Plan on the basis that you may not receive your state
-                pension until 68 or later.
+                <strong>State pension age:</strong> Currently 66, rising to 67 between 2026 and
+                2028, and expected to rise further. Plan on the basis that you may not receive your
+                state pension until 68 or later.
               </span>
             </li>
           </ul>
@@ -447,8 +488,9 @@ const sections = [
     content: (
       <>
         <p>
-          A pension is the cornerstone of retirement planning, but it is not the only tool available.
-          Successful electricians typically build retirement income from multiple sources.
+          A pension is the cornerstone of retirement planning, but it is not the only tool
+          available. Successful electricians typically build retirement income from multiple
+          sources.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -457,10 +499,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Pension (Tax-Advantaged)</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Your primary retirement savings vehicle. Benefits from tax relief on contributions,
-                  tax-free growth inside the pot, and 25% tax-free lump sum at retirement. The rest
-                  is taxed as income when you withdraw it, but most retirees are in a lower tax
-                  bracket than during their working years.
+                  Your primary retirement savings vehicle. Benefits from tax relief on
+                  contributions, tax-free growth inside the pot, and 25% tax-free lump sum at
+                  retirement. The rest is taxed as income when you withdraw it, but most retirees
+                  are in a lower tax bracket than during their working years.
                 </p>
               </div>
             </div>
@@ -486,9 +528,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Business Value</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If you build a successful electrical business with employees, recurring contracts,
-                  and a strong reputation, the business itself has value. You may be able to sell it,
-                  bring in a partner, or wind it down gradually — extracting value over several years.
-                  This is not a pension replacement, but it is part of the picture.
+                  and a strong reputation, the business itself has value. You may be able to sell
+                  it, bring in a partner, or wind it down gradually — extracting value over several
+                  years. This is not a pension replacement, but it is part of the picture.
                 </p>
               </div>
             </div>
@@ -511,9 +553,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1. Check your NI record.</strong> Go to gov.uk/check-national-insurance-record.
-                Make sure you have no gaps. If you do, consider filling them with voluntary
-                contributions.
+                <strong>1. Check your NI record.</strong> Go to
+                gov.uk/check-national-insurance-record. Make sure you have no gaps. If you do,
+                consider filling them with voluntary contributions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -527,17 +569,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3. Set up a direct debit.</strong> Even £100 per month is a start. Set it
-                up to leave your account on the day after your quietest billing day — treat it like
-                a bill, not an option.
+                <strong>3. Set up a direct debit.</strong> Even £100 per month is a start. Set it up
+                to leave your account on the day after your quietest billing day — treat it like a
+                bill, not an option.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4. Increase annually.</strong> Each year, increase your contribution by
-                £25–£50 per month. You will barely notice the difference month to month, but over
-                a career it adds up to tens of thousands of pounds.
+                £25–£50 per month. You will barely notice the difference month to month, but over a
+                career it adds up to tens of thousands of pounds.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -589,7 +631,7 @@ export default function ElectricianPensionGuidePage() {
       faqHeading="Frequently Asked Questions About Self-Employed Pensions"
       relatedPages={relatedPages}
       ctaHeading="Earn More, Save More, Retire Better"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. The more efficiently you run your business, the more you can invest in your future. 7-day free trial, cancel anytime."
     />
   );
 }

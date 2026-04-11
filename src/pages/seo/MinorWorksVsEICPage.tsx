@@ -116,7 +116,7 @@ const relatedPages = [
   {
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types UK',
-    description: 'All 8 certificate types explained — when to use each one.',
+    description: 'All 16 certificate types explained — when to use each one.',
     icon: BookOpen,
     category: 'Guide',
   },
@@ -145,9 +145,10 @@ const sections = [
           is the correct document.
         </p>
         <p>
-          This distinction is set out in BS 7671 Part 6. Part 6 requires an EIC for new installations
-          and additions or alterations that include new circuits, and a Minor Works certificate for
-          additions or alterations to existing circuits that do not extend to the installation of a new circuit.
+          This distinction is set out in BS 7671 Part 6. Part 6 requires an EIC for new
+          installations and additions or alterations that include new circuits, and a Minor Works
+          certificate for additions or alterations to existing circuits that do not extend to the
+          installation of a new circuit.
         </p>
         <p>
           Getting this right matters. Issuing the wrong certificate can result in scheme provider
@@ -204,7 +205,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Minor Works in Under 3 Minutes"
-          description="Elec-Mate auto-fills your company details, personal information, and scheme registration number. Enter the circuit details, test results, and signature — the PDF is ready to send before you pack up. All 8 certificate types in one app."
+          description="Elec-Mate auto-fills your company details, personal information, and scheme registration number. Enter the circuit details, test results, and signature — the PDF is ready to send before you pack up. All 16 certificate types in one app."
           icon={FileText}
         />
       </>
@@ -587,12 +588,12 @@ const sections = [
           as you enter them, and the app flags incomplete fields before you sign off.
         </p>
         <p>
-          All 8 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
+          All 16 certificate types in Elec-Mate: EIC, Minor Works, EICR, Emergency Lighting, Fire
           Alarm, PAT Testing, EV Charger, and Solar PV. One subscription covers every certificate an
           electrician needs.
         </p>
         <SEOAppBridge
-          title="All 8 Certificate Types in One App"
+          title="All 16 Certificate Types in One App"
           description="Stop guessing which certificate to use. Elec-Mate guides you to the right form based on the scope of work. Minor Works, EIC, EICR, and 5 more — all with auto-fill, digital signatures, and PDF export."
           icon={ClipboardCheck}
         />
@@ -625,7 +626,7 @@ export default function MinorWorksVsEICPage() {
       faqHeading="Frequently Asked Questions About Minor Works vs EIC"
       relatedPages={relatedPages}
       ctaHeading="Right certificate, every time"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. Minor Works, EIC, EICR, and 5 more certificate types. 7-day free trial."
     />
   );
 }

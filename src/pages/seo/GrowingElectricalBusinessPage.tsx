@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What gross profit margin should an electrician target?',
     answer:
-      'Gross profit margin (revenue minus direct costs of labour and materials, before overheads) should be 35–50 per cent for a healthy electrical business. If you are charging £600 for a consumer unit upgrade and your materials cost £200 and your labour cost (your own time valued at your target daily rate, or your employee\'s wage) is £200, your gross profit is £200 (33 per cent). Net profit (after overheads: van, insurance, tools, software, marketing, accountant) will be lower — typically 15–25 per cent for a well-run small electrical business. Track gross margin monthly and investigate any month where it drops below 30 per cent.',
+      "Gross profit margin (revenue minus direct costs of labour and materials, before overheads) should be 35–50 per cent for a healthy electrical business. If you are charging £600 for a consumer unit upgrade and your materials cost £200 and your labour cost (your own time valued at your target daily rate, or your employee's wage) is £200, your gross profit is £200 (33 per cent). Net profit (after overheads: van, insurance, tools, software, marketing, accountant) will be lower — typically 15–25 per cent for a well-run small electrical business. Track gross margin monthly and investigate any month where it drops below 30 per cent.",
   },
   {
     question: 'What business systems do I need to scale beyond one van?',
@@ -77,12 +77,12 @@ const faqs = [
   {
     question: 'How do I find good subcontractors to use before I am ready to hire?',
     answer:
-      'NICEIC, NAPIT, and ELECSA all have online registers of registered electricians by location. Local trade networks, Facebook groups for electricians, and word of mouth in your area are also effective. When using subcontractors (as opposed to employees), ensure they have their own public liability insurance (£2m minimum), their own scheme registration, and that you have a written subcontractor agreement covering payment terms, quality standards, and responsibility for their work. HMRC\'s IR35 rules apply if a subcontractor works exclusively for you under your direction — take advice if you are unsure about the employment status distinction.',
+      "NICEIC, NAPIT, and ELECSA all have online registers of registered electricians by location. Local trade networks, Facebook groups for electricians, and word of mouth in your area are also effective. When using subcontractors (as opposed to employees), ensure they have their own public liability insurance (£2m minimum), their own scheme registration, and that you have a written subcontractor agreement covering payment terms, quality standards, and responsibility for their work. HMRC's IR35 rules apply if a subcontractor works exclusively for you under your direction — take advice if you are unsure about the employment status distinction.",
   },
   {
     question: 'How do I manage cash flow as my electrical business grows?',
     answer:
-      'Cash flow problems are the most common reason small electrical businesses struggle during growth phases — you are spending on wages, materials, and equipment before customers pay. Key cash flow practices: invoice immediately on job completion, not days later; set payment terms of 14 days on commercial work; require a deposit (25–50 per cent) on larger domestic jobs such as rewires and consumer unit upgrades; use automated payment reminders (most invoicing software has these built in); and maintain a cash reserve of at least two months\' fixed costs. Consider invoice finance if you have significant commercial work with 30+ day payment terms — it is not expensive and solves the timing problem.',
+      "Cash flow problems are the most common reason small electrical businesses struggle during growth phases — you are spending on wages, materials, and equipment before customers pay. Key cash flow practices: invoice immediately on job completion, not days later; set payment terms of 14 days on commercial work; require a deposit (25–50 per cent) on larger domestic jobs such as rewires and consumer unit upgrades; use automated payment reminders (most invoicing software has these built in); and maintain a cash reserve of at least two months' fixed costs. Consider invoice finance if you have significant commercial work with 30+ day payment terms — it is not expensive and solves the timing problem.",
   },
 ];
 
@@ -144,7 +144,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Stage 1: Sole Trader (1 van, sub-£100k turnover)</strong>
+                <strong className="block mb-1">
+                  Stage 1: Sole Trader (1 van, sub-£100k turnover)
+                </strong>
                 <span>
                   You do everything — the electrical work, the quotes, the invoicing, the customer
                   calls. Your income is limited by your available hours. Growth here comes from
@@ -158,7 +160,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Stage 2: Small Team (2–5 vans, £100k–£500k turnover)</strong>
+                <strong className="block mb-1">
+                  Stage 2: Small Team (2–5 vans, £100k–£500k turnover)
+                </strong>
                 <span>
                   You have moved beyond your own capacity by hiring. Your income can now grow beyond
                   your personal billable hours. The challenge shifts from finding work to managing
@@ -172,7 +176,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <strong className="block mb-1">Stage 3: Established Contractor (5+ vans, £500k+ turnover)</strong>
+                <strong className="block mb-1">
+                  Stage 3: Established Contractor (5+ vans, £500k+ turnover)
+                </strong>
                 <span>
                   You have transitioned from being an electrician who runs a business to being a
                   business owner who happens to have an electrical background. At this level, you
@@ -201,9 +207,9 @@ const sections = [
       <>
         <p>
           Taking on your first employee is the most significant milestone in scaling an electrical
-          business. Done correctly, it unlocks growth beyond your personal capacity. Done poorly,
-          it creates expensive legal, financial, and operational problems. Here is what you need
-          to have in place from day one.
+          business. Done correctly, it unlocks growth beyond your personal capacity. Done poorly, it
+          creates expensive legal, financial, and operational problems. Here is what you need to
+          have in place from day one.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -213,8 +219,9 @@ const sections = [
                 <strong>Employment contract</strong> — a written statement of employment particulars
                 is a legal requirement from day one. Include: job title, start date, pay and payment
                 frequency, hours, holiday entitlement (minimum 28 days including bank holidays for
-                full-time), notice period, and place of work. Use a reputable template (ACAS provides
-                free guidance and templates) or pay an employment lawyer £200–£400 to draft one.
+                full-time), notice period, and place of work. Use a reputable template (ACAS
+                provides free guidance and templates) or pay an employment lawyer £200–£400 to draft
+                one.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -222,8 +229,8 @@ const sections = [
               <span>
                 <strong>Employers' liability insurance</strong> — legally required from day one of
                 employment, minimum £5m cover. Your existing public liability policy does not cover
-                you as an employer. A combined trades policy (public liability + employers' liability)
-                typically costs £800–£1,500/year and covers both.
+                you as an employer. A combined trades policy (public liability + employers'
+                liability) typically costs £800–£1,500/year and covers both.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -240,19 +247,20 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Workplace pension (auto-enrolment)</strong> — employers must auto-enrol
-                eligible workers (aged 22–66, earning over £10,000/year) into a pension scheme.
-                The minimum employer contribution is 3 per cent of qualifying earnings. Set up a
-                scheme (NEST is free for employers) before your first eligible employee starts.
+                eligible workers (aged 22–66, earning over £10,000/year) into a pension scheme. The
+                minimum employer contribution is 3 per cent of qualifying earnings. Set up a scheme
+                (NEST is free for employers) before your first eligible employee starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Apprentice vs experienced electrician</strong> — apprentices cost significantly
-                less (£6,000–£14,000/year) but generate limited independent revenue for the first
-                two to three years. Experienced electricians (£28,000–£40,000/year) generate revenue
-                from day one but require a more significant immediate work pipeline to justify the
-                cost. Model both scenarios against your current and projected workload before deciding.
+                <strong>Apprentice vs experienced electrician</strong> — apprentices cost
+                significantly less (£6,000–£14,000/year) but generate limited independent revenue
+                for the first two to three years. Experienced electricians (£28,000–£40,000/year)
+                generate revenue from day one but require a more significant immediate work pipeline
+                to justify the cost. Model both scenarios against your current and projected
+                workload before deciding.
               </span>
             </li>
           </ul>
@@ -283,9 +291,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     professional quoting app
                   </SEOInternalLink>{' '}
-                  with pre-built price lists for your common jobs. This ensures consistency,
-                  speeds up the quoting process, and produces professional branded proposals that
-                  position you as a credible business.
+                  with pre-built price lists for your common jobs. This ensures consistency, speeds
+                  up the quoting process, and produces professional branded proposals that position
+                  you as a credible business.
                 </span>
               </div>
             </li>
@@ -295,10 +303,10 @@ const sections = [
                 <strong className="block mb-1">Invoicing</strong>
                 <span>
                   Invoice on the day of job completion, not days or weeks later. Late invoicing
-                  delays payment and signals to commercial customers that chasing is acceptable.
-                  Use invoicing software with automated payment reminders (three days, seven days,
-                  fourteen days overdue). Set payment terms of 14 days for domestic work and 30
-                  days for commercial.
+                  delays payment and signals to commercial customers that chasing is acceptable. Use
+                  invoicing software with automated payment reminders (three days, seven days,
+                  fourteen days overdue). Set payment terms of 14 days for domestic work and 30 days
+                  for commercial.
                 </span>
               </div>
             </li>
@@ -340,8 +348,9 @@ const sections = [
     content: (
       <>
         <p>
-          Your van is your most visible marketing asset and your most critical piece of infrastructure.
-          As you add vehicles to the fleet, managing them efficiently becomes increasingly important.
+          Your van is your most visible marketing asset and your most critical piece of
+          infrastructure. As you add vehicles to the fleet, managing them efficiently becomes
+          increasingly important.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -349,39 +358,39 @@ const sections = [
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Van livery</strong> — a well-designed, professionally installed van livery
-                is one of the most cost-effective forms of advertising for an electrician. A
-                branded van parked outside a job generates enquiries from neighbours, and driving
-                around your service area provides constant passive advertising. Budget £600–£1,500
-                for a professional full livery.
+                is one of the most cost-effective forms of advertising for an electrician. A branded
+                van parked outside a job generates enquiries from neighbours, and driving around
+                your service area provides constant passive advertising. Budget £600–£1,500 for a
+                professional full livery.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stock management</strong> — running out of a common component on a job
-                and needing to visit a trade counter is expensive in time. A well-organised van
-                stock system — a standard stock list for each vehicle checked weekly — reduces
-                this significantly. Many electricians find that investing an hour per week in
-                van stock saves two to three hours of reactive trade counter runs.
+                <strong>Stock management</strong> — running out of a common component on a job and
+                needing to visit a trade counter is expensive in time. A well-organised van stock
+                system — a standard stock list for each vehicle checked weekly — reduces this
+                significantly. Many electricians find that investing an hour per week in van stock
+                saves two to three hours of reactive trade counter runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle tracking (for a team)</strong> — GPS tracking systems (from
-                £15/month per vehicle) provide route optimisation data, help manage employee
-                van use, support insurance claims, and provide accountability. Many insurers
-                offer premium discounts for tracked commercial vehicles.
+                £15/month per vehicle) provide route optimisation data, help manage employee van
+                use, support insurance claims, and provide accountability. Many insurers offer
+                premium discounts for tracked commercial vehicles.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric vans</strong> — as EV infrastructure improves and fuel costs
-                remain significant, electric commercial vans are increasingly viable for
-                electricians. The irony of an electrician driving a diesel van is not lost on
-                customers — an electric van can be a genuine conversation starter and
-                differentiator, particularly for environmentally conscious commercial customers.
+                <strong>Electric vans</strong> — as EV infrastructure improves and fuel costs remain
+                significant, electric commercial vans are increasingly viable for electricians. The
+                irony of an electrician driving a diesel van is not lost on customers — an electric
+                van can be a genuine conversation starter and differentiator, particularly for
+                environmentally conscious commercial customers.
               </span>
             </li>
           </ul>
@@ -434,8 +443,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Take professional advice first</strong> — do not make this decision based on
-                online research alone. An accountant specialising in trades businesses (many offer
-                a free initial consultation) will model the exact saving for your specific situation
+                online research alone. An accountant specialising in trades businesses (many offer a
+                free initial consultation) will model the exact saving for your specific situation
                 and advise on the optimal salary/dividend split and timing.
               </span>
             </li>
@@ -469,19 +478,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Target net margin: 15–25 per cent</strong> — after paying all overheads
-                (van costs, insurance, tools, software, marketing, accountant, phone, training),
-                a healthy electrical business should retain 15–25 pence per pound of revenue as
-                net profit. Below 10 per cent, you are working hard for a thin return that leaves
-                little buffer for slow periods or unexpected costs.
+                <strong>Target net margin: 15–25 per cent</strong> — after paying all overheads (van
+                costs, insurance, tools, software, marketing, accountant, phone, training), a
+                healthy electrical business should retain 15–25 pence per pound of revenue as net
+                profit. Below 10 per cent, you are working hard for a thin return that leaves little
+                buffer for slow periods or unexpected costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Materials margin</strong> — buying trade account discounts of 25–40 per
-                cent below retail (from Rexel, Edmundson, City Electrical Factors, or similar)
-                and charging customers at close to retail price is standard practice. This materials
+                <strong>Materials margin</strong> — buying trade account discounts of 25–40 per cent
+                below retail (from Rexel, Edmundson, City Electrical Factors, or similar) and
+                charging customers at close to retail price is standard practice. This materials
                 margin contributes to your gross profit. Understand your typical materials discount
                 and factor it into your pricing model.
               </span>
@@ -490,9 +499,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Review monthly</strong> — calculate your gross margin monthly, not just
-                annually. A month where it drops below 30 per cent signals a problem — usually
-                a mis-priced job, unexpected materials costs, or excessive time on a job. Identify
-                the cause and adjust.
+                annually. A month where it drops below 30 per cent signals a problem — usually a
+                mis-priced job, unexpected materials costs, or excessive time on a job. Identify the
+                cause and adjust.
               </span>
             </li>
           </ul>
@@ -519,9 +528,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">From Quote to Certificate in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send a branded quote, convert it to an invoice when the job is done, issue the
-                  certificate on site, and store the customer record — all from your phone.
-                  As you add team members, each one can use Elec-Mate on their own device.
-                  No paperwork. No evening admin. No lost certificates.
+                  certificate on site, and store the customer record — all from your phone. As you
+                  add team members, each one can use Elec-Mate on their own device. No paperwork. No
+                  evening admin. No lost certificates.
                 </p>
               </div>
             </div>
@@ -530,7 +539,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <BarChart3 className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Business Intelligence That Drives Decisions</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Business Intelligence That Drives Decisions
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Know which job types generate the most revenue. Know which customers are most
                   valuable. Know which months are consistently slow so you can plan your marketing
@@ -547,9 +558,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Business Assistant on WhatsApp</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate's AI assistant (Mate) handles customer queries, generates quotes,
-                  reminds you about follow-ups, and provides a morning brief of the day's schedule
-                  — all via WhatsApp. As your business grows, having an always-on assistant takes
-                  the administrative pressure off so you can focus on the work that matters.
+                  reminds you about follow-ups, and provides a morning brief of the day's schedule —
+                  all via WhatsApp. As your business grows, having an always-on assistant takes the
+                  administrative pressure off so you can focus on the work that matters.
                 </p>
               </div>
             </div>
@@ -557,7 +568,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The business platform built for growing electrical companies"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. From sole trader to multi-van operation. 7-day free trial."
           icon={TrendingUp}
         />
       </>
@@ -594,7 +605,7 @@ export default function GrowingElectricalBusinessPage() {
       faqHeading="Frequently Asked Questions About Growing an Electrical Business"
       relatedPages={relatedPages}
       ctaHeading="Scale Your Electrical Business With Elec-Mate"
-      ctaSubheading="Professional quoting, invoicing, job management, and certification for UK electricians at every stage of growth. Join 430+ electrical businesses. 7-day free trial."
+      ctaSubheading="Professional quoting, invoicing, job management, and certification for UK electricians at every stage of growth. Join 1,000+ electrical businesses. 7-day free trial."
     />
   );
 }

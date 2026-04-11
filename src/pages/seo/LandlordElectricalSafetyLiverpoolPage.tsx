@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Liverpool', href: '/guides/landlord-electrical-safety-liverpool' },
+  {
+    label: 'Landlord Electrical Safety Liverpool',
+    href: '/guides/landlord-electrical-safety-liverpool',
+  },
 ];
 
 const tocItems = [
@@ -81,7 +84,7 @@ const faqs = [
   {
     question: 'Can a Liverpool tenant request an electrical safety check?',
     answer:
-      'Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report to Liverpool City Council\'s environmental health or private rented sector team. The council can require the landlord to arrange an inspection and, if the landlord fails to comply with a remedial notice, can arrange the work and recover costs from the landlord.',
+      "Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report to Liverpool City Council's environmental health or private rented sector team. The council can require the landlord to arrange an inspection and, if the landlord fails to comply with a remedial notice, can arrange the work and recover costs from the landlord.",
   },
   {
     question: 'What qualifications must an EICR inspector have in Liverpool?',
@@ -94,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,7 +132,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -143,8 +148,8 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — landlords must obtain an Electrical Installation
-                Condition Report before a new tenancy begins and at least every five years. The
-                EICR is documented in accordance with{' '}
+                Condition Report before a new tenancy begins and at least every five years. The EICR
+                is documented in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
@@ -169,9 +174,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualified person</strong> — the EICR must be carried out by a qualified
-                and competent person, in practice meaning registration with NICEIC, NAPIT, ELECSA,
-                or equivalent.
+                <strong>Qualified person</strong> — the EICR must be carried out by a qualified and
+                competent person, in practice meaning registration with NICEIC, NAPIT, ELECSA, or
+                equivalent.
               </span>
             </li>
           </ul>
@@ -195,9 +200,9 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Selective licensing</strong> — Liverpool City Council operates selective
-                licensing schemes covering significant parts of the city including areas of
-                Toxteth, Kensington, Anfield, and Wavertree. In these areas, landlords must hold
-                a property licence and EICR compliance is a standard licence condition.
+                licensing schemes covering significant parts of the city including areas of Toxteth,
+                Kensington, Anfield, and Wavertree. In these areas, landlords must hold a property
+                licence and EICR compliance is a standard licence condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -213,17 +218,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action power</strong> — if a landlord fails to comply with a
-                remedial notice, the council can arrange for the work to be carried out and
-                recover costs from the landlord. This power is used alongside civil penalties.
+                remedial notice, the council can arrange for the work to be carried out and recover
+                costs from the landlord. This power is used alongside civil penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid
-                Section 21 (no-fault eviction) notice without providing the tenant with a copy
-                of the current EICR. Non-compliance can prevent landlords from regaining
-                possession of their properties.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                (no-fault eviction) notice without providing the tenant with a copy of the current
+                EICR. Non-compliance can prevent landlords from regaining possession of their
+                properties.
               </span>
             </li>
           </ul>
@@ -246,10 +251,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing</strong> — applies to properties with five or
-                more occupants forming two or more households. A valid EICR is a mandatory licence
-                condition. The EICR must cover all fixed electrical installations including
-                communal areas and fire safety systems.
+                <strong>Mandatory HMO licensing</strong> — applies to properties with five or more
+                occupants forming two or more households. A valid EICR is a mandatory licence
+                condition. The EICR must cover all fixed electrical installations including communal
+                areas and fire safety systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -263,9 +268,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspection frequency</strong> — Liverpool HMO licence conditions may
-                require more frequent EICRs than the standard five years. Check your specific
-                licence conditions.
+                <strong>Inspection frequency</strong> — Liverpool HMO licence conditions may require
+                more frequent EICRs than the standard five years. Check your specific licence
+                conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,16 +300,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing
-                to provide it to the tenant, failing to supply it to the council on request, and
+                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing to
+                provide it to the tenant, failing to supply it to the council on request, and
                 failing to complete remedial work are each separate breaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid
-                Section 21 notice without providing the tenant with a copy of the current EICR.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                notice without providing the tenant with a copy of the current EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -319,9 +324,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rent repayment orders</strong> — where a landlord commits certain housing
-                offences (such as operating an unlicensed HMO), tenants can apply to the
-                First-tier Tribunal (Property Chamber) for a rent repayment order of up to
-                12 months' rent.
+                offences (such as operating an unlicensed HMO), tenants can apply to the First-tier
+                Tribunal (Property Chamber) for a rent repayment order of up to 12 months' rent.
               </span>
             </li>
           </ul>
@@ -334,16 +338,14 @@ const sections = [
     heading: 'Tenant Rights Under the Regulations',
     content: (
       <>
-        <p>
-          Liverpool tenants have specific rights under the 2020 Regulations.
-        </p>
+        <p>Liverpool tenants have specific rights under the 2020 Regulations.</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days. New tenants must receive a copy before moving in.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days. New tenants must receive a copy before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -390,33 +392,33 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>28 days maximum</strong> — all remedial work must be completed within
-                28 days of the EICR, unless the inspector specifies a shorter timescale. The
-                28-day clock starts from the date of the inspection.
+                <strong>28 days maximum</strong> — all remedial work must be completed within 28
+                days of the EICR, unless the inspector specifies a shorter timescale. The 28-day
+                clock starts from the date of the inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate action</strong> — C1 (danger present)
-                observations require immediate action. The inspector may recommend disconnecting
-                the affected circuit. Landlords should not wait the full 28 days.
+                observations require immediate action. The inspector may recommend disconnecting the
+                affected circuit. Landlords should not wait the full 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation required</strong> — once remedial work is complete,
-                a qualified person must confirm the work in writing. This must be provided to the
+                <strong>Written confirmation required</strong> — once remedial work is complete, a
+                qualified person must confirm the work in writing. This must be provided to the
                 tenant and to the council within 28 days of the work being completed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common Liverpool remedial work</strong> — typical remedial work in
-                Liverpool includes fitting RCD protection (Regulation 411.3.3), replacing plastic
-                consumer units with metal enclosures, upgrading earthing and bonding, and replacing
+                <strong>Common Liverpool remedial work</strong> — typical remedial work in Liverpool
+                includes fitting RCD protection (Regulation 411.3.3), replacing plastic consumer
+                units with metal enclosures, upgrading earthing and bonding, and replacing
                 deteriorated cables in pre-war terraced housing.
               </span>
             </li>
@@ -439,9 +441,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's
-                online register for Liverpool-based inspectors. Scheme membership assures
-                qualifications, insurance, and regular assessment.
+                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's online
+                register for Liverpool-based inspectors. Scheme membership assures qualifications,
+                insurance, and regular assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -464,8 +466,7 @@ const sections = [
               <span>
                 <strong>Avoid unusually cheap quotes</strong> — a thorough EICR for a Liverpool
                 two-bedroom house requires 2 to 4 hours and calibrated test equipment. Prices
-                substantially below £120 for a one-bedroom property may indicate inadequate
-                testing.
+                substantially below £120 for a one-bedroom property may indicate inadequate testing.
               </span>
             </li>
           </ul>
@@ -479,8 +480,8 @@ const sections = [
     content: (
       <>
         <p>
-          Liverpool EICR costs are competitive compared to southern English cities, reflecting
-          the city's lower labour rates.
+          Liverpool EICR costs are competitive compared to southern English cities, reflecting the
+          city's lower labour rates.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -493,8 +494,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat or small terraced house</strong> — £170 to £300.
-                Usually 5 to 8 circuits.
+                <strong>Two-bedroom flat or small terraced house</strong> — £170 to £300. Usually 5
+                to 8 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -528,8 +529,8 @@ const sections = [
         <p>
           Liverpool's large private rented sector — with a high concentration of HMOs near the
           universities and selective licensing across inner-city neighbourhoods — creates consistent
-          demand for landlord EICRs. Electricians who establish relationships with Liverpool
-          letting agents and property managers can build a strong pipeline of recurring work.
+          demand for landlord EICRs. Electricians who establish relationships with Liverpool letting
+          agents and property managers can build a strong pipeline of recurring work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -542,8 +543,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork.
                 </p>
               </div>
             </div>
@@ -567,7 +568,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Liverpool with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -604,7 +605,7 @@ export default function LandlordElectricalSafetyLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

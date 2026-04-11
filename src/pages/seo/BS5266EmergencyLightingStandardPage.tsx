@@ -590,7 +590,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Emergency lighting testing made efficient"
-          description="Elec-Mate streamlines the entire emergency lighting workflow — testing, certification, defect reporting, quoting, and invoicing. All from your phone, all on site. Plus AI agents, 50+ calculators, and 46+ training courses. 7-day free trial."
+          description="Elec-Mate streamlines the entire emergency lighting workflow — testing, certification, defect reporting, quoting, and invoicing. All from your phone, all on site. Plus AI agents, 70+ calculators, and 46+ training courses. 7-day free trial."
           icon={Lightbulb}
         />
       </>
@@ -626,7 +626,7 @@ export default function BS5266EmergencyLightingStandardPage() {
       faqHeading="Frequently Asked Questions About BS 5266 Emergency Lighting"
       relatedPages={relatedPages}
       ctaHeading="Emergency Lighting Certificates on Your Phone"
-      ctaSubheading="Create professional BS 5266-compliant emergency lighting certificates with Elec-Mate. Complete testing, certification, quoting, and invoicing on site. Plus 46+ training courses and 50+ calculators. 7-day free trial."
+      ctaSubheading="Create professional BS 5266-compliant emergency lighting certificates with Elec-Mate. Complete testing, certification, quoting, and invoicing on site. Plus 46+ training courses and 70+ calculators. 7-day free trial."
     />
   );
 }

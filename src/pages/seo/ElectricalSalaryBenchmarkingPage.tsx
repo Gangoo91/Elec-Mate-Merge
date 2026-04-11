@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What is the JIB Approved Electrician rate in 2025?',
     answer:
-      'The JIB sets the Approved Electrician (AE) rate annually following negotiations between the Electrical Contractors\' Association (ECA) and Unite the Union. For 2025, the JIB Approved Electrician national rate is approximately £20.00 per hour. This equates to a gross annual salary of approximately £37,000 to £40,000 based on a standard 37.5-hour week, rising to £42,000 to £46,000 with typical overtime. Check the JIB website (jib.org.uk) for the current confirmed rate, as it is updated each January.',
+      "The JIB sets the Approved Electrician (AE) rate annually following negotiations between the Electrical Contractors' Association (ECA) and Unite the Union. For 2025, the JIB Approved Electrician national rate is approximately £20.00 per hour. This equates to a gross annual salary of approximately £37,000 to £40,000 based on a standard 37.5-hour week, rising to £42,000 to £46,000 with typical overtime. Check the JIB website (jib.org.uk) for the current confirmed rate, as it is updated each January.",
   },
   {
     question: 'What is the JIB Technician Electrician rate?',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Do JIB rates apply to self-employed electricians?',
     answer:
-      'JIB rates are contractual minimum rates for employees working for JIB-registered employers in England, Wales, and Northern Ireland. They do not directly apply to self-employed electricians or sole traders. However, JIB rates serve as a useful benchmark — self-employed day rate electricians typically charge a premium above the equivalent employed rate to cover their self-employment costs (no employer\'s NI contribution, no holiday pay, no sick pay, funding their own tools and insurance). A typical self-employed day rate in 2025 for an Approved Electrician equivalent is £200 to £280 per day, depending on region and specialism.',
+      "JIB rates are contractual minimum rates for employees working for JIB-registered employers in England, Wales, and Northern Ireland. They do not directly apply to self-employed electricians or sole traders. However, JIB rates serve as a useful benchmark — self-employed day rate electricians typically charge a premium above the equivalent employed rate to cover their self-employment costs (no employer's NI contribution, no holiday pay, no sick pay, funding their own tools and insurance). A typical self-employed day rate in 2025 for an Approved Electrician equivalent is £200 to £280 per day, depending on region and specialism.",
   },
   {
     question: 'What is London weighting for electricians?',
@@ -123,18 +123,18 @@ const sections = [
     content: (
       <>
         <p>
-          The Joint Industry Board (JIB) is the industry body established jointly by the
-          Electrical Contractors' Association (ECA) and Unite the Union to regulate employment
-          conditions in the electrical contracting industry. JIB rates apply to employers who are
-          JIB registered, covering the vast majority of NICEIC and NAPIT member companies.
+          The Joint Industry Board (JIB) is the industry body established jointly by the Electrical
+          Contractors' Association (ECA) and Unite the Union to regulate employment conditions in
+          the electrical contracting industry. JIB rates apply to employers who are JIB registered,
+          covering the vast majority of NICEIC and NAPIT member companies.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Technician Electrician</strong> — approximately £22.50 to £23.00/hour.
-                The highest employed grade under the JIB. Typically holds Level 4 qualifications and
+                <strong>Technician Electrician</strong> — approximately £22.50 to £23.00/hour. The
+                highest employed grade under the JIB. Typically holds Level 4 qualifications and
                 takes technical responsibility for design, verification, or project management.
                 Annual salary equivalent: approximately £43,000 to £47,000 at standard hours.
               </span>
@@ -153,24 +153,24 @@ const sections = [
               <span>
                 <strong>Electrician</strong> — approximately £17.50 to £18.50/hour. A transitional
                 grade for those who have completed their apprenticeship but have not yet achieved
-                JIB Approved Electrician assessment. Annual salary equivalent: approximately
-                £33,000 to £36,000.
+                JIB Approved Electrician assessment. Annual salary equivalent: approximately £33,000
+                to £36,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Improver</strong> — approximately £14.00 to £16.00/hour.
-                For those with some electrical experience and qualifications but not yet fully
+                <strong>Electrical Improver</strong> — approximately £14.00 to £16.00/hour. For
+                those with some electrical experience and qualifications but not yet fully
                 qualified. Annual salary equivalent: approximately £27,000 to £31,000.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Always check the current JIB rate schedule at jib.org.uk — rates are updated annually
-          in January and the figures above are 2025 approximations. The JIB also publishes
-          consolidated WRA documents covering all grades and allowances.
+          Always check the current JIB rate schedule at jib.org.uk — rates are updated annually in
+          January and the figures above are 2025 approximations. The JIB also publishes consolidated
+          WRA documents covering all grades and allowances.
         </p>
       </>
     ),
@@ -181,8 +181,8 @@ const sections = [
     content: (
       <>
         <p>
-          JIB apprentice pay scales are expressed as a percentage of the Approved Electrician
-          rate, reflecting the apprentice's increasing skill and value to the employer as the
+          JIB apprentice pay scales are expressed as a percentage of the Approved Electrician rate,
+          reflecting the apprentice's increasing skill and value to the employer as the
           apprenticeship progresses.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -190,41 +190,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 — 40% of AE rate</strong> — approximately £8.00/hour (2025).
-                Legal minimum (NMW apprentice rate) is £6.40/hour; most JIB employers pay at or
-                above the JIB recommended rate. Annual equivalent: approximately £15,600.
+                <strong>Year 1 — 40% of AE rate</strong> — approximately £8.00/hour (2025). Legal
+                minimum (NMW apprentice rate) is £6.40/hour; most JIB employers pay at or above the
+                JIB recommended rate. Annual equivalent: approximately £15,600.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 2 — 50% of AE rate</strong> — approximately £10.00/hour.
-                From Year 2, if the apprentice is 19 or older, the NMW for their age band applies
-                instead if higher. Annual equivalent: approximately £19,500.
+                <strong>Year 2 — 50% of AE rate</strong> — approximately £10.00/hour. From Year 2,
+                if the apprentice is 19 or older, the NMW for their age band applies instead if
+                higher. Annual equivalent: approximately £19,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 3 — 65% of AE rate</strong> — approximately £13.00/hour.
-                The apprentice is now capable of undertaking most standard installation tasks
-                under supervision. Annual equivalent: approximately £25,350.
+                <strong>Year 3 — 65% of AE rate</strong> — approximately £13.00/hour. The apprentice
+                is now capable of undertaking most standard installation tasks under supervision.
+                Annual equivalent: approximately £25,350.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 4 — 75% of AE rate</strong> — approximately £15.00/hour.
-                Final apprenticeship year — the apprentice is preparing for their end-point
-                assessment (EPA). Annual equivalent: approximately £29,250.
+                <strong>Year 4 — 75% of AE rate</strong> — approximately £15.00/hour. Final
+                apprenticeship year — the apprentice is preparing for their end-point assessment
+                (EPA). Annual equivalent: approximately £29,250.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          On completion of the apprenticeship standard and JIB Approved Electrician assessment,
-          pay should move to the full AE rate. Employers who do not upgrade pay on qualification
-          risk losing their newly qualified electricians to better-paying competitors.
+          On completion of the apprenticeship standard and JIB Approved Electrician assessment, pay
+          should move to the full AE rate. Employers who do not upgrade pay on qualification risk
+          losing their newly qualified electricians to better-paying competitors.
         </p>
       </>
     ),
@@ -235,9 +235,9 @@ const sections = [
     content: (
       <>
         <p>
-          The JIB Working Rule Agreement recognises that the cost of living and working in London
-          is significantly higher than in the rest of England. A London Allowance is paid on top
-          of national rates for electricians working within Greater London.
+          The JIB Working Rule Agreement recognises that the cost of living and working in London is
+          significantly higher than in the rest of England. A London Allowance is paid on top of
+          national rates for electricians working within Greater London.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -246,8 +246,8 @@ const sections = [
               <span>
                 <strong>Inner London zone</strong> — covers the central London boroughs and adds
                 approximately £1.50 to £2.50 per hour above the national rate. An Approved
-                Electrician working in Inner London earns approximately £21.50 to £22.50/hour
-                before shift allowances.
+                Electrician working in Inner London earns approximately £21.50 to £22.50/hour before
+                shift allowances.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -261,21 +261,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Market premium above JIB</strong> — in reality, the London market often
-                pays significantly above JIB minimums, particularly on major commercial,
-                infrastructure, and data centre projects. Self-employed Approved Electrician
-                equivalent day rates in London are commonly £280 to £380 per day, well above the
-                JIB implied rate.
+                <strong>Market premium above JIB</strong> — in reality, the London market often pays
+                significantly above JIB minimums, particularly on major commercial, infrastructure,
+                and data centre projects. Self-employed Approved Electrician equivalent day rates in
+                London are commonly £280 to £380 per day, well above the JIB implied rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ULEZ and congestion charge</strong> — electricians working in central
-                London incur additional costs (ULEZ charge of £12.50/day, congestion charge of
-                £15/day). These are employer costs under the WRA travel and expenses provisions
-                and should be reimbursed. Self-employed contractors should factor these into
-                their day rates.
+                <strong>ULEZ and congestion charge</strong> — electricians working in central London
+                incur additional costs (ULEZ charge of £12.50/day, congestion charge of £15/day).
+                These are employer costs under the WRA travel and expenses provisions and should be
+                reimbursed. Self-employed contractors should factor these into their day rates.
               </span>
             </li>
           </ul>
@@ -339,9 +337,9 @@ const sections = [
     content: (
       <>
         <p>
-          Shift allowances and hazard money can substantially increase total compensation above
-          the basic hourly rate. Understanding what you are entitled to and ensuring your employer
-          pays correctly is an important part of pay benchmarking.
+          Shift allowances and hazard money can substantially increase total compensation above the
+          basic hourly rate. Understanding what you are entitled to and ensuring your employer pays
+          correctly is an important part of pay benchmarking.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -349,10 +347,10 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overtime rates</strong> — the JIB WRA sets overtime premiums: typically
-                time-and-a-quarter (1.25x) for Monday to Friday overtime, time-and-a-half (1.5x)
-                for Saturday, and double time (2x) for Sundays and public holidays. On a project
-                with regular overtime, total weekly earnings can be 20 to 30% above the standard
-                hourly rate.
+                time-and-a-quarter (1.25x) for Monday to Friday overtime, time-and-a-half (1.5x) for
+                Saturday, and double time (2x) for Sundays and public holidays. On a project with
+                regular overtime, total weekly earnings can be 20 to 30% above the standard hourly
+                rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,8 +375,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Travel time and mileage</strong> — under the JIB WRA, travel time to and
-                from site is paid at applicable rates. Mileage reimbursement applies when using
-                your own vehicle. These entitlements are frequently underpaid — check your payslip
+                from site is paid at applicable rates. Mileage reimbursement applies when using your
+                own vehicle. These entitlements are frequently underpaid — check your payslip
                 against the WRA provisions.
               </span>
             </li>
@@ -394,8 +392,8 @@ const sections = [
       <>
         <p>
           Effective pay benchmarking requires comparing like with like. A direct comparison of
-          headline hourly rates is rarely sufficient — total compensation (including overtime,
-          shift premium, travel, and benefits) is the correct measure.
+          headline hourly rates is rarely sufficient — total compensation (including overtime, shift
+          premium, travel, and benefits) is the correct measure.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -411,10 +409,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — Check current market rates</strong> — search live job listings
-                on Indeed, Reed, and the ECA Jobs Board for comparable roles in your area. Note
-                both the advertised rate and whether it is above or below JIB minimums. Trade
-                forums and union shop stewards are also good sources of real-world pay data.
+                <strong>Step 2 — Check current market rates</strong> — search live job listings on
+                Indeed, Reed, and the ECA Jobs Board for comparable roles in your area. Note both
+                the advertised rate and whether it is above or below JIB minimums. Trade forums and
+                union shop stewards are also good sources of real-world pay data.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,10 +426,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Consider non-pay benefits</strong> — employer pension
-                contributions above the auto-enrolment minimum, private medical insurance, income
-                protection, and funded training and qualifications all have real financial value
-                that should be factored into any comparison.
+                <strong>Step 4 — Consider non-pay benefits</strong> — employer pension contributions
+                above the auto-enrolment minimum, private medical insurance, income protection, and
+                funded training and qualifications all have real financial value that should be
+                factored into any comparison.
               </span>
             </li>
           </ul>
@@ -446,16 +444,16 @@ const sections = [
       <>
         <p>
           Once you have benchmarked your pay and identified a gap, the negotiation itself is
-          straightforward if you are well-prepared. Approach it as a business conversation,
-          not a personal request.
+          straightforward if you are well-prepared. Approach it as a business conversation, not a
+          personal request.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Request a formal meeting</strong> — do not raise pay in passing. Ask for
-                a dedicated meeting with your manager. This signals that you are serious and gives
+                <strong>Request a formal meeting</strong> — do not raise pay in passing. Ask for a
+                dedicated meeting with your manager. This signals that you are serious and gives
                 both parties time to prepare.
               </span>
             </li>
@@ -464,15 +462,15 @@ const sections = [
               <span>
                 <strong>Lead with market data</strong> — present the JIB rate for your grade and
                 comparable market rates. If your employer is paying below the JIB minimum for your
-                grade, state this clearly — they have a legal obligation to pay the JIB rate if
-                they are a JIB member.
+                grade, state this clearly — they have a legal obligation to pay the JIB rate if they
+                are a JIB member.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Quantify your contribution</strong> — list certificates issued in your
-                name, projects you have led, apprentices you have mentored, and any additional
+                <strong>Quantify your contribution</strong> — list certificates issued in your name,
+                projects you have led, apprentices you have mentored, and any additional
                 qualifications gained since your last pay review. Make the business case for your
                 value.
               </span>
@@ -480,8 +478,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Have an alternative if needed</strong> — knowing your market value gives
-                you confidence. If your employer refuses a reasonable rise despite clear market
+                <strong>Have an alternative if needed</strong> — knowing your market value gives you
+                confidence. If your employer refuses a reasonable rise despite clear market
                 evidence, it may be time to test the market. Qualified electricians are in short
                 supply in most UK regions and a new employer can often offer considerably more.
               </span>
@@ -500,8 +498,8 @@ const sections = [
           For self-employed electricians and business owners, understanding market rates is only
           half the story — your effective hourly rate depends on how efficiently you quote, invoice,
           and recover costs. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink>{' '}
-          help you price jobs correctly from day one.
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> help
+          you price jobs correctly from day one.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -536,7 +534,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, invoice, and track profitability with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. Know your numbers and grow your business. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. Know your numbers and grow your business. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -573,7 +571,7 @@ export default function ElectricalSalaryBenchmarkingPage() {
       faqHeading="Frequently Asked Questions About Electrician Pay Rates"
       relatedPages={relatedPages}
       ctaHeading="Run a more profitable electrical business with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, electrical certificates, and job scheduling. 7-day free trial, cancel anytime."
     />
   );
 }

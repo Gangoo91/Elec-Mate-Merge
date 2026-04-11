@@ -216,8 +216,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing assessment</strong> — check the supply type (TN-C-S, TN-S, TT) and
-                decide whether to extend the existing earth or install a local earth rod at the shed.
-                This is a critical safety decision covered in detail below.
+                decide whether to extend the existing earth or install a local earth rod at the
+                shed. This is a critical safety decision covered in detail below.
               </span>
             </li>
           </ul>
@@ -257,8 +257,8 @@ const sections = [
           </div>
         </div>
         <p>
-          The sub-main cable must be sized for the maximum demand at the shed, accounting for voltage
-          drop over the cable run. Use the{' '}
+          The sub-main cable must be sized for the maximum demand at the shed, accounting for
+          voltage drop over the cable run. Use the{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -372,10 +372,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting</strong> — LED battens or bulkhead fittings are practical for sheds.
-                For a workshop, aim for 300 to 500 lux at bench height. A 6W to 10W LED batten per
-                square metre of bench area is a reasonable rule of thumb. Include a switch at the
-                door. For larger sheds, add an external PIR-controlled bulkhead for security.
+                <strong>Lighting</strong> — LED battens or bulkhead fittings are practical for
+                sheds. For a workshop, aim for 300 to 500 lux at bench height. A 6W to 10W LED
+                batten per square metre of bench area is a reasonable rule of thumb. Include a
+                switch at the door. For larger sheds, add an external PIR-controlled bulkhead for
+                security.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -392,9 +393,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated circuits</strong> — if the customer has specific high-power
-                equipment (welder, table saw, compressor), provide dedicated radial circuits from the
-                sub-panel rather than relying on socket outlets. This prevents nuisance tripping and
-                provides correct overcurrent protection for the equipment.
+                equipment (welder, table saw, compressor), provide dedicated radial circuits from
+                the sub-panel rather than relying on socket outlets. This prevents nuisance tripping
+                and provides correct overcurrent protection for the equipment.
               </span>
             </li>
           </ul>
@@ -434,8 +435,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               If the house has a TN-S (earth provided by the DNO cable sheath) or TT (earth rod at
               the house) supply, the earth can be extended to the shed via the SWA armouring and a
-              separate CPC within the cable. For TT supplies, an additional earth rod at the shed may
-              improve the earth fault loop impedance and disconnection times, but is not always
+              separate CPC within the cable. For TT supplies, an additional earth rod at the shed
+              may improve the earth fault loop impedance and disconnection times, but is not always
               necessary if the main earth rod value is adequate.
             </p>
           </div>
@@ -569,8 +570,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Basic shed (up to 15m run)</strong> — 2 light points, 2 double sockets, 4-way
-                RCBO board: £400 to £700.
+                <strong>Basic shed (up to 15m run)</strong> — 2 light points, 2 double sockets,
+                4-way RCBO board: £400 to £700.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -607,9 +608,9 @@ const sections = [
       <>
         <p>
           Shed electrical installations are bread-and-butter domestic work with good margins. A
-          typical job takes half a day to a full day depending on the trench length and specification.
-          The key to profitability is an accurate site survey, correct cable sizing on the first
-          visit, and efficient on-site execution.
+          typical job takes half a day to a full day depending on the trench length and
+          specification. The key to profitability is an accurate site survey, correct cable sizing
+          on the first visit, and efficient on-site execution.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -662,7 +663,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify shed electrics"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for outbuilding installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for outbuilding installations. 7-day free trial."
           icon={Home}
         />
       </>
@@ -699,7 +700,7 @@ export default function ShedElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Shed Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Shed Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for outbuilding installations. 7-day free trial, cancel anytime."
     />
   );
 }

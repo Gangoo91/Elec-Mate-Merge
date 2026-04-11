@@ -5,7 +5,7 @@ const reasons = [
     icon: Brain,
     title: 'AI Trained for UK Electrical',
     description:
-      'Not a generic chatbot. 8 Elec-AI specialists trained specifically on BS 7671:2018+A3:2024, GN3, CDM 2015, and thousands of real UK electrical scenarios.',
+      'Not a generic chatbot. AI specialists trained specifically on BS 7671:2018+A3:2024, GN3, CDM 2015, and thousands of real UK electrical scenarios.',
   },
   {
     icon: WifiOff,
@@ -23,7 +23,7 @@ const reasons = [
     icon: Calculator,
     title: 'Calculations Done for You',
     description:
-      '70 calculators with all BS 7671 tables built in. No manual formula work, no spreadsheet errors, no hunting through Appendix 4.',
+      '70+ calculators with all BS 7671 tables built in. No manual formula work, no spreadsheet errors, no hunting through Appendix 4.',
   },
   {
     icon: BookCheck,

@@ -604,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Design, certify, and invoice heat pump electrical work"
-          description="Cable sizing, max demand, EIC certificates, quoting, and invoicing — all on your phone. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Cable sizing, max demand, EIC certificates, quoting, and invoicing — all on your phone. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={Wind}
         />
       </>
@@ -641,7 +641,7 @@ export default function HeatPumpElectricalPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Requirements"
       relatedPages={relatedPages}
       ctaHeading="Design and Certify Heat Pump Circuits on Your Phone"
-      ctaSubheading="Cable sizing calculators, max demand tools, EIC certificates, and invoicing — all in one app. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing calculators, max demand tools, EIC certificates, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

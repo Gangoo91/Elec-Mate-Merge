@@ -593,7 +593,7 @@ export default function NICEICvsNAPICPage() {
       faqHeading="Frequently Asked Questions About NICEIC vs NAPIT"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Any Scheme"
-      ctaSubheading="Elec-Mate creates BS 7671-compliant EICs, MEIWCs, and EICRs that pass any scheme assessment. Digital, professional, and always accessible. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate creates BS 7671-compliant EICs, MEIWCs, and EICRs that pass any scheme assessment. Digital, professional, and always accessible. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

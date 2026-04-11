@@ -108,7 +108,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Critical for long sub-main runs to detached annexes — check voltage drop before ordering cable.',
+    description:
+      'Critical for long sub-main runs to detached annexes — check voltage drop before ordering cable.',
     icon: Zap,
     category: 'Tool',
   },
@@ -160,18 +161,20 @@ const sections = [
           Granny annexes — self-contained living spaces built in the garden or attached to the main
           house — are one of the fastest-growing areas of domestic construction in the UK. They
           provide independent accommodation for elderly relatives, adult children, or rental income,
-          and they require a complete electrical installation equivalent to a small flat or bungalow.
+          and they require a complete electrical installation equivalent to a small flat or
+          bungalow.
         </p>
         <p>
           Unlike a shed or garage conversion, a granny annex typically includes a kitchen, bathroom,
-          living area, and bedroom. This means the electrical installation must cover every aspect of
-          domestic wiring: general power and lighting, cooking circuits, bathroom special location
-          requirements, heating, hot water, smoke detection, and potentially a separate metered
-          supply.
+          living area, and bedroom. This means the electrical installation must cover every aspect
+          of domestic wiring: general power and lighting, cooking circuits, bathroom special
+          location requirements, heating, hot water, smoke detection, and potentially a separate
+          metered supply.
         </p>
         <p>
           This guide covers the complete electrical installation process from supply design through
-          to certification, with practical guidance on the decisions that affect cost and complexity.
+          to certification, with practical guidance on the decisions that affect cost and
+          complexity.
         </p>
       </>
     ),
@@ -191,21 +194,21 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The annex is supplied via a sub-main cable from the house consumer unit or a dedicated
               switch-fuse adjacent to the meter. This is the simpler and cheaper option. It is
-              appropriate when the annex is ancillary to the main house (used by a family member, not
-              separately metered or billed). The sub-main cable must be sized for the annex maximum
-              demand — typically 16.0mm² or 25.0mm² SWA for a one-bedroom annex. The annex
+              appropriate when the annex is ancillary to the main house (used by a family member,
+              not separately metered or billed). The sub-main cable must be sized for the annex
+              maximum demand — typically 16.0mm² or 25.0mm² SWA for a one-bedroom annex. The annex
               electricity cost is included in the main house bill.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Separate DNO Connection</h3>
             <p className="text-white text-sm leading-relaxed">
-              The annex has its own electricity meter and a separate connection from the Distribution
-              Network Operator (DNO). This is required when the annex is a separate dwelling (for
-              rental, sale, or independent occupancy). The DNO installs a new service cable, cut-out,
-              and meter. The electrician provides the meter tails and consumer unit. Lead time is
-              typically 6 to 12 weeks. Cost is £500 to £2,000+ depending on the distance from the
-              existing network and any excavation required.
+              The annex has its own electricity meter and a separate connection from the
+              Distribution Network Operator (DNO). This is required when the annex is a separate
+              dwelling (for rental, sale, or independent occupancy). The DNO installs a new service
+              cable, cut-out, and meter. The electrician provides the meter tails and consumer unit.
+              Lead time is typically 6 to 12 weeks. Cost is £500 to £2,000+ depending on the
+              distance from the existing network and any excavation required.
             </p>
           </div>
         </div>
@@ -267,15 +270,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Immersion heater</strong> — 16A radial in 2.5mm² if the hot water is provided
-                by an immersion heater in a cylinder.
+                <strong>Immersion heater</strong> — 16A radial in 2.5mm² if the hot water is
+                provided by an immersion heater in a cylinder.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smoke detection</strong> — dedicated circuit or fed from the lighting circuit
-                depending on the alarm type and Building Control preference.
+                <strong>Smoke detection</strong> — dedicated circuit or fed from the lighting
+                circuit depending on the alarm type and Building Control preference.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -289,9 +292,9 @@ const sections = [
         </div>
         <p>
           An RCBO board is the recommended approach — it provides individual RCD and overcurrent
-          protection for each circuit without the risk of one fault tripping unrelated circuits. This
-          is particularly important in a self-contained dwelling where losing all power to a fault on
-          one circuit affects an elderly or vulnerable occupant.
+          protection for each circuit without the risk of one fault tripping unrelated circuits.
+          This is particularly important in a self-contained dwelling where losing all power to a
+          fault on one circuit affects an elderly or vulnerable occupant.
         </p>
       </>
     ),
@@ -301,9 +304,7 @@ const sections = [
     heading: 'Kitchen Circuits',
     content: (
       <>
-        <p>
-          The annex kitchen requires the same electrical provision as a kitchen in a house:
-        </p>
+        <p>The annex kitchen requires the same electrical provision as a kitchen in a house:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -420,8 +421,8 @@ const sections = [
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric panel heaters</strong> — the simplest option. Wall-mounted heaters
-                (1kW to 2kW each) on a dedicated radial circuit per room or a shared circuit.
-                Modern smart heaters with individual room thermostats are popular for annexes.
+                (1kW to 2kW each) on a dedicated radial circuit per room or a shared circuit. Modern
+                smart heaters with individual room thermostats are popular for annexes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,8 +437,8 @@ const sections = [
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Air source heat pump</strong> — increasingly common in new-build annexes for
-                Part L compliance. The electrician provides the outdoor unit supply (typically 20A to
-                32A), indoor unit wiring, and controls. A separate circuit for the heat pump is
+                Part L compliance. The electrician provides the outdoor unit supply (typically 20A
+                to 32A), indoor unit wiring, and controls. A separate circuit for the heat pump is
                 essential.
               </span>
             </li>
@@ -460,9 +461,7 @@ const sections = [
     heading: 'Fire Separation and Smoke Detection',
     content: (
       <>
-        <p>
-          Fire safety in an annex has direct implications for the electrical installation:
-        </p>
+        <p>Fire safety in an annex has direct implications for the electrical installation:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -487,8 +486,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting</strong> — not typically required for a domestic annex, but
-                consider a maintained emergency bulkhead at the entrance for elderly or disabled
+                <strong>Emergency lighting</strong> — not typically required for a domestic annex,
+                but consider a maintained emergency bulkhead at the entrance for elderly or disabled
                 occupants who may need illuminated escape during a power failure.
               </span>
             </li>
@@ -511,17 +510,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Self-certified</strong> — by a registered electrician (NICEIC, NAPIT, ELECSA,
-                etc.) who submits the EIC to Building Control via their competent person scheme. This
-                is the standard approach.
+                <strong>Self-certified</strong> — by a registered electrician (NICEIC, NAPIT,
+                ELECSA, etc.) who submits the EIC to Building Control via their competent person
+                scheme. This is the standard approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Control notification</strong> — if the electrician is not registered,
-                the homeowner must apply to Building Control before work starts. Building Control
-                will inspect the work at first fix and final fix stages and charge an inspection fee.
+                <strong>Building Control notification</strong> — if the electrician is not
+                registered, the homeowner must apply to Building Control before work starts.
+                Building Control will inspect the work at first fix and final fix stages and charge
+                an inspection fee.
               </span>
             </li>
           </ul>
@@ -583,7 +583,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional testing of smoke/heat alarms, heating controls, and extract fans</span>
+              <span>
+                Functional testing of smoke/heat alarms, heating controls, and extract fans
+              </span>
             </li>
           </ul>
         </div>
@@ -728,7 +730,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify annex electrics"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for annex electrical installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for annex electrical installations. 7-day free trial."
           icon={Home}
         />
       </>
@@ -765,7 +767,7 @@ export default function AnnexElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About Annex Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Annex Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates for annex installations. 7-day free trial, cancel anytime."
     />
   );
 }

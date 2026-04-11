@@ -545,7 +545,7 @@ export default function ApprenticeTrainingPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="The Training App Built for Electrical Apprentices"
-            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition. Join 430+ UK electricians on Elec-Mate."
+            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition. Join 1,000+ UK electricians on Elec-Mate."
             icon={Award}
           />
           <p className="text-white mt-4 text-sm">
@@ -561,7 +561,7 @@ export default function ApprenticeTrainingPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start your apprenticeship journey"
-        subheading="Join 430+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians and apprentices learning smarter. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

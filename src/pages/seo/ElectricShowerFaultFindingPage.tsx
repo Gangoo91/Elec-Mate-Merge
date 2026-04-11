@@ -136,17 +136,17 @@ const sections = [
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Flow switch</strong> — when the shower valve is turned on, water flow is
-                detected by the flow switch (a paddle or pressure-differential switch). This sends
-                a signal to the PCB to energise the heating element. If water pressure is too low,
-                the flow switch does not activate and the element stays off — running cold water.
+                detected by the flow switch (a paddle or pressure-differential switch). This sends a
+                signal to the PCB to energise the heating element. If water pressure is too low, the
+                flow switch does not activate and the element stays off — running cold water.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solenoid valve</strong> — an electrically operated valve that opens to
-                allow water through the unit when the shower is turned on. A failed solenoid does
-                not open, preventing water flow entirely or restricting it severely.
+                <strong>Solenoid valve</strong> — an electrically operated valve that opens to allow
+                water through the unit when the shower is turned on. A failed solenoid does not
+                open, preventing water flow entirely or restricting it severely.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -187,39 +187,45 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
             <div className="space-y-2 text-white">
-              <p className="font-bold text-lg">Never work on an electric shower without safe isolation</p>
+              <p className="font-bold text-lg">
+                Never work on an electric shower without safe isolation
+              </p>
               <p>
                 A 10.5kW electric shower draws approximately 46A at 230V. Contact with live
-                conductors inside the shower unit will cause severe burns, cardiac arrest, or
-                death. Always isolate at the consumer unit and prove dead before opening the unit.
+                conductors inside the shower unit will cause severe burns, cardiac arrest, or death.
+                Always isolate at the consumer unit and prove dead before opening the unit.
               </p>
             </div>
           </div>
         </div>
-        <p>
-          The safe isolation procedure for an electric shower:
-        </p>
+        <p>The safe isolation procedure for an electric shower:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                1
+              </span>
               <span>
                 <strong>Switch off at the consumer unit</strong> — locate the shower MCB (labelled
-                "Shower" or the bathroom circuit) and switch it off. The shower will be wired on
-                its own dedicated circuit. Lock the board or attach a warning notice.
+                "Shower" or the bathroom circuit) and switch it off. The shower will be wired on its
+                own dedicated circuit. Lock the board or attach a warning notice.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                2
+              </span>
               <span>
                 <strong>Prove dead at the shower terminals</strong> — use a GS38-compliant voltage
-                indicator to test between live and neutral, live and earth, and neutral and earth
-                at the shower supply terminals. The shower unit contains capacitors that can hold
+                indicator to test between live and neutral, live and earth, and neutral and earth at
+                the shower supply terminals. The shower unit contains capacitors that can hold
                 charge briefly — wait at least 30 seconds after isolation before testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 text-sm font-bold">
+                3
+              </span>
               <span>
                 <strong>Test and retest your tester</strong> — verify your voltage indicator works
                 on a known live source before and after proving dead. A faulty tester is one of the
@@ -237,16 +243,16 @@ const sections = [
     content: (
       <>
         <p>
-          An electric shower that trips the RCD every time it is switched on — or during use —
-          has a fault to earth. This is by far the most common serious fault in electric showers.
+          An electric shower that trips the RCD every time it is switched on — or during use — has a
+          fault to earth. This is by far the most common serious fault in electric showers.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Immediate RCD trip (on switch-on)</strong> — the element has failed with
-                a dead short to earth. Insulation resistance between the element and the earth
+                <strong>Immediate RCD trip (on switch-on)</strong> — the element has failed with a
+                dead short to earth. Insulation resistance between the element and the earth
                 terminal will read close to zero. The element must be replaced. Do not continue
                 resetting the RCD.
               </span>
@@ -267,8 +273,8 @@ const sections = [
                 <strong>Testing the element</strong> — after safe isolation, disconnect the element
                 leads from the PCB or terminal block. Set a multifunction tester to 500V DC
                 insulation resistance test. Measure between each element terminal and earth. A
-                reading above 1MΩ is acceptable. Below 0.5MΩ indicates a failing element. Zero
-                or near-zero indicates a failed element that must be replaced.
+                reading above 1MΩ is acceptable. Below 0.5MΩ indicates a failing element. Zero or
+                near-zero indicates a failed element that must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,19 +319,18 @@ const sections = [
                 <strong>Element replacement</strong> — in most shower units, the element is
                 accessible after removing the front cover. The element is secured with screws or
                 clips and connected to the PCB via spade connectors. Replacement elements are
-                model-specific and should be sourced from the manufacturer or a reputable
-                electrical wholesaler. Fitting an incorrect element can cause overheating or
-                RCD tripping.
+                model-specific and should be sourced from the manufacturer or a reputable electrical
+                wholesaler. Fitting an incorrect element can cause overheating or RCD tripping.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limescale prevention</strong> — in hard water areas, fitting an
-                inline scale inhibitor on the cold supply to the shower extends element life
-                significantly. Magnetic scale inhibitors cost £20 to £50 and require no chemicals.
-                Polyphosphate dosing units are more effective but require cartridge replacement
-                every six to twelve months.
+                <strong>Limescale prevention</strong> — in hard water areas, fitting an inline scale
+                inhibitor on the cold supply to the shower extends element life significantly.
+                Magnetic scale inhibitors cost £20 to £50 and require no chemicals. Polyphosphate
+                dosing units are more effective but require cartridge replacement every six to
+                twelve months.
               </span>
             </li>
           </ul>
@@ -339,9 +344,9 @@ const sections = [
     content: (
       <>
         <p>
-          The solenoid valve is an electromagnetically operated valve that controls water flow
-          into the heating chamber. Solenoid valve failure is a common cause of electric shower
-          problems that do not involve the electrical supply circuit at all.
+          The solenoid valve is an electromagnetically operated valve that controls water flow into
+          the heating chamber. Solenoid valve failure is a common cause of electric shower problems
+          that do not involve the electrical supply circuit at all.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -350,8 +355,8 @@ const sections = [
               <span>
                 <strong>Solenoid fails closed (no water flow)</strong> — the valve does not open
                 when energised. The shower turns on but no water passes through the unit. You may
-                hear a faint humming from the solenoid coil attempting to operate. The solenoid
-                coil or valve body requires replacement.
+                hear a faint humming from the solenoid coil attempting to operate. The solenoid coil
+                or valve body requires replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,8 +384,8 @@ const sections = [
         <p>
           Solenoid replacement is a job for an electrician familiar with the specific shower model.
           The valve is accessible after safe isolation and removal of the shower cover. The water
-          supply must be isolated at the isolating valve under the shower before replacing the
-          valve body.
+          supply must be isolated at the isolating valve under the shower before replacing the valve
+          body.
         </p>
       </>
     ),
@@ -402,9 +407,9 @@ const sections = [
               <span>
                 <strong>Minimum pressure requirement</strong> — most electric showers require a
                 minimum dynamic (flowing) water pressure of 0.7 to 1.0 bar at the shower inlet.
-                Check the shower manufacturer's specifications. UK mains pressure is typically
-                1.0 to 3.5 bar at the boundary, but can be lower at the shower due to pipe
-                restrictions, shared supply, or peak demand periods.
+                Check the shower manufacturer's specifications. UK mains pressure is typically 1.0
+                to 3.5 bar at the boundary, but can be lower at the shower due to pipe restrictions,
+                shared supply, or peak demand periods.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -419,10 +424,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Partially blocked inlet filter</strong> — most electric showers have a
-                small inline filter at the water inlet to catch debris. A blocked filter restricts
-                flow and can prevent the flow switch from activating. The filter is accessible
-                after isolating the water supply and is cleaned or replaced as part of routine
+                <strong>Partially blocked inlet filter</strong> — most electric showers have a small
+                inline filter at the water inlet to catch debris. A blocked filter restricts flow
+                and can prevent the flow switch from activating. The filter is accessible after
+                isolating the water supply and is cleaned or replaced as part of routine
                 maintenance.
               </span>
             </li>
@@ -437,28 +442,27 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding which trade to call for an electric shower fault saves time and cost.
-          The fault can lie in the electrical side, the plumbing side, or — in many cases — both.
+          Understanding which trade to call for an electric shower fault saves time and cost. The
+          fault can lie in the electrical side, the plumbing side, or — in many cases — both.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Call an electrician for:</strong> RCD tripping, shower not powering on,
-                no heat (cold water), element or solenoid coil replacement, PCB replacement,
-                circuit fault, wiring fault, installation of a new shower unit, or issuing the
-                Electrical Installation Certificate.
+                <strong>Call an electrician for:</strong> RCD tripping, shower not powering on, no
+                heat (cold water), element or solenoid coil replacement, PCB replacement, circuit
+                fault, wiring fault, installation of a new shower unit, or issuing the Electrical
+                Installation Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Call a plumber for:</strong> low water pressure at the shower inlet,
-                leaking water supply connections, replacing the shower hose or head, fixing the
-                riser rail, or addressing a dripping solenoid valve body (the valve body
-                replacement itself is within an electrician's scope if they are confident with
-                pipework isolation).
+                <strong>Call a plumber for:</strong> low water pressure at the shower inlet, leaking
+                water supply connections, replacing the shower hose or head, fixing the riser rail,
+                or addressing a dripping solenoid valve body (the valve body replacement itself is
+                within an electrician's scope if they are confident with pipework isolation).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -466,9 +470,9 @@ const sections = [
               <span>
                 <strong>Either or both:</strong> a shower that drips after switch-off may be a
                 solenoid fault (electrical) or a worn valve seat (plumbing). An experienced
-                electrician with plumbing knowledge can often diagnose and resolve both aspects.
-                If in doubt, call an electrician first — they can identify the electrical
-                components as safe or faulty, then a plumber can address the water side.
+                electrician with plumbing knowledge can often diagnose and resolve both aspects. If
+                in doubt, call an electrician first — they can identify the electrical components as
+                safe or faulty, then a plumber can address the water side.
               </span>
             </li>
           </ul>
@@ -490,39 +494,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heating element replacement</strong> — £80 to £150 all-in. Element parts
-                £30 to £60, labour £50 to £90. Most common repair.
+                <strong>Heating element replacement</strong> — £80 to £150 all-in. Element parts £30
+                to £60, labour £50 to £90. Most common repair.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solenoid valve replacement</strong> — £60 to £120 all-in. Solenoid parts
-                £20 to £50, labour £40 to £70.
+                <strong>Solenoid valve replacement</strong> — £60 to £120 all-in. Solenoid parts £20
+                to £50, labour £40 to £70.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PCB replacement</strong> — £140 to £300 all-in. PCB parts £80 to £200
-                (model-dependent), labour £60 to £100. If the PCB costs more than 60% of a new
-                unit, replacement of the entire shower is better value.
+                (model-dependent), labour £60 to £100. If the PCB costs more than 60% of a new unit,
+                replacement of the entire shower is better value.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New shower unit fitted</strong> — £300 to £700 all-in. Shower unit £150
-                to £400, installation and certification £150 to £300. A modern 10.5kW unit
-                provides noticeably better performance than an older 7.5kW unit, particularly
-                in winter.
+                <strong>New shower unit fitted</strong> — £300 to £700 all-in. Shower unit £150 to
+                £400, installation and certification £150 to £300. A modern 10.5kW unit provides
+                noticeably better performance than an older 7.5kW unit, particularly in winter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Circuit upgrade (if cable or MCB is undersized)</strong> — £200 to £500
-                for a new dedicated radial circuit from the consumer unit to the shower position,
+                <strong>Circuit upgrade (if cable or MCB is undersized)</strong> — £200 to £500 for
+                a new dedicated radial circuit from the consumer unit to the shower position,
                 including correct cable sizing, MCB, and RCD protection.
               </span>
             </li>
@@ -571,8 +574,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . Customers who receive a professional quote while you are present approve work
-                  at a significantly higher rate than those who receive a quote later by email.
+                  . Customers who receive a professional quote while you are present approve work at
+                  a significantly higher rate than those who receive a quote later by email.
                 </p>
               </div>
             </div>
@@ -580,7 +583,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete shower installation certificates on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, Minor Works certificates, and instant quoting. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Electrical Installation Certificates, Minor Works certificates, and instant quoting. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -617,7 +620,7 @@ export default function ElectricShowerFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Electric Shower Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Electrical Installation Certificates, Minor Works certificates, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

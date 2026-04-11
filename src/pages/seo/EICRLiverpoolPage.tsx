@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, protective devices, earthing, and bonding with classified observation codes.",
   'Liverpool EICR costs typically range from £100 to £400 depending on property size. A two-bedroom flat costs £130 to £220, while a three-bedroom house costs £180 to £300. Prices are generally below the national average, reflecting lower labour rates in the North West.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Liverpool City Council.',
   'Liverpool has a large stock of Victorian terraces, dock area warehouse conversions, and student HMOs. These properties frequently present aged wiring, converted commercial installations, and complex multi-tenancy arrangements that require careful inspection.',
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,18 +146,18 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -166,8 +168,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -212,9 +214,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom+ house</strong> — £280 to £400+. Larger properties in
-                Allerton, Woolton, and Childwall may have multiple consumer units or extensions that
-                increase the scope of inspection.
+                <strong>Four-bedroom+ house</strong> — £280 to £400+. Larger properties in Allerton,
+                Woolton, and Childwall may have multiple consumer units or extensions that increase
+                the scope of inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -253,8 +255,8 @@ const sections = [
               <span>
                 <strong>Before a new tenancy</strong> — the landlord must ensure the electrical
                 installation is inspected and tested by a qualified person, and obtain an EICR,
-                before a new tenant moves in. This applies to all new tenancies from 1 July 2020
-                and all existing tenancies from 1 April 2021.
+                before a new tenant moves in. This applies to all new tenancies from 1 July 2020 and
+                all existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -375,8 +377,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Risk of injury exists. Immediate remedial action is required. The inspector may
               recommend disconnecting the dangerous circuit or installation on the spot. Examples in
-              Liverpool properties include exposed live conductors in warehouse conversions,
-              damaged wiring in cellar areas, and missing consumer unit covers.
+              Liverpool properties include exposed live conductors in warehouse conversions, damaged
+              wiring in cellar areas, and missing consumer unit covers.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -384,8 +386,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
               Liverpool include absent or inadequate earthing (particularly in older terraces), lack
-              of RCD protection on socket circuits, overloaded circuits, and
-              deteriorated cable insulation in dock area conversions.
+              of RCD protection on socket circuits, overloaded circuits, and deteriorated cable
+              insulation in dock area conversions.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -401,9 +403,9 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
               The inspector could not fully assess a part of the installation and further
-              investigation is needed. This is common in Liverpool's converted warehouse
-              properties where wiring may be concealed behind cladding, in service voids, or
-              routed through areas that cannot be accessed without destructive investigation.
+              investigation is needed. This is common in Liverpool's converted warehouse properties
+              where wiring may be concealed behind cladding, in service voids, or routed through
+              areas that cannot be accessed without destructive investigation.
             </p>
           </div>
         </div>
@@ -432,10 +434,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial-to-residential conversions</strong> — warehouse and commercial
-                buildings converted to residential use may retain elements of the original commercial
-                electrical installation. Three-phase supplies, industrial-grade distribution boards,
-                and commercial cable types are sometimes found alongside domestic installations,
-                creating a complex inspection scope.
+                buildings converted to residential use may retain elements of the original
+                commercial electrical installation. Three-phase supplies, industrial-grade
+                distribution boards, and commercial cable types are sometimes found alongside
+                domestic installations, creating a complex inspection scope.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -472,9 +474,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shared supplies in conversions</strong> — some dock area conversions and
-                terraced house conversions share electrical supplies between flats. Identifying which
-                circuits belong to which flat, and confirming that metering and protective devices
-                are correctly allocated, can be time-consuming.
+                terraced house conversions share electrical supplies between flats. Identifying
+                which circuits belong to which flat, and confirming that metering and protective
+                devices are correctly allocated, can be time-consuming.
               </span>
             </li>
           </ul>
@@ -529,18 +531,19 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report completion</strong> — the inspector completes the EICR including
-                Schedules of Circuit Details and Test Results (as required by Regulation
-                Section 631). The report includes observations with classification codes, an overall
+                Schedules of Circuit Details and Test Results (as required by Regulation Section
+                631). The report includes observations with classification codes, an overall
                 assessment, and a recommended date for the next inspection.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          In Liverpool, tenants and landlords should prepare by ensuring clear access to the consumer
-          unit and meter, removing items stored in front of electrical equipment, and making all
-          rooms accessible. In dock area conversions, the meter and consumer unit may be in a
-          communal plant room — check access arrangements with the building management beforehand.
+          In Liverpool, tenants and landlords should prepare by ensuring clear access to the
+          consumer unit and meter, removing items stored in front of electrical equipment, and
+          making all rooms accessible. In dock area conversions, the meter and consumer unit may be
+          in a communal plant room — check access arrangements with the building management
+          beforehand.
         </p>
       </>
     ),
@@ -552,8 +555,8 @@ const sections = [
       <>
         <p>
           The required frequency of EICRs depends on the property type and use. BS 7671 Regulation
-          Section 621 establishes that installations must be periodically inspected at intervals suited to
-          the property type:
+          Section 621 establishes that installations must be periodically inspected at intervals
+          suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -592,9 +595,9 @@ const sections = [
         </div>
         <p>
           The inspector may recommend a shorter interval than the standard maximum if the
-          installation is in poor condition. For example, a Victorian Liverpool terrace with multiple
-          C3 observations may have a recommended next inspection of 3 years rather than the standard
-          5 years.
+          installation is in poor condition. For example, a Victorian Liverpool terrace with
+          multiple C3 observations may have a recommended next inspection of 3 years rather than the
+          standard 5 years.
         </p>
       </>
     ),
@@ -614,8 +617,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. Searching these
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. Searching these
                 registers for Liverpool-based inspectors is the most reliable way to find a
                 qualified person.
               </span>
@@ -702,7 +705,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -727,8 +730,7 @@ export default function EICRLiverpoolPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          EICR Liverpool:{' '}
-          <span className="text-yellow-400">Electrical Inspection Cost 2026</span>
+          EICR Liverpool: <span className="text-yellow-400">Electrical Inspection Cost 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about EICRs in Liverpool — costs by property type, landlord legal requirements, selective licensing, student HMO requirements, dock area property challenges, and how to find a qualified inspector."
@@ -739,7 +741,7 @@ export default function EICRLiverpoolPage() {
       faqHeading="Frequently Asked Questions About EICRs in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -21,7 +21,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Outdoor Entertaining Area Electrical', href: '/guides/outdoor-entertaining-area-electrical' },
+  {
+    label: 'Outdoor Entertaining Area Electrical',
+    href: '/guides/outdoor-entertaining-area-electrical',
+  },
 ];
 
 const tocItems = [
@@ -74,7 +77,7 @@ const faqs = [
   {
     question: 'Does a hot tub in the garden need a separate electrical installation?',
     answer:
-      'Yes. Hot tubs require a dedicated electrical installation that is separate from the general garden electrical supply. The hot tub supply is covered in a separate guide — the HotTubElectricalConnectionPage. In brief: hot tubs typically require a 32A or 40A dedicated single-phase supply (for domestic models up to 3.5kW heater) or a three-phase supply (for commercial-grade models). The supply must be on a dedicated circuit with 30mA RCD, armoured cable, and an external isolator adjacent to the tub. Supplementary bonding of the hot tub metalwork is required. The installation must comply with BS 7671 special location requirements for outdoor areas near water. The hot tub manufacturer\'s installation manual specifies the exact electrical requirements.',
+      "Yes. Hot tubs require a dedicated electrical installation that is separate from the general garden electrical supply. The hot tub supply is covered in a separate guide — the HotTubElectricalConnectionPage. In brief: hot tubs typically require a 32A or 40A dedicated single-phase supply (for domestic models up to 3.5kW heater) or a three-phase supply (for commercial-grade models). The supply must be on a dedicated circuit with 30mA RCD, armoured cable, and an external isolator adjacent to the tub. Supplementary bonding of the hot tub metalwork is required. The installation must comply with BS 7671 special location requirements for outdoor areas near water. The hot tub manufacturer's installation manual specifies the exact electrical requirements.",
   },
   {
     question: 'Can festoon lighting be connected to the house ring circuit?',
@@ -87,35 +90,40 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size armoured cables for underground outdoor circuits to garden buildings and entertaining areas.',
+    description:
+      'Size armoured cables for underground outdoor circuits to garden buildings and entertaining areas.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for outdoor garden electrical installations.',
+    description:
+      'Complete Electrical Installation Certificates for outdoor garden electrical installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote outdoor entertaining area electrical packages including armoured cable and IP66 sockets.',
+    description:
+      'Quote outdoor entertaining area electrical packages including armoured cable and IP66 sockets.',
     icon: Wrench,
     category: 'Tool',
   },
   {
     href: '/guides/swimming-pool-electrical-installation',
     title: 'Swimming Pool Electrical Installation',
-    description: 'BS 7671 Section 702 requirements for pools adjacent to outdoor entertaining areas.',
+    description:
+      'BS 7671 Section 702 requirements for pools adjacent to outdoor entertaining areas.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on armoured cable runs to remote garden buildings and BBQ areas.',
+    description:
+      'Check voltage drop on armoured cable runs to remote garden buildings and BBQ areas.',
     icon: Zap,
     category: 'Tool',
   },
@@ -150,10 +158,10 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          Section 714 (outdoor lighting) and the general requirements for protection against electric
-          shock in outdoor environments, including Regulation 411.3.3 (mandatory RCD protection for
-          outdoor sockets). Correct IP ratings, appropriate cable installation methods, and proper
-          earthing and bonding are all critical elements.
+          Section 714 (outdoor lighting) and the general requirements for protection against
+          electric shock in outdoor environments, including Regulation 411.3.3 (mandatory RCD
+          protection for outdoor sockets). Correct IP ratings, appropriate cable installation
+          methods, and proper earthing and bonding are all critical elements.
         </p>
         <p>
           This guide covers IP ratings for outdoor use, outdoor socket and kitchen circuits, LED
@@ -178,7 +186,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Protected against water splashing from any direction. Minimum for sheltered outdoor
               locations under a covered patio or pergola where direct rain does not reach. Suitable
-              for under-canopy luminaires and enclosed outdoor junction boxes in sheltered positions.
+              for under-canopy luminaires and enclosed outdoor junction boxes in sheltered
+              positions.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-600/15 border border-blue-600/25 p-5">
@@ -190,11 +199,13 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-blue-700/15 border border-blue-700/25 p-5">
-            <h3 className="font-bold text-white text-base mb-2">IP65/IP66 — Dustproof and Jet Protected</h3>
+            <h3 className="font-bold text-white text-base mb-2">
+              IP65/IP66 — Dustproof and Jet Protected
+            </h3>
             <p className="text-white text-sm leading-relaxed">
-              Fully dustproof (6) and protected against water jets (5) or powerful jets (6).
-              IP66 is the standard for outdoor socket housings and weatherproof enclosures.
-              IP65 is suitable for most outdoor luminaires not exposed to direct powerful jets.
+              Fully dustproof (6) and protected against water jets (5) or powerful jets (6). IP66 is
+              the standard for outdoor socket housings and weatherproof enclosures. IP65 is suitable
+              for most outdoor luminaires not exposed to direct powerful jets.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-800/15 border border-blue-800/25 p-5">
@@ -208,9 +219,9 @@ const sections = [
         </div>
         <p>
           Always verify the IP rating of each piece of equipment against its intended installation
-          location. Downgrading IP ratings to reduce cost is a false economy — a luminaire that fails
-          due to water ingress within its first winter is costly to replace and may cause a fault
-          that trips the RCD.
+          location. Downgrading IP ratings to reduce cost is a false economy — a luminaire that
+          fails due to water ingress within its first winter is costly to replace and may cause a
+          fault that trips the RCD.
         </p>
       </>
     ),
@@ -221,9 +232,9 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket provision for an entertaining area should be generous — homeowners regularly
-          need to connect outdoor speakers, string lights, phone chargers, a garden vacuum, and
-          kitchen appliances simultaneously. Key requirements:
+          Outdoor socket provision for an entertaining area should be generous — homeowners
+          regularly need to connect outdoor speakers, string lights, phone chargers, a garden
+          vacuum, and kitchen appliances simultaneously. Key requirements:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -240,9 +251,9 @@ const sections = [
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated kitchen appliance circuits</strong> — if the outdoor kitchen
-                includes an induction hob (2kW to 3.5kW), electric grill, or pizza oven, a
-                dedicated circuit from the consumer unit is required. An outdoor fridge (typically
-                100 to 150W) can share the general outdoor socket circuit.
+                includes an induction hob (2kW to 3.5kW), electric grill, or pizza oven, a dedicated
+                circuit from the consumer unit is required. An outdoor fridge (typically 100 to
+                150W) can share the general outdoor socket circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,8 +261,8 @@ const sections = [
               <span>
                 <strong>30mA RCD protection mandatory</strong> — Regulation 411.3.3 requires 30mA
                 RCD protection for all socket outlets that may be expected to supply portable
-                equipment for use outdoors. This applies to every outdoor socket regardless of
-                the circuit type.
+                equipment for use outdoors. This applies to every outdoor socket regardless of the
+                circuit type.
               </span>
             </li>
           </ul>
@@ -281,10 +292,10 @@ const sections = [
             <Sun className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">12V SELV LED Strip</h3>
             <p className="text-white text-sm leading-relaxed">
-              Powered by a weatherproof 12V or 24V transformer. Safe to touch even when wet —
-              ideal for under-seat recesses, step lighting, and anywhere near water. Maximum run
-              5m at 12V (14.4W/m strip) before voltage drop requires upsizing to 24V. IP65
-              (silicone sleeve) or IP68 (fully waterproof) rating required for outdoor use.
+              Powered by a weatherproof 12V or 24V transformer. Safe to touch even when wet — ideal
+              for under-seat recesses, step lighting, and anywhere near water. Maximum run 5m at 12V
+              (14.4W/m strip) before voltage drop requires upsizing to 24V. IP65 (silicone sleeve)
+              or IP68 (fully waterproof) rating required for outdoor use.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -293,17 +304,17 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Longer runs without voltage drop issues. Festoon lights (IP65 rated) on a weather-
               proof cable are the most popular outdoor entertaining lighting choice — warm white
-              2700K LED filament bulbs create an excellent ambience. Must be connected to a
-              30mA RCD-protected outdoor socket or circuit.
+              2700K LED filament bulbs create an excellent ambience. Must be connected to a 30mA
+              RCD-protected outdoor socket or circuit.
             </p>
           </div>
         </div>
         <p>
-          Wall-wash luminaires for boundary walls or fencing, spike spotlights for plants and
-          garden features, and step lights in decking are all common elements of an outdoor
-          entertaining area lighting scheme. All must be IP65 minimum for exposed outdoor use
-          and connected to a 30mA RCD-protected lighting circuit. Section 714 of BS 7671 applies
-          to the outdoor lighting installation.
+          Wall-wash luminaires for boundary walls or fencing, spike spotlights for plants and garden
+          features, and step lights in decking are all common elements of an outdoor entertaining
+          area lighting scheme. All must be IP65 minimum for exposed outdoor use and connected to a
+          30mA RCD-protected lighting circuit. Section 714 of BS 7671 applies to the outdoor
+          lighting installation.
         </p>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages"
@@ -339,21 +350,21 @@ const sections = [
               <span>
                 <strong>Section 714 (Outdoor Lighting)</strong> — additional requirements for
                 outdoor luminaire circuits: RCD protection (30mA) for all outdoor luminaire
-                circuits; cables buried in the ground must comply with Regulation 522.8.10
-                (minimum depth 500mm, or protected by conduit or armoured cable); luminaires must
-                have appropriate IP rating for the installation location; and protection against
-                thermal effects from luminaires must be considered (particularly for luminaires
-                near combustible materials such as timber decking or garden furniture).
+                circuits; cables buried in the ground must comply with Regulation 522.8.10 (minimum
+                depth 500mm, or protected by conduit or armoured cable); luminaires must have
+                appropriate IP rating for the installation location; and protection against thermal
+                effects from luminaires must be considered (particularly for luminaires near
+                combustible materials such as timber decking or garden furniture).
               </span>
             </li>
           </ul>
         </div>
         <p>
           In practice, the most efficient way to comply is to install a dedicated outdoor circuits
-          RCBO at the consumer unit (combining the MCB and 30mA RCD in one device) for each
-          outdoor circuit — socket circuit, lighting circuit, and any dedicated appliance circuits.
-          This provides individual fault discrimination and avoids the risk of a single RCD
-          tripping all outdoor circuits simultaneously.
+          RCBO at the consumer unit (combining the MCB and 30mA RCD in one device) for each outdoor
+          circuit — socket circuit, lighting circuit, and any dedicated appliance circuits. This
+          provides individual fault discrimination and avoids the risk of a single RCD tripping all
+          outdoor circuits simultaneously.
         </p>
       </>
     ),
@@ -374,9 +385,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated supply</strong> — a hot tub requires a dedicated circuit from
-                the consumer unit — typically 32A or 40A single-phase on 6mm armoured cable.
-                The outdoor entertaining area socket circuit cannot supply the hot tub.
+                <strong>Dedicated supply</strong> — a hot tub requires a dedicated circuit from the
+                consumer unit — typically 32A or 40A single-phase on 6mm armoured cable. The outdoor
+                entertaining area socket circuit cannot supply the hot tub.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -399,8 +410,8 @@ const sections = [
         </div>
         <p>
           Where the outdoor entertaining area includes a hot tub, the zone distances from BS 7671
-          Section 702 (swimming pools and similar) should be applied to the hot tub location —
-          no general-purpose socket outlets within 2m of the hot tub perimeter.
+          Section 702 (swimming pools and similar) should be applied to the hot tub location — no
+          general-purpose socket outlets within 2m of the hot tub perimeter.
         </p>
       </>
     ),
@@ -411,8 +422,8 @@ const sections = [
     content: (
       <>
         <p>
-          All new outdoor circuits must be tested and certified in accordance with BS 7671. The
-          test schedule for outdoor circuits includes:
+          All new outdoor circuits must be tested and certified in accordance with BS 7671. The test
+          schedule for outdoor circuits includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -422,19 +433,28 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance (500V DC, minimum 1 megohm) — with all luminaires and equipment disconnected</span>
+              <span>
+                Insulation resistance (500V DC, minimum 1 megohm) — with all luminaires and
+                equipment disconnected
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Polarity at all socket outlets, luminaire positions, and appliance connection points</span>
+              <span>
+                Polarity at all socket outlets, luminaire positions, and appliance connection points
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Earth fault loop impedance (Zs) at the furthest outdoor socket on each circuit</span>
+              <span>
+                Earth fault loop impedance (Zs) at the furthest outdoor socket on each circuit
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>RCD operation (30mA test) on each outdoor circuit at the RCBO or RCD device</span>
+              <span>
+                RCD operation (30mA test) on each outdoor circuit at the RCBO or RCD device
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -460,17 +480,19 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor entertaining area electrical work is growing rapidly and the projects are
-          often well-scoped and well-funded. Homeowners spending £10,000 to £50,000 on a garden
-          redesign with outdoor kitchen, lighting, and decking will not baulk at a professional
-          electrical package. Key points:
+          Outdoor entertaining area electrical work is growing rapidly and the projects are often
+          well-scoped and well-funded. Homeowners spending £10,000 to £50,000 on a garden redesign
+          with outdoor kitchen, lighting, and decking will not baulk at a professional electrical
+          package. Key points:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <Wrench className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Coordinate with the Landscape Contractor</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Coordinate with the Landscape Contractor
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Armoured cable must be buried before decking and paving is laid. Coordinate with
                   the landscape contractor to identify cable routes and burial depths before
@@ -514,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote outdoor entertaining area electrical packages on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification. Professional PDF quotes from the survey — armoured cable, IP66 sockets, and LED lighting all itemised. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for outdoor electrical quoting, cable sizing, and on-site EIC certification. Professional PDF quotes from the survey — armoured cable, IP66 sockets, and LED lighting all itemised. 7-day free trial."
           icon={Sun}
         />
       </>

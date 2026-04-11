@@ -662,7 +662,7 @@ export default function ElectricalSafetyLandlordPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="AI board scanner, voice test entry, defect-to-quote conversion, and instant PDF delivery. Join 430+ electricians making landlord work faster and more profitable. 7-day free trial."
+      ctaSubheading="AI board scanner, voice test entry, defect-to-quote conversion, and instant PDF delivery. Join 1,000+ electricians making landlord work faster and more profitable. 7-day free trial."
     />
   );
 }

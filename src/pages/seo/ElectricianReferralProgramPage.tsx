@@ -97,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/customer-reviews-electrician',
     title: 'Getting Customer Reviews',
-    description: 'The natural complement to a referral strategy — reviews that reinforce referrals.',
+    description:
+      'The natural complement to a referral strategy — reviews that reinforce referrals.',
     icon: Star,
     category: 'Guide',
   },
@@ -149,8 +150,8 @@ const sections = [
               <span>
                 <strong>Near-zero acquisition cost</strong> — a referred customer costs you nothing
                 beyond the referral fee (if applicable) and the relationship maintenance time you
-                invest in the referring partner. Compare this to Google Ads (£4–£15 per click,
-                5–10 per cent conversion rate) or Checkatrade (£600–£1,500/year subscription plus
+                invest in the referring partner. Compare this to Google Ads (£4–£15 per click, 5–10
+                per cent conversion rate) or Checkatrade (£600–£1,500/year subscription plus
                 competition from other members).
               </span>
             </li>
@@ -167,9 +168,9 @@ const sections = [
               <Handshake className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Self-reinforcing</strong> — great work on a referred job generates reviews
-                and further referrals. The customer refers you to their neighbour; the builder refers
-                you on their next project. A referral network, once established, generates compounding
-                returns over time.
+                and further referrals. The customer refers you to their neighbour; the builder
+                refers you on their next project. A referral network, once established, generates
+                compounding returns over time.
               </span>
             </li>
           </ul>
@@ -225,10 +226,11 @@ const sections = [
               <div>
                 <strong className="block mb-1">Plumbers and heating engineers</strong>
                 <span>
-                  Boiler and heat pump installations require electrical connections and often trigger
-                  consumer unit issues. Smart heating systems need electrical work. Plumbers working
-                  in bathrooms often encounter electrical problems. A mutual referral arrangement
-                  with two or three plumbers can generate consistent work in both directions.
+                  Boiler and heat pump installations require electrical connections and often
+                  trigger consumer unit issues. Smart heating systems need electrical work. Plumbers
+                  working in bathrooms often encounter electrical problems. A mutual referral
+                  arrangement with two or three plumbers can generate consistent work in both
+                  directions.
                 </span>
               </div>
             </li>
@@ -240,8 +242,8 @@ const sections = [
                   If you do not install EV chargers or solar PV yourself, build relationships with
                   specialists who do. They need reliable electricians for consumer unit upgrades,
                   supply capacity work, and remedial issues before installation. If you do install
-                  EV chargers, reciprocal referrals with solar installers work well — customers
-                  with solar often want EV chargers and vice versa.
+                  EV chargers, reciprocal referrals with solar installers work well — customers with
+                  solar often want EV chargers and vice versa.
                 </span>
               </div>
             </li>
@@ -274,8 +276,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Percentage of job value</strong> — 5–8 per cent of the invoiced job value.
-                Works well when job values vary widely. Requires more administration — you must share
-                invoice values with the referring party or agree on a reporting basis.
+                Works well when job values vary widely. Requires more administration — you must
+                share invoice values with the referring party or agree on a reporting basis.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -291,9 +293,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Document the arrangement</strong> — a simple email exchange confirming the
-                structure, the fee amount, what constitutes a qualifying referral, and payment timing
-                is sufficient. Pay within 14 days of receiving payment from the customer. Late
-                payment damages referral relationships faster than anything else.
+                structure, the fee amount, what constitutes a qualifying referral, and payment
+                timing is sufficient. Pay within 14 days of receiving payment from the customer.
+                Late payment damages referral relationships faster than anything else.
               </span>
             </li>
           </ul>
@@ -313,8 +315,8 @@ const sections = [
       <>
         <p>
           Letting agents manage large property portfolios and have a constant need for reliable
-          electricians. EICR certificates for new tenancies, remedial work from EICR findings,
-          and electrical checks for properties going on the market are all steady, predictable work.
+          electricians. EICR certificates for new tenancies, remedial work from EICR findings, and
+          electrical checks for properties going on the market are all steady, predictable work.
           Building one good letting agent relationship can be worth 20–50 jobs per year.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -322,20 +324,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Who to approach</strong> — the property manager or senior lettings negotiator,
-                not the branch manager. Property managers deal with maintenance issues daily and have
-                direct influence over which contractors they use. In larger agencies, there may be a
-                dedicated maintenance coordinator.
+                <strong>Who to approach</strong> — the property manager or senior lettings
+                negotiator, not the branch manager. Property managers deal with maintenance issues
+                daily and have direct influence over which contractors they use. In larger agencies,
+                there may be a dedicated maintenance coordinator.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What they need from you</strong> — reliability (showing up when booked),
-                prompt certificate issue (agents are chasing landlords who are waiting on certificates),
-                professional communication (email confirmation, on-site arrival time updates), and
-                competitive but not rock-bottom pricing. Agents who use the cheapest electrician
-                available spend twice as much time managing problems.
+                prompt certificate issue (agents are chasing landlords who are waiting on
+                certificates), professional communication (email confirmation, on-site arrival time
+                updates), and competitive but not rock-bottom pricing. Agents who use the cheapest
+                electrician available spend twice as much time managing problems.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -355,9 +357,9 @@ const sections = [
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Preferred contractor agreements</strong> — some larger agencies require
-                contractors to sign a preferred supplier agreement covering insurance levels, response
-                times, and pricing. These are standard and worth accepting if the volume of work
-                justifies it.
+                contractors to sign a preferred supplier agreement covering insurance levels,
+                response times, and pricing. These are standard and worth accepting if the volume of
+                work justifies it.
               </span>
             </li>
           </ul>
@@ -383,9 +385,9 @@ const sections = [
               <span>
                 <strong>Ideal network composition</strong> — builder, electrician (you), plumber,
                 heating engineer, kitchen fitter, decorator, tiler, joiner, and possibly a property
-                surveyor or estate agent. Each member covers a different trade, minimising competition.
-                Five to ten members is the ideal size — small enough to know each other, large enough
-                to cover all the trades homeowners commonly need.
+                surveyor or estate agent. Each member covers a different trade, minimising
+                competition. Five to ten members is the ideal size — small enough to know each
+                other, large enough to cover all the trades homeowners commonly need.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,8 +404,8 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Formalise with a WhatsApp group</strong> — a WhatsApp group for the network
-                makes referral sharing easy. Members can post: "Customer needs a plumber in [area]
-                — who's available this week?" It also builds the relationships that make referrals
+                makes referral sharing easy. Members can post: "Customer needs a plumber in [area] —
+                who's available this week?" It also builds the relationships that make referrals
                 feel natural rather than transactional.
               </span>
             </li>
@@ -436,8 +438,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Referral cards for partners</strong> — give each referral partner a stack
-                of your business cards. Better still, print cards specifically for referral use:
+                <strong>Referral cards for partners</strong> — give each referral partner a stack of
+                your business cards. Better still, print cards specifically for referral use:
                 "Referred by [Partner Name] — call [your number] for [X% discount / priority
                 booking]." This tracks the referral source and gives the customer an incentive to
                 use the referral.
@@ -448,18 +450,18 @@ const sections = [
               <span>
                 <strong>Digital sharing</strong> — a professional PDF brochure (one page, listing
                 your services, qualifications, and contact details) that partners can forward via
-                WhatsApp is increasingly effective. When a builder's customer asks for an electrician,
-                the builder can forward your brochure instantly.
+                WhatsApp is increasingly effective. When a builder's customer asks for an
+                electrician, the builder can forward your brochure instantly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Partner landing pages</strong> — if you have a website, consider creating
-                a simple landing page for each major referral partner: "Referred by [Builder Name]?
+                <strong>Partner landing pages</strong> — if you have a website, consider creating a
+                simple landing page for each major referral partner: "Referred by [Builder Name]?
                 Here's what we do and how to get in touch." This makes the referral feel more
-                premium and makes tracking easier (you can see which partner page generates the
-                most traffic).
+                premium and makes tracking easier (you can see which partner page generates the most
+                traffic).
               </span>
             </li>
           </ul>
@@ -502,8 +504,9 @@ const sections = [
               <span>
                 <strong>Thank your referral partners</strong> — when a referral partner sends you
                 work, acknowledge it promptly. Let them know the customer contacted you, thank them
-                personally, and pay any agreed referral fee immediately. Regular positive reinforcement
-                keeps referral relationships active and motivates partners to refer more.
+                personally, and pay any agreed referral fee immediately. Regular positive
+                reinforcement keeps referral relationships active and motivates partners to refer
+                more.
               </span>
             </li>
           </ul>
@@ -519,15 +522,17 @@ const sections = [
         <p>
           Referral business lives and dies on your reputation for professionalism and reliability.
           The trades and agents who refer work to you are vouching for you personally — your
-          performance on every referred job reflects directly on them. Professional systems
-          underpin professional performance.
+          performance on every referred job reflects directly on them. Professional systems underpin
+          professional performance.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Certificates That Impress Letting Agents</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Certificates That Impress Letting Agents
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
@@ -544,11 +549,13 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Track Referral Sources in Your Job Records</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Track Referral Sources in Your Job Records
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Record how each customer found you in Elec-Mate's job management system. Over time,
-                  your referral data shows which relationships generate the most work and the highest
-                  value jobs — so you know where to invest your relationship-building time.
+                  Record how each customer found you in Elec-Mate's job management system. Over
+                  time, your referral data shows which relationships generate the most work and the
+                  highest value jobs — so you know where to invest your relationship-building time.
                 </p>
               </div>
             </div>
@@ -556,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional tools for a referral-worthy electrical business"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Run the kind of professional operation that agents and builders are proud to refer. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, invoicing, job management, and certification. Run the kind of professional operation that agents and builders are proud to refer. 7-day free trial."
           icon={Users}
         />
       </>

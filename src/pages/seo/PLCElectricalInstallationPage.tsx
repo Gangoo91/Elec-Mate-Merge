@@ -87,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/motor-starters-installation',
     title: 'Motor Starter Installation',
-    description: 'DOL, star-delta, and VFD starters — wiring, overload protection, and control circuits.',
+    description:
+      'DOL, star-delta, and VFD starters — wiring, overload protection, and control circuits.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/industrial-earthing-systems',
     title: 'Industrial Earthing Systems',
-    description: 'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
+    description:
+      'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/power-factor-correction',
     title: 'Power Factor Correction',
-    description: 'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
+    description:
+      'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
     icon: Activity,
     category: 'Guide',
   },
@@ -130,17 +133,18 @@ const sections = [
           wiring. Panel design is governed by BS EN 61439 (low-voltage switchgear and controlgear
           assemblies), and all electrical installation work connecting the panel to the fixed
           installation must comply with BS 7671. Good panel design reduces installation time, makes
-          fault-finding straightforward, and ensures the system can be safely modified in the future.
+          fault-finding straightforward, and ensures the system can be safely modified in the
+          future.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cpu className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DIN rail layout</strong> — arrange components on steel DIN rail (35 mm
-                × 7.5 mm to BS EN 60715) in a logical sequence: incoming isolator and MCBs at
-                the top, PLC rack in the middle, I/O terminal strips at the bottom. Allow a
-                minimum 25 mm gap between rows for cable access and ventilation.
+                <strong>DIN rail layout</strong> — arrange components on steel DIN rail (35 mm × 7.5
+                mm to BS EN 60715) in a logical sequence: incoming isolator and MCBs at the top, PLC
+                rack in the middle, I/O terminal strips at the bottom. Allow a minimum 25 mm gap
+                between rows for cable access and ventilation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,8 +160,8 @@ const sections = [
               <Cpu className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Thermal management</strong> — calculate the total heat dissipation of all
-                components (from data sheets). If the panel ambient temperature would exceed 35°C
-                at maximum ambient, specify a panel air conditioner or heat exchanger. PLC
+                components (from data sheets). If the panel ambient temperature would exceed 35°C at
+                maximum ambient, specify a panel air conditioner or heat exchanger. PLC
                 manufacturers specify maximum ambient temperature for each CPU and I/O module.
               </span>
             </li>
@@ -181,19 +185,19 @@ const sections = [
       <>
         <p>
           PLC systems require at least two voltage levels: mains voltage (240 V AC single phase or
-          400 V AC three phase) for power to the panel and for output loads, and 24 VDC for the
-          PLC itself, I/O modules, and field devices. The 24 VDC power supply must be a
-          DIN-rail-mounted switched-mode unit rated for the total 24 VDC current consumption
-          plus a minimum 25% margin.
+          400 V AC three phase) for power to the panel and for output loads, and 24 VDC for the PLC
+          itself, I/O modules, and field devices. The 24 VDC power supply must be a DIN-rail-mounted
+          switched-mode unit rated for the total 24 VDC current consumption plus a minimum 25%
+          margin.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains incoming supply</strong> — main isolator (rotary cam switch or
-                moulded case circuit breaker with lockable handle) at the top of the panel provides
-                safe isolation. Individual MCBs protect each mains voltage circuit (motor supplies,
+                <strong>Mains incoming supply</strong> — main isolator (rotary cam switch or moulded
+                case circuit breaker with lockable handle) at the top of the panel provides safe
+                isolation. Individual MCBs protect each mains voltage circuit (motor supplies,
                 heaters, lighting, 240 V socket for laptop).
               </span>
             </li>
@@ -201,28 +205,28 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>24 VDC distribution</strong> — use a 24 VDC busbar or terminal block
-                distribution for positive (+24 V) and 0 V rails. Add individual miniature fuses
-                (1 A or 2 A) per I/O group or field circuit segment to limit fault current and
-                aid fault location. Electronic fuses (eFuse modules) provide resettable protection
-                and fault indication.
+                distribution for positive (+24 V) and 0 V rails. Add individual miniature fuses (1 A
+                or 2 A) per I/O group or field circuit segment to limit fault current and aid fault
+                location. Electronic fuses (eFuse modules) provide resettable protection and fault
+                indication.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UPS for critical systems</strong> — where a mains failure must not cause
-                a dangerous process state, fit a 24 VDC UPS module (capacitor-based for a few
-                seconds, battery-based for minutes) to maintain PLC power during transition.
-                The UPS also protects against mains voltage dips that could cause the PLC to reset.
+                <strong>UPS for critical systems</strong> — where a mains failure must not cause a
+                dangerous process state, fit a 24 VDC UPS module (capacitor-based for a few seconds,
+                battery-based for minutes) to maintain PLC power during transition. The UPS also
+                protects against mains voltage dips that could cause the PLC to reset.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power supply redundancy</strong> — for high-availability systems, use two
-                24 VDC power supplies with a diode OR module (prevents back-feed between PSUs)
-                feeding the same busbar. If one PSU fails, the other maintains the load without
-                interruption and a fault alarm is generated.
+                <strong>Power supply redundancy</strong> — for high-availability systems, use two 24
+                VDC power supplies with a diode OR module (prevents back-feed between PSUs) feeding
+                the same busbar. If one PSU fails, the other maintains the load without interruption
+                and a fault alarm is generated.
               </span>
             </li>
           </ul>
@@ -239,18 +243,18 @@ const sections = [
           Digital inputs connect field devices (pushbuttons, limit switches, proximity sensors,
           photoelectric sensors, pressure switches, flow switches) to the PLC. Each digital input
           module has a defined input voltage range (typically 15–30 VDC), input current (typically
-          4–8 mA), and input impedance. The field device must be capable of sinking or sourcing
-          the required input current reliably.
+          4–8 mA), and input impedance. The field device must be capable of sinking or sourcing the
+          required input current reliably.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PNP (sourcing) wiring</strong> — most common in UK/European systems. The
-                24 V positive rail is switched to the PLC input terminal by the field device or
-                sensor. The 0 V common is connected to the PLC input common terminal. PNP proximity
-                sensors and pushbuttons with normally open contacts are wired this way.
+                <strong>PNP (sourcing) wiring</strong> — most common in UK/European systems. The 24
+                V positive rail is switched to the PLC input terminal by the field device or sensor.
+                The 0 V common is connected to the PLC input common terminal. PNP proximity sensors
+                and pushbuttons with normally open contacts are wired this way.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -266,20 +270,20 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable length and voltage drop</strong> — long cable runs increase voltage
-                drop and may cause input under-voltage. For runs over 100 m, use 1.5 mm² cores
-                and check that 24 VDC minus the cable volt drop (at input current) remains above
-                the input ON threshold. Use 4–20 mA analogue signals rather than digital 24 VDC
-                for very long runs where possible.
+                drop and may cause input under-voltage. For runs over 100 m, use 1.5 mm² cores and
+                check that 24 VDC minus the cable volt drop (at input current) remains above the
+                input ON threshold. Use 4–20 mA analogue signals rather than digital 24 VDC for very
+                long runs where possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety inputs</strong> — E-stop buttons, light curtains, and safety gate
-                switches connected to safety PLC inputs (or safety relay modules) must be wired
-                with redundant channels and cable monitoring (OSSD outputs from safety devices).
-                Follow the specific safety device wiring instructions and functional safety
-                requirements (BS EN ISO 13849, BS EN 62061).
+                switches connected to safety PLC inputs (or safety relay modules) must be wired with
+                redundant channels and cable monitoring (OSSD outputs from safety devices). Follow
+                the specific safety device wiring instructions and functional safety requirements
+                (BS EN ISO 13849, BS EN 62061).
               </span>
             </li>
           </ul>
@@ -304,22 +308,22 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Relay outputs</strong> — volt-free contacts rated typically 2 A at 240 VAC
-                or 24 VDC. Fit a suppression diode (1N4004 or equivalent) across DC inductive
-                loads (solenoid valves, relay coils) to clamp the back-EMF on de-energisation.
-                For AC loads, fit an RC snubber (typically 0.1 µF + 100 Ω) across the load.
-                Relay outputs have finite contact life (10–30 million operations) — check against
-                the cycle rate requirement.
+                or 24 VDC. Fit a suppression diode (1N4004 or equivalent) across DC inductive loads
+                (solenoid valves, relay coils) to clamp the back-EMF on de-energisation. For AC
+                loads, fit an RC snubber (typically 0.1 µF + 100 Ω) across the load. Relay outputs
+                have finite contact life (10–30 million operations) — check against the cycle rate
+                requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transistor outputs (24 VDC)</strong> — PNP transistor outputs switch
-                +24 V to the load, current returns through 0 V common. Rated typically 0.5–2 A
-                per channel. Used for servo drive enable signals, high-speed pulse outputs, and
-                24 VDC loads with high cycle rates. Always fit a free-wheel diode across
-                inductive 24 VDC loads (the output module may have internal protection, but
-                external diodes provide extra safety margin).
+                <strong>Transistor outputs (24 VDC)</strong> — PNP transistor outputs switch +24 V
+                to the load, current returns through 0 V common. Rated typically 0.5–2 A per
+                channel. Used for servo drive enable signals, high-speed pulse outputs, and 24 VDC
+                loads with high cycle rates. Always fit a free-wheel diode across inductive 24 VDC
+                loads (the output module may have internal protection, but external diodes provide
+                extra safety margin).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,11 +339,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Output fusing</strong> — protect each output or output group with a fuse
-                or electronic fuse sized to the output module's maximum current rating. A shorted
-                load without fusing can destroy the entire output module. Use individual fuses per
-                output channel for critical or complex systems, common group fuses for simple
-                applications.
+                <strong>Output fusing</strong> — protect each output or output group with a fuse or
+                electronic fuse sized to the output module's maximum current rating. A shorted load
+                without fusing can destroy the entire output module. Use individual fuses per output
+                channel for critical or complex systems, common group fuses for simple applications.
               </span>
             </li>
           </ul>
@@ -354,10 +357,10 @@ const sections = [
       <>
         <p>
           Poor earthing is the most common cause of intermittent PLC faults in industrial
-          installations. Electromagnetic interference (EMI) from VFDs, contactors, and power
-          cables couples into signal wiring and analogue inputs, causing spurious inputs, corrupted
-          communications, and programme faults. Correct earthing eliminates or greatly reduces
-          these problems.
+          installations. Electromagnetic interference (EMI) from VFDs, contactors, and power cables
+          couples into signal wiring and analogue inputs, causing spurious inputs, corrupted
+          communications, and programme faults. Correct earthing eliminates or greatly reduces these
+          problems.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -366,16 +369,16 @@ const sections = [
               <span>
                 <strong>Star-point earth bar</strong> — use a single copper earth bar (star point)
                 in the panel connected to the installation earth via a low-impedance conductor
-                (minimum 16 mm²). All panel component earths, cable screen terminations, and the
-                DIN rail earth connection radiate from this single point to prevent earth current
-                loops between devices.
+                (minimum 16 mm²). All panel component earths, cable screen terminations, and the DIN
+                rail earth connection radiate from this single point to prevent earth current loops
+                between devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable screen termination</strong> — terminate screened cable screens
-                at the panel using EMC cable glands that provide 360° screen bonding (not pigtail
+                <strong>Cable screen termination</strong> — terminate screened cable screens at the
+                panel using EMC cable glands that provide 360° screen bonding (not pigtail
                 connections, which have high inductance at RF frequencies). The screen must be
                 bonded at the panel end; leave floating at the field device end unless the field
                 device is part of the same earth reference.
@@ -384,20 +387,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>VFD earthing</strong> — VFD motor cables must use screened cable (SY or
-                SWA with separate screen) with the screen bonded at both the VFD and the motor
-                terminal box using EMC glands. The VFD chassis must be bonded to the panel earth
-                bar. Failure to do this causes high-frequency common-mode currents that corrupt
-                all analogue and communications wiring in the panel.
+                <strong>VFD earthing</strong> — VFD motor cables must use screened cable (SY or SWA
+                with separate screen) with the screen bonded at both the VFD and the motor terminal
+                box using EMC glands. The VFD chassis must be bonded to the panel earth bar. Failure
+                to do this causes high-frequency common-mode currents that corrupt all analogue and
+                communications wiring in the panel.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Separate analogue earth</strong> — in systems with mixed digital I/O and
-                analogue signals, consider using a separate analogue earth bar connected to the
-                main earth at a single point. This prevents digital switching noise on the
-                common earth reference from affecting analogue measurements.
+                analogue signals, consider using a separate analogue earth bar connected to the main
+                earth at a single point. This prevents digital switching noise on the common earth
+                reference from affecting analogue measurements.
               </span>
             </li>
           </ul>
@@ -413,46 +416,46 @@ const sections = [
         <p>
           Cable segregation is a fundamental requirement for reliable PLC operation. The objective
           is to prevent electromagnetic coupling between high-power conductors (which carry large,
-          rapidly-changing currents) and low-level signal conductors (which carry small currents
-          or voltages). BS EN 61000-5-2 provides guidance on cable segregation for EMC.
+          rapidly-changing currents) and low-level signal conductors (which carry small currents or
+          voltages). BS EN 61000-5-2 provides guidance on cable segregation for EMC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Category 1 — Power cables</strong> — mains voltage (230/400 V AC) cables
-                to motors, heaters, transformers, and main distribution. Run in steel cable tray
-                or conduit. Maintain minimum 300 mm separation from Category 3 cables (or separate
-                by a grounded metallic barrier where separation is not possible).
+                <strong>Category 1 — Power cables</strong> — mains voltage (230/400 V AC) cables to
+                motors, heaters, transformers, and main distribution. Run in steel cable tray or
+                conduit. Maintain minimum 300 mm separation from Category 3 cables (or separate by a
+                grounded metallic barrier where separation is not possible).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Category 2 — 24 VDC I/O cables</strong> — digital input and output cables.
-                Can share a tray with other 24 VDC wiring. Maintain at least 150 mm from Category
-                1 power cables. Use screened cable for runs over 30 m or in areas of high
-                electrical noise (near VFDs or large contactors).
+                Can share a tray with other 24 VDC wiring. Maintain at least 150 mm from Category 1
+                power cables. Use screened cable for runs over 30 m or in areas of high electrical
+                noise (near VFDs or large contactors).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Category 3 — Analogue and communications cables</strong> — 4–20 mA,
-                0–10 V, thermocouple, RTD, Profibus, Modbus RTU, and Ethernet cables. Always use
+                <strong>Category 3 — Analogue and communications cables</strong> — 4–20 mA, 0–10 V,
+                thermocouple, RTD, Profibus, Modbus RTU, and Ethernet cables. Always use
                 individually screened twisted pair. Maintain minimum 300 mm from Category 1 cables
-                or separate by a grounded metallic partition. Never bundle analogue and power
-                cables together, even for short runs.
+                or separate by a grounded metallic partition. Never bundle analogue and power cables
+                together, even for short runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>VFD motor cables</strong> — treat VFD output cables (PWM waveform) as
-                the highest noise category. Run in separate steel conduit or armoured cable
-                separate from all other cables. Never run VFD motor cables parallel to signal
-                cables in the same tray.
+                <strong>VFD motor cables</strong> — treat VFD output cables (PWM waveform) as the
+                highest noise category. Run in separate steel conduit or armoured cable separate
+                from all other cables. Never run VFD motor cables parallel to signal cables in the
+                same tray.
               </span>
             </li>
           </ul>
@@ -467,10 +470,10 @@ const sections = [
       <>
         <p>
           A PLC installation without comprehensive documentation is a liability — for the installer,
-          the client, and anyone who must maintain or modify the system in the future.
-          BS EN 61082 governs the preparation of documents used in electrical work, and IEC 81346
-          provides rules for reference designation systems. In practice, the minimum documentation
-          set for a PLC installation comprises the following.
+          the client, and anyone who must maintain or modify the system in the future. BS EN 61082
+          governs the preparation of documents used in electrical work, and IEC 81346 provides rules
+          for reference designation systems. In practice, the minimum documentation set for a PLC
+          installation comprises the following.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -478,26 +481,26 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Panel general arrangement (GA) drawing</strong> — plan view showing
-                component positions, door cut-outs (HMI, operator panel), cable entry areas,
-                and dimensional information. Used for fabrication and future reference.
+                component positions, door cut-outs (HMI, operator panel), cable entry areas, and
+                dimensional information. Used for fabrication and future reference.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit diagrams (schematic diagrams)</strong> — power schematic (showing
-                all mains voltage circuits) and control schematic (24 VDC and I/O circuits),
-                drawn to BS EN 61082. All components referenced by unique tag numbers matching
-                the panel component labelling.
+                all mains voltage circuits) and control schematic (24 VDC and I/O circuits), drawn
+                to BS EN 61082. All components referenced by unique tag numbers matching the panel
+                component labelling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>I/O schedule</strong> — spreadsheet or table listing every I/O point:
-                PLC address, tag name, description, signal type (DI/DO/AI/AO), field device tag,
-                cable number, terminal number, and notes (e.g., "normally closed in safe state").
-                The I/O schedule is the master reference for commissioning and fault-finding.
+                <strong>I/O schedule</strong> — spreadsheet or table listing every I/O point: PLC
+                address, tag name, description, signal type (DI/DO/AI/AO), field device tag, cable
+                number, terminal number, and notes (e.g., "normally closed in safe state"). The I/O
+                schedule is the master reference for commissioning and fault-finding.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -505,8 +508,8 @@ const sections = [
               <span>
                 <strong>Program backup and documentation</strong> — PLC program saved in
                 manufacturer format (e.g., .zap15 for Siemens TIA Portal, .ACD for Allen-Bradley
-                Studio 5000). Provide a PDF/printout of the program with comments on all rungs
-                and function blocks. Record firmware versions for all PLC components.
+                Studio 5000). Provide a PDF/printout of the program with comments on all rungs and
+                function blocks. Record firmware versions for all PLC components.
               </span>
             </li>
           </ul>
@@ -522,9 +525,9 @@ const sections = [
         <p>
           PLC system commissioning is a structured process that verifies the electrical installation
           before power is applied, then systematically confirms that every I/O point functions
-          correctly. A Factory Acceptance Test (FAT) is carried out at the panel builder's
-          workshop, and a Site Acceptance Test (SAT) is carried out after installation at the
-          client's premises.
+          correctly. A Factory Acceptance Test (FAT) is carried out at the panel builder's workshop,
+          and a Site Acceptance Test (SAT) is carried out after installation at the client's
+          premises.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -542,28 +545,29 @@ const sections = [
               <span>
                 <strong>I/O loop check</strong> — with the PLC program loaded and powered,
                 systematically operate each field device (or apply a test signal at the terminal
-                strip) and verify the correct PLC input address illuminates. For each output,
-                force the output ON in the PLC diagnostic display and verify the field device
-                operates. Record all results in the commissioning test sheet.
+                strip) and verify the correct PLC input address illuminates. For each output, force
+                the output ON in the PLC diagnostic display and verify the field device operates.
+                Record all results in the commissioning test sheet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Functional test</strong> — run through all control sequences defined in
-                the functional design specification. Test all normal operating modes, interlocks,
+                <strong>Functional test</strong> — run through all control sequences defined in the
+                functional design specification. Test all normal operating modes, interlocks,
                 alarms, and safety functions. Test the E-stop circuit and confirm safe state is
-                achieved within the required time. Document any non-conformances and their resolution.
+                achieved within the required time. Document any non-conformances and their
+                resolution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety function testing</strong> — all safety functions (E-stop, safety
-                guard interlock, two-hand control) must be tested in accordance with the
-                applicable functional safety standard (BS EN ISO 13849 or BS EN 62061) and the
-                results recorded. This is a legal requirement under the Machinery Directive and
-                the UK equivalent post-Brexit (UK MD S.I. 2008/1597).
+                guard interlock, two-hand control) must be tested in accordance with the applicable
+                functional safety standard (BS EN ISO 13849 or BS EN 62061) and the results
+                recorded. This is a legal requirement under the Machinery Directive and the UK
+                equivalent post-Brexit (UK MD S.I. 2008/1597).
               </span>
             </li>
           </ul>
@@ -596,8 +600,8 @@ const sections = [
                   </SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate on your phone after
                   commissioning the PLC panel. Record insulation resistance results, circuit
-                  details, and test engineer information — then export a professional PDF before
-                  you leave site.
+                  details, and test engineer information — then export a professional PDF before you
+                  leave site.
                 </p>
               </div>
             </div>
@@ -605,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PLC installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, commissioning test records, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -642,7 +646,7 @@ export default function PLCElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About PLC Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Industrial EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

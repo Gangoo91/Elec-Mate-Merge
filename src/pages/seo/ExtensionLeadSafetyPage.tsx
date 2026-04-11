@@ -128,15 +128,15 @@ const sections = [
       <>
         <p>
           Extension leads are one of the most commonly misused items in UK homes and workplaces.
-          Electrical Safety First estimates that overloaded extension leads cause thousands of
-          fires in the UK every year. The combination of multiple high-wattage appliances,
-          coiled cables, and the temptation to daisy-chain leads creates conditions that can
-          result in fire and electric shock.
+          Electrical Safety First estimates that overloaded extension leads cause thousands of fires
+          in the UK every year. The combination of multiple high-wattage appliances, coiled cables,
+          and the temptation to daisy-chain leads creates conditions that can result in fire and
+          electric shock.
         </p>
         <p>
           The good news is that extension lead hazards are almost entirely preventable. A small
-          amount of knowledge about load limits, lead types, and safe usage turns a potential
-          hazard into a safe, useful tool.
+          amount of knowledge about load limits, lead types, and safe usage turns a potential hazard
+          into a safe, useful tool.
         </p>
       </>
     ),
@@ -152,9 +152,7 @@ const sections = [
           multiple appliances, calculate the total load.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <p className="font-semibold text-white mb-3">
-            Load calculation: Amps = Watts ÷ 230V
-          </p>
+          <p className="font-semibold text-white mb-3">Load calculation: Amps = Watts ÷ 230V</p>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -183,9 +181,9 @@ const sections = [
           </p>
         </div>
         <p>
-          Check the wattage label on the back or underside of each appliance and add up the
-          totals. Most extension leads also have a maximum load label — always respect it. Some
-          economy leads are rated at less than 13A despite having a 13A plug fuse.
+          Check the wattage label on the back or underside of each appliance and add up the totals.
+          Most extension leads also have a maximum load label — always respect it. Some economy
+          leads are rated at less than 13A despite having a 13A plug fuse.
         </p>
       </>
     ),
@@ -196,36 +194,35 @@ const sections = [
     content: (
       <>
         <p>
-          Daisy-chaining — plugging one extension lead into another — is one of the most
-          dangerous things you can do with extension leads. It is prohibited in many workplace
-          settings and is a common cause of electrical fires in homes.
+          Daisy-chaining — plugging one extension lead into another — is one of the most dangerous
+          things you can do with extension leads. It is prohibited in many workplace settings and is
+          a common cause of electrical fires in homes.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Compound overloading risk</strong> — the total load on a daisy-chain
-                appears at the original socket outlet and at the connection between the two
-                leads. The original socket, its wiring, and the plug connection all carry the
-                full combined load.
+                <strong>Compound overloading risk</strong> — the total load on a daisy-chain appears
+                at the original socket outlet and at the connection between the two leads. The
+                original socket, its wiring, and the plug connection all carry the full combined
+                load.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Arcing at the connection point</strong> — the connection between the
-                first lead's socket and the second lead's plug is a loose mechanical contact
-                that can arc if it works loose under load. Arcing generates heat and is a
-                direct fire hazard.
+                <strong>Arcing at the connection point</strong> — the connection between the first
+                lead's socket and the second lead's plug is a loose mechanical contact that can arc
+                if it works loose under load. Arcing generates heat and is a direct fire hazard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The correct solution</strong> — use a single extension lead with
-                sufficient sockets, or have additional socket outlets installed by a registered
-                electrician. See the section below on when to upgrade to a permanent socket.
+                <strong>The correct solution</strong> — use a single extension lead with sufficient
+                sockets, or have additional socket outlets installed by a registered electrician.
+                See the section below on when to upgrade to a permanent socket.
               </span>
             </li>
           </ul>
@@ -241,45 +238,44 @@ const sections = [
         <p>
           An RCD (Residual Current Device) protected extension lead contains a built-in RCD that
           trips in milliseconds if electricity starts flowing through an unintended path — for
-          example, through a person who has cut through the cable or touched a live conductor.
-          These leads significantly reduce the risk of fatal electric shock.
+          example, through a person who has cut through the cable or touched a live conductor. These
+          leads significantly reduce the risk of fatal electric shock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use for power tools</strong> — always use an RCD-protected extension
-                lead or plug-in RCD adaptor when using power tools such as drills, circular
-                saws, and angle grinders. A 30mA RCD can trip fast enough to prevent a fatal
-                shock even if you cut through the cable.
+                <strong>Use for power tools</strong> — always use an RCD-protected extension lead or
+                plug-in RCD adaptor when using power tools such as drills, circular saws, and angle
+                grinders. A 30mA RCD can trip fast enough to prevent a fatal shock even if you cut
+                through the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use for garden equipment</strong> — lawnmowers, hedge trimmers, and
-                garden power tools must be used with RCD protection. Regulation 411.3.3 of BS
-                7671 requires RCD protection (not exceeding 30mA) for socket outlets in certain
-                locations used to supply portable equipment outdoors.
+                <strong>Use for garden equipment</strong> — lawnmowers, hedge trimmers, and garden
+                power tools must be used with RCD protection. Regulation 411.3.3 of BS 7671 requires
+                RCD protection (not exceeding 30mA) for socket outlets in certain locations used to
+                supply portable equipment outdoors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30mA is the protective rating</strong> — only 30mA RCDs provide
-                protection against electrocution. Higher-rated RCDs (100mA, 300mA) protect
-                against fire but not against fatal shock. Ensure your RCD-protected lead is
-                rated at 30mA.
+                <strong>30mA is the protective rating</strong> — only 30mA RCDs provide protection
+                against electrocution. Higher-rated RCDs (100mA, 300mA) protect against fire but not
+                against fatal shock. Ensure your RCD-protected lead is rated at 30mA.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          If the sockets in your home or workplace are not already RCD-protected, you can also
-          use a plug-in RCD adaptor (a small device that fits between the plug and the socket)
-          to add protection. These cost around £10 to £20 and provide 30mA protection for the
-          appliance plugged into them.
+          If the sockets in your home or workplace are not already RCD-protected, you can also use a
+          plug-in RCD adaptor (a small device that fits between the plug and the socket) to add
+          protection. These cost around £10 to £20 and provide 30mA protection for the appliance
+          plugged into them.
         </p>
       </>
     ),
@@ -298,30 +294,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why coiling causes overheating</strong> — when a conductor carries
-                current, it generates heat proportional to the square of the current (P = I²R).
-                In a coil, this heat cannot dissipate effectively — each turn insulates adjacent
-                turns. A 13A cable carrying significant current while coiled can reach
-                temperatures far above its insulation rating.
+                <strong>Why coiling causes overheating</strong> — when a conductor carries current,
+                it generates heat proportional to the square of the current (P = I²R). In a coil,
+                this heat cannot dissipate effectively — each turn insulates adjacent turns. A 13A
+                cable carrying significant current while coiled can reach temperatures far above its
+                insulation rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The fire risk is real</strong> — there are documented cases of cable
-                drum extension leads causing fires when used coiled under load. The insulation
-                melts, conductors contact each other or the drum casing, and a fire starts.
-                This can happen in minutes with a high load.
+                <strong>The fire risk is real</strong> — there are documented cases of cable drum
+                extension leads causing fires when used coiled under load. The insulation melts,
+                conductors contact each other or the drum casing, and a fire starts. This can happen
+                in minutes with a high load.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The rule: always fully uncoil</strong> — before plugging in any load,
-                unwind the entire cable from the drum. This applies even if you only need a
-                short length. Some cable drums have a coiled-use rating printed on them at a
-                very low wattage — if so, only use at that rating or lower if you cannot fully
-                uncoil.
+                <strong>The rule: always fully uncoil</strong> — before plugging in any load, unwind
+                the entire cable from the drum. This applies even if you only need a short length.
+                Some cable drums have a coiled-use rating printed on them at a very low wattage — if
+                so, only use at that rating or lower if you cannot fully uncoil.
               </span>
             </li>
           </ul>
@@ -336,8 +331,8 @@ const sections = [
       <>
         <p>
           Using the wrong extension lead outdoors is a common cause of electric shock. Indoor
-          extension leads are not weatherproof and must not be used in gardens, on patios, or
-          in any location where they may be exposed to rain, damp, or moisture.
+          extension leads are not weatherproof and must not be used in gardens, on patios, or in any
+          location where they may be exposed to rain, damp, or moisture.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -345,33 +340,33 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP44 minimum for outdoor use</strong> — IP44 means the lead and its
-                connections are protected against solid particles greater than 1mm and against
-                water splashing from any direction. Look for the IP44 (or higher) marking on
-                the lead itself, not just on the packaging.
+                connections are protected against solid particles greater than 1mm and against water
+                splashing from any direction. Look for the IP44 (or higher) marking on the lead
+                itself, not just on the packaging.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Connect to an RCD-protected socket</strong> — outdoor socket outlets
-                must be RCD-protected under BS 7671 Regulation 411.3.3. If your outdoor socket
-                is not RCD-protected, use a plug-in RCD adaptor rated at 30mA.
+                <strong>Connect to an RCD-protected socket</strong> — outdoor socket outlets must be
+                RCD-protected under BS 7671 Regulation 411.3.3. If your outdoor socket is not
+                RCD-protected, use a plug-in RCD adaptor rated at 30mA.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Keep connections dry</strong> — even weatherproof leads should not
-                have their socket end submerged or left in standing water. If connections
-                become wet, allow them to dry completely before reconnecting.
+                <strong>Keep connections dry</strong> — even weatherproof leads should not have
+                their socket end submerged or left in standing water. If connections become wet,
+                allow them to dry completely before reconnecting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Store indoors after use</strong> — UV exposure, frost, and temperature
-                cycles degrade extension lead insulation over time. Store outdoor leads
-                indoors and inspect them before each use for cracking or damage.
+                cycles degrade extension lead insulation over time. Store outdoor leads indoors and
+                inspect them before each use for cracking or damage.
               </span>
             </li>
           </ul>
@@ -385,44 +380,44 @@ const sections = [
     content: (
       <>
         <p>
-          Extension leads are designed as a temporary solution. If you find yourself regularly
-          using an extension lead in the same location, or running leads across floors, under
-          rugs, or through doorways, it is time to have a qualified electrician install
-          additional socket outlets.
+          Extension leads are designed as a temporary solution. If you find yourself regularly using
+          an extension lead in the same location, or running leads across floors, under rugs, or
+          through doorways, it is time to have a qualified electrician install additional socket
+          outlets.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cost</strong> — adding a double socket outlet typically costs £80 to
-                £200 depending on location and the ease of running new cabling. This is a
-                one-time cost that eliminates a permanent fire risk.
+                <strong>Cost</strong> — adding a double socket outlet typically costs £80 to £200
+                depending on location and the ease of running new cabling. This is a one-time cost
+                that eliminates a permanent fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insurance and compliance</strong> — a properly installed socket outlet
-                fitted by a registered electrician comes with an Electrical Installation
-                Certificate (EIC) or a Minor Works Certificate, demonstrating compliance with
-                Part P of the Building Regulations.
+                fitted by a registered electrician comes with an Electrical Installation Certificate
+                (EIC) or a Minor Works Certificate, demonstrating compliance with Part P of the
+                Building Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Outdoor sockets</strong> — if you regularly use power tools or garden
-                equipment, having a dedicated weatherproof outdoor socket installed is
-                significantly safer than running an extension lead from an indoor socket.
+                equipment, having a dedicated weatherproof outdoor socket installed is significantly
+                safer than running an extension lead from an indoor socket.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Find a NICEIC or NAPIT registered electrician to carry out this work. All notifiable
-          work (including new socket circuits) must be registered with building control or
-          completed by a registered competent person who self-certifies the work.
+          Find a NICEIC or NAPIT registered electrician to carry out this work. All notifiable work
+          (including new socket circuits) must be registered with building control or completed by a
+          registered competent person who self-certifies the work.
         </p>
       </>
     ),
@@ -433,9 +428,8 @@ const sections = [
     content: (
       <>
         <p>
-          Not all extension leads on the UK market are equal. Very cheap leads may use
-          undersized conductors or sub-standard insulation, making them unsafe at their rated
-          current.
+          Not all extension leads on the UK market are equal. Very cheap leads may use undersized
+          conductors or sub-standard insulation, making them unsafe at their rated current.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -451,27 +445,25 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check the conductor size</strong> — a 13A extension lead should have
-                conductors of at least 1.25mm². Leads with thinner conductors may overheat
-                before the 13A fuse blows. Good-quality leads will state the conductor size
-                on the lead itself or packaging.
+                conductors of at least 1.25mm². Leads with thinner conductors may overheat before
+                the 13A fuse blows. Good-quality leads will state the conductor size on the lead
+                itself or packaging.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Individual switched sockets</strong> — extension leads with individually
-                switched socket outlets make it easy to turn off appliances without unplugging
-                them, reducing the total standby load and making the lead safer and more
-                convenient.
+                switched socket outlets make it easy to turn off appliances without unplugging them,
+                reducing the total standby load and making the lead safer and more convenient.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surge protection for sensitive electronics</strong> — for computers,
-                televisions, and audio equipment, consider a surge-protected extension lead.
-                These contain metal oxide varistors (MOVs) that absorb voltage spikes. See
-                our guide on{' '}
+                televisions, and audio equipment, consider a surge-protected extension lead. These
+                contain metal oxide varistors (MOVs) that absorb voltage spikes. See our guide on{' '}
                 <SEOInternalLink href="/power-surge-protection">
                   power surge protection
                 </SEOInternalLink>{' '}
@@ -482,7 +474,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Are you an electrician? Manage jobs and certificates with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, quoting, and invoicing. Start your 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, quoting, and invoicing. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -507,8 +499,7 @@ export default function ExtensionLeadSafetyPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          Extension Lead Safety UK:{' '}
-          <span className="text-yellow-400">The Complete Guide</span>
+          Extension Lead Safety UK: <span className="text-yellow-400">The Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about using extension leads safely in the UK — from calculating loads and avoiding daisy-chaining, to choosing RCD-protected leads and knowing when to get a permanent socket installed."
@@ -519,7 +510,7 @@ export default function ExtensionLeadSafetyPage() {
       faqHeading="Frequently Asked Questions About Extension Lead Safety"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICRs on your phone, generate quotes instantly, and manage all your certificates in one place. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Complete EICRs on your phone, generate quotes instantly, and manage all your certificates in one place. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

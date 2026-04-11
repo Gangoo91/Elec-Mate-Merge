@@ -891,7 +891,7 @@ export default function BS7671ObservationCodesPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Write better EICR observations"
-        subheading="Join 430+ UK electricians producing professional, consistent EICRs. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians producing professional, consistent EICRs. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

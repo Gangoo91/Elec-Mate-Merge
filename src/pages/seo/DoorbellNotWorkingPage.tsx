@@ -148,9 +148,9 @@ const sections = [
             <h4 className="font-bold text-white mb-2">Wired doorbells</h4>
             <p className="text-white text-sm leading-relaxed">
               Connected by bell wire to a transformer (usually mounted near or inside the consumer
-              unit). The transformer steps down mains 230V to extra-low voltage (typically 8V, 12V, or
-              24V AC). Pressing the button completes the circuit and the chime sounds. Reliable but
-              dependent on the transformer and wiring.
+              unit). The transformer steps down mains 230V to extra-low voltage (typically 8V, 12V,
+              or 24V AC). Pressing the button completes the circuit and the chime sounds. Reliable
+              but dependent on the transformer and wiring.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -164,10 +164,10 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-2">Smart doorbells</h4>
             <p className="text-white text-sm leading-relaxed">
-              Video doorbells (Ring, Nest, Eufy, etc.) that connect to Wi-Fi and send notifications to
-              your phone. Can be wired (using existing bell wire and transformer) or battery-powered.
-              Wired versions charge from the bell transformer; battery versions need periodic
-              recharging.
+              Video doorbells (Ring, Nest, Eufy, etc.) that connect to Wi-Fi and send notifications
+              to your phone. Can be wired (using existing bell wire and transformer) or
+              battery-powered. Wired versions charge from the bell transformer; battery versions
+              need periodic recharging.
             </p>
           </div>
         </div>
@@ -189,9 +189,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Transformer failure</strong> — the most common cause. Bell transformers
-                eventually fail (winding breakdown, thermal fuse blowing). With no transformer output,
-                the entire bell circuit is dead. Check for voltage at the transformer secondary
-                terminals with a multimeter.
+                eventually fail (winding breakdown, thermal fuse blowing). With no transformer
+                output, the entire bell circuit is dead. Check for voltage at the transformer
+                secondary terminals with a multimeter.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,9 +205,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Broken bell wire</strong> — bell wire is thin (typically 0.5mm) and can break
-                where it passes through door frames, walls, or where it has been painted over and
-                pulled. Test continuity with a multimeter.
+                <strong>Broken bell wire</strong> — bell wire is thin (typically 0.5mm) and can
+                break where it passes through door frames, walls, or where it has been painted over
+                and pulled. Test continuity with a multimeter.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -228,17 +228,15 @@ const sections = [
     heading: 'Wireless Doorbell Faults',
     content: (
       <>
-        <p>
-          Wireless doorbells are simpler but have their own set of common problems:
-        </p>
+        <p>Wireless doorbells are simpler but have their own set of common problems:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flat batteries</strong> — the number one cause. Check and replace batteries in
-                both the push button and the chime unit. Push button batteries in particular drain
-                faster in cold weather.
+                <strong>Flat batteries</strong> — the number one cause. Check and replace batteries
+                in both the push button and the chime unit. Push button batteries in particular
+                drain faster in cold weather.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,8 +281,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient transformer voltage</strong> — the most common issue with wired
-                smart doorbells. Older bell transformers output 8V, but most smart doorbells need 16V
-                or 24V. Low voltage means the doorbell cannot charge and eventually goes offline.
+                smart doorbells. Older bell transformers output 8V, but most smart doorbells need
+                16V or 24V. Low voltage means the doorbell cannot charge and eventually goes
+                offline.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,7 +291,8 @@ const sections = [
               <span>
                 <strong>Weak Wi-Fi</strong> — the doorbell is typically at the front of the house,
                 which may be far from the router. A weak signal causes disconnections, delayed
-                notifications, and poor video quality. A Wi-Fi extender or mesh system may be needed.
+                notifications, and poor video quality. A Wi-Fi extender or mesh system may be
+                needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,9 +313,7 @@ const sections = [
     heading: 'What to Check Yourself',
     content: (
       <>
-        <p>
-          Before calling an electrician, there are several things you can safely check:
-        </p>
+        <p>Before calling an electrician, there are several things you can safely check:</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">For wireless doorbells</h4>
@@ -325,7 +323,9 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">For wired doorbells (extra-low voltage side only)</h4>
+            <h4 className="font-bold text-white mb-2">
+              For wired doorbells (extra-low voltage side only)
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               Remove the push button and briefly touch the two bell wires together. If the chime
               sounds, the push button is faulty — replace it. Check that the chime unit is connected
@@ -336,8 +336,8 @@ const sections = [
             <h4 className="font-bold text-white mb-2">For smart doorbells</h4>
             <p className="text-white text-sm leading-relaxed">
               Check Wi-Fi signal strength in the app. Reboot the doorbell (remove from mount and
-              hold reset button). Check the transformer voltage if wired — you need a multimeter
-              for this. Recharge or replace the battery if battery-powered.
+              hold reset button). Check the transformer voltage if wired — you need a multimeter for
+              this. Recharge or replace the battery if battery-powered.
             </p>
           </div>
         </div>
@@ -349,9 +349,7 @@ const sections = [
     heading: 'When to Call an Electrician',
     content: (
       <>
-        <p>
-          Call an electrician in these situations:
-        </p>
+        <p>Call an electrician in these situations:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -420,10 +418,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Wiring</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Bell wire is typically 0.5mm twin flat. It is extra-low voltage so does not require
-                  the same cable management as mains wiring, but should still be routed neatly and
-                  protected from damage. Where bell wire runs alongside mains cables, BS 7671 Chapter
-                  52 requirements for separation apply.
+                  Bell wire is typically 0.5mm twin flat. It is extra-low voltage so does not
+                  require the same cable management as mains wiring, but should still be routed
+                  neatly and protected from damage. Where bell wire runs alongside mains cables, BS
+                  7671 Chapter 52 requirements for separation apply.
                 </p>
               </div>
             </div>
@@ -447,7 +445,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete Minor Works Certificates on your phone"
-          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 430+ UK electricians."
+          description="Elec-Mate's certificate apps let you document doorbell installations and repairs with test results and instant PDF export. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -472,8 +470,7 @@ export default function DoorbellNotWorkingPage() {
       badgeIcon={Bell}
       heroTitle={
         <>
-          Doorbell Not Working:{' '}
-          <span className="text-yellow-400">Causes and Fixes</span>
+          Doorbell Not Working: <span className="text-yellow-400">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Whether it is a wired, wireless, or smart doorbell, this guide covers every common fault — transformer failure, flat batteries, Wi-Fi problems, corroded contacts — and tells you what to check and when to call an electrician."
@@ -484,7 +481,7 @@ export default function DoorbellNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Doorbells Not Working"
       relatedPages={relatedPages}
       ctaHeading="Document Electrical Repairs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional certificates, AI fault diagnosis, and job documentation. 7-day free trial, cancel anytime."
     />
   );
 }

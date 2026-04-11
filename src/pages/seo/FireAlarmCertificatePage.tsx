@@ -462,7 +462,7 @@ export default function FireAlarmCertificatePage() {
             </p>
             <p>
               Elec-Mate is part of a complete platform for UK electricians that includes 70
-              electrical calculators, 8 Elec-AI agents and 12 AI tools, 36+ training courses, 8
+              electrical calculators, 8 Elec-AI agents and 12 AI tools, 46+ training courses, 8
               certificate types, and integration with Xero and QuickBooks for invoicing. Everything
               you need in one mobile-first tool.
             </p>
@@ -558,12 +558,16 @@ export default function FireAlarmCertificatePage() {
               actually carried out on site.
             </p>
             <p>
-              The platform includes 70 electrical calculators, 8 certificate types ({' '}
+              The platform includes 70 electrical calculators, 16 certificate types ({' '}
               <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
-              Works, <SEOInternalLink href="/emergency-lighting-certificate">emergency lighting</SEOInternalLink>, fire alarm, EV charger, PAT testing, and solar PV), 8
-              Elec-AI agents, 12 AI tools, and 36+ training courses. Xero and QuickBooks integration
-              means you can raise invoices directly from completed jobs without re-entering data.
+              Works,{' '}
+              <SEOInternalLink href="/emergency-lighting-certificate">
+                emergency lighting
+              </SEOInternalLink>
+              , fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI tools,
+              and 46+ training courses. Xero and QuickBooks integration means you can raise invoices
+              directly from completed jobs without re-entering data.
             </p>
           </div>
         </div>
@@ -610,7 +614,7 @@ export default function FireAlarmCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop writing fire alarm certificates by hand"
-        subheading="Join 430+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians creating professional digital certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

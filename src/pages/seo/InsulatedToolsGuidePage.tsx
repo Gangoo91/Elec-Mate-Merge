@@ -130,20 +130,19 @@ const sections = [
     content: (
       <>
         <p>
-          IEC 60900:2018 (adopted in the UK as BS EN IEC 60900:2018) is the international
-          standard for hand tools used for live working on electrical systems up to 1,000V AC
-          or 1,500V DC. It is the only standard relevant to insulated hand tools in the UK
-          electrical industry.
+          IEC 60900:2018 (adopted in the UK as BS EN IEC 60900:2018) is the international standard
+          for hand tools used for live working on electrical systems up to 1,000V AC or 1,500V DC.
+          It is the only standard relevant to insulated hand tools in the UK electrical industry.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dielectric testing to 10,000V</strong> — although rated for use up to
-                1,000V AC, IEC 60900 tools are tested during manufacture to 10,000V AC. This
-                tenfold safety margin ensures the insulation provides meaningful protection even
-                if it degrades slightly over time.
+                <strong>Dielectric testing to 10,000V</strong> — although rated for use up to 1,000V
+                AC, IEC 60900 tools are tested during manufacture to 10,000V AC. This tenfold safety
+                margin ensures the insulation provides meaningful protection even if it degrades
+                slightly over time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -160,17 +159,17 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Marking requirements</strong> — compliant tools must be marked with the
-                voltage rating (1000V), the double-triangle symbol indicating compliance with
-                IEC 60900, and the manufacturer's name or trademark. The VDE mark indicates
-                independent third-party testing.
+                voltage rating (1000V), the double-triangle symbol indicating compliance with IEC
+                60900, and the manufacturer's name or trademark. The VDE mark indicates independent
+                third-party testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mechanical testing</strong> — in addition to dielectric testing, IEC 60900
-                specifies mechanical tests including impact, bending, and tensile strength tests
-                to ensure the insulation remains intact under normal working conditions.
+                specifies mechanical tests including impact, bending, and tensile strength tests to
+                ensure the insulation remains intact under normal working conditions.
               </span>
             </li>
           </ul>
@@ -197,36 +196,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1000V marking</strong> — confirms the tool is rated for use on systems up
-                to 1,000V AC or 1,500V DC under IEC 60900. This covers the vast majority of
-                low-voltage electrical installations in the UK, including 230V single-phase and
-                400V three-phase systems.
+                <strong>1000V marking</strong> — confirms the tool is rated for use on systems up to
+                1,000V AC or 1,500V DC under IEC 60900. This covers the vast majority of low-voltage
+                electrical installations in the UK, including 230V single-phase and 400V three-phase
+                systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Double-triangle symbol</strong> — the two overlapping triangles symbol
-                on an insulated tool indicates compliance with IEC 60900. This is the universal
-                marking recognised across Europe and internationally.
+                <strong>Double-triangle symbol</strong> — the two overlapping triangles symbol on an
+                insulated tool indicates compliance with IEC 60900. This is the universal marking
+                recognised across Europe and internationally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>VDE mark</strong> — the VDE oval mark indicates independent testing and
-                certification by VDE (Germany). This is the gold standard for insulated tools
-                and provides the highest level of assurance. GS mark (Geprüfte Sicherheit) is
-                another German safety mark that may accompany the VDE mark.
+                certification by VDE (Germany). This is the gold standard for insulated tools and
+                provides the highest level of assurance. GS mark (Geprüfte Sicherheit) is another
+                German safety mark that may accompany the VDE mark.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Colour coding</strong> — Knipex and Wiha use red/yellow insulation;
-                other manufacturers use different combinations. Importantly, the inner layer must
-                be a contrasting colour to the outer — if you see the inner colour breaking through,
-                the tool's insulation is compromised. Take it out of service immediately.
+                <strong>Colour coding</strong> — Knipex and Wiha use red/yellow insulation; other
+                manufacturers use different combinations. Importantly, the inner layer must be a
+                contrasting colour to the outer — if you see the inner colour breaking through, the
+                tool's insulation is compromised. Take it out of service immediately.
               </span>
             </li>
           </ul>
@@ -234,8 +233,8 @@ const sections = [
         <p>
           Be aware of cheap tools that carry "1000V" markings without genuine IEC 60900 compliance.
           If a tool is significantly cheaper than reputable brands' equivalents, it may not have
-          been tested to the standard. Purchase from reputable electrical wholesalers and check
-          for the double-triangle symbol and, ideally, the VDE mark.
+          been tested to the standard. Purchase from reputable electrical wholesalers and check for
+          the double-triangle symbol and, ideally, the VDE mark.
         </p>
       </>
     ),
@@ -247,8 +246,8 @@ const sections = [
       <>
         <p>
           Insulated tools are mandatory when working on or near live electrical conductors. Under
-          the Electricity at Work Regulations 1989, working live requires specific justification
-          and precautions — insulated tools are one of those required precautions.
+          the Electricity at Work Regulations 1989, working live requires specific justification and
+          precautions — insulated tools are one of those required precautions.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -282,9 +281,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection work near live parts</strong> — when inspecting an installation
-                where some circuits remain live (e.g., inspecting a sub-board with an adjacent
-                live main incomer), insulated tools should be used for any work in proximity to
-                live conductors.
+                where some circuits remain live (e.g., inspecting a sub-board with an adjacent live
+                main incomer), insulated tools should be used for any work in proximity to live
+                conductors.
               </span>
             </li>
           </ul>
@@ -306,8 +305,8 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 14 of the Electricity at Work Regulations 1989 permits live working only
-          in tightly defined circumstances. Understanding this regulation is essential for any
+          Regulation 14 of the Electricity at Work Regulations 1989 permits live working only in
+          tightly defined circumstances. Understanding this regulation is essential for any
           electrician considering live work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -318,8 +317,8 @@ const sections = [
                 <strong>Three-part test</strong> — live work is only permitted if: (1) it is
                 unreasonable in all the circumstances for the conductors to be dead; (2) it is
                 reasonable in all the circumstances for the person to be at work on or near those
-                conductors; and (3) suitable precautions are taken. All three conditions must
-                be satisfied simultaneously.
+                conductors; and (3) suitable precautions are taken. All three conditions must be
+                satisfied simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,8 +326,8 @@ const sections = [
               <span>
                 <strong>Employer authorisation required</strong> — the employer must assess and
                 authorise live work. Self-employed electricians must carry out and document their
-                own risk assessment. A verbal "it's fine" is not sufficient — the assessment must
-                be documented and the worker must be trained in live-working techniques.
+                own risk assessment. A verbal "it's fine" is not sufficient — the assessment must be
+                documented and the worker must be trained in live-working techniques.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,17 +335,17 @@ const sections = [
               <span>
                 <strong>Required precautions for live work</strong> — IEC 60900 insulated tools,
                 insulating gloves (Class 00 minimum — rated to 500V AC, tested to 2,500V), face
-                shield rated to the arc flash energy level, a second competent person present at
-                all times, and a rescue plan including first aid provision.
+                shield rated to the arc flash energy level, a second competent person present at all
+                times, and a rescue plan including first aid provision.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not a cost-saving measure</strong> — live working to avoid the
-                inconvenience or cost of isolation does not satisfy the Regulation 14 test. "The
-                customer didn't want the power off" is not a defence. HSE inspectors are
-                experienced at identifying rationalisation after the fact.
+                <strong>Not a cost-saving measure</strong> — live working to avoid the inconvenience
+                or cost of isolation does not satisfy the Regulation 14 test. "The customer didn't
+                want the power off" is not a defence. HSE inspectors are experienced at identifying
+                rationalisation after the fact.
               </span>
             </li>
           </ul>
@@ -369,17 +368,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Knipex</strong> — market leader for insulated pliers and cutters. Their
-                VDE insulated range covers combination pliers, long-nose pliers, side cutters,
-                cable shears, strippers, and crimping tools. The Knipex 98-series is widely used
-                by UK electricians. Known for exceptional build quality and precision.
+                <strong>Knipex</strong> — market leader for insulated pliers and cutters. Their VDE
+                insulated range covers combination pliers, long-nose pliers, side cutters, cable
+                shears, strippers, and crimping tools. The Knipex 98-series is widely used by UK
+                electricians. Known for exceptional build quality and precision.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wiha</strong> — leading brand for insulated screwdrivers, nut drivers,
-                and pliers. Their SlimBit and SlimLine insulated ranges are popular for work in
+                <strong>Wiha</strong> — leading brand for insulated screwdrivers, nut drivers, and
+                pliers. Their SlimBit and SlimLine insulated ranges are popular for work in
                 restricted spaces. VDE-certified and available from all major UK electrical
                 wholesalers. Excellent ergonomics.
               </span>
@@ -425,17 +424,17 @@ const sections = [
     content: (
       <>
         <p>
-          A full insulated tool kit for an electrician carries insulated versions of every tool
-          that might contact a live conductor during the course of work.
+          A full insulated tool kit for an electrician carries insulated versions of every tool that
+          might contact a live conductor during the course of work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Screwdrivers</strong> — slotted and Pozidriv in multiple sizes, plus
-                Torx for modern equipment. VDE-insulated screwdrivers are the most commonly
-                carried insulated tool among UK electricians.
+                <strong>Screwdrivers</strong> — slotted and Pozidriv in multiple sizes, plus Torx
+                for modern equipment. VDE-insulated screwdrivers are the most commonly carried
+                insulated tool among UK electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,17 +454,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Spanners and nut drivers</strong> — insulated nut drivers (commonly in
-                10mm, 13mm, and 17mm) and insulated open-ended spanners for work on terminals
-                and bus connections.
+                <strong>Spanners and nut drivers</strong> — insulated nut drivers (commonly in 10mm,
+                13mm, and 17mm) and insulated open-ended spanners for work on terminals and bus
+                connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable knives</strong> — insulated electrician's knives for cable
-                preparation adjacent to live conductors. A non-insulated knife blade contacting
-                a live conductor is a serious electrocution risk.
+                <strong>Cable knives</strong> — insulated electrician's knives for cable preparation
+                adjacent to live conductors. A non-insulated knife blade contacting a live conductor
+                is a serious electrocution risk.
               </span>
             </li>
           </ul>
@@ -480,17 +479,17 @@ const sections = [
       <>
         <p>
           Insulated tools are personal protective equipment (PPE) under the Personal Protective
-          Equipment at Work Regulations 1992. They must be maintained in serviceable condition
-          and inspected regularly. The Provision and Use of Work Equipment Regulations 1998
-          (PUWER) also applies to tools used at work.
+          Equipment at Work Regulations 1992. They must be maintained in serviceable condition and
+          inspected regularly. The Provision and Use of Work Equipment Regulations 1998 (PUWER) also
+          applies to tools used at work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection before each use</strong> — IEC 60900 requires tools to
-                be visually inspected before use. Check for cuts, cracks, punctures, swelling,
+                <strong>Visual inspection before each use</strong> — IEC 60900 requires tools to be
+                visually inspected before use. Check for cuts, cracks, punctures, swelling,
                 hardening, or discolouration of the insulation. Check that the inner contrasting
                 layer is not visible through the outer layer. Remove any tool with visible damage
                 from service immediately.
@@ -503,35 +502,35 @@ const sections = [
                 periodic testing of insulated tools and protective devices. This involves applying
                 10,000V AC for one minute across the insulation and measuring the leakage current,
                 and must be carried out by a competent person with appropriate equipment. While
-                annual testing is widely adopted as industry best practice in the UK, IEC 60900
-                does not mandate a specific interval — employers and duty holders should set their
-                own inspection frequencies based on risk assessment under PUWER.
+                annual testing is widely adopted as industry best practice in the UK, IEC 60900 does
+                not mandate a specific interval — employers and duty holders should set their own
+                inspection frequencies based on risk assessment under PUWER.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping</strong> — maintain a record of insulated tool inspections
-                and tests. This demonstrates compliance with PUWER and PPE regulations and is
-                useful evidence in the event of an incident investigation.
+                and tests. This demonstrates compliance with PUWER and PPE regulations and is useful
+                evidence in the event of an incident investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No field repair of insulation</strong> — damaged insulation on an IEC
-                60900 tool cannot be repaired on site with insulating tape or similar. The tool
-                must be withdrawn and either returned to the manufacturer for assessment or
-                destroyed. Attempting to repair damaged insulation creates a false sense of
-                security and could cause electrocution.
+                <strong>No field repair of insulation</strong> — damaged insulation on an IEC 60900
+                tool cannot be repaired on site with insulating tape or similar. The tool must be
+                withdrawn and either returned to the manufacturer for assessment or destroyed.
+                Attempting to repair damaged insulation creates a false sense of security and could
+                cause electrocution.
               </span>
             </li>
           </ul>
         </div>
         <p>
           After any suspected contact with a live conductor (including a suspected insulation
-          failure), the tool must be withdrawn from service and tested before reuse. Never
-          assume a tool is still safe after an electrical incident.
+          failure), the tool must be withdrawn from service and tested before reuse. Never assume a
+          tool is still safe after an electrical incident.
         </p>
       </>
     ),
@@ -543,9 +542,9 @@ const sections = [
       <>
         <p>
           Any live electrical work must be documented in a risk assessment and method statement
-          (RAMS) before work begins. The RAMS must specify the justification for live working,
-          the insulated tools and PPE to be used, the competency of the workers, and the rescue
-          plan. This documentation protects you legally and demonstrates professional standards.
+          (RAMS) before work begins. The RAMS must specify the justification for live working, the
+          insulated tools and PPE to be used, the competency of the workers, and the rescue plan.
+          This documentation protects you legally and demonstrates professional standards.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-4">
@@ -554,10 +553,8 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">
-                  Elec-Mate RAMS generator
-                </SEOInternalLink>{' '}
-                to create comprehensive risk assessments and method statements for live electrical
+                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                create comprehensive risk assessments and method statements for live electrical
                 work, including IEC 60900 tool requirements, PPE specifications, and rescue plan
                 documentation. Ready to share with clients and principal contractors.
               </p>
@@ -566,7 +563,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for electrical contractors"
-          description="Join 430+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance. AI-generated, site-specific documents ready in minutes. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, site safety documentation, and health and safety compliance. AI-generated, site-specific documents ready in minutes. 7-day free trial."
           icon={HardHat}
         />
       </>

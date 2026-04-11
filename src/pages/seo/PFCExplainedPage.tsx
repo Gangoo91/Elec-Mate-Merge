@@ -168,7 +168,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Measure, record, and verify PFC"
-          description="Elec-Mate records PFC at the origin as part of the EICR and EIC forms, and automatically checks whether the protective device breaking capacity is adequate. Plus 50+ calculators for cable sizing, Zs, voltage drop, and more."
+          description="Elec-Mate records PFC at the origin as part of the EICR and EIC forms, and automatically checks whether the protective device breaking capacity is adequate. Plus 70+ calculators for cable sizing, Zs, voltage drop, and more."
           icon={Gauge}
         />
       </>
@@ -542,7 +542,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Full Calculator Suite</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  PFC is one of over 50 calculators on Elec-Mate. Others include{' '}
+                  PFC is one of over 70+ calculators on Elec-Mate. Others include{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
@@ -603,7 +603,7 @@ export default function PFCExplainedPage() {
       faqHeading="Frequently Asked Questions About Prospective Fault Current"
       relatedPages={relatedPages}
       ctaHeading="PFC Calculator in Your Pocket"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 50+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including PFC, Zs, cable sizing, voltage drop, adiabatic equation, and more. 7-day free trial, cancel anytime."
     />
   );
 }

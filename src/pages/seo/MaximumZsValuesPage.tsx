@@ -714,7 +714,7 @@ export default function MaximumZsValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Look up maximum Zs values instantly on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Instant Zs lookup, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Instant Zs lookup, auto-validation, voice test entry, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

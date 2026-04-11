@@ -236,8 +236,15 @@ export default function EarthingArrangementsPage() {
               design because it determines the maximum permitted earth fault loop impedance (Zs) for
               every circuit, which in turn affects cable sizing, protective device selection, and
               the need for additional protection by RCDs. All earthing details must be recorded on
-              your <SEOInternalLink href="/tools/eic-certificate">Electrical Installation Certificate</SEOInternalLink> or{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">EV charger installation certificate</SEOInternalLink> at the time of inspection.
+              your{' '}
+              <SEOInternalLink href="/tools/eic-certificate">
+                Electrical Installation Certificate
+              </SEOInternalLink>{' '}
+              or{' '}
+              <SEOInternalLink href="/tools/ev-charger-certificate">
+                EV charger installation certificate
+              </SEOInternalLink>{' '}
+              at the time of inspection.
             </p>
           </div>
         </div>
@@ -630,8 +637,8 @@ export default function EarthingArrangementsPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. 70 calculators, 8 AI agents, digital certificates,
-            and 36+ training courses — all built to BS 7671:2018+A3:2024.
+            Purpose-built for UK electricians. 70+ calculators, 8 AI agents, digital certificates,
+            and 46+ training courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -682,7 +689,7 @@ export default function EarthingArrangementsPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Record Earthing Data Digitally"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

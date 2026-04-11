@@ -675,7 +675,7 @@ export default function CorrectionFactorsGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Cable sizing with automatic derating"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site cable sizing, 70 calculators, and 8 certificate types — all built to BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site cable sizing, 70+ calculators, and 16 certificate types — all built to BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
     />
   );
 }

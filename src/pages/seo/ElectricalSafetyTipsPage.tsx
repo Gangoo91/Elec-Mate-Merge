@@ -573,7 +573,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete safety inspections faster"
-          description="AI board scanning, voice test entry, automated defect classification, and instant PDF delivery. Join 430+ UK electricians using Elec-Mate for every inspection. 7-day free trial."
+          description="AI board scanning, voice test entry, automated defect classification, and instant PDF delivery. Join 1,000+ UK electricians using Elec-Mate for every inspection. 7-day free trial."
           icon={Shield}
         />
       </>

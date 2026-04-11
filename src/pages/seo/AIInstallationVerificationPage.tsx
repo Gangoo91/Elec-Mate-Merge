@@ -159,8 +159,8 @@ export default function AIInstallationVerificationPage() {
                 </li>
                 <li>
                   <span className="font-semibold text-white">Amendment 3:2024 requirements</span> —
-                  Regulation 530.3.2 checked for installations with bidirectional power flow
-                  (solar PV, battery storage). Correct protective device directionality verified.
+                  Regulation 530.3.2 checked for installations with bidirectional power flow (solar
+                  PV, battery storage). Correct protective device directionality verified.
                 </li>
               </ul>
               <p>
@@ -469,7 +469,7 @@ export default function AIInstallationVerificationPage() {
         },
       ]}
       ctaHeading="Verify installations with confidence"
-      ctaSubheading="Join 430+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using AI-powered verification to catch non-compliances before they reach the certificate. 7-day free trial, cancel anytime."
     />
   );
 }

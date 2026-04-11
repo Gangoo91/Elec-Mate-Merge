@@ -443,7 +443,7 @@ export default function AIProjectManagerPage() {
       faqHeading="Frequently Asked Questions About AI Project Management"
       relatedPages={relatedPages}
       ctaHeading="Deliver Every Project On Time"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Project Manager. Smart scheduling, resource planning, and progress tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Project Manager. Smart scheduling, resource planning, and progress tracking. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-project-manager"
     />
   );

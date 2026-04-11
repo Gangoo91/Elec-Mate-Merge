@@ -17,9 +17,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [
-  { label: 'Electrical Safety', href: '/electrical-safety-at-home' },
-];
+const breadcrumbs = [{ label: 'Electrical Safety', href: '/electrical-safety-at-home' }];
 
 const tocItems = [
   { id: 'common-hazards', label: 'Common Electrical Hazards' },
@@ -71,7 +69,7 @@ const faqs = [
       'Turn off the power to that circuit at your consumer unit (fuse box) immediately. Do not use the socket or circuit until it has been inspected by a qualified electrician. A burning smell indicates overheating, arcing, or a loose connection — all of which are serious fire hazards. If you see smoke or flames, call 999 immediately.',
   },
   {
-    question: 'How often should I have my home\'s electrics checked?',
+    question: "How often should I have my home's electrics checked?",
     answer:
       'The IET (Institution of Engineering and Technology) recommends an Electrical Installation Condition Report (EICR) every ten years for owner-occupied homes, or every five years for privately rented properties (which is a legal requirement for landlords). If you move into an older property, have had significant electrical work done, or notice any warning signs such as flickering lights, frequent trips, or discoloured sockets, arrange an inspection sooner.',
   },
@@ -131,11 +129,11 @@ const sections = [
           common electrical hazards is the first step to keeping your household safe.
         </p>
         <p>
-          The most frequently occurring hazards are overloaded sockets and extension leads,
-          damaged or deteriorated cables, and unauthorised DIY wiring. Each of these can cause
-          electric shock, fire, or both. Modern homes protected by RCDs (Residual Current Devices)
-          have significantly better protection than older properties, but no electrical protection
-          system is a substitute for good habits and a properly maintained installation.
+          The most frequently occurring hazards are overloaded sockets and extension leads, damaged
+          or deteriorated cables, and unauthorised DIY wiring. Each of these can cause electric
+          shock, fire, or both. Modern homes protected by RCDs (Residual Current Devices) have
+          significantly better protection than older properties, but no electrical protection system
+          is a substitute for good habits and a properly maintained installation.
         </p>
       </>
     ),
@@ -156,17 +154,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Calculate your load</strong> — divide the wattage of each appliance by
-                230V to get the current in amps. A 2,500W kettle draws approximately 10.9A, a
-                1,000W microwave draws 4.3A, and a 700W toaster draws 3A. The total must not
-                exceed 13A per socket outlet.
+                <strong>Calculate your load</strong> — divide the wattage of each appliance by 230V
+                to get the current in amps. A 2,500W kettle draws approximately 10.9A, a 1,000W
+                microwave draws 4.3A, and a 700W toaster draws 3A. The total must not exceed 13A per
+                socket outlet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Never use cube adaptors</strong> — the old-style cube (block) adaptors
-                that allow two or three plugs in one socket are particularly dangerous as they
+                <strong>Never use cube adaptors</strong> — the old-style cube (block) adaptors that
+                allow two or three plugs in one socket are particularly dangerous as they
                 concentrate load at a single outlet. Use a fused extension lead with individual
                 switched sockets instead.
               </span>
@@ -176,20 +174,18 @@ const sections = [
               <span>
                 <strong>High-current appliances need dedicated sockets</strong> — kettles, washing
                 machines, tumble dryers, dishwashers, and electric cookers draw large currents and
-                should ideally have their own dedicated socket outlet or, in the case of cookers,
-                a dedicated circuit.
+                should ideally have their own dedicated socket outlet or, in the case of cookers, a
+                dedicated circuit.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See the full guide to{' '}
-          <SEOInternalLink href="/extension-lead-safety">
-            extension lead safety
-          </SEOInternalLink>{' '}
-          for load calculations. If you regularly need more sockets than you have, the safest
-          solution is to have additional socket outlets installed by a registered electrician —
-          not to daisy-chain extension leads.
+          <SEOInternalLink href="/extension-lead-safety">extension lead safety</SEOInternalLink> for
+          load calculations. If you regularly need more sockets than you have, the safest solution
+          is to have additional socket outlets installed by a registered electrician — not to
+          daisy-chain extension leads.
         </p>
       </>
     ),
@@ -200,21 +196,21 @@ const sections = [
     content: (
       <>
         <p>
-          Damaged, frayed, or cracked cables and flexes are a serious hazard. Exposed conductors
-          can cause electric shock if touched, and damaged insulation can allow arcing that leads
-          to fire. Cable damage is particularly common on appliance leads that run under rugs,
-          are trapped under furniture, or are regularly kinked at the point where the flex enters
-          the plug.
+          Damaged, frayed, or cracked cables and flexes are a serious hazard. Exposed conductors can
+          cause electric shock if touched, and damaged insulation can allow arcing that leads to
+          fire. Cable damage is particularly common on appliance leads that run under rugs, are
+          trapped under furniture, or are regularly kinked at the point where the flex enters the
+          plug.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replace damaged flexes — do not tape them</strong> — wrapping a damaged
-                flex in insulating tape is not a safe repair. The tape cannot restore the
-                structural integrity of the insulation, may conceal worsening damage, and will
-                eventually fail. Replace the flex or the entire appliance.
+                <strong>Replace damaged flexes — do not tape them</strong> — wrapping a damaged flex
+                in insulating tape is not a safe repair. The tape cannot restore the structural
+                integrity of the insulation, may conceal worsening damage, and will eventually fail.
+                Replace the flex or the entire appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,9 +225,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Route cables safely</strong> — never run cables under rugs or carpets
-                (where they can be damaged and overheat without being visible), around door
-                frames, or in areas where they will be regularly walked on or compressed.
+                <strong>Route cables safely</strong> — never run cables under rugs or carpets (where
+                they can be damaged and overheat without being visible), around door frames, or in
+                areas where they will be regularly walked on or compressed.
               </span>
             </li>
           </ul>
@@ -245,9 +241,9 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations governs electrical work in domestic premises in
-          England and Wales. Not all electrical work requires notification — but the most
-          important and risky work does.
+          Part P of the Building Regulations governs electrical work in domestic premises in England
+          and Wales. Not all electrical work requires notification — but the most important and
+          risky work does.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -255,19 +251,19 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Generally permitted without notification</strong> — replacing like-for-like
-                fittings such as swapping a socket faceplate, replacing a ceiling light fitting
-                (not in a bathroom), or replacing a consumer unit like-for-like. However, the
-                work must still be carried out to BS 7671 standard.
+                fittings such as swapping a socket faceplate, replacing a ceiling light fitting (not
+                in a bathroom), or replacing a consumer unit like-for-like. However, the work must
+                still be carried out to BS 7671 standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable work</strong> — installing a new circuit, adding a circuit
-                in a kitchen or bathroom, any work in a bathroom (including replacing a fitting),
-                installing electrical equipment in a garden, and installing solar PV or EV
-                charging equipment. This work must be done by a registered competent person or
-                notified to building control.
+                <strong>Notifiable work</strong> — installing a new circuit, adding a circuit in a
+                kitchen or bathroom, any work in a bathroom (including replacing a fitting),
+                installing electrical equipment in a garden, and installing solar PV or EV charging
+                equipment. This work must be done by a registered competent person or notified to
+                building control.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -275,8 +271,8 @@ const sections = [
               <span>
                 <strong>Consequences of unpermitted work</strong> — completing notifiable work
                 without registration or building control notification can invalidate your home
-                insurance, cause problems when selling your property, and — most importantly —
-                leave unsafe wiring without the independent verification a registered electrician
+                insurance, cause problems when selling your property, and — most importantly — leave
+                unsafe wiring without the independent verification a registered electrician
                 provides.
               </span>
             </li>
@@ -291,10 +287,10 @@ const sections = [
     content: (
       <>
         <p>
-          A Residual Current Device (RCD) monitors the electrical current flowing in a circuit.
-          If it detects a difference between the live and neutral conductors — indicating current
-          is leaking to earth, potentially through a person — it cuts the power in milliseconds.
-          RCDs save lives, but they must be tested regularly to verify they are working correctly.
+          A Residual Current Device (RCD) monitors the electrical current flowing in a circuit. If
+          it detects a difference between the live and neutral conductors — indicating current is
+          leaking to earth, potentially through a person — it cuts the power in milliseconds. RCDs
+          save lives, but they must be tested regularly to verify they are working correctly.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -310,27 +306,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — Press the test button</strong> — press the button firmly. The
-                RCD should trip immediately, clicking to the off position and cutting power to
-                all circuits it protects. This will turn off lights and appliances on those
-                circuits — be prepared for this.
+                <strong>Step 2 — Press the test button</strong> — press the button firmly. The RCD
+                should trip immediately, clicking to the off position and cutting power to all
+                circuits it protects. This will turn off lights and appliances on those circuits —
+                be prepared for this.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — Reset</strong> — push the RCD switch back to the on position.
-                Power should be restored to all protected circuits. If the RCD does not trip when
-                tested, or cannot be reset after testing, call a qualified electrician — the RCD
-                may be faulty and must be replaced.
+                <strong>Step 3 — Reset</strong> — push the RCD switch back to the on position. Power
+                should be restored to all protected circuits. If the RCD does not trip when tested,
+                or cannot be reset after testing, call a qualified electrician — the RCD may be
+                faulty and must be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test monthly</strong> — set a reminder to test your RCDs monthly. Many
-                households test on the first of every month. A functioning RCD can be the
-                difference between a minor incident and a fatality.
+                households test on the first of every month. A functioning RCD can be the difference
+                between a minor incident and a fatality.
               </span>
             </li>
           </ul>
@@ -396,9 +392,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Find a registered electrician through the NICEIC, NAPIT, or ELECSA online registers.
-          All registered electricians are assessed for competence and carry professional
-          indemnity insurance. For emergencies, see our guide on{' '}
+          Find a registered electrician through the NICEIC, NAPIT, or ELECSA online registers. All
+          registered electricians are assessed for competence and carry professional indemnity
+          insurance. For emergencies, see our guide on{' '}
           <SEOInternalLink href="/finding-emergency-electrician">
             finding an emergency electrician
           </SEOInternalLink>
@@ -422,10 +418,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UK sockets already have built-in shutters</strong> — standard BS 1363
-                socket outlets (the UK standard) have internal shutters that only open when both
-                pins of a plug are inserted simultaneously. A child cannot insert a single object
-                such as a finger or a hairpin and access live conductors.
+                <strong>UK sockets already have built-in shutters</strong> — standard BS 1363 socket
+                outlets (the UK standard) have internal shutters that only open when both pins of a
+                plug are inserted simultaneously. A child cannot insert a single object such as a
+                finger or a hairpin and access live conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,9 +437,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supervision and education</strong> — teaching children from an early age
-                not to touch electrical sockets and appliances, and supervising young children
-                near electrical equipment, is far more effective than socket covers.
+                <strong>Supervision and education</strong> — teaching children from an early age not
+                to touch electrical sockets and appliances, and supervising young children near
+                electrical equipment, is far more effective than socket covers.
               </span>
             </li>
           </ul>
@@ -457,8 +453,8 @@ const sections = [
     content: (
       <>
         <p>
-          Christmas is a period of significantly increased electrical fire risk. The combination
-          of additional electrical load from lights, drier indoor conditions, and proximity of
+          Christmas is a period of significantly increased electrical fire risk. The combination of
+          additional electrical load from lights, drier indoor conditions, and proximity of
           decorations to heat sources increases the risk of both fire and electric shock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -475,16 +471,16 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check lights before use</strong> — inspect lights each year for damaged
-                wires, broken bulbs, or loose connections. Discard any sets with damaged wiring.
-                Do not attempt to repair damaged light sets.
+                wires, broken bulbs, or loose connections. Discard any sets with damaged wiring. Do
+                not attempt to repair damaged light sets.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Do not leave lights on unattended</strong> — turn off Christmas lights
-                when leaving the house and before going to bed. Use a timer switch to automate
-                this if helpful.
+                <strong>Do not leave lights on unattended</strong> — turn off Christmas lights when
+                leaving the house and before going to bed. Use a timer switch to automate this if
+                helpful.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -540,22 +536,20 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consider a permanent socket</strong> — if you regularly need an extension
-                lead in the same location, have a qualified electrician install an additional
-                socket outlet. This is a safer and tidier long-term solution.
+                lead in the same location, have a qualified electrician install an additional socket
+                outlet. This is a safer and tidier long-term solution.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See the full guide to{' '}
-          <SEOInternalLink href="/extension-lead-safety">
-            extension lead safety
-          </SEOInternalLink>{' '}
-          for more detail on load calculations, RCD-protected leads, and outdoor use.
+          <SEOInternalLink href="/extension-lead-safety">extension lead safety</SEOInternalLink> for
+          more detail on load calculations, RCD-protected leads, and outdoor use.
         </p>
         <SEOAppBridge
           title="Are you an electrician? Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -580,8 +574,7 @@ export default function ElectricalSafetyAtHomePage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          Electrical Safety at Home UK:{' '}
-          <span className="text-yellow-400">Your Complete Guide</span>
+          Electrical Safety at Home UK: <span className="text-yellow-400">Your Complete Guide</span>
         </>
       }
       heroSubtitle="Everything you need to know about keeping your home electrically safe — from testing your RCD monthly and avoiding overloaded sockets, to the truth about socket covers for children and Christmas decoration safety."
@@ -592,7 +585,7 @@ export default function ElectricalSafetyAtHomePage() {
       faqHeading="Frequently Asked Questions About Home Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

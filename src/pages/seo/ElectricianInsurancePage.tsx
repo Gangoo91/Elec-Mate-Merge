@@ -655,7 +655,7 @@ export default function ElectricianInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Insurance"
       relatedPages={relatedPages}
       ctaHeading="Track All Business Expenses Including Insurance"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to track expenses, send invoices, and manage their business. Every insurance payment captured, every tool purchase logged, every receipt stored. 7-day free trial, cancel anytime."
     />
   );
 }

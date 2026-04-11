@@ -126,8 +126,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — essential for EICR work across Maidstone and Mid Kent.',
+    description: 'Study for C&G 2391 — essential for EICR work across Maidstone and Mid Kent.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,22 +143,21 @@ const sections = [
     content: (
       <>
         <p>
-          Maidstone is the county town of Kent with a population of around 180,000. Located
-          in the Medway Valley in Mid Kent, Maidstone is a major commercial centre for the
-          county — home to the Kent County Council headquarters, Maidstone Crown and County
-          Courts, and a thriving professional services sector.
+          Maidstone is the county town of Kent with a population of around 180,000. Located in the
+          Medway Valley in Mid Kent, Maidstone is a major commercial centre for the county — home to
+          the Kent County Council headquarters, Maidstone Crown and County Courts, and a thriving
+          professional services sector.
         </p>
         <p>
           For electricians, Maidstone provides access to a wide variety of work. The town's
-          Victorian terraced housing stock generates demand for consumer unit upgrades and
-          rewires. The large commuter population drives EV charger installations. The
-          surrounding Kent countryside — with its farmhouses, oast houses, and village
-          properties — provides varied rural electrical work. South East rates apply throughout.
+          Victorian terraced housing stock generates demand for consumer unit upgrades and rewires.
+          The large commuter population drives EV charger installations. The surrounding Kent
+          countryside — with its farmhouses, oast houses, and village properties — provides varied
+          rural electrical work. South East rates apply throughout.
         </p>
         <p>
-          This guide covers finding a qualified electrician in Maidstone, typical costs,
-          common jobs, regulatory requirements, and the specific characteristics of the
-          local market.
+          This guide covers finding a qualified electrician in Maidstone, typical costs, common
+          jobs, regulatory requirements, and the specific characteristics of the local market.
         </p>
       </>
     ),
@@ -170,18 +168,17 @@ const sections = [
     content: (
       <>
         <p>
-          To find a qualified and registered electrician in Maidstone and the surrounding
-          Mid Kent area:
+          To find a qualified and registered electrician in Maidstone and the surrounding Mid Kent
+          area:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC</strong> — the NICEIC "find a contractor" search is the best
-                starting point for domestic work. NICEIC approved contractors in Maidstone
-                are assessed annually and can self-certify all notifiable domestic electrical
-                work under Part P.
+                <strong>NICEIC</strong> — the NICEIC "find a contractor" search is the best starting
+                point for domestic work. NICEIC approved contractors in Maidstone are assessed
+                annually and can self-certify all notifiable domestic electrical work under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -194,9 +191,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rural specialists</strong> — for properties in the Kent countryside
-                around Maidstone, look for electricians familiar with TT earthing systems,
-                rural supply characteristics, and solar PV installations in rural settings.
+                <strong>Rural specialists</strong> — for properties in the Kent countryside around
+                Maidstone, look for electricians familiar with TT earthing systems, rural supply
+                characteristics, and solar PV installations in rural settings.
               </span>
             </li>
           </ul>
@@ -209,9 +206,7 @@ const sections = [
     heading: 'Electrician Costs in Maidstone (2026)',
     content: (
       <>
-        <p>
-          Maidstone rates reflect the South East location. Typical 2026 rates:
-        </p>
+        <p>Maidstone rates reflect the South East location. Typical 2026 rates:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-3">
@@ -270,37 +265,37 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Maidstone's Victorian and post-war housing stock contains many outdated consumer
-              units that lack the RCD protection required by BS 7671 Regulation 411.3.3.
-              Consumer unit upgrades are triggered by EICRs, property sales, and EV charger
-              installations that require a spare way in the consumer unit.
+              Maidstone's Victorian and post-war housing stock contains many outdated consumer units
+              that lack the RCD protection required by BS 7671 Regulation 411.3.3. Consumer unit
+              upgrades are triggered by EICRs, property sales, and EV charger installations that
+              require a spare way in the consumer unit.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Landlord EICRs</h3>
             <p className="text-white text-sm leading-relaxed">
-              Maidstone has a significant private rented sector. Landlord EICRs are legally
-              required every 5 years under the 2020 Electrical Safety Regulations. Any C1 or
-              C2 defects identified must be remedied within 28 days. Maidstone Borough Council
-              enforces these requirements actively.
+              Maidstone has a significant private rented sector. Landlord EICRs are legally required
+              every 5 years under the 2020 Electrical Safety Regulations. Any C1 or C2 defects
+              identified must be remedied within 28 days. Maidstone Borough Council enforces these
+              requirements actively.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Charger Installation</h3>
             <p className="text-white text-sm leading-relaxed">
-              Maidstone's position as a London commuter town and the growth of electric
-              vehicle ownership create strong demand for home EV charger installations. UK
-              Power Networks G98 notification is required. OZEV-approved installers can
-              access grant funding for eligible customers.
+              Maidstone's position as a London commuter town and the growth of electric vehicle
+              ownership create strong demand for home EV charger installations. UK Power Networks
+              G98 notification is required. OZEV-approved installers can access grant funding for
+              eligible customers.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural Kent Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              The villages and rural areas surrounding Maidstone — including the Weald, the
-              North Downs, and the Medway villages — have older rural properties requiring
-              periodic rewires and solar PV installations. Some have TT earthing and older
-              single-phase supplies. Rural electrical work commands a travel premium.
+              The villages and rural areas surrounding Maidstone — including the Weald, the North
+              Downs, and the Medway villages — have older rural properties requiring periodic
+              rewires and solar PV installations. Some have TT earthing and older single-phase
+              supplies. Rural electrical work commands a travel premium.
             </p>
           </div>
         </div>
@@ -312,33 +307,30 @@ const sections = [
     heading: 'Part P and BS 7671 in Maidstone',
     content: (
       <>
-        <p>
-          All domestic electrical work in Maidstone must comply with Part P and BS 7671:
-        </p>
+        <p>All domestic electrical work in Maidstone must comply with Part P and BS 7671:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — notifiable work must be self-certified
-                by a registered competent person or notified to Maidstone Borough Council
-                building control. Registered electricians notify automatically.
+                <strong>Part P notification</strong> — notifiable work must be self-certified by a
+                registered competent person or notified to Maidstone Borough Council building
+                control. Registered electricians notify automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD
-                protection for all socket outlets up to 32A and all final circuits in new
-                domestic installations.
+                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD protection
+                for all socket outlets up to 32A and all final circuits in new domestic
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection</strong> — BS 7671 Section 631 covers periodic
-                inspection requirements. Rental properties must have an EICR every 5 years
-                by law.
+                inspection requirements. Rental properties must have an EICR every 5 years by law.
               </span>
             </li>
           </ul>
@@ -355,36 +347,34 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Victorian terraced properties are common in the Fant, Tovil, and Park Wood
-              areas of Maidstone. Solid brick walls require surface-mounted trunking or
-              floor-void routing for rewires. Pre-1980s properties should be checked for
-              asbestos before invasive work.
+              Victorian terraced properties are common in the Fant, Tovil, and Park Wood areas of
+              Maidstone. Solid brick walls require surface-mounted trunking or floor-void routing
+              for rewires. Pre-1980s properties should be checked for asbestos before invasive work.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Semi-Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              1950s and 1960s semi-detached houses in areas like Shepway, Senacre, and Loose.
-              Cavity wall construction — easier cable routing than Victorian terraces. Many
-              have outdated consumer units approaching the end of their serviceable life.
+              1950s and 1960s semi-detached houses in areas like Shepway, Senacre, and Loose. Cavity
+              wall construction — easier cable routing than Victorian terraces. Many have outdated
+              consumer units approaching the end of their serviceable life.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Rural Kent Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              Farmhouses, oast houses, and village properties in the Mid Kent countryside.
-              May have TT earthing, overhead service cables, and older single-phase supplies
-              with limited capacity. Solar PV is popular on south-facing farm and rural
-              properties. Always survey before quoting rural jobs.
+              Farmhouses, oast houses, and village properties in the Mid Kent countryside. May have
+              TT earthing, overhead service cables, and older single-phase supplies with limited
+              capacity. Solar PV is popular on south-facing farm and rural properties. Always survey
+              before quoting rural jobs.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Developments</h3>
             <p className="text-white text-sm leading-relaxed">
-              New-build estates in areas like Langley Park, Kings Hill (nearby), and on the
-              fringes of Maidstone. Modern wiring, consumer units, and EV charger provision
-              in many new builds. Work is typically additions and EV charger installations
-              rather than rewires.
+              New-build estates in areas like Langley Park, Kings Hill (nearby), and on the fringes
+              of Maidstone. Modern wiring, consumer units, and EV charger provision in many new
+              builds. Work is typically additions and EV charger installations rather than rewires.
             </p>
           </div>
         </div>
@@ -397,10 +387,10 @@ const sections = [
     content: (
       <>
         <p>
-          Maidstone is a strong South East market offering varied work across residential,
-          rural, and commercial sectors. The county town status brings professional services
-          commercial work alongside the residential market — and South East rates make the
-          area financially rewarding for well-qualified electricians.
+          Maidstone is a strong South East market offering varied work across residential, rural,
+          and commercial sectors. The county town status brings professional services commercial
+          work alongside the residential market — and South East rates make the area financially
+          rewarding for well-qualified electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -409,16 +399,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EICs
-                  </SEOInternalLink>{' '}
-                  from your phone on Maidstone and Kent jobs. Issue certificates on site —
-                  no delays, professional documentation every time.
+                  Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
+                  and <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> from
+                  your phone on Maidstone and Kent jobs. Issue certificates on site — no delays,
+                  professional documentation every time.
                 </p>
               </div>
             </div>
@@ -433,8 +417,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Maidstone and surrounding Kent
-                  customers at accurate South East rates. Quote on site and close more jobs.
+                  to produce professional PDF quotes for Maidstone and surrounding Kent customers at
+                  accurate South East rates. Quote on site and close more jobs.
                 </p>
               </div>
             </div>
@@ -442,7 +426,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Maidstone electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Kent. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for South East electricians working across Kent. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -467,8 +451,7 @@ export default function ElectricianMaidstonePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Maidstone:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Maidstone: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Maidstone's South East location, Victorian housing stock, commuter population, and surrounding Kent countryside create a varied and rewarding market for registered electricians. Find NICEIC and NAPIT approved electricians in Maidstone."
@@ -479,7 +462,7 @@ export default function ElectricianMaidstonePage() {
       faqHeading="Frequently Asked Questions About Electricians in Maidstone"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Maidstone Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Kent. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for South East electricians working across Kent. 7-day free trial."
     />
   );
 }

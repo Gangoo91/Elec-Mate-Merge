@@ -192,9 +192,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Notifiable work includes: installing a new circuit, replacing a consumer unit (fuse board),
-          any electrical work in a bathroom or shower room, any electrical work in a kitchen within
-          a new build, and any addition or alteration to existing circuits in special locations.
+          Notifiable work includes: installing a new circuit, replacing a consumer unit (fuse
+          board), any electrical work in a bathroom or shower room, any electrical work in a kitchen
+          within a new build, and any addition or alteration to existing circuits in special
+          locations.
         </p>
       </>
     ),
@@ -241,9 +242,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">ELECSA</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Part of the Certsure group (which also includes NICEIC). Offers a more
-                  affordable entry point than NICEIC while providing the same self-certification
-                  authority. Less well-known to homeowners but fully government-authorised.
+                  Part of the Certsure group (which also includes NICEIC). Offers a more affordable
+                  entry point than NICEIC while providing the same self-certification authority.
+                  Less well-known to homeowners but fully government-authorised.
                 </p>
               </div>
             </div>
@@ -254,9 +255,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">STROMA</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Originally focused on energy performance certificates, STROMA now offers electrical
-                  competent person scheme membership. Competitive pricing. Less brand recognition
-                  in the electrical sector but fully authorised for self-certification.
+                  Originally focused on energy performance certificates, STROMA now offers
+                  electrical competent person scheme membership. Competitive pricing. Less brand
+                  recognition in the electrical sector but fully authorised for self-certification.
                 </p>
               </div>
             </div>
@@ -319,9 +320,7 @@ const sections = [
     heading: 'Assessment Process',
     content: (
       <>
-        <p>
-          The initial assessment involves:
-        </p>
+        <p>The initial assessment involves:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -359,9 +358,9 @@ const sections = [
         </div>
         <p>
           The assessment is not an exam — it is a review of your real work. If you are doing
-          competent work and keeping good records, you will pass. The most common issues flagged
-          are documentation errors (missing test results, incomplete schedules) rather than
-          installation faults.
+          competent work and keeping good records, you will pass. The most common issues flagged are
+          documentation errors (missing test results, incomplete schedules) rather than installation
+          faults.
         </p>
       </>
     ),
@@ -418,9 +417,7 @@ const sections = [
     heading: 'Ongoing Obligations',
     content: (
       <>
-        <p>
-          Once you join a scheme, you have ongoing obligations:
-        </p>
+        <p>Once you join a scheme, you have ongoing obligations:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -444,9 +441,7 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Maintain insurance — public liability insurance must remain in force.
-              </span>
+              <span>Maintain insurance — public liability insurance must remain in force.</span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -507,7 +502,7 @@ export default function CompetentPersonSchemeGuidePage() {
       faqHeading="Frequently Asked Questions About Competent Person Schemes"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Scheme Assessments"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICs, EICRs, and minor works certificates. Professional documentation that passes every assessment. 7-day free trial."
     />
   );
 }

@@ -491,14 +491,14 @@ export default function AdiabaticEquationCalculatorPage() {
             </p>
             <p>
               These are two of 70 electrical calculators available in Elec-Mate — 56 technical
-              calculators plus 14 business calculators. Combined with 8 certificate types, 8 Elec-AI
-              agents, 12 AI tools, 36+ training courses, and integration with Xero and QuickBooks,
-              it is the complete platform for UK electricians.
+              calculators plus 14 business calculators. Combined with 16 certificate types, 8
+              Elec-AI agents, 12 AI tools, 46+ training courses, and integration with Xero and
+              QuickBooks, it is the complete platform for UK electricians.
             </p>
           </div>
           <SEOAppBridge
             title="Adiabatic Calculations + Certification in One App"
-            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within Elec-Mate. 70 calculators, 8 certificate types, AI tools, and 36+ training courses."
+            description="Calculate minimum CPC sizes using the adiabatic equation, then record your verified results directly onto your EIC or EICR certificate — all within Elec-Mate. 70+ calculators, 16 certificate types, AI tools, and 46+ training courses."
             icon={Calculator}
           />
           <SEOFeatureGrid features={features} columns={3} />
@@ -542,19 +542,19 @@ export default function AdiabaticEquationCalculatorPage() {
           </h2>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              Regulation 543.1 of BS 7671 sets out the requirements for sizing protective conductors.
-              It states that the cross-sectional area of every protective conductor, other than a
-              protective bonding conductor, shall be calculated by the adiabatic equation or selected
-              in accordance with Table 54.7. The regulation makes it clear that the adiabatic
-              equation is the definitive method — Table 54.7 is a simplified alternative that gives
-              conservative (larger) sizes.
+              Regulation 543.1 of BS 7671 sets out the requirements for sizing protective
+              conductors. It states that the cross-sectional area of every protective conductor,
+              other than a protective bonding conductor, shall be calculated by the adiabatic
+              equation or selected in accordance with Table 54.7. The regulation makes it clear that
+              the adiabatic equation is the definitive method — Table 54.7 is a simplified
+              alternative that gives conservative (larger) sizes.
             </p>
             <p>
-              The regulation specifies that the calculated cross-sectional area shall be not less than
-              the value determined by the equation S = √(I²t) / k, where the symbols have the
-              meanings described above. It also notes that the k values are given in Tables 54.2
-              to 54.6, and that the value of I²t shall not exceed the value given by the
-              manufacturer for the protective device.
+              The regulation specifies that the calculated cross-sectional area shall be not less
+              than the value determined by the equation S = √(I²t) / k, where the symbols have the
+              meanings described above. It also notes that the k values are given in Tables 54.2 to
+              54.6, and that the value of I²t shall not exceed the value given by the manufacturer
+              for the protective device.
             </p>
             <p>
               In practice, this means that for every circuit in an installation, the designer or
@@ -568,8 +568,8 @@ export default function AdiabaticEquationCalculatorPage() {
             <p>
               Amendment 3 to BS 7671 (A3:2024), issued in July 2024, did not change the fundamental
               adiabatic equation requirements but added Regulation 530.3.2 covering requirements for
-              bidirectional and unidirectional switching devices. The core CPC sizing requirements in
-              Regulation 543.1 remain as established in the 18th Edition.
+              bidirectional and unidirectional switching devices. The core CPC sizing requirements
+              in Regulation 543.1 remain as established in the 18th Edition.
             </p>
           </div>
         </div>
@@ -587,14 +587,14 @@ export default function AdiabaticEquationCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Elec-Mate is designed by electricians for electricians. The adiabatic equation
-              calculator is one of 70 calculators that work the way you actually need them to on
+              calculator is one of 70+ calculators that work the way you actually need them to on
               site — fast, accurate, and available on your phone even without a signal. Enter your
               values, get the answer, verify the conductor, move on.
             </p>
             <p>
-              The platform also includes 8 certificate types (EICR, EIC, Minor Works, emergency
+              The platform also includes 16 certificate types (EICR, EIC, Minor Works, emergency
               lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI
-              tools, and 36+ training courses. Xero and QuickBooks integration means you can manage
+              tools, and 46+ training courses. Xero and QuickBooks integration means you can manage
               your jobs, certificates, and invoicing all from one mobile-first app.
             </p>
           </div>
@@ -629,7 +629,7 @@ export default function AdiabaticEquationCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Size protective conductors in seconds"
-        subheading="Join 430+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

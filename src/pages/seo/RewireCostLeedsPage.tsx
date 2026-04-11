@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Are there grants for house rewiring in Leeds?',
     answer:
-      'Leeds City Council operates a private sector housing assistance programme that in some circumstances provides grants or interest-free loans for essential home repairs, including electrical work, for older or disabled homeowners. These are means-tested. The national ECO4 scheme may fund some electrical work where it is linked to energy efficiency improvements. Contact Leeds City Council\'s housing options team to check current availability for your situation.',
+      "Leeds City Council operates a private sector housing assistance programme that in some circumstances provides grants or interest-free loans for essential home repairs, including electrical work, for older or disabled homeowners. These are means-tested. The national ECO4 scheme may fund some electrical work where it is linked to energy efficiency improvements. Contact Leeds City Council's housing options team to check current availability for your situation.",
   },
   {
     question: 'What happens to walls after a rewire in a Leeds back-to-back terrace?',
@@ -183,19 +183,19 @@ const sections = [
           </ul>
         </div>
         <p>
-          These prices include all materials, labour, a new consumer unit with RCBOs and SPD, initial
-          verification testing, the{' '}
+          These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
+          initial verification testing, the{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
-          , and Part P notification. Making good is quoted separately — budget £500–£1,500 for
-          a standard Leeds property.
+          , and Part P notification. Making good is quoted separately — budget £500–£1,500 for a
+          standard Leeds property.
         </p>
         <p>
           Inner Leeds (Headingley, Hyde Park, Beeston, Holbeck) Victorian terraces attract costs
           towards the higher end due to lath-and-plaster construction and limited access. Outer
-          Leeds suburbs (Roundhay, Morley, Garforth, Wetherby) with inter-war and modern housing
-          sit at the lower end.
+          Leeds suburbs (Roundhay, Morley, Garforth, Wetherby) with inter-war and modern housing sit
+          at the lower end.
         </p>
       </>
     ),
@@ -215,17 +215,18 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian back-to-backs and through-terraces (1860s–1900s):</strong> Highly
-                concentrated in Headingley, Hyde Park, Beeston, Holbeck, and Harehills. Back-to-backs
-                are a distinctive Leeds building type — no rear access, no loft in many cases. Cable
-                routing is challenging and takes longer than in conventional terraces.
+                concentrated in Headingley, Hyde Park, Beeston, Holbeck, and Harehills.
+                Back-to-backs are a distinctive Leeds building type — no rear access, no loft in
+                many cases. Cable routing is challenging and takes longer than in conventional
+                terraces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Edwardian through-terraces (1900s–1910s):</strong> Found in Burley,
-                Armley, Bramley, and Chapel Allerton. Larger than back-to-backs, with rear gardens
-                and more accessible cable routes, but still lath-and-plaster construction.
+                <strong>Edwardian through-terraces (1900s–1910s):</strong> Found in Burley, Armley,
+                Bramley, and Chapel Allerton. Larger than back-to-backs, with rear gardens and more
+                accessible cable routes, but still lath-and-plaster construction.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,8 +273,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board with wire fuses</strong> — no RCD protection, fire
-                and shock risk.
+                <strong>Rewirable fuse board with wire fuses</strong> — no RCD protection, fire and
+                shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,8 +442,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about Leeds housing stock experience</strong> — back-to-backs and
-                Victorian terraces require specific expertise. Ask for references from similar
-                Leeds properties.
+                Victorian terraces require specific expertise. Ask for references from similar Leeds
+                properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -481,8 +482,7 @@ export default function RewireCostLeedsPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Leeds:{' '}
-          <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Leeds: <span className="text-yellow-400">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Leeds rewire costs in 2026 across all property types — from Victorian back-to-backs in Headingley and Hyde Park to 1930s semis in Roundhay and Horsforth. Realistic Yorkshire prices, Part P guidance, and what to expect from a Leeds electrician."
@@ -493,7 +493,7 @@ export default function RewireCostLeedsPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Quote Leeds Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

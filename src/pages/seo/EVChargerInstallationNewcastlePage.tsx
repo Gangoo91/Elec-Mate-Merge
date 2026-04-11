@@ -44,7 +44,7 @@ const keyTakeaways = [
   'Northern Powergrid is the Distribution Network Operator (DNO) for the Newcastle and wider North East region. G98 notification is required before energising any domestic EV charger.',
   'BS 7671:2018 Section 722 governs all EV charging installations. Regulation 722.411.4.1 requires specific earthing measures on PME supplies, which are common across Newcastle.',
   'All EV charger installations must be carried out by a Part P-competent electrician. NICEIC and NAPIT members can self-certify the installation to Building Regulations.',
-  'Newcastle\'s housing stock includes a mix of Tyne and Wear terraces, semis, and newer builds — most offer straightforward cable runs at the lower end of the cost range.',
+  "Newcastle's housing stock includes a mix of Tyne and Wear terraces, semis, and newer builds — most offer straightforward cable runs at the lower end of the cost range.",
 ];
 
 const faqs = [
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'Which DNO covers Newcastle for EV charger notification?',
     answer:
-      'Northern Powergrid is the Distribution Network Operator for Newcastle, Gateshead, Sunderland, and the wider North East region. All EV charger installations must be notified to Northern Powergrid under Engineering Recommendation G98 before the charger is energised. For standard 7kW single-phase chargers, G98 is a simple notification — no prior approval is required. Three-phase 22kW chargers require G99 approval, which can take several weeks. The installer submits the notification on the homeowner\'s behalf.',
+      "Northern Powergrid is the Distribution Network Operator for Newcastle, Gateshead, Sunderland, and the wider North East region. All EV charger installations must be notified to Northern Powergrid under Engineering Recommendation G98 before the charger is energised. For standard 7kW single-phase chargers, G98 is a simple notification — no prior approval is required. Three-phase 22kW chargers require G99 approval, which can take several weeks. The installer submits the notification on the homeowner's behalf.",
   },
   {
     question: 'Do I need an OZEV-approved installer for EV charger installation in Newcastle?',
@@ -120,7 +120,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
-    description: 'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
+    description:
+      'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -153,18 +154,16 @@ const sections = [
         </p>
         <p>
           The good news for Newcastle residents is that home EV charger installation is generally
-          more affordable here than in London or the South East. Labour rates are lower, cable
-          runs are shorter in most properties, and the North East's housing stock — a mix of
-          post-war semis, terraces, and newer builds — lends itself to straightforward
-          installations.
+          more affordable here than in London or the South East. Labour rates are lower, cable runs
+          are shorter in most properties, and the North East's housing stock — a mix of post-war
+          semis, terraces, and newer builds — lends itself to straightforward installations.
         </p>
         <p>
           This guide covers the real costs of EV charger installation in Newcastle, the OZEV grant
-          of up to £350 available to eligible residents, the{' '}
-          <strong>Northern Powergrid</strong> DNO notification process, Part P compliance
-          requirements, and what to look for when choosing an OZEV-approved installer. Whether
-          you are getting quotes for your home or an electrician pricing North East jobs, this
-          guide reflects current 2026 market conditions.
+          of up to £350 available to eligible residents, the <strong>Northern Powergrid</strong> DNO
+          notification process, Part P compliance requirements, and what to look for when choosing
+          an OZEV-approved installer. Whether you are getting quotes for your home or an electrician
+          pricing North East jobs, this guide reflects current 2026 market conditions.
         </p>
       </>
     ),
@@ -188,33 +187,33 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Simple installation (detached/semi, garage or short driveway)</strong> —
-                £800 to £1,000. Charger mounted close to the consumer unit, short cable run of 3
-                to 8 metres, no board upgrade required. The most common Newcastle scenario for
-                post-war semis.
+                £800 to £1,000. Charger mounted close to the consumer unit, short cable run of 3 to
+                8 metres, no board upgrade required. The most common Newcastle scenario for post-war
+                semis.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard installation (terrace, medium cable run)</strong> — £900 to
-                £1,100. Cable run of 8 to 15 metres, possible board upgrade, earth rod where
-                PME supply is present. Typical for Tyne and Wear terraces with a front driveway.
+                <strong>Standard installation (terrace, medium cable run)</strong> — £900 to £1,100.
+                Cable run of 8 to 15 metres, possible board upgrade, earth rod where PME supply is
+                present. Typical for Tyne and Wear terraces with a front driveway.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complex installation (long cable run, board upgrade)</strong> — £1,100 to
-                £1,400. Cable run over 15 metres, consumer unit replacement needed, earth rod and
-                TT arrangement. Less common but occurs where consumer unit is at the rear and
-                parking is at the front.
+                £1,400. Cable run over 15 metres, consumer unit replacement needed, earth rod and TT
+                arrangement. Less common but occurs where consumer unit is at the rear and parking
+                is at the front.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires
-                a three-phase supply (not all Newcastle properties have this) and G99 approval from
+                <strong>22kW three-phase charger</strong> — £1,200 to £2,000 installed. Requires a
+                three-phase supply (not all Newcastle properties have this) and G99 approval from
                 Northern Powergrid. Suitable for properties with very high mileage usage or multiple
                 EVs.
               </span>
@@ -237,8 +236,8 @@ const sections = [
         <p>
           The <strong>OZEV EV chargepoint grant</strong> (formerly the OLEV grant) provides up to
           £350 towards the cost of a home EV charger installation. In Newcastle, where total
-          installation costs typically fall in the £800 to £1,200 range, this grant represents
-          a meaningful saving of up to 30 to 40% for eligible applicants.
+          installation costs typically fall in the £800 to £1,200 range, this grant represents a
+          meaningful saving of up to 30 to 40% for eligible applicants.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Grant Eligibility</h3>
@@ -304,10 +303,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit (Regulation 722.533.101)</strong> — the EV charger must
-                be on its own dedicated final circuit. This typically means a 32A Type B MCB from
-                the consumer unit, protected with appropriate RCD protection. If the consumer unit
-                has no spare ways, a board upgrade or sub-board may be needed.
+                <strong>Dedicated circuit (Regulation 722.533.101)</strong> — the EV charger must be
+                on its own dedicated final circuit. This typically means a 32A Type B MCB from the
+                consumer unit, protected with appropriate RCD protection. If the consumer unit has
+                no spare ways, a board upgrade or sub-board may be needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,8 +314,8 @@ const sections = [
               <span>
                 <strong>RCD protection (Regulation 722.531.101)</strong> — the EV charger circuit
                 requires RCD protection. For chargers that produce DC residual currents, a Type B
-                RCD or a Type A RCD with a separate 6mA DC RDC-DD device is required. Most
-                modern smart chargers have integrated DC fault protection.
+                RCD or a Type A RCD with a separate 6mA DC RDC-DD device is required. Most modern
+                smart chargers have integrated DC fault protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -324,8 +323,8 @@ const sections = [
               <span>
                 <strong>Smart charger compliance</strong> — under the Electric Vehicles (Smart
                 Charge Points) Regulations 2021, all new home EV chargers must support smart
-                charging functionality, randomised delay, and demand side response. Chargers must
-                be capable of remote control and scheduling.
+                charging functionality, randomised delay, and demand side response. Chargers must be
+                capable of remote control and scheduling.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -360,9 +359,9 @@ const sections = [
       <>
         <p>
           The majority of Newcastle properties are supplied on a PME (TN-C-S) earthing arrangement.
-          Regulation 722.411.4.1 and the IET Code of Practice for EV Charging Equipment
-          Installation require that additional earthing measures are taken where an EV charging
-          point is installed outdoors on a PME supply.
+          Regulation 722.411.4.1 and the IET Code of Practice for EV Charging Equipment Installation
+          require that additional earthing measures are taken where an EV charging point is
+          installed outdoors on a PME supply.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -370,8 +369,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               On a PME supply, a broken PEN conductor between the distribution transformer and the
               property can cause dangerous touch voltages on earthed metalwork — including the EV
-              being charged outdoors. The vehicle tyres provide limited isolation and a wet
-              driveway can create a shock risk if the PEN conductor fails.
+              being charged outdoors. The vehicle tyres provide limited isolation and a wet driveway
+              can create a shock risk if the PEN conductor fails.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -380,16 +379,15 @@ const sections = [
               The IET Code of Practice recommends installing a local earth electrode (earth rod) at
               the charger to create a TT arrangement, or using a charger with integrated PEN fault
               detection. Where the charger is inside a garage or carport (rather than fully
-              outdoors), the PME earth may be acceptable subject to an assessment by the
-              installing electrician.
+              outdoors), the PME earth may be acceptable subject to an assessment by the installing
+              electrician.
             </p>
           </div>
         </div>
         <p>
           An earth rod installation in Newcastle adds approximately £80 to £150 to the cost,
-          including the rod, clamp, and continuity and resistance testing. Most Newcastle
-          properties with gardens or grass verges have suitable ground conditions for earth rod
-          installation.
+          including the rod, clamp, and continuity and resistance testing. Most Newcastle properties
+          with gardens or grass verges have suitable ground conditions for earth rod installation.
         </p>
       </>
     ),
@@ -429,10 +427,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installer responsibility</strong> — the installing electrician is responsible
-                for submitting DNO notification. Confirm this is included in the quoted price before
-                booking. Failure to notify Northern Powergrid can result in the charger being
-                required to be disconnected until notification is complete.
+                <strong>Installer responsibility</strong> — the installing electrician is
+                responsible for submitting DNO notification. Confirm this is included in the quoted
+                price before booking. Failure to notify Northern Powergrid can result in the charger
+                being required to be disconnected until notification is complete.
               </span>
             </li>
           </ul>
@@ -473,19 +471,19 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV installation experience</strong> — ask installers about their experience
-                specifically with EV charger installations. The earthing assessment, DNO notification
-                process, and smart charger commissioning are specific skills. A general electrician
-                may not be familiar with all aspects of Section 722 compliance.
+                specifically with EV charger installations. The earthing assessment, DNO
+                notification process, and smart charger commissioning are specific skills. A general
+                electrician may not be familiar with all aspects of Section 722 compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation included</strong> — the installer should provide an
-                Electrical Installation Certificate (EIC), a Minor Electrical Installation Works
-                Certificate or EIC as appropriate, Northern Powergrid G98 notification confirmation,
-                and manufacturer commissioning documentation. Ask for these to be included in the
-                quoted price.
+                <strong>Documentation included</strong> — the installer should provide an Electrical
+                Installation Certificate (EIC), a Minor Electrical Installation Works Certificate or
+                EIC as appropriate, Northern Powergrid G98 notification confirmation, and
+                manufacturer commissioning documentation. Ask for these to be included in the quoted
+                price.
               </span>
             </li>
           </ul>
@@ -500,8 +498,8 @@ const sections = [
       <>
         <p>
           Newcastle and the North East represent a growing market for domestic EV charger
-          installation. EV uptake is accelerating across the region and electricians who can offer
-          a complete, compliant installation service — including OZEV grant processing — are well
+          installation. EV uptake is accelerating across the region and electricians who can offer a
+          complete, compliant installation service — including OZEV grant processing — are well
           positioned to win work.
         </p>
         <div className="space-y-4 my-4">
@@ -543,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify EV charger installations in Newcastle"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across the North East."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. Complete EV charger quotes and certificates from your phone — built for electricians working across the North East."
           icon={Car}
         />
       </>
@@ -580,7 +578,7 @@ export default function EVChargerInstallationNewcastlePage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -34,7 +34,7 @@ const tocItems = [
   { id: 'costs', label: 'Typical Costs in Glasgow' },
   { id: 'property-types', label: 'Glasgow Property Types' },
   { id: 'dno-spen', label: 'SPEN and the Scottish Grid' },
-  { id: 'select-trade-body', label: 'SELECT: Scotland\'s Electrical Trade Body' },
+  { id: 'select-trade-body', label: "SELECT: Scotland's Electrical Trade Body" },
   { id: 'for-electricians', label: 'For Electricians in Glasgow' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Scotland has DIFFERENT building regulations from England and Wales. Part P does NOT apply in Scotland. Instead, electrical work is covered by the Scottish Building Standards (Section 4: Safety), and all electrical installation work must comply with BS 7671 and be certified.',
-  'SELECT is Scotland\'s trade body for electrical contractors — equivalent to NICEIC/NAPIT in England. While NICEIC and NAPIT also operate in Scotland, SELECT is the predominant body and many Scottish customers specifically look for SELECT-registered electricians.',
+  "SELECT is Scotland's trade body for electrical contractors — equivalent to NICEIC/NAPIT in England. While NICEIC and NAPIT also operate in Scotland, SELECT is the predominant body and many Scottish customers specifically look for SELECT-registered electricians.",
   'SP Energy Networks (SPEN, part of ScottishPower) is the Distribution Network Operator for Glasgow and the west of Scotland. All new connections, supply upgrades, and generation notifications go through SPEN.',
   'Glasgow has a distinctive property stock dominated by sandstone tenements (typically 4-storey blocks built between 1870 and 1920), which present unique rewiring challenges due to thick stone walls, shared closes, and lath-and-plaster ceilings.',
   'Scottish landlord electrical safety requirements differ from England — the Repairing Standard (Housing (Scotland) Act 2006) requires a valid EICR for all rented properties, with inspections at least every 5 years.',
@@ -175,8 +175,8 @@ const sections = [
         <p>
           This is the single most important difference between hiring an electrician in Glasgow
           versus anywhere in England or Wales.{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          does not apply in Scotland. The regulatory framework is different:
+          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> does
+          not apply in Scotland. The regulatory framework is different:
         </p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -185,9 +185,8 @@ const sections = [
               <span>
                 <strong>Building (Scotland) Act 2003</strong> — this is the primary legislation
                 governing building work in Scotland, including electrical installation work. The
-                Scottish Building Standards (Technical Handbooks) set out the requirements.
-                Section 4 (Safety) covers electrical installations and requires compliance with
-                BS 7671.
+                Scottish Building Standards (Technical Handbooks) set out the requirements. Section
+                4 (Safety) covers electrical installations and requires compliance with BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -233,7 +232,7 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications in Scotland',
+    heading: "How to Verify an Electrician's Qualifications in Scotland",
     content: (
       <>
         <p>
@@ -272,8 +271,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public liability insurance</strong> — minimum £1 million cover, ideally
-                £2 million. Tenement properties (where damage to one flat can affect neighbouring
+                <strong>Public liability insurance</strong> — minimum £1 million cover, ideally £2
+                million. Tenement properties (where damage to one flat can affect neighbouring
                 flats) make adequate insurance cover particularly important in Glasgow.
               </span>
             </li>
@@ -289,8 +288,8 @@ const sections = [
       <>
         <p>
           Glasgow electrical prices are broadly comparable to Leeds and other northern English
-          cities — lower than London and the South East, but competitive for skilled work. Here
-          are realistic 2026 prices for common domestic electrical work in Glasgow:
+          cities — lower than London and the South East, but competitive for skilled work. Here are
+          realistic 2026 prices for common domestic electrical work in Glasgow:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -307,16 +306,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed semi-detached)</strong> — £4,000 to £6,500 including
-                all circuits, consumer unit, testing, and certification. Post-war semis in areas
-                like Knightswood, Cardonald, and Clarkston are more straightforward than tenements.
+                <strong>Full rewire (3-bed semi-detached)</strong> — £4,000 to £6,500 including all
+                circuits, consumer unit, testing, and certification. Post-war semis in areas like
+                Knightswood, Cardonald, and Clarkston are more straightforward than tenements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement</strong> — £400 to £650 including isolation,
-                new compliant unit, testing, and certification.
+                <strong>Consumer unit replacement</strong> — £400 to £650 including isolation, new
+                compliant unit, testing, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -330,8 +329,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £600 to £1,100 for a 7kW home charger.
-                Properties with driveways (typically suburban Glasgow) are straightforward.
-                Tenement properties without off-street parking present challenges.
+                Properties with driveways (typically suburban Glasgow) are straightforward. Tenement
+                properties without off-street parking present challenges.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -346,7 +345,8 @@ const sections = [
         <p>
           Prices vary across Glasgow. The West End (Hillhead, Partick, Hyndland) and the Southside
           (Shawlands, Pollokshields) tend to be at the higher end. East Glasgow (Dennistoun,
-          Bridgeton, Parkhead) and outer areas are at the lower end. Always get three written quotes.
+          Bridgeton, Parkhead) and outer areas are at the lower end. Always get three written
+          quotes.
         </p>
       </>
     ),
@@ -368,8 +368,8 @@ const sections = [
               Glasgow's defining building type — typically 3 to 4 storey sandstone blocks with 2 to
               3 flats per landing, accessed from a shared close (communal stairwell). Built between
               1870 and 1920, they have thick sandstone external walls (600mm or more) that cannot be
-              chased, internal walls of lath-and-plaster on timber studs, high ceilings (3 metres
-              or more), and original timber floors with useful void space for cable routing. The
+              chased, internal walls of lath-and-plaster on timber studs, high ceilings (3 metres or
+              more), and original timber floors with useful void space for cable routing. The
               electricity supply typically enters through the close and is metered in a shared
               cupboard. Rewiring requires creative cable routing — primarily through the lath-and-
               plaster internal walls, floor voids, and surface trunking where concealment is not
@@ -379,34 +379,36 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Council Housing</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large areas of Glasgow were rebuilt with council housing in the 1950s to 1970s —
-              tower blocks (Sighthill, Red Road, the Gorbals), four-in-a-block cottages, and
-              terraced houses. Many have been transferred to housing associations and refurbished,
-              but some retain original wiring. These properties typically have concrete construction
-              (in tower blocks) or non-traditional construction methods that affect cable routing.
+              Large areas of Glasgow were rebuilt with council housing in the 1950s to 1970s — tower
+              blocks (Sighthill, Red Road, the Gorbals), four-in-a-block cottages, and terraced
+              houses. Many have been transferred to housing associations and refurbished, but some
+              retain original wiring. These properties typically have concrete construction (in
+              tower blocks) or non-traditional construction methods that affect cable routing.
               Asbestos is commonly found in meter cupboards, ceiling tiles, and around heating
               systems in this era — an asbestos survey before electrical work is essential.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">West End and Southside Conversions</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              West End and Southside Conversions
+            </h3>
             <p className="text-white text-sm leading-relaxed">
-              Many larger Glasgow tenement flats — particularly in the West End (Hillhead, Dowanhill,
-              Hyndland) and the Southside (Shawlands, Pollokshields, Queens Park) — have been
-              subdivided or reconfigured over the years. This creates complex electrical layouts
-              where circuits may not follow logical room boundaries, shared risers serve multiple
-              properties, and previous electrical work may not be documented. A thorough initial
-              survey (ideally an EICR) before any additional work is strongly recommended.
+              Many larger Glasgow tenement flats — particularly in the West End (Hillhead,
+              Dowanhill, Hyndland) and the Southside (Shawlands, Pollokshields, Queens Park) — have
+              been subdivided or reconfigured over the years. This creates complex electrical
+              layouts where circuits may not follow logical room boundaries, shared risers serve
+              multiple properties, and previous electrical work may not be documented. A thorough
+              initial survey (ideally an EICR) before any additional work is strongly recommended.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Developments</h3>
             <p className="text-white text-sm leading-relaxed">
               New-build apartments and houses along the Clyde waterfront (Pacific Quay, Finnieston),
-              in the Merchant City, and in suburban areas (Newton Mearns, East Kilbride, Bishopbriggs)
-              have modern compliant installations. Electrical work in these properties is typically
-              additions and upgrades — EV chargers, home offices, garden electrics, and smart home
-              systems.
+              in the Merchant City, and in suburban areas (Newton Mearns, East Kilbride,
+              Bishopbriggs) have modern compliant installations. Electrical work in these properties
+              is typically additions and upgrades — EV chargers, home offices, garden electrics, and
+              smart home systems.
             </p>
           </div>
         </div>
@@ -419,10 +421,10 @@ const sections = [
     content: (
       <>
         <p>
-          SP Energy Networks (SPEN, part of ScottishPower) is the Distribution Network
-          Operator for Glasgow and the west and central belt of Scotland. SSEN (Scottish and
-          Southern Electricity Networks) covers the north of Scotland — the Highlands, Islands,
-          and Aberdeenshire. Glasgow is firmly within the SPEN distribution area.
+          SP Energy Networks (SPEN, part of ScottishPower) is the Distribution Network Operator for
+          Glasgow and the west and central belt of Scotland. SSEN (Scottish and Southern Electricity
+          Networks) covers the north of Scotland — the Highlands, Islands, and Aberdeenshire.
+          Glasgow is firmly within the SPEN distribution area.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -447,8 +449,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — required for solar PV, battery storage, and
-                generation equipment. Submit to SPEN. G98 covers systems up to
-                16A per phase.
+                generation equipment. Submit to SPEN. G98 covers systems up to 16A per phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,7 +469,7 @@ const sections = [
   },
   {
     id: 'select-trade-body',
-    heading: 'SELECT: Scotland\'s Electrical Trade Body',
+    heading: "SELECT: Scotland's Electrical Trade Body",
     content: (
       <>
         <p>
@@ -482,18 +483,18 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What SELECT membership means</strong> — SELECT members must demonstrate
-                technical competence, carry appropriate insurance, use qualified electricians
-                (SJIB grading), and comply with SELECT's code of practice. Members' work is
-                regularly assessed through site inspections. SELECT offers a consumer guarantee
-                scheme that protects customers if a member firm ceases trading.
+                technical competence, carry appropriate insurance, use qualified electricians (SJIB
+                grading), and comply with SELECT's code of practice. Members' work is regularly
+                assessed through site inspections. SELECT offers a consumer guarantee scheme that
+                protects customers if a member firm ceases trading.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Finding a SELECT member</strong> — use the online search tool at
-                select.org.uk to find registered electrical contractors in the Glasgow area. You
-                can search by postcode and type of work.
+                select.org.uk to find registered electrical contractors in the Glasgow area. You can
+                search by postcode and type of work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -511,8 +512,8 @@ const sections = [
         <p>
           For electricians from England working in Scotland (or vice versa), it is important to
           understand the different regulatory frameworks. SELECT provides guidance on working across
-          the border, and many larger firms hold both SELECT and NICEIC/NAPIT registrations to
-          cover work in both jurisdictions.
+          the border, and many larger firms hold both SELECT and NICEIC/NAPIT registrations to cover
+          work in both jurisdictions.
         </p>
       </>
     ),
@@ -525,8 +526,8 @@ const sections = [
         <p>
           Glasgow is the largest electrical market in Scotland, with strong demand across domestic,
           commercial, and industrial sectors. The city's distinctive tenement stock creates
-          specialist skills requirements that not all electricians possess, and those with
-          tenement experience command a premium.
+          specialist skills requirements that not all electricians possess, and those with tenement
+          experience command a premium.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -538,9 +539,9 @@ const sections = [
                   Tenement rewiring is specialist work with steady demand — many Glasgow tenements
                   are being upgraded as the property market strengthens. Landlord compliance (EICRs,
                   fire detection) is a large market given Glasgow's high proportion of private
-                  rented accommodation. Heat pump installations are growing as Scotland pushes
-                  ahead with net-zero targets. Commercial work in the city centre and along the
-                  Clyde waterfront is strong.
+                  rented accommodation. Heat pump installations are growing as Scotland pushes ahead
+                  with net-zero targets. Commercial work in the city centre and along the Clyde
+                  waterfront is strong.
                 </p>
               </div>
             </div>
@@ -551,11 +552,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Cold Climate Expertise</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Glasgow's climate creates specific requirements for external installations,
-                  heat pump systems, and insulation. Electricians with expertise in heat pump
-                  electrical connections, underfloor heating controls, and weatherproof external
-                  installations have a growing niche in the Glasgow market as energy efficiency
-                  retrofitting accelerates under Scottish Government programmes.
+                  Glasgow's climate creates specific requirements for external installations, heat
+                  pump systems, and insulation. Electricians with expertise in heat pump electrical
+                  connections, underfloor heating controls, and weatherproof external installations
+                  have a growing niche in the Glasgow market as energy efficiency retrofitting
+                  accelerates under Scottish Government programmes.
                 </p>
               </div>
             </div>
@@ -566,8 +567,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Glasgow letting agents and factors manage large portfolios of tenement flats.
-                  They need certificates quickly and in digital format. Complete your{' '}
+                  Glasgow letting agents and factors manage large portfolios of tenement flats. They
+                  need certificates quickly and in digital format. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on your
                   phone, send the PDF on the day, and build a reputation for fast, professional
@@ -579,7 +580,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Glasgow electrical business"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -616,7 +617,7 @@ export default function ElectricianGlasgowPage() {
       faqHeading="Frequently Asked Questions About Electricians in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Glasgow factors and letting agents. 7-day free trial."
     />
   );
 }

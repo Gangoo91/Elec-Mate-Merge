@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'Do all insurers accept both NICEIC and NAPIT?',
     answer:
-      'The vast majority of UK electrical contractors\' insurers accept both NICEIC and NAPIT registration as evidence of competency. Public liability and professional indemnity insurers in the electrical sector generally do not distinguish between the two schemes. However, always confirm with your specific insurer — some niche or specialist policies may specify a particular scheme.',
+      "The vast majority of UK electrical contractors' insurers accept both NICEIC and NAPIT registration as evidence of competency. Public liability and professional indemnity insurers in the electrical sector generally do not distinguish between the two schemes. However, always confirm with your specific insurer — some niche or specialist policies may specify a particular scheme.",
   },
   {
     question: 'Which scheme do local authorities prefer?',
@@ -92,21 +92,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eca-membership-guide',
     title: 'ECA Membership Guide',
-    description: 'What ECA membership gives electricians — technical support, legal helpline, and lobbying.',
+    description:
+      'What ECA membership gives electricians — technical support, legal helpline, and lobbying.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/part-p-self-certification',
     title: 'Part P Self-Certification Guide',
-    description: 'How competent person schemes work, what work is notifiable, and Scotland/NI differences.',
+    description:
+      'How competent person schemes work, what work is notifiable, and Scotland/NI differences.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/select-electrical-registration',
     title: 'SELECT Electrical Registration Scotland',
-    description: 'The Scottish equivalent — how SELECT works and why it matters north of the border.',
+    description:
+      'The Scottish equivalent — how SELECT works and why it matters north of the border.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -137,9 +140,9 @@ const sections = [
     content: (
       <>
         <p>
-          Both NICEIC and NAPIT are government-approved competent person schemes operating under
-          the Part P Building Regulations framework in England and Wales. Membership of either
-          scheme allows electricians and electrical contractors to self-certify notifiable domestic
+          Both NICEIC and NAPIT are government-approved competent person schemes operating under the
+          Part P Building Regulations framework in England and Wales. Membership of either scheme
+          allows electricians and electrical contractors to self-certify notifiable domestic
           electrical work without notifying local authority building control on each job.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -148,13 +151,13 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC</strong> — the National Inspection Council for Electrical
-                Installation Contracting. Founded in 1956, NICEIC is one of the UK's oldest
-                and most recognised electrical contracting bodies. It is now part of the Certsure
-                group (alongside ELECSA). NICEIC offers multiple registration tiers including
-                Approved Contractor (all work types), Domestic Installer (domestic only), and
-                Domestic Part P (restricted domestic). See{' '}
-                <SEOInternalLink href="/eca-membership-guide">ECA membership</SEOInternalLink>{' '}
-                for an alternative trade body option.
+                Installation Contracting. Founded in 1956, NICEIC is one of the UK's oldest and most
+                recognised electrical contracting bodies. It is now part of the Certsure group
+                (alongside ELECSA). NICEIC offers multiple registration tiers including Approved
+                Contractor (all work types), Domestic Installer (domestic only), and Domestic Part P
+                (restricted domestic). See{' '}
+                <SEOInternalLink href="/eca-membership-guide">ECA membership</SEOInternalLink> for
+                an alternative trade body option.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -170,18 +173,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Government approval</strong> — both schemes are authorised by the
-                Department for Energy Security and Net Zero (DESNZ) and listed on the official
-                Competent Person Scheme register. Both submit completion certificates to local
-                authority building control on behalf of their members.
+                <strong>Government approval</strong> — both schemes are authorised by the Department
+                for Energy Security and Net Zero (DESNZ) and listed on the official Competent Person
+                Scheme register. Both submit completion certificates to local authority building
+                control on behalf of their members.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For most electricians, the practical day-to-day experience of being registered with
-          NICEIC or NAPIT is similar. The differences lie in brand recognition, multi-discipline
-          coverage, assessment style, and cost.
+          For most electricians, the practical day-to-day experience of being registered with NICEIC
+          or NAPIT is similar. The differences lie in brand recognition, multi-discipline coverage,
+          assessment style, and cost.
         </p>
       </>
     ),
@@ -193,9 +196,9 @@ const sections = [
       <>
         <p>
           Registration costs for both schemes are broadly comparable, though the precise figures
-          vary depending on your scheme tier, company size, and whether you pay monthly or
-          annually. The following are approximate figures for 2026 — always check the respective
-          websites for current pricing.
+          vary depending on your scheme tier, company size, and whether you pay monthly or annually.
+          The following are approximate figures for 2026 — always check the respective websites for
+          current pricing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -211,16 +214,16 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC Domestic Installer</strong> — approximately £200–£350/year.
-                Restricted to domestic electrical work only. Suitable for electricians who
-                work exclusively in the domestic sector.
+                Restricted to domestic electrical work only. Suitable for electricians who work
+                exclusively in the domestic sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT Electrical Registration (sole trader)</strong> — approximately
-                £350–£550/year for standard electrical registration. Multi-discipline bundles
-                (e.g., electrical + heating) can offer savings over registering separately.
+                £350–£550/year for standard electrical registration. Multi-discipline bundles (e.g.,
+                electrical + heating) can offer savings over registering separately.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -234,10 +237,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For a sole trader doing primarily domestic work, the annual cost difference between
-          NICEIC Domestic Installer and NAPIT is unlikely to exceed £100–£150. For larger firms
-          with multiple engineers, both schemes charge additional fees per registered operative.
-          Get a formal quote from both schemes before making a decision based on cost alone.
+          For a sole trader doing primarily domestic work, the annual cost difference between NICEIC
+          Domestic Installer and NAPIT is unlikely to exceed £100–£150. For larger firms with
+          multiple engineers, both schemes charge additional fees per registered operative. Get a
+          formal quote from both schemes before making a decision based on cost alone.
         </p>
       </>
     ),
@@ -249,19 +252,19 @@ const sections = [
       <>
         <p>
           Both NICEIC and NAPIT require an initial assessment before granting registration, and
-          ongoing periodic assessments to maintain it. The process is broadly similar but differs
-          in some details.
+          ongoing periodic assessments to maintain it. The process is broadly similar but differs in
+          some details.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Initial site assessment</strong> — both schemes send an assessor to
-                inspect a sample of your completed installations. They check workmanship
-                quality, compliance with BS 7671, documentation, and test instrument calibration.
-                You must hold appropriate qualifications (Level 3 NVQ/SVQ, 18th Edition, and
-                inspection and testing qualifications for EICR work).
+                <strong>Initial site assessment</strong> — both schemes send an assessor to inspect
+                a sample of your completed installations. They check workmanship quality, compliance
+                with BS 7671, documentation, and test instrument calibration. You must hold
+                appropriate qualifications (Level 3 NVQ/SVQ, 18th Edition, and inspection and
+                testing qualifications for EICR work).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -276,18 +279,18 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NAPIT assessment</strong> — NAPIT uses a competency framework approach.
-                Assessors look at the overall quality of work and documentation systems rather
-                than a rigid points score. Many contractors find NAPIT's approach slightly
-                more collaborative.
+                Assessors look at the overall quality of work and documentation systems rather than
+                a rigid points score. Many contractors find NAPIT's approach slightly more
+                collaborative.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ongoing assessments</strong> — both schemes conduct annual or bi-annual
-                assessments after initial registration. These include a site visit to inspect
-                live or recent work. Desk-based checks (insurance, qualifications) are also
-                conducted periodically.
+                assessments after initial registration. These include a site visit to inspect live
+                or recent work. Desk-based checks (insurance, qualifications) are also conducted
+                periodically.
               </span>
             </li>
           </ul>
@@ -310,36 +313,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC public recognition</strong> — surveys consistently show that
-                NICEIC is the most recognised electrical registration body among UK homeowners.
-                Many clients specifically ask for "NICEIC registered" electricians. The NICEIC
+                <strong>NICEIC public recognition</strong> — surveys consistently show that NICEIC
+                is the most recognised electrical registration body among UK homeowners. Many
+                clients specifically ask for "NICEIC registered" electricians. The NICEIC
                 find-a-contractor directory receives significant consumer traffic.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT recognition</strong> — NAPIT is less well known to the general
-                public but is fully recognised by industry professionals, insurers, and building
-                control. For commercial and landlord clients (who understand the scheme landscape),
-                NAPIT carries equal credibility to NICEIC.
+                <strong>NAPIT recognition</strong> — NAPIT is less well known to the general public
+                but is fully recognised by industry professionals, insurers, and building control.
+                For commercial and landlord clients (who understand the scheme landscape), NAPIT
+                carries equal credibility to NICEIC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Logo usage</strong> — both schemes allow registered members to use their
-                logo on vehicles, business cards, and websites. The NICEIC logo is more likely
-                to be recognised by a homeowner browsing a van parked outside a property.
+                logo on vehicles, business cards, and websites. The NICEIC logo is more likely to be
+                recognised by a homeowner browsing a van parked outside a property.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          If your primary market is domestic work and you win business from homeowners searching
-          for local electricians, NICEIC's stronger consumer brand may give you a marginal
-          marketing edge. For commercial, industrial, or landlord-focused work, the distinction
-          is less relevant.
+          If your primary market is domestic work and you win business from homeowners searching for
+          local electricians, NICEIC's stronger consumer brand may give you a marginal marketing
+          edge. For commercial, industrial, or landlord-focused work, the distinction is less
+          relevant.
         </p>
       </>
     ),
@@ -351,8 +354,8 @@ const sections = [
       <>
         <p>
           Both NICEIC and NAPIT are accepted by the vast majority of UK insurers and all local
-          authority building control departments. There is no meaningful practical difference
-          in this regard.
+          authority building control departments. There is no meaningful practical difference in
+          this regard.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -361,17 +364,17 @@ const sections = [
               <span>
                 <strong>Public liability insurance</strong> — insurers providing public liability
                 cover to electrical contractors accept both NICEIC and NAPIT registration as
-                evidence of competency. Some insurers offer discounted premiums for scheme
-                members; confirm with your broker whether they favour a particular scheme.
+                evidence of competency. Some insurers offer discounted premiums for scheme members;
+                confirm with your broker whether they favour a particular scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building control notifications</strong> — both schemes notify local
-                authority building control on behalf of members for notifiable Part P work.
-                The process is identical — you notify your scheme, they notify building control,
-                and a completion certificate is issued to the homeowner.
+                authority building control on behalf of members for notifiable Part P work. The
+                process is identical — you notify your scheme, they notify building control, and a
+                completion certificate is issued to the homeowner.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -382,8 +385,8 @@ const sections = [
                   landlord EICR compliance
                 </SEOInternalLink>
                 , both schemes are equally recognised. The 2020 Electrical Safety Regulations
-                require a "qualified and competent person" — membership of either scheme
-                satisfies this requirement.
+                require a "qualified and competent person" — membership of either scheme satisfies
+                this requirement.
               </span>
             </li>
           </ul>
@@ -397,39 +400,38 @@ const sections = [
     content: (
       <>
         <p>
-          For electricians who work exclusively in the electrotechnical sector, both schemes
-          provide comprehensive coverage. The key differentiator arises when contractors work
-          across multiple regulated disciplines.
+          For electricians who work exclusively in the electrotechnical sector, both schemes provide
+          comprehensive coverage. The key differentiator arises when contractors work across
+          multiple regulated disciplines.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC specialist categories</strong> — NICEIC covers domestic,
-                commercial, industrial, and specialist electrical disciplines including
-                electrical vehicle charging installations, solar PV, fire detection systems,
-                and emergency lighting. Each specialist category may require additional
-                evidence of competency.
+                <strong>NICEIC specialist categories</strong> — NICEIC covers domestic, commercial,
+                industrial, and specialist electrical disciplines including electrical vehicle
+                charging installations, solar PV, fire detection systems, and emergency lighting.
+                Each specialist category may require additional evidence of competency.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT multi-discipline advantage</strong> — NAPIT covers electrical,
-                heating and ventilation (Gas Safe equivalent pathway), solid fuel, plumbing,
-                microgeneration (solar PV, heat pumps), and green deal. For a contractor who
-                does electrical work and installs heat pumps or solar, a NAPIT multi-discipline
-                registration can be more cost-effective than separate registrations.
+                <strong>NAPIT multi-discipline advantage</strong> — NAPIT covers electrical, heating
+                and ventilation (Gas Safe equivalent pathway), solid fuel, plumbing, microgeneration
+                (solar PV, heat pumps), and green deal. For a contractor who does electrical work
+                and installs heat pumps or solar, a NAPIT multi-discipline registration can be more
+                cost-effective than separate registrations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charging</strong> — both schemes support self-certification of EV
-                charging point installations under Part P. OZEV (Office for Zero Emission
-                Vehicles) grant schemes historically required OLEV-registered installers;
-                check current OZEV requirements for any grant-funded work.
+                charging point installations under Part P. OZEV (Office for Zero Emission Vehicles)
+                grant schemes historically required OLEV-registered installers; check current OZEV
+                requirements for any grant-funded work.
               </span>
             </li>
           </ul>
@@ -453,27 +455,27 @@ const sections = [
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC find-a-contractor</strong> — NICEIC's consumer directory receives
-                significant traffic from homeowners searching for local electricians. Being
-                listed here can generate leads, particularly in areas where NICEIC registration
-                is widely associated with quality electrical work.
+                significant traffic from homeowners searching for local electricians. Being listed
+                here can generate leads, particularly in areas where NICEIC registration is widely
+                associated with quality electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT find-a-tradesperson</strong> — NAPIT's directory covers all
-                registered disciplines, which can bring in leads from consumers searching for
-                heating, plumbing, or other trades as well as electrical. For multi-discipline
-                contractors, this broader reach can be advantageous.
+                <strong>NAPIT find-a-tradesperson</strong> — NAPIT's directory covers all registered
+                disciplines, which can bring in leads from consumers searching for heating,
+                plumbing, or other trades as well as electrical. For multi-discipline contractors,
+                this broader reach can be advantageous.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Practical lead value</strong> — in practice, most electricians generate
-                the majority of their work through word-of-mouth, social media, and platforms
-                like Checkatrade or MyBuilder. The scheme directories are a supplementary
-                source rather than a primary lead channel for most businesses.
+                <strong>Practical lead value</strong> — in practice, most electricians generate the
+                majority of their work through word-of-mouth, social media, and platforms like
+                Checkatrade or MyBuilder. The scheme directories are a supplementary source rather
+                than a primary lead channel for most businesses.
               </span>
             </li>
           </ul>
@@ -495,29 +497,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Choose NICEIC if</strong> — you work primarily in the domestic sector
-                and your clients are homeowners who recognise the NICEIC name; you want the
-                strongest possible consumer brand on your van and website; or you already have
-                relationships with NICEIC-registered contractors and want consistency.
+                <strong>Choose NICEIC if</strong> — you work primarily in the domestic sector and
+                your clients are homeowners who recognise the NICEIC name; you want the strongest
+                possible consumer brand on your van and website; or you already have relationships
+                with NICEIC-registered contractors and want consistency.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Choose NAPIT if</strong> — you work across multiple regulated trades
-                (electrical plus heating, solar, or plumbing) and want a single membership;
-                your clients are predominantly commercial, industrial, or landlords who are
-                less influenced by consumer brand; or you find NAPIT's pricing better for
-                your situation.
+                (electrical plus heating, solar, or plumbing) and want a single membership; your
+                clients are predominantly commercial, industrial, or landlords who are less
+                influenced by consumer brand; or you find NAPIT's pricing better for your situation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Also consider ELECSA</strong> — ELECSA (part of the Certsure group
-                alongside NICEIC) is another government-approved scheme that some contractors
-                prefer, particularly for domestic work. It operates under the same framework
-                as NICEIC but is assessed and managed separately.
+                <strong>Also consider ELECSA</strong> — ELECSA (part of the Certsure group alongside
+                NICEIC) is another government-approved scheme that some contractors prefer,
+                particularly for domestic work. It operates under the same framework as NICEIC but
+                is assessed and managed separately.
               </span>
             </li>
           </ul>
@@ -527,8 +528,8 @@ const sections = [
           <SEOInternalLink href="/select-electrical-registration">
             SELECT in Scotland
           </SEOInternalLink>
-          , you will need a separate Part P scheme membership for any work you do in England
-          or Wales, as SELECT covers Scottish Building Standards rather than Part P.
+          , you will need a separate Part P scheme membership for any work you do in England or
+          Wales, as SELECT covers Scottish Building Standards rather than Part P.
         </p>
       </>
     ),
@@ -539,14 +540,13 @@ const sections = [
     content: (
       <>
         <p>
-          Whichever scheme you choose, keeping your registration current means staying on top
-          of assessment dates, qualifications renewals, and insurance documentation. Elec-Mate
-          helps registered electricians manage the certificate and documentation side of their
-          business.
+          Whichever scheme you choose, keeping your registration current means staying on top of
+          assessment dates, qualifications renewals, and insurance documentation. Elec-Mate helps
+          registered electricians manage the certificate and documentation side of their business.
         </p>
         <SEOAppBridge
           title="Certificate and document management for registered electricians"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs, Minor Works, and Electrical Installation Certificates on their phone. On-site PDF generation, AI board scanning, and instant report delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works, and Electrical Installation Certificates on their phone. On-site PDF generation, AI board scanning, and instant report delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>

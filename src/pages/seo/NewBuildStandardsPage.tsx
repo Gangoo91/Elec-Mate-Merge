@@ -615,7 +615,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete new build EICs on site"
-          description="Join 430+ UK electricians creating professional certificates on their phones. AI board scanner, voice entry, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional certificates on their phones. AI board scanner, voice entry, and instant PDF delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -652,7 +652,7 @@ export default function NewBuildStandardsPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical Standards"
       relatedPages={relatedPages}
       ctaHeading="Complete New Build EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional Electrical Installation Certificates with AI board scanning, voice test entry, and instant delivery to developers. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional Electrical Installation Certificates with AI board scanning, voice test entry, and instant delivery to developers. 7-day free trial, cancel anytime."
     />
   );
 }

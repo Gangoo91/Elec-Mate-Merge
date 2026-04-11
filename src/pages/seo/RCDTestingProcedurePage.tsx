@@ -684,7 +684,7 @@ export default function RCDTestingProcedurePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Validate RCD trip times automatically on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Auto-validated RCD trip times, voice test entry, EICR and EIC forms, 70+ calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Auto-validated RCD trip times, voice test entry, EICR and EIC forms, 70+ calculators. 7-day free trial, cancel anytime."
     />
   );
 }

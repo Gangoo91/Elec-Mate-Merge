@@ -668,7 +668,7 @@ export default function CommercialEICRGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional commercial EICR tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for BS 7671-compliant EICR documentation, multi-board test result schedules, and professional PDF export. Impress building managers with documentation that stands up to scrutiny. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for BS 7671-compliant EICR documentation, multi-board test result schedules, and professional PDF export. Impress building managers with documentation that stands up to scrutiny. 7-day free trial, cancel anytime."
     />
   );
 }

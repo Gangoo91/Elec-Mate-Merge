@@ -138,7 +138,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -172,7 +172,7 @@ export default function MinorWorksCertificatePage() {
   useSEO({
     title: 'Minor Works Certificate App | Digital EWC Form',
     description:
-      'Create Minor Works certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export. Part of 8 certificate types.',
+      'Create Minor Works certificates on site in minutes. Auto-fill, digital signatures, BS 7671 compliant observations, and instant PDF export. Part of 16 certificate types.',
   });
 
   return (
@@ -195,7 +195,7 @@ export default function MinorWorksCertificatePage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <FileText className="w-4 h-4" />
-            Part of 8 Certificate Types
+            Part of 16 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             Minor Works Certificate App
@@ -291,11 +291,8 @@ export default function MinorWorksCertificatePage() {
               </SEOInternalLink>{' '}
               depends on whether new circuits are being installed. Understanding the distinction is
               essential for compliance and avoiding potential liability issues. For condition
-              reporting,{' '}
-              <SEOInternalLink href="/guides/eicr-guide">
-                EICRs
-              </SEOInternalLink>{' '}
-              are the appropriate document.
+              reporting, <SEOInternalLink href="/guides/eicr-guide">EICRs</SEOInternalLink> are the
+              appropriate document.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
@@ -541,7 +538,7 @@ export default function MinorWorksCertificatePage() {
               <ClipboardCheck className="w-5 h-5 text-yellow-400" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              All 8 Certificate Types in Elec-Mate
+              All 16 Certificate Types in Elec-Mate
             </h2>
           </div>
           <p className="text-white mb-6 leading-relaxed">
@@ -744,7 +741,7 @@ export default function MinorWorksCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Create Professional Certificates in Minutes"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

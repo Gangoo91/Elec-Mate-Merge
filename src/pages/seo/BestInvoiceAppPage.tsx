@@ -113,7 +113,7 @@ export default function BestInvoiceAppPage() {
             <>
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform for UK electricians with invoicing,
-                quoting, Stripe payments, Xero integration, plus 8 certificate types, 70+ BS 7671
+                quoting, Stripe payments, Xero integration, plus 16 certificate types, 70+ BS 7671
                 calculators, 8 Elec-AI tools, and 46+ training courses. From £5.99/month.
               </p>
               <p>
@@ -253,7 +253,7 @@ export default function BestInvoiceAppPage() {
         {
           question: 'Is Elec-Mate cheaper than QuickBooks and Xero?',
           answer:
-            'Elec-Mate starts from £5.99 per month and includes everything: invoicing, quoting, 8 certificate types, 70+ calculators, 8 AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators. If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
+            'Elec-Mate starts from £5.99 per month and includes everything: invoicing, quoting, 16 certificate types, 70+ calculators, 8 AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators. If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
         },
         {
           question: 'Does Elec-Mate work offline?',
@@ -295,7 +295,7 @@ export default function BestInvoiceAppPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

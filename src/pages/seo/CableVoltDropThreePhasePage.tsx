@@ -652,7 +652,7 @@ export default function CableVoltDropThreePhasePage() {
       faqHeading="Frequently Asked Questions About Three-Phase Voltage Drop"
       relatedPages={relatedPages}
       ctaHeading="Calculate Three-Phase Voltage Drop in Seconds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. All BS 7671 tables built in. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. All BS 7671 tables built in. 7-day free trial, cancel anytime."
       toolPath="/tools/cable-volt-drop-three-phase"
     />
   );

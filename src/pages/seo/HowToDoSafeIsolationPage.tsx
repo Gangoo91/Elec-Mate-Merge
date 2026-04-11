@@ -108,7 +108,7 @@ const features = [
   },
   {
     icon: ClipboardCheck,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT Testing. All digitally signed with PDF export.',
   },
@@ -251,12 +251,17 @@ export default function HowToDoSafeIsolationPage() {
               and Regulation 13, which requires precautions to prevent equipment being inadvertently
               re-energised), the Health and Safety at Work Act 1974, and BS 7671:2018+A3:2024
               (Regulation 462, which covers isolation and switching). HSE Guidance Note GS38 sets
-              out the requirements for the test equipment used during safe isolation. After completing
-              the work, you will need to carry out{' '}
-              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">insulation resistance testing</SEOInternalLink>{' '}
+              out the requirements for the test equipment used during safe isolation. After
+              completing the work, you will need to carry out{' '}
+              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                insulation resistance testing
+              </SEOInternalLink>{' '}
               and issue the appropriate certificate — whether that is a{' '}
-              <SEOInternalLink href="/electrical-certification/minor-works">Minor Works Certificate</SEOInternalLink>{' '}
-              or a full <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>.
+              <SEOInternalLink href="/electrical-certification/minor-works">
+                Minor Works Certificate
+              </SEOInternalLink>{' '}
+              or a full{' '}
+              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>.
             </p>
             <p>
               The core principle is simple: never trust a circuit to be dead until you have
@@ -507,7 +512,7 @@ export default function HowToDoSafeIsolationPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Safe isolation guidance, 70 calculators, 8 certificate types, and 8 AI agents — all
+            Safe isolation guidance, 70+ calculators, 16 certificate types, and 8 AI agents — all
             built for UK electricians working on site.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
@@ -560,7 +565,7 @@ export default function HowToDoSafeIsolationPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Work Safer with Elec-Mate"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site procedures, testing, and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

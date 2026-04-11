@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'How do I find a qualified electrician in Bolton?',
     answer:
-      'The safest way to find a qualified electrician in Bolton is to use the NICEIC or NAPIT contractor search on their websites. Both organisations maintain registers of approved contractors who have been assessed for technical competence and who carry appropriate insurance. You can also ask for recommendations from neighbours or check review platforms. Always ask to see the electrician\'s competent person scheme registration card before work begins. A registered electrician will self-certify their work and issue you with an Electrical Installation Certificate (EIC) or Minor Works Certificate as evidence that the work meets BS 7671.',
+      "The safest way to find a qualified electrician in Bolton is to use the NICEIC or NAPIT contractor search on their websites. Both organisations maintain registers of approved contractors who have been assessed for technical competence and who carry appropriate insurance. You can also ask for recommendations from neighbours or check review platforms. Always ask to see the electrician's competent person scheme registration card before work begins. A registered electrician will self-certify their work and issue you with an Electrical Installation Certificate (EIC) or Minor Works Certificate as evidence that the work meets BS 7671.",
   },
   {
     question: 'How much does an electrician charge in Bolton?',
@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What electrical work is most common in Bolton?',
     answer:
-      'The most common electrical jobs for Bolton electricians include: consumer unit (fuse board) upgrades to meet current BS 7671 requirements, EICRs for landlords and homebuyers, rewiring of Victorian and Edwardian terraced houses (which make up a large proportion of Bolton\'s housing stock), additional sockets and lighting circuits for home improvements, EV charger installations (growing rapidly), and fault finding and repairs. Commercial work is also strong given Bolton\'s industrial heritage, with factory and warehouse electrical maintenance being a significant part of the local market.',
+      "The most common electrical jobs for Bolton electricians include: consumer unit (fuse board) upgrades to meet current BS 7671 requirements, EICRs for landlords and homebuyers, rewiring of Victorian and Edwardian terraced houses (which make up a large proportion of Bolton's housing stock), additional sockets and lighting circuits for home improvements, EV charger installations (growing rapidly), and fault finding and repairs. Commercial work is also strong given Bolton's industrial heritage, with factory and warehouse electrical maintenance being a significant part of the local market.",
   },
   {
     question: 'How long does a consumer unit replacement take in Bolton?',
@@ -126,8 +126,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 with structured training modules and practice questions.',
+    description: 'Study for C&G 2391 with structured training modules and practice questions.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -145,21 +144,21 @@ const sections = [
       <>
         <p>
           Bolton is a large town in Greater Manchester with a population of around 285,000.
-          Historically a mill town, Bolton has a diverse economy and a large stock of Victorian
-          and Edwardian terraced housing that generates consistent demand for electrical
-          rewiring, consumer unit upgrades, and periodic inspection work.
+          Historically a mill town, Bolton has a diverse economy and a large stock of Victorian and
+          Edwardian terraced housing that generates consistent demand for electrical rewiring,
+          consumer unit upgrades, and periodic inspection work.
         </p>
         <p>
-          The town falls within the Electricity North West distribution area and is subject to
-          Part P of the Building Regulations, as with all of England. Bolton electricians serve
-          a mix of domestic, commercial, and light industrial customers — from landlord EICRs
-          in the terraced streets of Farnworth and Great Lever to commercial fit-outs in the
-          town centre and industrial maintenance on the surrounding business parks.
+          The town falls within the Electricity North West distribution area and is subject to Part
+          P of the Building Regulations, as with all of England. Bolton electricians serve a mix of
+          domestic, commercial, and light industrial customers — from landlord EICRs in the terraced
+          streets of Farnworth and Great Lever to commercial fit-outs in the town centre and
+          industrial maintenance on the surrounding business parks.
         </p>
         <p>
           This guide covers everything homeowners and electricians need to know about electrical
-          work in Bolton — from finding a registered electrician and understanding typical costs
-          to the regulatory requirements and property-specific challenges of the local area.
+          work in Bolton — from finding a registered electrician and understanding typical costs to
+          the regulatory requirements and property-specific challenges of the local area.
         </p>
       </>
     ),
@@ -170,17 +169,17 @@ const sections = [
     content: (
       <>
         <p>
-          When looking for an electrician in Bolton, the most important thing to check is
-          whether they are registered with a competent person scheme. The main schemes are:
+          When looking for an electrician in Bolton, the most important thing to check is whether
+          they are registered with a competent person scheme. The main schemes are:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC</strong> — the largest electrical contractor certification scheme
-                in the UK. NICEIC-registered electricians in Bolton are assessed annually for
-                technical competence and can self-certify their work under Part P.
+                <strong>NICEIC</strong> — the largest electrical contractor certification scheme in
+                the UK. NICEIC-registered electricians in Bolton are assessed annually for technical
+                competence and can self-certify their work under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -223,9 +222,9 @@ const sections = [
     content: (
       <>
         <p>
-          Bolton has competitive electrician rates compared to the national average, reflecting
-          the North West cost of living and the strong local supply of qualified tradespeople.
-          Typical rates in 2026:
+          Bolton has competitive electrician rates compared to the national average, reflecting the
+          North West cost of living and the strong local supply of qualified tradespeople. Typical
+          rates in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -274,10 +273,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Prices can vary depending on the age and condition of the property, ease of access,
-          and the complexity of the job. Victorian terraced houses in Bolton often have solid
-          brick walls (no cavity), which makes cable routing more difficult and time-consuming
-          than in modern properties. Always get two or three quotes for larger jobs.
+          Prices can vary depending on the age and condition of the property, ease of access, and
+          the complexity of the job. Victorian terraced houses in Bolton often have solid brick
+          walls (no cavity), which makes cable routing more difficult and time-consuming than in
+          modern properties. Always get two or three quotes for larger jobs.
         </p>
       </>
     ),
@@ -288,48 +287,46 @@ const sections = [
     content: (
       <>
         <p>
-          Bolton electricians handle a broad range of domestic, commercial, and industrial
-          work. The most frequently requested jobs in the area are:
+          Bolton electricians handle a broad range of domestic, commercial, and industrial work. The
+          most frequently requested jobs in the area are:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Many older Bolton properties still have outdated fuse boards with rewirable fuses
-              or early MCB boards that do not provide adequate RCD protection. Upgrading to a
-              modern consumer unit with RCDs or
-              RCBOs improves safety and is often required when selling a property or raising
-              a mortgage.
+              Many older Bolton properties still have outdated fuse boards with rewirable fuses or
+              early MCB boards that do not provide adequate RCD protection. Upgrading to a modern
+              consumer unit with RCDs or RCBOs improves safety and is often required when selling a
+              property or raising a mortgage.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EICRs for Landlords</h3>
             <p className="text-white text-sm leading-relaxed">
-              Bolton has a large private rented sector. Landlord EICRs are mandatory every
-              5 years under the 2020 Electrical Safety Regulations. The EICR assesses the
-              condition of the fixed wiring and consumer unit against BS 7671, identifies any
-              C1 (danger present), C2 (potentially dangerous), or C3 (improvement recommended)
-              defects, and must be carried out by a qualified person.
+              Bolton has a large private rented sector. Landlord EICRs are mandatory every 5 years
+              under the 2020 Electrical Safety Regulations. The EICR assesses the condition of the
+              fixed wiring and consumer unit against BS 7671, identifies any C1 (danger present), C2
+              (potentially dangerous), or C3 (improvement recommended) defects, and must be carried
+              out by a qualified person.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Full Rewires</h3>
             <p className="text-white text-sm leading-relaxed">
-              Bolton's Victorian and Edwardian terraced houses frequently need full rewires
-              when the original wiring reaches the end of its serviceable life. Signs include
-              rubber-insulated cables, a lack of earthing to sockets, and no RCD protection.
-              Full rewires in solid-wall terraces take longer than in cavity-wall properties
-              due to the difficulty of routing cables.
+              Bolton's Victorian and Edwardian terraced houses frequently need full rewires when the
+              original wiring reaches the end of its serviceable life. Signs include
+              rubber-insulated cables, a lack of earthing to sockets, and no RCD protection. Full
+              rewires in solid-wall terraces take longer than in cavity-wall properties due to the
+              difficulty of routing cables.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Charger Installation</h3>
             <p className="text-white text-sm leading-relaxed">
-              EV charger installations are growing rapidly in Bolton as electric vehicle
-              adoption increases. Most home charger installations involve a dedicated 7kW
-              Type 2 charger, a dedicated circuit from the consumer unit, and a G98 or DNO
-              notification to Electricity North West. OZEV-approved installers can access
-              grant funding for eligible customers.
+              EV charger installations are growing rapidly in Bolton as electric vehicle adoption
+              increases. Most home charger installations involve a dedicated 7kW Type 2 charger, a
+              dedicated circuit from the consumer unit, and a G98 or DNO notification to Electricity
+              North West. OZEV-approved installers can access grant funding for eligible customers.
             </p>
           </div>
         </div>
@@ -342,37 +339,38 @@ const sections = [
     content: (
       <>
         <p>
-          All electrical work in Bolton dwellings must comply with <strong>Part P of the
-          Building Regulations</strong> and the current edition of <strong>BS 7671:2018
-          (18th Edition) including Amendment 3:2024</strong>. The key requirements are:
+          All electrical work in Bolton dwellings must comply with{' '}
+          <strong>Part P of the Building Regulations</strong> and the current edition of{' '}
+          <strong>BS 7671:2018 (18th Edition) including Amendment 3:2024</strong>. The key
+          requirements are:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable work</strong> — new circuits, consumer unit replacements,
-                and work in kitchens, bathrooms, and outside must be notified. Registered
-                electricians self-certify; unregistered electricians must notify Bolton Council
-                building control before starting.
+                <strong>Notifiable work</strong> — new circuits, consumer unit replacements, and
+                work in kitchens, bathrooms, and outside must be notified. Registered electricians
+                self-certify; unregistered electricians must notify Bolton Council building control
+                before starting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — BS 7671 requires RCD additional protection
-                for socket outlets in domestic premises, and for
-                all final circuits in new domestic installations. Modern consumer units use
-                RCBOs or dual RCD arrangements to satisfy this.
+                <strong>RCD protection</strong> — BS 7671 requires RCD additional protection for
+                socket outlets in domestic premises, and for all final circuits in new domestic
+                installations. Modern consumer units use RCBOs or dual RCD arrangements to satisfy
+                this.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the
-                requirements for periodic inspection and testing. The recommended interval for
-                domestic properties is every 10 years (or on change of occupancy). Rental
-                properties require an EICR every 5 years by law.
+                <strong>Periodic inspection</strong> — BS 7671 Section 631 sets out the requirements
+                for periodic inspection and testing. The recommended interval for domestic
+                properties is every 10 years (or on change of occupancy). Rental properties require
+                an EICR every 5 years by law.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -380,8 +378,8 @@ const sections = [
               <span>
                 <strong>Certification</strong> — on completion of notifiable work, a registered
                 electrician issues an Electrical Installation Certificate (EIC) or Minor Works
-                Certificate. These documents prove the work has been inspected and tested to
-                BS 7671 and must be kept for the life of the installation.
+                Certificate. These documents prove the work has been inspected and tested to BS 7671
+                and must be kept for the life of the installation.
               </span>
             </li>
           </ul>
@@ -395,8 +393,8 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding Bolton's property stock helps electricians quote accurately and plan
-          jobs effectively:
+          Understanding Bolton's property stock helps electricians quote accurately and plan jobs
+          effectively:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -404,18 +402,18 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The dominant property type in areas like Farnworth, Great Lever, Halliwell, and
               Daubhill. Solid brick walls, no cavity, often 2 or 3 storeys. Rewiring involves
-              surface-mounted trunking or careful routing through floor voids. Pre-1980s
-              properties may contain asbestos in floor tiles, artex, and pipe lagging — an
-              asbestos survey is advisable before invasive work.
+              surface-mounted trunking or careful routing through floor voids. Pre-1980s properties
+              may contain asbestos in floor tiles, artex, and pipe lagging — an asbestos survey is
+              advisable before invasive work.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Semi-Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              1950s and 1960s semi-detached houses in areas like Heaton, Lostock, and Bromley
-              Cross. Cavity walls make cable routing easier than Victorian terraces. Many of
-              these properties still have original wiring that is approaching the end of its
-              serviceable life and benefit from consumer unit upgrades or partial rewires.
+              1950s and 1960s semi-detached houses in areas like Heaton, Lostock, and Bromley Cross.
+              Cavity walls make cable routing easier than Victorian terraces. Many of these
+              properties still have original wiring that is approaching the end of its serviceable
+              life and benefit from consumer unit upgrades or partial rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -429,11 +427,11 @@ const sections = [
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial and Industrial</h3>
             <p className="text-white text-sm leading-relaxed">
-              Bolton has significant commercial and light industrial premises, particularly
-              around the town centre and the surrounding business parks. Commercial electrical
-              work — including three-phase supplies, distribution boards, emergency lighting,
-              and fire alarm systems — is a strong part of the local market for larger
-              electrical contractors.
+              Bolton has significant commercial and light industrial premises, particularly around
+              the town centre and the surrounding business parks. Commercial electrical work —
+              including three-phase supplies, distribution boards, emergency lighting, and fire
+              alarm systems — is a strong part of the local market for larger electrical
+              contractors.
             </p>
           </div>
         </div>
@@ -462,13 +460,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning and voice test entry. Issue
-                  professional certificates from your phone before you leave Bolton jobs —
-                  no paperwork delays.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning and voice test entry. Issue professional
+                  certificates from your phone before you leave Bolton jobs — no paperwork delays.
                 </p>
               </div>
             </div>
@@ -483,9 +477,8 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  for accurate voltage drop calculations on Bolton terraced house rewires.
-                  Long cable runs in solid-wall properties are common — get the sizing right
-                  first time.
+                  for accurate voltage drop calculations on Bolton terraced house rewires. Long
+                  cable runs in solid-wall properties are common — get the sizing right first time.
                 </p>
               </div>
             </div>
@@ -500,8 +493,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Accurate pricing for the North West market built in — quote on site and
-                  send before you drive away.
+                  . Accurate pricing for the North West market built in — quote on site and send
+                  before you drive away.
                 </p>
               </div>
             </div>
@@ -509,7 +502,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bolton electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of Bolton's terraced housing stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the realities of Bolton's terraced housing stock. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -534,8 +527,7 @@ export default function ElectricianBoltonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Bolton:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Bolton: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Bolton's large stock of Victorian terraced housing and growing rental sector creates strong demand for rewires, EICRs, consumer unit upgrades, and EV charger installations. Find NICEIC and NAPIT registered electricians in Bolton."
@@ -546,7 +538,7 @@ export default function ElectricianBoltonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bolton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bolton Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Bolton's housing stock and the North West market. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Bolton's housing stock and the North West market. 7-day free trial."
     />
   );
 }

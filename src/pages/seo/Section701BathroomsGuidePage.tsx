@@ -197,28 +197,28 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Zone 1</h3>
             <p className="text-white text-sm leading-relaxed">
               Above the bath or shower tray up to 2.25m from the finished floor level. Horizontally,
-              it extends to the vertical plane at the outer edge of the bath or shower tray, or
-              1.2m from the fixed water outlet for showers without trays. Equipment must be at
-              least IPX4. Only fixed current-using equipment suitable for the zone is permitted.
-              SELV up to 25V AC or 60V DC is allowed with the source outside Zones 0, 1, and 2.
+              it extends to the vertical plane at the outer edge of the bath or shower tray, or 1.2m
+              from the fixed water outlet for showers without trays. Equipment must be at least
+              IPX4. Only fixed current-using equipment suitable for the zone is permitted. SELV up
+              to 25V AC or 60V DC is allowed with the source outside Zones 0, 1, and 2.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 2</h3>
             <p className="text-white text-sm leading-relaxed">
               Extends 0.6m horizontally beyond Zone 1, from the finished floor level up to 2.25m.
-              Equipment must be rated at least IPX4. Fixed current-using equipment, luminaires,
-              and shaver supply units (BS EN 61558-2-5) are permitted. Switches are only permitted
-              if they form part of fixed current-using equipment suitable for the zone.
+              Equipment must be rated at least IPX4. Fixed current-using equipment, luminaires, and
+              shaver supply units (BS EN 61558-2-5) are permitted. Switches are only permitted if
+              they form part of fixed current-using equipment suitable for the zone.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Outside Zones</h3>
             <p className="text-white text-sm leading-relaxed">
-              Beyond Zone 2 and above 2.25m from the finished floor level. Normal installation
-              rules apply, subject to the general requirement that all bathroom circuits are
-              30mA RCD-protected. Socket outlets may be installed here if at least 3m from the
-              boundary of Zone 1. Switchgear, accessories, and general equipment are permitted.
+              Beyond Zone 2 and above 2.25m from the finished floor level. Normal installation rules
+              apply, subject to the general requirement that all bathroom circuits are 30mA
+              RCD-protected. Socket outlets may be installed here if at least 3m from the boundary
+              of Zone 1. Switchgear, accessories, and general equipment are permitted.
             </p>
           </div>
         </div>
@@ -260,8 +260,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone 2 — IPX4 minimum</strong>: same as Zone 1. Again, IPX5 where water
-                jets are used for cleaning. In most domestic bathrooms, IPX4 is sufficient.
+                <strong>Zone 2 — IPX4 minimum</strong>: same as Zone 1. Again, IPX5 where water jets
+                are used for cleaning. In most domestic bathrooms, IPX4 is sufficient.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,8 +331,8 @@ const sections = [
         <p>
           The minimum cross-sectional area of a supplementary bonding conductor is 4mm² if
           mechanically protected or 2.5mm² if not mechanically protected but connected between two
-          extraneous-conductive-parts (Regulation 544.2.1). Always verify the main bonding and
-          earth fault loop impedance before deciding to omit supplementary bonding.
+          extraneous-conductive-parts (Regulation 544.2.1). Always verify the main bonding and earth
+          fault loop impedance before deciding to omit supplementary bonding.
         </p>
       </>
     ),
@@ -381,8 +381,8 @@ const sections = [
         </div>
         <p>
           In a modern dual-RCD or RCBO consumer unit, most circuits are already 30mA RCD-protected.
-          On older installations with a main switch only, upgrading the consumer unit may be the most
-          practical way to achieve compliance.
+          On older installations with a main switch only, upgrading the consumer unit may be the
+          most practical way to achieve compliance.
         </p>
       </>
     ),
@@ -446,8 +446,8 @@ const sections = [
               <span>
                 <strong>Zones 0 and 1</strong>: no switchgear or accessories, except switches
                 forming an integral part of fixed current-using equipment suitable for use in that
-                zone, and SELV controls not exceeding 12V AC/30V DC (Zone 0) or 25V AC/60V DC
-                (Zone 1).
+                zone, and SELV controls not exceeding 12V AC/30V DC (Zone 0) or 25V AC/60V DC (Zone
+                1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -524,9 +524,10 @@ const sections = [
     content: (
       <>
         <p>
-          Electric showers are one of the highest-demand fixed appliances in a domestic installation,
-          typically drawing 40A to 50A at 230V (9.5kW to 11kW). The circuit must comply with both
-          the general requirements of BS 7671 and the specific requirements of Section 701.
+          Electric showers are one of the highest-demand fixed appliances in a domestic
+          installation, typically drawing 40A to 50A at 230V (9.5kW to 11kW). The circuit must
+          comply with both the general requirements of BS 7671 and the specific requirements of
+          Section 701.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -548,16 +549,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local isolation</strong>: a 45A or 50A double-pole isolator switch should
-                be installed outside the zones (or outside the bathroom), accessible to the user.
+                <strong>Local isolation</strong>: a 45A or 50A double-pole isolator switch should be
+                installed outside the zones (or outside the bathroom), accessible to the user.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing</strong>: the cable within the bathroom should ideally be
-                routed outside the zones or, if crossing zones, should be of sufficient IP rating
-                or enclosed in trunking with appropriate IP rating.
+                routed outside the zones or, if crossing zones, should be of sufficient IP rating or
+                enclosed in trunking with appropriate IP rating.
               </span>
             </li>
           </ul>
@@ -598,22 +599,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Insulation resistance — 500V DC test, minimum 1 megohm. Pay attention to moisture
-                in bathroom environments; test when the room is dry.
+                Insulation resistance — 500V DC test, minimum 1 megohm. Pay attention to moisture in
+                bathroom environments; test when the room is dry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Verification of IP ratings — inspect all equipment in zones to confirm the IP
-                rating is appropriate and has not been compromised during installation.
+                Verification of IP ratings — inspect all equipment in zones to confirm the IP rating
+                is appropriate and has not been compromised during installation.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
+          An <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
@@ -635,9 +635,7 @@ const sections = [
           unit change affecting bathroom circuits requires either self-certification through a
           competent person scheme or Building Control notification.
         </p>
-        <p>
-          Common pitfalls on bathroom installations include:
-        </p>
+        <p>Common pitfalls on bathroom installations include:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -705,7 +703,7 @@ export default function Section701BathroomsGuidePage() {
       faqHeading="Frequently Asked Questions About Section 701 Bathroom Regulations"
       relatedPages={relatedPages}
       ctaHeading="Certify Bathroom Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital EIC and Minor Works certificates with bathroom zone diagrams and supplementary bonding records. 7-day free trial."
     />
   );
 }

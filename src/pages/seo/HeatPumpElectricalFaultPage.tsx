@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'Why has my heat pump stopped working completely?',
     answer:
-      'Complete failure of a heat pump is most commonly caused by a tripped MCB or RCD on the dedicated supply circuit, a lockout fault on the heat pump control board (often following a power outage or transient), a failed control board, or a refrigerant-side fault that has triggered an electrical safety interlock. Check the consumer unit for a tripped protective device first. If all protective devices are closed, check the heat pump\'s display or indicator lights for a fault code and consult the manufacturer\'s manual.',
+      "Complete failure of a heat pump is most commonly caused by a tripped MCB or RCD on the dedicated supply circuit, a lockout fault on the heat pump control board (often following a power outage or transient), a failed control board, or a refrigerant-side fault that has triggered an electrical safety interlock. Check the consumer unit for a tripped protective device first. If all protective devices are closed, check the heat pump's display or indicator lights for a fault code and consult the manufacturer's manual.",
   },
   {
     question: 'Why does my heat pump keep tripping the MCB?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What size MCB does a heat pump need?',
     answer:
-      'MCB sizing for a heat pump depends on the unit\'s maximum continuous current and its starting current. For a typical 5 kW to 8 kW air source heat pump, a 16 A to 32 A MCB is common. Critically, motor loads require Type C MCBs (which tolerate a momentary inrush of 5 to 10 times rated current without tripping) rather than the Type B MCBs used for most domestic circuits. Refer to the heat pump manufacturer\'s installation manual for the specific MCB type and rating required.',
+      "MCB sizing for a heat pump depends on the unit's maximum continuous current and its starting current. For a typical 5 kW to 8 kW air source heat pump, a 16 A to 32 A MCB is common. Critically, motor loads require Type C MCBs (which tolerate a momentary inrush of 5 to 10 times rated current without tripping) rather than the Type B MCBs used for most domestic circuits. Refer to the heat pump manufacturer's installation manual for the specific MCB type and rating required.",
   },
   {
     question: 'Can the heat pump installation cause problems with my other circuits?',
@@ -125,29 +125,29 @@ const sections = [
           The control board is the brain of the heat pump system. It manages compressor sequencing,
           defrost cycles, heating and cooling mode switching, domestic hot water priority, and
           communication with the room thermostat and hot water cylinder sensor. A faulty control
-          board can present in many ways — from complete system failure to subtle misbehaviour
-          such as incorrect defrost cycle timing or inability to switch between heating and hot
-          water modes.
+          board can present in many ways — from complete system failure to subtle misbehaviour such
+          as incorrect defrost cycle timing or inability to switch between heating and hot water
+          modes.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fault codes and lockout</strong> — modern heat pump control boards log
-                fault codes with timestamps. A heat pump that has locked out after a fault will
-                not restart until the fault is acknowledged, either via the controller display or
-                by a power cycle. Note the displayed fault code before resetting — it is the
-                primary diagnostic information.
+                <strong>Fault codes and lockout</strong> — modern heat pump control boards log fault
+                codes with timestamps. A heat pump that has locked out after a fault will not
+                restart until the fault is acknowledged, either via the controller display or by a
+                power cycle. Note the displayed fault code before resetting — it is the primary
+                diagnostic information.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Stuck defrost loop</strong> — a heat pump that appears to be constantly
-                defrosting, or that produces minimal heat output despite running, may have a
-                faulty outdoor coil temperature sensor feeding incorrect data to the control board.
-                The control board believes the coil is frosted when it is not, and runs the defrost
+                defrosting, or that produces minimal heat output despite running, may have a faulty
+                outdoor coil temperature sensor feeding incorrect data to the control board. The
+                control board believes the coil is frosted when it is not, and runs the defrost
                 cycle continuously. Replace the suspect sensor.
               </span>
             </li>
@@ -165,10 +165,10 @@ const sections = [
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Control board replacement</strong> — control board replacement is a
-                manufacturer or specialist installer task. The replacement board must be the
-                correct part number for the unit and may require configuration via the service
-                menu. Incorrect board installation or configuration can damage the compressor
-                inverter drive.
+                manufacturer or specialist installer task. The replacement board must be the correct
+                part number for the unit and may require configuration via the service menu.
+                Incorrect board installation or configuration can damage the compressor inverter
+                drive.
               </span>
             </li>
           </ul>
@@ -182,11 +182,10 @@ const sections = [
     content: (
       <>
         <p>
-          The compressor is the highest-power component in a heat pump and the most demanding
-          load on the electrical supply. Starting problems — where the compressor fails to reach
-          running speed — are among the most stressful events for the electrical installation and
-          can damage both the compressor and the supply circuit if the fault is not diagnosed and
-          corrected.
+          The compressor is the highest-power component in a heat pump and the most demanding load
+          on the electrical supply. Starting problems — where the compressor fails to reach running
+          speed — are among the most stressful events for the electrical installation and can damage
+          both the compressor and the supply circuit if the fault is not diagnosed and corrected.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -196,9 +195,9 @@ const sections = [
                 <strong>Inverter-driven vs. fixed-speed compressors</strong> — most modern heat
                 pumps use variable-speed (inverter-driven) compressors that have a soft-start
                 characteristic and lower starting currents. Fixed-speed compressors have a hard
-                start with inrush currents of five to eight times the running current. If the
-                supply impedance is high, a hard-start compressor will cause a voltage dip that
-                can exceed the motor's operating tolerance.
+                start with inrush currents of five to eight times the running current. If the supply
+                impedance is high, a hard-start compressor will cause a voltage dip that can exceed
+                the motor's operating tolerance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -208,18 +207,18 @@ const sections = [
                 difference across the compressor needs time to equalise before a restart is
                 possible. Starting against a pressure difference causes very high starting current
                 and torque. Heat pump control boards enforce a minimum off-time (typically 3 to 5
-                minutes) for this reason. A power cycle that bypasses this delay can cause
-                repeated starting failures and compressor damage.
+                minutes) for this reason. A power cycle that bypasses this delay can cause repeated
+                starting failures and compressor damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failed inverter drive</strong> — in inverter-driven heat pumps, the
-                inverter PCB converts the AC supply to DC and then synthesises variable-frequency
-                AC for the compressor motor. A failed inverter drive causes a fault code and
-                complete compressor failure. Inverter drive failure is often caused by voltage
-                transients on the supply — SPD protection is recommended.
+                <strong>Failed inverter drive</strong> — in inverter-driven heat pumps, the inverter
+                PCB converts the AC supply to DC and then synthesises variable-frequency AC for the
+                compressor motor. A failed inverter drive causes a fault code and complete
+                compressor failure. Inverter drive failure is often caused by voltage transients on
+                the supply — SPD protection is recommended.
               </span>
             </li>
           </ul>
@@ -235,8 +234,8 @@ const sections = [
         <p>
           Heat pumps place a continuous, high-current demand on the property's electrical
           installation. Supply-side problems that are invisible to other loads can manifest
-          dramatically when a heat pump is running, particularly during cold weather when the
-          heat pump operates at maximum capacity for extended periods.
+          dramatically when a heat pump is running, particularly during cold weather when the heat
+          pump operates at maximum capacity for extended periods.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,9 +244,9 @@ const sections = [
               <span>
                 <strong>High supply impedance</strong> — older rural properties with long service
                 cable runs from the DNO transformer can have high supply impedance. Under the heat
-                pump's running current, the voltage drop across the supply impedance may reduce
-                the terminal voltage at the consumer unit below 207 V. Measure voltage at the
-                consumer unit under maximum heat pump load. If below 207 V, report to the DNO.
+                pump's running current, the voltage drop across the supply impedance may reduce the
+                terminal voltage at the consumer unit below 207 V. Measure voltage at the consumer
+                unit under maximum heat pump load. If below 207 V, report to the DNO.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -290,18 +289,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable sizing</strong> — the supply cable must be sized to carry the
-                heat pump's maximum continuous current with the voltage drop within BS 7671
-                limits (typically 3% on a final circuit, under Appendix 4). For a 5 kW to 8 kW
-                heat pump running at 32 A, 6 mm² or 10 mm² twin and earth is typically required
-                depending on the route length and installation method.
+                <strong>Cable sizing</strong> — the supply cable must be sized to carry the heat
+                pump's maximum continuous current with the voltage drop within BS 7671 limits
+                (typically 3% on a final circuit, under Appendix 4). For a 5 kW to 8 kW heat pump
+                running at 32 A, 6 mm² or 10 mm² twin and earth is typically required depending on
+                the route length and installation method.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCB type and rating</strong> — heat pump compressors require Type C MCBs
-                to tolerate the starting inrush current without nuisance tripping. Use the
+                <strong>MCB type and rating</strong> — heat pump compressors require Type C MCBs to
+                tolerate the starting inrush current without nuisance tripping. Use the
                 manufacturer's specified MCB rating — do not uprate the MCB beyond the specified
                 value as this removes the short-circuit protection for the supply cable.
               </span>
@@ -311,17 +310,17 @@ const sections = [
               <span>
                 <strong>RCD protection</strong> — a 30 mA RCD is required on the heat pump circuit
                 for additional protection. Type A is generally sufficient for inverter-driven heat
-                pumps but confirm with the manufacturer. Some heat pump manufacturers specify
-                Type B RCDs for specific models.
+                pumps but confirm with the manufacturer. Some heat pump manufacturers specify Type B
+                RCDs for specific models.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation and switching</strong> — a means of isolation must be provided
-                adjacent to the heat pump (accessible for maintenance) in addition to the MCB at
-                the consumer unit. This is typically a 45 A double-pole isolator or a suitably
-                rated rotary isolator.
+                adjacent to the heat pump (accessible for maintenance) in addition to the MCB at the
+                consumer unit. This is typically a 45 A double-pole isolator or a suitably rated
+                rotary isolator.
               </span>
             </li>
           </ul>
@@ -356,8 +355,8 @@ const sections = [
               <span>
                 <strong>Undersized cable for the route length</strong> — cable routes that pass
                 through insulation or are buried in thermal insulation dramatically reduce the
-                cable's current-carrying capacity. A 6 mm² cable installed in thermal insulation
-                may be derated to less than 20 A continuous capacity, insufficient for a heat pump
+                cable's current-carrying capacity. A 6 mm² cable installed in thermal insulation may
+                be derated to less than 20 A continuous capacity, insufficient for a heat pump
                 running at 25 A.
               </span>
             </li>
@@ -401,16 +400,16 @@ const sections = [
               <span>
                 <strong>Call promptly (within 24 to 48 hours)</strong> — in cold weather, a heat
                 pump that is not working is a risk to vulnerable occupants. Most heat pump
-                manufacturers and installers offer emergency call-out services. Contact the
-                original installer first as they will have system documentation.
+                manufacturers and installers offer emergency call-out services. Contact the original
+                installer first as they will have system documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical vs. refrigerant engineer</strong> — an electrician can diagnose
-                and repair supply circuit faults, control board wiring faults, and sensor faults.
-                A refrigerant engineer (F-Gas registered) is required for any fault involving the
+                and repair supply circuit faults, control board wiring faults, and sensor faults. A
+                refrigerant engineer (F-Gas registered) is required for any fault involving the
                 refrigerant circuit, compressor, or heat exchanger. Many heat pump specialists hold
                 both qualifications.
               </span>
@@ -426,23 +425,23 @@ const sections = [
     content: (
       <>
         <p>
-          Heat pump electrical installation and fault finding is a growing specialist area.
-          As the UK government targets 600,000 heat pump installations per year by 2028, the
-          demand for electricians competent in heat pump supply circuits, controls wiring, and
-          certification is expanding rapidly.
+          Heat pump electrical installation and fault finding is a growing specialist area. As the
+          UK government targets 600,000 heat pump installations per year by 2028, the demand for
+          electricians competent in heat pump supply circuits, controls wiring, and certification is
+          expanding rapidly.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <Thermometer className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Minor Works and Installation Certificates</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Minor Works and Installation Certificates
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Heat pump supply circuit work requires an Electrical Installation Certificate
                   (EIC) or Minor Works Certificate depending on scope. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certificates on site with test results, circuit details, and instant
                   PDF export.
                 </p>
@@ -469,7 +468,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate heat pump installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to certificate heat pump supply circuits, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
           icon={Thermometer}
         />
       </>
@@ -506,7 +505,7 @@ export default function HeatPumpElectricalFaultPage() {
       faqHeading="Frequently Asked Questions About Heat Pump Electrical Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate Heat Pump Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for heat pump installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

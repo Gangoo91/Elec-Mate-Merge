@@ -696,7 +696,7 @@ export default function RCDKeepsTrippingPage() {
         },
       ]}
       ctaHeading="Diagnose Electrical Faults Faster with Elec-Mate"
-      ctaSubheading="70+ calculators, AI fault diagnosis, and digital EICR forms. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="70+ calculators, AI fault diagnosis, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

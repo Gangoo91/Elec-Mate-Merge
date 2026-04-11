@@ -634,7 +634,7 @@ export default function LowInsulationResistancePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-Validate Insulation Resistance on Site"
-      ctaSubheading="Schedule of tests with BS 7671 validation, voice test entry, defect code AI, and digital EICR forms. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Schedule of tests with BS 7671 validation, voice test entry, defect code AI, and digital EICR forms. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

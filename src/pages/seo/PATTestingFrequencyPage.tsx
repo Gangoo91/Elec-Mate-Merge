@@ -97,7 +97,7 @@ const sections = [
           Electrical Equipment (5th Edition) provides recommended intervals based on the type of
           premises and the type of equipment. PAT testing is one of the{' '}
           <SEOInternalLink href="/guides/electrical-certificate-types-uk">
-            8 certificate types
+            16 certificate types
           </SEOInternalLink>{' '}
           that UK electricians commonly produce.
         </p>
@@ -567,7 +567,7 @@ export default function PATTestingFrequencyPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Digital PAT Testing from Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for PAT testing certificates, equipment registers, client scheduling, and re-test reminders. Quote and invoice from site. 7-day free trial."
     />
   );
 }

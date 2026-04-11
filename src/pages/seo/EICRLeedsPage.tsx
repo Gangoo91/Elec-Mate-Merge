@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented per BS 7671:2018+A3:2024 (Section 631). It classifies defects as C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), or FI (further investigation).',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A3:2024 (Section 631). It classifies defects as C1 (danger present), C2 (potentially dangerous), C3 (improvement recommended), or FI (further investigation).",
   'Leeds EICR costs are competitive. Expect £110 to £190 for a two-bedroom flat, £160 to £270 for a three-bedroom terraced house, and £230 to £380 for a four-bedroom detached house.',
   'Since 1 April 2021, landlords in England must have a valid EICR renewed at least every five years. Leeds City Council enforces through its Private Rented Sector team and can impose fines of up to £30,000.',
   'Leeds has a large student housing market centred on Headingley, Hyde Park, Woodhouse, and Burley. Student HMOs require HMO licensing with a valid EICR as a mandatory condition.',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'What happens if my Leeds property fails an EICR?',
     answer:
-      'If the EICR is Unsatisfactory (C1 or C2 observations), the landlord must complete remedial work within 28 days or sooner if the inspector specifies. Written confirmation must be provided to the tenant and Leeds City Council if requested. The council can arrange remedial work at the landlord\'s expense if the landlord fails to act.',
+      "If the EICR is Unsatisfactory (C1 or C2 observations), the landlord must complete remedial work within 28 days or sooner if the inspector specifies. Written confirmation must be provided to the tenant and Leeds City Council if requested. The council can arrange remedial work at the landlord's expense if the landlord fails to act.",
   },
   {
     question: 'Who is the electricity supplier for Leeds?',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -121,7 +122,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -147,10 +149,10 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires an EICR for periodic inspection of existing
-          installations. The inspector carries out a visual inspection and programme of testing,
-          classifying each observation using codes (C1, C2, C3, FI). The overall installation is
-          assessed as Satisfactory or Unsatisfactory.
+          (Section 631), which requires an EICR for periodic inspection of existing installations.
+          The inspector carries out a visual inspection and programme of testing, classifying each
+          observation using codes (C1, C2, C3, FI). The overall installation is assessed as
+          Satisfactory or Unsatisfactory.
         </p>
       </>
     ),
@@ -325,9 +327,7 @@ const sections = [
       <>
         <p>
           Each defect is classified using one of four codes defined in the model forms accompanying{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            BS 7671
-          </SEOInternalLink>
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">BS 7671</SEOInternalLink>
           :
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -343,8 +343,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent action needed. Common C2 findings include lack of RCD
-              protection on socket circuits, absent main bonding, and obsolete
-              rewirable fuse boards without protective devices.
+              protection on socket circuits, absent main bonding, and obsolete rewirable fuse boards
+              without protective devices.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -376,10 +376,10 @@ const sections = [
     content: (
       <>
         <p>
-          Leeds has more surviving back-to-back terraced houses than any other city in the UK.
-          These properties, built primarily in the Victorian era, share party walls on three sides
-          (both sides and the rear), with only the front wall having windows and a door. This
-          creates unique challenges for EICR inspectors:
+          Leeds has more surviving back-to-back terraced houses than any other city in the UK. These
+          properties, built primarily in the Victorian era, share party walls on three sides (both
+          sides and the rear), with only the front wall having windows and a door. This creates
+          unique challenges for EICR inspectors:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -444,9 +444,9 @@ const sections = [
     content: (
       <>
         <p>
-          The EICR involves a visual inspection and electrical testing. The inspector needs access to
-          every room, the consumer unit, meter position, cellar (if present), and any outbuildings.
-          The power will be off for 30 to 60 minutes during dead testing.
+          The EICR involves a visual inspection and electrical testing. The inspector needs access
+          to every room, the consumer unit, meter position, cellar (if present), and any
+          outbuildings. The power will be off for 30 to 60 minutes during dead testing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -475,8 +475,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report</strong> — EICR with Schedules of Circuit Details and Test Results
-                per Section 631, observations with codes, overall assessment, and
-                recommended next inspection date.
+                per Section 631, observations with codes, overall assessment, and recommended next
+                inspection date.
               </span>
             </li>
           </ul>
@@ -490,8 +490,7 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Section 6 requires periodic inspection at intervals suited to the property
-          type:
+          BS 7671 Section 6 requires periodic inspection at intervals suited to the property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -617,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -654,7 +653,7 @@ export default function EICRLeedsPage() {
       faqHeading="Frequently Asked Questions About EICRs in Leeds"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

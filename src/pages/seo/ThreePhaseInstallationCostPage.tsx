@@ -102,8 +102,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-guide',
     title: 'EV Charger Installation Guide',
-    description:
-      'Installation requirements for EV chargers including supply capacity assessment.',
+    description: 'Installation requirements for EV chargers including supply capacity assessment.',
     icon: Zap,
     category: 'Guide',
   },
@@ -126,16 +125,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/solar-panel-installation-electrical-cost',
     title: 'Solar Panel Electrical Cost',
-    description:
-      'Electrical installation costs for solar PV including G98/G99 requirements.',
+    description: 'Electrical installation costs for solar PV including G98/G99 requirements.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/commercial-electrical-installation',
     title: 'Commercial Electrical Installation',
-    description:
-      'Guide to commercial electrical installations including 3-phase distribution.',
+    description: 'Guide to commercial electrical installations including 3-phase distribution.',
     icon: Building2,
     category: 'Guide',
   },
@@ -171,33 +168,33 @@ const sections = [
               <Factory className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Large workshops and outbuildings</strong> — 3-phase motors, welders,
-                compressors, and CNC machines require or benefit significantly from a 3-phase supply.
-                Running large motors on single-phase is inefficient and limits the equipment you can
-                use.
+                compressors, and CNC machines require or benefit significantly from a 3-phase
+                supply. Running large motors on single-phase is inefficient and limits the equipment
+                you can use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV fleet charging</strong> — a single 7 kW charger works on single-phase, but
-                multiple chargers or a 22 kW 3-phase charger require a 3-phase supply. Commercial
-                premises with fleet vehicles almost always need 3-phase.
+                <strong>EV fleet charging</strong> — a single 7 kW charger works on single-phase,
+                but multiple chargers or a 22 kW 3-phase charger require a 3-phase supply.
+                Commercial premises with fleet vehicles almost always need 3-phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple heat pumps</strong> — a large property with air-source or ground-source
-                heat pumps may exceed single-phase capacity, particularly when combined with other
-                high-power loads.
+                <strong>Multiple heat pumps</strong> — a large property with air-source or
+                ground-source heat pumps may exceed single-phase capacity, particularly when
+                combined with other high-power loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial kitchens</strong> — 3-phase ovens, induction hobs, and commercial
-                refrigeration require 3-phase power. Any commercial food premises will typically need a
-                3-phase supply.
+                refrigeration require 3-phase power. Any commercial food premises will typically
+                need a 3-phase supply.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,8 +202,8 @@ const sections = [
               <span>
                 <strong>Exceeding single-phase capacity</strong> — if the maximum demand assessment
                 shows the installation will regularly exceed the available single-phase capacity, a
-                3-phase upgrade is the only solution. Overloading a single-phase supply causes voltage
-                drop, nuisance tripping, and potential damage to equipment.
+                3-phase upgrade is the only solution. Overloading a single-phase supply causes
+                voltage drop, nuisance tripping, and potential damage to equipment.
               </span>
             </li>
           </ul>
@@ -220,9 +217,9 @@ const sections = [
     content: (
       <>
         <p>
-          The largest and most variable element of a 3-phase installation cost is the DNO (Distribution
-          Network Operator) connection charge. This covers the work the DNO must carry out to bring a
-          3-phase supply from their network to your meter position.
+          The largest and most variable element of a 3-phase installation cost is the DNO
+          (Distribution Network Operator) connection charge. This covers the work the DNO must carry
+          out to bring a 3-phase supply from their network to your meter position.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">DNO Connection Costs</h3>
@@ -231,8 +228,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard connection (network at boundary)</strong> — £1,000 to £1,500. Where
-                the existing 3-phase network already runs past the property, the DNO needs to install a
-                service cable, cutout, and meter. This is the best-case scenario.
+                the existing 3-phase network already runs past the property, the DNO needs to
+                install a service cable, cutout, and meter. This is the best-case scenario.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -246,26 +243,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Network reinforcement needed</strong> — £3,000 to £10,000+. In rural areas or
-                locations far from the existing 3-phase network, significant infrastructure work may be
-                needed. The DNO may need to install a new transformer or run cables over long distances.
-                These costs can be substantial.
+                <strong>Network reinforcement needed</strong> — £3,000 to £10,000+. In rural areas
+                or locations far from the existing 3-phase network, significant infrastructure work
+                may be needed. The DNO may need to install a new transformer or run cables over long
+                distances. These costs can be substantial.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The DNO will provide a formal quotation after surveying the site. In England and Wales, the
-          main DNOs are UK Power Networks (South and East), Western Power Distribution (Midlands and
-          South West), Northern Powergrid (North East and Yorkshire), Electricity North West, Scottish
-          Power Energy Networks, and Scottish and Southern Electricity Networks. Each has their own
-          application process and pricing structure.
+          The DNO will provide a formal quotation after surveying the site. In England and Wales,
+          the main DNOs are UK Power Networks (South and East), Western Power Distribution (Midlands
+          and South West), Northern Powergrid (North East and Yorkshire), Electricity North West,
+          Scottish Power Energy Networks, and Scottish and Southern Electricity Networks. Each has
+          their own application process and pricing structure.
         </p>
         <p>
-          The application is typically made online through the DNO's connections portal. You will need
-          to provide the site address, maximum demand assessment, a site plan, and details of the
-          proposed installation. Most DNOs charge a non-refundable application fee of £100 to £300 in
-          addition to the connection charge.
+          The application is typically made online through the DNO's connections portal. You will
+          need to provide the site address, maximum demand assessment, a site plan, and details of
+          the proposed installation. Most DNOs charge a non-refundable application fee of £100 to
+          £300 in addition to the connection charge.
         </p>
       </>
     ),
@@ -303,24 +300,24 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase protective devices</strong> — 3-pole MCBs £25 to £50 each, 3-phase
-                RCBOs £80 to £150 each, 4-pole RCD £80 to £120, 3-phase SPD £120 to £250. These costs
-                add up quickly on a large installation.
+                RCBOs £80 to £150 each, 4-pole RCD £80 to £120, 3-phase SPD £120 to £250. These
+                costs add up quickly on a large installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional materials</strong> — 3-phase meter tails (25mm SWA typical) £80 to
-                £150, earthing conductor, equipotential bonding, cable glands, trunking, and labels:
-                £100 to £250.
+                <strong>Additional materials</strong> — 3-phase meter tails (25mm SWA typical) £80
+                to £150, earthing conductor, equipotential bonding, cable glands, trunking, and
+                labels: £100 to £250.
               </span>
             </li>
           </ul>
         </div>
         <p>
           For a typical 3-phase installation with a well-specified distribution board, protective
-          devices, SPD, and sundries, total material cost to the electrician is approximately £800 to
-          £1,500.
+          devices, SPD, and sundries, total material cost to the electrician is approximately £800
+          to £1,500.
         </p>
       </>
     ),
@@ -389,9 +386,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium commercial premises</strong> — £4,000 to £6,500 total. DNO connection:
-                £1,500 to £3,000. Materials: £1,000 to £1,500. Labour: £900 to £1,500. Testing and
-                certification: £300 to £500.
+                <strong>Medium commercial premises</strong> — £4,000 to £6,500 total. DNO
+                connection: £1,500 to £3,000. Materials: £1,000 to £1,500. Labour: £900 to £1,500.
+                Testing and certification: £300 to £500.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,9 +407,9 @@ const sections = [
           icon={Calculator}
         />
         <p>
-          Note that the DNO connection cost is the single biggest variable and is largely outside the
-          electrician's control. The internal installation cost is more predictable and can be quoted
-          accurately once the specification is agreed.
+          Note that the DNO connection cost is the single biggest variable and is largely outside
+          the electrician's control. The internal installation cost is more predictable and can be
+          quoted accurately once the specification is agreed.
         </p>
       </>
     ),
@@ -447,9 +444,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Acceptance and payment</strong> — once the customer accepts the quotation and
-                pays, the DNO schedules the installation work. Payment is usually required in full
-                before work is scheduled.
+                <strong>Acceptance and payment</strong> — once the customer accepts the quotation
+                and pays, the DNO schedules the installation work. Payment is usually required in
+                full before work is scheduled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,8 +499,8 @@ const sections = [
         </p>
         <p>
           For electricians installing 3-phase solar PV or battery storage systems, understanding the
-          G99 process is essential. The application should be submitted early in the project timeline
-          as DNO approval can take 4 to 8 weeks.
+          G99 process is essential. The application should be submitted early in the project
+          timeline as DNO approval can take 4 to 8 weeks.
         </p>
       </>
     ),
@@ -514,8 +511,8 @@ const sections = [
     content: (
       <>
         <p>
-          Every 3-phase installation is different. Here are the main factors that influence the total
-          cost:
+          Every 3-phase installation is different. Here are the main factors that influence the
+          total cost:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -524,8 +521,8 @@ const sections = [
               <span>
                 <strong>Distance from 3-phase network</strong> — this is by far the biggest cost
                 variable. If the 3-phase network runs past the property, the connection cost is
-                minimal. If cables must be run hundreds of metres, the cost can exceed £10,000 for the
-                DNO work alone.
+                minimal. If cables must be run hundreds of metres, the cost can exceed £10,000 for
+                the DNO work alone.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -539,25 +536,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Number of circuits</strong> — more circuits mean a larger distribution board,
-                more protective devices, and more testing time. A 12-way board for a workshop costs
-                significantly less than a 36-way board for a commercial premises.
+                <strong>Number of circuits</strong> — more circuits mean a larger distribution
+                board, more protective devices, and more testing time. A 12-way board for a workshop
+                costs significantly less than a 36-way board for a commercial premises.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable runs and containment</strong> — long cable runs between the meter and the
-                distribution board, or between the main board and sub-distribution boards, add to
-                material and labour costs.
+                <strong>Cable runs and containment</strong> — long cable runs between the meter and
+                the distribution board, or between the main board and sub-distribution boards, add
+                to material and labour costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — a 3-phase installation requires adequate
-                earthing. If the existing earthing is insufficient or needs upgrading, this adds cost.
-                Under BS 7671 Regulation 411.3.3, RCD protection is required for socket-outlet
+                earthing. If the existing earthing is insufficient or needs upgrading, this adds
+                cost. Under BS 7671 Regulation 411.3.3, RCD protection is required for socket-outlet
                 circuits not exceeding 32A in all installations.
               </span>
             </li>
@@ -580,8 +577,9 @@ const sections = [
       <>
         <p>
           3-phase installations are higher-value jobs with good margins for competent electricians.
-          They require more planning and coordination than domestic single-phase work, but the higher
-          project values make them worthwhile. Here are tips for quoting 3-phase work effectively:
+          They require more planning and coordination than domestic single-phase work, but the
+          higher project values make them worthwhile. Here are tips for quoting 3-phase work
+          effectively:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -590,10 +588,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Maximum Demand Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always carry out a proper maximum demand assessment before quoting. This determines
-                  the required supply capacity and informs the DNO application. Use diversity factors
-                  from BS 7671 Table 1A or Appendix A of the On-Site Guide to calculate the expected
-                  load per phase.
+                  Always carry out a proper maximum demand assessment before quoting. This
+                  determines the required supply capacity and informs the DNO application. Use
+                  diversity factors from BS 7671 Table 1A or Appendix A of the On-Site Guide to
+                  calculate the expected load per phase.
                 </p>
               </div>
             </div>
@@ -605,9 +603,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Separate DNO and Internal Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Always quote the internal electrical installation separately from the DNO
-                  connection cost. Make it clear to the customer that the DNO charge is set by the DNO
-                  and is outside your control. Provide an estimate based on similar local projects, but
-                  direct the customer to apply to the DNO for a formal quotation.
+                  connection cost. Make it clear to the customer that the DNO charge is set by the
+                  DNO and is outside your control. Provide an estimate based on similar local
+                  projects, but direct the customer to apply to the DNO for a formal quotation.
                 </p>
               </div>
             </div>
@@ -632,7 +630,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify 3-phase installations"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for 3-phase work. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -669,7 +667,7 @@ export default function ThreePhaseInstallationCostPage() {
       faqHeading="Frequently Asked Questions About 3-Phase Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote 3-Phase Installations with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

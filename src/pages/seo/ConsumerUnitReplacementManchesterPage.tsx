@@ -98,7 +98,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
-    description: 'Detailed guide to the regulations governing consumer units including Amendment 3.',
+    description:
+      'Detailed guide to the regulations governing consumer units including Amendment 3.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -119,7 +120,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote consumer unit replacements with itemised materials and professional PDF output.',
+    description:
+      'Quote consumer unit replacements with itemised materials and professional PDF output.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -173,8 +175,8 @@ const sections = [
         <p>
           Manchester electrician day rates typically range from £280 to £380, making consumer unit
           replacement more affordable than in London but broadly in line with other major English
-          cities such as Birmingham and Leeds. Trade material prices are consistent across the UK
-          as most wholesalers operate nationally.
+          cities such as Birmingham and Leeds. Trade material prices are consistent across the UK as
+          most wholesalers operate nationally.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Manchester Pricing Breakdown (2026)</h3>
@@ -233,8 +235,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuses (BS 3036)</strong> — common in pre-1970s Manchester terraces.
-                No RCD protection, relying on correctly rated fuse wire.
+                <strong>Rewirable fuses (BS 3036)</strong> — common in pre-1970s Manchester
+                terraces. No RCD protection, relying on correctly rated fuse wire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -247,9 +249,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
-                socket circuits and concealed cables. Boards without RCDs or RCBOs are a
-                significant shock risk.
+                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
+                circuits and concealed cables. Boards without RCDs or RCBOs are a significant shock
+                risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -257,14 +259,15 @@ const sections = [
               <span>
                 <strong>EICR C2 observation</strong> — if an{' '}
                 <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has flagged
-                a C2 (potentially dangerous) issue at the board, replacement is strongly recommended.
+                a C2 (potentially dangerous) issue at the board, replacement is strongly
+                recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overheating or burning smell</strong> — loose connections over decades
-                can cause overheating. This requires immediate attention.
+                <strong>Overheating or burning smell</strong> — loose connections over decades can
+                cause overheating. This requires immediate attention.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -286,8 +289,8 @@ const sections = [
       <>
         <p>
           Consumer unit replacement is notifiable work under Part P of the Building Regulations in
-          England and Wales. In Manchester, this means the work must be carried out by an electrician
-          registered with a competent person scheme (such as{' '}
+          England and Wales. In Manchester, this means the work must be carried out by an
+          electrician registered with a competent person scheme (such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA), or
           the homeowner must notify Manchester City Council Building Control before the work starts.
@@ -315,9 +318,7 @@ const sections = [
     heading: 'What to Expect During a Consumer Unit Replacement',
     content: (
       <>
-        <p>
-          Here is the typical process for a consumer unit replacement in a Manchester property:
-        </p>
+        <p>Here is the typical process for a consumer unit replacement in a Manchester property:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -381,9 +382,9 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Complex Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              Meter tail replacement, earthing upgrade, cable extensions, or additional circuits.
-              6 to 10 hours. Typical in Victorian and Edwardian Manchester properties where wiring
-              may be in poor condition.
+              Meter tail replacement, earthing upgrade, cable extensions, or additional circuits. 6
+              to 10 hours. Typical in Victorian and Edwardian Manchester properties where wiring may
+              be in poor condition.
             </p>
           </div>
         </div>
@@ -417,8 +418,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local to your borough</strong> — choose an electrician in your part of
-                Greater Manchester to minimise travel costs. A Bolton electrician working in Stockport
-                will add travel time.
+                Greater Manchester to minimise travel costs. A Bolton electrician working in
+                Stockport will add travel time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -483,7 +484,7 @@ export default function ConsumerUnitReplacementManchesterPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Manchester"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

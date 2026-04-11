@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The Housing Grants, Construction and Regeneration Act 1996 (as amended) gives every electrical subcontractor the right to interim payments at intervals of not less than 28 days, the right to suspend work for non-payment after seven days\' notice, and the right to refer any payment dispute to adjudication.',
+  "The Housing Grants, Construction and Regeneration Act 1996 (as amended) gives every electrical subcontractor the right to interim payments at intervals of not less than 28 days, the right to suspend work for non-payment after seven days' notice, and the right to refer any payment dispute to adjudication.",
   'CIS (Construction Industry Scheme) deductions apply to most electrical subcontracting work. Registered subcontractors have 20 per cent deducted at source; unregistered subcontractors have 30 per cent deducted. Register with HMRC before starting subcontract work.',
   'CHAS accreditation and Constructionline registration are the most widely accepted pre-qualification credentials in the UK construction sector. Without at least CHAS, most national main contractors will not add you to their supply chain.',
   'Labour-only subcontracting (you supply labour; the main contractor supplies materials) carries lower risk but lower margin. Direct subcontracting (you supply materials and labour) carries higher margin but more commercial risk.',
@@ -50,12 +50,12 @@ const faqs = [
   {
     question: 'How do I find main contractors to subcontract electrical work to?',
     answer:
-      'The most effective routes to finding main contractors are: trade bodies (the ECA and NICEIC both have contractor directories and networking events); regional construction associations (e.g. Constructing Excellence regional clubs); attending supply chain events organised by major contractors (Willmott Dixon, Wates, Kier, and others regularly hold supply chain days); Constructionline and Approved Contractors registers (main contractors search these directly); direct marketing (researching active projects on the Planning Portal and approaching the main contractor before they go to tender); and referrals from existing contacts. Cold approaches to main contractors\' procurement teams are far less effective than networking or coming through a recognised framework.',
+      "The most effective routes to finding main contractors are: trade bodies (the ECA and NICEIC both have contractor directories and networking events); regional construction associations (e.g. Constructing Excellence regional clubs); attending supply chain events organised by major contractors (Willmott Dixon, Wates, Kier, and others regularly hold supply chain days); Constructionline and Approved Contractors registers (main contractors search these directly); direct marketing (researching active projects on the Planning Portal and approaching the main contractor before they go to tender); and referrals from existing contacts. Cold approaches to main contractors' procurement teams are far less effective than networking or coming through a recognised framework.",
   },
   {
     question: 'What is CHAS and do I need it?',
     answer:
-      'CHAS (Contractors Health and Safety Assessment Scheme) is a pre-qualification accreditation that assesses your health and safety management against a standard set of criteria. It is one of the most widely recognised schemes in UK construction and is accepted by the vast majority of main contractors as evidence of H&S competence. Without CHAS or an equivalent (Safe Contractor, Constructionline Health and Safety), most national main contractors will not place you on their supply chain register. CHAS accreditation costs from around £300 per year for a sole trader and requires submission of your health and safety policy, risk assessments, employer\'s liability insurance, and other documentation.',
+      "CHAS (Contractors Health and Safety Assessment Scheme) is a pre-qualification accreditation that assesses your health and safety management against a standard set of criteria. It is one of the most widely recognised schemes in UK construction and is accepted by the vast majority of main contractors as evidence of H&S competence. Without CHAS or an equivalent (Safe Contractor, Constructionline Health and Safety), most national main contractors will not place you on their supply chain register. CHAS accreditation costs from around £300 per year for a sole trader and requires submission of your health and safety policy, risk assessments, employer's liability insurance, and other documentation.",
   },
   {
     question: 'What is the Construction Industry Scheme (CIS) and how does it affect me?',
@@ -65,10 +65,11 @@ const faqs = [
   {
     question: 'What payment rights do I have as an electrical subcontractor?',
     answer:
-      'The Housing Grants, Construction and Regeneration Act 1996 (as amended by the Local Democracy, Economic Development and Construction Act 2009) gives you: the right to interim payments at intervals of not less than 28 days; the right to receive a payment notice within five days of the payment due date, or to issue your own payment notice (a default payment notice) if the payer fails to issue one; the right to receive a pay less notice at least seven days before the final date for payment if the payer intends to pay less than the notified amount; the right to suspend work if payment is not made by the final date, after giving seven days\' written notice; and the right to refer any payment dispute to adjudication (a statutory right that cannot be contracted out of).',
+      "The Housing Grants, Construction and Regeneration Act 1996 (as amended by the Local Democracy, Economic Development and Construction Act 2009) gives you: the right to interim payments at intervals of not less than 28 days; the right to receive a payment notice within five days of the payment due date, or to issue your own payment notice (a default payment notice) if the payer fails to issue one; the right to receive a pay less notice at least seven days before the final date for payment if the payer intends to pay less than the notified amount; the right to suspend work if payment is not made by the final date, after giving seven days' written notice; and the right to refer any payment dispute to adjudication (a statutory right that cannot be contracted out of).",
   },
   {
-    question: 'What is the difference between direct subcontracting and labour-only subcontracting?',
+    question:
+      'What is the difference between direct subcontracting and labour-only subcontracting?',
     answer:
       'In a direct subcontract, you supply both materials and labour. You take responsibility for procurement, material costs, and delivery risk. Your margin is higher because you earn on both materials and labour, but your commercial exposure is greater. In a labour-only subcontract, the main contractor supplies all materials; you supply only labour. This reduces your financial risk (no material procurement, no price exposure) but your margin is lower because you only earn on your labour. Labour-only subcontractors are paid a lower rate per hour than direct subcontractors because the main contractor carries the material cost. Both forms are common in electrical subcontracting.',
   },
@@ -95,7 +96,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/quote-writing-guide',
     title: 'Quote Writing Guide',
-    description: 'Professional quote structure and pricing strategy for domestic and commercial work.',
+    description:
+      'Professional quote structure and pricing strategy for domestic and commercial work.',
     icon: ClipboardList,
     category: 'Guide',
   },
@@ -134,9 +136,9 @@ const sections = [
       <>
         <p>
           Electrical subcontracting means carrying out electrical work for a main contractor or
-          specialist contractor rather than directly for a building owner. The main contractor
-          holds the primary contract with the client and subcontracts specialist trades —
-          including electrical — to specialist firms.
+          specialist contractor rather than directly for a building owner. The main contractor holds
+          the primary contract with the client and subcontracts specialist trades — including
+          electrical — to specialist firms.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -145,28 +147,27 @@ const sections = [
               <span>
                 <strong>Advantages of subcontracting</strong> — regular volume of work from
                 established clients; less time spent on marketing and quoting; access to larger
-                projects than you could win directly; simplified administration (the main
-                contractor manages the client relationship); opportunities to build long-term
-                supply chain relationships.
+                projects than you could win directly; simplified administration (the main contractor
+                manages the client relationship); opportunities to build long-term supply chain
+                relationships.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Disadvantages</strong> — lower margin than direct-to-client work;
-                payment can be slower (main contractor payment terms are typically 30 to 45 days);
-                exposure to main contractor insolvency; less control over programme and site
-                conditions; complex contract conditions with significant liability clauses.
+                <strong>Disadvantages</strong> — lower margin than direct-to-client work; payment
+                can be slower (main contractor payment terms are typically 30 to 45 days); exposure
+                to main contractor insolvency; less control over programme and site conditions;
+                complex contract conditions with significant liability clauses.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Who uses subcontractors?</strong> — national and regional main
-                contractors (Wates, Willmott Dixon, Vistry, Galliford Try, Morgan Sindall and
-                others), M&amp;E management contractors, specialist M&amp;E contractors who
-                subcontract installation to smaller firms, housing developers, and facilities
-                management companies.
+                <strong>Who uses subcontractors?</strong> — national and regional main contractors
+                (Wates, Willmott Dixon, Vistry, Galliford Try, Morgan Sindall and others), M&amp;E
+                management contractors, specialist M&amp;E contractors who subcontract installation
+                to smaller firms, housing developers, and facilities management companies.
               </span>
             </li>
           </ul>
@@ -181,19 +182,19 @@ const sections = [
       <>
         <p>
           Getting on main contractor supply chains requires a proactive approach. Main contractors
-          do not typically advertise for subcontractors in the way clients advertise for
-          contractors — you need to make yourself known before the work exists.
+          do not typically advertise for subcontractors in the way clients advertise for contractors
+          — you need to make yourself known before the work exists.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Constructionline and Achilles</strong> — the leading supply chain
-                databases used by main contractors to find and vet subcontractors. Registration
-                gives you visibility to hundreds of main contractors searching for electrical
-                subcontractors in your region. Constructionline Silver is the minimum acceptable
-                level for most national contractors.
+                <strong>Constructionline and Achilles</strong> — the leading supply chain databases
+                used by main contractors to find and vet subcontractors. Registration gives you
+                visibility to hundreds of main contractors searching for electrical subcontractors
+                in your region. Constructionline Silver is the minimum acceptable level for most
+                national contractors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -235,18 +236,18 @@ const sections = [
       <>
         <p>
           Pre-qualification credentials are the gatekeepers to main contractor supply chains.
-          Without the right accreditations, you will not be invited to tender regardless of
-          your technical ability. These are the most important ones to obtain.
+          Without the right accreditations, you will not be invited to tender regardless of your
+          technical ability. These are the most important ones to obtain.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CHAS</strong> — Contractors Health and Safety Assessment Scheme. Accepted
-                by over 50,000 buyers in UK construction. Annual fee from approximately £300 for
-                sole traders. Required: H&amp;S policy, risk assessments, employer's liability
-                insurance, public liability insurance, method statements for key activities.
+                <strong>CHAS</strong> — Contractors Health and Safety Assessment Scheme. Accepted by
+                over 50,000 buyers in UK construction. Annual fee from approximately £300 for sole
+                traders. Required: H&amp;S policy, risk assessments, employer's liability insurance,
+                public liability insurance, method statements for key activities.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -262,18 +263,18 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safe Contractor</strong> — an alternative H&amp;S accreditation to CHAS,
-                operated by Alcumus. Widely accepted by facilities management contractors,
-                housing associations, and retail sector clients. Some clients specify Safe
-                Contractor rather than CHAS — check client requirements before applying.
+                operated by Alcumus. Widely accepted by facilities management contractors, housing
+                associations, and retail sector clients. Some clients specify Safe Contractor rather
+                than CHAS — check client requirements before applying.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ISO 9001</strong> — quality management system certification. Required by
-                some public sector frameworks and larger private sector clients. More expensive
-                and time-consuming to obtain but opens significant additional procurement
-                opportunities. Often required above a certain contract value threshold.
+                some public sector frameworks and larger private sector clients. More expensive and
+                time-consuming to obtain but opens significant additional procurement opportunities.
+                Often required above a certain contract value threshold.
               </span>
             </li>
           </ul>
@@ -283,8 +284,8 @@ const sections = [
           <SEOInternalLink href="/health-safety-audit-electrician">
             H&amp;S audit guide
           </SEOInternalLink>{' '}
-          covers the documentation you need to assemble for CHAS and Constructionline
-          accreditation, including RAMS templates and CDM 2015 compliance.
+          covers the documentation you need to assemble for CHAS and Constructionline accreditation,
+          including RAMS templates and CDM 2015 compliance.
         </p>
       </>
     ),
@@ -305,27 +306,27 @@ const sections = [
               <span>
                 <strong>Read the main contract conditions</strong> — liquidated damages (LDs)
                 clauses in the main contract typically flow down to subcontracts. If the main
-                contractor faces LDs of £5,000 per day for late completion, they may seek to
-                pass these to you if delay is in your section. Price this risk explicitly.
+                contractor faces LDs of £5,000 per day for late completion, they may seek to pass
+                these to you if delay is in your section. Price this risk explicitly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Retention</strong> — most subcontracts include retention (typically 3 to
-                5 per cent) held until practical completion (half released) and end of defects
-                liability period (balance released). Price retention costs into your tender —
-                you are effectively financing the retention amount.
+                <strong>Retention</strong> — most subcontracts include retention (typically 3 to 5
+                per cent) held until practical completion (half released) and end of defects
+                liability period (balance released). Price retention costs into your tender — you
+                are effectively financing the retention amount.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Programme risk</strong> — subcontractors often bear programme risk from
-                delays caused by other trades or the main contractor's programme management.
-                Include a programme risk allowance and use the notification provisions in the
-                contract (compensation events under NEC, extension of time under JCT) to protect
-                your position when delays occur.
+                delays caused by other trades or the main contractor's programme management. Include
+                a programme risk allowance and use the notification provisions in the contract
+                (compensation events under NEC, extension of time under JCT) to protect your
+                position when delays occur.
               </span>
             </li>
           </ul>
@@ -346,8 +347,8 @@ const sections = [
     content: (
       <>
         <p>
-          The distinction between direct and labour-only subcontracting affects your pricing,
-          your CIS obligations, your VAT position, and your commercial risk exposure.
+          The distinction between direct and labour-only subcontracting affects your pricing, your
+          CIS obligations, your VAT position, and your commercial risk exposure.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -365,11 +366,11 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Labour-only subcontracting</strong> — you supply labour only; the main
-                contractor supplies materials. Lower margin but lower risk. CIS deductions apply
-                to the whole payment (since there are no materials to deduct). Domestic reverse
-                charge VAT applies if both you and the main contractor are VAT-registered and
-                the main contractor is not the end client — this is a common compliance issue
-                that electrical subcontractors get wrong.
+                contractor supplies materials. Lower margin but lower risk. CIS deductions apply to
+                the whole payment (since there are no materials to deduct). Domestic reverse charge
+                VAT applies if both you and the main contractor are VAT-registered and the main
+                contractor is not the end client — this is a common compliance issue that electrical
+                subcontractors get wrong.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,8 +380,8 @@ const sections = [
                 reverse charge applies to most subcontract electrical work between VAT-registered
                 businesses in the construction sector. If the reverse charge applies, you do not
                 charge VAT on your invoice — the main contractor self-accounts for the VAT. Get
-                advice from an accountant familiar with construction VAT before issuing your
-                first subcontract invoice.
+                advice from an accountant familiar with construction VAT before issuing your first
+                subcontract invoice.
               </span>
             </li>
           </ul>
@@ -394,20 +395,19 @@ const sections = [
     content: (
       <>
         <p>
-          The Construction Industry Scheme (CIS) is administered by HMRC and applies to almost
-          all payments from contractors to subcontractors for construction work, including
-          electrical installation. Non-compliance with CIS carries significant penalties.
+          The Construction Industry Scheme (CIS) is administered by HMRC and applies to almost all
+          payments from contractors to subcontractors for construction work, including electrical
+          installation. Non-compliance with CIS carries significant penalties.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Register before you start</strong> — register as a CIS subcontractor
-                with HMRC before receiving your first subcontract payment. A registered
-                subcontractor has 20 per cent deducted; an unregistered subcontractor has 30 per
-                cent deducted. The deduction is a prepayment of tax — it does not mean you pay
-                tax twice.
+                <strong>Register before you start</strong> — register as a CIS subcontractor with
+                HMRC before receiving your first subcontract payment. A registered subcontractor has
+                20 per cent deducted; an unregistered subcontractor has 30 per cent deducted. The
+                deduction is a prepayment of tax — it does not mean you pay tax twice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -415,8 +415,8 @@ const sections = [
               <span>
                 <strong>Gross payment status</strong> — once you meet HMRC's criteria (turnover
                 threshold, tax compliance record), you can apply for gross payment status, meaning
-                no CIS deduction is made from your payments. You then pay your tax directly
-                through self-assessment. This significantly improves cashflow.
+                no CIS deduction is made from your payments. You then pay your tax directly through
+                self-assessment. This significantly improves cashflow.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -440,19 +440,19 @@ const sections = [
       <>
         <p>
           The Housing Grants, Construction and Regeneration Act 1996 (as amended by the Local
-          Democracy, Economic Development and Construction Act 2009) gives electrical
-          subcontractors powerful statutory rights that cannot be contracted out of. Know these
-          rights — they are your most important financial protection.
+          Democracy, Economic Development and Construction Act 2009) gives electrical subcontractors
+          powerful statutory rights that cannot be contracted out of. Know these rights — they are
+          your most important financial protection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to interim payments</strong> — you are entitled to interim payments
-                at intervals of not less than 28 days throughout the contract. The main contractor
-                must issue a payment notice within five days of the payment due date specifying
-                the amount they propose to pay.
+                <strong>Right to interim payments</strong> — you are entitled to interim payments at
+                intervals of not less than 28 days throughout the contract. The main contractor must
+                issue a payment notice within five days of the payment due date specifying the
+                amount they propose to pay.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -460,8 +460,8 @@ const sections = [
               <span>
                 <strong>Default payment notice</strong> — if the main contractor fails to issue a
                 payment notice, you can issue your own (a "payee's payment notice" or "default
-                payment notice") for the amount you consider due. This becomes the notified sum
-                and must be paid by the final date for payment.
+                payment notice") for the amount you consider due. This becomes the notified sum and
+                must be paid by the final date for payment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -475,10 +475,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Suspension</strong> — if the main contractor fails to pay by the final
-                date for payment, you have the right to suspend work after giving seven days'
-                written notice. Suspension is a powerful remedy — use it as a last resort but
-                know that you have the right.
+                <strong>Suspension</strong> — if the main contractor fails to pay by the final date
+                for payment, you have the right to suspend work after giving seven days' written
+                notice. Suspension is a powerful remedy — use it as a last resort but know that you
+                have the right.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -493,10 +493,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Pay-when-paid clauses (where the main contractor only pays you when the client pays
-          them) are prohibited under the Construction Act, except in the event of the client's
-          insolvency. If a main contractor tries to include such a clause in your subcontract,
-          it is unenforceable.
+          Pay-when-paid clauses (where the main contractor only pays you when the client pays them)
+          are prohibited under the Construction Act, except in the event of the client's insolvency.
+          If a main contractor tries to include such a clause in your subcontract, it is
+          unenforceable.
         </p>
       </>
     ),
@@ -518,44 +518,43 @@ const sections = [
               <span>
                 <strong>Unlimited liability clauses</strong> — some main contractor subcontracts
                 attempt to make you liable for all consequential losses arising from your default.
-                For an electrical subcontractor, this could mean liability for the main
-                contractor's liquidated damages, loss of profit, and client claims. Resist or
-                cap your liability.
+                For an electrical subcontractor, this could mean liability for the main contractor's
+                liquidated damages, loss of profit, and client claims. Resist or cap your liability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Short notification time bars</strong> — some contracts require you to
-                notify compensation events or variations within a very short period (14 days or
-                less) on pain of losing your entitlement. Read these provisions carefully and
-                set up a system to notify in time.
+                <strong>Short notification time bars</strong> — some contracts require you to notify
+                compensation events or variations within a very short period (14 days or less) on
+                pain of losing your entitlement. Read these provisions carefully and set up a system
+                to notify in time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Design responsibility</strong> — some subcontracts include design
-                obligations (design of containment systems, cable sizing, circuit protection).
-                If you accept design responsibility, you need professional indemnity insurance.
-                If you did not quote a design fee, raise this before signing.
+                obligations (design of containment systems, cable sizing, circuit protection). If
+                you accept design responsibility, you need professional indemnity insurance. If you
+                did not quote a design fee, raise this before signing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Retention release conditions</strong> — check what triggers retention
-                release. Some contracts tie retention to the main contract practical completion
-                and defects certificate rather than your section. This can mean waiting years
-                for your retention.
+                release. Some contracts tie retention to the main contract practical completion and
+                defects certificate rather than your section. This can mean waiting years for your
+                retention.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The ECA (Electrical Contractors' Association) publishes a standard domestic subcontract
-          form and provides members with contract advice. Membership is worth considering if
-          you intend to build a significant subcontracting business.
+          form and provides members with contract advice. Membership is worth considering if you
+          intend to build a significant subcontracting business.
         </p>
       </>
     ),
@@ -594,10 +593,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">RAMS for Subcontract Tenders</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Generate professional RAMS documents for every activity in your subcontract
-                  scope using the Elec-Mate RAMS generator. Build a library of pre-approved
-                  RAMS that you can customise for each tender — the most time-efficient approach
-                  for contractors tendering regularly.
+                  Generate professional RAMS documents for every activity in your subcontract scope
+                  using the Elec-Mate RAMS generator. Build a library of pre-approved RAMS that you
+                  can customise for each tender — the most time-efficient approach for contractors
+                  tendering regularly.
                 </p>
               </div>
             </div>
@@ -605,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your electrical subcontracting business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, invoice management, and AI business support. 7-day free trial, cancel anytime."
           icon={Briefcase}
         />
       </>
@@ -642,7 +641,7 @@ export default function SubcontractingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Subcontracting"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Subcontracting Business with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, RAMS generation, and AI business support. 7-day free trial, cancel anytime."
     />
   );
 }

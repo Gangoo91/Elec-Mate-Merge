@@ -711,7 +711,7 @@ export default function AppendixFourTablesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Every Appendix 4 table, always in your pocket"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70 calculators, 8 certificate types — all BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for instant cable sizing with every BS 7671 table built in. 70+ calculators, 16 certificate types — all BS 7671:2018+A3:2024. 7-day free trial, cancel anytime."
     />
   );
 }

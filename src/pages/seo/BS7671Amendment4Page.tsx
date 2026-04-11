@@ -152,11 +152,11 @@ const sections = [
           consultation is under way.
         </p>
         <p>
-          While Amendment 3 was narrowly focused on a single Section 530 requirement (on bidirectional
-          devices), Amendment 4 is anticipated to be broader in scope. The rapid evolution of
-          electrical installation technology — energy storage systems, smart home infrastructure,
-          electric vehicle charging, and the continuing harmonisation of European standards —
-          creates significant pressure for the standard to be updated.
+          While Amendment 3 was narrowly focused on a single Section 530 requirement (on
+          bidirectional devices), Amendment 4 is anticipated to be broader in scope. The rapid
+          evolution of electrical installation technology — energy storage systems, smart home
+          infrastructure, electric vehicle charging, and the continuing harmonisation of European
+          standards — creates significant pressure for the standard to be updated.
         </p>
         <p>
           The IET has two options: publish Amendment 4 as an update to the existing 18th Edition, or
@@ -623,7 +623,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Be ready for Amendment 4 on day one"
-          description="Join 430+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD. When Amendment 4 drops, your tools and training will update automatically. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for certificates, calculations, AI agents, and CPD. When Amendment 4 drops, your tools and training will update automatically. 7-day free trial, cancel anytime."
           icon={ShieldCheck}
         />
       </>
@@ -659,7 +659,7 @@ export default function BS7671Amendment4Page() {
       faqHeading="Frequently Asked Questions About BS 7671 Amendment 4"
       relatedPages={relatedPages}
       ctaHeading="Prepare for Amendment 4 with Elec-Mate"
-      ctaSubheading="46+ training courses, 50+ calculators, AI circuit designer, and certificate tools — all updated for every BS 7671 amendment. 7-day free trial, cancel anytime."
+      ctaSubheading="46+ training courses, 70+ calculators, AI circuit designer, and certificate tools — all updated for every BS 7671 amendment. 7-day free trial, cancel anytime."
     />
   );
 }

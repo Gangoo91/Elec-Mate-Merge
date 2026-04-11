@@ -106,8 +106,8 @@ export default function OfflineElectricalAppPage() {
           content: (
             <>
               <p>
-                All 8 certificate types in Elec-Mate work fully offline. You can complete the entire
-                certificate workflow without any internet connection:
+                All 16 certificate types in Elec-Mate work fully offline. You can complete the
+                entire certificate workflow without any internet connection:
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Enter property details, client information, and installation particulars</li>
@@ -266,7 +266,7 @@ export default function OfflineElectricalAppPage() {
               <p className="font-semibold text-white mt-4 mb-2">Works fully offline:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  All 8 certificate types (EICR, EIC, Minor Works, EV, Solar PV, Fire Alarm,
+                  All 16 certificate types (EICR, EIC, Minor Works, EV, Solar PV, Fire Alarm,
                   Emergency Lighting, PAT)
                 </li>
                 <li>All 70+ BS 7671 calculators</li>
@@ -397,7 +397,7 @@ export default function OfflineElectricalAppPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI features, digital signatures, and professional PDF output.',
+            'All 16 certificate types with AI features, digital signatures, and professional PDF output.',
           icon: FileCheck2,
           category: 'Certificates',
         },
@@ -442,7 +442,7 @@ export default function OfflineElectricalAppPage() {
         },
       ]}
       ctaHeading="Try offline mode free for 7 days"
-      ctaSubheading="Full offline capability, auto-save, cloud sync, all 8 certificate types, 70+ calculators, and 46+ courses. Start your free trial — no card required."
+      ctaSubheading="Full offline capability, auto-save, cloud sync, all 16 certificate types, 70+ calculators, and 46+ courses. Start your free trial — no card required."
       toolPath="/tools/offline-electrical-app"
     />
   );

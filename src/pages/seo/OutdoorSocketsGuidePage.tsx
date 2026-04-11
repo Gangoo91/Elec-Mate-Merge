@@ -647,7 +647,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Quick jobs, professional results. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -684,7 +684,7 @@ export default function OutdoorSocketsGuidePage() {
       faqHeading="Frequently Asked Questions About Outdoor Sockets"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Outdoor Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC and Minor Works certificates. 7-day free trial, cancel anytime."
     />
   );
 }

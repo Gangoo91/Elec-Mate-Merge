@@ -567,7 +567,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete EPA Preparation — All Three Components"
-          description="Join 430+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator, 2,000+ knowledge test questions, AM2 practical exercises, portfolio builder, and OJT tracker. 7-day free trial."
+          description="Join 1,000+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator, 2,000+ knowledge test questions, AM2 practical exercises, portfolio builder, and OJT tracker. 7-day free trial."
           icon={Award}
         />
       </>
@@ -600,7 +600,7 @@ export default function EPAWhatToExpectPage() {
       faqHeading="Frequently Asked Questions About the Electrical EPA"
       relatedPages={relatedPages}
       ctaHeading="Ace your End Point Assessment"
-      ctaSubheading="Join 430+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator with AI voice scoring, 2,000+ knowledge test questions, and complete gateway tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices preparing for the EPA with Elec-Mate. Professional discussion simulator with AI voice scoring, 2,000+ knowledge test questions, and complete gateway tracking. 7-day free trial, cancel anytime."
     />
   );
 }

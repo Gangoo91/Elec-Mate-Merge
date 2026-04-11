@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Fire alarm systems must comply with BS 5839-1:2017 (fire detection and alarm systems for buildings — code of practice for design, installation, commissioning, and maintenance). Maintenance must be carried out by a competent person at least every 6 months.',
   'Zone faults — where the panel reports that a zone has an open or short circuit — are among the most common fire alarm faults. They are caused by wiring faults, device failures, or incorrect device connections within the zone loop.',
-  'Detector contamination is the most common cause of false alarms from optical smoke detectors. Dust, insects, and steam ingress cause the detector\'s optical chamber to scatter light and trigger a fire signal. Contaminated detectors must be cleaned or replaced.',
+  "Detector contamination is the most common cause of false alarms from optical smoke detectors. Dust, insects, and steam ingress cause the detector's optical chamber to scatter light and trigger a fire signal. Contaminated detectors must be cleaned or replaced.",
   'Fire alarm panel faults — including CPU errors, memory corruption, and power supply module failure — require investigation by a competent fire alarm engineer, not a general electrician. Working inside a fire alarm panel without appropriate training risks disabling the fire detection system.',
   'Any person carrying out maintenance, testing, or fault finding on a fire alarm system should be competent in accordance with BS 5839-1:2017. In practice, this means being trained and experienced in fire alarm systems, not merely holding a general electrical qualification.',
 ];
@@ -112,7 +112,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/hmo-electrical-requirements',
     title: 'HMO Electrical Requirements',
-    description: 'Fire alarm and emergency lighting requirements for Houses in Multiple Occupation.',
+    description:
+      'Fire alarm and emergency lighting requirements for Houses in Multiple Occupation.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -129,52 +130,52 @@ const sections = [
     content: (
       <>
         <p>
-          A zone fault is one of the most common conditions displayed on a fire alarm panel.
-          It indicates that the resistance of the zone detection loop is outside the panel's
-          acceptable range — either too high (open circuit) or too low (short circuit). A zone
-          in fault condition cannot detect a fire condition in that area until the fault is
-          rectified, making prompt investigation essential.
+          A zone fault is one of the most common conditions displayed on a fire alarm panel. It
+          indicates that the resistance of the zone detection loop is outside the panel's acceptable
+          range — either too high (open circuit) or too low (short circuit). A zone in fault
+          condition cannot detect a fire condition in that area until the fault is rectified, making
+          prompt investigation essential.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Open-circuit zone fault</strong> — caused by a broken conductor in the
-                zone wiring, a loose or corroded terminal connection, or a failed detector or
-                call point. On a conventional system, isolate sections of the zone loop to locate
-                the break. On an addressable system, the panel identifies the specific device or
-                loop segment where the open circuit exists.
+                <strong>Open-circuit zone fault</strong> — caused by a broken conductor in the zone
+                wiring, a loose or corroded terminal connection, or a failed detector or call point.
+                On a conventional system, isolate sections of the zone loop to locate the break. On
+                an addressable system, the panel identifies the specific device or loop segment
+                where the open circuit exists.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Short-circuit zone fault</strong> — caused by insulation damage between
-                the two conductors of the zone loop (often due to mechanical damage, rodent
-                attack, or water ingress), an incorrectly wired device, or a device with an
-                internal short circuit. Short-circuit faults on conventional systems render the
-                entire zone inoperative. Addressable systems with short-circuit isolators (SCI)
-                can isolate the fault and maintain operation of the remaining devices on the loop.
+                <strong>Short-circuit zone fault</strong> — caused by insulation damage between the
+                two conductors of the zone loop (often due to mechanical damage, rodent attack, or
+                water ingress), an incorrectly wired device, or a device with an internal short
+                circuit. Short-circuit faults on conventional systems render the entire zone
+                inoperative. Addressable systems with short-circuit isolators (SCI) can isolate the
+                fault and maintain operation of the remaining devices on the loop.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Device failure</strong> — a detector or call point with an internal
-                fault can cause a zone fault. On addressable systems, the panel identifies the
-                specific device address. Replace the device with the correct specified type and
-                re-commission if required.
+                <strong>Device failure</strong> — a detector or call point with an internal fault
+                can cause a zone fault. On addressable systems, the panel identifies the specific
+                device address. Replace the device with the correct specified type and re-commission
+                if required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Interim measures</strong> — while a zone fault is active, the fire
-                risk assessment for the premises must be reviewed. Where an entire zone is
-                out of service, additional fire watch patrols or temporary detection measures
-                may be required. Notify the responsible person and record the fault condition
-                in the fire alarm log book.
+                <strong>Interim measures</strong> — while a zone fault is active, the fire risk
+                assessment for the premises must be reviewed. Where an entire zone is out of
+                service, additional fire watch patrols or temporary detection measures may be
+                required. Notify the responsible person and record the fault condition in the fire
+                alarm log book.
               </span>
             </li>
           </ul>
@@ -189,8 +190,8 @@ const sections = [
       <>
         <p>
           Detector contamination is the leading cause of false alarms in optical smoke detection
-          systems and one of the most common reasons for detector failure. In the UK, the fire
-          and rescue services attend over 200,000 false alarm activations per year — a significant
+          systems and one of the most common reasons for detector failure. In the UK, the fire and
+          rescue services attend over 200,000 false alarm activations per year — a significant
           proportion of which are caused by contaminated or inappropriately sited detectors.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -198,21 +199,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dust contamination</strong> — the most common contaminant in optical
-                smoke detectors. Dust particles settle in or near the optical chamber and scatter
-                light, creating a signal that the detector interprets as smoke. Detectors in
-                dusty environments (construction sites, food production, woodworking) require
-                more frequent inspection and cleaning or should be replaced with a detector type
-                more suitable for the environment.
+                <strong>Dust contamination</strong> — the most common contaminant in optical smoke
+                detectors. Dust particles settle in or near the optical chamber and scatter light,
+                creating a signal that the detector interprets as smoke. Detectors in dusty
+                environments (construction sites, food production, woodworking) require more
+                frequent inspection and cleaning or should be replaced with a detector type more
+                suitable for the environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insect intrusion</strong> — insects entering the optical chamber of a
-                smoke detector are a well-documented cause of false alarms. Inspect detectors
-                in areas with insect activity and consider insect-resistant detector designs
-                for vulnerable installations.
+                <strong>Insect intrusion</strong> — insects entering the optical chamber of a smoke
+                detector are a well-documented cause of false alarms. Inspect detectors in areas
+                with insect activity and consider insect-resistant detector designs for vulnerable
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -221,18 +222,18 @@ const sections = [
                 <strong>Steam and cooking fumes</strong> — detectors located too close to kitchens,
                 shower rooms, or steam sources are exposed to high humidity and aerosol particles
                 that can trigger false alarms. Exclusion zones around kitchens and bathrooms are
-                specified in BS 5839-1 — detectors should not be located within 1.5 m of
-                permanently open kitchen doorways.
+                specified in BS 5839-1 — detectors should not be located within 1.5 m of permanently
+                open kitchen doorways.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cleaning procedure</strong> — approved cleaning of a smoke detector
-                involves careful vacuuming of the detector chamber using a soft brush attachment.
-                Never use compressed air (which forces contamination deeper into the chamber),
-                cleaning solvents, or water. If the detector continues to false alarm after
-                cleaning, replace it.
+                <strong>Cleaning procedure</strong> — approved cleaning of a smoke detector involves
+                careful vacuuming of the detector chamber using a soft brush attachment. Never use
+                compressed air (which forces contamination deeper into the chamber), cleaning
+                solvents, or water. If the detector continues to false alarm after cleaning, replace
+                it.
               </span>
             </li>
           </ul>
@@ -258,37 +259,36 @@ const sections = [
               <span>
                 <strong>System fault / CPU fault</strong> — a fault reported against the panel
                 itself (rather than a zone or device) indicates an internal panel hardware or
-                software fault. This may be a failed output module, a firmware corruption, or
-                a hardware component failure. Do not attempt to open the panel or probe the
+                software fault. This may be a failed output module, a firmware corruption, or a
+                hardware component failure. Do not attempt to open the panel or probe the
                 electronics — contact the fire alarm installer or manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Memory or programming fault</strong> — addressable fire alarm panels
-                store device programming in non-volatile memory. Memory corruption (typically
-                caused by a voltage transient or battery failure during programming) can cause
-                the panel to report all devices as faulted or to behave erratically. A
-                programming reload from a backup may be required.
+                <strong>Memory or programming fault</strong> — addressable fire alarm panels store
+                device programming in non-volatile memory. Memory corruption (typically caused by a
+                voltage transient or battery failure during programming) can cause the panel to
+                report all devices as faulted or to behave erratically. A programming reload from a
+                backup may be required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sounder or relay module fault</strong> — a fault on the sounder supply
-                circuit or relay output module will prevent the sounders or ancillary outputs
-                from operating during a fire signal. This is a critical life-safety fault —
-                the building evacuation signalling capability is compromised. Arrange urgent
-                repair.
+                circuit or relay output module will prevent the sounders or ancillary outputs from
+                operating during a fire signal. This is a critical life-safety fault — the building
+                evacuation signalling capability is compromised. Arrange urgent repair.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Isolating a faulty zone or device on a fire alarm panel using the panel's own isolation
-          function is within the capability of a trained user. Opening the panel enclosure to
-          work on the electronics is not — this must be done by a competent fire alarm engineer.
+          function is within the capability of a trained user. Opening the panel enclosure to work
+          on the electronics is not — this must be done by a competent fire alarm engineer.
         </p>
       </>
     ),
@@ -300,40 +300,40 @@ const sections = [
       <>
         <p>
           Fire alarm control panels require a reliable mains power supply and a standby battery
-          capable of maintaining system operation for a minimum period following mains failure.
-          BS 5839-1:2017 specifies minimum standby durations based on the premises category.
+          capable of maintaining system operation for a minimum period following mains failure. BS
+          5839-1:2017 specifies minimum standby durations based on the premises category.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mains power loss</strong> — the panel should indicate mains power loss
-                via an amber LED and continue operating from the standby battery. The mains supply
+                <strong>Mains power loss</strong> — the panel should indicate mains power loss via
+                an amber LED and continue operating from the standby battery. The mains supply
                 circuit (a dedicated final circuit from the consumer unit, fused at 6 A) must be
                 restored as soon as possible. A mains supply that is frequently interrupting —
-                without a known power cut — indicates a wiring fault or MCB problem on the
-                dedicated circuit.
+                without a known power cut — indicates a wiring fault or MCB problem on the dedicated
+                circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standby battery fault</strong> — a battery fault reported by the panel
-                indicates that the standby battery has failed, is not connected, or is not
-                accepting charge. Replace with the battery type and capacity specified in the
-                panel documentation. BS 5839-1 requires a minimum standby duration of 24 hours
-                (or 72 hours for certain premises categories) plus 30 minutes of alarm operation.
+                indicates that the standby battery has failed, is not connected, or is not accepting
+                charge. Replace with the battery type and capacity specified in the panel
+                documentation. BS 5839-1 requires a minimum standby duration of 24 hours (or 72
+                hours for certain premises categories) plus 30 minutes of alarm operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>PSU module failure</strong> — the power supply unit within the fire alarm
-                panel converts mains AC to the panel's DC operating voltage and charges the
-                standby battery. A failed PSU module causes both mains power fault and battery
-                fault indicators. PSU replacement must be carried out by a competent fire alarm
-                engineer using the correct spare part for the panel model.
+                panel converts mains AC to the panel's DC operating voltage and charges the standby
+                battery. A failed PSU module causes both mains power fault and battery fault
+                indicators. PSU replacement must be carried out by a competent fire alarm engineer
+                using the correct spare part for the panel model.
               </span>
             </li>
           </ul>
@@ -348,39 +348,38 @@ const sections = [
       <>
         <p>
           BS 5839-1:2017 is the UK code of practice for fire detection and alarm systems in
-          buildings. While it is not itself a statutory document, it is referenced in guidance
-          to the Regulatory Reform (Fire Safety) Order 2005, which imposes legal duties on
-          responsible persons in non-domestic premises. Non-compliance with BS 5839-1 can
-          result in enforcement action by the fire authority.
+          buildings. While it is not itself a statutory document, it is referenced in guidance to
+          the Regulatory Reform (Fire Safety) Order 2005, which imposes legal duties on responsible
+          persons in non-domestic premises. Non-compliance with BS 5839-1 can result in enforcement
+          action by the fire authority.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Six-monthly servicing</strong> — BS 5839-1 recommends inspection and
-                testing of commercial fire alarm systems at not less than six-monthly intervals
-                by a competent person. At each visit, all detectors, call points, sounders, and
-                panel functions must be tested. The service certificate and log book must be
-                updated.
+                <strong>Six-monthly servicing</strong> — BS 5839-1 recommends inspection and testing
+                of commercial fire alarm systems at not less than six-monthly intervals by a
+                competent person. At each visit, all detectors, call points, sounders, and panel
+                functions must be tested. The service certificate and log book must be updated.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Weekly testing (larger systems)</strong> — in buildings with a large
-                installed base of detectors, a different zone or call point should be tested
-                each week on a rolling basis. This ensures all devices are tested at least
-                annually between formal service visits. Results must be recorded in the log book.
+                installed base of detectors, a different zone or call point should be tested each
+                week on a rolling basis. This ensures all devices are tested at least annually
+                between formal service visits. Results must be recorded in the log book.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm log book</strong> — the log book must record every test,
-                every fault event and its resolution, every false alarm, and all maintenance
-                work carried out on the system. The log book should be kept adjacent to the
-                fire alarm panel and be readily accessible to the fire authority on request.
+                <strong>Fire alarm log book</strong> — the log book must record every test, every
+                fault event and its resolution, every false alarm, and all maintenance work carried
+                out on the system. The log book should be kept adjacent to the fire alarm panel and
+                be readily accessible to the fire authority on request.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -404,29 +403,29 @@ const sections = [
       <>
         <p>
           The term "competent person" in the context of fire alarm systems has a specific meaning
-          under BS 5839-1:2017. It refers to a person who has sufficient training, experience,
-          and knowledge of fire alarm systems to safely carry out the work in question — which is
-          a higher bar than a general electrical qualification.
+          under BS 5839-1:2017. It refers to a person who has sufficient training, experience, and
+          knowledge of fire alarm systems to safely carry out the work in question — which is a
+          higher bar than a general electrical qualification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Work requiring a fire alarm competent person</strong> — fault finding
-                on zone loops and devices, detector replacement on addressable systems requiring
+                <strong>Work requiring a fire alarm competent person</strong> — fault finding on
+                zone loops and devices, detector replacement on addressable systems requiring
                 programming, panel configuration or reprogramming, commissioning, any modification
-                to the system design, and all formal servicing visits. This is the majority of
-                fire alarm work.
+                to the system design, and all formal servicing visits. This is the majority of fire
+                alarm work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Work a general electrician can carry out</strong> — the dedicated mains
-                supply circuit to the fire alarm panel, including the MCB, cable, and termination
-                at the panel. This is standard electrical installation work. The electrician should
-                not need to access the panel's internal electronics.
+                supply circuit to the fire alarm panel, including the MCB, cable, and termination at
+                the panel. This is standard electrical installation work. The electrician should not
+                need to access the panel's internal electronics.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,7 +435,8 @@ const sections = [
                 that cannot be resolved must be reported to the responsible person and a competent
                 fire alarm engineer called promptly. In the interim, the fault condition should be
                 left on the panel display (not permanently silenced) and recorded in the log book.
-                Silencing a persistent fault without investigation creates a false sense of security.
+                Silencing a persistent fault without investigation creates a false sense of
+                security.
               </span>
             </li>
           </ul>
@@ -450,10 +450,10 @@ const sections = [
     content: (
       <>
         <p>
-          Electricians working in commercial premises will regularly encounter fire alarm systems
-          as part of EICR work, new installation projects, and maintenance contracts. Understanding
-          the boundary between electrical installation work and fire alarm engineering is essential
-          for both safety and liability reasons.
+          Electricians working in commercial premises will regularly encounter fire alarm systems as
+          part of EICR work, new installation projects, and maintenance contracts. Understanding the
+          boundary between electrical installation work and fire alarm engineering is essential for
+          both safety and liability reasons.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -464,8 +464,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When carrying out an EICR on commercial premises, inspect and test the dedicated
                   mains supply circuit to the fire alarm panel. Record the circuit details, test
-                  results, and note the fire alarm system type in the schedule of particulars.
-                  Use the{' '}
+                  results, and note the fire alarm system type in the schedule of particulars. Use
+                  the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
@@ -494,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage fire alarm electrical work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and BS 7671-compliant documentation. 7-day free trial."
           icon={BellRing}
         />
       </>
@@ -531,7 +531,7 @@ export default function FireAlarmFaultFindingPage() {
       faqHeading="Frequently Asked Questions About Fire Alarm Faults"
       relatedPages={relatedPages}
       ctaHeading="Manage Fire Alarm Electrical Work with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, fire alarm certificates, and compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

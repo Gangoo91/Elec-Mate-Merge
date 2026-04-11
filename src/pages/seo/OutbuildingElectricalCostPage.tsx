@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/garage-electrical-cost',
     title: 'Garage Electrical Installation Cost',
-    description: 'Detached and integral garage wiring costs, armoured cable, and EV charger add-ons.',
+    description:
+      'Detached and integral garage wiring costs, armoured cable, and EV charger add-ons.',
     icon: Building2,
     category: 'Cost Guide',
   },
@@ -125,8 +126,8 @@ const sections = [
     content: (
       <>
         <p>
-          Supplying electricity to a garden office, workshop, summerhouse, or outbuilding is one
-          of the most common domestic electrical jobs. It transforms a cold storage space into a
+          Supplying electricity to a garden office, workshop, summerhouse, or outbuilding is one of
+          the most common domestic electrical jobs. It transforms a cold storage space into a
           productive, comfortable work or leisure area. The cost depends primarily on the distance
           from the house, the nature of the ground between the two buildings, and the scope of the
           internal electrical installation.
@@ -143,16 +144,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Garden office or workshop (medium)</strong> — £1,500 to £2,500. Longer
-                cable run, more circuits, data points, heating circuit, and sub-board.
+                <strong>Garden office or workshop (medium)</strong> — £1,500 to £2,500. Longer cable
+                run, more circuits, data points, heating circuit, and sub-board.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large outbuilding or annexe (complex)</strong> — £2,500 to £3,500+.
-                Long cable run, trenching under hard landscaping, larger sub-board, multiple
-                circuits, and potentially a three-phase supply.
+                <strong>Large outbuilding or annexe (complex)</strong> — £2,500 to £3,500+. Long
+                cable run, trenching under hard landscaping, larger sub-board, multiple circuits,
+                and potentially a three-phase supply.
               </span>
             </li>
           </ul>
@@ -166,41 +167,41 @@ const sections = [
     content: (
       <>
         <p>
-          The internal electrical fit-out varies significantly depending on how the outbuilding
-          will be used.
+          The internal electrical fit-out varies significantly depending on how the outbuilding will
+          be used.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Garden shed</strong> — £800 to £1,200 total. Typically one lighting
-                circuit, four double socket outlets, and a consumer unit. Armoured cable run of
-                up to 15 metres assumed.
+                <strong>Garden shed</strong> — £800 to £1,200 total. Typically one lighting circuit,
+                four double socket outlets, and a consumer unit. Armoured cable run of up to 15
+                metres assumed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Summerhouse or leisure room</strong> — £1,000 to £1,800. Lighting,
-                multiple socket outlets, electric heater circuit, and data point for Wi-Fi
-                extender or Cat6 data cable.
+                <strong>Summerhouse or leisure room</strong> — £1,000 to £1,800. Lighting, multiple
+                socket outlets, electric heater circuit, and data point for Wi-Fi extender or Cat6
+                data cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Garden office (home working)</strong> — £1,500 to £2,500. Multiple power
-                circuits, dedicated data points (Cat6), USB outlets, electric panel heater or
-                air source heat pump connection, exterior security light.
+                circuits, dedicated data points (Cat6), USB outlets, electric panel heater or air
+                source heat pump connection, exterior security light.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workshop or hobby room</strong> — £1,500 to £2,800. Dedicated circuits
-                for power tools and machinery, stronger overhead lighting (fluorescent or LED
-                strips), potentially three-phase supply for larger machinery.
+                <strong>Workshop or hobby room</strong> — £1,500 to £2,800. Dedicated circuits for
+                power tools and machinery, stronger overhead lighting (fluorescent or LED strips),
+                potentially three-phase supply for larger machinery.
               </span>
             </li>
           </ul>
@@ -222,39 +223,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Underground (preferred)</strong> — SWA cable buried at 500mm depth in
-                a garden, on a bed of sharp sand with cable covers above. Invisible once
-                reinstated. Requires trenching which adds £15 to £50 per metre depending on
-                surface type.
+                <strong>Underground (preferred)</strong> — SWA cable buried at 500mm depth in a
+                garden, on a bed of sharp sand with cable covers above. Invisible once reinstated.
+                Requires trenching which adds £15 to £50 per metre depending on surface type.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overhead catenary</strong> — SWA cable suspended on a catenary wire
-                between the house and outbuilding. Minimum height of 3.5 metres above ground
-                (5.2 metres over vehicle routes). Cheaper than going under a concrete driveway
-                but visually intrusive.
+                <strong>Overhead catenary</strong> — SWA cable suspended on a catenary wire between
+                the house and outbuilding. Minimum height of 3.5 metres above ground (5.2 metres
+                over vehicle routes). Cheaper than going under a concrete driveway but visually
+                intrusive.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surface-mounted on fence or wall</strong> — SWA cable clipped to a fence
-                or wall surface is acceptable in some situations and avoids both trenching and
-                aerial installation. Must be protected from mechanical damage at low level.
+                <strong>Surface-mounted on fence or wall</strong> — SWA cable clipped to a fence or
+                wall surface is acceptable in some situations and avoids both trenching and aerial
+                installation. Must be protected from mechanical damage at low level.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The IET On-Site Guide and{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           Appendix 4 provide the reference method and correction factors for armoured cable in
-          various installation conditions. Burial depth correction factors must be applied to
-          the cable's current-carrying capacity.
+          various installation conditions. Burial depth correction factors must be applied to the
+          cable's current-carrying capacity.
         </p>
       </>
     ),
@@ -266,8 +264,8 @@ const sections = [
       <>
         <p>
           A sub-board (local consumer unit or distribution board) is installed inside the
-          outbuilding at the point where the armoured cable enters. It is required by BS 7671
-          and provides local protection and isolation.
+          outbuilding at the point where the armoured cable enters. It is required by BS 7671 and
+          provides local protection and isolation.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -282,8 +280,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6–8 way RCBO board</strong> — £350 to £550 fitted. Individual RCBO per
-                circuit for better discrimination. Preferred for garden offices where a single
-                fault should not cut power to everything.
+                circuit for better discrimination. Preferred for garden offices where a single fault
+                should not cut power to everything.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,33 +313,33 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data connectivity</strong> — Cat6 data cable from the house router or
-                a dedicated Wi-Fi access point. Running a single Cat6 cable underground in the
-                same trench as the power cable adds very little cost at the installation stage.
+                <strong>Data connectivity</strong> — Cat6 data cable from the house router or a
+                dedicated Wi-Fi access point. Running a single Cat6 cable underground in the same
+                trench as the power cable adds very little cost at the installation stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heating</strong> — electric panel heater (500W to 2kW depending on
-                floor area), infrared heating, or air source heat pump. Dedicated circuit per
-                heater. Smart thermostat and timer strongly recommended.
+                <strong>Heating</strong> — electric panel heater (500W to 2kW depending on floor
+                area), infrared heating, or air source heat pump. Dedicated circuit per heater.
+                Smart thermostat and timer strongly recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power circuits</strong> — minimum of six double socket outlets in a
-                typical home office, plus USB outlets. Separate circuit for IT equipment
-                (computers, monitors, printers) is good practice.
+                <strong>Power circuits</strong> — minimum of six double socket outlets in a typical
+                home office, plus USB outlets. Separate circuit for IT equipment (computers,
+                monitors, printers) is good practice.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting</strong> — LED downlights or a high-quality LED strip for even
-                task lighting. Bias lighting behind monitors reduces eye strain. External security
-                light with PIR sensor at the outbuilding entrance.
+                <strong>Lighting</strong> — LED downlights or a high-quality LED strip for even task
+                lighting. Bias lighting behind monitors reduces eye strain. External security light
+                with PIR sensor at the outbuilding entrance.
               </span>
             </li>
           </ul>
@@ -356,41 +354,41 @@ const sections = [
       <>
         <p>
           Trenching is frequently the most variable cost element in an outbuilding electrical
-          installation. The ground conditions, surface type, and length of the run all affect
-          the price significantly.
+          installation. The ground conditions, surface type, and length of the run all affect the
+          price significantly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Through lawn or garden (per metre)</strong> — £15 to £25 per metre, including
-                digging, cable laying, sand bedding, cable covers, and reinstatement. A 15-metre
-                run adds £225 to £375.
+                <strong>Through lawn or garden (per metre)</strong> — £15 to £25 per metre,
+                including digging, cable laying, sand bedding, cable covers, and reinstatement. A
+                15-metre run adds £225 to £375.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Through block paving (per metre)</strong> — £25 to £40 per metre.
-                Blocks must be carefully lifted, stored, and relaid. More labour-intensive than
-                grass reinstatement.
+                <strong>Through block paving (per metre)</strong> — £25 to £40 per metre. Blocks
+                must be carefully lifted, stored, and relaid. More labour-intensive than grass
+                reinstatement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Under concrete or tarmac driveway (per metre)</strong> — £40 to £60 per
-                metre. Requires breaking out, core drilling, or boring. Concrete reinstatement
-                adds significant materials and labour cost. Consider an overhead alternative.
+                metre. Requires breaking out, core drilling, or boring. Concrete reinstatement adds
+                significant materials and labour cost. Consider an overhead alternative.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mini-digger hire (long runs)</strong> — for runs over 20 metres through
-                a lawn, hiring a mini-digger for half a day (£150 to £300) can reduce labour
-                time significantly and produce a cleaner trench.
+                <strong>Mini-digger hire (long runs)</strong> — for runs over 20 metres through a
+                lawn, hiring a mini-digger for half a day (£150 to £300) can reduce labour time
+                significantly and produce a cleaner trench.
               </span>
             </li>
           </ul>
@@ -422,18 +420,18 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> documents
-                the full installation including the supply cable, sub-board, and all circuits.
-                Essential for property sale conveyancing.
+                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> documents the
+                full installation including the supply cable, sub-board, and all circuits. Essential
+                for property sale conveyancing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing</strong> — the outbuilding must have its own earth electrode
-                (earth rod) if the supply protective conductor (earth) cannot be confirmed as
-                effective at the outbuilding. This is assessed at the time of installation
-                and tested with an earth rod resistance test.
+                <strong>Earthing</strong> — the outbuilding must have its own earth electrode (earth
+                rod) if the supply protective conductor (earth) cannot be confirmed as effective at
+                the outbuilding. This is assessed at the time of installation and tested with an
+                earth rod resistance test.
               </span>
             </li>
           </ul>
@@ -459,9 +457,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Trenching Separately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Always quote trenching as a separate, itemised line. Surface type (lawn, block
-                  paving, concrete) makes an enormous difference to cost. Customers understand
-                  why a run under their concrete driveway costs more when it is clearly explained
-                  and priced transparently.
+                  paving, concrete) makes an enormous difference to cost. Customers understand why a
+                  run under their concrete driveway costs more when it is clearly explained and
+                  priced transparently.
                 </p>
               </div>
             </div>
@@ -472,9 +470,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Offer Data Cable in the Trench</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always offer to pull a Cat6 data cable in the same trench as the armoured
-                  power cable. The materials cost is minimal, the trench is already open, and
-                  the customer saves significant money versus having it done separately. Use the{' '}
+                  Always offer to pull a Cat6 data cable in the same trench as the armoured power
+                  cable. The materials cost is minimal, the trench is already open, and the customer
+                  saves significant money versus having it done separately. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -486,7 +484,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote outbuilding electrical installations professionally with Elec-Mate"
-          description="Create itemised outbuilding electrical quotes with armoured cable, trenching, sub-board, and optional extras. Issue EICs on site. Join 430+ UK electricians. 7-day free trial."
+          description="Create itemised outbuilding electrical quotes with armoured cable, trenching, sub-board, and optional extras. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -523,7 +521,7 @@ export default function OutbuildingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Outbuilding Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Outbuilding Electrical Installation in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional outbuilding electrical quotes with armoured cable, trenching, and optional extras clearly priced. 7-day free trial, cancel anytime."
     />
   );
 }

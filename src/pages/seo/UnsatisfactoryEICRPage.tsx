@@ -526,7 +526,7 @@ export default function UnsatisfactoryEICRPage() {
       faqHeading="Frequently Asked Questions About Unsatisfactory EICRs"
       relatedPages={relatedPages}
       ctaHeading="Turn defects into quotes on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICR certificates with auto assessment, defect code AI, and remedial estimator. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates with auto assessment, defect code AI, and remedial estimator. 7-day free trial."
     />
   );
 }

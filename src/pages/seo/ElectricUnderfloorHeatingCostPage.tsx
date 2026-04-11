@@ -92,14 +92,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for underfloor heating circuits on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for underfloor heating circuits on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote underfloor heating installations with element, thermostat, circuit, and Part P costs.',
+    description:
+      'Quote underfloor heating installations with element, thermostat, circuit, and Part P costs.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -120,7 +122,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on long circuit runs from consumer unit to underfloor heating thermostats.',
+    description:
+      'Check voltage drop on long circuit runs from consumer unit to underfloor heating thermostats.',
     icon: Zap,
     category: 'Tool',
   },
@@ -139,14 +142,15 @@ const sections = [
         <p>
           Electric underfloor heating (UFH) is one of the most popular upgrades in UK bathroom and
           kitchen renovations. The heat is radiated evenly from the floor surface, creating comfort
-          without visible radiators or ducting, and the system is entirely controlled by a thermostat
-          — often with smart home integration.
+          without visible radiators or ducting, and the system is entirely controlled by a
+          thermostat — often with smart home integration.
         </p>
         <p>
-          The electrician's role in a UFH installation covers the dedicated circuit from the consumer
-          unit to the thermostat position, connection of the thermostat and floor sensor, testing of
-          the element continuity and insulation resistance before and after tiling, and the full
-          electrical test and certification after installation. Part P notification is required.
+          The electrician's role in a UFH installation covers the dedicated circuit from the
+          consumer unit to the thermostat position, connection of the thermostat and floor sensor,
+          testing of the element continuity and insulation resistance before and after tiling, and
+          the full electrical test and certification after installation. Part P notification is
+          required.
         </p>
         <p>
           This guide covers the two main system types (mat and loose element), installation and
@@ -171,9 +175,9 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Heating Mat</h3>
             <p className="text-white text-sm leading-relaxed">
               Pre-spaced element on fibreglass mesh. Available in standard widths (0.5m) and
-              lengths. Quick to install — unroll and lay in thinset adhesive before tiling.
-              Best for regular rectangular rooms. Cannot cut the element — the mat can be cut
-              and folded to navigate obstacles but the cable itself must not be cut.
+              lengths. Quick to install — unroll and lay in thinset adhesive before tiling. Best for
+              regular rectangular rooms. Cannot cut the element — the mat can be cut and folded to
+              navigate obstacles but the cable itself must not be cut.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -188,8 +192,8 @@ const sections = [
           </div>
         </div>
         <p>
-          Both systems produce the same heat output per unit area for a given wattage. The output
-          is specified in W/m² and the total element wattage is determined by the floor area to be
+          Both systems produce the same heat output per unit area for a given wattage. The output is
+          specified in W/m² and the total element wattage is determined by the floor area to be
           heated multiplied by the specified output. A 10m² bathroom at 150W/m² requires a 1,500W
           element.
         </p>
@@ -218,16 +222,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen or utility room (10–15m², mat or loose element)</strong> — £1,200
-                to £1,800. Larger element area, longer circuit run from consumer unit, WiFi
-                thermostat.
+                <strong>Kitchen or utility room (10–15m², mat or loose element)</strong> — £1,200 to
+                £1,800. Larger element area, longer circuit run from consumer unit, WiFi thermostat.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Living room or open-plan area (15–30m², loose element)</strong> — £1,800
-                to £2,500. Full room coverage, loose element for layout flexibility, smart thermostat
+                <strong>Living room or open-plan area (15–30m², loose element)</strong> — £1,800 to
+                £2,500. Full room coverage, loose element for layout flexibility, smart thermostat
                 with multi-zone capability, longer cable run from consumer unit.
               </span>
             </li>
@@ -256,26 +259,26 @@ const sections = [
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Element wattage</strong> — total floor area (m²) × element output (W/m²).
-                Typical values: 100 to 150W/m² for tiles (primary heat source), 80 to 100W/m²
-                for supplementary comfort heating under wood or laminate.
+                Typical values: 100 to 150W/m² for tiles (primary heat source), 80 to 100W/m² for
+                supplementary comfort heating under wood or laminate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Daily run time</strong> — controlled by the thermostat schedule. In a
-                well-insulated floor, the thermostat cycles the element on and off to maintain
-                the set temperature, so actual energy consumption is less than the element wattage
-                × scheduled hours.
+                well-insulated floor, the thermostat cycles the element on and off to maintain the
+                set temperature, so actual energy consumption is less than the element wattage ×
+                scheduled hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity tariff</strong> — at a standard rate of 25p per kWh, a 1.5kW
-                bathroom element running an average of 1.5 hours per day consumes 2.25kWh and
-                costs approximately 56p per day or £17 per month. On an off-peak tariff (if the
-                system can charge a thermal mass floor overnight), running costs are lower.
+                bathroom element running an average of 1.5 hours per day consumes 2.25kWh and costs
+                approximately 56p per day or £17 per month. On an off-peak tariff (if the system can
+                charge a thermal mass floor overnight), running costs are lower.
               </span>
             </li>
           </ul>
@@ -313,8 +316,8 @@ const sections = [
               <span>
                 <strong>Smart thermostat with WiFi (recommended)</strong> — app control, geofencing,
                 energy monitoring, and compatibility with Alexa/Google Home. The Warmup 4iE and
-                Heatmat TouchStat are popular choices. Cost: £120 to £200. Provides energy data
-                that demonstrates the system is running efficiently.
+                Heatmat TouchStat are popular choices. Cost: £120 to £200. Provides energy data that
+                demonstrates the system is running efficiently.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -346,8 +349,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit</strong> — a dedicated circuit from the consumer unit
-                is required. Do not connect UFH as a spur from a socket circuit.
+                <strong>Dedicated circuit</strong> — a dedicated circuit from the consumer unit is
+                required. Do not connect UFH as a spur from a socket circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -407,10 +410,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Test Before and After Tiling</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always test element continuity and insulation resistance before the tiler starts and
-                  again after tiling is complete. If the resistance drops after tiling, the element
-                  has been damaged — catching this before the EIC is issued protects you and the
-                  customer. Record both sets of results on the certificate.
+                  Always test element continuity and insulation resistance before the tiler starts
+                  and again after tiling is complete. If the resistance drops after tiling, the
+                  element has been damaged — catching this before the EIC is issued protects you and
+                  the customer. Record both sets of results on the certificate.
                 </p>
               </div>
             </div>
@@ -432,7 +435,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification. Complete the certificate on site and issue the PDF immediately. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for underfloor heating installation quotes, element testing records, and EIC certification. Complete the certificate on site and issue the PDF immediately. 7-day free trial."
           icon={Thermometer}
         />
       </>

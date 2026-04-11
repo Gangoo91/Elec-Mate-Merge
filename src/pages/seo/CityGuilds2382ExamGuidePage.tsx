@@ -94,21 +94,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'Comprehensive guide to the 18th Edition Wiring Regulations covered in the 2382 exam.',
+    description:
+      'Comprehensive guide to the 18th Edition Wiring Regulations covered in the 2382 exam.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
     href: '/guides/am2-exam-tips',
     title: 'AM2 Exam Tips',
-    description: 'Prepare for the AM2 practical assessment — the next step after passing your 2382.',
+    description:
+      'Prepare for the AM2 practical assessment — the next step after passing your 2382.',
     icon: Award,
     category: 'Guide',
   },
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Practise Appendix 4 cable sizing calculations — the most common fail area in the 2382.',
+    description:
+      'Practise Appendix 4 cable sizing calculations — the most common fail area in the 2382.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -156,8 +159,8 @@ const sections = [
         <p>
           Almost every electrician in the UK needs it. You cannot join a competent person scheme
           (NICEIC, NAPIT, ELECSA, or STROMA) without it. Most employers require it. The ECS
-          (Electrotechnical Certification Scheme) card requires it. If you want to self-certify
-          your own work under Part P of the Building Regulations, you need it.
+          (Electrotechnical Certification Scheme) card requires it. If you want to self-certify your
+          own work under Part P of the Building Regulations, you need it.
         </p>
         <p>
           The current version is the 2382-22, which covers the 18th Edition including Amendment 3
@@ -257,9 +260,9 @@ const sections = [
         </div>
         <p>
           The most effective approach is to tab the key sections you know you will need to find
-          quickly: Appendix 4 tables, Part 4 (especially Chapter 41 for disconnection times), Part
-          6 (inspection and testing), and the index. Use different colour tabs for different
-          sections. Highlight key regulation numbers so they stand out on the page.
+          quickly: Appendix 4 tables, Part 4 (especially Chapter 41 for disconnection times), Part 6
+          (inspection and testing), and the index. Use different colour tabs for different sections.
+          Highlight key regulation numbers so they stand out on the page.
         </p>
       </>
     ),
@@ -271,8 +274,8 @@ const sections = [
       <>
         <p>
           The 2382 is a navigation exam as much as a knowledge exam. You do not need to memorise
-          every regulation — you need to find the right regulation quickly under time pressure.
-          Here is what works:
+          every regulation — you need to find the right regulation quickly under time pressure. Here
+          is what works:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -296,9 +299,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Do Mock Exams Under Timed Conditions</h4>
                 <p className="text-white text-sm leading-relaxed">
                   This is the single most important study technique. Set a timer for 2 hours and
-                  complete a full 60-question mock. If you cannot finish in time, you need to work on
-                  your navigation speed. Most training providers supply mock papers. Aim to complete
-                  at least three full mock exams before the real thing.
+                  complete a full 60-question mock. If you cannot finish in time, you need to work
+                  on your navigation speed. Most training providers supply mock papers. Aim to
+                  complete at least three full mock exams before the real thing.
                 </p>
               </div>
             </div>
@@ -309,10 +312,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Learn the Appendix 4 Tables</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Cable sizing questions using Appendix 4 appear in almost every exam paper. Practise
-                  the method: determine the design current, select the protective device rating,
-                  apply correction factors (Ca, Cg, Ci, Cf), calculate the tabulated current (It),
-                  and read the table to find the minimum cable size. Use the{' '}
+                  Cable sizing questions using Appendix 4 appear in almost every exam paper.
+                  Practise the method: determine the design current, select the protective device
+                  rating, apply correction factors (Ca, Cg, Ci, Cf), calculate the tabulated current
+                  (It), and read the table to find the minimum cable size. Use the{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
@@ -354,8 +357,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Appendix 4 cable sizing calculations</strong> — applying correction factors
-                in the wrong order, using the wrong table for the installation method, or
-                misreading the cable current ratings. Practise until the process is automatic.
+                in the wrong order, using the wrong table for the installation method, or misreading
+                the cable current ratings. Practise until the process is automatic.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,9 +380,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Special locations (Part 7)</strong> — bathrooms, swimming pools, construction
-                sites, agricultural installations. These have specific additional requirements that
-                override or supplement the general regulations.
+                <strong>Special locations (Part 7)</strong> — bathrooms, swimming pools,
+                construction sites, agricultural installations. These have specific additional
+                requirements that override or supplement the general regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -448,9 +451,7 @@ const sections = [
     heading: 'On the Day',
     content: (
       <>
-        <p>
-          Practical advice for exam day:
-        </p>
+        <p>Practical advice for exam day:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -523,12 +524,14 @@ const sections = [
             <div className="flex items-start gap-4">
               <GraduationCap className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Take the 2391 (Inspection and Testing)</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Take the 2391 (Inspection and Testing)
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   The C&G 2391 is the natural next step after the 2382. It builds on your knowledge
                   of BS 7671 and teaches you how to inspect and test electrical installations, and
-                  how to complete EICs and EICRs. Many electricians take the 2382 and 2391 within
-                  a few months of each other.
+                  how to complete EICs and EICRs. Many electricians take the 2382 and 2391 within a
+                  few months of each other.
                 </p>
               </div>
             </div>
@@ -590,7 +593,7 @@ export default function CityGuilds2382ExamGuidePage() {
       faqHeading="Frequently Asked Questions About the 2382 Exam"
       relatedPages={relatedPages}
       ctaHeading="Prepare for the 2382 with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for exam preparation, cable sizing practice, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -638,7 +638,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage school electrical contracts with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for commercial quotes, multi-board EICR completion, and EIC certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial quotes, multi-board EICR completion, and EIC certification. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -675,7 +675,7 @@ export default function SchoolElectricalCostPage() {
       faqHeading="Frequently Asked Questions: School Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certificate School Electrical Projects on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for school project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for school project quoting, multi-board EICR completion, and EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

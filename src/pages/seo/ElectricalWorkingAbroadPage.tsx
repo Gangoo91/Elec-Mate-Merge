@@ -646,7 +646,7 @@ export default function ElectricalWorkingAbroadPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Build your overseas qualification portfolio with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital certificate management, CPD tracking, and professional documentation. Build the portfolio overseas licensing bodies want to see. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificate management, CPD tracking, and professional documentation. Build the portfolio overseas licensing bodies want to see. 7-day free trial, cancel anytime."
     />
   );
 }

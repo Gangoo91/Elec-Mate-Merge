@@ -504,7 +504,7 @@ export default function TransformerSizingCalculatorPage() {
         {
           question: 'What information do I need before sizing a transformer?',
           answer:
-            'To size a transformer accurately you need: the full list of connected loads (in kW or kVA for each piece of equipment), the power factor of each load type (resistive loads such as heaters and incandescent lighting have a power factor of 1.0; motors, fluorescent fittings, and drives typically have a power factor of 0.7 to 0.85), whether any motors will be started direct-on-line (DOL) and their full load and starting currents, the diversity or demand factor applicable to the installation, whether the installation is single-phase or three-phase, and the secondary voltage required (typically 230 V single-phase or 400 V three-phase for UK installations, or 110 V centre-tapped earth for construction sites). For future-proofing, also ask the client whether additional loads are planned within the transformer\'s expected service life — adding capacity now is far cheaper than replacing the transformer later.',
+            "To size a transformer accurately you need: the full list of connected loads (in kW or kVA for each piece of equipment), the power factor of each load type (resistive loads such as heaters and incandescent lighting have a power factor of 1.0; motors, fluorescent fittings, and drives typically have a power factor of 0.7 to 0.85), whether any motors will be started direct-on-line (DOL) and their full load and starting currents, the diversity or demand factor applicable to the installation, whether the installation is single-phase or three-phase, and the secondary voltage required (typically 230 V single-phase or 400 V three-phase for UK installations, or 110 V centre-tapped earth for construction sites). For future-proofing, also ask the client whether additional loads are planned within the transformer's expected service life — adding capacity now is far cheaper than replacing the transformer later.",
         },
       ]}
       faqHeading="Frequently Asked Questions About Transformer Sizing"
@@ -559,7 +559,7 @@ export default function TransformerSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size Transformers in Seconds on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. 50+ calculators, 8 certificate types, and AI tools. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 70+ calculators, 16 certificate types, and AI tools. 7-day free trial, cancel anytime."
     />
   );
 }

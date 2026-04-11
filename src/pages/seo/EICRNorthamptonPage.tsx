@@ -88,28 +88,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-explained',
     title: 'EICR Explained',
-    description: 'Complete guide to Electrical Installation Condition Reports — what inspectors check, what the codes mean, and what happens next.',
+    description:
+      'Complete guide to Electrical Installation Condition Reports — what inspectors check, what the codes mean, and what happens next.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Full landlord EICR guide covering the 2020 Regulations, compliance deadlines, penalties, and managing multiple properties.',
+    description:
+      'Full landlord EICR guide covering the 2020 Regulations, compliance deadlines, penalties, and managing multiple properties.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-observation-codes-explained',
     title: 'EICR Observation Codes',
-    description: 'What C1, C2, C3 and FI codes mean, what action is required, and real-world examples.',
+    description:
+      'What C1, C2, C3 and FI codes mean, what action is required, and real-world examples.',
     icon: AlertTriangle,
     category: 'Guide',
   },
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export.',
+    description:
+      'Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -137,10 +141,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What is covered</strong> — the fixed electrical installation: consumer
-                unit, wiring, socket outlets, switches, light fittings, earthing and bonding
-                conductors, and the incoming supply arrangements. Portable appliances are not
-                included (these are covered by PAT testing).
+                <strong>What is covered</strong> — the fixed electrical installation: consumer unit,
+                wiring, socket outlets, switches, light fittings, earthing and bonding conductors,
+                and the incoming supply arrangements. Portable appliances are not included (these
+                are covered by PAT testing).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -150,9 +154,8 @@ const sections = [
                 <SEOInternalLink href="/tools/eicr-certificate">
                   Schedule of Test Results
                 </SEOInternalLink>
-                . Tests include earth continuity, insulation resistance, polarity, earth fault
-                loop impedance, and RCD operating time, all carried out with calibrated
-                instruments.
+                . Tests include earth continuity, insulation resistance, polarity, earth fault loop
+                impedance, and RCD operating time, all carried out with calibrated instruments.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -170,8 +173,8 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report outcome</strong> — the EICR states Satisfactory or Unsatisfactory,
-                lists all observations with their code classifications, and recommends the date
-                of the next inspection.
+                lists all observations with their code classifications, and recommends the date of
+                the next inspection.
               </span>
             </li>
           </ul>
@@ -193,35 +196,37 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Safety Standards in the Private Rented Sector (England)
-                Regulations 2020</strong> — every private landlord must obtain an EICR before
-                a new tenancy begins and at least every five years. The EICR must be provided
-                to tenants within 28 days of the inspection and to West Northamptonshire Council
-                within seven days if requested.
+                <strong>
+                  Electrical Safety Standards in the Private Rented Sector (England) Regulations
+                  2020
+                </strong>{' '}
+                — every private landlord must obtain an EICR before a new tenancy begins and at
+                least every five years. The EICR must be provided to tenants within 28 days of the
+                inspection and to West Northamptonshire Council within seven days if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Civil penalties</strong> — West Northamptonshire Council can impose
-                civil penalties of up to £30,000 per breach. Each separate failure constitutes
-                a separate breach and can attract its own penalty.
+                <strong>Civil penalties</strong> — West Northamptonshire Council can impose civil
+                penalties of up to £30,000 per breach. Each separate failure constitutes a separate
+                breach and can attract its own penalty.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — where the EICR is Unsatisfactory, all C1 and
-                C2 observations must be remedied within 28 days. Written confirmation from a
-                qualified electrician must be provided to the tenant and to the council on request.
+                <strong>Remedial work</strong> — where the EICR is Unsatisfactory, all C1 and C2
+                observations must be remedied within 28 days. Written confirmation from a qualified
+                electrician must be provided to the tenant and to the council on request.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid
-                Section 21 (no-fault eviction) notice where they have not provided the tenant
-                with a copy of the current EICR.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                (no-fault eviction) notice where they have not provided the tenant with a copy of
+                the current EICR.
               </span>
             </li>
           </ul>
@@ -250,38 +255,37 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Victorian and Edwardian terraces</strong> — areas including Semilong,
-                Spring Boroughs, Abington, and parts of Far Cotton contain Victorian and
-                Edwardian terraced housing. Many retain original rubber-insulated wiring or
-                early PVC cables. Degraded rubber insulation is a C2 observation requiring
-                urgent remedial action.
+                <strong>Victorian and Edwardian terraces</strong> — areas including Semilong, Spring
+                Boroughs, Abington, and parts of Far Cotton contain Victorian and Edwardian terraced
+                housing. Many retain original rubber-insulated wiring or early PVC cables. Degraded
+                rubber insulation is a C2 observation requiring urgent remedial action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war and post-war housing</strong> — Northampton's inter-war and
-                post-war estates were largely built between 1930 and 1970. Many have been
-                partially or fully rewired at some stage, but some retain original or outdated
-                wiring. Absence of RCD protection is common in this housing era.
+                post-war estates were largely built between 1930 and 1970. Many have been partially
+                or fully rewired at some stage, but some retain original or outdated wiring. Absence
+                of RCD protection is common in this housing era.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — properties wired or last rewired before
-                approximately 1995 frequently lack RCD protection on socket-outlet circuits.
-                BS 7671 Regulation 411.3.3 requires 30mA RCD protection. Absence is coded C2,
-                making the EICR Unsatisfactory and typically requiring a consumer unit upgrade.
+                approximately 1995 frequently lack RCD protection on socket-outlet circuits. BS 7671
+                Regulation 411.3.3 requires 30mA RCD protection. Absence is coded C2, making the
+                EICR Unsatisfactory and typically requiring a consumer unit upgrade.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Expansion town development</strong> — Northampton expanded significantly
-                in the 1960s to 1980s under the new town designation. Properties from this period
-                are generally better wired than Victorian stock but may still lack modern RCD
-                protection and may have ageing PVC cabling approaching the end of its design life.
+                <strong>Expansion town development</strong> — Northampton expanded significantly in
+                the 1960s to 1980s under the new town designation. Properties from this period are
+                generally better wired than Victorian stock but may still lack modern RCD protection
+                and may have ageing PVC cabling approaching the end of its design life.
               </span>
             </li>
           </ul>
@@ -303,25 +307,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Preparation</strong> — all rooms, the consumer unit, and the loft hatch
-                must be accessible. Tenants should be informed that brief power interruptions
-                may occur during circuit testing.
+                <strong>Preparation</strong> — all rooms, the consumer unit, and the loft hatch must
+                be accessible. Tenants should be informed that brief power interruptions may occur
+                during circuit testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection</strong> — the inspector examines all accessible parts
-                of the fixed installation: wiring, accessories, the consumer unit, and earthing
-                and bonding arrangements.
+                <strong>Visual inspection</strong> — the inspector examines all accessible parts of
+                the fixed installation: wiring, accessories, the consumer unit, and earthing and
+                bonding arrangements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical testing</strong> — circuits are tested in turn using calibrated
-                instruments. Results are recorded in the Schedule of Test Results. Each circuit
-                may be briefly de-energised during testing.
+                instruments. Results are recorded in the Schedule of Test Results. Each circuit may
+                be briefly de-energised during testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,8 +333,8 @@ const sections = [
               <span>
                 <strong>Report completion</strong> — the EICR is ideally completed on site and
                 provided to the landlord before the inspector leaves. For a one or two-bedroom
-                Northampton flat allow two to three hours; for a three-bedroom house allow three
-                to five hours.
+                Northampton flat allow two to three hours; for a three-bedroom house allow three to
+                five hours.
               </span>
             </li>
           </ul>
@@ -344,18 +348,18 @@ const sections = [
     content: (
       <>
         <p>
-          All findings from an EICR are classified using the four-code system defined in BS 7671
-          and its guidance notes. The codes determine whether the EICR is Satisfactory or
-          Unsatisfactory and what action the landlord must take.
+          All findings from an EICR are classified using the four-code system defined in BS 7671 and
+          its guidance notes. The codes determine whether the EICR is Satisfactory or Unsatisfactory
+          and what action the landlord must take.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — Danger present</strong> — immediate risk of injury. Requires
-                immediate remedial action, possibly including disconnection of the affected
-                circuit. Always makes the EICR Unsatisfactory.
+                <strong>C1 — Danger present</strong> — immediate risk of injury. Requires immediate
+                remedial action, possibly including disconnection of the affected circuit. Always
+                makes the EICR Unsatisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,8 +367,8 @@ const sections = [
               <span>
                 <strong>C2 — Potentially dangerous</strong> — urgent action required. Not an
                 immediate risk but potentially dangerous. Always makes the EICR Unsatisfactory.
-                Common in Northampton: absence of RCD protection, degraded rubber wiring,
-                inadequate bonding.
+                Common in Northampton: absence of RCD protection, degraded rubber wiring, inadequate
+                bonding.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,9 +381,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-white mt-0.5 shrink-0" />
               <span>
-                <strong>FI — Further investigation required</strong> — a potential issue
-                cannot be assessed without further investigation. Makes the EICR Unsatisfactory
-                until resolved.
+                <strong>FI — Further investigation required</strong> — a potential issue cannot be
+                assessed without further investigation. Makes the EICR Unsatisfactory until
+                resolved.
               </span>
             </li>
           </ul>
@@ -409,15 +413,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £95 to £185. Modern purpose-built flats
-                are faster to inspect than older conversions or Victorian properties.
+                <strong>One-bedroom flat</strong> — £95 to £185. Modern purpose-built flats are
+                faster to inspect than older conversions or Victorian properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £140 to £250. Victorian terraced
-                properties in Semilong or Abington may be at the higher end due to aged wiring.
+                <strong>Two-bedroom property</strong> — £140 to £250. Victorian terraced properties
+                in Semilong or Abington may be at the higher end due to aged wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -431,8 +435,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO or larger property</strong> — £280 to £550+. Fire alarm systems,
-                emergency lighting, and multiple consumer units increase the inspection scope
-                and duration.
+                emergency lighting, and multiple consumer units increase the inspection scope and
+                duration.
               </span>
             </li>
           </ul>
@@ -460,37 +464,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person scheme membership</strong> — use the NICEIC, NAPIT,
-                or ELECSA online registers to find Northampton-based electricians with inspection
-                and testing qualifications. Membership confirms qualifications, insurance, and
-                ongoing technical assessment by the scheme body.
+                <strong>Competent person scheme membership</strong> — use the NICEIC, NAPIT, or
+                ELECSA online registers to find Northampton-based electricians with inspection and
+                testing qualifications. Membership confirms qualifications, insurance, and ongoing
+                technical assessment by the scheme body.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify qualifications</strong> — the inspector should hold City and
-                Guilds 2391 or C&G 2395 (Inspection and Testing) and a current BS 7671 18th
-                Edition qualification (C&G 2382). Ask to see their scheme membership card or
-                certificate.
+                <strong>Verify qualifications</strong> — the inspector should hold City and Guilds
+                2391 or C&G 2395 (Inspection and Testing) and a current BS 7671 18th Edition
+                qualification (C&G 2382). Ask to see their scheme membership card or certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Experience with local property types</strong> — prefer inspectors with
-                experience of Northampton's Victorian and inter-war housing stock. Familiarity
-                with rubber-insulated wiring and older consumer unit types reduces the risk of
+                experience of Northampton's Victorian and inter-war housing stock. Familiarity with
+                rubber-insulated wiring and older consumer unit types reduces the risk of
                 misdiagnosis or missed defects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Avoid suspiciously cheap quotes</strong> — a thorough EICR for a
-                Northampton three-bedroom house takes three to five hours and requires expensive
-                calibrated equipment. Quotes significantly below the market rate may indicate an
-                inadequate inspection.
+                <strong>Avoid suspiciously cheap quotes</strong> — a thorough EICR for a Northampton
+                three-bedroom house takes three to five hours and requires expensive calibrated
+                equipment. Quotes significantly below the market rate may indicate an inadequate
+                inspection.
               </span>
             </li>
           </ul>
@@ -533,8 +536,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Win Northampton Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When you identify C1 or C2 observations, quote the remedial work immediately
-                  using the{' '}
+                  When you identify C1 or C2 observations, quote the remedial work immediately using
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
@@ -547,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Northampton EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -584,7 +587,7 @@ export default function EICRNorthamptonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Northampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Northampton EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

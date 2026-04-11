@@ -603,7 +603,7 @@ export default function KitchenWiringGuidePage() {
       faqHeading="Frequently Asked Questions About Kitchen Wiring"
       relatedPages={relatedPages}
       ctaHeading="Design Kitchen Wiring Layouts Professionally"
-      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you design, size, and price kitchen wiring jobs accurately. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and quoting app help you design, size, and price kitchen wiring jobs accurately. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

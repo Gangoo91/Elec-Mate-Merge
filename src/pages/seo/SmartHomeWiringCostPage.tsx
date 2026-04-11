@@ -106,14 +106,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/security-lighting-installation-cost',
     title: 'Security Lighting Cost Guide',
-    description: 'Security lighting is often integrated with smart home systems for automated control.',
+    description:
+      'Security lighting is often integrated with smart home systems for automated control.',
     icon: Lightbulb,
     category: 'Guide',
   },
   {
     href: '/guides/kitchen-rewire-cost',
     title: 'Kitchen Rewire Cost Guide',
-    description: 'Kitchen rewires are an ideal time to install smart switches and under-cabinet smart lighting.',
+    description:
+      'Kitchen rewires are an ideal time to install smart switches and under-cabinet smart lighting.',
     icon: Zap,
     category: 'Guide',
   },
@@ -144,17 +146,15 @@ const sections = [
         </p>
         <p>
           The cost of smart home wiring varies enormously depending on scope. A single room with
-          smart switches might cost <strong>£500</strong>. A whole-house system with structured
-          Cat6 cabling, ceiling-mounted WiFi access points, smart switches in every room, and a
+          smart switches might cost <strong>£500</strong>. A whole-house system with structured Cat6
+          cabling, ceiling-mounted WiFi access points, smart switches in every room, and a
           centralised hub can exceed <strong>£5,000</strong>.
         </p>
         <p>
-          This guide breaks down the costs by system type, explains the difference between
-          retrofit and new-build pricing, and covers the regulatory requirements under{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>{' '}
-          and Part P.
+          This guide breaks down the costs by system type, explains the difference between retrofit
+          and new-build pricing, and covers the regulatory requirements under{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> and
+          Part P.
         </p>
       </>
     ),
@@ -173,42 +173,54 @@ const sections = [
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Smart lighting — single room</p>
-                <p className="text-white text-sm">3–4 smart switches/dimmers, possibly neutral wire retrofit</p>
+                <p className="text-white text-sm">
+                  3–4 smart switches/dimmers, possibly neutral wire retrofit
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £600</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Smart lighting — whole house</p>
-                <p className="text-white text-sm">10–15 smart switches, possible neutral retrofits, hub</p>
+                <p className="text-white text-sm">
+                  10–15 smart switches, possible neutral retrofits, hub
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,000 – £2,500</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Cat6 structured cabling — per room</p>
-                <p className="text-white text-sm">Double Cat6 outlet, cable to patch panel, termination</p>
+                <p className="text-white text-sm">
+                  Double Cat6 outlet, cable to patch panel, termination
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£120 – £200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Whole-house Cat6 + WiFi APs</p>
-                <p className="text-white text-sm">Cat6 to every room, patch panel, 3–4 ceiling WiFi access points</p>
+                <p className="text-white text-sm">
+                  Cat6 to every room, patch panel, 3–4 ceiling WiFi access points
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,500 – £3,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Comprehensive whole-house smart system</p>
-                <p className="text-white text-sm">Cat6, WiFi APs, smart switches, smart sockets, hub, commissioning</p>
+                <p className="text-white text-sm">
+                  Cat6, WiFi APs, smart switches, smart sockets, hub, commissioning
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£3,000 – £5,000+</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-bold text-white">WiFi access point (materials only)</p>
-                <p className="text-white text-sm">Ceiling-mounted PoE access point (e.g. Ubiquiti, TP-Link)</p>
+                <p className="text-white text-sm">
+                  Ceiling-mounted PoE access point (e.g. Ubiquiti, TP-Link)
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£80 – £150</p>
             </div>
@@ -239,8 +251,8 @@ const sections = [
               or a proprietary hub. The existing light fittings and bulbs remain unchanged. This is
               the preferred approach for electricians because it uses standard wiring and does not
               require the homeowner to buy special bulbs. Trade price for a smart dimmer switch
-              ranges from £25 to £60. Installation labour is £30 to £50 per switch, plus £30 to
-              £60 per switch if a neutral wire needs retrofitting.
+              ranges from £25 to £60. Installation labour is £30 to £50 per switch, plus £30 to £60
+              per switch if a neutral wire needs retrofitting.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -271,9 +283,9 @@ const sections = [
     content: (
       <>
         <p>
-          Smart sockets allow homeowners to control individual outlets via an app or voice assistant.
-          They are useful for lamps, heaters (with safety interlocks), Christmas lights, and
-          appliances that need scheduling.
+          Smart sockets allow homeowners to control individual outlets via an app or voice
+          assistant. They are useful for lamps, heaters (with safety interlocks), Christmas lights,
+          and appliances that need scheduling.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -281,19 +293,19 @@ const sections = [
               <Smartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Plug-in smart sockets</strong> — these plug into an existing socket and
-                provide app control for the connected device. No electrical work required. Cost:
-                £10 to £25 per unit. Suitable for a DIY approach but they protrude from the wall
-                and look bulky.
+                provide app control for the connected device. No electrical work required. Cost: £10
+                to £25 per unit. Suitable for a DIY approach but they protrude from the wall and
+                look bulky.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Smartphone className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>In-wall smart sockets</strong> — these replace the existing socket with a
-                smart version that sits flush in the standard UK back box. Brands such as
-                Lightwave and Den offer double smart sockets in standard UK format. Trade price:
-                £40 to £80 per double socket. Installation is a straight swap if the existing
-                wiring is sound — approximately 20 to 30 minutes per socket including testing.
+                smart version that sits flush in the standard UK back box. Brands such as Lightwave
+                and Den offer double smart sockets in standard UK format. Trade price: £40 to £80
+                per double socket. Installation is a straight swap if the existing wiring is sound —
+                approximately 20 to 30 minutes per socket including testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,8 +313,8 @@ const sections = [
               <span>
                 <strong>Smart module behind existing socket</strong> — products such as Shelly 1PM
                 fit behind the existing socket faceplate in the back box, adding smart control
-                without changing the visible socket. Trade price: £15 to £25 per module. Requires
-                a sufficiently deep back box (35mm minimum). Good for retrofit where the homeowner
+                without changing the visible socket. Trade price: £15 to £25 per module. Requires a
+                sufficiently deep back box (35mm minimum). Good for retrofit where the homeowner
                 wants to keep their existing faceplates.
               </span>
             </li>
@@ -327,10 +339,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cat6 cable</strong> — supports up to 1Gbps over 100 metres (or 10Gbps
-                over shorter runs). Cat6 RJ45 data module inserts cost approximately £10.50 each
-                at trade price. Cable costs £0.30 to £0.50 per metre. The main cost is labour for
-                routing cables through walls, floors, and ceilings.
+                <strong>Cat6 cable</strong> — supports up to 1Gbps over 100 metres (or 10Gbps over
+                shorter runs). Cat6 RJ45 data module inserts cost approximately £10.50 each at trade
+                price. Cable costs £0.30 to £0.50 per metre. The main cost is labour for routing
+                cables through walls, floors, and ceilings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -338,28 +350,27 @@ const sections = [
               <span>
                 <strong>Patch panel</strong> — a central termination point (typically in a utility
                 cupboard or under-stairs location) where all Cat6 runs terminate. A 24-port patch
-                panel costs £30 to £60. The patch panel connects to a network switch, which
-                connects to the router.
+                panel costs £30 to £60. The patch panel connects to a network switch, which connects
+                to the router.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>WiFi access points</strong> — ceiling-mounted access points (such as
-                Ubiquiti UniFi or TP-Link Omada) provide whole-house WiFi coverage. They are
-                powered via PoE (Power over Ethernet) from the network switch, so only a Cat6
-                cable is needed — no separate power supply. One access point per floor is typical
-                for a 3 to 4-bedroom house. Cost: £80 to £150 each plus Cat6 run.
+                Ubiquiti UniFi or TP-Link Omada) provide whole-house WiFi coverage. They are powered
+                via PoE (Power over Ethernet) from the network switch, so only a Cat6 cable is
+                needed — no separate power supply. One access point per floor is typical for a 3 to
+                4-bedroom house. Cost: £80 to £150 each plus Cat6 run.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A typical structured cabling installation for a 3-bedroom house includes 8 to 12 Cat6
-          runs (two per bedroom, two in the living room, two in the home office, plus WiFi AP
-          locations), a 24-port patch panel, a PoE network switch, and 3 ceiling-mounted access
-          points. Total materials cost: £400 to £700. Total installed cost including labour:
-          £1,500 to £3,000.
+          A typical structured cabling installation for a 3-bedroom house includes 8 to 12 Cat6 runs
+          (two per bedroom, two in the living room, two in the home office, plus WiFi AP locations),
+          a 24-port patch panel, a PoE network switch, and 3 ceiling-mounted access points. Total
+          materials cost: £400 to £700. Total installed cost including labour: £1,500 to £3,000.
         </p>
       </>
     ),
@@ -371,12 +382,14 @@ const sections = [
       <>
         <p>
           Homeowners often ask whether they should wire the entire house at once or start with one
-          or two rooms. The answer depends on budget, property type, and whether any major works
-          are planned:
+          or two rooms. The answer depends on budget, property type, and whether any major works are
+          planned:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Whole-House (Recommended for New Builds / Rewires)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Whole-House (Recommended for New Builds / Rewires)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Installing structured cabling and smart switch wiring during a new build or full
               rewire is significantly cheaper because cables are run before plastering. First-fix
@@ -386,12 +399,14 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Room-by-Room (Better for Retrofit)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Room-by-Room (Better for Retrofit)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               For existing properties where no rewire is planned, a room-by-room approach spreads
               the cost and minimises disruption. Start with the most-used rooms (living room,
-              kitchen, master bedroom) and add rooms over time. Each room can be completed in half
-              a day. The downside is higher per-room cost (no economies of scale) and potential
+              kitchen, master bedroom) and add rooms over time. Each room can be completed in half a
+              day. The downside is higher per-room cost (no economies of scale) and potential
               inconsistency between rooms if different products are used.
             </p>
           </div>
@@ -431,9 +446,7 @@ const sections = [
               <span>
                 <strong>BS 7671 compliance</strong> — all electrical work must comply with the
                 current edition of{' '}
-                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671
-                </SEOInternalLink>
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>
                 . This includes correct circuit protection, cable sizing, earthing, and RCD
                 protection where required. Smart switches and modules must be suitable for the
                 circuit they are installed on (correct voltage and current rating).
@@ -512,7 +525,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify smart home installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price smart home jobs accurately and present professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price smart home jobs accurately and present professional documentation. 7-day free trial."
           icon={Home}
         />
       </>
@@ -549,7 +562,7 @@ export default function SmartHomeWiringCostPage() {
       faqHeading="Frequently Asked Questions About Smart Home Wiring Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Smart Home Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

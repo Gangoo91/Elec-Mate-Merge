@@ -73,7 +73,7 @@ const faqs = [
   {
     question: 'What is delayed cardiac arrhythmia after electric shock?',
     answer:
-      'The electrical current from a shock can temporarily disrupt the heart\'s conduction system without causing immediate cardiac arrest. However, this disruption can trigger arrhythmias (irregular heart rhythms) in the hours following the incident. Ventricular fibrillation and other life-threatening arrhythmias have been documented occurring up to 12 to 24 hours after a low-voltage electric shock. This is why hospital monitoring for at least 12 to 24 hours is recommended for anyone who has received a significant electric shock, even if they feel well immediately afterwards.',
+      "The electrical current from a shock can temporarily disrupt the heart's conduction system without causing immediate cardiac arrest. However, this disruption can trigger arrhythmias (irregular heart rhythms) in the hours following the incident. Ventricular fibrillation and other life-threatening arrhythmias have been documented occurring up to 12 to 24 hours after a low-voltage electric shock. This is why hospital monitoring for at least 12 to 24 hours is recommended for anyone who has received a significant electric shock, even if they feel well immediately afterwards.",
   },
   {
     question: 'What is different about high-voltage electric shock first aid?',
@@ -134,20 +134,26 @@ const sections = [
               </p>
               <p className="text-white">
                 If you touch a person who is still connected to a live electrical source, current
-                will pass through you as well. You will become a second casualty, incapacitated
-                and potentially killed, leaving the original casualty with no help. This is how
-                multiple fatalities from a single electrical accident occur.
+                will pass through you as well. You will become a second casualty, incapacitated and
+                potentially killed, leaving the original casualty with no help. This is how multiple
+                fatalities from a single electrical accident occur.
               </p>
             </div>
           </div>
         </div>
-        <p>
-          The golden rule of electric shock first aid is:
-        </p>
+        <p>The golden rule of electric shock first aid is:</p>
         <ol className="space-y-2 text-white list-decimal list-inside my-4">
-          <li><strong>Make the situation safe first</strong> — isolate the supply</li>
-          <li><strong>Only then approach and help the casualty</strong></li>
-          <li><strong>Call 999 — do this as soon as possible, ideally at the same time as step 1</strong></li>
+          <li>
+            <strong>Make the situation safe first</strong> — isolate the supply
+          </li>
+          <li>
+            <strong>Only then approach and help the casualty</strong>
+          </li>
+          <li>
+            <strong>
+              Call 999 — do this as soon as possible, ideally at the same time as step 1
+            </strong>
+          </li>
         </ol>
         <p>
           This sequence is not about prioritising the power over the person — it is the only
@@ -163,47 +169,45 @@ const sections = [
     content: (
       <>
         <p>
-          Isolating the supply removes the danger to both the casualty and to you. The
-          method depends on the situation.
+          Isolating the supply removes the danger to both the casualty and to you. The method
+          depends on the situation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Turn off at the consumer unit</strong> — if the consumer unit is
-                nearby and you can reach it safely without crossing the affected area,
-                turn off the main switch. This isolates all circuits in the property.
+                <strong>Turn off at the consumer unit</strong> — if the consumer unit is nearby and
+                you can reach it safely without crossing the affected area, turn off the main
+                switch. This isolates all circuits in the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switch off the appliance at the wall</strong> — if the casualty
-                is in contact with an appliance (a faulty tool, appliance, or lead),
-                switch off or unplug it at the wall socket — not the appliance switch,
-                as the fault may be in the appliance itself.
+                <strong>Switch off the appliance at the wall</strong> — if the casualty is in
+                contact with an appliance (a faulty tool, appliance, or lead), switch off or unplug
+                it at the wall socket — not the appliance switch, as the fault may be in the
+                appliance itself.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If you cannot switch off the supply</strong> — use a dry,
-                non-conducting object to move the source away from the casualty or
-                the casualty away from the source. Suitable materials include a dry
-                wooden broom handle, a folded dry newspaper, or a dry rubber mat.
-                Do not use anything damp, metal, or wet. Stand on a dry, insulating
-                surface if possible.
+                <strong>If you cannot switch off the supply</strong> — use a dry, non-conducting
+                object to move the source away from the casualty or the casualty away from the
+                source. Suitable materials include a dry wooden broom handle, a folded dry
+                newspaper, or a dry rubber mat. Do not use anything damp, metal, or wet. Stand on a
+                dry, insulating surface if possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High voltage — do not approach</strong> — if the source is high
-                voltage (overhead power lines, railway electrification, substations),
-                do not approach within 15 metres. Call 999 immediately and keep bystanders
-                well back. Only approach when the relevant authority confirms the supply
-                is isolated.
+                <strong>High voltage — do not approach</strong> — if the source is high voltage
+                (overhead power lines, railway electrification, substations), do not approach within
+                15 metres. Call 999 immediately and keep bystanders well back. Only approach when
+                the relevant authority confirms the supply is isolated.
               </span>
             </li>
           </ul>
@@ -217,10 +221,9 @@ const sections = [
     content: (
       <>
         <p>
-          Call 999 immediately for any electric shock, regardless of how the casualty
-          appears. Do not delay calling because the person says they feel fine. Electric
-          shock injuries include delayed effects that make immediate medical assessment
-          essential for every case.
+          Call 999 immediately for any electric shock, regardless of how the casualty appears. Do
+          not delay calling because the person says they feel fine. Electric shock injuries include
+          delayed effects that make immediate medical assessment essential for every case.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -240,18 +243,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Phone className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Do not hang up</strong> — the emergency operator will guide you
-                through what to do while the ambulance is on its way. Follow their
-                instructions exactly.
+                <strong>Do not hang up</strong> — the emergency operator will guide you through what
+                to do while the ambulance is on its way. Follow their instructions exactly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Phone className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If a bystander is present</strong> — direct a specific person
-                to call 999 while you begin first aid. Say: "You — call 999 now and
-                tell them someone has had an electric shock at [address]." Giving a
-                specific person the task ensures it is done.
+                <strong>If a bystander is present</strong> — direct a specific person to call 999
+                while you begin first aid. Say: "You — call 999 now and tell them someone has had an
+                electric shock at [address]." Giving a specific person the task ensures it is done.
               </span>
             </li>
           </ul>
@@ -265,64 +266,62 @@ const sections = [
     content: (
       <>
         <p>
-          Once the casualty is away from the electrical source and you are certain you
-          are not at risk of electrocution, check for response and breathing. If the
-          casualty is unresponsive and not breathing normally, begin CPR immediately.
-          Early CPR is the single most important factor in survival from cardiac arrest.
+          Once the casualty is away from the electrical source and you are certain you are not at
+          risk of electrocution, check for response and breathing. If the casualty is unresponsive
+          and not breathing normally, begin CPR immediately. Early CPR is the single most important
+          factor in survival from cardiac arrest.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check for response</strong> — call their name and tap their
-                shoulders firmly. If no response, shout for help.
+                <strong>Check for response</strong> — call their name and tap their shoulders
+                firmly. If no response, shout for help.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Open the airway</strong> — tilt the head back gently by placing
-                one hand on the forehead and lifting the chin with two fingers. Look for
-                no more than 10 seconds for normal breathing (normal breathing is not
-                occasional gasps).
+                <strong>Open the airway</strong> — tilt the head back gently by placing one hand on
+                the forehead and lifting the chin with two fingers. Look for no more than 10 seconds
+                for normal breathing (normal breathing is not occasional gasps).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Start chest compressions</strong> — place the heel of one hand
-                on the centre of the chest (lower half of the breastbone). Place your
-                other hand on top and interlace your fingers. Press down 5 to 6 cm,
-                keeping your arms straight. Compress at a rate of 100 to 120 per minute
-                (the beat of "Stayin' Alive" by the Bee Gees is a useful guide).
+                <strong>Start chest compressions</strong> — place the heel of one hand on the centre
+                of the chest (lower half of the breastbone). Place your other hand on top and
+                interlace your fingers. Press down 5 to 6 cm, keeping your arms straight. Compress
+                at a rate of 100 to 120 per minute (the beat of "Stayin' Alive" by the Bee Gees is a
+                useful guide).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rescue breaths (if trained)</strong> — after every 30 compressions,
-                give 2 rescue breaths: pinch the nose, seal your lips over the casualty's
-                mouth, and blow steadily for about 1 second. If you are not trained or
-                not confident in rescue breaths, continue with compressions only — hands-only
-                CPR is effective.
+                <strong>Rescue breaths (if trained)</strong> — after every 30 compressions, give 2
+                rescue breaths: pinch the nose, seal your lips over the casualty's mouth, and blow
+                steadily for about 1 second. If you are not trained or not confident in rescue
+                breaths, continue with compressions only — hands-only CPR is effective.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use an AED if available</strong> — Automated External Defibrillators
-                (AEDs) are available in many public places. Send a bystander to find one
-                while you continue CPR. Follow the AED's voice instructions exactly — they
-                are designed to be used by untrained bystanders.
+                <strong>Use an AED if available</strong> — Automated External Defibrillators (AEDs)
+                are available in many public places. Send a bystander to find one while you continue
+                CPR. Follow the AED's voice instructions exactly — they are designed to be used by
+                untrained bystanders.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Heart className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Continue until help arrives</strong> — do not stop CPR until a
-                paramedic takes over, the casualty shows signs of life (normal breathing,
-                movement), or you are physically unable to continue.
+                <strong>Continue until help arrives</strong> — do not stop CPR until a paramedic
+                takes over, the casualty shows signs of life (normal breathing, movement), or you
+                are physically unable to continue.
               </span>
             </li>
           </ol>
@@ -336,8 +335,8 @@ const sections = [
     content: (
       <>
         <p>
-          The terms "low voltage" and "high voltage" have specific technical meanings, but the
-          key point is: both can be fatal. Low voltage does not mean low risk.
+          The terms "low voltage" and "high voltage" have specific technical meanings, but the key
+          point is: both can be fatal. Low voltage does not mean low risk.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -346,13 +345,12 @@ const sections = [
               <div>
                 <strong>Low voltage (up to 1,000V AC) — includes UK mains (230V)</strong>
                 <p className="mt-1">
-                  UK domestic mains electricity (230V, 50Hz AC) is fully capable of causing
-                  cardiac arrest. The 50Hz frequency of UK mains is particularly dangerous
-                  because it falls within the range most likely to induce ventricular
-                  fibrillation. The path of current through the body is critical — hand-to-hand
-                  or hand-to-foot paths passing through the chest carry the highest risk of
-                  cardiac injury. Burns at the contact points may be visible but are not a
-                  reliable guide to internal injury severity.
+                  UK domestic mains electricity (230V, 50Hz AC) is fully capable of causing cardiac
+                  arrest. The 50Hz frequency of UK mains is particularly dangerous because it falls
+                  within the range most likely to induce ventricular fibrillation. The path of
+                  current through the body is critical — hand-to-hand or hand-to-foot paths passing
+                  through the chest carry the highest risk of cardiac injury. Burns at the contact
+                  points may be visible but are not a reliable guide to internal injury severity.
                 </p>
               </div>
             </li>
@@ -362,13 +360,13 @@ const sections = [
                 <strong>High voltage (above 1,000V AC) — power lines, railway, substations</strong>
                 <p className="mt-1">
                   High-voltage shocks cause additional injury patterns not seen with domestic
-                  voltages. The current travels through the body along the path of least
-                  resistance (nerve sheaths, blood vessels), causing deep internal burns from
-                  entry to exit point. Flash burns from the electrical arc can cause severe
-                  surface burns even without direct contact. Tetanic muscle contraction may
-                  cause fractures or joint dislocations from the violent involuntary movement.
-                  Blast injuries from the arc explosion can occur. High-voltage injury is a
-                  major trauma requiring specialist burns and surgical care.
+                  voltages. The current travels through the body along the path of least resistance
+                  (nerve sheaths, blood vessels), causing deep internal burns from entry to exit
+                  point. Flash burns from the electrical arc can cause severe surface burns even
+                  without direct contact. Tetanic muscle contraction may cause fractures or joint
+                  dislocations from the violent involuntary movement. Blast injuries from the arc
+                  explosion can occur. High-voltage injury is a major trauma requiring specialist
+                  burns and surgical care.
                 </p>
               </div>
             </li>
@@ -383,53 +381,51 @@ const sections = [
     content: (
       <>
         <p>
-          Anyone who has received an electric shock — even if they appear completely unharmed
-          — must be assessed by a doctor. This is not optional.
+          Anyone who has received an electric shock — even if they appear completely unharmed — must
+          be assessed by a doctor. This is not optional.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Internal burns are not visible</strong> — current passing through
-                the body can cause internal burns along blood vessels and nerves that
-                cause no immediate pain or visible surface injury.
+                <strong>Internal burns are not visible</strong> — current passing through the body
+                can cause internal burns along blood vessels and nerves that cause no immediate pain
+                or visible surface injury.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cardiac monitoring is required</strong> — the heart's conduction
-                system may have been disrupted without causing immediate arrest. An ECG
-                (electrocardiogram) is needed to assess the heart rhythm. Abnormalities
-                may not be immediately apparent and may require monitoring over several
-                hours.
+                <strong>Cardiac monitoring is required</strong> — the heart's conduction system may
+                have been disrupted without causing immediate arrest. An ECG (electrocardiogram) is
+                needed to assess the heart rhythm. Abnormalities may not be immediately apparent and
+                may require monitoring over several hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Secondary injury from falls</strong> — electric shocks can cause
-                violent involuntary muscle contraction and unconsciousness, leading to
-                falls and impact injuries. Head injury from a fall must be assessed and
-                ruled out.
+                <strong>Secondary injury from falls</strong> — electric shocks can cause violent
+                involuntary muscle contraction and unconsciousness, leading to falls and impact
+                injuries. Head injury from a fall must be assessed and ruled out.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tetanic muscle contraction injuries</strong> — severe involuntary
-                muscle contraction can be strong enough to cause fractures of the long
-                bones or dislocations of major joints. These may not be immediately obvious
-                in the post-shock confusion.
+                <strong>Tetanic muscle contraction injuries</strong> — severe involuntary muscle
+                contraction can be strong enough to cause fractures of the long bones or
+                dislocations of major joints. These may not be immediately obvious in the post-shock
+                confusion.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Do not allow a shock casualty to drive themselves to hospital or to be left alone
-          in the hours after an incident. They must be accompanied to Accident and Emergency
-          or taken by ambulance.
+          Do not allow a shock casualty to drive themselves to hospital or to be left alone in the
+          hours after an incident. They must be accompanied to Accident and Emergency or taken by
+          ambulance.
         </p>
       </>
     ),
@@ -440,9 +436,9 @@ const sections = [
     content: (
       <>
         <p>
-          One of the most serious and least-understood aspects of electric shock injury is
-          the risk of delayed cardiac arrhythmia — abnormal heart rhythms that develop in
-          the hours after the incident rather than immediately.
+          One of the most serious and least-understood aspects of electric shock injury is the risk
+          of delayed cardiac arrhythmia — abnormal heart rhythms that develop in the hours after the
+          incident rather than immediately.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -450,38 +446,36 @@ const sections = [
               <Activity className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>What happens</strong> — the electrical current can cause temporary
-                disruption to the heart's conduction system (the electrical signals that
-                coordinate the heartbeat). The heart may continue to beat normally
-                immediately after the shock, but the myocardium (heart muscle) may have
-                been damaged or irritated sufficiently to trigger ventricular fibrillation
-                or other dangerous arrhythmias hours later.
+                disruption to the heart's conduction system (the electrical signals that coordinate
+                the heartbeat). The heart may continue to beat normally immediately after the shock,
+                but the myocardium (heart muscle) may have been damaged or irritated sufficiently to
+                trigger ventricular fibrillation or other dangerous arrhythmias hours later.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documented time frame</strong> — delayed arrhythmias have been
-                documented occurring up to 24 hours after the initial shock. The risk is
-                highest in the first 12 hours. This is why medical protocols call for ECG
-                monitoring for at least 12 to 24 hours for any significant shock exposure.
+                <strong>Documented time frame</strong> — delayed arrhythmias have been documented
+                occurring up to 24 hours after the initial shock. The risk is highest in the first
+                12 hours. This is why medical protocols call for ECG monitoring for at least 12 to
+                24 hours for any significant shock exposure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warning symptoms</strong> — anyone who has received an electric
-                shock should seek immediate emergency attention if they develop any of the
-                following in the hours after the incident: chest pain or tightness,
-                palpitations (awareness of irregular or rapid heartbeat), dizziness or
-                fainting, difficulty breathing, or confusion.
+                <strong>Warning symptoms</strong> — anyone who has received an electric shock should
+                seek immediate emergency attention if they develop any of the following in the hours
+                after the incident: chest pain or tightness, palpitations (awareness of irregular or
+                rapid heartbeat), dizziness or fainting, difficulty breathing, or confusion.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          This is why even a person who received a seemingly minor shock and feels fine
-          immediately must be seen by a doctor. A brief ECG in A&amp;E and a period of
-          monitoring can be life-saving.
+          This is why even a person who received a seemingly minor shock and feels fine immediately
+          must be seen by a doctor. A brief ECG in A&amp;E and a period of monitoring can be
+          life-saving.
         </p>
       </>
     ),
@@ -492,17 +486,17 @@ const sections = [
     content: (
       <>
         <p>
-          The best electric shock first aid is never needing it. Most domestic electric
-          shock incidents are preventable.
+          The best electric shock first aid is never needing it. Most domestic electric shock
+          incidents are preventable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test your RCD monthly</strong> — a functioning 30mA RCD can trip
-                fast enough to prevent a fatal shock in many situations. Test by pressing
-                the test button on your consumer unit monthly. See{' '}
+                <strong>Test your RCD monthly</strong> — a functioning 30mA RCD can trip fast enough
+                to prevent a fatal shock in many situations. Test by pressing the test button on
+                your consumer unit monthly. See{' '}
                 <SEOInternalLink href="/electrical-safety-at-home">
                   our home electrical safety guide
                 </SEOInternalLink>{' '}
@@ -512,9 +506,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use RCD-protected extension leads for power tools</strong> — when
-                using power tools, always use an RCD-protected extension lead or a plug-in
-                RCD adaptor rated at 30mA. See our guide on{' '}
+                <strong>Use RCD-protected extension leads for power tools</strong> — when using
+                power tools, always use an RCD-protected extension lead or a plug-in RCD adaptor
+                rated at 30mA. See our guide on{' '}
                 <SEOInternalLink href="/extension-lead-safety">
                   extension lead safety
                 </SEOInternalLink>
@@ -524,8 +518,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replace damaged cables immediately</strong> — never use appliances
-                with damaged leads. Replace flexes rather than wrapping them with tape.
+                <strong>Replace damaged cables immediately</strong> — never use appliances with
+                damaged leads. Replace flexes rather than wrapping them with tape.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -535,23 +529,23 @@ const sections = [
                 <SEOInternalLink href="/guides/eicr-for-landlords">
                   Electrical Installation Condition Report (EICR)
                 </SEOInternalLink>{' '}
-                every ten years for owner-occupied homes identifies hidden wiring faults
-                before they cause accidents.
+                every ten years for owner-occupied homes identifies hidden wiring faults before they
+                cause accidents.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Learn CPR</strong> — consider taking a first aid course that
-                includes CPR. The British Red Cross and St John Ambulance offer courses
-                throughout the UK. Knowing how to perform CPR could save a life.
+                <strong>Learn CPR</strong> — consider taking a first aid course that includes CPR.
+                The British Red Cross and St John Ambulance offer courses throughout the UK. Knowing
+                how to perform CPR could save a life.
               </span>
             </li>
           </ul>
         </div>
         <SEOAppBridge
           title="Are you an electrician? Help keep UK homes electrically safe"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Start your 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -588,7 +582,7 @@ export default function ElectricShockFirstAidPage() {
       faqHeading="Frequently Asked Questions About Electric Shock First Aid"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Complete EICRs Faster with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

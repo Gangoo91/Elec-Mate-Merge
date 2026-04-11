@@ -637,7 +637,7 @@ export default function ContinuityTestingR1R2Page() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate R1+R2 and Zs values on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. R1+R2 calculator, Zs lookup, voice test entry, board scanner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. R1+R2 calculator, Zs lookup, voice test entry, board scanner. 7-day free trial, cancel anytime."
     />
   );
 }

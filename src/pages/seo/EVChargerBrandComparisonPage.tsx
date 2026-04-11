@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'Which EV charger is best for a business or fleet?',
     answer:
-      'For commercial and fleet installations, Easee Charge and Pod Point Pro are leading options. Easee\'s power-sharing architecture allows multiple chargers to automatically share the available supply without a separate load management controller — reducing installation complexity and cost. Pod Point Pro provides a full fleet management portal with session reporting, access control, and cost allocation. Wallbox Commander 2 is also suited to fleet use, with a 22kW three-phase option, integrated screen, and fleet management software. For large-scale fleet depots with 40+ chargers, a bespoke design using dedicated load management controllers from brands such as ABB or Schneider may be more appropriate than consumer-grade chargers.',
+      "For commercial and fleet installations, Easee Charge and Pod Point Pro are leading options. Easee's power-sharing architecture allows multiple chargers to automatically share the available supply without a separate load management controller — reducing installation complexity and cost. Pod Point Pro provides a full fleet management portal with session reporting, access control, and cost allocation. Wallbox Commander 2 is also suited to fleet use, with a 22kW three-phase option, integrated screen, and fleet management software. For large-scale fleet depots with 40+ chargers, a bespoke design using dedicated load management controllers from brands such as ABB or Schneider may be more appropriate than consumer-grade chargers.",
   },
   {
     question: 'What warranty do UK EV chargers come with?',
     answer:
-      'Most major EV charger brands offer a 3-year manufacturer\'s warranty as standard. myenergi (Zappi) offers 3 years. Pod Point offers 3 years. Ohme offers 3 years. Easee offers 3 years. Wallbox offers 2–3 years depending on the model. Some brands offer extended warranty options at additional cost. Installers should check the current warranty terms at the time of installation and communicate these to customers — warranty claims typically go through the manufacturer\'s customer service team, not through the installing electrician.',
+      "Most major EV charger brands offer a 3-year manufacturer's warranty as standard. myenergi (Zappi) offers 3 years. Pod Point offers 3 years. Ohme offers 3 years. Easee offers 3 years. Wallbox offers 2–3 years depending on the model. Some brands offer extended warranty options at additional cost. Installers should check the current warranty terms at the time of installation and communicate these to customers — warranty claims typically go through the manufacturer's customer service team, not through the installing electrician.",
   },
 ];
 
@@ -130,19 +130,19 @@ const sections = [
     content: (
       <>
         <p>
-          The Zappi is manufactured by myenergi, a UK-based company founded in Lincolnshire.
-          It is the most popular solar-integrated EV charger in the UK and is widely regarded
-          as the benchmark for homes with solar PV or battery storage systems.
+          The Zappi is manufactured by myenergi, a UK-based company founded in Lincolnshire. It is
+          the most popular solar-integrated EV charger in the UK and is widely regarded as the
+          benchmark for homes with solar PV or battery storage systems.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar diversion</strong> — ECO mode and ECO+ mode use a CT clamp on
-                the grid meter to detect surplus solar generation and divert it into the EV.
-                ECO+ mode charges only from surplus solar; ECO mode tops up from the grid
-                to maintain a minimum charge rate.
+                <strong>Solar diversion</strong> — ECO mode and ECO+ mode use a CT clamp on the grid
+                meter to detect surplus solar generation and divert it into the EV. ECO+ mode
+                charges only from surplus solar; ECO mode tops up from the grid to maintain a
+                minimum charge rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,17 +156,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tethered or untethered</strong> — available in both configurations.
-                The Zappi 2 is available as a 7.4kW (single-phase) or 22kW (three-phase) model,
-                in tethered (5m or 8.5m cable) or untethered versions.
+                <strong>Tethered or untethered</strong> — available in both configurations. The
+                Zappi 2 is available as a 7.4kW (single-phase) or 22kW (three-phase) model, in
+                tethered (5m or 8.5m cable) or untethered versions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approximate installed cost</strong> — £1,000–1,400 supply and install
-                (7.4kW tethered). One of the more expensive domestic chargers, but justified
-                for solar PV households where payback on solar diversion is rapid.
+                <strong>Approximate installed cost</strong> — £1,000–1,400 supply and install (7.4kW
+                tethered). One of the more expensive domestic chargers, but justified for solar PV
+                households where payback on solar diversion is rapid.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -187,26 +187,26 @@ const sections = [
     content: (
       <>
         <p>
-          Pod Point is one of the UK's largest EV charging companies, founded in London in 2009
-          and now majority-owned by EDF Energy. The Pod Point Solo 3 is their primary domestic
-          charger and one of the most widely installed in UK homes.
+          Pod Point is one of the UK's largest EV charging companies, founded in London in 2009 and
+          now majority-owned by EDF Energy. The Pod Point Solo 3 is their primary domestic charger
+          and one of the most widely installed in UK homes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart scheduling</strong> — the Pod Point app allows schedule-based
-                charging with time-of-use tariff integration. Supports Octopus Go, Intelligent
-                Octopus, and other tariffs via the OCPP protocol.
+                <strong>Smart scheduling</strong> — the Pod Point app allows schedule-based charging
+                with time-of-use tariff integration. Supports Octopus Go, Intelligent Octopus, and
+                other tariffs via the OCPP protocol.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Universal compatibility</strong> — Solo 3 works with all Type 2
-                vehicles (all modern EVs sold in the UK). Available in 7.4kW (single-phase)
-                and 22kW (three-phase) variants. Tethered (5m cable) or untethered (socket).
+                <strong>Universal compatibility</strong> — Solo 3 works with all Type 2 vehicles
+                (all modern EVs sold in the UK). Available in 7.4kW (single-phase) and 22kW
+                (three-phase) variants. Tethered (5m cable) or untethered (socket).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,9 +220,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approximate installed cost</strong> — £800–1,100 supply and install
-                (7.4kW tethered). Mid-range pricing; strong value for a reliable, well-supported
-                charger.
+                <strong>Approximate installed cost</strong> — £800–1,100 supply and install (7.4kW
+                tethered). Mid-range pricing; strong value for a reliable, well-supported charger.
               </span>
             </li>
           </ul>
@@ -237,28 +236,28 @@ const sections = [
       <>
         <p>
           Ohme is a UK-based EV charger company whose products are designed specifically around
-          smart tariff and vehicle API integration. The Ohme ePod and Ohme Home Pro are
-          popular domestic chargers with some of the most sophisticated smart charging
-          capabilities on the market.
+          smart tariff and vehicle API integration. The Ohme ePod and Ohme Home Pro are popular
+          domestic chargers with some of the most sophisticated smart charging capabilities on the
+          market.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Smartphone className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vehicle API integration</strong> — the Ohme app integrates with the
-                APIs of compatible vehicles (Tesla, BMW, Volkswagen Group, Ford, and others)
-                to read state of charge and send charge commands directly to the vehicle.
-                This enables true smart charging without manual scheduling.
+                <strong>Vehicle API integration</strong> — the Ohme app integrates with the APIs of
+                compatible vehicles (Tesla, BMW, Volkswagen Group, Ford, and others) to read state
+                of charge and send charge commands directly to the vehicle. This enables true smart
+                charging without manual scheduling.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Smartphone className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Intelligent Octopus integration</strong> — Ohme is the preferred
-                hardware partner for Octopus Energy's Intelligent Octopus Go tariff. The
-                charger automatically charges during the cheapest half-hourly slots, chosen
-                by the Octopus algorithm to minimise cost and grid stress simultaneously.
+                <strong>Intelligent Octopus integration</strong> — Ohme is the preferred hardware
+                partner for Octopus Energy's Intelligent Octopus Go tariff. The charger
+                automatically charges during the cheapest half-hourly slots, chosen by the Octopus
+                algorithm to minimise cost and grid stress simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -266,15 +265,15 @@ const sections = [
               <span>
                 <strong>Ohme ePod vs Home Pro</strong> — the ePod is the entry-level untethered
                 7.4kW model; the Home Pro adds solar integration via CT clamp, dynamic load
-                management, and a colour display. The Home Pro competes more directly with
-                the Zappi for solar-equipped homes.
+                management, and a colour display. The Home Pro competes more directly with the Zappi
+                for solar-equipped homes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approximate installed cost</strong> — Ohme ePod: £850–1,100; Ohme Home
-                Pro: £1,050–1,350. Both OZEV-approved for EVHS and WCS grant applications.
+                <strong>Approximate installed cost</strong> — Ohme ePod: £850–1,100; Ohme Home Pro:
+                £1,050–1,350. Both OZEV-approved for EVHS and WCS grant applications.
               </span>
             </li>
           </ul>
@@ -288,43 +287,42 @@ const sections = [
     content: (
       <>
         <p>
-          Easee is a Norwegian EV charger brand that has grown rapidly in the UK commercial
-          market. Its innovative power-sharing architecture makes it particularly suited to
-          fleet and workplace installations where multiple chargers share a single supply.
+          Easee is a Norwegian EV charger brand that has grown rapidly in the UK commercial market.
+          Its innovative power-sharing architecture makes it particularly suited to fleet and
+          workplace installations where multiple chargers share a single supply.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power sharing</strong> — multiple Easee chargers can be linked
-                (up to 3 per circuit, or via an Equalizer load management hub) to share
-                available power automatically. No separate load management controller required
-                for smaller installations, reducing hardware cost and installation complexity.
+                <strong>Power sharing</strong> — multiple Easee chargers can be linked (up to 3 per
+                circuit, or via an Equalizer load management hub) to share available power
+                automatically. No separate load management controller required for smaller
+                installations, reducing hardware cost and installation complexity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equalizer</strong> — the Easee Equalizer is a dedicated load
-                management hub that monitors the incoming supply via CT clamp and distributes
-                available capacity across a cluster of Easee chargers. Supports up to 12
-                chargers per Equalizer.
+                <strong>Equalizer</strong> — the Easee Equalizer is a dedicated load management hub
+                that monitors the incoming supply via CT clamp and distributes available capacity
+                across a cluster of Easee chargers. Supports up to 12 chargers per Equalizer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial management portal</strong> — the Easee cloud portal provides
-                session history, energy consumption reporting, access control (RFID or app),
-                and remote management for fleet operators and property managers.
+                session history, energy consumption reporting, access control (RFID or app), and
+                remote management for fleet operators and property managers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-purple-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approximate installed cost</strong> — Easee Charge: £800–1,100 supply
-                and install (single charger, 7.4kW). Equalizer hub adds approximately £200–350.
+                <strong>Approximate installed cost</strong> — Easee Charge: £800–1,100 supply and
+                install (single charger, 7.4kW). Equalizer hub adds approximately £200–350.
                 Three-phase 22kW version available. OZEV-approved for WCS grant applications.
               </span>
             </li>
@@ -340,17 +338,17 @@ const sections = [
       <>
         <p>
           Wallbox is a Spanish manufacturer with a UK operation and a range of compact, stylish
-          chargers popular for both domestic and light commercial installations. The Pulsar Plus
-          and Copper SB are their most commonly installed domestic models.
+          chargers popular for both domestic and light commercial installations. The Pulsar Plus and
+          Copper SB are their most commonly installed domestic models.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pulsar Plus</strong> — compact 7.4kW charger (one of the smallest on
-                the market) with strong app control, scheduled charging, and solar integration
-                via third-party CT clamp. Tethered (7.5m cable) or untethered.
+                <strong>Pulsar Plus</strong> — compact 7.4kW charger (one of the smallest on the
+                market) with strong app control, scheduled charging, and solar integration via
+                third-party CT clamp. Tethered (7.5m cable) or untethered.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -358,8 +356,8 @@ const sections = [
               <span>
                 <strong>Copper SB</strong> — Wallbox's premium domestic model with an integrated
                 screen, gesture control, RFID access, and V2G (Vehicle-to-Grid) capability for
-                compatible vehicles. One of the few domestic AC chargers with bidirectional
-                charging support.
+                compatible vehicles. One of the few domestic AC chargers with bidirectional charging
+                support.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -403,19 +401,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tethered — best for single-vehicle households</strong> — convenient,
-                no cable to manage, ideal where one household always charges the same EV with
-                the same connector (Type 2 in the UK). Most popular choice for domestic
-                residential installations.
+                <strong>Tethered — best for single-vehicle households</strong> — convenient, no
+                cable to manage, ideal where one household always charges the same EV with the same
+                connector (Type 2 in the UK). Most popular choice for domestic residential
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Untethered — best for commercial and shared charging</strong> — allows
-                multiple users with different vehicles and their own cables to use the same
-                charger. Essential where public or visitor access is required. More future-proof
-                if cable standards evolve.
+                multiple users with different vehicles and their own cables to use the same charger.
+                Essential where public or visitor access is required. More future-proof if cable
+                standards evolve.
               </span>
             </li>
           </ul>
@@ -449,8 +447,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ohme ePod / Home Pro</strong> — solar diversion: Home Pro only;
-                smart tariff: excellent (Intelligent Octopus native); app quality: excellent;
+                <strong>Ohme ePod / Home Pro</strong> — solar diversion: Home Pro only; smart
+                tariff: excellent (Intelligent Octopus native); app quality: excellent;
                 tethered/untethered: untethered; commercial use: limited; warranty: 3 years;
                 installed cost (7.4kW): £850–1,350.
               </span>
@@ -466,20 +464,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wallbox Pulsar Plus</strong> — solar diversion: via third-party CT;
-                smart tariff: good; app quality: excellent; tethered/untethered: both; commercial
-                use: via Commander 2; warranty: 2–3 years; installed cost (7.4kW): £850–1,150.
+                <strong>Wallbox Pulsar Plus</strong> — solar diversion: via third-party CT; smart
+                tariff: good; app quality: excellent; tethered/untethered: both; commercial use: via
+                Commander 2; warranty: 2–3 years; installed cost (7.4kW): £850–1,150.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          All prices above are approximate 2025 supply-and-install figures before any OZEV
-          grant deduction. The EVHS grant (£350 for eligible flat residents and renters) and
-          WCS grant (£350 per socket for businesses) apply to all brands listed above, as all
-          are OZEV-approved. See our{' '}
-          <SEOInternalLink href="/ev-charger-grants">EV charger grants guide</SEOInternalLink>{' '}
-          for full eligibility details.
+          All prices above are approximate 2025 supply-and-install figures before any OZEV grant
+          deduction. The EVHS grant (£350 for eligible flat residents and renters) and WCS grant
+          (£350 per socket for businesses) apply to all brands listed above, as all are
+          OZEV-approved. See our{' '}
+          <SEOInternalLink href="/ev-charger-grants">EV charger grants guide</SEOInternalLink> for
+          full eligibility details.
         </p>
       </>
     ),
@@ -490,12 +488,12 @@ const sections = [
     content: (
       <>
         <p>
-          The best charger brand for your customer depends on their specific situation. Asking
-          five key questions will narrow the choice quickly: Do they have solar PV? (Zappi.)
-          Do they want automatic smart tariff optimisation? (Ohme.) Is it a commercial or
-          fleet installation? (Easee or Pod Point Pro.) Is it for a flat with limited space?
-          (Wallbox Pulsar Plus or Ohme ePod.) Is it a straightforward domestic installation?
-          (Any of the above — choose the brand you know best and have stock of.)
+          The best charger brand for your customer depends on their specific situation. Asking five
+          key questions will narrow the choice quickly: Do they have solar PV? (Zappi.) Do they want
+          automatic smart tariff optimisation? (Ohme.) Is it a commercial or fleet installation?
+          (Easee or Pod Point Pro.) Is it for a flat with limited space? (Wallbox Pulsar Plus or
+          Ohme ePod.) Is it a straightforward domestic installation? (Any of the above — choose the
+          brand you know best and have stock of.)
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -504,8 +502,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Certificate Every Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Regardless of brand, every EV charger installation requires a BS 7671 Section
-                  722 electrical installation certificate. Use the{' '}
+                  Regardless of brand, every EV charger installation requires a BS 7671 Section 722
+                  electrical installation certificate. Use the{' '}
                   <SEOInternalLink href="/tools/ev-charging-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
@@ -525,10 +523,10 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
-                  to present quotes with the EVHS or WCS grant clearly itemised. Customers who
-                  see £350 deducted from their net cost are more likely to proceed — showing
-                  the gross cost, grant, and net cost on a single professional quote page
-                  removes friction from the buying decision.
+                  to present quotes with the EVHS or WCS grant clearly itemised. Customers who see
+                  £350 deducted from their net cost are more likely to proceed — showing the gross
+                  cost, grant, and net cost on a single professional quote page removes friction
+                  from the buying decision.
                 </p>
               </div>
             </div>
@@ -536,7 +534,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EV charger installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Complete every installation professionally. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -573,7 +571,7 @@ export default function EVChargerBrandComparisonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Brands"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV certificates, quoting, and job management. Every brand, every installation. 7-day free trial, cancel anytime."
     />
   );
 }

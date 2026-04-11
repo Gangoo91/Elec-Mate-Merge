@@ -102,40 +102,35 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/cash-flow-management-electricians',
     title: 'Cash Flow Management',
-    description:
-      'Invoicing terms, deposit strategy, and staged payments for electricians.',
+    description: 'Invoicing terms, deposit strategy, and staged payments for electricians.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Create professional PDF quotes with per-point pricing built in.',
+    description: 'Create professional PDF quotes with per-point pricing built in.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'Tender websites, networking, and frameworks for commercial electrical contracts.',
+    description: 'Tender websites, networking, and frameworks for commercial electrical contracts.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/guides/how-to-get-first-electrical-customer',
     title: 'Getting Your First Customer',
-    description:
-      'Starting your electrical business — pricing, marketing, and finding work.',
+    description: 'Starting your electrical business — pricing, marketing, and finding work.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete electrical certificates on site with professional PDF output.',
+    description: 'Complete electrical certificates on site with professional PDF output.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -152,21 +147,21 @@ const sections = [
     content: (
       <>
         <p>
-          Per-point pricing is the most widely used method for estimating domestic electrical
-          work in the UK. Instead of calculating every metre of cable, every clip, and every
-          hour of labour separately, you assign a fixed price to each electrical "point" —
-          and multiply by the number of points on the job.
+          Per-point pricing is the most widely used method for estimating domestic electrical work
+          in the UK. Instead of calculating every metre of cable, every clip, and every hour of
+          labour separately, you assign a fixed price to each electrical "point" — and multiply by
+          the number of points on the job.
         </p>
         <p>
           It is fast, simple, and accurate enough for standard domestic work. Walk the property,
-          count the points, multiply by your rate, add the consumer unit and any extras, and
-          you have a quote. Most experienced electricians can price a full rewire in 20 to 30
-          minutes using per-point pricing.
+          count the points, multiply by your rate, add the consumer unit and any extras, and you
+          have a quote. Most experienced electricians can price a full rewire in 20 to 30 minutes
+          using per-point pricing.
         </p>
         <p>
           The rate per point varies by region, property type, and whether you are supplying
-          materials or providing labour only. This guide breaks down all of those variables so
-          you can set a rate that is competitive in your area and profitable for your business.
+          materials or providing labour only. This guide breaks down all of those variables so you
+          can set a rate that is competitive in your area and profitable for your business.
         </p>
       </>
     ),
@@ -220,7 +215,9 @@ const sections = [
           </div>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
-          <h4 className="font-bold text-white mb-4">NOT Included in Per-Point Pricing (Price Separately)</h4>
+          <h4 className="font-bold text-white mb-4">
+            NOT Included in Per-Point Pricing (Price Separately)
+          </h4>
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 shrink-0" />
@@ -257,10 +254,9 @@ const sections = [
     content: (
       <>
         <p>
-          Per-point rates vary significantly across the UK. The figures below are for
-          supply-and-fix (you provide all materials and labour) on standard domestic work.
-          These are market averages — your rate should reflect your experience, overheads,
-          and local competition.
+          Per-point rates vary significantly across the UK. The figures below are for supply-and-fix
+          (you provide all materials and labour) on standard domestic work. These are market
+          averages — your rate should reflect your experience, overheads, and local competition.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-3 text-white text-sm">
@@ -317,10 +313,10 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Existing property rates are higher</strong> because the work involves
-          lifting floorboards, chasing walls, working around existing finishes, and dealing
-          with unknown conditions. New build first fix is faster — open walls, easy access,
-          no existing services to work around.
+          <strong>Existing property rates are higher</strong> because the work involves lifting
+          floorboards, chasing walls, working around existing finishes, and dealing with unknown
+          conditions. New build first fix is faster — open walls, easy access, no existing services
+          to work around.
         </p>
       </>
     ),
@@ -337,10 +333,9 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               You provide all materials and labour. The per-point rate includes standard cable
-              (typically 2.5mm twin and earth for power, 1.0mm or 1.5mm for lighting), back
-              boxes, front plates, clips, and fixings. You control the material quality and
-              carry full responsibility for the installation. This is the standard for domestic
-              work.
+              (typically 2.5mm twin and earth for power, 1.0mm or 1.5mm for lighting), back boxes,
+              front plates, clips, and fixings. You control the material quality and carry full
+              responsibility for the installation. This is the standard for domestic work.
             </p>
             <p className="text-white text-sm leading-relaxed mt-2">
               <strong>Typical rate: £80 to £150 per point</strong> (varies by region)
@@ -351,10 +346,10 @@ const sections = [
               <Wrench className="w-5 h-5 text-blue-400" /> Labour Only
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              The main contractor or customer provides all materials. You provide labour,
-              tools, and testing equipment only. Common on new-build sites where the developer
-              buys materials in bulk. You have less control over material quality — inspect
-              everything before installing and refuse to install non-compliant materials.
+              The main contractor or customer provides all materials. You provide labour, tools, and
+              testing equipment only. Common on new-build sites where the developer buys materials
+              in bulk. You have less control over material quality — inspect everything before
+              installing and refuse to install non-compliant materials.
             </p>
             <p className="text-white text-sm leading-relaxed mt-2">
               <strong>Typical rate: £40 to £75 per point</strong> (40% to 50% of supply-and-fix)
@@ -362,10 +357,10 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Important:</strong> If working labour-only, ensure your quote states clearly
-          that you are not responsible for the suitability of customer-supplied materials. You
-          still carry responsibility for the quality of the installation itself, but not for a
-          substandard consumer unit or cable that the customer sourced.
+          <strong>Important:</strong> If working labour-only, ensure your quote states clearly that
+          you are not responsible for the suitability of customer-supplied materials. You still
+          carry responsibility for the quality of the installation itself, but not for a substandard
+          consumer unit or cable that the customer sourced.
         </p>
       </>
     ),
@@ -402,8 +397,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional sockets and lights</strong> — quick add-on work. "One new
-                double socket is £120" is clear and instant.
+                <strong>Additional sockets and lights</strong> — quick add-on work. "One new double
+                socket is £120" is clear and instant.
               </span>
             </li>
           </ul>
@@ -421,9 +416,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial fit-outs with containment</strong> — the labour for running
-                cable tray, trunking, and conduit varies enormously and is not captured in a
-                per-point rate.
+                <strong>Commercial fit-outs with containment</strong> — the labour for running cable
+                tray, trunking, and conduit varies enormously and is not captured in a per-point
+                rate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,9 +431,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Very long cable runs</strong> — if a single point requires a 30m cable
-                run (for example, an outbuilding supply), a standard per-point rate will
-                massively undercover the cost. Price these individually.
+                <strong>Very long cable runs</strong> — if a single point requires a 30m cable run
+                (for example, an outbuilding supply), a standard per-point rate will massively
+                undercover the cost. Price these individually.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -459,9 +454,7 @@ const sections = [
     heading: 'Adjusting Your Per-Point Rate',
     content: (
       <>
-        <p>
-          Your base per-point rate is a starting point — adjust it for specific job conditions.
-        </p>
+        <p>Your base per-point rate is a starting point — adjust it for specific job conditions.</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
@@ -499,9 +492,9 @@ const sections = [
     content: (
       <>
         <p>
-          Your per-point rate should be reviewed at least twice a year. Material costs
-          change, your overheads change, and the market moves. Track your actual costs on
-          completed jobs and adjust your rate accordingly.
+          Your per-point rate should be reviewed at least twice a year. Material costs change, your
+          overheads change, and the market moves. Track your actual costs on completed jobs and
+          adjust your rate accordingly.
         </p>
         <SEOAppBridge
           title="Quote with built-in per-point pricing"
@@ -542,7 +535,7 @@ export default function PricingPerPointGuidePage() {
       faqHeading="Frequently Asked Questions About Per-Point Pricing"
       relatedPages={relatedPages}
       ctaHeading="Quote Faster with Per-Point Pricing Built In"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes in minutes. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes in minutes. 7-day free trial, cancel anytime."
     />
   );
 }

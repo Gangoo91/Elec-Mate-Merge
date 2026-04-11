@@ -131,11 +131,11 @@ const sections = [
     content: (
       <>
         <p>
-          The Construction Industry Scheme (CIS) is an HMRC tax scheme that affects contractors
-          and subcontractors working in the UK construction industry. Under CIS, contractors
-          are required to withhold a proportion of each payment made to subcontractors and pay
-          it directly to HMRC as an advance payment of the subcontractor's tax and National
-          Insurance contributions.
+          The Construction Industry Scheme (CIS) is an HMRC tax scheme that affects contractors and
+          subcontractors working in the UK construction industry. Under CIS, contractors are
+          required to withhold a proportion of each payment made to subcontractors and pay it
+          directly to HMRC as an advance payment of the subcontractor's tax and National Insurance
+          contributions.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -144,15 +144,15 @@ const sections = [
               <span>
                 <strong>Who is a contractor under CIS?</strong> — any business that pays
                 subcontractors for construction work. This includes main contractors on large
-                projects, housebuilders, local authorities, and any electrician who pays their
-                own subbies or labourers on CIS projects.
+                projects, housebuilders, local authorities, and any electrician who pays their own
+                subbies or labourers on CIS projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Who is a subcontractor under CIS?</strong> — any individual or business
-                that is paid by a contractor to carry out construction work. Most self-employed
+                <strong>Who is a subcontractor under CIS?</strong> — any individual or business that
+                is paid by a contractor to carry out construction work. Most self-employed
                 electricians working on new builds, commercial projects, or infrastructure projects
                 are CIS subcontractors.
               </span>
@@ -169,10 +169,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Purpose of CIS</strong> — CIS was introduced to reduce tax evasion in
-                the construction industry. By requiring contractors to withhold tax at source,
-                HMRC ensures advance payment of tax from workers who might otherwise not
-                file returns.
+                <strong>Purpose of CIS</strong> — CIS was introduced to reduce tax evasion in the
+                construction industry. By requiring contractors to withhold tax at source, HMRC
+                ensures advance payment of tax from workers who might otherwise not file returns.
               </span>
             </li>
           </ul>
@@ -211,9 +210,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>20% — Standard rate (registered subcontractor)</strong> — if you are
-                registered with HMRC for CIS and the contractor can verify your UTR, they deduct
-                20% from the labour element of your payment. On a £1,000 labour invoice, the
-                contractor pays you £800 and £200 goes to HMRC.
+                registered with HMRC for CIS and the contractor can verify your UTR, they deduct 20%
+                from the labour element of your payment. On a £1,000 labour invoice, the contractor
+                pays you £800 and £200 goes to HMRC.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -242,17 +241,17 @@ const sections = [
     content: (
       <>
         <p>
-          Registering for CIS as a subcontractor is straightforward and free. Here is what
-          you need to do before starting work on your first CIS job.
+          Registering for CIS as a subcontractor is straightforward and free. Here is what you need
+          to do before starting work on your first CIS job.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Get your UTR first</strong> — you cannot register for CIS without a
-                Unique Taxpayer Reference. If you do not have one, register for self-assessment
-                first. See our{' '}
+                <strong>Get your UTR first</strong> — you cannot register for CIS without a Unique
+                Taxpayer Reference. If you do not have one, register for self-assessment first. See
+                our{' '}
                 <SEOInternalLink href="/utr-number-electrician">
                   UTR number guide for electricians
                 </SEOInternalLink>{' '}
@@ -263,8 +262,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Register online or by phone</strong> — log in to your HMRC online account
-                and register for CIS, or call the CIS Helpline on 0300 200 3210. Registration
-                adds you to the CIS subcontractor register.
+                and register for CIS, or call the CIS Helpline on 0300 200 3210. Registration adds
+                you to the CIS subcontractor register.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,17 +271,17 @@ const sections = [
               <span>
                 <strong>Provide your UTR to contractors</strong> — before your first payment, give
                 your UTR and National Insurance number to the contractor. They must verify you with
-                HMRC — this is usually done online and takes minutes. The contractor should give
-                you a verification number as confirmation.
+                HMRC — this is usually done online and takes minutes. The contractor should give you
+                a verification number as confirmation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Request monthly deduction statements</strong> — after each payment, your
-                contractor must provide a CIS deduction statement showing the gross amount paid,
-                the CIS deduction made, and the net amount paid to you. Keep these statements —
-                you need them to complete your self-assessment return.
+                contractor must provide a CIS deduction statement showing the gross amount paid, the
+                CIS deduction made, and the net amount paid to you. Keep these statements — you need
+                them to complete your self-assessment return.
               </span>
             </li>
           </ul>
@@ -313,8 +312,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Compliance test</strong> — you must have filed all required tax returns
-                on time, paid all tax and NIC on time, and have no outstanding HMRC debts for the
+                <strong>Compliance test</strong> — you must have filed all required tax returns on
+                time, paid all tax and NIC on time, and have no outstanding HMRC debts for the
                 previous 12 months. A single late payment or missed return can prevent you from
                 qualifying.
               </span>
@@ -322,17 +321,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual review</strong> — HMRC reviews gross payment status annually.
-                If your compliance deteriorates, they can withdraw it. This means you must
-                maintain clean compliance permanently to keep the benefit.
+                <strong>Annual review</strong> — HMRC reviews gross payment status annually. If your
+                compliance deteriorates, they can withdraw it. This means you must maintain clean
+                compliance permanently to keep the benefit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cash flow benefit</strong> — gross payment status significantly improves
-                cash flow because you receive your full invoice immediately rather than waiting
-                for HMRC to refund deductions at year end.
+                cash flow because you receive your full invoice immediately rather than waiting for
+                HMRC to refund deductions at year end.
               </span>
             </li>
           </ul>
@@ -346,9 +345,9 @@ const sections = [
     content: (
       <>
         <p>
-          If you engage your own subcontractors on CIS projects — whether electricians,
-          labourers, or other trades — you are acting as a contractor. This brings additional
-          monthly obligations to HMRC.
+          If you engage your own subcontractors on CIS projects — whether electricians, labourers,
+          or other trades — you are acting as a contractor. This brings additional monthly
+          obligations to HMRC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -356,33 +355,33 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify before paying</strong> — before making the first payment to any
-                subcontractor, you must verify them with HMRC using their UTR and NI number.
-                HMRC's verification service is online and takes seconds. Verification tells you
-                what deduction rate to apply.
+                subcontractor, you must verify them with HMRC using their UTR and NI number. HMRC's
+                verification service is online and takes seconds. Verification tells you what
+                deduction rate to apply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly return deadline — 19th of each month</strong> — you must submit
-                a CIS monthly return to HMRC by the 19th of the month following the payment month.
-                The return lists all subcontractor payments, verification numbers, deductions made,
-                and materials costs. File online via your HMRC business account.
+                <strong>Monthly return deadline — 19th of each month</strong> — you must submit a
+                CIS monthly return to HMRC by the 19th of the month following the payment month. The
+                return lists all subcontractor payments, verification numbers, deductions made, and
+                materials costs. File online via your HMRC business account.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Nil returns</strong> — if you had no subcontractor payments in a month,
-                you must still file a nil return by the 19th. Failure to file (even a nil return)
+                <strong>Nil returns</strong> — if you had no subcontractor payments in a month, you
+                must still file a nil return by the 19th. Failure to file (even a nil return)
                 attracts automatic penalties starting at £100.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pay the deductions over</strong> — the CIS deductions you have made must
-                be paid to HMRC by the 22nd of the month (online) or the 19th (by post). These
+                <strong>Pay the deductions over</strong> — the CIS deductions you have made must be
+                paid to HMRC by the 22nd of the month (online) or the 19th (by post). These
                 deductions are not your money to hold — late payment attracts interest.
               </span>
             </li>
@@ -397,18 +396,18 @@ const sections = [
     content: (
       <>
         <p>
-          CIS deductions withheld by your contractors are advance payments of your tax. At year
-          end, they are offset against your total tax liability via your self-assessment return.
-          If your deductions exceed your tax bill, HMRC refunds the excess.
+          CIS deductions withheld by your contractors are advance payments of your tax. At year end,
+          they are offset against your total tax liability via your self-assessment return. If your
+          deductions exceed your tax bill, HMRC refunds the excess.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Declare gross income</strong> — on your self-assessment return, declare
-                the gross amount of CIS income (before deductions) as your trading income. Do
-                not declare the net amounts received.
+                <strong>Declare gross income</strong> — on your self-assessment return, declare the
+                gross amount of CIS income (before deductions) as your trading income. Do not
+                declare the net amounts received.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -422,10 +421,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>File early for faster refunds</strong> — if you are due a refund (common
-                for electricians with high expenses or lower income years), file your return as
-                soon as possible after 6 April. HMRC typically processes refunds within 4 to 6
-                weeks of receiving a complete return.
+                <strong>File early for faster refunds</strong> — if you are due a refund (common for
+                electricians with high expenses or lower income years), file your return as soon as
+                possible after 6 April. HMRC typically processes refunds within 4 to 6 weeks of
+                receiving a complete return.
               </span>
             </li>
           </ul>
@@ -439,34 +438,34 @@ const sections = [
     content: (
       <>
         <p>
-          HMRC requires contractors and subcontractors to keep CIS records for a minimum of
-          three years. For subcontractors, this means keeping all CIS deduction statements
-          received from contractors.
+          HMRC requires contractors and subcontractors to keep CIS records for a minimum of three
+          years. For subcontractors, this means keeping all CIS deduction statements received from
+          contractors.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Subcontractor records</strong> — keep all monthly CIS deduction
-                statements from contractors, your invoices (showing gross amount, materials, and
-                labour split), and bank statements showing net payments received.
+                <strong>Subcontractor records</strong> — keep all monthly CIS deduction statements
+                from contractors, your invoices (showing gross amount, materials, and labour split),
+                and bank statements showing net payments received.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Contractor records</strong> — if you are also a contractor, keep
-                subcontractor verification records, all monthly CIS returns submitted,
-                evidence of payments made, and copies of deduction statements issued.
+                subcontractor verification records, all monthly CIS returns submitted, evidence of
+                payments made, and copies of deduction statements issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum three years</strong> — HMRC can open a compliance check into
-                CIS returns up to three years after filing. Keep all records for at least three
-                years, and longer if there has been any dispute or query with HMRC.
+                <strong>Minimum three years</strong> — HMRC can open a compliance check into CIS
+                returns up to three years after filing. Keep all records for at least three years,
+                and longer if there has been any dispute or query with HMRC.
               </span>
             </li>
           </ul>
@@ -480,9 +479,8 @@ const sections = [
     content: (
       <>
         <p>
-          Correct invoicing is central to CIS compliance. Separating labour and materials on
-          every invoice ensures contractors deduct CIS on the right amount and protects your
-          cash flow.
+          Correct invoicing is central to CIS compliance. Separating labour and materials on every
+          invoice ensures contractors deduct CIS on the right amount and protects your cash flow.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -506,10 +504,12 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete Income Records for Self-Assessment</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete Income Records for Self-Assessment
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Every invoice you raise in Elec-Mate is stored with date, amount, and client.
-                  At self-assessment time, hand your accountant a complete record of gross income
+                  Every invoice you raise in Elec-Mate is stored with date, amount, and client. At
+                  self-assessment time, hand your accountant a complete record of gross income
                   alongside your CIS deduction statements — no spreadsheets needed.
                 </p>
               </div>
@@ -518,7 +518,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional CIS invoicing with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on your phone, in seconds. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional invoicing. Create CIS-compliant invoices with labour and materials clearly separated — on your phone, in seconds. 7-day free trial."
           icon={FileText}
         />
       </>
@@ -555,7 +555,7 @@ export default function CISGuideElectricianPage() {
       faqHeading="Frequently Asked Questions About CIS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CIS-Compliant Invoicing on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing with labour and materials clearly separated for CIS. Create invoices in seconds on site. 7-day free trial, cancel anytime."
     />
   );
 }

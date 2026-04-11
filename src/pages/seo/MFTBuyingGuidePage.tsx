@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What is the no-trip RCD test and when do I use it?',
     answer:
-      'Some MFTs offer a no-trip RCD test function — it applies a test current below the RCD\'s tripping threshold (typically 50% of rated residual operating current) to verify that the RCD does not trip spuriously at half its rated current. This test is useful in situations where tripping the RCD would cause disruption — for example, when circuits supply refrigeration, medical equipment, or alarm systems that must remain energised. The no-trip test does NOT verify that the RCD will trip when required — it only confirms the RCD does not trip prematurely. A full trip test at 100% and 150% of rated current is still required to verify correct operation. The no-trip test is typically used as a preliminary check or for periodic verification of RCDs in sensitive applications between full trip tests.',
+      "Some MFTs offer a no-trip RCD test function — it applies a test current below the RCD's tripping threshold (typically 50% of rated residual operating current) to verify that the RCD does not trip spuriously at half its rated current. This test is useful in situations where tripping the RCD would cause disruption — for example, when circuits supply refrigeration, medical equipment, or alarm systems that must remain energised. The no-trip test does NOT verify that the RCD will trip when required — it only confirms the RCD does not trip prematurely. A full trip test at 100% and 150% of rated current is still required to verify correct operation. The no-trip test is typically used as a preliminary check or for periodic verification of RCDs in sensitive applications between full trip tests.",
   },
   {
     question: 'Can I use an MFT to test RCBOs?',
@@ -176,10 +176,10 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               Ze (external loop impedance) is measured at the origin of the installation. Zs (total
-              loop impedance) is measured at any point in the installation. Zs values must not exceed
-              the maximum values in BS 7671 Table 41.2 for the protective device in the circuit.
-              MFTs measure loop impedance by injecting a test current and measuring the resulting
-              voltage drop — a live test performed with the circuit energised.
+              loop impedance) is measured at any point in the installation. Zs values must not
+              exceed the maximum values in BS 7671 Table 41.2 for the protective device in the
+              circuit. MFTs measure loop impedance by injecting a test current and measuring the
+              resulting voltage drop — a live test performed with the circuit energised.
             </p>
           </div>
           <div>
@@ -189,9 +189,9 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               Tests RCD trip time at 50%, 100%, and 500% of the rated residual operating current
-              (IΔn). A general-purpose 30mA RCD must trip in ≤300ms at IΔn and ≤40ms at 5×IΔn.
-              The MFT injects a test current through the protected circuit and measures how long the
-              RCD takes to trip. Many MFTs also offer a ramp test (gradually increasing current until
+              (IΔn). A general-purpose 30mA RCD must trip in ≤300ms at IΔn and ≤40ms at 5×IΔn. The
+              MFT injects a test current through the protected circuit and measures how long the RCD
+              takes to trip. Many MFTs also offer a ramp test (gradually increasing current until
               trip) and a no-trip pre-test at 50% IΔn. Both positive and negative half-cycle tests
               are required for a complete RCD verification.
             </p>
@@ -202,11 +202,11 @@ const sections = [
               3. Insulation Resistance
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Tests the resistance of cable insulation between live conductors (L-N) and between live
-              conductors and earth (L-E, N-E). Performed on de-energised, isolated circuits with a DC
-              test voltage of 250V, 500V, or 1000V depending on the circuit voltage rating and
-              whether electronic components are connected. Minimum acceptable insulation resistance
-              for 230V circuits is 1MΩ at 500V DC (BS 7671 Table 61).
+              Tests the resistance of cable insulation between live conductors (L-N) and between
+              live conductors and earth (L-E, N-E). Performed on de-energised, isolated circuits
+              with a DC test voltage of 250V, 500V, or 1000V depending on the circuit voltage rating
+              and whether electronic components are connected. Minimum acceptable insulation
+              resistance for 230V circuits is 1MΩ at 500V DC (BS 7671 Table 61).
             </p>
           </div>
           <div>
@@ -230,8 +230,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Calculates the prospective short-circuit current at the test point. Derived from the
               measured loop impedance. PFC values must not exceed the rated breaking capacity of the
-              protective devices at the distribution board. Required for EIC completion and essential
-              for verifying switchgear suitability in commercial and industrial installations.
+              protective devices at the distribution board. Required for EIC completion and
+              essential for verifying switchgear suitability in commercial and industrial
+              installations.
             </p>
           </div>
         </div>
@@ -244,22 +245,22 @@ const sections = [
     content: (
       <>
         <p>
-          The CAT (Measurement Category) rating system defined in IEC 61010-1 specifies the transient
-          overvoltage environment in which an instrument can safely operate. When testing at the
-          consumer unit — particularly when measuring Ze at the origin of the installation — you are
-          in a CAT IV environment.
+          The CAT (Measurement Category) rating system defined in IEC 61010-1 specifies the
+          transient overvoltage environment in which an instrument can safely operate. When testing
+          at the consumer unit — particularly when measuring Ze at the origin of the installation —
+          you are in a CAT IV environment.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT IV environment</strong> — measurements at the origin of the installation:
-                meter tails, service head, the supply cable from the street. The most severe transient
-                overvoltage environment in a building. A CAT IV 300V instrument must withstand a
-                8kV transient. A CAT III 600V instrument must only withstand 6kV. Use a CAT III
-                instrument at the service head and a severe transient may cause a catastrophic arc
-                inside the instrument, potentially killing the operator.
+                <strong>CAT IV environment</strong> — measurements at the origin of the
+                installation: meter tails, service head, the supply cable from the street. The most
+                severe transient overvoltage environment in a building. A CAT IV 300V instrument
+                must withstand a 8kV transient. A CAT III 600V instrument must only withstand 6kV.
+                Use a CAT III instrument at the service head and a severe transient may cause a
+                catastrophic arc inside the instrument, potentially killing the operator.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,8 +268,8 @@ const sections = [
               <span>
                 <strong>All modern professional MFTs are CAT IV 300V rated</strong> — Megger,
                 Kewtech, Metrel, and Fluke all rate their current MFT ranges at CAT IV 300V minimum.
-                If you have an older instrument (pre-2010), check the label. If it is only rated
-                CAT III, do not use it for Ze measurements at the origin.
+                If you have an older instrument (pre-2010), check the label. If it is only rated CAT
+                III, do not use it for Ze measurements at the origin.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -291,8 +292,8 @@ const sections = [
     content: (
       <>
         <p>
-          Beyond the core measurement functions and CAT rating, the following features distinguish
-          a good professional MFT from a basic instrument:
+          Beyond the core measurement functions and CAT rating, the following features distinguish a
+          good professional MFT from a basic instrument:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -316,10 +317,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Low Zs measurement mode (2-wire or 3-wire):</strong> For accurately measuring
-                loop impedance on circuits protected by RCDs, a 3-wire or no-trip loop test is
-                needed. Standard 2-wire loop tests trip the RCD. Look for a "no-trip" or "2-wire
-                loop" function.
+                <strong>Low Zs measurement mode (2-wire or 3-wire):</strong> For accurately
+                measuring loop impedance on circuits protected by RCDs, a 3-wire or no-trip loop
+                test is needed. Standard 2-wire loop tests trip the RCD. Look for a "no-trip" or
+                "2-wire loop" function.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -334,9 +335,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery life and charging:</strong> Long battery life and rechargeable battery
-                (USB or mains) avoids the frustration of depleted batteries on site. The Megger
-                MFT1741 has a rechargeable NiMH battery pack with USB charging capability.
+                <strong>Battery life and charging:</strong> Long battery life and rechargeable
+                battery (USB or mains) avoids the frustration of depleted batteries on site. The
+                Megger MFT1741 has a rechargeable NiMH battery pack with USB charging capability.
               </span>
             </li>
           </ul>
@@ -360,12 +361,12 @@ const sections = [
               Best Overall Professional MFT — ~£450
             </p>
             <p className="text-white text-sm leading-relaxed">
-              CAT IV 300V / CAT III 600V. All five core functions plus ISOL (insulation) autosequence,
-              PFC, and voltage/frequency measurement. Rechargeable NiMH battery with USB charging.
-              500-reading memory with MFT-Link PC software. Bluetooth option available on MFT1741+.
-              Megger is the original name in UK electrical testing — the MFT1741 is the industry
-              benchmark for professional installation testing. 12-month manufacturer warranty with
-              UKAS-accredited calibration available.
+              CAT IV 300V / CAT III 600V. All five core functions plus ISOL (insulation)
+              autosequence, PFC, and voltage/frequency measurement. Rechargeable NiMH battery with
+              USB charging. 500-reading memory with MFT-Link PC software. Bluetooth option available
+              on MFT1741+. Megger is the original name in UK electrical testing — the MFT1741 is the
+              industry benchmark for professional installation testing. 12-month manufacturer
+              warranty with UKAS-accredited calibration available.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -377,8 +378,8 @@ const sections = [
               CAT IV 300V / CAT III 600V. All standard functions plus Fluke Connect wireless data
               logging via Bluetooth to the Fluke Connect app. The FC (Fluke Connect) system allows
               real-time sharing of test results with office staff and integration with Fluke's asset
-              management platform. Ideal for electrical contractors who need to send test results
-              to the office immediately. Large colour display with intuitive interface.
+              management platform. Ideal for electrical contractors who need to send test results to
+              the office immediately. Large colour display with intuitive interface.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -437,7 +438,8 @@ const sections = [
                 traceability available in the UK. UKAS (United Kingdom Accreditation Service)
                 accredits calibration laboratories to ISO/IEC 17025. A UKAS calibration certificate
                 provides legally defensible evidence that the instrument was calibrated by a
-                competent laboratory. Megger, Fluke, and Kewtech all offer UKAS calibration services.
+                competent laboratory. Megger, Fluke, and Kewtech all offer UKAS calibration
+                services.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -445,18 +447,18 @@ const sections = [
               <span>
                 <strong>Calibration interval:</strong> Most manufacturers recommend 12-month
                 calibration. Some contractors calibrate every 6 months if the instrument is in heavy
-                daily use or has been subjected to physical shock. Check the instrument's calibration
-                due date before each job — an out-of-calibration instrument should not be used for
-                compliance testing.
+                daily use or has been subjected to physical shock. Check the instrument's
+                calibration due date before each job — an out-of-calibration instrument should not
+                be used for compliance testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Post-shock calibration:</strong> If an MFT is dropped from height, submerged
-                in water, or otherwise physically damaged, remove it from service immediately and send
-                it for calibration before further use. Physical shock can shift the calibration of
-                precision measurement circuits without any visible external damage.
+                in water, or otherwise physically damaged, remove it from service immediately and
+                send it for calibration before further use. Physical shock can shift the calibration
+                of precision measurement circuits without any visible external damage.
               </span>
             </li>
           </ul>
@@ -470,8 +472,8 @@ const sections = [
     content: (
       <>
         <p>
-          The MFT produces the measurements. Elec-Mate provides the certification workflow to record,
-          verify, and certify them professionally:
+          The MFT produces the measurements. Elec-Mate provides the certification workflow to
+          record, verify, and certify them professionally:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -480,7 +482,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EIC Schedule of Test Results</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Enter Ze, Zs, RCD trip times, insulation resistance, and continuity values into the{' '}
+                  Enter Ze, Zs, RCD trip times, insulation resistance, and continuity values into
+                  the{' '}
                   <SEOInternalLink href="/tools/eic-certificate">
                     EIC schedule of test results
                   </SEOInternalLink>{' '}
@@ -518,7 +521,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EIC and EICR certificates with MFT results on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for MFT result entry, automatic Zs compliance checking, and professional EIC and EICR certification. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -555,7 +558,7 @@ export default function MFTBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Record MFT Test Results and Issue EIC Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to enter MFT readings into EIC and EICR schedules, auto-check Zs compliance, and generate professional certificates on site. 7-day free trial."
     />
   );
 }

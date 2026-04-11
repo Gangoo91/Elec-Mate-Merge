@@ -41,7 +41,7 @@ const tocItems = [
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
   'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is the Distribution Network Operator for Milton Keynes. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
-  'Milton Keynes has one of the highest proportions of new-build housing in the UK, with major developments at Western Expansion Area, Kingsmead South, and Campbell Park North. Electrical snagging on new builds is a significant part of local electricians\' workload.',
+  "Milton Keynes has one of the highest proportions of new-build housing in the UK, with major developments at Western Expansion Area, Kingsmead South, and Campbell Park North. Electrical snagging on new builds is a significant part of local electricians' workload.",
   'The grid road system and extensive commercial estates (Knowlhill, Linford Wood, Caldecotte) generate strong demand for commercial electrical contractors alongside domestic work.',
   'Milton Keynes is one of the fastest-growing cities in England, meaning high demand for electricians across domestic, commercial, and infrastructure sectors.',
 ];
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How much does an electrician cost in Milton Keynes?',
     answer:
-      'Milton Keynes electrician day rates typically range from £240 to £340 per day for a qualified electrician. Hourly rates are usually £35 to £55 per hour, with emergency call-out rates of £70 to £100 per hour. Prices in Milton Keynes are slightly above the national average due to the city\'s proximity to London and strong local demand from new-build developments. A consumer unit replacement typically costs £450 to £750 and a full rewire of a 3-bedroom house costs £4,500 to £7,500. Always get at least three written quotes for any significant work.',
+      "Milton Keynes electrician day rates typically range from £240 to £340 per day for a qualified electrician. Hourly rates are usually £35 to £55 per hour, with emergency call-out rates of £70 to £100 per hour. Prices in Milton Keynes are slightly above the national average due to the city's proximity to London and strong local demand from new-build developments. A consumer unit replacement typically costs £450 to £750 and a full rewire of a 3-bedroom house costs £4,500 to £7,500. Always get at least three written quotes for any significant work.",
   },
   {
     question: 'How do I check if a Milton Keynes electrician is properly qualified?',
@@ -119,7 +119,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Milton Keynes customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Milton Keynes customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -144,11 +145,11 @@ const sections = [
         </p>
         <p>
           The Milton Keynes electrical market is shaped by two distinct segments. New-build work
-          dominates — the city\'s expansion areas require armies of electricians for first and second
-          fix on housing developments, commercial fit-outs in business parks, and infrastructure
-          installation. The existing housing stock, particularly in the original villages and older
-          estates from the 1970s and 1980s, generates steady demand for rewires, consumer unit
-          upgrades, EICRs, and general maintenance.
+          dominates — the city\'s expansion areas require armies of electricians for first and
+          second fix on housing developments, commercial fit-outs in business parks, and
+          infrastructure installation. The existing housing stock, particularly in the original
+          villages and older estates from the 1970s and 1980s, generates steady demand for rewires,
+          consumer unit upgrades, EICRs, and general maintenance.
         </p>
         <p>
           Whatever the type of work, the qualifications and registration requirements are the same.
@@ -158,16 +159,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by local authority building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -256,8 +256,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR (Electrical Installation Condition Report)</strong> — £180 to £300 for
-                a 2 to 3 bedroom property, £280 to £450 for a 4 to 5 bedroom house. Required every
-                5 years for rented properties. Newer MK estates generally produce faster inspections.
+                a 2 to 3 bedroom property, £280 to £450 for a 4 to 5 bedroom house. Required every 5
+                years for rented properties. Newer MK estates generally produce faster inspections.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,10 +310,10 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The original Milton Keynes estates (Fishermead, Netherfield, Coffee Hall, Beanhill)
               were built in the 1970s and 1980s with timber-frame construction and flat roofs. Many
-              are now 40 to 50 years old and due for full rewires. Common issues include
-              aluminium wiring in some early builds, outdated consumer units with rewirable fuses,
-              and inadequate socket provision by modern standards. The timber-frame construction
-              makes rewiring relatively straightforward compared to solid masonry.
+              are now 40 to 50 years old and due for full rewires. Common issues include aluminium
+              wiring in some early builds, outdated consumer units with rewirable fuses, and
+              inadequate socket provision by modern standards. The timber-frame construction makes
+              rewiring relatively straightforward compared to solid masonry.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -394,8 +394,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Milton Keynes is overseen by Milton Keynes City
           Council building control or by an approved inspector. If your electrician is registered
           with a competent person scheme, they self-certify and notify the council on your behalf.
@@ -430,8 +429,8 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Independent EICR within warranty</strong> — it is strongly recommended to
-                commission an independent EICR within the first 2 years of occupation while the
-                NHBC (or equivalent) warranty covers structural and installation defects. Any C2
+                commission an independent EICR within the first 2 years of occupation while the NHBC
+                (or equivalent) warranty covers structural and installation defects. Any C2
                 (potentially dangerous) or C3 (improvement recommended) observations can be raised
                 with the developer for rectification at their cost.
               </span>
@@ -443,8 +442,8 @@ const sections = [
                 optional smart home packages, but the pre-wiring is often basic. If you want a
                 comprehensive smart home setup (automated lighting, multi-room audio, CCTV, network
                 cabling), it is worth engaging an independent electrician during the build phase to
-                specify and supervise the pre-wiring rather than relying on the developer's
-                standard offering.
+                specify and supervise the pre-wiring rather than relying on the developer's standard
+                offering.
               </span>
             </li>
           </ul>
@@ -503,10 +502,10 @@ const sections = [
         <p>
           Milton Keynes offers excellent opportunities for electricians. The combination of
           continuous new-build development, a large stock of ageing 1970s and 1980s properties due
-          for upgrade, thriving commercial estates, and a growing population means consistent
-          demand across all sectors. Operating costs are moderate — parking is generally free or
-          cheap compared to major cities, travel times between jobs are short thanks to the grid
-          road network, and there is no congestion charge.
+          for upgrade, thriving commercial estates, and a growing population means consistent demand
+          across all sectors. Operating costs are moderate — parking is generally free or cheap
+          compared to major cities, travel times between jobs are short thanks to the grid road
+          network, and there is no congestion charge.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -542,7 +541,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Milton Keynes electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -579,7 +578,7 @@ export default function ElectricianMiltonKeynesPage() {
       faqHeading="Frequently Asked Questions About Electricians in Milton Keynes"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Milton Keynes and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Milton Keynes and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

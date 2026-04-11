@@ -114,16 +114,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/best-multifunction-tester-2026',
     title: 'Best Multifunction Tester 2026',
-    description:
-      'The MFT is the other essential item in your kit bag — see our 2026 comparison.',
+    description: 'The MFT is the other essential item in your kit bag — see our 2026 comparison.',
     icon: Gauge,
     category: 'Guide',
   },
   {
     href: '/guides/best-van-racking-electricians',
     title: 'Best Van Racking 2026',
-    description:
-      'Keep your label printer organised and accessible with proper van racking.',
+    description: 'Keep your label printer organised and accessible with proper van racking.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -149,13 +147,10 @@ const sections = [
       <>
         <p>
           Proper labelling is one of the simplest ways to demonstrate professionalism and comply
-          with{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>
-          . A neatly labelled consumer unit tells the customer (and the next electrician) that the
-          installation was done by someone who cares about their work. Handwritten labels on
-          masking tape tell a different story entirely.
+          with <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>.
+          A neatly labelled consumer unit tells the customer (and the next electrician) that the
+          installation was done by someone who cares about their work. Handwritten labels on masking
+          tape tell a different story entirely.
         </p>
         <p>
           Beyond professionalism, correct labelling is a safety requirement. Circuit identification
@@ -165,8 +160,8 @@ const sections = [
           reports.
         </p>
         <p>
-          A decent label printer costs 80 to 200 pounds and pays for itself in professionalism
-          and time saved. This guide compares the four main label printers used by UK electricians,
+          A decent label printer costs 80 to 200 pounds and pays for itself in professionalism and
+          time saved. This guide compares the four main label printers used by UK electricians,
           covering print quality, tape costs, connectivity, and which labels you actually need for
           compliant work.
         </p>
@@ -189,8 +184,8 @@ const sections = [
               <span>
                 <strong>Circuit identification (Reg 514.9.1)</strong> — every circuit must be
                 identified by a durable label at its origin (the distribution board). This means
-                either individual labels on each MCB/RCBO or a circuit schedule chart affixed to
-                the inside of the board cover. The label must identify the circuit purpose (e.g.
+                either individual labels on each MCB/RCBO or a circuit schedule chart affixed to the
+                inside of the board cover. The label must identify the circuit purpose (e.g.
                 "Kitchen ring", "Upstairs lighting", "Cooker") and ideally the cable size and
                 protective device rating.
               </span>
@@ -199,28 +194,28 @@ const sections = [
               <Tag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection notice (Reg 514.12.1)</strong> — a label stating the
-                date of the next recommended periodic inspection and the name/contact details of
-                the installer or inspector. This should be placed inside the consumer unit or on
-                the adjacent wall. The recommended wording is prescribed in Appendix 6 of BS 7671.
+                date of the next recommended periodic inspection and the name/contact details of the
+                installer or inspector. This should be placed inside the consumer unit or on the
+                adjacent wall. The recommended wording is prescribed in Appendix 6 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD test notice (Reg 514.12.1)</strong> — where an RCD is installed, a
-                label must be placed at or near the origin of the installation with the wording:
-                "This installation, or part of it, is protected by a device which automatically
-                switches off the supply if an earth fault develops. Test quarterly by pressing the
-                button marked 'T' or 'Test'."
+                <strong>RCD test notice (Reg 514.12.1)</strong> — where an RCD is installed, a label
+                must be placed at or near the origin of the installation with the wording: "This
+                installation, or part of it, is protected by a device which automatically switches
+                off the supply if an earth fault develops. Test quarterly by pressing the button
+                marked 'T' or 'Test'."
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Warning labels</strong> — "SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE"
-                on the main earthing conductor connection (Reg 514.13), "CAUTION — DUAL SUPPLY"
-                where more than one source of supply exists (Reg 514.15), and voltage warning
-                labels where different voltages are present in the same enclosure.
+                <strong>Warning labels</strong> — "SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE" on
+                the main earthing conductor connection (Reg 514.13), "CAUTION — DUAL SUPPLY" where
+                more than one source of supply exists (Reg 514.15), and voltage warning labels where
+                different voltages are present in the same enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -244,24 +239,42 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Brother PT-E550W — The Electrician Favourite</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Brother PT-E550W — The Electrician Favourite
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            The Brother PT-E550W is the most widely used label printer among UK electricians. It
-            is designed specifically for electrical and network installers, with built-in templates
-            for cable wraps, patch panels, and distribution board labels.
+            The Brother PT-E550W is the most widely used label printer among UK electricians. It is
+            designed specifically for electrical and network installers, with built-in templates for
+            cable wraps, patch panels, and distribution board labels.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Tape widths:</strong> 6mm, 9mm, 12mm, 18mm, 24mm (TZe)</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth + USB</p>
-              <p className="text-white text-sm"><strong>Built-in templates:</strong> Cable wrap, patch panel, board labels</p>
-              <p className="text-white text-sm"><strong>Keyboard:</strong> Yes (QWERTY)</p>
+              <p className="text-white text-sm">
+                <strong>Tape widths:</strong> 6mm, 9mm, 12mm, 18mm, 24mm (TZe)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth + USB
+              </p>
+              <p className="text-white text-sm">
+                <strong>Built-in templates:</strong> Cable wrap, patch panel, board labels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Keyboard:</strong> Yes (QWERTY)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable Li-ion (included)</p>
-              <p className="text-white text-sm"><strong>Print resolution:</strong> 180 dpi</p>
-              <p className="text-white text-sm"><strong>Auto-cutter:</strong> Yes (full and half cut)</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 130 to 170 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable Li-ion (included)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Print resolution:</strong> 180 dpi
+              </p>
+              <p className="text-white text-sm">
+                <strong>Auto-cutter:</strong> Yes (full and half cut)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 130 to 170 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -270,19 +283,18 @@ const sections = [
           and types (standard laminated, flexible ID, heat-shrink, cable wrap) of any label printer
           platform. The Bluetooth connection to the Brother P-Touch Design and Print app works
           reliably and allows you to design labels on your phone screen, which is faster than using
-          the small built-in keyboard for long labels. The rechargeable battery lasts a full
-          working day. The auto-cutter (including half-cut for easy peeling) saves time when
-          printing multiple labels. The built-in electrical templates speed up common label types.
-          TZe laminated labels are extremely durable — the printed text is sandwiched between a
-          clear laminate and a coloured backing, making them resistant to water, heat, UV, and
-          abrasion.
+          the small built-in keyboard for long labels. The rechargeable battery lasts a full working
+          day. The auto-cutter (including half-cut for easy peeling) saves time when printing
+          multiple labels. The built-in electrical templates speed up common label types. TZe
+          laminated labels are extremely durable — the printed text is sandwiched between a clear
+          laminate and a coloured backing, making them resistant to water, heat, UV, and abrasion.
         </p>
         <p>
-          <strong>Weaknesses:</strong> The printer is bulkier than the Dymo Rhino alternatives —
-          it does not fit in a pocket, though it fits easily in a tool bag. The 180 dpi resolution
-          is adequate for text labels but not for detailed graphics or QR codes (the Brady BMP21
-          at 203 dpi is slightly sharper). The Brother app, while functional, is not as intuitive
-          as it could be — the label template selection is cluttered with options irrelevant to
+          <strong>Weaknesses:</strong> The printer is bulkier than the Dymo Rhino alternatives — it
+          does not fit in a pocket, though it fits easily in a tool bag. The 180 dpi resolution is
+          adequate for text labels but not for detailed graphics or QR codes (the Brady BMP21 at 203
+          dpi is slightly sharper). The Brother app, while functional, is not as intuitive as it
+          could be — the label template selection is cluttered with options irrelevant to
           electricians.
         </p>
         <p>
@@ -299,24 +311,42 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Dymo XTL 300 — The Industrial Option</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Dymo XTL 300 — The Industrial Option
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            The Dymo XTL range is the industrial upgrade from the well-known Dymo Rhino series.
-            The XTL 300 targets electrical contractors and data installers with a colour touchscreen
-            and larger label capacity.
+            The Dymo XTL range is the industrial upgrade from the well-known Dymo Rhino series. The
+            XTL 300 targets electrical contractors and data installers with a colour touchscreen and
+            larger label capacity.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Tape widths:</strong> 6mm, 9mm, 12mm, 19mm, 24mm (XTL)</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> USB (Bluetooth on some models)</p>
-              <p className="text-white text-sm"><strong>Display:</strong> Colour touchscreen</p>
-              <p className="text-white text-sm"><strong>Keyboard:</strong> Yes (QWERTY)</p>
+              <p className="text-white text-sm">
+                <strong>Tape widths:</strong> 6mm, 9mm, 12mm, 19mm, 24mm (XTL)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> USB (Bluetooth on some models)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Display:</strong> Colour touchscreen
+              </p>
+              <p className="text-white text-sm">
+                <strong>Keyboard:</strong> Yes (QWERTY)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable Li-ion</p>
-              <p className="text-white text-sm"><strong>Print resolution:</strong> 300 dpi</p>
-              <p className="text-white text-sm"><strong>Auto-cutter:</strong> Yes</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 200 to 280 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable Li-ion
+              </p>
+              <p className="text-white text-sm">
+                <strong>Print resolution:</strong> 300 dpi
+              </p>
+              <p className="text-white text-sm">
+                <strong>Auto-cutter:</strong> Yes
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 200 to 280 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -325,17 +355,17 @@ const sections = [
           labels are noticeably sharper and cleaner than the 180 dpi Brother output. The colour
           touchscreen makes label design on the printer itself much easier than using a small
           monochrome display. The XTL label range includes pre-printed headers (e.g. "DANGER",
-          "CAUTION", "WARNING") that comply with BS 7671 warning label requirements without
-          manual design. The industrial-grade labels are designed for harsh environments.
+          "CAUTION", "WARNING") that comply with BS 7671 warning label requirements without manual
+          design. The industrial-grade labels are designed for harsh environments.
         </p>
         <p>
           <strong>Weaknesses:</strong> The XTL tape cartridges are more expensive per metre than
           Brother TZe tapes — approximately 50% more for comparable label widths. The XTL label
           range is smaller than the Brother TZe range, with fewer colour combinations and specialty
           types. Bluetooth connectivity is not standard on all XTL 300 models — check the specific
-          model before buying. The printer is the largest and heaviest in this review, which
-          matters if space in your tool bag is limited. The Dymo Connect app for phone-based label
-          design is less reliable than the Brother equivalent.
+          model before buying. The printer is the largest and heaviest in this review, which matters
+          if space in your tool bag is limited. The Dymo Connect app for phone-based label design is
+          less reliable than the Brother equivalent.
         </p>
         <p>
           <strong>Best for:</strong> Electricians who prioritise print quality and on-device label
@@ -351,7 +381,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Brady BMP21-PLUS — The Durability Champion</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Brady BMP21-PLUS — The Durability Champion
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Brady is a US manufacturer specialising in industrial labelling. The BMP21-PLUS is
             designed for harsh environments — construction sites, industrial plants, and outdoor
@@ -359,16 +391,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Tape widths:</strong> 6.4mm, 9.5mm, 12.7mm, 19mm (M21)</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> USB only</p>
-              <p className="text-white text-sm"><strong>Built-in templates:</strong> Cable, wire, panel labels</p>
-              <p className="text-white text-sm"><strong>Keyboard:</strong> Yes (ABC layout)</p>
+              <p className="text-white text-sm">
+                <strong>Tape widths:</strong> 6.4mm, 9.5mm, 12.7mm, 19mm (M21)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> USB only
+              </p>
+              <p className="text-white text-sm">
+                <strong>Built-in templates:</strong> Cable, wire, panel labels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Keyboard:</strong> Yes (ABC layout)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> 6x AA (alkaline or NiMH)</p>
-              <p className="text-white text-sm"><strong>Print resolution:</strong> 203 dpi</p>
-              <p className="text-white text-sm"><strong>Auto-cutter:</strong> No (manual cutter)</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 150 to 200 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> 6x AA (alkaline or NiMH)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Print resolution:</strong> 203 dpi
+              </p>
+              <p className="text-white text-sm">
+                <strong>Auto-cutter:</strong> No (manual cutter)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 150 to 200 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -385,12 +433,11 @@ const sections = [
         <p>
           <strong>Weaknesses:</strong> No Bluetooth — label design is limited to the small built-in
           keyboard or a PC connection via USB. This is the most significant limitation for
-          electricians who want phone-based label design. The manual cutter (no auto-cut) slows
-          down batch label production. The M21 cartridge range uses imperial tape widths (6.4mm,
-          9.5mm, 12.7mm, 19mm) rather than the metric widths used by Brother and Dymo — not a
-          functional issue but the sizes do not match exactly. The M21 cartridges are the most
-          expensive per metre in this review. The ABC keyboard layout is slower than QWERTY for
-          text entry.
+          electricians who want phone-based label design. The manual cutter (no auto-cut) slows down
+          batch label production. The M21 cartridge range uses imperial tape widths (6.4mm, 9.5mm,
+          12.7mm, 19mm) rather than the metric widths used by Brother and Dymo — not a functional
+          issue but the sizes do not match exactly. The M21 cartridges are the most expensive per
+          metre in this review. The ABC keyboard layout is slower than QWERTY for text entry.
         </p>
         <p>
           <strong>Best for:</strong> Electricians working in industrial and commercial environments
@@ -407,23 +454,41 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Epson LW-PX400 — The Budget-Friendly All-Rounder</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Epson LW-PX400 — The Budget-Friendly All-Rounder
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Epson's portable label printer targets electrical installers with Bluetooth connectivity
             and an industrial label range at a lower price point than the Brother PT-E550W.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Tape widths:</strong> 6mm, 9mm, 12mm, 18mm (LK)</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth</p>
-              <p className="text-white text-sm"><strong>Built-in templates:</strong> Cable flag, circuit labels</p>
-              <p className="text-white text-sm"><strong>Keyboard:</strong> No (phone app only)</p>
+              <p className="text-white text-sm">
+                <strong>Tape widths:</strong> 6mm, 9mm, 12mm, 18mm (LK)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth
+              </p>
+              <p className="text-white text-sm">
+                <strong>Built-in templates:</strong> Cable flag, circuit labels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Keyboard:</strong> No (phone app only)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> 6x AA</p>
-              <p className="text-white text-sm"><strong>Print resolution:</strong> 180 dpi</p>
-              <p className="text-white text-sm"><strong>Auto-cutter:</strong> Yes (manual lever)</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 80 to 120 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> 6x AA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Print resolution:</strong> 180 dpi
+              </p>
+              <p className="text-white text-sm">
+                <strong>Auto-cutter:</strong> Yes (manual lever)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 80 to 120 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -433,17 +498,17 @@ const sections = [
           phone-based label design works well and includes electrical-specific templates for circuit
           labels, cable flags, and warning notices. The LK tape cartridges are the cheapest per
           metre in this review — approximately 0.90 to 1.30 pounds per metre for 12mm tape. The
-          compact form factor and AA battery power make it highly portable. The Bluetooth
-          connection is reliable and pairs quickly.
+          compact form factor and AA battery power make it highly portable. The Bluetooth connection
+          is reliable and pairs quickly.
         </p>
         <p>
           <strong>Weaknesses:</strong> No built-in keyboard — you must use the phone app for all
           label design. If your phone battery dies or Bluetooth drops out, you cannot produce
           labels. The maximum tape width is 18mm (not 24mm) — adequate for most circuit and warning
           labels but limiting for larger notices. The LK tape range is smaller than the Brother TZe
-          range, with fewer specialty types (no heat-shrink, limited cable wrap options). The
-          manual cutter lever is functional but slower than the Brother auto-cutter. The label
-          durability is good but not at the Brady industrial level.
+          range, with fewer specialty types (no heat-shrink, limited cable wrap options). The manual
+          cutter lever is functional but slower than the Brother auto-cutter. The label durability
+          is good but not at the Brady industrial level.
         </p>
         <p>
           <strong>Best for:</strong> Budget-conscious electricians who are comfortable using a phone
@@ -496,8 +561,8 @@ const sections = [
               <span>
                 <strong>Heat-shrink labels (optional)</strong> — printed heat-shrink tubing that
                 slides over a cable end and shrinks with a heat gun to form a permanent, tamper-
-                proof cable marker. The most durable cable marking method but requires a heat gun
-                on site. Only the Brother TZe system offers heat-shrink cartridges in this review.
+                proof cable marker. The most durable cable marking method but requires a heat gun on
+                site. Only the Brother TZe system offers heat-shrink cartridges in this review.
               </span>
             </li>
           </ul>
@@ -518,28 +583,57 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Cost Per Metre (12mm Standard Tape)</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Cheapest:</strong> Epson LK tape — 0.90 to 1.30 pounds per metre (9m cassette)</p>
-              <p><strong>Mid:</strong> Brother TZe tape — 1.00 to 1.50 pounds per metre (8m cassette)</p>
-              <p><strong>Higher:</strong> Dymo XTL tape — 1.80 to 2.70 pounds per metre (5.5m cassette)</p>
-              <p><strong>Highest:</strong> Brady M21 tape — 1.90 to 2.80 pounds per metre (6.4m cassette)</p>
+              <p>
+                <strong>Cheapest:</strong> Epson LK tape — 0.90 to 1.30 pounds per metre (9m
+                cassette)
+              </p>
+              <p>
+                <strong>Mid:</strong> Brother TZe tape — 1.00 to 1.50 pounds per metre (8m cassette)
+              </p>
+              <p>
+                <strong>Higher:</strong> Dymo XTL tape — 1.80 to 2.70 pounds per metre (5.5m
+                cassette)
+              </p>
+              <p>
+                <strong>Highest:</strong> Brady M21 tape — 1.90 to 2.80 pounds per metre (6.4m
+                cassette)
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Annual Cost Estimate (30 metres per year)</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Epson:</strong> 27 to 39 pounds per year</p>
-              <p><strong>Brother:</strong> 30 to 45 pounds per year</p>
-              <p><strong>Dymo:</strong> 54 to 81 pounds per year</p>
-              <p><strong>Brady:</strong> 57 to 84 pounds per year</p>
+              <p>
+                <strong>Epson:</strong> 27 to 39 pounds per year
+              </p>
+              <p>
+                <strong>Brother:</strong> 30 to 45 pounds per year
+              </p>
+              <p>
+                <strong>Dymo:</strong> 54 to 81 pounds per year
+              </p>
+              <p>
+                <strong>Brady:</strong> 57 to 84 pounds per year
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h4 className="font-bold text-white mb-3">3-Year Total Cost (Printer + Tape at 30m/year)</h4>
+            <h4 className="font-bold text-white mb-3">
+              3-Year Total Cost (Printer + Tape at 30m/year)
+            </h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Epson LW-PX400:</strong> 80 + 99 = 179 to 237 pounds</p>
-              <p><strong>Brother PT-E550W:</strong> 150 + 105 = 255 to 315 pounds</p>
-              <p><strong>Brady BMP21-PLUS:</strong> 175 + 171 = 346 to 427 pounds</p>
-              <p><strong>Dymo XTL 300:</strong> 240 + 162 = 402 to 483 pounds</p>
+              <p>
+                <strong>Epson LW-PX400:</strong> 80 + 99 = 179 to 237 pounds
+              </p>
+              <p>
+                <strong>Brother PT-E550W:</strong> 150 + 105 = 255 to 315 pounds
+              </p>
+              <p>
+                <strong>Brady BMP21-PLUS:</strong> 175 + 171 = 346 to 427 pounds
+              </p>
+              <p>
+                <strong>Dymo XTL 300:</strong> 240 + 162 = 402 to 483 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -561,8 +655,8 @@ const sections = [
             add genuine value for professional work.
           </p>
           <p className="text-white text-sm leading-relaxed mb-3">
-            <strong>For budget-conscious or starting out: Epson LW-PX400.</strong> At half the
-            price of the Brother with the lowest running costs, the Epson is the smart choice for
+            <strong>For budget-conscious or starting out: Epson LW-PX400.</strong> At half the price
+            of the Brother with the lowest running costs, the Epson is the smart choice for
             electricians upgrading from handwritten labels. The phone-app-only design is a
             limitation, but the Bluetooth connection works well and the label quality is good.
           </p>
@@ -624,7 +718,7 @@ export default function BestLabelPrinterElectriciansPage() {
       faqHeading="Frequently Asked Questions About Label Printers for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Circuit Schedules and Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC and EICR certificates with automatic circuit schedules, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

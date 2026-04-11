@@ -89,8 +89,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Size cables for outdoor socket installations including SWA buried cable runs.',
+    description: 'Size cables for outdoor socket installations including SWA buried cable runs.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -119,7 +118,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
-    description: 'Outdoor EV charger installations share many of the same cable routing and RCD requirements.',
+    description:
+      'Outdoor EV charger installations share many of the same cable routing and RCD requirements.',
     icon: Cable,
     category: 'Guide',
   },
@@ -144,24 +144,22 @@ const sections = [
     content: (
       <>
         <p>
-          An outdoor socket is one of the most commonly requested domestic electrical jobs in the UK.
-          Homeowners want power in the garden for lawnmowers, pressure washers, lighting,
-          hot tubs, and electric barbecues. The installation is straightforward for a qualified
-          electrician, but the cost varies significantly depending on the cable route and
-          groundwork required.
+          An outdoor socket is one of the most commonly requested domestic electrical jobs in the
+          UK. Homeowners want power in the garden for lawnmowers, pressure washers, lighting, hot
+          tubs, and electric barbecues. The installation is straightforward for a qualified
+          electrician, but the cost varies significantly depending on the cable route and groundwork
+          required.
         </p>
         <p>
-          The typical price range is <strong>£150 to £400</strong> for a single IP66 rated
-          outdoor socket. The lower end applies where the cable runs directly through an external
-          wall behind the consumer unit. The higher end applies where underground SWA cable,
-          trenching, and surface reinstatement are needed.
+          The typical price range is <strong>£150 to £400</strong> for a single IP66 rated outdoor
+          socket. The lower end applies where the cable runs directly through an external wall
+          behind the consumer unit. The higher end applies where underground SWA cable, trenching,
+          and surface reinstatement are needed.
         </p>
         <p>
           This guide breaks down the costs, explains the technical requirements under{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>
-          , and covers Part P notification, IP ratings, RCD protection, and cable selection.
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, and
+          covers Part P notification, IP ratings, RCD protection, and cable selection.
         </p>
       </>
     ),
@@ -181,28 +179,36 @@ const sections = [
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Simple through-wall installation</p>
-                <p className="text-white text-sm">Cable through external wall, surface-mount socket, spur or new RCBO</p>
+                <p className="text-white text-sm">
+                  Cable through external wall, surface-mount socket, spur or new RCBO
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£150 – £200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Surface-mounted SWA run (up to 10m)</p>
-                <p className="text-white text-sm">SWA cable clipped to external wall or fence, IP66 socket</p>
+                <p className="text-white text-sm">
+                  SWA cable clipped to external wall or fence, IP66 socket
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£200 – £300</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Underground SWA run (up to 15m)</p>
-                <p className="text-white text-sm">Trench, sand bed, SWA cable, marker tape, backfill</p>
+                <p className="text-white text-sm">
+                  Trench, sand bed, SWA cable, marker tape, backfill
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£300 – £400</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Underground SWA run (15m+)</p>
-                <p className="text-white text-sm">Longer trench, possible 4.0mm² SWA, additional making good</p>
+                <p className="text-white text-sm">
+                  Longer trench, possible 4.0mm² SWA, additional making good
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£400 – £600+</p>
             </div>
@@ -217,9 +223,9 @@ const sections = [
         </div>
         <p>
           Additional costs may apply if the consumer unit has no spare ways (add £80 to £150 for a
-          new RCBO or small enclosure), if patio slabs or concrete need cutting and reinstating
-          (add £100 to £200), or if the installation requires Building Control notification
-          (£100 to £300 if not self-certified via a competent person scheme).
+          new RCBO or small enclosure), if patio slabs or concrete need cutting and reinstating (add
+          £100 to £200), or if the installation requires Building Control notification (£100 to £300
+          if not self-certified via a competent person scheme).
         </p>
       </>
     ),
@@ -238,10 +244,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">IP66</h3>
             <p className="text-white text-sm leading-relaxed">
               Dust-tight and protected against powerful water jets from any direction. This is the
-              standard rating for outdoor sockets in the UK. The socket is fully sealed when the
-              lid is closed. Suitable for wall-mounted positions and most garden locations.
-              Weatherproof enclosures from manufacturers such as Legrand (Plexo range, trade price
-              from approximately £5) provide IP55 or IP66 protection.
+              standard rating for outdoor sockets in the UK. The socket is fully sealed when the lid
+              is closed. Suitable for wall-mounted positions and most garden locations. Weatherproof
+              enclosures from manufacturers such as Legrand (Plexo range, trade price from
+              approximately £5) provide IP55 or IP66 protection.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -249,18 +255,18 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               IP67 is protected against temporary immersion in water. IP68 is protected against
               continuous immersion. These ratings are not normally required for standard outdoor
-              sockets but may be specified for sockets in locations at risk of flooding, near
-              ponds, or in areas where standing water is possible. IP67/68 sockets and enclosures
-              cost more and are less commonly stocked at wholesalers.
+              sockets but may be specified for sockets in locations at risk of flooding, near ponds,
+              or in areas where standing water is possible. IP67/68 sockets and enclosures cost more
+              and are less commonly stocked at wholesalers.
             </p>
           </div>
         </div>
         <p>
           When specifying an outdoor socket, check the IP rating with the lid both open and closed,
-          and with a plug inserted. Some budget sockets achieve IP66 with the lid closed but drop
-          to IP44 when a plug is inserted. For permanently connected equipment, this is acceptable.
-          For general use where the socket may be left open in rain, choose a socket that maintains
-          at least IP55 with the plug in place.
+          and with a plug inserted. Some budget sockets achieve IP66 with the lid closed but drop to
+          IP44 when a plug is inserted. For permanently connected equipment, this is acceptable. For
+          general use where the socket may be left open in rain, choose a socket that maintains at
+          least IP55 with the plug in place.
         </p>
       </>
     ),
@@ -280,20 +286,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30mA RCD protection</strong> — required for all outdoor socket outlets.
-                This can be provided by an RCBO (combined MCB and RCD) in the consumer unit, an
-                RCD protecting a group of circuits, or a standalone RCD enclosure. An RCBO is
-                preferred because it provides individual protection without affecting other circuits
-                if it trips. Trade price for a branded RCBO starts from approximately £17 to £25.
+                <strong>30mA RCD protection</strong> — required for all outdoor socket outlets. This
+                can be provided by an RCBO (combined MCB and RCD) in the consumer unit, an RCD
+                protecting a group of circuits, or a standalone RCD enclosure. An RCBO is preferred
+                because it provides individual protection without affecting other circuits if it
+                trips. Trade price for a branded RCBO starts from approximately £17 to £25.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional protection</strong> — Regulation 415.1.1 requires additional
-                protection by an RCD with a rated residual operating current not exceeding 30mA
-                for socket outlets rated 32A or less in all locations, with limited exceptions.
-                Outdoor sockets fall squarely within this requirement.
+                protection by an RCD with a rated residual operating current not exceeding 30mA for
+                socket outlets rated 32A or less in all locations, with limited exceptions. Outdoor
+                sockets fall squarely within this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -333,11 +339,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surface-mounted SWA</strong> — SWA cable clipped to the external wall,
-                along a fence, or along a garden structure. No trenching required, but the cable
-                is visible. SWA is mechanically protected and suitable for external surface
-                mounting. 2.5mm² 3-core SWA cable costs approximately £2.50 to £3.50 per metre at
-                trade price.
+                <strong>Surface-mounted SWA</strong> — SWA cable clipped to the external wall, along
+                a fence, or along a garden structure. No trenching required, but the cable is
+                visible. SWA is mechanically protected and suitable for external surface mounting.
+                2.5mm² 3-core SWA cable costs approximately £2.50 to £3.50 per metre at trade price.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -357,8 +362,8 @@ const sections = [
           <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
-          to check that the total voltage drop does not exceed 5% (11.5V) at full load. Longer
-          runs may require upsizing from 2.5mm² to 4.0mm² SWA.
+          to check that the total voltage drop does not exceed 5% (11.5V) at full load. Longer runs
+          may require upsizing from 2.5mm² to 4.0mm² SWA.
         </p>
       </>
     ),
@@ -374,8 +379,8 @@ const sections = [
             notifiable work under Part P
           </SEOInternalLink>{' '}
           of the Building Regulations. This is because outdoor locations are classified as special
-          locations, and the work involves adding a new circuit (or extending an existing circuit
-          to a special location).
+          locations, and the work involves adding a new circuit (or extending an existing circuit to
+          a special location).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -392,11 +397,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Control notification</strong> — if the electrician is not registered
-                with a competent person scheme, the homeowner must apply to the local authority
-                Building Control before the work starts. Building Control will inspect the work and
-                issue a completion certificate. The fee for this varies by local authority, typically
-                £100 to £300.
+                <strong>Building Control notification</strong> — if the electrician is not
+                registered with a competent person scheme, the homeowner must apply to the local
+                authority Building Control before the work starts. Building Control will inspect the
+                work and issue a completion certificate. The fee for this varies by local authority,
+                typically £100 to £300.
               </span>
             </li>
           </ul>
@@ -431,8 +436,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safety risk</strong> — outdoor circuits operate in wet conditions and are
-                at higher risk of earth faults. Incorrect installation can result in electric shock,
+                <strong>Safety risk</strong> — outdoor circuits operate in wet conditions and are at
+                higher risk of earth faults. Incorrect installation can result in electric shock,
                 particularly if RCD protection is not correctly installed or the earthing
                 arrangement is inadequate.
               </span>
@@ -448,8 +453,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The cost difference between DIY and professional installation is modest — materials
-          cost £30 to £60, while a professional installation is £150 to £400 including materials,
+          The cost difference between DIY and professional installation is modest — materials cost
+          £30 to £60, while a professional installation is £150 to £400 including materials,
           testing, certification, and Part P compliance. The professional route includes an
           Electrical Installation Certificate that confirms the work meets BS 7671.
         </p>
@@ -462,9 +467,9 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket installations are bread-and-butter work for domestic electricians. They
-          are quick to complete, have good margins, and often lead to additional work (garden
-          lighting, EV charger preparation, hot tub supply). Here is how to quote them accurately:
+          Outdoor socket installations are bread-and-butter work for domestic electricians. They are
+          quick to complete, have good margins, and often lead to additional work (garden lighting,
+          EV charger preparation, hot tub supply). Here is how to quote them accurately:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -477,8 +482,8 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
-                  . Check voltage drop on longer runs. Get the correct cable size confirmed
-                  on site during the survey.
+                  . Check voltage drop on longer runs. Get the correct cable size confirmed on site
+                  during the survey.
                 </p>
               </div>
             </div>
@@ -493,8 +498,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing,
-                  and Part P notification — all itemised with your margins.
+                  . IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing, and
+                  Part P notification — all itemised with your margins.
                 </p>
               </div>
             </div>
@@ -518,7 +523,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify outdoor socket installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Everything you need to price and complete outdoor socket jobs. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Everything you need to price and complete outdoor socket jobs. 7-day free trial."
           icon={Plug}
         />
       </>
@@ -555,7 +560,7 @@ export default function OutdoorSocketInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Outdoor Socket Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Outdoor Socket Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

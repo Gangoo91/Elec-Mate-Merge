@@ -260,15 +260,23 @@ export default function InspectionTestingCoursePage() {
             </p>
             <p>
               For working electricians, the 2391 is one of the most important qualifications after
-              the <SEOInternalLink href="/study/18th-edition-course">18th Edition (C&G 2382)</SEOInternalLink> and the{' '}
-              <SEOInternalLink href="/study/level-3-electrical">Level 3 NVQ</SEOInternalLink>. Without it, you cannot join a
-              competent person scheme (NICEIC, NAPIT, ELECSA) as a qualified supervisor, and you
-              cannot independently sign off{' '}
-              <SEOInternalLink href="/electrical-certification/eic">Electrical Installation Certificates (EICs)</SEOInternalLink>{' '}
+              the{' '}
+              <SEOInternalLink href="/study/18th-edition-course">
+                18th Edition (C&G 2382)
+              </SEOInternalLink>{' '}
+              and the{' '}
+              <SEOInternalLink href="/study/level-3-electrical">Level 3 NVQ</SEOInternalLink>.
+              Without it, you cannot join a competent person scheme (NICEIC, NAPIT, ELECSA) as a
+              qualified supervisor, and you cannot independently sign off{' '}
+              <SEOInternalLink href="/electrical-certification/eic">
+                Electrical Installation Certificates (EICs)
+              </SEOInternalLink>{' '}
               or{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">Electrical Installation Condition Reports (EICRs)</SEOInternalLink>.
-              If you want to work as a self-employed electrician and certify your own work, the 2391 is not optional — it is
-              essential.
+              <SEOInternalLink href="/electrical-certification/eicr">
+                Electrical Installation Condition Reports (EICRs)
+              </SEOInternalLink>
+              . If you want to work as a self-employed electrician and certify your own work, the
+              2391 is not optional — it is essential.
             </p>
           </div>
         </div>
@@ -646,7 +654,7 @@ export default function InspectionTestingCoursePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Pass the 2391 with confidence"
-        subheading="Join 430+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians studying for qualifications and growing their careers. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

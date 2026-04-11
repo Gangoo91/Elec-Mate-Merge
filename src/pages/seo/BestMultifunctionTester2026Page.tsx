@@ -130,8 +130,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description:
-      'Verify voltage drop calculations match your on-site MFT measurements.',
+    description: 'Verify voltage drop calculations match your on-site MFT measurements.',
     icon: Zap,
     category: 'Tool',
   },
@@ -156,8 +155,8 @@ const sections = [
         <p>
           The UK market has five serious contenders in 2026. Each has strengths and weaknesses, and
           the right choice depends on the type of work you do, the volume of testing, and whether
-          app connectivity matters to your workflow. This guide gives an honest comparison — not just
-          a recommendation to buy the most expensive option.
+          app connectivity matters to your workflow. This guide gives an honest comparison — not
+          just a recommendation to buy the most expensive option.
         </p>
         <p>
           All five instruments tested here comply with BS EN 61557 and are suitable for testing to{' '}
@@ -227,8 +226,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Total cost of ownership</strong> — purchase price plus annual calibration
-                (50 to 120 pounds), replacement leads (30 to 80 pounds), and battery replacements.
-                A 600-pound MFT that lasts 8 years costs less per year than an 800-pound MFT that
+                (50 to 120 pounds), replacement leads (30 to 80 pounds), and battery replacements. A
+                600-pound MFT that lasts 8 years costs less per year than an 800-pound MFT that
                 lasts 6 years.
               </span>
             </li>
@@ -251,16 +250,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)</p>
-              <p className="text-white text-sm"><strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V</p>
-              <p className="text-white text-sm"><strong>RCD test currents:</strong> 10mA to 1000mA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth (Fluke Connect)</p>
+              <p className="text-white text-sm">
+                <strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V
+              </p>
+              <p className="text-white text-sm">
+                <strong>RCD test currents:</strong> 10mA to 1000mA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth (Fluke Connect)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable Li-ion, 8+ hours</p>
-              <p className="text-white text-sm"><strong>Weight:</strong> 1.2 kg (with battery)</p>
-              <p className="text-white text-sm"><strong>IP rating:</strong> IP54</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 1,100 to 1,300 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable Li-ion, 8+ hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Weight:</strong> 1.2 kg (with battery)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IP rating:</strong> IP54
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 1,100 to 1,300 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -275,13 +290,14 @@ const sections = [
           <strong>Weaknesses:</strong> The price. At over a thousand pounds, it is 400 to 500 pounds
           more than the Megger MFT1741+ for broadly comparable core test performance. The Fluke
           Connect subscription adds ongoing cost if you want cloud storage. Some electricians find
-          the menu system less intuitive than the Megger rotary dial. Calibration costs are also
-          at the higher end.
+          the menu system less intuitive than the Megger rotary dial. Calibration costs are also at
+          the higher end.
         </p>
         <p>
-          <strong>Best for:</strong> Electricians doing high-volume commercial and industrial testing
-          who will use the Fluke Connect app workflow daily. If you test 5 or more boards per week
-          and want seamless wireless data transfer, the Fluke 1664 FC justifies the premium.
+          <strong>Best for:</strong> Electricians doing high-volume commercial and industrial
+          testing who will use the Fluke Connect app workflow daily. If you test 5 or more boards
+          per week and want seamless wireless data transfer, the Fluke 1664 FC justifies the
+          premium.
         </p>
       </>
     ),
@@ -292,7 +308,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Megger MFT1741+ — The Industry Standard</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Megger MFT1741+ — The Industry Standard
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             The MFT1741+ is the most widely used multifunction tester in UK electrical contracting.
             It is the instrument most apprentices learn on, most training centres teach with, and
@@ -300,16 +318,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)</p>
-              <p className="text-white text-sm"><strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V</p>
-              <p className="text-white text-sm"><strong>RCD test currents:</strong> 10mA to 1000mA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth (Megger Link)</p>
+              <p className="text-white text-sm">
+                <strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V
+              </p>
+              <p className="text-white text-sm">
+                <strong>RCD test currents:</strong> 10mA to 1000mA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth (Megger Link)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable NiMH, 8+ hours</p>
-              <p className="text-white text-sm"><strong>Weight:</strong> 1.1 kg (with battery)</p>
-              <p className="text-white text-sm"><strong>IP rating:</strong> IP54</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 650 to 800 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable NiMH, 8+ hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Weight:</strong> 1.1 kg (with battery)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IP rating:</strong> IP54
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 650 to 800 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -341,7 +375,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Metrel MI 3152 — The Underrated Contender</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Metrel MI 3152 — The Underrated Contender
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Metrel is a Slovenian manufacturer with a strong reputation in European markets. The MI
             3152 is less well-known in the UK than Fluke or Megger, but it is a seriously capable
@@ -349,16 +385,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)</p>
-              <p className="text-white text-sm"><strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V</p>
-              <p className="text-white text-sm"><strong>RCD test currents:</strong> 10mA to 1000mA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth, Android app</p>
+              <p className="text-white text-sm">
+                <strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V
+              </p>
+              <p className="text-white text-sm">
+                <strong>RCD test currents:</strong> 10mA to 1000mA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth, Android app
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable Li-ion, 10+ hours</p>
-              <p className="text-white text-sm"><strong>Weight:</strong> 1.0 kg (with battery)</p>
-              <p className="text-white text-sm"><strong>IP rating:</strong> IP40</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 700 to 900 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable Li-ion, 10+ hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Weight:</strong> 1.0 kg (with battery)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IP rating:</strong> IP40
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 700 to 900 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -367,8 +419,7 @@ const sections = [
           full day of intensive testing with capacity to spare. The auto-sequence feature is well
           implemented, running through tests in the correct order and storing results against
           circuit numbers. The Metrel Android app allows direct transfer to test result databases.
-          The instrument is lighter than the Fluke and Megger competitors. Build quality is
-          solid.
+          The instrument is lighter than the Fluke and Megger competitors. Build quality is solid.
         </p>
         <p>
           <strong>Weaknesses:</strong> The IP40 rating is lower than competitors — it is not as well
@@ -400,16 +451,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Loop impedance accuracy:</strong> +/- (2% + 5 digits)</p>
-              <p className="text-white text-sm"><strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V</p>
-              <p className="text-white text-sm"><strong>RCD test currents:</strong> 10mA to 500mA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> None (manual)</p>
+              <p className="text-white text-sm">
+                <strong>Loop impedance accuracy:</strong> +/- (2% + 5 digits)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V
+              </p>
+              <p className="text-white text-sm">
+                <strong>RCD test currents:</strong> 10mA to 500mA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> None (manual)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> 6x AA batteries</p>
-              <p className="text-white text-sm"><strong>Weight:</strong> 0.9 kg (with batteries)</p>
-              <p className="text-white text-sm"><strong>IP rating:</strong> IP54</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 350 to 450 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> 6x AA batteries
+              </p>
+              <p className="text-white text-sm">
+                <strong>Weight:</strong> 0.9 kg (with batteries)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IP rating:</strong> IP54
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 350 to 450 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -444,24 +511,42 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Seaward Clare — The PAT Testing Crossover</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Seaward Clare — The PAT Testing Crossover
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            Seaward is best known for PAT testing instruments, but their Clare range of multifunction
-            testers is a credible option for electricians who also do significant portable appliance
-            testing work.
+            Seaward is best known for PAT testing instruments, but their Clare range of
+            multifunction testers is a credible option for electricians who also do significant
+            portable appliance testing work.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)</p>
-              <p className="text-white text-sm"><strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V</p>
-              <p className="text-white text-sm"><strong>RCD test currents:</strong> 10mA to 1000mA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Bluetooth, Seaward app</p>
+              <p className="text-white text-sm">
+                <strong>Loop impedance accuracy:</strong> +/- (2% + 3 digits)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR test voltages:</strong> 50V, 100V, 250V, 500V, 1000V
+              </p>
+              <p className="text-white text-sm">
+                <strong>RCD test currents:</strong> 10mA to 1000mA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Bluetooth, Seaward app
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable Li-ion, 7+ hours</p>
-              <p className="text-white text-sm"><strong>Weight:</strong> 1.15 kg (with battery)</p>
-              <p className="text-white text-sm"><strong>IP rating:</strong> IP54</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 750 to 950 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable Li-ion, 7+ hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Weight:</strong> 1.15 kg (with battery)
+              </p>
+              <p className="text-white text-sm">
+                <strong>IP rating:</strong> IP54
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 750 to 950 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -469,8 +554,8 @@ const sections = [
           <strong>Strengths:</strong> Seaward has a strong calibration and support infrastructure in
           the UK. The Bluetooth connectivity and companion app work well, with good integration to
           Seaward's own certificate management software. The Clare range instruments perform all
-          standard MFT tests competently. If you already use Seaward PAT testers and their
-          software ecosystem, adding a Clare MFT keeps everything in one platform.
+          standard MFT tests competently. If you already use Seaward PAT testers and their software
+          ecosystem, adding a Clare MFT keeps everything in one platform.
         </p>
         <p>
           <strong>Weaknesses:</strong> The brand has less mindshare in the MFT market compared to
@@ -483,7 +568,8 @@ const sections = [
         <p>
           <strong>Best for:</strong> Electricians who already use Seaward PAT testing equipment and
           want to keep their instrument ecosystem consistent. Also worth considering if you find a
-          good package deal from a Seaward distributor that includes the MFT, leads, and calibration.
+          good package deal from a Seaward distributor that includes the MFT, leads, and
+          calibration.
         </p>
       </>
     ),
@@ -493,41 +579,72 @@ const sections = [
     heading: 'Head-to-Head Comparison',
     content: (
       <>
-        <p>
-          Here is the direct comparison across the factors that matter most on site.
-        </p>
+        <p>Here is the direct comparison across the factors that matter most on site.</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Test Speed (Loop Impedance)</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Fastest:</strong> Megger MFT1741+ (3 to 4 seconds) and Fluke 1664 FC (3 to 4 seconds)</p>
-              <p><strong>Mid:</strong> Metrel MI 3152 (4 to 5 seconds) and Seaward Clare (4 to 5 seconds)</p>
-              <p><strong>Slowest:</strong> Kewtech KT66DL (5 to 7 seconds)</p>
+              <p>
+                <strong>Fastest:</strong> Megger MFT1741+ (3 to 4 seconds) and Fluke 1664 FC (3 to 4
+                seconds)
+              </p>
+              <p>
+                <strong>Mid:</strong> Metrel MI 3152 (4 to 5 seconds) and Seaward Clare (4 to 5
+                seconds)
+              </p>
+              <p>
+                <strong>Slowest:</strong> Kewtech KT66DL (5 to 7 seconds)
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Connectivity</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Best:</strong> Fluke 1664 FC (Fluke Connect — mature, cross-platform, cloud)</p>
-              <p><strong>Good:</strong> Megger MFT1741+ (Megger Link — improving rapidly)</p>
-              <p><strong>Adequate:</strong> Metrel MI 3152 (Android only) and Seaward Clare (Seaward app)</p>
-              <p><strong>None:</strong> Kewtech KT66DL</p>
+              <p>
+                <strong>Best:</strong> Fluke 1664 FC (Fluke Connect — mature, cross-platform, cloud)
+              </p>
+              <p>
+                <strong>Good:</strong> Megger MFT1741+ (Megger Link — improving rapidly)
+              </p>
+              <p>
+                <strong>Adequate:</strong> Metrel MI 3152 (Android only) and Seaward Clare (Seaward
+                app)
+              </p>
+              <p>
+                <strong>None:</strong> Kewtech KT66DL
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Value for Money</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Best value:</strong> Kewtech KT66DL (350 to 450 pounds — all essential tests)</p>
-              <p><strong>Best mid-range:</strong> Megger MFT1741+ (650 to 800 pounds — the safe choice)</p>
-              <p><strong>Premium justified if:</strong> Fluke 1664 FC (1,100+ pounds — high-volume commercial)</p>
+              <p>
+                <strong>Best value:</strong> Kewtech KT66DL (350 to 450 pounds — all essential
+                tests)
+              </p>
+              <p>
+                <strong>Best mid-range:</strong> Megger MFT1741+ (650 to 800 pounds — the safe
+                choice)
+              </p>
+              <p>
+                <strong>Premium justified if:</strong> Fluke 1664 FC (1,100+ pounds — high-volume
+                commercial)
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Battery Life</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Best:</strong> Metrel MI 3152 (10+ hours Li-ion) and Kewtech KT66DL (unlimited with spare AAs)</p>
-              <p><strong>Good:</strong> Fluke 1664 FC (8+ hours) and Megger MFT1741+ (8+ hours)</p>
-              <p><strong>Adequate:</strong> Seaward Clare (7+ hours)</p>
+              <p>
+                <strong>Best:</strong> Metrel MI 3152 (10+ hours Li-ion) and Kewtech KT66DL
+                (unlimited with spare AAs)
+              </p>
+              <p>
+                <strong>Good:</strong> Fluke 1664 FC (8+ hours) and Megger MFT1741+ (8+ hours)
+              </p>
+              <p>
+                <strong>Adequate:</strong> Seaward Clare (7+ hours)
+              </p>
             </div>
           </div>
         </div>
@@ -555,16 +672,15 @@ const sections = [
           </p>
           <p className="text-white text-sm leading-relaxed">
             <strong>For high-volume commercial testing: Fluke 1664 FC.</strong> The automatic test
-            sequencing and Fluke Connect ecosystem genuinely save time when you are testing
-            multiple large boards every day. The premium price is justified by the time savings at
-            scale.
+            sequencing and Fluke Connect ecosystem genuinely save time when you are testing multiple
+            large boards every day. The premium price is justified by the time savings at scale.
           </p>
         </div>
         <p>
-          Whichever instrument you choose, invest in genuine leads and probes, keep it in calibration,
-          and learn its features properly. A 350-pound Kewtech in the hands of a competent
-          electrician produces better results than a 1,300-pound Fluke used by someone who has not
-          read the manual.
+          Whichever instrument you choose, invest in genuine leads and probes, keep it in
+          calibration, and learn its features properly. A 350-pound Kewtech in the hands of a
+          competent electrician produces better results than a 1,300-pound Fluke used by someone who
+          has not read the manual.
         </p>
         <SEOAppBridge
           title="Record your MFT results directly into certificates"
@@ -605,7 +721,7 @@ export default function BestMultifunctionTester2026Page() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Enter Test Results and Generate Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR and EIC certificates with on-site test result entry and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

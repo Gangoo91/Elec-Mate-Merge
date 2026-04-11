@@ -20,7 +20,10 @@ import {
 
 const breadcrumbs = [
   { label: 'EV Charger Installation', href: '/ev-charger-installation' },
-  { label: 'EV Charger Installation Wolverhampton', href: '/ev-charger-installation-wolverhampton' },
+  {
+    label: 'EV Charger Installation Wolverhampton',
+    href: '/ev-charger-installation-wolverhampton',
+  },
 ];
 
 const tocItems = [
@@ -39,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'A 7kW home EV charger installation in Wolverhampton typically costs £750 to £1,050 all-in — among the most affordable in England, reflecting West Midlands trade labour rates — with OZEV grants of up to £350 available for eligible properties.',
   'The West Midlands Clean Air Zone (CAZ) charges non-compliant diesel and petrol vehicles to drive in the zone — home EV charging significantly reduces the ongoing cost of EV ownership for Wolverhampton commuters.',
-  'Wolverhampton\'s housing stock includes a large proportion of post-war and 1960s–1980s semis and terraces with garages and driveways, making home EV charger installation particularly straightforward.',
+  "Wolverhampton's housing stock includes a large proportion of post-war and 1960s–1980s semis and terraces with garages and driveways, making home EV charger installation particularly straightforward.",
   'All EV charger installations must comply with BS 7671:2018+A3:2024 Section 722, including a dedicated circuit, RCD protection under Regulation 722.531.2, and a PME earthing assessment under Regulation 722.411.4.',
   'NICEIC and NAPIT registered, OZEV-approved electricians in Wolverhampton can self-certify the installation under Building Regulations Part P without the need to notify the City of Wolverhampton Council building control.',
 ];
@@ -68,17 +71,18 @@ const faqs = [
   {
     question: 'How long does EV charger installation take in Wolverhampton?',
     answer:
-      'A typical 7kW home charger installation in Wolverhampton takes 2 to 4 hours. Wolverhampton\'s large proportion of post-war and 1960s–1980s housing typically has garages integrated with or adjacent to the house, making cable routes short and installation straightforward. Older Victorian terraces in areas such as Whitmore Reans or Blakenhall with rear yard parking may require slightly longer cable runs, adding 1 to 2 hours. A consumer unit upgrade (if required) extends the total time to a full day.',
+      "A typical 7kW home charger installation in Wolverhampton takes 2 to 4 hours. Wolverhampton's large proportion of post-war and 1960s–1980s housing typically has garages integrated with or adjacent to the house, making cable routes short and installation straightforward. Older Victorian terraces in areas such as Whitmore Reans or Blakenhall with rear yard parking may require slightly longer cable runs, adding 1 to 2 hours. A consumer unit upgrade (if required) extends the total time to a full day.",
   },
   {
-    question: 'Can I get an EV charger installed at a Wolverhampton council property or housing association home?',
+    question:
+      'Can I get an EV charger installed at a Wolverhampton council property or housing association home?',
     answer:
-      'Possibly, but you will need permission from the City of Wolverhampton Council or your housing association before commissioning installation. Many social housing providers in the West Midlands are actively rolling out EV charging infrastructure as part of sustainability commitments. Contact your housing provider directly — they may have a preferred approved installer and may be able to fund part or all of the installation cost through separate grant schemes. If you are a private renter, you need your landlord\'s written permission before installing a charger.',
+      "Possibly, but you will need permission from the City of Wolverhampton Council or your housing association before commissioning installation. Many social housing providers in the West Midlands are actively rolling out EV charging infrastructure as part of sustainability commitments. Contact your housing provider directly — they may have a preferred approved installer and may be able to fund part or all of the installation cost through separate grant schemes. If you are a private renter, you need your landlord's written permission before installing a charger.",
   },
   {
     question: 'What is the best charger type for Wolverhampton homes?',
     answer:
-      'For most Wolverhampton properties, a 7kW smart charger is the optimal choice — compatible with all EVs sold in the UK, charges overnight from near-empty, and OZEV grant eligible. Popular models installed by Wolverhampton electricians include the Ohme Home Pro (excellent for EV tariff scheduling), Pod Point Solo 3 (straightforward and reliable), and Myenergi Zappi (ideal if you have solar PV panels). For Wolverhampton properties with solar panels — increasingly common across the West Midlands — the Zappi\'s solar divert function uses surplus generation to charge your EV at near-zero cost.',
+      "For most Wolverhampton properties, a 7kW smart charger is the optimal choice — compatible with all EVs sold in the UK, charges overnight from near-empty, and OZEV grant eligible. Popular models installed by Wolverhampton electricians include the Ohme Home Pro (excellent for EV tariff scheduling), Pod Point Solo 3 (straightforward and reliable), and Myenergi Zappi (ideal if you have solar PV panels). For Wolverhampton properties with solar panels — increasingly common across the West Midlands — the Zappi's solar divert function uses surplus generation to charge your EV at near-zero cost.",
   },
   {
     question: 'Do I need planning permission for an EV charger in Wolverhampton?',
@@ -88,7 +92,7 @@ const faqs = [
   {
     question: 'Are there any local Wolverhampton or West Midlands grants for EV chargers?',
     answer:
-      'In addition to the national OZEV grant, the West Midlands Combined Authority (WMCA) has periodically offered local funding and co-investment for EV infrastructure as part of its Midlands Net Zero Hub and Transport Strategy. Check the WMCA website and City of Wolverhampton Council\'s sustainability pages for any current local grant schemes. The council has also invested in public EV charging infrastructure across car parks and on-street locations as part of its transport decarbonisation plans.',
+      "In addition to the national OZEV grant, the West Midlands Combined Authority (WMCA) has periodically offered local funding and co-investment for EV infrastructure as part of its Midlands Net Zero Hub and Transport Strategy. Check the WMCA website and City of Wolverhampton Council's sustainability pages for any current local grant schemes. The council has also invested in public EV charging infrastructure across car parks and on-street locations as part of its transport decarbonisation plans.",
   },
 ];
 
@@ -142,11 +146,11 @@ const sections = [
       <>
         <p>
           Wolverhampton is one of the West Midlands' key urban centres, with strong manufacturing,
-          logistics, and professional services sectors. The city has a growing EV community,
-          driven by the West Midlands Clean Air Zone (CAZ), City of Wolverhampton Council's
-          climate action commitments, and the West Midlands Combined Authority's transport
-          decarbonisation strategy. Home EV charger installation is the most cost-effective
-          way for Wolverhampton residents to support EV ownership.
+          logistics, and professional services sectors. The city has a growing EV community, driven
+          by the West Midlands Clean Air Zone (CAZ), City of Wolverhampton Council's climate action
+          commitments, and the West Midlands Combined Authority's transport decarbonisation
+          strategy. Home EV charger installation is the most cost-effective way for Wolverhampton
+          residents to support EV ownership.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -154,31 +158,31 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>West Midlands Clean Air Zone</strong> — the West Midlands CAZ charges
-                non-compliant vehicles to drive within designated zones. Electric vehicles are
-                fully exempt. For Wolverhampton residents who commute to Birmingham or other
-                CAZ-covered areas, switching to an EV eliminates daily charges, improving the
-                financial case for both EV purchase and home charger installation.
+                non-compliant vehicles to drive within designated zones. Electric vehicles are fully
+                exempt. For Wolverhampton residents who commute to Birmingham or other CAZ-covered
+                areas, switching to an EV eliminates daily charges, improving the financial case for
+                both EV purchase and home charger installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competitive installation costs</strong> — Wolverhampton benefits from
-                West Midlands trade labour rates, which are significantly lower than London
-                and the South East. This makes Wolverhampton one of the more affordable cities
-                in England for home EV charger installation, with standard 7kW installations
-                typically costing £100 to £200 less than equivalent South East installations.
+                <strong>Competitive installation costs</strong> — Wolverhampton benefits from West
+                Midlands trade labour rates, which are significantly lower than London and the South
+                East. This makes Wolverhampton one of the more affordable cities in England for home
+                EV charger installation, with standard 7kW installations typically costing £100 to
+                £200 less than equivalent South East installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Housing stock</strong> — Wolverhampton has a high proportion of post-war,
-                1960s, and 1970s semis and terraces with integral or adjacent garages and
-                driveways. This makes home EV charger installation particularly straightforward,
-                with short cable runs from the consumer unit and ample wall space for charger
-                mounting. The city also has newer estate developments in areas such as
-                Wednesfield, Tettenhall, and Oxley.
+                1960s, and 1970s semis and terraces with integral or adjacent garages and driveways.
+                This makes home EV charger installation particularly straightforward, with short
+                cable runs from the consumer unit and ample wall space for charger mounting. The
+                city also has newer estate developments in areas such as Wednesfield, Tettenhall,
+                and Oxley.
               </span>
             </li>
           </ul>
@@ -207,33 +211,33 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Eligibility</strong> — you must own or have ordered an eligible EV or
-                plug-in hybrid and live in a flat or rented accommodation. Homeowners in houses
-                are no longer eligible for the residential grant (from April 2022).
+                plug-in hybrid and live in a flat or rented accommodation. Homeowners in houses are
+                no longer eligible for the residential grant (from April 2022).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Grant amount</strong> — up to £350 or 75% of the installation cost
-                (whichever is lower). On a typical Wolverhampton installation costing £850,
-                the grant reduces your net cost to £500.
+                (whichever is lower). On a typical Wolverhampton installation costing £850, the
+                grant reduces your net cost to £500.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workplace Charging Scheme</strong> — Wolverhampton businesses, including
-                the city's manufacturing and logistics sector, can claim up to £350 per socket
-                (maximum 40 sockets) for EV chargers at commercial premises through the OZEV
-                Workplace Charging Scheme.
+                <strong>Workplace Charging Scheme</strong> — Wolverhampton businesses, including the
+                city's manufacturing and logistics sector, can claim up to £350 per socket (maximum
+                40 sockets) for EV chargers at commercial premises through the OZEV Workplace
+                Charging Scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>OZEV-approved installer required</strong> — verify your installer's OZEV
-                status at gov.uk before committing. Only OZEV-registered installers can apply
-                the grant on your behalf.
+                status at gov.uk before committing. Only OZEV-registered installers can apply the
+                grant on your behalf.
               </span>
             </li>
           </ul>
@@ -254,33 +258,41 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">1</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                1
+              </span>
               <span>
                 <strong>Pre-installation survey</strong> — assessment of consumer unit capacity,
-                spare MCB ways, earthing arrangement (most Wolverhampton properties are on NGED
-                PME supplies), cable route from consumer unit to charger location, and proposed
-                charger mounting position.
+                spare MCB ways, earthing arrangement (most Wolverhampton properties are on NGED PME
+                supplies), cable route from consumer unit to charger location, and proposed charger
+                mounting position.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">2</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                2
+              </span>
               <span>
                 <strong>PME earthing risk assessment</strong> — required under BS 7671 Regulation
-                722.411.4. The installer assesses whether the NGED PME earth is suitable for the
-                EV charger circuit, particularly important at detached garage or outdoor
-                installation locations.
+                722.411.4. The installer assesses whether the NGED PME earth is suitable for the EV
+                charger circuit, particularly important at detached garage or outdoor installation
+                locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">3</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                3
+              </span>
               <span>
-                <strong>Dedicated circuit installation</strong> — a new 32A radial circuit from
-                the consumer unit to the charger location, protected by an appropriate RCBO or
-                MCB with RCD protection per Regulation 722.531.2.
+                <strong>Dedicated circuit installation</strong> — a new 32A radial circuit from the
+                consumer unit to the charger location, protected by an appropriate RCBO or MCB with
+                RCD protection per Regulation 722.531.2.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">4</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                4
+              </span>
               <span>
                 <strong>Charger installation and commissioning</strong> — wall mounting, connection,
                 smart charging feature configuration (overnight scheduling, EV tariff integration),
@@ -288,11 +300,13 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">5</span>
+              <span className="flex items-center justify-center w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 font-bold text-sm shrink-0">
+                5
+              </span>
               <span>
-                <strong>Testing, EIC, Part P, and OZEV</strong> — verification testing per
-                BS 7671 Chapter 61, EIC issued, self-certification under Part P by NICEIC or
-                NAPIT registered installer, and OZEV grant application submitted on your behalf.
+                <strong>Testing, EIC, Part P, and OZEV</strong> — verification testing per BS 7671
+                Chapter 61, EIC issued, self-certification under Part P by NICEIC or NAPIT
+                registered installer, and OZEV grant application submitted on your behalf.
               </span>
             </li>
           </ul>
@@ -315,18 +329,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard 7kW home installation</strong> — £750 to £1,050 all-in,
-                including charger unit, dedicated circuit, RCD protection, EIC, and Part P
-                certificate. After OZEV grant (where eligible): approximately £400 to £700.
+                <strong>Standard 7kW home installation</strong> — £750 to £1,050 all-in, including
+                charger unit, dedicated circuit, RCD protection, EIC, and Part P certificate. After
+                OZEV grant (where eligible): approximately £400 to £700.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Integral garage installation</strong> — often the simplest and least
-                expensive installation scenario in Wolverhampton, where the garage is attached
-                and the consumer unit is adjacent. Cable run may be as short as 5 to 10 metres,
-                reducing overall cost.
+                expensive installation scenario in Wolverhampton, where the garage is attached and
+                the consumer unit is adjacent. Cable run may be as short as 5 to 10 metres, reducing
+                overall cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -334,16 +348,16 @@ const sections = [
               <span>
                 <strong>Consumer unit upgrade</strong> — £350 to £600 additional. Wolverhampton's
                 stock of 1960s and 1970s properties sometimes includes older consumer units
-                (particularly older rewireable fuse boards) that require upgrading before an
-                EV charger circuit can be safely added.
+                (particularly older rewireable fuse boards) that require upgrading before an EV
+                charger circuit can be safely added.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode</strong> — £150 to £280 additional if required by the
-                PME earthing risk assessment. Most straightforward Wolverhampton installations
-                do not require a supplementary earth electrode.
+                <strong>Earth electrode</strong> — £150 to £280 additional if required by the PME
+                earthing risk assessment. Most straightforward Wolverhampton installations do not
+                require a supplementary earth electrode.
               </span>
             </li>
           </ul>
@@ -361,49 +375,48 @@ const sections = [
     content: (
       <>
         <p>
-          The West Midlands has one of the UK's most ambitious regional EV transition plans,
-          driven by the West Midlands Combined Authority (WMCA) and the region's automotive
-          heritage. Understanding the regional context helps Wolverhampton residents and
-          electricians appreciate why home charging is particularly important here.
+          The West Midlands has one of the UK's most ambitious regional EV transition plans, driven
+          by the West Midlands Combined Authority (WMCA) and the region's automotive heritage.
+          Understanding the regional context helps Wolverhampton residents and electricians
+          appreciate why home charging is particularly important here.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>WMCA EV strategy</strong> — the West Midlands Combined Authority has
-                set targets for EV charging infrastructure across the region, including public
-                charging hubs, rapid chargers on key routes, and support for home and workplace
-                charging. Wolverhampton is included in the WMCA's regional charging network
-                expansion plans.
+                <strong>WMCA EV strategy</strong> — the West Midlands Combined Authority has set
+                targets for EV charging infrastructure across the region, including public charging
+                hubs, rapid chargers on key routes, and support for home and workplace charging.
+                Wolverhampton is included in the WMCA's regional charging network expansion plans.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Automotive cluster</strong> — the West Midlands is home to a significant
-                automotive manufacturing and supply chain cluster, including Jaguar Land Rover
-                (now JLR) which produces plug-in hybrid and electric vehicles. Many Wolverhampton
-                area workers in the automotive sector have access to EVs through employee schemes,
+                automotive manufacturing and supply chain cluster, including Jaguar Land Rover (now
+                JLR) which produces plug-in hybrid and electric vehicles. Many Wolverhampton area
+                workers in the automotive sector have access to EVs through employee schemes,
                 increasing local demand for home charging.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Public charging network</strong> — Wolverhampton has a growing network
-                of public chargers at council car parks, supermarkets, and along key routes.
-                However, home charging remains far cheaper — a full overnight home charge can
-                cost as little as £3 on an EV tariff versus £25 to £40 at a public rapid charger.
+                <strong>Public charging network</strong> — Wolverhampton has a growing network of
+                public chargers at council car parks, supermarkets, and along key routes. However,
+                home charging remains far cheaper — a full overnight home charge can cost as little
+                as £3 on an EV tariff versus £25 to £40 at a public rapid charger.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Midlands Net Zero Hub</strong> — the Midlands Net Zero Hub supports
-                local authorities and businesses across the region, including Wolverhampton, in
-                developing EV charging infrastructure and accessing central government grant
-                funding. Check the hub's website for any current local co-funding opportunities.
+                <strong>Midlands Net Zero Hub</strong> — the Midlands Net Zero Hub supports local
+                authorities and businesses across the region, including Wolverhampton, in developing
+                EV charging infrastructure and accessing central government grant funding. Check the
+                hub's website for any current local co-funding opportunities.
               </span>
             </li>
           </ul>
@@ -428,37 +441,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.411.4 — PME earthing</strong> — most Wolverhampton
-                properties are on NGED (National Grid Electricity Distribution) PME (TN-C-S)
-                supplies. A PME earthing risk assessment must be carried out. Where a PME earth
-                is unsuitable, an earth electrode must be installed at the charger location.
+                <strong>Regulation 722.411.4 — PME earthing</strong> — most Wolverhampton properties
+                are on NGED (National Grid Electricity Distribution) PME (TN-C-S) supplies. A PME
+                earthing risk assessment must be carried out. Where a PME earth is unsuitable, an
+                earth electrode must be installed at the charger location.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits
-                must be protected by an appropriate RCD. Most modern OZEV-approved smart chargers
-                incorporate Type B equivalent DC fault protection, allowing a Type A RCBO to be
-                used at the consumer unit.
+                <strong>Regulation 722.531.2 — RCD protection</strong> — EV charger circuits must be
+                protected by an appropriate RCD. Most modern OZEV-approved smart chargers
+                incorporate Type B equivalent DC fault protection, allowing a Type A RCBO to be used
+                at the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated 32A circuit</strong> — the EV charger must be supplied by its
-                own dedicated final circuit, not shared with other loads. A Type B RCBO or MCB
-                at the consumer unit is standard for a 7kW installation.
+                <strong>Dedicated 32A circuit</strong> — the EV charger must be supplied by its own
+                dedicated final circuit, not shared with other loads. A Type B RCBO or MCB at the
+                consumer unit is standard for a 7kW installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Regulations Part P</strong> — EV charger installation is
-                notifiable electrical work. NICEIC and NAPIT registered installers can
-                self-certify under Part P. An EIC must be issued on completion. Non-registered
-                installers must notify City of Wolverhampton Council building control before
-                work begins.
+                <strong>Building Regulations Part P</strong> — EV charger installation is notifiable
+                electrical work. NICEIC and NAPIT registered installers can self-certify under Part
+                P. An EIC must be issued on completion. Non-registered installers must notify City
+                of Wolverhampton Council building control before work begins.
               </span>
             </li>
           </ul>
@@ -472,34 +484,34 @@ const sections = [
     content: (
       <>
         <p>
-          The Wolverhampton area and wider West Midlands has a good number of OZEV-approved
-          EV charger installers. Use the following criteria to identify the right contractor
-          for your installation.
+          The Wolverhampton area and wider West Midlands has a good number of OZEV-approved EV
+          charger installers. Use the following criteria to identify the right contractor for your
+          installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search.
-                Only OZEV-registered installers can apply the EVHS grant on your behalf.
+                <strong>OZEV registration</strong> — verify at gov.uk OZEV installer search. Only
+                OZEV-registered installers can apply the EVHS grant on your behalf.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — verify on the scheme's online
-                register. Provides assurance of technical qualifications, regular assessment,
-                and appropriate insurance.
+                register. Provides assurance of technical qualifications, regular assessment, and
+                appropriate insurance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local West Midlands experience</strong> — confirm the installer is
-                familiar with NGED's PME earthing arrangements and the specific housing types
-                in Wolverhampton. West Midlands electricians with EV experience will understand
-                the DNO's technical requirements and guidance documents.
+                <strong>Local West Midlands experience</strong> — confirm the installer is familiar
+                with NGED's PME earthing arrangements and the specific housing types in
+                Wolverhampton. West Midlands electricians with EV experience will understand the
+                DNO's technical requirements and guidance documents.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -522,8 +534,8 @@ const sections = [
       <>
         <p>
           Wolverhampton and the wider West Midlands represent a growing and accessible market for
-          OZEV-approved EV charger installers. The region's strong automotive sector, CAZ-driven
-          EV adoption, and large proportion of semi-detached and detached properties with garages
+          OZEV-approved EV charger installers. The region's strong automotive sector, CAZ-driven EV
+          adoption, and large proportion of semi-detached and detached properties with garages
           create ideal conditions for high-volume residential EV installation work.
         </p>
         <div className="space-y-4 my-4">
@@ -538,8 +550,8 @@ const sections = [
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete the EIC and OZEV documentation on your phone at the Wolverhampton
-                  property. Send the certificate to your customer before driving away — no
-                  paperwork left for the evening.
+                  property. Send the certificate to your customer before driving away — no paperwork
+                  left for the evening.
                 </p>
               </div>
             </div>
@@ -563,7 +575,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV installation business in Wolverhampton with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, instant PDF export, and professional quoting. Complete more installations per day. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -600,7 +612,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Installation Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV certification, OZEV documentation, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

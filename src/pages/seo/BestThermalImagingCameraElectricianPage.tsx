@@ -86,16 +86,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description:
-      'Include thermal images in your EICR reports with the Elec-Mate certificate app.',
+    description: 'Include thermal images in your EICR reports with the Elec-Mate certificate app.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/best-multifunction-tester-2026',
     title: 'Best Multifunction Tester 2026',
-    description:
-      'Pair your thermal camera with the right MFT for a complete testing toolkit.',
+    description: 'Pair your thermal camera with the right MFT for a complete testing toolkit.',
     icon: Gauge,
     category: 'Guide',
   },
@@ -126,8 +124,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description:
-      'High voltage drop means heat in cables — check your designs before installation.',
+    description: 'High voltage drop means heat in cables — check your designs before installation.',
     icon: Zap,
     category: 'Tool',
   },
@@ -145,14 +142,14 @@ const sections = [
       <>
         <p>
           A thermal imaging camera does something no other tool in your kit can do — it makes heat
-          visible. Loose connections, overloaded cables, failing components, and imbalanced loads all
-          generate excess heat before they cause visible damage, tripped breakers, or fires.
+          visible. Loose connections, overloaded cables, failing components, and imbalanced loads
+          all generate excess heat before they cause visible damage, tripped breakers, or fires.
         </p>
         <p>
           For electricians, thermal imaging is a diagnostic shortcut. Instead of checking every
-          connection on a loaded board with the back of your hand (or worse, waiting for something to
-          fail), you point the camera at the board and instantly see which connections are running
-          hot. A 30-second thermal scan can identify a problem that would take 20 minutes of
+          connection on a loaded board with the back of your hand (or worse, waiting for something
+          to fail), you point the camera at the board and instantly see which connections are
+          running hot. A 30-second thermal scan can identify a problem that would take 20 minutes of
           systematic testing to find.
         </p>
         <p>
@@ -239,16 +236,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Thermal resolution:</strong> 160x120 pixels</p>
-              <p className="text-white text-sm"><strong>Temperature range:</strong> -20 to +400 degrees C</p>
-              <p className="text-white text-sm"><strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%</p>
-              <p className="text-white text-sm"><strong>MSX enhancement:</strong> Yes (edge overlay)</p>
+              <p className="text-white text-sm">
+                <strong>Thermal resolution:</strong> 160x120 pixels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Temperature range:</strong> -20 to +400 degrees C
+              </p>
+              <p className="text-white text-sm">
+                <strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%
+              </p>
+              <p className="text-white text-sm">
+                <strong>MSX enhancement:</strong> Yes (edge overlay)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Visible camera:</strong> 5MP</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Wi-Fi, FLIR Ignite cloud</p>
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable, 4 hours</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 500 to 600 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Visible camera:</strong> 5MP
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Wi-Fi, FLIR Ignite cloud
+              </p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable, 4 hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 500 to 600 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -288,35 +301,51 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Thermal resolution:</strong> 256x192 pixels</p>
-              <p className="text-white text-sm"><strong>Temperature range:</strong> -20 to +150 degrees C</p>
-              <p className="text-white text-sm"><strong>Accuracy:</strong> +/- 2 degrees C or +/- 2%</p>
-              <p className="text-white text-sm"><strong>Fusion modes:</strong> PIP, blended, side-by-side</p>
+              <p className="text-white text-sm">
+                <strong>Thermal resolution:</strong> 256x192 pixels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Temperature range:</strong> -20 to +150 degrees C
+              </p>
+              <p className="text-white text-sm">
+                <strong>Accuracy:</strong> +/- 2 degrees C or +/- 2%
+              </p>
+              <p className="text-white text-sm">
+                <strong>Fusion modes:</strong> PIP, blended, side-by-side
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Visible camera:</strong> 2MP</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Wi-Fi, HikMicro Viewer app</p>
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable, 6 hours</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 350 to 450 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Visible camera:</strong> 2MP
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Wi-Fi, HikMicro Viewer app
+              </p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable, 6 hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 350 to 450 pounds
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> The headline is the resolution — 256x192 pixels at 350 to 450
           pounds is remarkable. This is a higher thermal resolution than the FLIR C5 at a lower
-          price. Images are noticeably sharper, with better detail on individual connections. Battery
-          life at 6 hours is better than the FLIR C5. The accuracy specification (+/- 2 degrees) is
-          tighter than FLIR. Multiple image fusion modes give flexibility in how you present results
-          to customers.
+          price. Images are noticeably sharper, with better detail on individual connections.
+          Battery life at 6 hours is better than the FLIR C5. The accuracy specification (+/- 2
+          degrees) is tighter than FLIR. Multiple image fusion modes give flexibility in how you
+          present results to customers.
         </p>
         <p>
-          <strong>Weaknesses:</strong> The HikMicro software ecosystem is less mature than FLIR.
-          The Viewer app works but lacks the polish and cloud integration of FLIR Ignite. The
-          visible light camera at 2MP is noticeably lower quality than the FLIR C5 — fine for
-          reference images but not for detailed photo documentation. The brand is less established
-          in the UK electrical market, and some customers may have concerns about Hikvision-related
-          products. The temperature range tops out at 150 degrees, which is sufficient for
-          electrical work but limits the camera for other applications.
+          <strong>Weaknesses:</strong> The HikMicro software ecosystem is less mature than FLIR. The
+          Viewer app works but lacks the polish and cloud integration of FLIR Ignite. The visible
+          light camera at 2MP is noticeably lower quality than the FLIR C5 — fine for reference
+          images but not for detailed photo documentation. The brand is less established in the UK
+          electrical market, and some customers may have concerns about Hikvision-related products.
+          The temperature range tops out at 150 degrees, which is sufficient for electrical work but
+          limits the camera for other applications.
         </p>
         <p>
           <strong>Best for:</strong> Electricians who want the best thermal resolution per pound
@@ -331,7 +360,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Fluke PTi120 — The Pocket Powerhouse</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Fluke PTi120 — The Pocket Powerhouse
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Fluke's entry into compact thermal imaging brings the same build quality and brand
             reputation that makes the Fluke 1664 FC a premium MFT. The PTi120 is designed
@@ -339,16 +370,32 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Thermal resolution:</strong> 120x90 pixels</p>
-              <p className="text-white text-sm"><strong>Temperature range:</strong> -20 to +150 degrees C</p>
-              <p className="text-white text-sm"><strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%</p>
-              <p className="text-white text-sm"><strong>IR-Fusion:</strong> Yes (Fluke blend mode)</p>
+              <p className="text-white text-sm">
+                <strong>Thermal resolution:</strong> 120x90 pixels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Temperature range:</strong> -20 to +150 degrees C
+              </p>
+              <p className="text-white text-sm">
+                <strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%
+              </p>
+              <p className="text-white text-sm">
+                <strong>IR-Fusion:</strong> Yes (Fluke blend mode)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Visible camera:</strong> 2MP</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> Fluke Connect</p>
-              <p className="text-white text-sm"><strong>Battery:</strong> Rechargeable, 4 hours</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 550 to 700 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Visible camera:</strong> 2MP
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> Fluke Connect
+              </p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Rechargeable, 4 hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 550 to 700 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -356,20 +403,20 @@ const sections = [
           <strong>Strengths:</strong> Fluke Connect integration — if you already use a Fluke 1664 FC
           MFT, the PTi120 feeds into the same app and cloud ecosystem. Build quality is excellent
           with an IP54 dust and splash rating. The form factor is genuinely pocket-friendly. The
-          IR-Fusion blend mode overlays thermal data on the visible image for easy identification
-          of hot spots. Fluke's calibration and support network is the strongest in the UK.
+          IR-Fusion blend mode overlays thermal data on the visible image for easy identification of
+          hot spots. Fluke's calibration and support network is the strongest in the UK.
         </p>
         <p>
           <strong>Weaknesses:</strong> The 120x90 thermal resolution is the lowest in this review.
           While adequate for identifying obvious hot spots, it lacks the detail of the HikMicro B1L
           or FLIR C5 for pinpointing individual connections on a densely populated board. At 550 to
-          700 pounds, it costs more than the HikMicro B1L with lower resolution — you are paying
-          the Fluke premium for build quality and ecosystem integration. Battery life at 4 hours
-          matches the FLIR C5 limitation.
+          700 pounds, it costs more than the HikMicro B1L with lower resolution — you are paying the
+          Fluke premium for build quality and ecosystem integration. Battery life at 4 hours matches
+          the FLIR C5 limitation.
         </p>
         <p>
-          <strong>Best for:</strong> Electricians already invested in the Fluke Connect ecosystem who
-          want thermal imaging that integrates seamlessly with their existing workflow.
+          <strong>Best for:</strong> Electricians already invested in the Fluke Connect ecosystem
+          who want thermal imaging that integrates seamlessly with their existing workflow.
         </p>
       </>
     ),
@@ -388,25 +435,41 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Thermal resolution:</strong> 160x120 pixels</p>
-              <p className="text-white text-sm"><strong>Temperature range:</strong> -20 to +400 degrees C</p>
-              <p className="text-white text-sm"><strong>Accuracy:</strong> +/- 3 degrees C or +/- 5%</p>
-              <p className="text-white text-sm"><strong>MSX enhancement:</strong> Yes</p>
+              <p className="text-white text-sm">
+                <strong>Thermal resolution:</strong> 160x120 pixels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Temperature range:</strong> -20 to +400 degrees C
+              </p>
+              <p className="text-white text-sm">
+                <strong>Accuracy:</strong> +/- 3 degrees C or +/- 5%
+              </p>
+              <p className="text-white text-sm">
+                <strong>MSX enhancement:</strong> Yes
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Visible camera:</strong> Uses phone camera</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> FLIR ONE app (iOS/Android)</p>
-              <p className="text-white text-sm"><strong>Battery:</strong> Internal, 1 hour continuous</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 300 to 400 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Visible camera:</strong> Uses phone camera
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> FLIR ONE app (iOS/Android)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> Internal, 1 hour continuous
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 300 to 400 pounds
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> The price is the primary advantage — 300 to 400 pounds for
-          160x120 resolution with MSX is good value. The FLIR ONE app is well-designed with
-          multiple colour palettes, spot temperature measurement, and image export. Using your
-          phone screen means a larger, higher-resolution display than any standalone camera at this
-          price. The 160x120 sensor resolution matches the FLIR C5.
+          160x120 resolution with MSX is good value. The FLIR ONE app is well-designed with multiple
+          colour palettes, spot temperature measurement, and image export. Using your phone screen
+          means a larger, higher-resolution display than any standalone camera at this price. The
+          160x120 sensor resolution matches the FLIR C5.
         </p>
         <p>
           <strong>Weaknesses:</strong> The 1-hour battery life is genuinely problematic — it drains
@@ -431,7 +494,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Milwaukee M12 — The Tool Brand Option</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Milwaukee M12 — The Tool Brand Option
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Milwaukee's M12 thermal imager uses the M12 battery platform that powers their drill
             range. If you are already invested in Milwaukee cordless tools, the shared battery
@@ -439,37 +504,53 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Thermal resolution:</strong> 120x90 pixels</p>
-              <p className="text-white text-sm"><strong>Temperature range:</strong> -10 to +400 degrees C</p>
-              <p className="text-white text-sm"><strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%</p>
-              <p className="text-white text-sm"><strong>Image overlay:</strong> Basic blend mode</p>
+              <p className="text-white text-sm">
+                <strong>Thermal resolution:</strong> 120x90 pixels
+              </p>
+              <p className="text-white text-sm">
+                <strong>Temperature range:</strong> -10 to +400 degrees C
+              </p>
+              <p className="text-white text-sm">
+                <strong>Accuracy:</strong> +/- 3 degrees C or +/- 3%
+              </p>
+              <p className="text-white text-sm">
+                <strong>Image overlay:</strong> Basic blend mode
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Visible camera:</strong> VGA</p>
-              <p className="text-white text-sm"><strong>Connectivity:</strong> None (USB download)</p>
-              <p className="text-white text-sm"><strong>Battery:</strong> M12 platform, 6+ hours</p>
-              <p className="text-white text-sm"><strong>Street price:</strong> 500 to 650 pounds (body only)</p>
+              <p className="text-white text-sm">
+                <strong>Visible camera:</strong> VGA
+              </p>
+              <p className="text-white text-sm">
+                <strong>Connectivity:</strong> None (USB download)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Battery:</strong> M12 platform, 6+ hours
+              </p>
+              <p className="text-white text-sm">
+                <strong>Street price:</strong> 500 to 650 pounds (body only)
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> Battery life is excellent — the M12 platform batteries are
-          robust and long-lasting. If you already own M12 batteries from other Milwaukee tools,
-          you do not need to buy additional batteries. The build quality is designed for
-          construction sites — it is tougher than the FLIR and Fluke pocket cameras. The pistol
-          grip ergonomics feel natural for electricians used to holding power tools.
+          robust and long-lasting. If you already own M12 batteries from other Milwaukee tools, you
+          do not need to buy additional batteries. The build quality is designed for construction
+          sites — it is tougher than the FLIR and Fluke pocket cameras. The pistol grip ergonomics
+          feel natural for electricians used to holding power tools.
         </p>
         <p>
           <strong>Weaknesses:</strong> No wireless connectivity — images must be downloaded via USB,
           which is a significant limitation for modern workflows. The 120x90 thermal resolution is
           tied for the lowest in this review. The visible camera is VGA quality, which is poor by
-          2026 standards. The image quality and software features are noticeably behind the
-          thermal imaging specialists (FLIR, HikMicro). If you do not already own M12 batteries,
-          the total cost including battery and charger pushes it above 700 pounds.
+          2026 standards. The image quality and software features are noticeably behind the thermal
+          imaging specialists (FLIR, HikMicro). If you do not already own M12 batteries, the total
+          cost including battery and charger pushes it above 700 pounds.
         </p>
         <p>
-          <strong>Best for:</strong> Electricians heavily invested in the Milwaukee M12 ecosystem who
-          want a thermal camera that shares batteries with their existing tools and can survive
+          <strong>Best for:</strong> Electricians heavily invested in the Milwaukee M12 ecosystem
+          who want a thermal camera that shares batteries with their existing tools and can survive
           rough treatment on site.
         </p>
       </>
@@ -490,17 +571,17 @@ const sections = [
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>True sensor resolution</strong> — ignore "enhanced" or "SuperResolution"
-                numbers. The true sensor resolution is what determines actual thermal detail. 160x120
-                is the sweet spot for electrical work. 120x90 is the minimum. Below 80x60 is not
-                useful for identifying individual connections.
+                numbers. The true sensor resolution is what determines actual thermal detail.
+                160x120 is the sweet spot for electrical work. 120x90 is the minimum. Below 80x60 is
+                not useful for identifying individual connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NETD (thermal sensitivity)</strong> — this measures the smallest temperature
-                difference the camera can detect. Under 70mK (0.07 degrees C) is good. Under 50mK
-                is excellent. This determines whether you can spot subtle temperature differences
+                difference the camera can detect. Under 70mK (0.07 degrees C) is good. Under 50mK is
+                excellent. This determines whether you can spot subtle temperature differences
                 between adjacent connections.
               </span>
             </li>
@@ -536,28 +617,54 @@ const sections = [
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Resolution (Best to Lowest)</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>1st:</strong> HikMicro B1L (256x192) — 350 to 450 pounds</p>
-              <p><strong>2nd:</strong> FLIR C5 (160x120) — 500 to 600 pounds</p>
-              <p><strong>2nd:</strong> FLIR ONE Pro (160x120) — 300 to 400 pounds</p>
-              <p><strong>4th:</strong> Fluke PTi120 (120x90) — 550 to 700 pounds</p>
-              <p><strong>4th:</strong> Milwaukee M12 (120x90) — 500 to 650 pounds</p>
+              <p>
+                <strong>1st:</strong> HikMicro B1L (256x192) — 350 to 450 pounds
+              </p>
+              <p>
+                <strong>2nd:</strong> FLIR C5 (160x120) — 500 to 600 pounds
+              </p>
+              <p>
+                <strong>2nd:</strong> FLIR ONE Pro (160x120) — 300 to 400 pounds
+              </p>
+              <p>
+                <strong>4th:</strong> Fluke PTi120 (120x90) — 550 to 700 pounds
+              </p>
+              <p>
+                <strong>4th:</strong> Milwaukee M12 (120x90) — 500 to 650 pounds
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Battery Life (Best to Shortest)</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>1st:</strong> Milwaukee M12 (6+ hours with M12 battery)</p>
-              <p><strong>2nd:</strong> HikMicro B1L (6 hours)</p>
-              <p><strong>3rd:</strong> FLIR C5 (4 hours) and Fluke PTi120 (4 hours)</p>
-              <p><strong>5th:</strong> FLIR ONE Pro (1 hour)</p>
+              <p>
+                <strong>1st:</strong> Milwaukee M12 (6+ hours with M12 battery)
+              </p>
+              <p>
+                <strong>2nd:</strong> HikMicro B1L (6 hours)
+              </p>
+              <p>
+                <strong>3rd:</strong> FLIR C5 (4 hours) and Fluke PTi120 (4 hours)
+              </p>
+              <p>
+                <strong>5th:</strong> FLIR ONE Pro (1 hour)
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-3">Value for Money</h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Best overall:</strong> HikMicro B1L — highest resolution at the lowest price</p>
-              <p><strong>Best all-rounder:</strong> FLIR C5 — best software, good resolution, pocket-sized</p>
-              <p><strong>Best entry point:</strong> FLIR ONE Pro — cheapest way to try thermal imaging</p>
+              <p>
+                <strong>Best overall:</strong> HikMicro B1L — highest resolution at the lowest price
+              </p>
+              <p>
+                <strong>Best all-rounder:</strong> FLIR C5 — best software, good resolution,
+                pocket-sized
+              </p>
+              <p>
+                <strong>Best entry point:</strong> FLIR ONE Pro — cheapest way to try thermal
+                imaging
+              </p>
             </div>
           </div>
         </div>
@@ -573,9 +680,9 @@ const sections = [
           <h3 className="font-bold text-white text-lg mb-3">The Recommendation</h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             <strong>Best overall: FLIR C5.</strong> The combination of 160x120 resolution, MSX image
-            fusion, FLIR Ignite cloud integration, and a pocket-sized form factor makes it the
-            most practical thermal camera for day-to-day electrical work. The software ecosystem is
-            the most mature and the brand is universally recognised.
+            fusion, FLIR Ignite cloud integration, and a pocket-sized form factor makes it the most
+            practical thermal camera for day-to-day electrical work. The software ecosystem is the
+            most mature and the brand is universally recognised.
           </p>
           <p className="text-white text-sm leading-relaxed mb-3">
             <strong>Best value: HikMicro B1L.</strong> If raw thermal resolution per pound is your
@@ -585,9 +692,9 @@ const sections = [
           </p>
           <p className="text-white text-sm leading-relaxed">
             <strong>Best for trying thermal imaging: FLIR ONE Pro.</strong> At 300 to 400 pounds
-            with no commitment to a standalone device, it is the lowest-risk way to discover
-            whether thermal imaging adds value to your workflow. Just accept the battery and
-            ergonomic limitations.
+            with no commitment to a standalone device, it is the lowest-risk way to discover whether
+            thermal imaging adds value to your workflow. Just accept the battery and ergonomic
+            limitations.
           </p>
         </div>
         <p>
@@ -637,7 +744,7 @@ export default function BestThermalImagingCameraElectricianPage() {
       faqHeading="Frequently Asked Questions About Thermal Imaging for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Add Thermal Evidence to Your EICR Reports"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates with photo attachments, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

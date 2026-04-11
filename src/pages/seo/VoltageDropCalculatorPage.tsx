@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'Can voltage drop be a problem even if a circuit passes all other BS 7671 checks?',
     answer:
-      'Yes. A circuit can have perfectly acceptable earth fault loop impedance, insulation resistance, and continuity values and still fail the voltage drop check. This is common on long circuit runs — for example, an outbuilding circuit running 40 to 50 metres from the distribution board, or a socket circuit in a large commercial unit serving the far end of a building. Excessive voltage drop causes equipment to run below its design voltage, which reduces the performance of motors and reduces the light output of certain lamp types. It can also cause electronic equipment to operate erratically or shut down. When you encounter high voltage drop on a circuit, the options are to increase the cable cross-sectional area, reduce the circuit length by adding a sub-distribution board closer to the load, or in some cases accept the situation with written agreement if the loads are tolerant of lower voltages. Elec-Mate\'s voltage drop calculator highlights circuits that exceed the BS 7671 limits and suggests alternative cable sizes.',
+      "Yes. A circuit can have perfectly acceptable earth fault loop impedance, insulation resistance, and continuity values and still fail the voltage drop check. This is common on long circuit runs — for example, an outbuilding circuit running 40 to 50 metres from the distribution board, or a socket circuit in a large commercial unit serving the far end of a building. Excessive voltage drop causes equipment to run below its design voltage, which reduces the performance of motors and reduces the light output of certain lamp types. It can also cause electronic equipment to operate erratically or shut down. When you encounter high voltage drop on a circuit, the options are to increase the cable cross-sectional area, reduce the circuit length by adding a sub-distribution board closer to the load, or in some cases accept the situation with written agreement if the loads are tolerant of lower voltages. Elec-Mate's voltage drop calculator highlights circuits that exceed the BS 7671 limits and suggests alternative cable sizes.",
   },
 ];
 
@@ -137,7 +137,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -694,7 +694,7 @@ export default function VoltageDropCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Calculate Voltage Drop in Seconds"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

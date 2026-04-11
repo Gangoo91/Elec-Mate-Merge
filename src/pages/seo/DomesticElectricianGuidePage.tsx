@@ -48,7 +48,7 @@ const keyTakeaways = [
   'Part P of the Building Regulations (England and Wales) requires that most domestic electrical work is either carried out by a registered competent person or notified to Building Control before work begins.',
   'Registration with a competent person scheme such as NICEIC Domestic Installer, NAPIT, or ELECSA allows you to self-certify notifiable work without involving Building Control, saving your customers time and money.',
   'Typical domestic electrician earnings in the UK range from £30,000 to £55,000 employed, with self-employed electricians earning £40,000 to £70,000+ depending on location, specialisation, and efficiency.',
-  'Elec-Mate covers every domestic job — all 8 certificate types, cable sizing for house circuits, board scanner, quote builder, and invoice app. One subscription replaces multiple tools.',
+  'Elec-Mate covers every domestic job — all 16 certificate types, cable sizing for house circuits, board scanner, quote builder, and invoice app. One subscription replaces multiple tools.',
 ];
 
 const faqs = [
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/guides/electrical-certificate-types-uk',
     title: 'Electrical Certificate Types',
     description:
-      'All 8 certificate types explained — EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, and more.',
+      'All 16 certificate types explained — EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, and more.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -279,7 +279,7 @@ const sections = [
           certificate types that a domestic electrician needs, directly from your phone.
         </p>
         <SEOAppBridge
-          title="All 8 certificate types in one app"
+          title="All 16 certificate types in one app"
           description="EIC, MEIWC, EICR, minor works, fire alarm, emergency lighting, EV charger, and PAT testing certificates. Complete them on your phone on site, send them to the customer before you leave. No evening paperwork."
           icon={FileCheck2}
         />
@@ -776,7 +776,7 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">All 8 Certificate Types</h4>
+                <h4 className="font-bold text-white mb-1">All 16 Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   EIC, MEIWC, EICR, Minor Works, Fire Alarm (BS 5839), Emergency Lighting (BS 5266),
                   EV Charger, and PAT Testing. Every certificate a domestic electrician needs,
@@ -834,7 +834,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="One app for every domestic job"
-          description="Join 430+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for domestic certification, calculations, quoting, and invoicing. All on your phone, all on site. 7-day free trial, cancel anytime."
           icon={Zap}
         />
       </>
@@ -871,7 +871,7 @@ export default function DomesticElectricianGuidePage() {
       faqHeading="Frequently Asked Questions About Domestic Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Every Domestic Cert on Your Phone"
-      ctaSubheading="Join 430+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians completing EICs, EICRs, minor works, and more on their phones. AI board scanner, cable sizing, quote builder, and instant delivery. 7-day free trial."
     />
   );
 }

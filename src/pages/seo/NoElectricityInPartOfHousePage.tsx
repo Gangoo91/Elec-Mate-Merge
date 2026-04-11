@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/trip-switch-keeps-going-off',
     title: 'Trip Switch Keeps Going Off',
-    description: 'Why your trip switch keeps tripping — MCB vs RCD, causes, and how to find the fault.',
+    description:
+      'Why your trip switch keeps tripping — MCB vs RCD, causes, and how to find the fault.',
     icon: Zap,
     category: 'Guide',
   },
@@ -171,9 +172,10 @@ const sections = [
             <h4 className="font-bold text-white mb-2">1. Check the consumer unit</h4>
             <p className="text-white text-sm leading-relaxed">
               Open the consumer unit cover and look at all the switches. If any MCB is in the middle
-              or "off" position, that circuit has tripped. Try pushing it firmly to the "on" position.
-              If it stays on, the problem may have been a transient fault. If it trips again
-              immediately, there is an active fault on that circuit — do not keep resetting it.
+              or "off" position, that circuit has tripped. Try pushing it firmly to the "on"
+              position. If it stays on, the problem may have been a transient fault. If it trips
+              again immediately, there is an active fault on that circuit — do not keep resetting
+              it.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -191,16 +193,16 @@ const sections = [
               If the power loss does not match your circuit layout (for example, you have lost one
               phase in a three-phase supply, or the power loss is intermittent), check whether your
               neighbours have power. A supply fault from the distribution network operator (DNO) can
-              cause partial power loss. If your neighbours are also affected, contact your DNO (found
-              on your electricity bill).
+              cause partial power loss. If your neighbours are also affected, contact your DNO
+              (found on your electricity bill).
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">4. Check for a prepayment meter</h4>
             <p className="text-white text-sm leading-relaxed">
               If you have a prepayment meter, check the credit. Some prepayment meters disconnect
-              individual circuits when credit runs out, rather than cutting all power at once. Top up
-              the meter if the balance is zero or in emergency credit.
+              individual circuits when credit runs out, rather than cutting all power at once. Top
+              up the meter if the balance is zero or in emergency credit.
             </p>
           </div>
         </div>
@@ -228,15 +230,16 @@ const sections = [
                 investigate further using the{' '}
                 <SEOInternalLink href="/guides/trip-switch-keeps-going-off">
                   trip switch troubleshooting guide
-                </SEOInternalLink>.
+                </SEOInternalLink>
+                .
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>If the MCB trips immediately on reset</strong> — there is a hard fault on the
-                circuit (short circuit or major overcurrent). Do not keep resetting. An electrician
-                needs to locate and repair the fault before the circuit can be used.
+                <strong>If the MCB trips immediately on reset</strong> — there is a hard fault on
+                the circuit (short circuit or major overcurrent). Do not keep resetting. An
+                electrician needs to locate and repair the fault before the circuit can be used.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -251,8 +254,8 @@ const sections = [
         </div>
         <p>
           Remember that an MCB protects a specific circuit. Check the label on the consumer unit to
-          identify which circuit the tripped MCB controls — this tells you which area of the house is
-          affected and helps narrow down the cause.
+          identify which circuit the tripped MCB controls — this tells you which area of the house
+          is affected and helps narrow down the cause.
         </p>
       </>
     ),
@@ -315,9 +318,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DIY damage</strong> — drilling into a wall, screwing into a floor, or nailing
-                into a joist without checking for cables first. This is extremely common and can
-                sever a conductor or damage insulation.
+                <strong>DIY damage</strong> — drilling into a wall, screwing into a floor, or
+                nailing into a joist without checking for cables first. This is extremely common and
+                can sever a conductor or damage insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,10 +334,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Age-related degradation</strong> — very old cable (particularly rubber-insulated
-                cable from pre-1960s installations) becomes brittle and the insulation cracks,
-                exposing conductors. This can cause intermittent faults as the cracked insulation
-                makes and breaks contact.
+                <strong>Age-related degradation</strong> — very old cable (particularly
+                rubber-insulated cable from pre-1960s installations) becomes brittle and the
+                insulation cracks, exposing conductors. This can cause intermittent faults as the
+                cracked insulation makes and breaks contact.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -349,8 +352,8 @@ const sections = [
         </div>
         <p>
           Cable damage inside walls, floors, and ceiling voids is invisible from outside. An
-          electrician uses insulation resistance testing and continuity testing to locate the damaged
-          section, and may need to replace a cable run if the damage is significant.
+          electrician uses insulation resistance testing and continuity testing to locate the
+          damaged section, and may need to replace a cable run if the damage is significant.
         </p>
       </>
     ),
@@ -367,10 +370,12 @@ const sections = [
           creates a specific problem when the shared neutral is interrupted.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">What Happens When a Shared Neutral Breaks</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            What Happens When a Shared Neutral Breaks
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            When the shared neutral conductor breaks or becomes disconnected, the circuits that share
-            it are effectively connected in series rather than in parallel. This causes:
+            When the shared neutral conductor breaks or becomes disconnected, the circuits that
+            share it are effectively connected in series rather than in parallel. This causes:
           </p>
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
@@ -379,7 +384,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>Other circuits may receive higher-than-normal voltage, potentially damaging appliances</span>
+              <span>
+                Other circuits may receive higher-than-normal voltage, potentially damaging
+                appliances
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
@@ -392,10 +400,13 @@ const sections = [
           </ul>
         </div>
         <p>
-          <strong>If you notice lights getting abnormally bright, switch off the main switch
-          immediately and call an electrician.</strong> Overvoltage can damage sensitive electronics
-          and appliances, and is a sign of a neutral fault that needs urgent repair. An electrician
-          will test for shared neutrals, locate the break, and repair or rewire the affected circuits.
+          <strong>
+            If you notice lights getting abnormally bright, switch off the main switch immediately
+            and call an electrician.
+          </strong>{' '}
+          Overvoltage can damage sensitive electronics and appliances, and is a sign of a neutral
+          fault that needs urgent repair. An electrician will test for shared neutrals, locate the
+          break, and repair or rewire the affected circuits.
         </p>
       </>
     ),
@@ -406,10 +417,10 @@ const sections = [
     content: (
       <>
         <p>
-          Most UK socket circuits are wired as ring final circuits — the cable starts at the consumer
-          unit, loops through every socket on the circuit, and returns to the consumer unit. This
-          means each socket is fed from two directions, and the load is shared between the two legs
-          of the ring.
+          Most UK socket circuits are wired as ring final circuits — the cable starts at the
+          consumer unit, loops through every socket on the circuit, and returns to the consumer
+          unit. This means each socket is fed from two directions, and the load is shared between
+          the two legs of the ring.
         </p>
         <p>
           When the ring breaks (a disconnection at one point in the ring), the circuit effectively
@@ -430,17 +441,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The MCB trips under load</strong> — a broken ring concentrates current on one
-                leg. The single cable may overheat under full load, or a loose connection at the break
-                point may arc and trip the MCB.
+                <strong>The MCB trips under load</strong> — a broken ring concentrates current on
+                one leg. The single cable may overheat under full load, or a loose connection at the
+                break point may arc and trip the MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Common break points</strong> — back of socket terminals (loose screws),
-                junction boxes under floors, and connections inside ceiling roses where ring circuits
-                pass through lighting points.
+                junction boxes under floors, and connections inside ceiling roses where ring
+                circuits pass through lighting points.
               </span>
             </li>
           </ul>
@@ -448,11 +459,9 @@ const sections = [
         <p>
           A broken ring is not always obvious because many sockets may continue to work. It is
           typically discovered during an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
-            EICR inspection
-          </SEOInternalLink>{' '}
-          when the electrician performs a ring continuity test, or when an investigation is triggered
-          by tripping or partial power loss.
+          <SEOInternalLink href="/guides/eicr-certificate">EICR inspection</SEOInternalLink> when
+          the electrician performs a ring continuity test, or when an investigation is triggered by
+          tripping or partial power loss.
         </p>
       </>
     ),
@@ -463,18 +472,18 @@ const sections = [
     content: (
       <>
         <p>
-          If your consumer unit uses fuse carriers instead of MCBs (common in properties built before
-          the 1990s), a blown fuse is the equivalent of a tripped MCB. There are two types:
+          If your consumer unit uses fuse carriers instead of MCBs (common in properties built
+          before the 1990s), a blown fuse is the equivalent of a tripped MCB. There are two types:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
             <h4 className="font-bold text-white mb-2">Rewirable Fuses (BS 3036)</h4>
             <p className="text-white text-sm leading-relaxed">
               These have a visible piece of fuse wire between two screw terminals. When blown, the
-              wire will be broken — you can see it through the front of the fuse carrier. To replace,
-              switch off the main switch, remove the fuse carrier, unscrew the old wire, thread new
-              fuse wire of the correct rating through the carrier, and reinsert. Always use the
-              correct rating wire — using a higher rating is extremely dangerous.
+              wire will be broken — you can see it through the front of the fuse carrier. To
+              replace, switch off the main switch, remove the fuse carrier, unscrew the old wire,
+              thread new fuse wire of the correct rating through the carrier, and reinsert. Always
+              use the correct rating wire — using a higher rating is extremely dangerous.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -488,8 +497,8 @@ const sections = [
           </div>
         </div>
         <p>
-          If you are replacing fuses regularly on the same circuit, the circuit has a recurring fault
-          that needs investigating. Fuse boards also provide no RCD protection, which is a
+          If you are replacing fuses regularly on the same circuit, the circuit has a recurring
+          fault that needs investigating. Fuse boards also provide no RCD protection, which is a
           significant safety concern. Consider a{' '}
           <SEOInternalLink href="/guides/consumer-unit-upgrade">
             consumer unit upgrade
@@ -506,8 +515,8 @@ const sections = [
       <>
         <p>
           If resetting the breaker or replacing a fuse restores power and it stays on, you may not
-          need an electrician immediately (but monitor the situation). Here is when you definitely need
-          professional help:
+          need an electrician immediately (but monitor the situation). Here is when you definitely
+          need professional help:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -523,9 +532,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Urgent</strong> — power loss is intermittent (flickering, cutting in and out),
-                the MCB trips repeatedly after reset, you have lost power with no obvious tripped
-                breaker, or a fuse blows immediately on replacement.
+                <strong>Urgent</strong> — power loss is intermittent (flickering, cutting in and
+                out), the MCB trips repeatedly after reset, you have lost power with no obvious
+                tripped breaker, or a fuse blows immediately on replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -541,10 +550,8 @@ const sections = [
         <p>
           An electrician will perform continuity testing, insulation resistance testing, and load
           measurements to identify the fault. For recurring issues, a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
-            EICR
-          </SEOInternalLink>{' '}
-          will identify all defects across the entire installation and prioritise them by severity.
+          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> will identify all
+          defects across the entire installation and prioritise them by severity.
         </p>
       </>
     ),
@@ -565,11 +572,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">1. Consumer Unit Inspection</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Visually inspect the consumer unit for signs of overheating (discolouration, melted
-                  plastic, burning smell). Test voltage at the affected MCB output terminals with the
-                  MCB on — no voltage indicates a supply-side issue (loose connection on busbar or
-                  incoming cable). Retorque all connections on affected circuits. Check the incoming
-                  supply — measure voltage at the main switch to rule out DNO supply faults.
+                  Visually inspect the consumer unit for signs of overheating (discolouration,
+                  melted plastic, burning smell). Test voltage at the affected MCB output terminals
+                  with the MCB on — no voltage indicates a supply-side issue (loose connection on
+                  busbar or incoming cable). Retorque all connections on affected circuits. Check
+                  the incoming supply — measure voltage at the main switch to rule out DNO supply
+                  faults.
                 </p>
               </div>
             </div>
@@ -581,10 +589,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">2. Circuit Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Perform continuity testing (R1, R2, R1+R2) on the affected circuit. For ring final
-                  circuits, carry out the full ring continuity test to verify the ring is complete and
-                  identify any break points. Test insulation resistance at 500V DC (L-E, N-E, L-N) —
-                  minimum 1 megohm. Low readings indicate cable damage or moisture ingress. Use the
-                  half-split technique to narrow down the fault location on long cable runs.
+                  circuits, carry out the full ring continuity test to verify the ring is complete
+                  and identify any break points. Test insulation resistance at 500V DC (L-E, N-E,
+                  L-N) — minimum 1 megohm. Low readings indicate cable damage or moisture ingress.
+                  Use the half-split technique to narrow down the fault location on long cable runs.
                 </p>
               </div>
             </div>
@@ -598,8 +606,8 @@ const sections = [
                   If the customer reports abnormally bright lights or damaged appliances, suspect a
                   neutral fault. Test neutral-to-earth voltage at several points — elevated N-E
                   voltage indicates a high-impedance neutral connection or break. Check for shared
-                  neutrals at junction boxes and the consumer unit. Multi-core cables running between
-                  circuits in older properties are the typical location.
+                  neutrals at junction boxes and the consumer unit. Multi-core cables running
+                  between circuits in older properties are the typical location.
                 </p>
               </div>
             </div>
@@ -614,9 +622,9 @@ const sections = [
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
-                  for the repair work. If the investigation reveals wider installation issues (shared
-                  neutrals, degraded cables, inadequate protection), recommend and quote for a full
-                  EICR and any necessary remedial works.
+                  for the repair work. If the investigation reveals wider installation issues
+                  (shared neutrals, degraded cables, inadequate protection), recommend and quote for
+                  a full EICR and any necessary remedial works.
                 </p>
               </div>
             </div>
@@ -649,8 +657,7 @@ export default function NoElectricityInPartOfHousePage() {
       badgeIcon={Power}
       heroTitle={
         <>
-          No Electricity in Part of House:{' '}
-          <span className="text-yellow-400">Causes and Fixes</span>
+          No Electricity in Part of House: <span className="text-yellow-400">Causes and Fixes</span>
         </>
       }
       heroSubtitle="Part of your house has lost power. This guide covers every common cause — from a simple tripped breaker to shared neutral faults in older properties — tells you what to check yourself, and explains when to call an electrician."
@@ -661,7 +668,7 @@ export default function NoElectricityInPartOfHousePage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Power Loss and Certify Repairs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, circuit testing records, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

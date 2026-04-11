@@ -90,48 +90,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete your EIC on site and include it in the handover package.',
+    description: 'Complete your EIC on site and include it in the handover package.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/working-with-other-trades-electrician',
     title: 'Working with Other Trades',
-    description:
-      'Coordinate handover timing with other trades on multi-trade projects.',
+    description: 'Coordinate handover timing with other trades on multi-trade projects.',
     icon: Users,
     category: 'Guide',
   },
   {
     href: '/guides/health-safety-policy-electrician',
     title: 'Health and Safety Policy',
-    description:
-      'H&S documentation feeds into the commercial handover health and safety file.',
+    description: 'H&S documentation feeds into the commercial handover health and safety file.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'Professional handovers win repeat commercial contracts.',
+    description: 'Professional handovers win repeat commercial contracts.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-estimating-guide',
     title: 'Electrical Estimating Guide',
-    description:
-      'Include handover time in your estimates — it is billable work.',
+    description: 'Include handover time in your estimates — it is billable work.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/how-to-get-first-electrical-customer',
     title: 'Getting Your First Customer',
-    description:
-      'A great handover leads to reviews and referrals — your best marketing.',
+    description: 'A great handover leads to reviews and referrals — your best marketing.',
     icon: Briefcase,
     category: 'Guide',
   },
@@ -148,20 +142,20 @@ const sections = [
     content: (
       <>
         <p>
-          The way you finish a job is what the customer remembers. A clean, professional
-          handover — with all documentation, a walkthrough, and a clear explanation — turns a
-          completed job into a lasting impression. It is also what gets you five-star reviews,
-          referrals, and repeat business.
+          The way you finish a job is what the customer remembers. A clean, professional handover —
+          with all documentation, a walkthrough, and a clear explanation — turns a completed job
+          into a lasting impression. It is also what gets you five-star reviews, referrals, and
+          repeat business.
         </p>
         <p>
-          Too many electricians finish the work, test, slap the certificate on the worktop,
-          and leave. That is a missed opportunity. A proper handover takes 30 to 60 minutes
-          and includes documentation, demonstration, and a conversation about ongoing
-          maintenance. It is billable time and it is time well spent.
+          Too many electricians finish the work, test, slap the certificate on the worktop, and
+          leave. That is a missed opportunity. A proper handover takes 30 to 60 minutes and includes
+          documentation, demonstration, and a conversation about ongoing maintenance. It is billable
+          time and it is time well spent.
         </p>
         <p>
-          This guide covers what you need to hand over for domestic and commercial projects,
-          how to conduct a client walkthrough, and what warranty and aftercare to provide.
+          This guide covers what you need to hand over for domestic and commercial projects, how to
+          conduct a client walkthrough, and what warranty and aftercare to provide.
         </p>
       </>
     ),
@@ -221,14 +215,14 @@ const sections = [
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <FileCheck2 className="w-5 h-5 text-blue-400" /> EIC (Electrical Installation Certificate)
+              <FileCheck2 className="w-5 h-5 text-blue-400" /> EIC (Electrical Installation
+              Certificate)
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Required for all new installations and major alterations. Confirms the
-              installation complies with BS 7671 at the time of completion. Must include
-              full schedule of test results for every circuit. This is the certificate you
-              issue for rewires, new circuits, consumer unit replacements, and other
-              notifiable work.
+              Required for all new installations and major alterations. Confirms the installation
+              complies with BS 7671 at the time of completion. Must include full schedule of test
+              results for every circuit. This is the certificate you issue for rewires, new
+              circuits, consumer unit replacements, and other notifiable work.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -236,21 +230,22 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-green-400" /> MEIWC (Minor Works Certificate)
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              For minor additions or alterations to existing circuits — such as adding a
-              socket to an existing ring final, replacing a light fitting, or adding an FCU.
-              Does not require a full schedule of test results but must confirm the work
-              complies with BS 7671 and includes relevant test results.
+              For minor additions or alterations to existing circuits — such as adding a socket to
+              an existing ring final, replacing a light fitting, or adding an FCU. Does not require
+              a full schedule of test results but must confirm the work complies with BS 7671 and
+              includes relevant test results.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <FileCheck2 className="w-5 h-5 text-purple-400" /> EICR (Electrical Installation Condition Report)
+              <FileCheck2 className="w-5 h-5 text-purple-400" /> EICR (Electrical Installation
+              Condition Report)
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              For inspection and testing of existing installations — no new work involved.
-              Reports on the condition of the installation and identifies any defects. Required
-              every 5 years for rental properties (England, from 2020). Recommended every 10
-              years for owner-occupied domestic and every 5 years for commercial.
+              For inspection and testing of existing installations — no new work involved. Reports
+              on the condition of the installation and identifies any defects. Required every 5
+              years for rental properties (England, from 2020). Recommended every 10 years for
+              owner-occupied domestic and every 5 years for commercial.
             </p>
           </div>
         </div>
@@ -264,8 +259,8 @@ const sections = [
       <>
         <p>
           An O&M manual tells the building owner how to operate and maintain the electrical
-          installation. For domestic work, a simple document is sufficient. For commercial
-          work, it is a contractual and legal requirement.
+          installation. For domestic work, a simple document is sufficient. For commercial work, it
+          is a contractual and legal requirement.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Domestic O&M Contents (2 to 4 pages)</h4>
@@ -302,8 +297,8 @@ const sections = [
         </div>
         <p>
           Attach manufacturer data sheets for all installed equipment — consumer unit, smoke
-          detectors, dimmer switches, timers, smart devices. Customers lose individual
-          instruction leaflets; the O&M manual keeps everything in one place.
+          detectors, dimmer switches, timers, smart devices. Customers lose individual instruction
+          leaflets; the O&M manual keeps everything in one place.
         </p>
       </>
     ),
@@ -314,9 +309,9 @@ const sections = [
     content: (
       <>
         <p>
-          As-built drawings show the installation as it was actually installed. For domestic
-          work, this does not need to be a formal CAD drawing — photographs and a circuit
-          schedule serve the same purpose.
+          As-built drawings show the installation as it was actually installed. For domestic work,
+          this does not need to be a formal CAD drawing — photographs and a circuit schedule serve
+          the same purpose.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -324,10 +319,10 @@ const sections = [
               <Camera className="w-5 h-5 text-blue-400" /> Domestic: Photos
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Photograph every cable route before it is concealed — in walls before
-              plasterboard, under floors before boards go down, in the loft before insulation
-              covers cables. Annotate the photos with circuit numbers. Share digitally with
-              the customer (email or app) so they have a permanent record.
+              Photograph every cable route before it is concealed — in walls before plasterboard,
+              under floors before boards go down, in the loft before insulation covers cables.
+              Annotate the photos with circuit numbers. Share digitally with the customer (email or
+              app) so they have a permanent record.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -337,9 +332,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Update the original design drawings to show the installation as built. Mark all
               changes from the design in red (known as "red-line" drawings). Include: circuit
-              routes, containment routes, distribution board locations, switch and socket
-              positions, fire alarm and emergency lighting layouts. Submit in both PDF and
-              editable format (DWG/DXF).
+              routes, containment routes, distribution board locations, switch and socket positions,
+              fire alarm and emergency lighting layouts. Submit in both PDF and editable format
+              (DWG/DXF).
             </p>
           </div>
         </div>
@@ -352,9 +347,9 @@ const sections = [
     content: (
       <>
         <p>
-          The client walkthrough is the most personal part of the handover. It is your chance
-          to demonstrate the quality of your work, educate the customer, and leave a lasting
-          positive impression.
+          The client walkthrough is the most personal part of the handover. It is your chance to
+          demonstrate the quality of your work, educate the customer, and leave a lasting positive
+          impression.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Walkthrough Agenda (15 to 30 minutes)</h4>
@@ -372,16 +367,16 @@ const sections = [
               controls, and any special features (dimmers, timers, outdoor lighting controls).
             </div>
             <div className="border-b border-white/10 pb-2">
-              <strong>4. Smart devices and programmable controls</strong> — set up and
-              demonstrate any smart thermostats, lighting controls, or automation.
+              <strong>4. Smart devices and programmable controls</strong> — set up and demonstrate
+              any smart thermostats, lighting controls, or automation.
             </div>
             <div className="border-b border-white/10 pb-2">
-              <strong>5. Documentation handover</strong> — present the complete handover pack
-              (EIC, O&M, photos, manufacturer instructions) and explain what each document is.
+              <strong>5. Documentation handover</strong> — present the complete handover pack (EIC,
+              O&M, photos, manufacturer instructions) and explain what each document is.
             </div>
             <div className="pb-2">
-              <strong>6. Aftercare</strong> — explain your warranty, when to schedule the next
-              EICR, and how to contact you if there is a problem.
+              <strong>6. Aftercare</strong> — explain your warranty, when to schedule the next EICR,
+              and how to contact you if there is a problem.
             </div>
           </div>
         </div>
@@ -421,11 +416,11 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Consumer rights:</strong> Under the Consumer Rights Act 2015 and the
-          Limitation Act 1980, customers can claim for faulty workmanship for up to 6 years.
-          Your formal warranty period does not limit their statutory rights. A clear warranty
-          statement shows confidence in your work and sets expectations for what you will
-          fix proactively versus what requires a formal claim.
+          <strong>Consumer rights:</strong> Under the Consumer Rights Act 2015 and the Limitation
+          Act 1980, customers can claim for faulty workmanship for up to 6 years. Your formal
+          warranty period does not limit their statutory rights. A clear warranty statement shows
+          confidence in your work and sets expectations for what you will fix proactively versus
+          what requires a formal claim.
         </p>
       </>
     ),
@@ -436,8 +431,8 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial handover is more formal and documentation-heavy. The handover package
-          typically includes:
+          Commercial handover is more formal and documentation-heavy. The handover package typically
+          includes:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white text-sm">
@@ -492,10 +487,10 @@ const sections = [
     content: (
       <>
         <p>
-          Include handover time in your quote — it is billable work, not an afterthought.
-          Budget 30 to 60 minutes for domestic and 2 to 4 hours for commercial. The handover
-          is also when you collect final payment, ask for a review, and plant the seed for
-          future work ("Your next EICR is due in 2031 — I will send you a reminder").
+          Include handover time in your quote — it is billable work, not an afterthought. Budget 30
+          to 60 minutes for domestic and 2 to 4 hours for commercial. The handover is also when you
+          collect final payment, ask for a review, and plant the seed for future work ("Your next
+          EICR is due in 2031 — I will send you a reminder").
         </p>
         <SEOAppBridge
           title="Generate handover documentation on site"
@@ -536,7 +531,7 @@ export default function ElectricalProjectHandoverPage() {
       faqHeading="Frequently Asked Questions About Electrical Project Handover"
       relatedPages={relatedPages}
       ctaHeading="Create Professional Handover Packs On Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certificates, test schedules, and handover documentation. Complete everything on site, share instantly. 7-day free trial, cancel anytime."
     />
   );
 }

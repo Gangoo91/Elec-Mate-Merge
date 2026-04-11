@@ -85,48 +85,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-estimating-guide',
     title: 'Electrical Estimating Guide',
-    description:
-      'Price your work correctly — per-point rates, labour rates, and material markup.',
+    description: 'Price your work correctly — per-point rates, labour rates, and material markup.',
     icon: Calculator,
     category: 'Guide',
   },
   {
     href: '/guides/partnership-vs-sole-trader-vs-ltd-electrician',
     title: 'Sole Trader vs Ltd vs Partnership',
-    description:
-      'Tax comparison, liability, and when to incorporate your electrical business.',
+    description: 'Tax comparison, liability, and when to incorporate your electrical business.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/guides/cash-flow-management-electricians',
     title: 'Cash Flow Management',
-    description:
-      'Invoicing terms, deposits, and staged payments to keep cash flowing.',
+    description: 'Invoicing terms, deposits, and staged payments to keep cash flowing.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'Expand into commercial — tenders, frameworks, and FM companies.',
+    description: 'Expand into commercial — tenders, frameworks, and FM companies.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/guides/how-to-get-first-electrical-customer',
     title: 'Getting Your First Customer',
-    description:
-      'Practical steps to land your first paying customer as a new electrical business.',
+    description: 'Practical steps to land your first paying customer as a new electrical business.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Professional PDF quotes with itemised pricing. Built for electricians.',
+    description: 'Professional PDF quotes with itemised pricing. Built for electricians.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -144,20 +138,20 @@ const sections = [
       <>
         <p>
           A business plan is not a document you write once and file away — it is the thinking
-          process that separates electricians who build profitable businesses from those who
-          are always chasing the next job to pay last month's bills.
+          process that separates electricians who build profitable businesses from those who are
+          always chasing the next job to pay last month's bills.
         </p>
         <p>
           The UK electrical industry is competitive. There are approximately 60,000 registered
-          electrical contractors. Most are sole traders or small businesses with 1 to 5
-          employees. The ones that survive and grow are the ones that know their numbers:
-          what it costs them to operate, what they need to charge, where their customers
-          come from, and when to invest in growth.
+          electrical contractors. Most are sole traders or small businesses with 1 to 5 employees.
+          The ones that survive and grow are the ones that know their numbers: what it costs them to
+          operate, what they need to charge, where their customers come from, and when to invest in
+          growth.
         </p>
         <p>
-          Whether you are starting from scratch, going self-employed after years as an
-          employee, or looking to grow an existing business, a business plan gives you the
-          framework to make informed decisions instead of guessing.
+          Whether you are starting from scratch, going self-employed after years as an employee, or
+          looking to grow an existing business, a business plan gives you the framework to make
+          informed decisions instead of guessing.
         </p>
       </>
     ),
@@ -175,8 +169,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">1. Executive Summary</h4>
                 <p className="text-white text-sm leading-relaxed">
                   One page. Who you are, what you do, your target market, your competitive
-                  advantage, and your financial summary (projected turnover, profit, and
-                  startup costs). Write this last — it summarises everything else.
+                  advantage, and your financial summary (projected turnover, profit, and startup
+                  costs). Write this last — it summarises everything else.
                 </p>
               </div>
             </div>
@@ -187,9 +181,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Business Description and Services</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Your business structure (sole trader, Ltd, partnership), the services you
-                  offer (domestic rewires, testing, EV charging, commercial), your
-                  qualifications and competent person scheme, and your service area.
+                  Your business structure (sole trader, Ltd, partnership), the services you offer
+                  (domestic rewires, testing, EV charging, commercial), your qualifications and
+                  competent person scheme, and your service area.
                 </p>
               </div>
             </div>
@@ -200,9 +194,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">3. Market Analysis</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Your local market: how many households, how many competing electricians,
-                  what types of work are in demand, seasonal patterns, and opportunities
-                  (new housing developments, EV growth, solar installations).
+                  Your local market: how many households, how many competing electricians, what
+                  types of work are in demand, seasonal patterns, and opportunities (new housing
+                  developments, EV growth, solar installations).
                 </p>
               </div>
             </div>
@@ -213,9 +207,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Marketing Plan</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  How you will find customers — at least three channels with costs and
-                  expected returns. Online presence, lead platforms, referral strategy, and
-                  pricing position.
+                  How you will find customers — at least three channels with costs and expected
+                  returns. Online presence, lead platforms, referral strategy, and pricing position.
                 </p>
               </div>
             </div>
@@ -226,9 +219,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">5. Financial Projections</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Startup costs, 12-month cash flow forecast, profit and loss for years 1 to
-                  3, break-even analysis, and pricing schedule. This is the most important
-                  section.
+                  Startup costs, 12-month cash flow forecast, profit and loss for years 1 to 3,
+                  break-even analysis, and pricing schedule. This is the most important section.
                 </p>
               </div>
             </div>
@@ -239,9 +231,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">6. Risk Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  What could go wrong and how you will handle it: injury or illness, van
-                  breakdown, slow-paying customers, seasonal dips, losing a key client, and
-                  regulatory changes.
+                  What could go wrong and how you will handle it: injury or illness, van breakdown,
+                  slow-paying customers, seasonal dips, losing a key client, and regulatory changes.
                 </p>
               </div>
             </div>
@@ -256,13 +247,14 @@ const sections = [
     content: (
       <>
         <p>
-          Your financial projections must be realistic. Overly optimistic projections are
-          useless — they will not convince a bank and they will mislead you into spending
-          money you do not have.
+          Your financial projections must be realistic. Overly optimistic projections are useless —
+          they will not convince a bank and they will mislead you into spending money you do not
+          have.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-yellow-400" /> Realistic Year 1 Projections (Sole Trader, 2026)
+            <BarChart3 className="w-4 h-4 text-yellow-400" /> Realistic Year 1 Projections (Sole
+            Trader, 2026)
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
@@ -304,9 +296,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Important:</strong> Year one will typically start slowly. You may only bill
-          15 to 20 hours per week in the first 3 months while building your customer base.
-          Your cash flow forecast must account for this ramp-up period.
+          <strong>Important:</strong> Year one will typically start slowly. You may only bill 15 to
+          20 hours per week in the first 3 months while building your customer base. Your cash flow
+          forecast must account for this ramp-up period.
         </p>
       </>
     ),
@@ -317,36 +309,35 @@ const sections = [
     content: (
       <>
         <p>
-          Your pricing strategy should be based on your costs plus a profit margin — not on
-          what the cheapest competitor charges. There are three common positions:
+          Your pricing strategy should be based on your costs plus a profit margin — not on what the
+          cheapest competitor charges. There are three common positions:
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Value</h3>
             <p className="text-white text-sm leading-relaxed">
-              Competitive pricing, high volume. Works if you can complete jobs quickly. Risk:
-              thin margins mean any problem wipes out your profit.
+              Competitive pricing, high volume. Works if you can complete jobs quickly. Risk: thin
+              margins mean any problem wipes out your profit.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Mid-Market</h3>
             <p className="text-white text-sm leading-relaxed">
-              Fair pricing, good service. Where most successful sole traders position
-              themselves. Sustainable margins with a steady flow of work.
+              Fair pricing, good service. Where most successful sole traders position themselves.
+              Sustainable margins with a steady flow of work.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Premium</h3>
             <p className="text-white text-sm leading-relaxed">
-              Higher prices, fewer jobs, exceptional service and presentation. Requires
-              strong branding, reviews, and a reputation. Highest margins.
+              Higher prices, fewer jobs, exceptional service and presentation. Requires strong
+              branding, reviews, and a reputation. Highest margins.
             </p>
           </div>
         </div>
         <p>
-          Your business plan should state which position you are targeting and why. Your
-          pricing, marketing, and customer experience must all align with your chosen
-          position.
+          Your business plan should state which position you are targeting and why. Your pricing,
+          marketing, and customer experience must all align with your chosen position.
         </p>
       </>
     ),
@@ -357,42 +348,40 @@ const sections = [
     content: (
       <>
         <p>
-          "Word of mouth" is not a marketing plan — it is the result of good marketing and
-          good work. Your plan needs specific, actionable channels.
+          "Word of mouth" is not a marketing plan — it is the result of good marketing and good
+          work. Your plan needs specific, actionable channels.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-4 text-white text-sm">
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2">Google Business Profile (Free)</h4>
               <p>
-                Claim and optimise your profile. Add photos of completed work, respond to
-                reviews, post updates weekly. Target: 10+ five-star reviews in first 3
-                months. This is the single most effective free marketing channel for local
-                trades.
+                Claim and optimise your profile. Add photos of completed work, respond to reviews,
+                post updates weekly. Target: 10+ five-star reviews in first 3 months. This is the
+                single most effective free marketing channel for local trades.
               </p>
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2">Lead Platform (£100 to £250/month)</h4>
               <p>
-                Checkatrade, MyBuilder, or Bark. Budget for 3 to 6 months to build reviews
-                and conversion rate. Track cost per lead and cost per won job. Stop if the
-                cost per won job exceeds 10% of the job value.
+                Checkatrade, MyBuilder, or Bark. Budget for 3 to 6 months to build reviews and
+                conversion rate. Track cost per lead and cost per won job. Stop if the cost per won
+                job exceeds 10% of the job value.
               </p>
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2">Social Media (£50 to £100/month)</h4>
               <p>
-                Facebook and Instagram. Post 2 to 3 times per week — before/after photos,
-                tips, completed projects. Boost posts in your local area. Join local community
-                groups (do not spam — be helpful and the work follows).
+                Facebook and Instagram. Post 2 to 3 times per week — before/after photos, tips,
+                completed projects. Boost posts in your local area. Join local community groups (do
+                not spam — be helpful and the work follows).
               </p>
             </div>
             <div className="pb-3">
               <h4 className="font-bold text-white mb-2">Referral Programme (Low Cost)</h4>
               <p>
-                Offer existing customers £25 to £50 off their next job for every referral
-                that converts. This systematises word of mouth instead of leaving it to
-                chance.
+                Offer existing customers £25 to £50 off their next job for every referral that
+                converts. This systematises word of mouth instead of leaving it to chance.
               </p>
             </div>
           </div>
@@ -409,28 +398,27 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Year 1: Survive and Stabilise</h3>
             <p className="text-white text-sm leading-relaxed">
-              Focus on building a customer base, establishing your reputation, and learning
-              the business side. Target: £40,000 to £70,000 turnover. Keep costs low — do
-              not hire, do not take on expensive premises. Reinvest profits into better tools
-              and marketing.
+              Focus on building a customer base, establishing your reputation, and learning the
+              business side. Target: £40,000 to £70,000 turnover. Keep costs low — do not hire, do
+              not take on expensive premises. Reinvest profits into better tools and marketing.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Year 2: Optimise and Grow</h3>
             <p className="text-white text-sm leading-relaxed">
-              Review your pricing (raise rates by 5% to 10%), drop unprofitable work, focus
-              on higher-margin jobs. Target: £60,000 to £90,000 turnover. Start building
-              repeat customer relationships. Consider whether to add services (EV charging,
-              testing, fire alarm).
+              Review your pricing (raise rates by 5% to 10%), drop unprofitable work, focus on
+              higher-margin jobs. Target: £60,000 to £90,000 turnover. Start building repeat
+              customer relationships. Consider whether to add services (EV charging, testing, fire
+              alarm).
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Year 3: Scale or Specialise</h3>
             <p className="text-white text-sm leading-relaxed">
               Decision point: hire your first employee and grow, or stay as a sole trader and
-              specialise in higher-value work. Target: £80,000 to £120,000+ turnover. If
-              hiring, plan for the true cost of employment (salary + 15% to 20% for employer
-              NI, pension, insurance, van, tools, training).
+              specialise in higher-value work. Target: £80,000 to £120,000+ turnover. If hiring,
+              plan for the true cost of employment (salary + 15% to 20% for employer NI, pension,
+              insurance, van, tools, training).
             </p>
           </div>
         </div>
@@ -447,33 +435,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overestimating billable hours</strong> — you will NOT bill 40 hours
-                per week. After travel, quoting, material collection, admin, and downtime, 25
-                to 30 billable hours is realistic for a sole trader.
+                <strong>Overestimating billable hours</strong> — you will NOT bill 40 hours per
+                week. After travel, quoting, material collection, admin, and downtime, 25 to 30
+                billable hours is realistic for a sole trader.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ignoring cash flow timing</strong> — you buy materials and pay for
-                fuel on day one, but may not get paid for 14 to 30 days. Your cash flow
-                forecast must show this gap and your plan for bridging it.
+                <strong>Ignoring cash flow timing</strong> — you buy materials and pay for fuel on
+                day one, but may not get paid for 14 to 30 days. Your cash flow forecast must show
+                this gap and your plan for bridging it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No contingency fund</strong> — plan for 3 months of expenses as a
-                cash buffer. Without it, one slow month or a late-paying customer can put you
-                under.
+                <strong>No contingency fund</strong> — plan for 3 months of expenses as a cash
+                buffer. Without it, one slow month or a late-paying customer can put you under.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Copying someone else&apos;s plan</strong> — templates are useful for
-                structure, but the numbers must be yours. Your costs, your area, your target
-                market. Generic numbers are worse than no numbers.
+                structure, but the numbers must be yours. Your costs, your area, your target market.
+                Generic numbers are worse than no numbers.
               </span>
             </li>
           </ul>
@@ -487,9 +474,9 @@ const sections = [
     content: (
       <>
         <p>
-          A business plan does not need to be perfect — it needs to be honest. Write down
-          your real numbers, review them quarterly, and adjust as you learn. The process of
-          planning is more valuable than the document itself.
+          A business plan does not need to be perfect — it needs to be honest. Write down your real
+          numbers, review them quarterly, and adjust as you learn. The process of planning is more
+          valuable than the document itself.
         </p>
         <SEOAppBridge
           title="Run your electrical business from one app"
@@ -530,7 +517,7 @@ export default function ElectricalBusinessPlanPage() {
       faqHeading="Frequently Asked Questions About Electrical Business Plans"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Electrical Business in One Place"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

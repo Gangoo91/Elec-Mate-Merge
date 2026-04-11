@@ -37,8 +37,8 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'SELECT (the Electrical Contractors\' Association of Scotland) is the principal trade association and approved scheme for electrical contractors working in Scotland.',
-  'Scotland operates under Building Standards Scotland rather than Part P (which applies in England and Wales). SELECT\'s Approved Certifier of Construction scheme is the Scottish equivalent of Part P competent person schemes.',
+  "SELECT (the Electrical Contractors' Association of Scotland) is the principal trade association and approved scheme for electrical contractors working in Scotland.",
+  "Scotland operates under Building Standards Scotland rather than Part P (which applies in England and Wales). SELECT's Approved Certifier of Construction scheme is the Scottish equivalent of Part P competent person schemes.",
   'SELECT membership is essential for Scottish electricians who want to self-certify electrical work under Building Standards Scotland without involving local authority building control on each project.',
   'SELECT registration requires an assessment of qualifications, work quality, and business competency. Annual assessments are required to maintain registration.',
   'SELECT also functions as a full trade body like ECA in England — offering technical helplines, legal support, BS 7671 guidance, and lobbying representation to the Scottish Parliament and UK government.',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'What is SELECT in Scotland?',
     answer:
-      'SELECT is the Electrical Contractors\' Association of Scotland. Founded in 1900, it is Scotland\'s main trade body and approved scheme for electrical contractors. SELECT operates the Approved Certifier of Construction scheme for electrical work, which is the Scottish equivalent of Part P competent person schemes in England and Wales. SELECT members can self-certify notifiable electrical work under Building Standards Scotland without notifying local authority building control on each job.',
+      "SELECT is the Electrical Contractors' Association of Scotland. Founded in 1900, it is Scotland's main trade body and approved scheme for electrical contractors. SELECT operates the Approved Certifier of Construction scheme for electrical work, which is the Scottish equivalent of Part P competent person schemes in England and Wales. SELECT members can self-certify notifiable electrical work under Building Standards Scotland without notifying local authority building control on each job.",
   },
   {
     question: 'Is Part P used in Scotland?',
@@ -91,14 +91,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/niceic-vs-napit-comparison',
     title: 'NICEIC vs NAPIT Comparison',
-    description: 'Compare the England and Wales competent person schemes — costs, assessments, and consumer appeal.',
+    description:
+      'Compare the England and Wales competent person schemes — costs, assessments, and consumer appeal.',
     icon: Scale,
     category: 'Guide',
   },
   {
     href: '/eca-membership-guide',
     title: 'ECA Membership Guide',
-    description: 'The English equivalent trade body — technical support, legal helpline, and lobbying.',
+    description:
+      'The English equivalent trade body — technical support, legal helpline, and lobbying.',
     icon: Building2,
     category: 'Guide',
   },
@@ -138,20 +140,20 @@ const sections = [
         <p>
           SELECT — the Electrical Contractors' Association of Scotland — is Scotland's principal
           trade association and approved scheme for electrical contractors. Founded in 1900 and
-          headquartered in Edinburgh, SELECT has over 120 years of representing Scottish
-          electrical contractors and has a membership of over 1,100 contracting businesses.
+          headquartered in Edinburgh, SELECT has over 120 years of representing Scottish electrical
+          contractors and has a membership of over 1,100 contracting businesses.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scotland-specific body</strong> — SELECT operates exclusively in
-                Scotland. It is the Scottish equivalent of the{' '}
-                <SEOInternalLink href="/eca-membership-guide">ECA</SEOInternalLink> in
-                England, Wales, and Northern Ireland. The two organisations work
-                collaboratively on shared UK-wide issues (such as BS 7671 and JIB matters)
-                but operate independently in their respective nations.
+                <strong>Scotland-specific body</strong> — SELECT operates exclusively in Scotland.
+                It is the Scottish equivalent of the{' '}
+                <SEOInternalLink href="/eca-membership-guide">ECA</SEOInternalLink> in England,
+                Wales, and Northern Ireland. The two organisations work collaboratively on shared
+                UK-wide issues (such as BS 7671 and JIB matters) but operate independently in their
+                respective nations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -159,18 +161,18 @@ const sections = [
               <span>
                 <strong>Dual function</strong> — unlike NICEIC or NAPIT (which are primarily
                 competent person schemes), SELECT combines the functions of a trade association
-                (technical helpline, legal support, lobbying) and an approved certification
-                scheme (Approved Certifier of Construction for Building Standards Scotland).
+                (technical helpline, legal support, lobbying) and an approved certification scheme
+                (Approved Certifier of Construction for Building Standards Scotland).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scottish Parliament engagement</strong> — SELECT has a dedicated
-                presence at the Scottish Parliament and regularly engages with Scottish
-                Government ministers and civil servants on energy policy, building
-                regulations, and skills funding. This is a distinct advantage of SELECT
-                over UK-wide bodies for contractors whose work is entirely in Scotland.
+                <strong>Scottish Parliament engagement</strong> — SELECT has a dedicated presence at
+                the Scottish Parliament and regularly engages with Scottish Government ministers and
+                civil servants on energy policy, building regulations, and skills funding. This is a
+                distinct advantage of SELECT over UK-wide bodies for contractors whose work is
+                entirely in Scotland.
               </span>
             </li>
           </ul>
@@ -184,52 +186,48 @@ const sections = [
     content: (
       <>
         <p>
-          Scotland has its own building standards system, governed by the Building (Scotland)
-          Act 2003 and the Building (Scotland) Regulations 2004. This is fundamentally different
-          from the Building Regulations (England and Wales) framework under which{' '}
-          <SEOInternalLink href="/part-p-self-certification">
-            Part P operates
-          </SEOInternalLink>
-          .
+          Scotland has its own building standards system, governed by the Building (Scotland) Act
+          2003 and the Building (Scotland) Regulations 2004. This is fundamentally different from
+          the Building Regulations (England and Wales) framework under which{' '}
+          <SEOInternalLink href="/part-p-self-certification">Part P operates</SEOInternalLink>.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Technical Handbook</strong> — in Scotland, the Technical Handbooks
-                (Domestic and Non-Domestic) set out the functional standards for building
-                work. Section 4 of the Technical Handbook covers Safety, including electrical
-                safety. The relevant standard is 4.5 (Electrical safety — adequate electrical
-                installation).
+                <strong>Technical Handbook</strong> — in Scotland, the Technical Handbooks (Domestic
+                and Non-Domestic) set out the functional standards for building work. Section 4 of
+                the Technical Handbook covers Safety, including electrical safety. The relevant
+                standard is 4.5 (Electrical safety — adequate electrical installation).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable work in Scotland</strong> — in Scotland, most electrical
-                work in dwellings is notifiable work under Building Standards. This is broader
-                than the Part P notifiable work list in England and Wales, meaning more work
-                triggers notification obligations in Scotland.
+                <strong>Notifiable work in Scotland</strong> — in Scotland, most electrical work in
+                dwellings is notifiable work under Building Standards. This is broader than the Part
+                P notifiable work list in England and Wales, meaning more work triggers notification
+                obligations in Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approved Certifier of Construction</strong> — Scotland's self-
-                certification mechanism. Approved Certifiers can certify that their own
-                electrical work complies with Building Standards without requiring verification
-                by local authority building control on each job. SELECT operates the main
-                Approved Certifier of Construction scheme for electrical work.
+                <strong>Approved Certifier of Construction</strong> — Scotland's self- certification
+                mechanism. Approved Certifiers can certify that their own electrical work complies
+                with Building Standards without requiring verification by local authority building
+                control on each job. SELECT operates the main Approved Certifier of Construction
+                scheme for electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 still applies</strong> — despite the different regulatory
-                framework, BS 7671 (IET Wiring Regulations) remains the technical standard
-                for electrical installations in Scotland. Compliance with BS 7671 is how
-                you demonstrate compliance with Standard 4.5 of the Technical Handbook.
+                <strong>BS 7671 still applies</strong> — despite the different regulatory framework,
+                BS 7671 (IET Wiring Regulations) remains the technical standard for electrical
+                installations in Scotland. Compliance with BS 7671 is how you demonstrate compliance
+                with Standard 4.5 of the Technical Handbook.
               </span>
             </li>
           </ul>
@@ -243,45 +241,45 @@ const sections = [
     content: (
       <>
         <p>
-          SELECT registration operates on an annual cycle. Registered members are known as
-          SELECT Approved Contractors and can self-certify notifiable electrical work in
-          Scotland through the Approved Certifier of Construction scheme.
+          SELECT registration operates on an annual cycle. Registered members are known as SELECT
+          Approved Contractors and can self-certify notifiable electrical work in Scotland through
+          the Approved Certifier of Construction scheme.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Application</strong> — submit an application to SELECT with evidence
-                of qualifications, insurance, and business details. SELECT will assess whether
-                you meet the eligibility criteria before arranging an assessment visit.
+                <strong>Application</strong> — submit an application to SELECT with evidence of
+                qualifications, insurance, and business details. SELECT will assess whether you meet
+                the eligibility criteria before arranging an assessment visit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Initial assessment</strong> — a SELECT assessor visits to inspect
-                sample installations. They verify workmanship quality, BS 7671 compliance,
-                documentation systems, and test instrument calibration. This is similar to
-                the assessment process used by NICEIC and NAPIT.
+                <strong>Initial assessment</strong> — a SELECT assessor visits to inspect sample
+                installations. They verify workmanship quality, BS 7671 compliance, documentation
+                systems, and test instrument calibration. This is similar to the assessment process
+                used by NICEIC and NAPIT.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification process</strong> — once registered, you notify SELECT
-                of completed notifiable work. SELECT issues an Approved Certifier completion
+                <strong>Certification process</strong> — once registered, you notify SELECT of
+                completed notifiable work. SELECT issues an Approved Certifier completion
                 certificate, which is submitted to the local authority verifier (the Scottish
-                equivalent of building control). The homeowner receives a copy of the
-                certificate confirming compliance.
+                equivalent of building control). The homeowner receives a copy of the certificate
+                confirming compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual renewal</strong> — SELECT registration is renewed annually.
-                Renewal includes a desk-based check of insurance and qualifications, and
-                periodic site assessments to verify ongoing work quality.
+                <strong>Annual renewal</strong> — SELECT registration is renewed annually. Renewal
+                includes a desk-based check of insurance and qualifications, and periodic site
+                assessments to verify ongoing work quality.
               </span>
             </li>
           </ul>
@@ -295,45 +293,45 @@ const sections = [
     content: (
       <>
         <p>
-          The SELECT assessment process is broadly similar to NICEIC and NAPIT assessments
-          in England and Wales, but is conducted by SELECT assessors who are familiar with
-          the specific requirements of Building Standards Scotland.
+          The SELECT assessment process is broadly similar to NICEIC and NAPIT assessments in
+          England and Wales, but is conducted by SELECT assessors who are familiar with the specific
+          requirements of Building Standards Scotland.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications check</strong> — the assessor verifies that the
-                responsible person holds the required qualifications: Level 3 SVQ/NVQ
-                Electrotechnical Technology (or equivalent), 18th Edition BS 7671
-                (C&G 2382 or equivalent), and inspection and testing qualifications.
+                <strong>Qualifications check</strong> — the assessor verifies that the responsible
+                person holds the required qualifications: Level 3 SVQ/NVQ Electrotechnical
+                Technology (or equivalent), 18th Edition BS 7671 (C&G 2382 or equivalent), and
+                inspection and testing qualifications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Work quality assessment</strong> — the assessor inspects a sample
-                of recently completed installations for compliance with BS 7671 and
-                workmanship standards. Documentation (minor works certificates, EICRs,
-                electrical installation certificates) is also reviewed.
+                <strong>Work quality assessment</strong> — the assessor inspects a sample of
+                recently completed installations for compliance with BS 7671 and workmanship
+                standards. Documentation (minor works certificates, EICRs, electrical installation
+                certificates) is also reviewed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test equipment calibration</strong> — all test instruments used for
-                electrical inspection and testing must have current calibration certificates.
-                SELECT verifies this at assessment. Calibration should be carried out at
-                least annually by an accredited laboratory.
+                electrical inspection and testing must have current calibration certificates. SELECT
+                verifies this at assessment. Calibration should be carried out at least annually by
+                an accredited laboratory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Business systems</strong> — SELECT also checks that the business
-                has appropriate management systems in place, including health and safety
-                policies, quality management procedures, and insurance documentation.
+                <strong>Business systems</strong> — SELECT also checks that the business has
+                appropriate management systems in place, including health and safety policies,
+                quality management procedures, and insurance documentation.
               </span>
             </li>
           </ul>
@@ -347,47 +345,47 @@ const sections = [
     content: (
       <>
         <p>
-          SELECT registration is the de facto standard for professional electrical contractors
-          in Scotland. Without it, you face practical and commercial disadvantages that make
-          it very difficult to operate effectively in the Scottish market.
+          SELECT registration is the de facto standard for professional electrical contractors in
+          Scotland. Without it, you face practical and commercial disadvantages that make it very
+          difficult to operate effectively in the Scottish market.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Self-certification capability</strong> — without SELECT (or another
-                approved scheme) registration, you must notify the local authority verifier
-                for every notifiable electrical job. This adds cost and delay that most
-                clients find unacceptable for routine domestic work.
+                <strong>Self-certification capability</strong> — without SELECT (or another approved
+                scheme) registration, you must notify the local authority verifier for every
+                notifiable electrical job. This adds cost and delay that most clients find
+                unacceptable for routine domestic work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Client requirements</strong> — Scottish homeowners, housing
-                associations, and main contractors routinely require SELECT registration
-                as a precondition of awarding electrical work. The SELECT quality mark
-                is recognised and trusted across Scotland.
+                <strong>Client requirements</strong> — Scottish homeowners, housing associations,
+                and main contractors routinely require SELECT registration as a precondition of
+                awarding electrical work. The SELECT quality mark is recognised and trusted across
+                Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property transactions</strong> — when a Scottish property is sold,
-                evidence that notifiable electrical work was certified under the Approved
-                Certifier scheme (via a SELECT completion certificate) is required. Without
-                this, the property may face delays at conveyancing.
+                <strong>Property transactions</strong> — when a Scottish property is sold, evidence
+                that notifiable electrical work was certified under the Approved Certifier scheme
+                (via a SELECT completion certificate) is required. Without this, the property may
+                face delays at conveyancing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord compliance</strong> — Scottish landlords are subject to
-                the Repairing Standard, which requires electrical installations to be
-                safe. EICR requirements for Scottish private landlords are set out in
-                regulations and EICRs must be carried out by competent electricians. SELECT
-                registration demonstrates competency.
+                <strong>Landlord compliance</strong> — Scottish landlords are subject to the
+                Repairing Standard, which requires electrical installations to be safe. EICR
+                requirements for Scottish private landlords are set out in regulations and EICRs
+                must be carried out by competent electricians. SELECT registration demonstrates
+                competency.
               </span>
             </li>
           </ul>
@@ -401,9 +399,9 @@ const sections = [
     content: (
       <>
         <p>
-          SELECT registration fees cover both trade body membership and Approved Certifier
-          of Construction scheme access in a single package. The following are approximate
-          figures — always confirm current pricing with SELECT directly at selectassociation.org.
+          SELECT registration fees cover both trade body membership and Approved Certifier of
+          Construction scheme access in a single package. The following are approximate figures —
+          always confirm current pricing with SELECT directly at selectassociation.org.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -411,32 +409,31 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sole trader / small business</strong> — approximately £400–£700/year
-                including annual assessment. This covers the full SELECT membership and
-                Approved Certifier scheme access.
+                including annual assessment. This covers the full SELECT membership and Approved
+                Certifier scheme access.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium business</strong> — fees scale with company size and number
-                of registered operatives. Medium contractors typically pay £800–£1,500/year.
+                <strong>Medium business</strong> — fees scale with company size and number of
+                registered operatives. Medium contractors typically pay £800–£1,500/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Initial assessment fee</strong> — there is typically an initial
-                assessment fee separate from the annual membership fee. This covers the
-                cost of the assessor's site visit and evaluation.
+                <strong>Initial assessment fee</strong> — there is typically an initial assessment
+                fee separate from the annual membership fee. This covers the cost of the assessor's
+                site visit and evaluation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Per-certificate notification fees</strong> — SELECT charges a small
-                fee for each Approved Certifier completion certificate issued. This is
-                typically built into the cost of the job and is modest (a few pounds per
-                certificate).
+                <strong>Per-certificate notification fees</strong> — SELECT charges a small fee for
+                each Approved Certifier completion certificate issued. This is typically built into
+                the cost of the job and is modest (a few pounds per certificate).
               </span>
             </li>
           </ul>
@@ -450,42 +447,40 @@ const sections = [
     content: (
       <>
         <p>
-          Both SELECT and NICEIC (through its Approved Certifier of Construction arrangement)
-          can be used by electricians working in Scotland. For most Scottish electricians,
-          SELECT is the natural choice for several practical reasons.
+          Both SELECT and NICEIC (through its Approved Certifier of Construction arrangement) can be
+          used by electricians working in Scotland. For most Scottish electricians, SELECT is the
+          natural choice for several practical reasons.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local recognition</strong> — SELECT is the most recognised electrical
-                scheme in Scotland. Scottish homeowners, housing associations, and public
-                sector clients are more likely to recognise SELECT than NICEIC. For purely
-                Scottish work, SELECT's local brand advantage is significant.
+                <strong>Local recognition</strong> — SELECT is the most recognised electrical scheme
+                in Scotland. Scottish homeowners, housing associations, and public sector clients
+                are more likely to recognise SELECT than NICEIC. For purely Scottish work, SELECT's
+                local brand advantage is significant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Trade body function</strong> — SELECT provides Scottish Parliament
-                engagement and Scottish-specific technical and legal support that NICEIC
-                (as a competent person scheme rather than a trade body) does not. For
-                contractors who value representation and commercial support, SELECT offers
-                more.
+                engagement and Scottish-specific technical and legal support that NICEIC (as a
+                competent person scheme rather than a trade body) does not. For contractors who
+                value representation and commercial support, SELECT offers more.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cross-border contractors</strong> — electricians who work regularly
-                in both Scotland and England may find it pragmatic to hold both SELECT
-                (for Scotland) and{' '}
+                <strong>Cross-border contractors</strong> — electricians who work regularly in both
+                Scotland and England may find it pragmatic to hold both SELECT (for Scotland) and{' '}
                 <SEOInternalLink href="/niceic-vs-napit-comparison">
                   NICEIC or NAPIT
                 </SEOInternalLink>{' '}
-                (for England and Wales). This avoids any gaps in self-certification
-                capability on either side of the border.
+                (for England and Wales). This avoids any gaps in self-certification capability on
+                either side of the border.
               </span>
             </li>
           </ul>
@@ -499,14 +494,14 @@ const sections = [
     content: (
       <>
         <p>
-          SELECT registration requires you to maintain accurate documentation for every
-          notifiable installation — EICRs, Electrical Installation Certificates, and Minor
-          Works Certificates. Elec-Mate's on-site certification tools help SELECT-registered
-          electricians produce compliant documentation efficiently.
+          SELECT registration requires you to maintain accurate documentation for every notifiable
+          installation — EICRs, Electrical Installation Certificates, and Minor Works Certificates.
+          Elec-Mate's on-site certification tools help SELECT-registered electricians produce
+          compliant documentation efficiently.
         </p>
         <SEOAppBridge
           title="Certificate management for SELECT-registered electricians"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs, Minor Works Certificates, and Electrical Installation Certificates on site. AI board scanning, instant PDF generation, and automatic client delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>

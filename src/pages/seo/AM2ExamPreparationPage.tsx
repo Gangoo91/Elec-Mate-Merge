@@ -53,7 +53,7 @@ const faqs = [
   {
     question: 'How early should I book my AM2 assessment?',
     answer:
-      'AM2 assessment slots at approved centres can fill up several months in advance, particularly from April to September when apprentices completing college courses want to sit the assessment as quickly as possible. As a general rule, book your AM2 slot at least 8 to 12 weeks before your target date. In England and Wales, the AM2 is administered by JTL through approved assessment centres — contact JTL or your training provider for availability. In Scotland, assessments are administered through SJIB or SELECT. Elec-Mate\'s AM2 preparation programme is designed so that most candidates can work through all the practice exercises and reach readiness in 6 to 8 weeks, giving you time to prepare and sit the assessment in a single block.',
+      "AM2 assessment slots at approved centres can fill up several months in advance, particularly from April to September when apprentices completing college courses want to sit the assessment as quickly as possible. As a general rule, book your AM2 slot at least 8 to 12 weeks before your target date. In England and Wales, the AM2 is administered by JTL through approved assessment centres — contact JTL or your training provider for availability. In Scotland, assessments are administered through SJIB or SELECT. Elec-Mate's AM2 preparation programme is designed so that most candidates can work through all the practice exercises and reach readiness in 6 to 8 weeks, giving you time to prepare and sit the assessment in a single block.",
   },
 ];
 
@@ -245,15 +245,15 @@ export default function AM2ExamPreparationPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The AM2 (Achievement Measurement 2) is the practical assessment of competence in
-              electrical installation. There are two main versions: the standard <strong>AM2</strong>{' '}
-              (for candidates with a Level 3 NVQ — a single-day assessment of approximately 6 to 8
-              hours), and <strong>AM2S</strong> (for apprentices on the Installation and Maintenance
-              standard — an extended two-day assessment that includes additional containment tasks
-              such as steel and PVC conduit installation). Both versions are practical assessments
-              that demonstrate you can safely and competently carry out electrical installation work
-              to the standard required of a qualified electrician. Passing the AM2 is the final step
-              in becoming a fully qualified Installation Electrician and is required to obtain the
-              JIB ECS Gold Card.
+              electrical installation. There are two main versions: the standard{' '}
+              <strong>AM2</strong> (for candidates with a Level 3 NVQ — a single-day assessment of
+              approximately 6 to 8 hours), and <strong>AM2S</strong> (for apprentices on the
+              Installation and Maintenance standard — an extended two-day assessment that includes
+              additional containment tasks such as steel and PVC conduit installation). Both
+              versions are practical assessments that demonstrate you can safely and competently
+              carry out electrical installation work to the standard required of a qualified
+              electrician. Passing the AM2 is the final step in becoming a fully qualified
+              Installation Electrician and is required to obtain the JIB ECS Gold Card.
             </p>
             <p>
               The AM2 is not a classroom exam — it is a hands-on practical assessment carried out in
@@ -267,8 +267,8 @@ export default function AM2ExamPreparationPage() {
             <p>
               The AM2 was developed by the Joint Industry Board (JIB). In England and Wales it is
               administered by JTL (Joint Training Limited) through approved assessment centres. In
-              Scotland, assessments are administered through SJIB (Scottish Joint Industry Board)
-              or SELECT. The assessment is typically booked several weeks in advance, and candidates
+              Scotland, assessments are administered through SJIB (Scottish Joint Industry Board) or
+              SELECT. The assessment is typically booked several weeks in advance, and candidates
               must bring their own hand tools and calibrated test instruments.
             </p>
           </div>
@@ -284,10 +284,10 @@ export default function AM2ExamPreparationPage() {
           <div className="space-y-4 text-white leading-relaxed mb-6">
             <p>
               The AM2 assessment consists of four main practical tasks, plus testing and inspection
-              of your completed work. The standard AM2 is a single-day assessment of approximately
-              6 to 8 hours of practical work. AM2S is a two-day extended assessment due to
-              additional containment tasks (steel and PVC conduit installation). Each task tests
-              different skills, and you must demonstrate competence in all of them to pass.
+              of your completed work. The standard AM2 is a single-day assessment of approximately 6
+              to 8 hours of practical work. AM2S is a two-day extended assessment due to additional
+              containment tasks (steel and PVC conduit installation). Each task tests different
+              skills, and you must demonstrate competence in all of them to pass.
             </p>
           </div>
           <div className="space-y-4">
@@ -660,7 +660,7 @@ export default function AM2ExamPreparationPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Pass the AM2 first time"
-        subheading="Join 430+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

@@ -181,10 +181,10 @@ const sections = [
           <SEOInternalLink href="/training/eighteenth-edition-course">
             18th Edition qualification (C&G 2382)
           </SEOInternalLink>
-          , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530 requirement and
-          the concept of bidirectional power flow. For practising electricians, understanding
-          A3:2024 is essential for any installation involving solar PV, battery storage, or V2G
-          charging.
+          , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530
+          requirement and the concept of bidirectional power flow. For practising electricians,
+          understanding A3:2024 is essential for any installation involving solar PV, battery
+          storage, or V2G charging.
         </p>
       </>
     ),
@@ -195,10 +195,11 @@ const sections = [
     content: (
       <>
         <p>
-          The central addition in Amendment 3 is the new bidirectional device requirement within Section 530 of BS 7671. This addition sits within
-          Part 5 of BS 7671 (Selection and Erection of Equipment) and specifically within Chapter 53
-          (Switching Devices). It states that where a switching device or control device may be
-          subjected to power flow in both directions, the device must be suitable for that duty.
+          The central addition in Amendment 3 is the new bidirectional device requirement within
+          Section 530 of BS 7671. This addition sits within Part 5 of BS 7671 (Selection and
+          Erection of Equipment) and specifically within Chapter 53 (Switching Devices). It states
+          that where a switching device or control device may be subjected to power flow in both
+          directions, the device must be suitable for that duty.
         </p>
         <p>
           This seems like common sense — of course a device should be suitable for its intended use.
@@ -218,8 +219,8 @@ const sections = [
                 If a fault occurs on a circuit protected by a unidirectional MCB and the fault
                 current flows in the reverse direction (from the load side), the MCB may not trip at
                 all, or may trip at a significantly higher current than its rating. This could
-                result in overheating, cable damage, or fire. The A3:2024 Section 530 addition makes it explicit
-                that this risk must be addressed at the design and installation stage.
+                result in overheating, cable damage, or fire. The A3:2024 Section 530 addition makes
+                it explicit that this risk must be addressed at the design and installation stage.
               </p>
             </div>
           </div>
@@ -300,9 +301,10 @@ const sections = [
         <p>
           For many electricians, the practical impact of Amendment 3 is focused on specific
           installation types. If you are installing solar PV, battery storage, or V2G chargers, you
-          need to apply the A3:2024 Section 530 bidirectional device requirement from the design stage. If you are carrying out general
-          domestic or commercial installation work without microgeneration, the regulation has
-          minimal direct impact on your day-to-day work — but you still need to know it.
+          need to apply the A3:2024 Section 530 bidirectional device requirement from the design
+          stage. If you are carrying out general domestic or commercial installation work without
+          microgeneration, the regulation has minimal direct impact on your day-to-day work — but
+          you still need to know it.
         </p>
         <p>When designing an installation with bidirectional power flow, the steps are:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -425,9 +427,9 @@ const sections = [
             <div>
               <h3 className="font-bold text-white text-lg mb-1">Amendment 3 (A3:2024)</h3>
               <p className="text-white text-sm leading-relaxed">
-                Published 31 July 2024. Adds a new Section 530 requirement addressing bidirectional and
-                unidirectional switching devices. Free PDF supplement — not incorporated into a new
-                brown book.
+                Published 31 July 2024. Adds a new Section 530 requirement addressing bidirectional
+                and unidirectional switching devices. Free PDF supplement — not incorporated into a
+                new brown book.
               </p>
             </div>
           </div>
@@ -579,7 +581,7 @@ export default function BS7671Amendment3CoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Get up to speed on Amendment 3"
-      ctaSubheading="Join 430+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians staying current with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any BS 7671 question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/bs-7671-amendment-3-course"
     />

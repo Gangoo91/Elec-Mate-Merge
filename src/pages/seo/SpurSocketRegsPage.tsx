@@ -628,7 +628,7 @@ export default function SpurSocketRegsPage() {
       faqHeading="Frequently Asked Questions About Spur Socket Regulations"
       relatedPages={relatedPages}
       ctaHeading="Cable Sizing and Certificates on Your Phone"
-      ctaSubheading="Elec-Mate's cable sizing calculator checks your spur design against BS 7671, and the Minor Works Certificate app lets you certify the work on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's cable sizing calculator checks your spur design against BS 7671, and the Minor Works Certificate app lets you certify the work on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

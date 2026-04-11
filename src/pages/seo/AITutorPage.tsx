@@ -471,7 +471,7 @@ export default function AITutorPage() {
       faqHeading="Frequently Asked Questions About the AI Tutor"
       relatedPages={relatedPages}
       ctaHeading="Start Learning with Your AI Tutor"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Tutor for exam preparation and on-site learning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Tutor for exam preparation and on-site learning. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-tutor"
     />
   );

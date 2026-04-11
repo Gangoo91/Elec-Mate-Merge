@@ -241,8 +241,8 @@ const sections = [
         </div>
         <p>
           A consumer unit that has been exposed to water will typically need to be replaced. Water
-          causes corrosion of bus bars, terminals, and the contacts inside MCBs and RCDs, which
-          may not be immediately visible but will cause failure over time.
+          causes corrosion of bus bars, terminals, and the contacts inside MCBs and RCDs, which may
+          not be immediately visible but will cause failure over time.
         </p>
       </>
     ),
@@ -364,8 +364,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Check for any circuits that have tripped and will not reset — this indicates a
-                fault on the circuit that needs investigation.
+                Check for any circuits that have tripped and will not reset — this indicates a fault
+                on the circuit that needs investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,8 +402,8 @@ const sections = [
       <>
         <p>
           Lightning strikes — even nearby strikes that do not directly hit the property — cause
-          transient overvoltages that can damage electronic equipment, protective devices, and
-          fixed wiring. Surge Protection Devices (SPDs) are designed to divert these transient
+          transient overvoltages that can damage electronic equipment, protective devices, and fixed
+          wiring. Surge Protection Devices (SPDs) are designed to divert these transient
           overvoltages safely to earth.
         </p>
         <p>
@@ -419,7 +419,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Properties with overhead supply lines (more exposed to lightning-induced surges)</span>
+              <span>
+                Properties with overhead supply lines (more exposed to lightning-induced surges)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -433,7 +435,10 @@ const sections = [
         </div>
         <p>
           For a detailed guide to SPD selection and installation, see the{' '}
-          <SEOInternalLink href="/guides/spd-surge-protection">SPD Surge Protection Guide</SEOInternalLink>.
+          <SEOInternalLink href="/guides/spd-surge-protection">
+            SPD Surge Protection Guide
+          </SEOInternalLink>
+          .
         </p>
       </>
     ),
@@ -472,7 +477,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Emergency Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                    quoting app
+                  </SEOInternalLink>{' '}
                   to provide an itemised quote for repair work on site. Consumer unit replacement,
                   rewiring damaged sections, SPD installation — all priced and sent to the customer
                   within minutes.
@@ -520,7 +527,7 @@ export default function StormDamageElectricalPage() {
       faqHeading="Frequently Asked Questions About Storm Damage and Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Be Ready for Storm Call-Outs"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICR certificates, quoting, and cable sizing. Respond to storm damage call-outs with professional tools on your phone. 7-day free trial."
     />
   );
 }

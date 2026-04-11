@@ -609,7 +609,7 @@ export default function ElectricShockFromTapPage() {
       faqHeading="Frequently Asked Questions About Electric Shock from Taps"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Electrical Faults Faster with AI"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, BS 7671 calculators, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

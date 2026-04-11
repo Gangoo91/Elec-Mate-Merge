@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Brighton EICR costs are above the national average due to high local demand and elevated property values. Expect to pay between £130 and £240 for a two-bedroom flat and £200 to £360 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. Brighton & Hove City Council enforces the regulations and can fine non-compliant landlords up to £30,000 per breach.',
   'Brighton has a high proportion of Regency, Victorian, and Edwardian properties — many converted into flats. These conversions frequently have mixed-era wiring and absent RCD protection, leading to C2 observations on most EICRs.',
@@ -62,12 +62,12 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Brighton properties?',
     answer:
-      'Brighton\'s housing stock is dominated by Regency and Victorian properties converted into flats. Common EICR findings include absent or inadequate RCD protection on socket circuits (C2 under BS 7671 Section 411), deteriorated rubber-insulated wiring in original parts of conversions, inadequate earthing and bonding in older flats, mixed-era wiring from different renovation phases, and overloaded circuits in converted properties where the original wiring was not designed for modern appliance loads. Damp ingress in basement flats can also cause insulation deterioration.',
+      "Brighton's housing stock is dominated by Regency and Victorian properties converted into flats. Common EICR findings include absent or inadequate RCD protection on socket circuits (C2 under BS 7671 Section 411), deteriorated rubber-insulated wiring in original parts of conversions, inadequate earthing and bonding in older flats, mixed-era wiring from different renovation phases, and overloaded circuits in converted properties where the original wiring was not designed for modern appliance loads. Damp ingress in basement flats can also cause insulation deterioration.",
   },
   {
     question: 'How long does an EICR take in Brighton?',
     answer:
-      'Duration depends on the size of the property and its wiring complexity. A studio or one-bedroom flat typically takes two to three hours. A three-bedroom house takes three to four hours. Victorian and Regency conversions frequently take longer because the wiring from different eras must be carefully traced, circuit identification is often poor, and access to concealed wiring may be restricted by listed building status or tenants\' belongings. The inspector needs access to every room, the consumer unit, and the meter position.',
+      "Duration depends on the size of the property and its wiring complexity. A studio or one-bedroom flat typically takes two to three hours. A three-bedroom house takes three to four hours. Victorian and Regency conversions frequently take longer because the wiring from different eras must be carefully traced, circuit identification is often poor, and access to concealed wiring may be restricted by listed building status or tenants' belongings. The inspector needs access to every room, the consumer unit, and the meter position.",
   },
   {
     question: 'Do Brighton landlords need an EICR for listed buildings?',
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -125,7 +126,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -153,13 +155,13 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
-          used for periodic inspection of existing installations. It is not a simple pass or fail
-          — it is a detailed condition assessment with standardised observation codes.
+          used for periodic inspection of existing installations. It is not a simple pass or fail —
+          it is a detailed condition assessment with standardised observation codes.
         </p>
         <p>
           The inspector conducts a visual inspection and a programme of electrical tests. All
-          results are recorded on Schedules of Circuit Details and Test Results. Each observation
-          is classified as C1, C2, C3, or FI depending on its severity. The overall assessment is
+          results are recorded on Schedules of Circuit Details and Test Results. Each observation is
+          classified as C1, C2, C3, or FI depending on its severity. The overall assessment is
           either Satisfactory or Unsatisfactory.
         </p>
       </>
@@ -171,9 +173,9 @@ const sections = [
     content: (
       <>
         <p>
-          Brighton EICR prices are above the national average, reflecting high local demand, elevated
-          labour rates, and the prevalence of older and more complex properties. Below are typical
-          2026 prices:
+          Brighton EICR prices are above the national average, reflecting high local demand,
+          elevated labour rates, and the prevalence of older and more complex properties. Below are
+          typical 2026 prices:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,9 +196,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £200 to £360. Larger Victorian and
-                Edwardian terraced houses in Hanover, Preston Park, and similar areas often take
-                four or more hours.
+                <strong>Three-bedroom house</strong> — £200 to £360. Larger Victorian and Edwardian
+                terraced houses in Hanover, Preston Park, and similar areas often take four or more
+                hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -209,8 +211,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO</strong> — £380 to £700+. Brighton's large student HMO market means
-                high demand. HMOs have broader inspection scope including fire alarm and emergency
+                <strong>HMO</strong> — £380 to £700+. Brighton's large student HMO market means high
+                demand. HMOs have broader inspection scope including fire alarm and emergency
                 lighting systems.
               </span>
             </li>
@@ -238,9 +240,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This applies to all new tenancies from 1 July 2020 and all
-                existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This applies to all new tenancies from 1 July 2020 and all existing
+                tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -254,16 +256,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant notification</strong> — a copy of the EICR must be provided to
-                the tenant within 28 days. New tenants must receive it before they move in.
+                <strong>Tenant notification</strong> — a copy of the EICR must be provided to the
+                tenant within 28 days. New tenants must receive it before they move in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days. Written confirmation must be provided to the tenant and to Brighton &
-                Hove City Council if requested.
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days. Written confirmation must be provided to the tenant and to Brighton & Hove
+                City Council if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -287,18 +289,18 @@ const sections = [
         <p>
           Brighton & Hove has one of the highest concentrations of Regency and Victorian period
           properties in England. The city centre and seafront areas contain large numbers of
-          properties built between 1800 and 1910, many converted into flats. This shapes the
-          typical EICR findings:
+          properties built between 1800 and 1910, many converted into flats. This shapes the typical
+          EICR findings:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — BS 7671 requires 30 mA RCD protection
-                for socket circuits and concealed cables. Older consumer units in converted Brighton
-                flats commonly lack this protection, resulting in a C2 observation on most EICRs
-                in pre-1980 properties.
+                <strong>Absent RCD protection</strong> — BS 7671 requires 30 mA RCD protection for
+                socket circuits and concealed cables. Older consumer units in converted Brighton
+                flats commonly lack this protection, resulting in a C2 observation on most EICRs in
+                pre-1980 properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -306,16 +308,16 @@ const sections = [
               <span>
                 <strong>Mixed-era wiring in conversions</strong> — Regency and Victorian houses
                 converted at different times have wiring from multiple eras. Original rubber-
-                insulated cables alongside later PVC additions are common. Identifying circuits
-                and establishing safe inspection sample sizes is more complex than in purpose-built
+                insulated cables alongside later PVC additions are common. Identifying circuits and
+                establishing safe inspection sample sizes is more complex than in purpose-built
                 properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Damp-related insulation failure</strong> — Brighton's coastal location
-                and the prevalence of basement and ground-floor flats means damp ingress is common.
+                <strong>Damp-related insulation failure</strong> — Brighton's coastal location and
+                the prevalence of basement and ground-floor flats means damp ingress is common.
                 Moisture penetration into electrical installations causes insulation resistance
                 failure, which may present as an FI or C2 observation.
               </span>
@@ -324,9 +326,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inadequate earthing in converted flats</strong> — conversions of large
-                Victorian houses into flats often result in inadequate earthing arrangements.
-                Shared earthing systems between flats, undersized protective conductors, and
-                absent main protective bonding are frequent C2 findings.
+                Victorian houses into flats often result in inadequate earthing arrangements. Shared
+                earthing systems between flats, undersized protective conductors, and absent main
+                protective bonding are frequent C2 findings.
               </span>
             </li>
           </ul>
@@ -355,25 +357,25 @@ const sections = [
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
-              Risk of injury exists. Immediate remedial action required. The inspector may
-              recommend disconnecting the dangerous circuit. Examples include exposed live
-              conductors and missing consumer unit covers.
+              Risk of injury exists. Immediate remedial action required. The inspector may recommend
+              disconnecting the dangerous circuit. Examples include exposed live conductors and
+              missing consumer unit covers.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action required. The most common C2 finding
-              in Brighton is absent RCD protection on socket circuits (BS 7671 Section 411),
-              followed by inadequate earthing and deteriorated insulation.
+              Could become dangerous. Urgent remedial action required. The most common C2 finding in
+              Brighton is absent RCD protection on socket circuits (BS 7671 Section 411), followed
+              by inadequate earthing and deteriorated insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
-              Not immediately dangerous but improvement would enhance safety. C3 alone does not
-              make the report Unsatisfactory. Common examples in Brighton include older but
-              functional accessories in Regency conversions.
+              Not immediately dangerous but improvement would enhance safety. C3 alone does not make
+              the report Unsatisfactory. Common examples in Brighton include older but functional
+              accessories in Regency conversions.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -445,8 +447,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property</strong> — at least every 5 years (legal
-                requirement under the 2020 Regulations).
+                <strong>Private rented property</strong> — at least every 5 years (legal requirement
+                under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -467,9 +469,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Change of occupancy</strong> — a new EICR is required before a new
-                tenant moves into any privately rented property, even if the previous EICR has
-                not expired.
+                <strong>Change of occupancy</strong> — a new EICR is required before a new tenant
+                moves into any privately rented property, even if the previous EICR has not expired.
               </span>
             </li>
           </ul>
@@ -499,8 +500,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or
-                the 2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
+                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or the
+                2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
                 Experience with Victorian and Regency conversions is a significant advantage in
                 Brighton.
               </span>
@@ -516,9 +517,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Brighton's high property values mean that EICR-related disputes can be significant.
-          Using a scheme-registered inspector with professional indemnity insurance provides
-          protection for both landlords and tenants.
+          Brighton's high property values mean that EICR-related disputes can be significant. Using
+          a scheme-registered inspector with professional indemnity insurance provides protection
+          for both landlords and tenants.
         </p>
       </>
     ),
@@ -529,10 +530,10 @@ const sections = [
     content: (
       <>
         <p>
-          Brighton's dense private rented sector, large student population, and high proportion
-          of older properties create strong and consistent demand for EICR work. The high remedial
-          work conversion rate in period conversions means Brighton EICRs are commercially
-          attractive for thorough inspectors.
+          Brighton's dense private rented sector, large student population, and high proportion of
+          older properties create strong and consistent demand for EICR work. The high remedial work
+          conversion rate in period conversions means Brighton EICRs are commercially attractive for
+          thorough inspectors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -545,9 +546,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete reports on your phone while still on site. AI board scanning reads
-                  the consumer unit, voice entry records test results, and instant PDF export
-                  delivers the report to landlords before you leave.
+                  to complete reports on your phone while still on site. AI board scanning reads the
+                  consumer unit, voice entry records test results, and instant PDF export delivers
+                  the report to landlords before you leave.
                 </p>
               </div>
             </div>
@@ -558,13 +559,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Instantly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When the EICR identifies C1 or C2 observations, quote the remedial work on
-                  the day using the{' '}
+                  When the EICR identifies C1 or C2 observations, quote the remedial work on the day
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Brighton landlords must act within 28 days — the electrician who quotes on
-                  the day of the EICR is most likely to win the follow-on work.
+                  . Brighton landlords must act within 28 days — the electrician who quotes on the
+                  day of the EICR is most likely to win the follow-on work.
                 </p>
               </div>
             </div>
@@ -572,7 +573,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -609,7 +610,7 @@ export default function EICRBrightonPage() {
       faqHeading="Frequently Asked Questions About EICRs in Brighton"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

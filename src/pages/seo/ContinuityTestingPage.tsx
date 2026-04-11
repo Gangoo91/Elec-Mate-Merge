@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
-    description: 'Test voltages, minimum values, and live circuit precautions under Regulation 643.3.',
+    description:
+      'Test voltages, minimum values, and live circuit precautions under Regulation 643.3.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -151,11 +152,7 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
-          or{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            EICR
-          </SEOInternalLink>
-          .
+          or <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
         </p>
         <p>
           Continuity testing is carried out with the circuit dead and isolated. The test instrument
@@ -182,9 +179,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The resistance of the line conductor from the MCB or fuse at the consumer unit to the
               furthest point of the circuit. For a 1.5mm² copper conductor at 20°C, resistance is
-              approximately 12.1mΩ per metre. For 2.5mm², approximately 7.41mΩ per metre. The
-              longer the circuit run and the smaller the conductor cross-section, the higher R1 will
-              be.
+              approximately 12.1mΩ per metre. For 2.5mm², approximately 7.41mΩ per metre. The longer
+              the circuit run and the smaller the conductor cross-section, the higher R1 will be.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -220,7 +216,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
                 <strong>Measure end-to-end resistance</strong> — at the consumer unit, temporarily
                 link the two line ends of the ring together. Measure from one end to the other with
@@ -228,7 +226,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Cross-connect for spurious ring test</strong> — connect one line end to one
                 neutral end at the board (cross-connect). Measure resistance from the remaining line
@@ -237,7 +237,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
                 <strong>Calculate maximum R1+R2</strong> — the maximum R1+R2 at any outlet on the
                 ring is (r1+r2)/4. This is the value to add to Ze when checking compliance with the
@@ -269,8 +271,9 @@ const sections = [
         <p>
           CPC continuity testing verifies that the protective conductor is electrically connected
           from the main earthing terminal to the furthest point of every circuit, and to every piece
-          of exposed metalwork in the installation. Without a continuous earth path, the installation
-          does not provide adequate protection against electric shock from indirect contact.
+          of exposed metalwork in the installation. Without a continuous earth path, the
+          installation does not provide adequate protection against electric shock from indirect
+          contact.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -278,8 +281,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Open circuit CPC</strong> — a reading of infinity (OL or overload display)
-                indicates a broken or disconnected CPC. This is a C1 (danger present) observation
-                on an EICR. The circuit must not be energised until the CPC is repaired.
+                indicates a broken or disconnected CPC. This is a C1 (danger present) observation on
+                an EICR. The circuit must not be energised until the CPC is repaired.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,8 +298,8 @@ const sections = [
               <span>
                 <strong>Main protective bonding</strong> — test from the main earthing terminal to
                 each bonded service (gas, water, oil, structural steel). The resistance should
-                typically be below 0.05Ω. Higher values may indicate a poor bonding connection or
-                an excessively long bonding conductor.
+                typically be below 0.05Ω. Higher values may indicate a poor bonding connection or an
+                excessively long bonding conductor.
               </span>
             </li>
           </ul>
@@ -311,37 +314,49 @@ const sections = [
       <>
         <p>
           Continuity test lead resistance can be a significant source of error, particularly for
-          measurements below 1Ω. Standard test leads have a resistance of between 0.1Ω and 0.5Ω.
-          For a circuit with an R2 of 0.5Ω, an unnulled lead resistance of 0.3Ω would produce a
-          reading of 0.8Ω — 60% higher than the true value.
+          measurements below 1Ω. Standard test leads have a resistance of between 0.1Ω and 0.5Ω. For
+          a circuit with an R2 of 0.5Ω, an unnulled lead resistance of 0.3Ω would produce a reading
+          of 0.8Ω — 60% higher than the true value.
         </p>
-        <p>
-          Always null (zero) the test leads before taking measurements:
-        </p>
+        <p>Always null (zero) the test leads before taking measurements:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-3 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>Connect the test lead clips together firmly.</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>Press the null or zero button on the instrument.</span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
-              <span>Verify the display reads 0.00Ω (or close to it). If the instrument does not have a null function, note the lead resistance and subtract it manually.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
+              <span>
+                Verify the display reads 0.00Ω (or close to it). If the instrument does not have a
+                null function, note the lead resistance and subtract it manually.
+              </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
-              <span>Repeat the null procedure if you change leads or if the leads have been moved significantly (temperature affects resistance).</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
+              <span>
+                Repeat the null procedure if you change leads or if the leads have been moved
+                significantly (temperature affects resistance).
+              </span>
             </li>
           </ol>
         </div>
         <p>
           Use good-quality test leads with low resistance. For very low-resistance measurements
-          (such as main bonding conductor continuity), Kelvin (four-wire) measurement eliminates lead
-          resistance entirely — some professional continuity testers support this mode.
+          (such as main bonding conductor continuity), Kelvin (four-wire) measurement eliminates
+          lead resistance entirely — some professional continuity testers support this mode.
         </p>
       </>
     ),
@@ -388,10 +403,8 @@ const sections = [
         <p>
           The schedule of test results on an EIC or EICR includes a dedicated column for R1+R2 (or
           r1+r2/4 for ring circuits), which must be completed for every circuit. The{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
-            Elec-Mate EIC app
-          </SEOInternalLink>{' '}
-          records these values and uses them to calculate Zs automatically.
+          <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink> records
+          these values and uses them to calculate Zs automatically.
         </p>
       </>
     ),
@@ -412,8 +425,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Use Long Test Leads</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Invest in 25m to 50m test lead extensions. This allows you to measure R1+R2 at
-                  the furthest socket outlet on a circuit from the consumer unit without needing a
+                  Invest in 25m to 50m test lead extensions. This allows you to measure R1+R2 at the
+                  furthest socket outlet on a circuit from the consumer unit without needing a
                   second person or a temporary link at every test point. Null out the leads before
                   use.
                 </p>
@@ -468,7 +481,7 @@ export default function ContinuityTestingPage() {
       faqHeading="Frequently Asked Questions About Continuity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Continuity Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate records R1+R2 and r1+r2/4 values, calculates Zs automatically, and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

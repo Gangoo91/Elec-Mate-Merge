@@ -628,7 +628,7 @@ export default function ElectricalMaintenanceGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Manage Maintenance Work From Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital certificates, professional reporting, and efficient job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificates, professional reporting, and efficient job management. 7-day free trial, cancel anytime."
     />
   );
 }

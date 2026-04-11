@@ -171,8 +171,8 @@ const sections = [
         <p>
           Oxford and the wider Oxfordshire area are served by{' '}
           <strong>Scottish and Southern Electricity Networks (SSEN)</strong>, operating under the
-          Southern Electric Power Distribution (SEPD) licence. SSEN manages the distribution
-          network from 132kV down to the 230V supply at properties.
+          Southern Electric Power Distribution (SEPD) licence. SSEN manages the distribution network
+          from 132kV down to the 230V supply at properties.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Key DNO Information for Oxford</h3>
@@ -192,8 +192,8 @@ const sections = [
             </p>
             <p>
               <strong>G98/G99 notifications:</strong> Solar PV, battery storage, and EV charger
-              installations that export to the grid require G98 (up to 16A per phase) or G99
-              (larger systems) notification to SSEN before energisation.
+              installations that export to the grid require G98 (up to 16A per phase) or G99 (larger
+              systems) notification to SSEN before energisation.
             </p>
             <p>
               <strong>Earthing:</strong> Most of Oxford is PME (TN-C-S) earthing. Some older
@@ -220,9 +220,9 @@ const sections = [
       <>
         <p>
           The University of Oxford is one of the largest property owners in the city, with 39
-          colleges and over 200 university-owned buildings. The oldest colleges — University
-          College (1249), Balliol (1263), and Merton (1264) — have buildings spanning nearly 800
-          years. The electrical requirements are both vast and varied.
+          colleges and over 200 university-owned buildings. The oldest colleges — University College
+          (1249), Balliol (1263), and Merton (1264) — have buildings spanning nearly 800 years. The
+          electrical requirements are both vast and varied.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -232,15 +232,15 @@ const sections = [
                 <strong>Student accommodation</strong> — each college houses hundreds of students.
                 Rooms need periodic inspection, socket upgrades (USB charging is now standard),
                 smoke detector compliance, and summer vacation rewiring programmes. The vacation
-                window (late June to September) is when major electrical work is scheduled —
-                plan capacity accordingly.
+                window (late June to September) is when major electrical work is scheduled — plan
+                capacity accordingly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Libraries and archives</strong> — the Bodleian Library, Radcliffe Camera, and
-                individual college libraries have stringent environmental control requirements.
+                <strong>Libraries and archives</strong> — the Bodleian Library, Radcliffe Camera,
+                and individual college libraries have stringent environmental control requirements.
                 Electrical work in these spaces often involves specialist lighting (UV-filtered for
                 preservation), humidity control systems, and fire suppression rather than sprinkler
                 systems to protect irreplaceable collections. All work must be silent during reading
@@ -353,12 +353,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New-build developments</strong> — the Oxford Local Plan allocates significant
-                housing development in East Oxford, Cowley, Barton Park, and the Oxpens site. New-
-                build residential electrical work (first-fix and second-fix) provides volume work for
-                contractors. The Barton Park development alone comprises over 800 homes. New builds
-                in Oxford increasingly require EV charger pre-wiring to meet Building Regulations
-                Part S.
+                <strong>New-build developments</strong> — the Oxford Local Plan allocates
+                significant housing development in East Oxford, Cowley, Barton Park, and the Oxpens
+                site. New- build residential electrical work (first-fix and second-fix) provides
+                volume work for contractors. The Barton Park development alone comprises over 800
+                homes. New builds in Oxford increasingly require EV charger pre-wiring to meet
+                Building Regulations Part S.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,9 +378,9 @@ const sections = [
               <span>
                 <strong>1950s–60s rewiring</strong> — Cowley's post-war housing estates (Rose Hill,
                 Blackbird Leys, Greater Leys) were built in the 1950s and 1960s. Many still have
-                original wiring — rubber-insulated cables, surface-mounted metal consumer units
-                with rewirable fuses, and ring finals run in imperial-sized conduit. These properties
-                are now 60 to 75 years old and approaching or past the point where a full rewire is
+                original wiring — rubber-insulated cables, surface-mounted metal consumer units with
+                rewirable fuses, and ring finals run in imperial-sized conduit. These properties are
+                now 60 to 75 years old and approaching or past the point where a full rewire is
                 necessary. This is steady, bread-and-butter rewiring work.
               </span>
             </li>
@@ -401,20 +401,20 @@ const sections = [
       <>
         <p>
           Oxford's commercial electrical market is growing, driven by retail development, the
-          expanding science and technology sector, and the healthcare infrastructure around the
-          John Radcliffe and Churchill hospitals.
+          expanding science and technology sector, and the healthcare infrastructure around the John
+          Radcliffe and Churchill hospitals.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShoppingBag className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Westgate Oxford</strong> — the redeveloped Westgate shopping centre is one of
-                the largest retail destinations in the south of England. Ongoing tenant fit-outs,
-                food court installations, cinema and leisure electrical work, and building management
-                system maintenance create regular commercial opportunities. Retail fit-out work
-                typically involves lighting design, small power, data cabling, fire alarm
-                integration, and emergency lighting — all to commercial timescales.
+                <strong>Westgate Oxford</strong> — the redeveloped Westgate shopping centre is one
+                of the largest retail destinations in the south of England. Ongoing tenant fit-outs,
+                food court installations, cinema and leisure electrical work, and building
+                management system maintenance create regular commercial opportunities. Retail
+                fit-out work typically involves lighting design, small power, data cabling, fire
+                alarm integration, and emergency lighting — all to commercial timescales.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,8 +423,8 @@ const sections = [
                 <strong>Oxford Science Park and Harwell</strong> — the Oxford Science Park
                 (Littlemore) and Harwell Science and Innovation Campus (south of Didcot) are major
                 employers generating laboratory, cleanroom, and office electrical work. The Diamond
-                Light Source at Harwell has specialist power requirements. These sites are accessible
-                from Oxford and provide high-value commercial work.
+                Light Source at Harwell has specialist power requirements. These sites are
+                accessible from Oxford and provide high-value commercial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -433,8 +433,8 @@ const sections = [
                 <strong>Healthcare</strong> — the Oxford University Hospitals NHS Foundation Trust
                 operates the John Radcliffe, Churchill, Horton, and Nuffield Orthopaedic Centre
                 hospitals. Healthcare electrical work includes medical gas alarm panels, nurse call
-                systems, theatre lighting, and critical power infrastructure. NHS framework contracts
-                are competitive but provide long-term, reliable income.
+                systems, theatre lighting, and critical power infrastructure. NHS framework
+                contracts are competitive but provide long-term, reliable income.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -462,8 +462,8 @@ const sections = [
     content: (
       <>
         <p>
-          Oxford pricing reflects the high cost of living and strong demand across all sectors. Rates
-          are comparable to outer London boroughs in many cases, particularly for heritage and
+          Oxford pricing reflects the high cost of living and strong demand across all sectors.
+          Rates are comparable to outer London boroughs in many cases, particularly for heritage and
           commercial work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -505,8 +505,8 @@ const sections = [
         <p>
           These rates are indicative for 2026. North Oxford and Summertown command the highest
           domestic rates; Cowley and Blackbird Leys are more price-sensitive. Commercial rates vary
-          significantly by sector — retail fit-outs at £300 to £400 per day, laboratory work at
-          £380 to £500. Use Elec-Mate's{' '}
+          significantly by sector — retail fit-outs at £300 to £400 per day, laboratory work at £380
+          to £500. Use Elec-Mate's{' '}
           <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate, itemised quotes tailored to the Oxford market.
         </p>
@@ -573,7 +573,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Oxford electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -610,7 +610,7 @@ export default function ElectricianOxfordPage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Oxford"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Oxford — On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, HMO, or commercial — certify it all on site. 7-day free trial."
     />
   );
 }

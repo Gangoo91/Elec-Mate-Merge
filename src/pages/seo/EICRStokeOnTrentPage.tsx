@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What are the most common EICR failures in Stoke-on-Trent?',
     answer:
-      'The most common C2 findings in Stoke-on-Trent properties are: absence of RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate or missing main protective bonding to gas and water services (Regulation 544.1), degraded wiring insulation in properties with original 1960s PVC cabling, and non-compliant consumer units housed in combustible plastic enclosures. Many of the six towns\' terraced properties have never been comprehensively rewired.',
+      "The most common C2 findings in Stoke-on-Trent properties are: absence of RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate or missing main protective bonding to gas and water services (Regulation 544.1), degraded wiring insulation in properties with original 1960s PVC cabling, and non-compliant consumer units housed in combustible plastic enclosures. Many of the six towns' terraced properties have never been comprehensively rewired.",
   },
   {
     question: 'How long does an EICR take in Stoke-on-Trent?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Who is qualified to carry out an EICR in Stoke-on-Trent?',
     answer:
-      'The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme. They should hold City and Guilds 2391 (Inspection and Testing) or equivalent and a current BS 7671 18th Edition qualification (C&G 2382). Always verify registration on the scheme\'s public register before commissioning.',
+      "The inspector must be a qualified and competent person — in practice, someone registered with NICEIC, NAPIT, ELECSA, or an equivalent competent person scheme. They should hold City and Guilds 2391 (Inspection and Testing) or equivalent and a current BS 7671 18th Edition qualification (C&G 2382). Always verify registration on the scheme's public register before commissioning.",
   },
 ];
 
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -206,9 +207,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Enforcement</strong> — Stoke-on-Trent City Council can issue civil
-                penalties of up to £30,000 per breach. Each individual failure (no EICR, failure
-                to provide copy, failure to complete remedial work) is a separate breach.
+                <strong>Enforcement</strong> — Stoke-on-Trent City Council can issue civil penalties
+                of up to £30,000 per breach. Each individual failure (no EICR, failure to provide
+                copy, failure to complete remedial work) is a separate breach.
               </span>
             </li>
           </ul>
@@ -238,8 +239,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Provide copies promptly</strong> — to existing tenants within 28 days of
-                the inspection, to new tenants before they occupy the property, and to Stoke-on-Trent
+                <strong>Provide copies promptly</strong> — to existing tenants within 28 days of the
+                inspection, to new tenants before they occupy the property, and to Stoke-on-Trent
                 City Council within seven days if requested.
               </span>
             </li>
@@ -263,8 +264,8 @@ const sections = [
         </div>
         <p>
           Non-compliance also prevents a landlord from serving a valid Section 21 (no-fault
-          eviction) notice. Stoke-on-Trent landlords who have not provided the EICR to their
-          tenant cannot regain possession through this route.
+          eviction) notice. Stoke-on-Trent landlords who have not provided the EICR to their tenant
+          cannot regain possession through this route.
         </p>
       </>
     ),
@@ -303,19 +304,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Degraded insulation resistance</strong> — insulation resistance testing
-                (per BS 7671 Section 612) on circuits with aged PVC or rubber-sheathed cabling
-                frequently reveals values below the required 1MΩ minimum, indicating insulation
-                breakdown and potential shock or fire risk.
+                <strong>Degraded insulation resistance</strong> — insulation resistance testing (per
+                BS 7671 Section 612) on circuits with aged PVC or rubber-sheathed cabling frequently
+                reveals values below the required 1MΩ minimum, indicating insulation breakdown and
+                potential shock or fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-compliant consumer units</strong> — consumer units installed or
-                replaced before 2016 may be housed in combustible plastic enclosures. Since
-                Amendment 3 to the 17th Edition (now consolidated in BS 7671:2018), consumer units
-                in domestic premises must be housed in non-combustible enclosures.
+                <strong>Non-compliant consumer units</strong> — consumer units installed or replaced
+                before 2016 may be housed in combustible plastic enclosures. Since Amendment 3 to
+                the 17th Edition (now consolidated in BS 7671:2018), consumer units in domestic
+                premises must be housed in non-combustible enclosures.
               </span>
             </li>
           </ul>
@@ -394,25 +395,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom terraced house</strong> — £120 to £200. The most common
-                property type in Stoke-on-Trent's private rented sector. Older properties may
-                take longer due to complex or partial rewiring histories.
+                <strong>Two-bedroom terraced house</strong> — £120 to £200. The most common property
+                type in Stoke-on-Trent's private rented sector. Older properties may take longer due
+                to complex or partial rewiring histories.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £180 to £300. Victorian terraces in
-                Longton, Burslem, and Tunstall can present more complex installations requiring
-                additional inspection time.
+                <strong>Three-bedroom house</strong> — £180 to £300. Victorian terraces in Longton,
+                Burslem, and Tunstall can present more complex installations requiring additional
+                inspection time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO / large property</strong> — £250 to £450 or more. Multiple consumer
-                units, fire alarm systems, and emergency lighting extend the inspection scope
-                and cost significantly.
+                units, fire alarm systems, and emergency lighting extend the inspection scope and
+                cost significantly.
               </span>
             </li>
           </ul>
@@ -440,10 +441,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use official scheme registers</strong> — search the NICEIC, NAPIT, or
-                ELECSA online registers for electricians operating in the Stoke-on-Trent area.
-                Registration provides assurance of qualifications, professional indemnity insurance,
-                and regular quality assessment.
+                <strong>Use official scheme registers</strong> — search the NICEIC, NAPIT, or ELECSA
+                online registers for electricians operating in the Stoke-on-Trent area. Registration
+                provides assurance of qualifications, professional indemnity insurance, and regular
+                quality assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -459,8 +460,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calibrated instruments</strong> — insulation resistance, earth fault loop
-                impedance, and RCD testing require calibrated multifunction testers. Ask whether
-                the electrician's instruments have current calibration certificates.
+                impedance, and RCD testing require calibrated multifunction testers. Ask whether the
+                electrician's instruments have current calibration certificates.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -510,7 +511,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Convert Findings to Quotes Immediately</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Convert Findings to Quotes Immediately
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are recorded, quote the remedial work on the day using
                   the{' '}
@@ -526,7 +529,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Stoke-on-Trent with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -563,7 +566,7 @@ export default function EICRStokeOnTrentPage() {
       faqHeading="Frequently Asked Questions About EICRs in Stoke-on-Trent"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location Across Stoke-on-Trent"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

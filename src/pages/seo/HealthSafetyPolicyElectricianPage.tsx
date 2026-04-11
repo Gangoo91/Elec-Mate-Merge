@@ -90,48 +90,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/gdpr-for-electricians',
     title: 'GDPR for Electricians',
-    description:
-      'Data protection compliance — another essential for commercial work.',
+    description: 'Data protection compliance — another essential for commercial work.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/guides/finding-commercial-electrical-work',
     title: 'Finding Commercial Work',
-    description:
-      'H&S policy is a prerequisite for commercial contracts — get it right first.',
+    description: 'H&S policy is a prerequisite for commercial contracts — get it right first.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-business-plan-template',
     title: 'Electrical Business Plan',
-    description:
-      'Include operational and compliance planning in your business plan.',
+    description: 'Include operational and compliance planning in your business plan.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/guides/working-with-other-trades-electrician',
     title: 'Working with Other Trades',
-    description:
-      'Coordination and safety when working alongside other trades on site.',
+    description: 'Coordination and safety when working alongside other trades on site.',
     icon: Users,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-project-handover-guide',
     title: 'Project Handover Guide',
-    description:
-      'H&S documentation is part of a professional project handover.',
+    description: 'H&S documentation is part of a professional project handover.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Professional electrical certification — part of your compliance toolkit.',
+    description: 'Professional electrical certification — part of your compliance toolkit.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -148,18 +142,18 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical work is inherently hazardous. Electric shock, arc flash, falls from
-          height, manual handling injuries, and exposure to asbestos-containing materials are
-          all real risks that you face on a daily basis. A health and safety policy is your
-          framework for managing those risks — not to satisfy a bureaucrat, but to make sure
-          you and everyone around you goes home safe at the end of every day.
+          Electrical work is inherently hazardous. Electric shock, arc flash, falls from height,
+          manual handling injuries, and exposure to asbestos-containing materials are all real risks
+          that you face on a daily basis. A health and safety policy is your framework for managing
+          those risks — not to satisfy a bureaucrat, but to make sure you and everyone around you
+          goes home safe at the end of every day.
         </p>
         <p>
           Beyond the moral and legal obligations, a health and safety policy is a commercial
           necessity. Main contractors will not let you on a commercial site without one. SSIP
           schemes (SafeContractor, CHAS, Constructionline) assess your policy as part of
-          accreditation. And if something goes wrong, your policy and risk assessments are the
-          first things the HSE will ask to see.
+          accreditation. And if something goes wrong, your policy and risk assessments are the first
+          things the HSE will ask to see.
         </p>
       </>
     ),
@@ -174,8 +168,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Health and Safety at Work etc. Act 1974</strong> — places a general duty
-                on all employers and self-employed persons to ensure, so far as is reasonably
+                <strong>Health and Safety at Work etc. Act 1974</strong> — places a general duty on
+                all employers and self-employed persons to ensure, so far as is reasonably
                 practicable, the health, safety, and welfare of themselves, their employees, and
                 others affected by their work.
               </span>
@@ -183,26 +177,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Management of Health and Safety at Work Regulations 1999</strong> —
-                requires risk assessments for all work activities. If you employ 5+ people,
-                risk assessments must be recorded in writing.
+                <strong>Management of Health and Safety at Work Regulations 1999</strong> — requires
+                risk assessments for all work activities. If you employ 5+ people, risk assessments
+                must be recorded in writing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Employers&apos; Health and Safety Policy Statements (Exception)
-                Regulations 1975</strong> — employers with 5 or more employees must have a
-                written health and safety policy. Fewer than 5 employees: no legal requirement
-                for a written policy, but you still have all the duties above.
+                <strong>
+                  Employers&apos; Health and Safety Policy Statements (Exception) Regulations 1975
+                </strong>{' '}
+                — employers with 5 or more employees must have a written health and safety policy.
+                Fewer than 5 employees: no legal requirement for a written policy, but you still
+                have all the duties above.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity at Work Regulations 1989</strong> — specific duties for
-                anyone working on or near electrical systems. Requires safe systems of work,
-                competence, and safe isolation procedures.
+                <strong>Electricity at Work Regulations 1989</strong> — specific duties for anyone
+                working on or near electrical systems. Requires safe systems of work, competence,
+                and safe isolation procedures.
               </span>
             </li>
           </ul>
@@ -222,11 +218,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Part 1: Statement of Intent</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A signed declaration by the business owner committing to: providing a safe
-                  working environment, complying with all relevant legislation, conducting
-                  risk assessments, providing training and information, reviewing the policy
-                  regularly, and consulting employees on H&S matters. Keep this to one page.
-                  Sign and date it.
+                  A signed declaration by the business owner committing to: providing a safe working
+                  environment, complying with all relevant legislation, conducting risk assessments,
+                  providing training and information, reviewing the policy regularly, and consulting
+                  employees on H&S matters. Keep this to one page. Sign and date it.
                 </p>
               </div>
             </div>
@@ -238,9 +233,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Part 2: Organisation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Who is responsible for what. For a sole trader: you are responsible for
-                  everything. For a larger business: name the person responsible for overall
-                  H&S, site-level supervision, first aid, fire safety, training, and accident
-                  reporting. Include an organisation chart if you have employees.
+                  everything. For a larger business: name the person responsible for overall H&S,
+                  site-level supervision, first aid, fire safety, training, and accident reporting.
+                  Include an organisation chart if you have employees.
                 </p>
               </div>
             </div>
@@ -253,9 +248,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The practical procedures: risk assessment process, safe isolation procedure,
                   working at height procedure, manual handling, PPE policy, accident reporting
-                  (RIDDOR), first aid arrangements, fire procedures, electrical safety
-                  standards, training and competence requirements, and consultation with
-                  employees. This is the longest section — 3 to 8 pages for a sole trader.
+                  (RIDDOR), first aid arrangements, fire procedures, electrical safety standards,
+                  training and competence requirements, and consultation with employees. This is the
+                  longest section — 3 to 8 pages for a sole trader.
                 </p>
               </div>
             </div>
@@ -273,18 +268,22 @@ const sections = [
           <div className="space-y-4 text-white text-sm">
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">1</span>
+                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">
+                  1
+                </span>
                 Identify the Hazards
               </h4>
               <p>
-                Walk the site before starting work. Look for: exposed live parts, overhead
-                cables, trip hazards, working at height requirements, asbestos indicators (pre-2000
+                Walk the site before starting work. Look for: exposed live parts, overhead cables,
+                trip hazards, working at height requirements, asbestos indicators (pre-2000
                 properties), confined spaces, and poor access.
               </p>
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">2</span>
+                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">
+                  2
+                </span>
                 Decide Who Might Be Harmed
               </h4>
               <p>
@@ -294,34 +293,40 @@ const sections = [
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">3</span>
+                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">
+                  3
+                </span>
                 Evaluate the Risks and Decide on Precautions
               </h4>
               <p>
-                For each hazard: what are you already doing to control it? Is it enough? What
-                more should you do? Use the hierarchy of controls: eliminate, substitute,
-                engineering controls, administrative controls, PPE (last resort).
+                For each hazard: what are you already doing to control it? Is it enough? What more
+                should you do? Use the hierarchy of controls: eliminate, substitute, engineering
+                controls, administrative controls, PPE (last resort).
               </p>
             </div>
             <div className="border-b border-white/10 pb-3">
               <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">4</span>
+                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">
+                  4
+                </span>
                 Record Your Findings
               </h4>
               <p>
                 Write it down. Record the hazard, who is at risk, existing controls, additional
-                controls needed, the residual risk level, and the person responsible. Keep it
-                simple — a one-page form per job is sufficient for most domestic work.
+                controls needed, the residual risk level, and the person responsible. Keep it simple
+                — a one-page form per job is sufficient for most domestic work.
               </p>
             </div>
             <div className="pb-3">
               <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">5</span>
+                <span className="w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-bold flex items-center justify-center shrink-0">
+                  5
+                </span>
                 Review and Update
               </h4>
               <p>
-                Review before each new job, after any incident, and when conditions change.
-                Risk assessments are living documents, not paperwork to be filed and forgotten.
+                Review before each new job, after any incident, and when conditions change. Risk
+                assessments are living documents, not paperwork to be filed and forgotten.
               </p>
             </div>
           </div>
@@ -335,8 +340,8 @@ const sections = [
     content: (
       <>
         <p>
-          A method statement describes the safe sequence of work for a specific task. It
-          should be specific enough that someone unfamiliar with the task could follow it.
+          A method statement describes the safe sequence of work for a specific task. It should be
+          specific enough that someone unfamiliar with the task could follow it.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Method Statement Contents</h4>
@@ -392,10 +397,9 @@ const sections = [
     content: (
       <>
         <p>
-          RAMS combines your risk assessment and method statement into a single document
-          for a specific project or task. On commercial sites, you will be asked to submit
-          RAMS before starting work. The site manager reviews and approves them before you
-          are allowed to begin.
+          RAMS combines your risk assessment and method statement into a single document for a
+          specific project or task. On commercial sites, you will be asked to submit RAMS before
+          starting work. The site manager reviews and approves them before you are allowed to begin.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -456,9 +460,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Practical advice:</strong> Write a policy even if you are not legally
-          required to. It takes a few hours, costs nothing, protects you in an investigation,
-          and opens the door to commercial work. There is no downside.
+          <strong>Practical advice:</strong> Write a policy even if you are not legally required to.
+          It takes a few hours, costs nothing, protects you in an investigation, and opens the door
+          to commercial work. There is no downside.
         </p>
       </>
     ),
@@ -473,8 +477,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual review</strong> — read through, update, re-sign and re-date.
-                SSIP schemes check for evidence of annual review.
+                <strong>Annual review</strong> — read through, update, re-sign and re-date. SSIP
+                schemes check for evidence of annual review.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -509,10 +513,10 @@ const sections = [
     content: (
       <>
         <p>
-          A health and safety policy is only worth the paper it is written on if you actually
-          follow it. The best policy in the world will not protect you if you do not conduct
-          risk assessments, do not isolate before working, and do not wear PPE. Make safety
-          a habit, not a document.
+          A health and safety policy is only worth the paper it is written on if you actually follow
+          it. The best policy in the world will not protect you if you do not conduct risk
+          assessments, do not isolate before working, and do not wear PPE. Make safety a habit, not
+          a document.
         </p>
         <SEOAppBridge
           title="Generate RAMS and risk assessments on site"
@@ -553,7 +557,7 @@ export default function HealthSafetyPolicyElectricianPage() {
       faqHeading="Frequently Asked Questions About Health and Safety Policies"
       relatedPages={relatedPages}
       ctaHeading="Generate RAMS in Minutes, Not Hours"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered RAMS, certificates, and job management. Professional documentation that keeps you safe and wins you work. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Aberdeen?',
     answer:
-      'EICR costs in Aberdeen are generally lower than the UK average for major cities. Expect to pay approximately £100 to £200 for a one-bedroom flat, £150 to £280 for a two-bedroom property, and £180 to £350 for a three-bedroom house. Larger houses with multiple circuits or properties with aged wiring (common in Aberdeen\'s granite tenements) may cost more. These prices cover the inspection and report only; any remedial work is quoted separately.',
+      "EICR costs in Aberdeen are generally lower than the UK average for major cities. Expect to pay approximately £100 to £200 for a one-bedroom flat, £150 to £280 for a two-bedroom property, and £180 to £350 for a three-bedroom house. Larger houses with multiple circuits or properties with aged wiring (common in Aberdeen's granite tenements) may cost more. These prices cover the inspection and report only; any remedial work is quoted separately.",
   },
   {
     question: 'How long does an EICR take in Aberdeen?',
@@ -74,7 +74,7 @@ const faqs = [
   {
     question: 'What are common EICR findings in Aberdeen properties?',
     answer:
-      'Aberdeen\'s older housing stock — particularly granite tenements built before 1960 — frequently presents rubber-insulated cables (which perish and crack with age), the absence of RCD protection on socket-outlet circuits, inadequate earthing and bonding, overloaded consumer units, and deteriorated or non-standard wiring from DIY modifications. These are all recorded as C1 or C2 observations and must be rectified before the installation can be classed as Satisfactory.',
+      "Aberdeen's older housing stock — particularly granite tenements built before 1960 — frequently presents rubber-insulated cables (which perish and crack with age), the absence of RCD protection on socket-outlet circuits, inadequate earthing and bonding, overloaded consumer units, and deteriorated or non-standard wiring from DIY modifications. These are all recorded as C1 or C2 observations and must be rectified before the installation can be classed as Satisfactory.",
   },
   {
     question: 'How often should an EICR be carried out in Aberdeen?',
@@ -87,28 +87,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-explained',
     title: 'EICR Explained',
-    description: 'A complete guide to Electrical Installation Condition Reports — what they are, what inspectors check, and what the codes mean.',
+    description:
+      'A complete guide to Electrical Installation Condition Reports — what they are, what inspectors check, and what the codes mean.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Landlord EICR obligations, compliance deadlines, penalties, and how to manage multiple properties efficiently.',
+    description:
+      'Landlord EICR obligations, compliance deadlines, penalties, and how to manage multiple properties efficiently.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-observation-codes-explained',
     title: 'EICR Observation Codes',
-    description: 'Understand C1, C2, C3 and FI codes — what they mean, what action is required, and common examples.',
+    description:
+      'Understand C1, C2, C3 and FI codes — what they mean, what action is required, and common examples.',
     icon: AlertTriangle,
     category: 'Guide',
   },
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export.',
+    description:
+      'Complete EICRs on your phone with AI board scanning, voice test entry, and instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -125,19 +129,19 @@ const sections = [
     content: (
       <>
         <p>
-          An Electrical Installation Condition Report (EICR) — sometimes called a periodic inspection
-          report — is a formal assessment of the safety and condition of an electrical installation
-          in an existing building. Unlike a new installation certificate, an EICR evaluates a
-          fixed electrical installation that has been in service for some time, assessing whether
-          it remains safe and compliant with current standards.
+          An Electrical Installation Condition Report (EICR) — sometimes called a periodic
+          inspection report — is a formal assessment of the safety and condition of an electrical
+          installation in an existing building. Unlike a new installation certificate, an EICR
+          evaluates a fixed electrical installation that has been in service for some time,
+          assessing whether it remains safe and compliant with current standards.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection</strong> — the inspector examines all accessible parts
-                of the fixed installation: consumer unit, wiring, sockets, switches, light fittings,
+                <strong>Visual inspection</strong> — the inspector examines all accessible parts of
+                the fixed installation: consumer unit, wiring, sockets, switches, light fittings,
                 bonding, and earthing arrangements. They check for damage, deterioration, and
                 non-compliant work.
               </span>
@@ -145,10 +149,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing</strong> — the inspector carries out a series of electrical tests
-                on circuits and equipment using calibrated instruments. Tests include earth
-                continuity, insulation resistance, polarity, earth fault loop impedance, and
-                RCD operation. Results are recorded in the{' '}
+                <strong>Testing</strong> — the inspector carries out a series of electrical tests on
+                circuits and equipment using calibrated instruments. Tests include earth continuity,
+                insulation resistance, polarity, earth fault loop impedance, and RCD operation.
+                Results are recorded in the{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
                   Schedule of Test Results
                 </SEOInternalLink>
@@ -179,8 +183,8 @@ const sections = [
         </div>
         <p>
           The completed EICR document lists all observations with their classification codes,
-          records all test results, and states an overall assessment and recommended date for
-          the next inspection.
+          records all test results, and states an overall assessment and recommended date for the
+          next inspection.
         </p>
       </>
     ),
@@ -202,43 +206,43 @@ const sections = [
               <span>
                 <strong>Housing (Scotland) Act 2006 — Repairing Standard</strong> — private
                 landlords in Scotland must ensure that the electrical installation and any
-                electrical fixtures, fittings, and appliances provided under the tenancy are in
-                a reasonable state of repair and in proper working order. A valid EICR (maximum
-                five years old) is the accepted means of demonstrating compliance.
+                electrical fixtures, fittings, and appliances provided under the tenancy are in a
+                reasonable state of repair and in proper working order. A valid EICR (maximum five
+                years old) is the accepted means of demonstrating compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Private Housing (Tenancies) (Scotland) Act 2016</strong> — further
-                strengthened tenant rights and landlord obligations. A landlord cannot lawfully
-                let a property that does not meet the Repairing Standard.
+                strengthened tenant rights and landlord obligations. A landlord cannot lawfully let
+                a property that does not meet the Repairing Standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord registration</strong> — all private landlords in Aberdeen must
-                be registered with Aberdeen City Council. The council can take action — including
-                revoking registration — against landlords who fail to maintain their properties
-                to the required standard.
+                <strong>Landlord registration</strong> — all private landlords in Aberdeen must be
+                registered with Aberdeen City Council. The council can take action — including
+                revoking registration — against landlords who fail to maintain their properties to
+                the required standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Housing and Property Chamber</strong> — tenants in Scotland can apply
-                to the First-tier Tribunal (Housing and Property Chamber) if a landlord fails
-                to comply with the Repairing Standard. The tribunal can order the landlord to
-                carry out the necessary work.
+                <strong>Housing and Property Chamber</strong> — tenants in Scotland can apply to the
+                First-tier Tribunal (Housing and Property Chamber) if a landlord fails to comply
+                with the Repairing Standard. The tribunal can order the landlord to carry out the
+                necessary work.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Owner-occupiers in Aberdeen are not legally required to obtain an EICR, but BS 7671
-          recommends periodic inspection every ten years or on change of occupancy. Given
-          Aberdeen's older housing stock, more frequent inspection is advisable.
+          recommends periodic inspection every ten years or on change of occupancy. Given Aberdeen's
+          older housing stock, more frequent inspection is advisable.
         </p>
       </>
     ),
@@ -251,28 +255,28 @@ const sections = [
         <p>
           Aberdeen has a distinctive built environment. The city's historic granite tenements,
           Victorian terraced villas, and inter-war semi-detached houses make up a significant
-          proportion of the private rented sector. Electricians carrying out EICRs in Aberdeen
-          must be familiar with the wiring challenges these property types present.
+          proportion of the private rented sector. Electricians carrying out EICRs in Aberdeen must
+          be familiar with the wiring challenges these property types present.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Granite tenements (pre-1960)</strong> — Aberdeen's iconic granite
-                tenements often retain original rubber-insulated wiring, sometimes with a vulcanised
-                rubber or lead sheath. Rubber insulation perishes over time, becoming brittle and
-                cracking, which significantly increases the risk of insulation failure and fire.
-                Such wiring is invariably recorded as a C2 or C1 observation.
+                <strong>Granite tenements (pre-1960)</strong> — Aberdeen's iconic granite tenements
+                often retain original rubber-insulated wiring, sometimes with a vulcanised rubber or
+                lead sheath. Rubber insulation perishes over time, becoming brittle and cracking,
+                which significantly increases the risk of insulation failure and fire. Such wiring
+                is invariably recorded as a C2 or C1 observation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Aluminium wiring (1960s–1970s)</strong> — some Aberdeen properties built
-                or rewired during the 1960s and 1970s have aluminium conductors. Aluminium wiring
-                is prone to oxidation at connections, causing overheating. Inspectors will
-                look for signs of overheating at all termination points.
+                <strong>Aluminium wiring (1960s–1970s)</strong> — some Aberdeen properties built or
+                rewired during the 1960s and 1970s have aluminium conductors. Aluminium wiring is
+                prone to oxidation at connections, causing overheating. Inspectors will look for
+                signs of overheating at all termination points.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,7 +303,8 @@ const sections = [
         <p>
           Electricians in Aberdeen should factor additional time into EICR bookings for older
           properties. Careful testing is essential — rubber-insulated cables require lower test
-          voltages during insulation resistance testing to avoid damaging already-degraded insulation.
+          voltages during insulation resistance testing to avoid damaging already-degraded
+          insulation.
         </p>
       </>
     ),
@@ -319,36 +324,36 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Preparation</strong> — ensure all rooms are accessible, including loft
-                hatches if the inspector needs to check wiring in the roof space. The consumer
-                unit must be accessible throughout the inspection. Tenants should be informed
-                in advance that the power may be briefly interrupted during testing.
+                hatches if the inspector needs to check wiring in the roof space. The consumer unit
+                must be accessible throughout the inspection. Tenants should be informed in advance
+                that the power may be briefly interrupted during testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection</strong> — the inspector examines all accessible
-                wiring, accessories (sockets, switches, light fittings), the consumer unit,
-                main earthing terminal, bonding conductors to gas and water services, and
-                any external installations.
+                <strong>Visual inspection</strong> — the inspector examines all accessible wiring,
+                accessories (sockets, switches, light fittings), the consumer unit, main earthing
+                terminal, bonding conductors to gas and water services, and any external
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing</strong> — circuits are tested individually. The inspector
-                will typically de-energise circuits one at a time to carry out tests. Test
-                results are recorded in the Schedule of Test Results, which forms part of the
-                completed EICR document.
+                <strong>Testing</strong> — circuits are tested individually. The inspector will
+                typically de-energise circuits one at a time to carry out tests. Test results are
+                recorded in the Schedule of Test Results, which forms part of the completed EICR
+                document.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Report and handover</strong> — the inspector completes the EICR on
-                site (or shortly afterwards) and provides it to the client. The report states
-                an overall outcome (Satisfactory or Unsatisfactory), all observations with
-                codes, and a recommended date for the next inspection.
+                <strong>Report and handover</strong> — the inspector completes the EICR on site (or
+                shortly afterwards) and provides it to the client. The report states an overall
+                outcome (Satisfactory or Unsatisfactory), all observations with codes, and a
+                recommended date for the next inspection.
               </span>
             </li>
           </ul>
@@ -362,9 +367,9 @@ const sections = [
     content: (
       <>
         <p>
-          Every defect, non-compliance, or area requiring further investigation found during an
-          EICR is assigned a code. The coding system is defined in BS 7671 and its associated
-          guidance notes.
+          Every defect, non-compliance, or area requiring further investigation found during an EICR
+          is assigned a code. The coding system is defined in BS 7671 and its associated guidance
+          notes.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -381,9 +386,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Potentially dangerous</strong> — urgent remedial action required.
-                The installation is potentially dangerous but does not present an immediate risk.
-                C2 observations make the EICR Unsatisfactory. Examples include absence of RCD
+                <strong>C2 — Potentially dangerous</strong> — urgent remedial action required. The
+                installation is potentially dangerous but does not present an immediate risk. C2
+                observations make the EICR Unsatisfactory. Examples include absence of RCD
                 protection, deteriorated rubber insulation, and inadequate bonding.
               </span>
             </li>
@@ -399,9 +404,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-white mt-0.5 shrink-0" />
               <span>
-                <strong>FI — Further investigation required</strong> — the inspector cannot
-                assess this aspect without further investigation. The EICR is Unsatisfactory
-                until the investigation is completed.
+                <strong>FI — Further investigation required</strong> — the inspector cannot assess
+                this aspect without further investigation. The EICR is Unsatisfactory until the
+                investigation is completed.
               </span>
             </li>
           </ul>
@@ -422,9 +427,8 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen EICR prices are broadly in line with the Scottish average, reflecting
-          competitive local labour rates. Prices are generally lower than London and the
-          South East of England.
+          Aberdeen EICR prices are broadly in line with the Scottish average, reflecting competitive
+          local labour rates. Prices are generally lower than London and the South East of England.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -438,31 +442,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £150 to £280. Allows for 5 to 8 circuits
-                and some additional complexity.
+                <strong>Two-bedroom property</strong> — £150 to £280. Allows for 5 to 8 circuits and
+                some additional complexity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £180 to £350. Older granite properties
-                with degraded wiring or multiple sub-boards will be at the higher end.
+                <strong>Three-bedroom house</strong> — £180 to £350. Older granite properties with
+                degraded wiring or multiple sub-boards will be at the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO or larger property</strong> — £300 to £600+. Multiple consumer
-                units, fire alarm systems, and a higher circuit count increase the scope and cost.
+                <strong>HMO or larger property</strong> — £300 to £600+. Multiple consumer units,
+                fire alarm systems, and a higher circuit count increase the scope and cost.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices are for the inspection and report only. Remedial work identified during
-          the EICR — such as a consumer unit upgrade to provide RCD protection — is quoted
-          and charged separately. A consumer unit replacement in Aberdeen typically costs
-          £400 to £700 including all materials.
+          These prices are for the inspection and report only. Remedial work identified during the
+          EICR — such as a consumer unit upgrade to provide RCD protection — is quoted and charged
+          separately. A consumer unit replacement in Aberdeen typically costs £400 to £700 including
+          all materials.
         </p>
       </>
     ),
@@ -473,42 +477,42 @@ const sections = [
     content: (
       <>
         <p>
-          Aberdeen has a healthy pool of qualified electricians, though inspection and testing
-          work requires specific qualifications that not every electrician holds.
+          Aberdeen has a healthy pool of qualified electricians, though inspection and testing work
+          requires specific qualifications that not every electrician holds.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use a competent person scheme member</strong> — search the NICEIC,
-                NAPIT, or ELECSA registers for electricians based in or covering Aberdeen.
-                Registration confirms qualifications, insurance, and regular technical assessment.
+                <strong>Use a competent person scheme member</strong> — search the NICEIC, NAPIT, or
+                ELECSA registers for electricians based in or covering Aberdeen. Registration
+                confirms qualifications, insurance, and regular technical assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify inspection qualifications</strong> — the inspector should hold
-                City and Guilds 2391 (Inspection and Testing of Electrical Installations) or
-                the equivalent C&G 2395 qualification, and a current BS 7671 qualification
-                (C&G 2382 18th Edition). Ask for evidence of these qualifications.
+                <strong>Verify inspection qualifications</strong> — the inspector should hold City
+                and Guilds 2391 (Inspection and Testing of Electrical Installations) or the
+                equivalent C&G 2395 qualification, and a current BS 7671 qualification (C&G 2382
+                18th Edition). Ask for evidence of these qualifications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Experience with older properties</strong> — given Aberdeen's housing
-                stock, prefer electricians with experience of pre-1960s wiring and the
-                challenges of granite tenement properties.
+                <strong>Experience with older properties</strong> — given Aberdeen's housing stock,
+                prefer electricians with experience of pre-1960s wiring and the challenges of
+                granite tenement properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid very cheap quotes</strong> — an EICR for a three-bedroom Aberdeen
-                house quoted at under £120 should raise questions about thoroughness. A proper
-                EICR takes three to five hours and requires expensive calibrated instruments.
+                house quoted at under £120 should raise questions about thoroughness. A proper EICR
+                takes three to five hours and requires expensive calibrated instruments.
               </span>
             </li>
           </ul>
@@ -538,10 +542,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to fill in the report on your phone while still at the Aberdeen property.
-                  AI board scanning, voice test entry, and instant PDF export eliminate
-                  evening paperwork. Send the completed report to the landlord before you
-                  leave the site.
+                  to fill in the report on your phone while still at the Aberdeen property. AI board
+                  scanning, voice test entry, and instant PDF export eliminate evening paperwork.
+                  Send the completed report to the landlord before you leave the site.
                 </p>
               </div>
             </div>
@@ -557,8 +560,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Scottish landlords must act within 28 days — the electrician who quotes
-                  on the day of the EICR wins the work.
+                  . Scottish landlords must act within 28 days — the electrician who quotes on the
+                  day of the EICR wins the work.
                 </p>
               </div>
             </div>
@@ -566,7 +569,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Aberdeen EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -591,8 +594,7 @@ export default function EICRAberdeenPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          EICR Aberdeen:{' '}
-          <span className="text-yellow-400">Electrical Inspection Guide 2026</span>
+          EICR Aberdeen: <span className="text-yellow-400">Electrical Inspection Guide 2026</span>
         </>
       }
       heroSubtitle="Everything you need to know about Electrical Installation Condition Reports in Aberdeen — legal requirements under Scottish law, costs, what inspectors look for in Aberdeen's granite tenements, finding qualified inspectors, and guidance for electricians."
@@ -603,7 +605,7 @@ export default function EICRAberdeenPage() {
       faqHeading="Frequently Asked Questions About EICRs in Aberdeen"
       relatedPages={relatedPages}
       ctaHeading="Complete Aberdeen EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

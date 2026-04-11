@@ -615,7 +615,7 @@ export default function RewireCostEdinburghPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Quote Edinburgh Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

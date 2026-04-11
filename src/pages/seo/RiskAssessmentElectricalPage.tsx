@@ -665,7 +665,7 @@ export default function RiskAssessmentElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate risk assessments with AI"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered risk assessments, method statements, and complete RAMS packs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered risk assessments, method statements, and complete RAMS packs. 7-day free trial, cancel anytime."
     />
   );
 }

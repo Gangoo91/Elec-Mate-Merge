@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
   },
   {
     href: '/guides/tripped-mcb-wont-reset',
-    title: 'Tripped MCB Won\'t Reset',
+    title: "Tripped MCB Won't Reset",
     description: 'What to do when the MCB for your immersion heater will not stay on.',
     icon: Zap,
     category: 'Guide',
@@ -129,8 +129,8 @@ const sections = [
       <>
         <p>
           No hot water is one of the most disruptive household problems, and if your home relies on
-          an immersion heater — either as the primary water heating method or as a backup to a boiler
-          — a failure needs diagnosing quickly.
+          an immersion heater — either as the primary water heating method or as a backup to a
+          boiler — a failure needs diagnosing quickly.
         </p>
         <p>
           Immersion heaters are electrically simple devices: a heating element, a thermostat, a
@@ -148,8 +148,8 @@ const sections = [
       <>
         <p>
           An immersion heater is an electric heating element fitted directly into the hot water
-          cylinder. It works like a large kettle element — current flows through a resistive element,
-          generating heat that transfers directly to the water.
+          cylinder. It works like a large kettle element — current flows through a resistive
+          element, generating heat that transfers directly to the water.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -198,7 +198,8 @@ const sections = [
     content: (
       <>
         <p>
-          Here are the most common reasons an immersion heater stops working, in order of likelihood:
+          Here are the most common reasons an immersion heater stops working, in order of
+          likelihood:
         </p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -250,9 +251,7 @@ const sections = [
     heading: 'Thermostat Problems',
     content: (
       <>
-        <p>
-          The thermostat is the brain of the immersion heater, and it fails in several ways:
-        </p>
+        <p>The thermostat is the brain of the immersion heater, and it fails in several ways:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -281,10 +280,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Set too low</strong> — if the thermostat is set below 60 degrees Celsius, the
-                water may not feel hot enough. However, do not set it above 65 degrees — there is a
-                scalding risk. The recommended range is 60-65 degrees Celsius, which also prevents
-                Legionella bacteria growth.
+                <strong>Set too low</strong> — if the thermostat is set below 60 degrees Celsius,
+                the water may not feel hot enough. However, do not set it above 65 degrees — there
+                is a scalding risk. The recommended range is 60-65 degrees Celsius, which also
+                prevents Legionella bacteria growth.
               </span>
             </li>
           </ul>
@@ -306,15 +305,27 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <span className="text-orange-400 font-bold shrink-0">1.</span>
-              <span><strong>Open circuit</strong> — the element wire has broken. No current flows, no heat. The MCB stays on but there is no hot water. Confirmed by a multimeter reading infinite resistance across the element terminals.</span>
+              <span>
+                <strong>Open circuit</strong> — the element wire has broken. No current flows, no
+                heat. The MCB stays on but there is no hot water. Confirmed by a multimeter reading
+                infinite resistance across the element terminals.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-orange-400 font-bold shrink-0">2.</span>
-              <span><strong>Short to earth</strong> — the insulation between the element wire and the outer sheath has broken down. Current leaks to earth through the water, tripping the RCD. This is the most common failure mode and is caused by corrosion and limescale.</span>
+              <span>
+                <strong>Short to earth</strong> — the insulation between the element wire and the
+                outer sheath has broken down. Current leaks to earth through the water, tripping the
+                RCD. This is the most common failure mode and is caused by corrosion and limescale.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-orange-400 font-bold shrink-0">3.</span>
-              <span><strong>Partial failure</strong> — the element still works but at reduced output. Heating takes much longer than usual. May be caused by limescale insulating part of the element surface.</span>
+              <span>
+                <strong>Partial failure</strong> — the element still works but at reduced output.
+                Heating takes much longer than usual. May be caused by limescale insulating part of
+                the element surface.
+              </span>
             </li>
           </ul>
         </div>
@@ -331,9 +342,7 @@ const sections = [
     heading: 'What to Check Yourself',
     content: (
       <>
-        <p>
-          Before calling an electrician, safely check these things:
-        </p>
+        <p>Before calling an electrician, safely check these things:</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">1. Consumer unit</h4>
@@ -345,9 +354,9 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">2. Isolator switch</h4>
             <p className="text-white text-sm leading-relaxed">
-              Check the double-pole switch near the hot water cylinder. It should be on with the neon
-              indicator lit. If the neon is off but the switch is on, either the neon has failed or
-              there is no power at the switch.
+              Check the double-pole switch near the hot water cylinder. It should be on with the
+              neon indicator lit. If the neon is off but the switch is on, either the neon has
+              failed or there is no power at the switch.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -374,9 +383,7 @@ const sections = [
     heading: 'When to Call an Electrician',
     content: (
       <>
-        <p>
-          Call an electrician if any of the following apply:
-        </p>
+        <p>Call an electrician if any of the following apply:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -412,9 +419,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity bill has suddenly increased</strong> — a stuck thermostat running
-                the element continuously can add hundreds of pounds to your bill. An electrician can
-                diagnose this in minutes.
+                <strong>Electricity bill has suddenly increased</strong> — a stuck thermostat
+                running the element continuously can add hundreds of pounds to your bill. An
+                electrician can diagnose this in minutes.
               </span>
             </li>
           </ul>
@@ -427,9 +434,7 @@ const sections = [
     heading: 'For Electricians: Immersion Heater Diagnosis and Replacement',
     content: (
       <>
-        <p>
-          Immersion heater work is common and straightforward. Here is the systematic approach:
-        </p>
+        <p>Immersion heater work is common and straightforward. Here is the systematic approach:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -438,8 +443,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">1. Initial Tests</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Isolate at the double-pole switch. Disconnect the element wires. Test element
-                  resistance (should be approximately 17.5 ohms for a 3kW element: R = V squared / P).
-                  Test insulation resistance at 500V between each terminal and earth — minimum 1
+                  resistance (should be approximately 17.5 ohms for a 3kW element: R = V squared /
+                  P). Test insulation resistance at 500V between each terminal and earth — minimum 1
                   megohm. Low IR readings confirm element insulation breakdown.
                 </p>
               </div>
@@ -452,9 +457,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">2. Element Replacement</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Drain the cylinder (or at least below the immersion boss level). Use an immersion
-                  heater spanner to remove the old element. Clean the boss thread. Fit the new element
-                  with a fibre washer, torqued to manufacturer specification. Refill, check for leaks,
-                  then reconnect wiring.
+                  heater spanner to remove the old element. Clean the boss thread. Fit the new
+                  element with a fibre washer, torqued to manufacturer specification. Refill, check
+                  for leaks, then reconnect wiring.
                 </p>
               </div>
             </div>
@@ -478,7 +483,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document immersion heater work on your phone"
-          description="Elec-Mate's certificate apps let you record test results, issue Minor Works Certificates, and export professional PDFs on site. Join 430+ UK electricians."
+          description="Elec-Mate's certificate apps let you record test results, issue Minor Works Certificates, and export professional PDFs on site. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -503,8 +508,7 @@ export default function ImmersionHeaterNotWorkingPage() {
       badgeIcon={Droplets}
       heroTitle={
         <>
-          Immersion Heater Not Working:{' '}
-          <span className="text-yellow-400">Causes and Fixes</span>
+          Immersion Heater Not Working: <span className="text-yellow-400">Causes and Fixes</span>
         </>
       }
       heroSubtitle="No hot water from your immersion heater? This guide covers every common cause — tripped breakers, faulty thermostats, failed elements, and timer problems — what to check yourself, and when to call an electrician."
@@ -515,7 +519,7 @@ export default function ImmersionHeaterNotWorkingPage() {
       faqHeading="Frequently Asked Questions About Immersion Heater Problems"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Heating Circuit Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, test result recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

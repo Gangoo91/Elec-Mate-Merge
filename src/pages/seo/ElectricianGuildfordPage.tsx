@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'How much does an electrician charge in Guildford?',
     answer:
-      'Guildford electrician rates in 2026 are among the highest in England outside London, typically £60 to £80 per hour for a qualified, registered electrician. Day rates range from £420 to £580. Emergency call-out rates are £100 to £150 per hour with a minimum charge of £150 to £200. Common fixed prices: consumer unit replacement £750 to £1,200, EICR for a 3-bed house £220 to £320, full rewire of a large detached house £6,000 to £10,000, single socket addition £130 to £200, EV charger installation £900 to £1,400. Guildford\'s high property values mean customers are used to paying premium rates for quality tradespeople.',
+      "Guildford electrician rates in 2026 are among the highest in England outside London, typically £60 to £80 per hour for a qualified, registered electrician. Day rates range from £420 to £580. Emergency call-out rates are £100 to £150 per hour with a minimum charge of £150 to £200. Common fixed prices: consumer unit replacement £750 to £1,200, EICR for a 3-bed house £220 to £320, full rewire of a large detached house £6,000 to £10,000, single socket addition £130 to £200, EV charger installation £900 to £1,400. Guildford's high property values mean customers are used to paying premium rates for quality tradespeople.",
   },
   {
     question: 'Who is the Distribution Network Operator for Guildford?',
@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'How do I find a reputable electrician in Guildford?',
     answer:
-      'Use the NICEIC or NAPIT contractor search with your Guildford postcode to find assessed and approved electricians in the area. In the Guildford market, it is also worth asking for recommendations from neighbours or your estate agent. Always ask to see the electrician\'s competent person scheme card before agreeing to work, and ask to see examples of their recent certificates. In a premium market like Guildford, quality matters — look for electricians who issue digital certificates promptly and communicate professionally.',
+      "Use the NICEIC or NAPIT contractor search with your Guildford postcode to find assessed and approved electricians in the area. In the Guildford market, it is also worth asking for recommendations from neighbours or your estate agent. Always ask to see the electrician's competent person scheme card before agreeing to work, and ask to see examples of their recent certificates. In a premium market like Guildford, quality matters — look for electricians who issue digital certificates promptly and communicate professionally.",
   },
   {
     question: 'Is Guildford a good area for electricians?',
@@ -126,8 +126,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — essential for EICR and HMO inspection work in Guildford.',
+    description: 'Study for C&G 2391 — essential for EICR and HMO inspection work in Guildford.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,23 +143,23 @@ const sections = [
     content: (
       <>
         <p>
-          Guildford is the county town of Surrey, with a population of around 80,000 and one
-          of the highest average house prices of any town in England. Located 28 miles south
-          west of London on the A3, Guildford is a prosperous commuter town with a historic
-          high street, the University of Surrey, and a thriving economy centred on financial
-          services, professional services, and technology.
+          Guildford is the county town of Surrey, with a population of around 80,000 and one of the
+          highest average house prices of any town in England. Located 28 miles south west of London
+          on the A3, Guildford is a prosperous commuter town with a historic high street, the
+          University of Surrey, and a thriving economy centred on financial services, professional
+          services, and technology.
         </p>
         <p>
-          For electricians, Guildford represents a premium market. The large Victorian and
-          Edwardian housing stock, substantial detached houses in the surrounding villages,
-          and affluent customer base create demand for high-quality electrical work at premium
-          rates. EV charger installations, solar PV, battery storage, and home automation work
-          are particularly strong in this market. The University of Surrey also creates a
-          significant HMO market requiring regular EICRs and fire alarm work.
+          For electricians, Guildford represents a premium market. The large Victorian and Edwardian
+          housing stock, substantial detached houses in the surrounding villages, and affluent
+          customer base create demand for high-quality electrical work at premium rates. EV charger
+          installations, solar PV, battery storage, and home automation work are particularly strong
+          in this market. The University of Surrey also creates a significant HMO market requiring
+          regular EICRs and fire alarm work.
         </p>
         <p>
-          This guide covers finding a qualified electrician in Guildford, typical costs,
-          common jobs, and the regulatory requirements for electrical work in the area.
+          This guide covers finding a qualified electrician in Guildford, typical costs, common
+          jobs, and the regulatory requirements for electrical work in the area.
         </p>
       </>
     ),
@@ -171,18 +170,17 @@ const sections = [
     content: (
       <>
         <p>
-          In Guildford's premium market, customers expect quality and professionalism. The
-          key registration schemes to look for are:
+          In Guildford's premium market, customers expect quality and professionalism. The key
+          registration schemes to look for are:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC Approved Contractor</strong> — the most widely recognised
-                scheme in the domestic market. Search by postcode on the NICEIC website to
-                find assessed, approved electricians covering Guildford and the surrounding
-                Surrey area.
+                <strong>NICEIC Approved Contractor</strong> — the most widely recognised scheme in
+                the domestic market. Search by postcode on the NICEIC website to find assessed,
+                approved electricians covering Guildford and the surrounding Surrey area.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -196,18 +194,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Which? Trusted Traders</strong> — popular in the Guildford market,
-                where customers use review platforms and recommendation services. Which? Trusted
-                Traders independently vet electricians and display verified reviews.
+                <strong>Which? Trusted Traders</strong> — popular in the Guildford market, where
+                customers use review platforms and recommendation services. Which? Trusted Traders
+                independently vet electricians and display verified reviews.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          In Guildford, word of mouth and personal recommendation carry significant weight.
-          An electrician who does excellent work in a street of large Victorian houses will
-          often get referrals to multiple neighbours. Building a reputation for quality,
-          punctuality, and professional documentation pays dividends in this market.
+          In Guildford, word of mouth and personal recommendation carry significant weight. An
+          electrician who does excellent work in a street of large Victorian houses will often get
+          referrals to multiple neighbours. Building a reputation for quality, punctuality, and
+          professional documentation pays dividends in this market.
         </p>
       </>
     ),
@@ -217,9 +215,7 @@ const sections = [
     heading: 'Electrician Costs in Guildford (2026)',
     content: (
       <>
-        <p>
-          Guildford rates are among the highest in England outside London. Typical 2026 rates:
-        </p>
+        <p>Guildford rates are among the highest in England outside London. Typical 2026 rates:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-3">
@@ -267,10 +263,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Large Victorian and Edwardian detached properties in Guildford command particularly
-          high rewire prices — these houses often have 8 to 12 bedrooms spread across three
-          or four floors, requiring extensive cable routes, multiple consumer unit positions,
-          and careful preservation of original features. Always survey before quoting.
+          Large Victorian and Edwardian detached properties in Guildford command particularly high
+          rewire prices — these houses often have 8 to 12 bedrooms spread across three or four
+          floors, requiring extensive cable routes, multiple consumer unit positions, and careful
+          preservation of original features. Always survey before quoting.
         </p>
       </>
     ),
@@ -285,37 +281,36 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Large House Rewires</h3>
             <p className="text-white text-sm leading-relaxed">
               Guildford has a large stock of Victorian and Edwardian detached and semi-detached
-              houses that periodically require full rewires. These are high-value jobs —
-              large property, premium rates, and customers who value quality. Cable routes
-              in these properties require care around original features and ornamental plasterwork.
+              houses that periodically require full rewires. These are high-value jobs — large
+              property, premium rates, and customers who value quality. Cable routes in these
+              properties require care around original features and ornamental plasterwork.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Charger Installation</h3>
             <p className="text-white text-sm leading-relaxed">
-              Guildford's affluent commuter population is one of the strongest EV charger
-              markets in England. Premium EV chargers — including smart chargers with solar
-              divert capability and load balancing — are popular. UK Power Networks G98
-              notification is required for most installations.
+              Guildford's affluent commuter population is one of the strongest EV charger markets in
+              England. Premium EV chargers — including smart chargers with solar divert capability
+              and load balancing — are popular. UK Power Networks G98 notification is required for
+              most installations.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">HMO Electrical Compliance</h3>
             <p className="text-white text-sm leading-relaxed">
-              The University of Surrey attracts a large student population. Student HMOs
-              in Onslow Village, Park Barn, and Stoughton require regular EICRs, fire alarm
-              systems to BS 5839-6, emergency lighting, and sufficient socket provision.
-              Guildford Borough Council HMO licensing requires up-to-date electrical certificates.
+              The University of Surrey attracts a large student population. Student HMOs in Onslow
+              Village, Park Barn, and Stoughton require regular EICRs, fire alarm systems to BS
+              5839-6, emergency lighting, and sufficient socket provision. Guildford Borough Council
+              HMO licensing requires up-to-date electrical certificates.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Solar PV and Battery Storage</h3>
             <p className="text-white text-sm leading-relaxed">
-              Guildford's large detached houses with good south-facing roof space are ideal
-              for solar PV. Battery storage is increasingly popular as prices fall. MCS
-              certification is required for installations eligible for the Smart Export
-              Guarantee tariff. UK Power Networks G98/G99 notifications must be submitted
-              before commissioning.
+              Guildford's large detached houses with good south-facing roof space are ideal for
+              solar PV. Battery storage is increasingly popular as prices fall. MCS certification is
+              required for installations eligible for the Smart Export Guarantee tariff. UK Power
+              Networks G98/G99 notifications must be submitted before commissioning.
             </p>
           </div>
         </div>
@@ -336,26 +331,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — notifiable work must be self-certified
-                by a registered competent person or notified to Guildford Borough Council
-                building control. Registered electricians notify automatically.
+                <strong>Part P notification</strong> — notifiable work must be self-certified by a
+                registered competent person or notified to Guildford Borough Council building
+                control. Registered electricians notify automatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD
-                protection for all socket outlets up to 32A and all final circuits in new
-                domestic installations.
+                <strong>RCD protection</strong> — BS 7671 Regulation 411.3.3 requires RCD protection
+                for all socket outlets up to 32A and all final circuits in new domestic
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection</strong> — BS 7671 Section 631 covers periodic
-                inspection requirements. Rental properties require an EICR every 5 years.
-                HMO properties must have current EICRs to maintain their HMO licence from
-                Guildford Borough Council.
+                inspection requirements. Rental properties require an EICR every 5 years. HMO
+                properties must have current EICRs to maintain their HMO licence from Guildford
+                Borough Council.
               </span>
             </li>
           </ul>
@@ -372,37 +367,37 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large detached and semi-detached properties in areas like Merrow, Onslow Village,
-              and Park Barn. High-value properties with complex rewire requirements. Often have
-              multiple floors, solid internal walls, and original features requiring careful
-              cable routing. Premium rewire prices justified by the complexity and value.
+              Large detached and semi-detached properties in areas like Merrow, Onslow Village, and
+              Park Barn. High-value properties with complex rewire requirements. Often have multiple
+              floors, solid internal walls, and original features requiring careful cable routing.
+              Premium rewire prices justified by the complexity and value.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Surrey Village Properties</h3>
             <p className="text-white text-sm leading-relaxed">
-              The villages surrounding Guildford — Shere, Bramley, Godalming, Cranleigh — have
-              older rural properties, some in the Surrey Hills Area of Outstanding Natural Beauty.
-              Some rural properties are TT earthed. External electrical work visible from the
-              road in AONB or conservation areas may require planning consideration.
+              The villages surrounding Guildford — Shere, Bramley, Godalming, Cranleigh — have older
+              rural properties, some in the Surrey Hills Area of Outstanding Natural Beauty. Some
+              rural properties are TT earthed. External electrical work visible from the road in
+              AONB or conservation areas may require planning consideration.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern New Builds</h3>
             <p className="text-white text-sm leading-relaxed">
               New-build developments in areas like Ash, Normandy, and on the edges of Guildford.
-              Standard cavity wall construction, modern consumer units, and good cable access.
-              Work is typically additions, EV charger installations, and smart home systems
-              rather than rewires.
+              Standard cavity wall construction, modern consumer units, and good cable access. Work
+              is typically additions, EV charger installations, and smart home systems rather than
+              rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Student HMOs</h3>
             <p className="text-white text-sm leading-relaxed">
-              Student properties near the University of Surrey require ongoing electrical
-              compliance work. HMO licences from Guildford Borough Council require up-to-date
-              EICRs, fire alarms to BS 5839-6, and emergency lighting. These are reliable repeat
-              clients for electricians who service the student rental market.
+              Student properties near the University of Surrey require ongoing electrical compliance
+              work. HMO licences from Guildford Borough Council require up-to-date EICRs, fire
+              alarms to BS 5839-6, and emergency lighting. These are reliable repeat clients for
+              electricians who service the student rental market.
             </p>
           </div>
         </div>
@@ -415,11 +410,10 @@ const sections = [
     content: (
       <>
         <p>
-          Guildford is one of the most lucrative markets in England for electricians. High
-          rates, complex and interesting work, and an affluent customer base who value quality
-          make it an excellent area to build a practice. Professional presentation —
-          including prompt, well-formatted certificates — is essential to win referrals in
-          this market.
+          Guildford is one of the most lucrative markets in England for electricians. High rates,
+          complex and interesting work, and an affluent customer base who value quality make it an
+          excellent area to build a practice. Professional presentation — including prompt,
+          well-formatted certificates — is essential to win referrals in this market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -432,12 +426,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  from your phone before leaving Guildford jobs. Premium customers expect
-                  documentation to match the quality of the work — deliver it on site.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from
+                  your phone before leaving Guildford jobs. Premium customers expect documentation
+                  to match the quality of the work — deliver it on site.
                 </p>
               </div>
             </div>
@@ -452,9 +443,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce professional PDF quotes at Surrey premium rates. Quote large
-                  house rewires, EV chargers, and solar PV installations — send the quote
-                  before leaving the survey and close jobs faster.
+                  to produce professional PDF quotes at Surrey premium rates. Quote large house
+                  rewires, EV chargers, and solar PV installations — send the quote before leaving
+                  the survey and close jobs faster.
                 </p>
               </div>
             </div>
@@ -462,7 +453,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Guildford electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the premium South East market. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -487,8 +478,7 @@ export default function ElectricianGuildfordPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Guildford:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Guildford: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Guildford's premium Surrey market, large Victorian housing stock, University of Surrey HMO sector, and affluent commuter population create excellent opportunities for well-qualified electricians. Find NICEIC and NAPIT approved electricians in Guildford."
@@ -499,7 +489,7 @@ export default function ElectricianGuildfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Guildford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Guildford Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the premium South East and Surrey market. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the premium South East and Surrey market. 7-day free trial."
     />
   );
 }

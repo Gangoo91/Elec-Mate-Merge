@@ -684,7 +684,7 @@ export default function PPEForElectriciansPage() {
       faqHeading="Frequently Asked Questions About PPE for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Stay Safe and Compliant on Every Job"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI risk assessments, RAMS generation, site safety tools, and training courses. PPE requirements are built into every assessment. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI risk assessments, RAMS generation, site safety tools, and training courses. PPE requirements are built into every assessment. 7-day free trial, cancel anytime."
     />
   );
 }

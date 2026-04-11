@@ -120,7 +120,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -194,7 +194,7 @@ export default function AICostEngineerPage() {
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              430+ electricians
+              1,000+ electricians
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
@@ -244,8 +244,8 @@ export default function AICostEngineerPage() {
               quoting typically requires.
             </p>
             <p>
-              The Cost Engineer is part of the Elec-Mate platform alongside 70 calculators, 8
-              certificate types, 36+ training courses, and the other seven Elec-AI specialist
+              The Cost Engineer is part of the Elec-Mate platform alongside 70+ calculators, 8
+              certificate types, 46+ training courses, and the other seven Elec-AI specialist
               agents. It integrates with the Circuit Designer (which can feed circuit specifications
               directly into a cost estimate) and the certification system (so completed jobs flow
               through from quote to installation to testing to certification without re-entering
@@ -386,7 +386,8 @@ export default function AICostEngineerPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Trained specifically for UK electrical work. Quote domestic and commercial jobs in
-            minutes instead of hours. Part of 70 calculators, 8 AI agents, and 36+ training courses.
+            minutes instead of hours. Part of 70+ calculators, 8 AI agents, and 46+ training
+            courses.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -443,7 +444,7 @@ export default function AICostEngineerPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Quote your next job in minutes"
-        subheading="Join 430+ UK electricians using AI for accurate, professional cost estimates. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using AI for accurate, professional cost estimates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

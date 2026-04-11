@@ -37,7 +37,7 @@ const tocItems = [
 const keyTakeaways = [
   'Most home EV charger faults fall into five categories: error codes and EVSE communication failures, supply voltage problems, RCD nuisance tripping, earthing faults, and vehicle-side issues — understanding which category applies narrows diagnosis significantly.',
   'EVSE (Electric Vehicle Supply Equipment) communicates with the vehicle via the IEC 61851-1 pilot signal. A fault in this signal — often caused by a damaged cable, corroded connector, or faulty control board — will prevent charging from starting.',
-  'Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle\'s on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A2:2022 Regulation 722.531.2.',
+  "Nuisance RCD tripping on EV charger circuits is common and is frequently caused by DC leakage from the vehicle's on-board charger. An RCD Type B (or Type A with DC leakage protection) is required under BS 7671:2018+A2:2022 Regulation 722.531.2.",
   'Earthing faults on EV charger installations — particularly missing or high-resistance earth paths — are a safety hazard and will prevent the EVSE from authorising a charge session. The installation must comply with BS 7671 Section 722.',
   'Only OZEV-approved (formerly OLEV-approved) installers should carry out rectification work on a home EV charger installation. Using an unapproved installer may invalidate the manufacturer warranty and any OZEV grant conditions.',
 ];
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: 'Why does my EV charger show a red light but the car does nothing?',
     answer:
-      'A solid or flashing red light typically indicates a fault condition detected by the EVSE. Common causes include a failed pilot signal (damaged cable or corroded connector), a supply voltage outside the acceptable range (usually 207 V to 253 V for a 230 V nominal supply), an earth fault detected by the EVSE\'s internal monitoring, or a tripped protective device on the dedicated circuit. Check the consumer unit for a tripped MCB or RCD before calling an engineer.',
+      "A solid or flashing red light typically indicates a fault condition detected by the EVSE. Common causes include a failed pilot signal (damaged cable or corroded connector), a supply voltage outside the acceptable range (usually 207 V to 253 V for a 230 V nominal supply), an earth fault detected by the EVSE's internal monitoring, or a tripped protective device on the dedicated circuit. Check the consumer unit for a tripped MCB or RCD before calling an engineer.",
   },
   {
     question: 'Why does my RCD keep tripping when I plug in my EV charger?',
@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'My EV charger worked fine and then suddenly stopped — what happened?',
     answer:
-      'Sudden failure on an otherwise working installation often indicates a supply issue (mains voltage dip, blown fuse, or tripped protective device), a firmware error in the charger unit (many smart chargers update overnight and can fail mid-update), a Wi-Fi connectivity loss preventing a smart charger from authenticating, or a vehicle-side fault. Restart the charger at the mains, check the manufacturer\'s app for error codes, and attempt a charge with a different vehicle if possible to isolate the fault.',
+      "Sudden failure on an otherwise working installation often indicates a supply issue (mains voltage dip, blown fuse, or tripped protective device), a firmware error in the charger unit (many smart chargers update overnight and can fail mid-update), a Wi-Fi connectivity loss preventing a smart charger from authenticating, or a vehicle-side fault. Restart the charger at the mains, check the manufacturer's app for error codes, and attempt a charge with a different vehicle if possible to isolate the fault.",
   },
   {
     question: 'Can I reset my home EV charger myself?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'Do I need a dedicated circuit for my home EV charger?',
     answer:
-      'Yes. BS 7671:2018+A2:2022 Section 722 and most charger manufacturer installation requirements specify a dedicated final circuit for an EV charger rated at 7.4 kW (32 A single-phase) or higher. The circuit should be wired in 6 mm² cable (or 10 mm² for longer runs) with appropriate RCD protection. Sharing the circuit with other loads is not compliant and will cause nuisance tripping and potentially damage the vehicle\'s on-board charger.',
+      "Yes. BS 7671:2018+A2:2022 Section 722 and most charger manufacturer installation requirements specify a dedicated final circuit for an EV charger rated at 7.4 kW (32 A single-phase) or higher. The circuit should be wired in 6 mm² cable (or 10 mm² for longer runs) with appropriate RCD protection. Sharing the circuit with other loads is not compliant and will cause nuisance tripping and potentially damage the vehicle's on-board charger.",
   },
   {
     question: 'When must I call an OZEV-approved installer?',
@@ -84,7 +84,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
-    description: 'Complete guide to home EV charger installation requirements under BS 7671 Section 722.',
+    description:
+      'Complete guide to home EV charger installation requirements under BS 7671 Section 722.',
     icon: Zap,
     category: 'Guide',
   },
@@ -141,15 +142,15 @@ const sections = [
                 <strong>E01 / CP fault</strong> — control pilot signal error. The EVSE cannot
                 establish correct communication with the vehicle. Check the Type 2 cable for
                 physical damage, clean the connector contacts, and try a different cable if
-                available. If the fault persists with a known-good cable, the EVSE control board
-                may be faulty.
+                available. If the fault persists with a known-good cable, the EVSE control board may
+                be faulty.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>E02 / Earth fault</strong> — the EVSE has detected an earth continuity
-                or leakage fault. This is a safety interlock — the unit will not authorise charging
+                <strong>E02 / Earth fault</strong> — the EVSE has detected an earth continuity or
+                leakage fault. This is a safety interlock — the unit will not authorise charging
                 until the earth path is verified. Do not attempt to defeat this interlock. An
                 OZEV-approved electrician must inspect the earth conductor continuity and the
                 protective bonding.
@@ -158,20 +159,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>E03 / Over-voltage / Under-voltage</strong> — the supply voltage is
-                outside the EVSE's acceptable operating window. UK nominal supply is 230 V with a
-                permitted tolerance of +10%/−6% (216.2 V to 253 V under BS EN 50160). Values
-                outside this range indicate a distribution network problem or a high-resistance
-                connection in the supply cable.
+                <strong>E03 / Over-voltage / Under-voltage</strong> — the supply voltage is outside
+                the EVSE's acceptable operating window. UK nominal supply is 230 V with a permitted
+                tolerance of +10%/−6% (216.2 V to 253 V under BS EN 50160). Values outside this
+                range indicate a distribution network problem or a high-resistance connection in the
+                supply cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>E04 / Over-temperature</strong> — the EVSE internal temperature has
-                exceeded its operating limit. This can be caused by prolonged high-current charging
-                in an enclosed space, inadequate ventilation around the unit, or an internal
-                component failure. Allow the unit to cool before attempting a restart.
+                <strong>E04 / Over-temperature</strong> — the EVSE internal temperature has exceeded
+                its operating limit. This can be caused by prolonged high-current charging in an
+                enclosed space, inadequate ventilation around the unit, or an internal component
+                failure. Allow the unit to cool before attempting a restart.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -188,7 +189,8 @@ const sections = [
         </div>
         <p>
           Always check the manufacturer's app or web portal first — most modern smart chargers log
-          fault events with timestamps and error descriptions that significantly narrow the diagnosis.
+          fault events with timestamps and error descriptions that significantly narrow the
+          diagnosis.
         </p>
       </>
     ),
@@ -199,10 +201,11 @@ const sections = [
     content: (
       <>
         <p>
-          The IEC 61851-1 standard defines how an EVSE (Electric Vehicle Supply Equipment) communicates
-          with the vehicle. This communication happens via the control pilot (CP) and proximity pilot
-          (PP) pins of the Type 2 connector. Faults in this communication path are one of the most
-          common causes of home EV chargers appearing to work but failing to start a charge session.
+          The IEC 61851-1 standard defines how an EVSE (Electric Vehicle Supply Equipment)
+          communicates with the vehicle. This communication happens via the control pilot (CP) and
+          proximity pilot (PP) pins of the Type 2 connector. Faults in this communication path are
+          one of the most common causes of home EV chargers appearing to work but failing to start a
+          charge session.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -218,28 +221,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Corroded or contaminated connectors</strong> — the Type 2 connector pins
-                can corrode or accumulate contamination in outdoor installations. Inspect the
-                connector contacts visually. Some manufacturers supply cleaning kits; others
-                recommend replacement of the cable assembly.
+                <strong>Corroded or contaminated connectors</strong> — the Type 2 connector pins can
+                corrode or accumulate contamination in outdoor installations. Inspect the connector
+                contacts visually. Some manufacturers supply cleaning kits; others recommend
+                replacement of the cable assembly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Faulty EVSE control board</strong> — if the cable tests good and the
-                vehicle charges normally on another EVSE, the fault is in the charger's control
-                electronics. Control board replacement is a warranty or manufacturer repair item
-                and should not be attempted by the end user.
+                <strong>Faulty EVSE control board</strong> — if the cable tests good and the vehicle
+                charges normally on another EVSE, the fault is in the charger's control electronics.
+                Control board replacement is a warranty or manufacturer repair item and should not
+                be attempted by the end user.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <WifiOff className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-side faults</strong> — some charge failures are caused by the
-                vehicle's on-board charger (OBC) rather than the EVSE. Test with a different
-                vehicle or a public charger to confirm. Vehicle OBC faults require dealership
-                diagnosis.
+                vehicle's on-board charger (OBC) rather than the EVSE. Test with a different vehicle
+                or a public charger to confirm. Vehicle OBC faults require dealership diagnosis.
               </span>
             </li>
           </ul>
@@ -263,11 +265,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Low incoming voltage</strong> — voltage below 216 V at the charger
-                terminals (under BS EN 50160 limits) can trigger under-voltage protection. Measure
-                the voltage at the consumer unit and at the charger terminals under full load. A
-                significant voltage drop between the two points indicates an undersized or
-                deteriorated supply cable.
+                <strong>Low incoming voltage</strong> — voltage below 216 V at the charger terminals
+                (under BS EN 50160 limits) can trigger under-voltage protection. Measure the voltage
+                at the consumer unit and at the charger terminals under full load. A significant
+                voltage drop between the two points indicates an undersized or deteriorated supply
+                cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,9 +294,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          If low voltage is confirmed under load, the supply network operator (DNO) must be informed.
-          The DNO is responsible for maintaining supply voltage within statutory limits to the
-          meter terminals.
+          If low voltage is confirmed under load, the supply network operator (DNO) must be
+          informed. The DNO is responsible for maintaining supply voltage within statutory limits to
+          the meter terminals.
         </p>
       </>
     ),
@@ -336,17 +338,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shared RCD with other loads</strong> — if the EV charger circuit shares
-                an RCD with other circuits, accumulated leakage from multiple sources can sum to
-                exceed the trip threshold. BS 7671 Section 722 requires a dedicated circuit for
-                EV charging, which should also have its own RCD.
+                <strong>Shared RCD with other loads</strong> — if the EV charger circuit shares an
+                RCD with other circuits, accumulated leakage from multiple sources can sum to exceed
+                the trip threshold. BS 7671 Section 722 requires a dedicated circuit for EV
+                charging, which should also have its own RCD.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Never remove or bypass an RCD on an EV charger circuit. If nuisance tripping is occurring,
-          the correct response is to identify and address the root cause with a qualified electrician.
+          the correct response is to identify and address the root cause with a qualified
+          electrician.
         </p>
       </>
     ),
@@ -359,27 +362,27 @@ const sections = [
         <p>
           EV chargers incorporate earth continuity monitoring as a fundamental safety feature. The
           EVSE will not authorise a charging session if the earth path resistance is above the
-          equipment's threshold — typically a few ohms. Earthing faults are therefore both a
-          safety concern and a cause of operational failure.
+          equipment's threshold — typically a few ohms. Earthing faults are therefore both a safety
+          concern and a cause of operational failure.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Broken or missing earth conductor</strong> — the earth conductor in the
-                EV charger circuit must have low resistance continuity from the charger back plate
-                to the main earthing terminal. A broken or omitted earth conductor will trigger
-                the EVSE earth fault interlock. This is confirmed with a low-resistance earth
-                continuity test (R1+R2 measurement).
+                <strong>Broken or missing earth conductor</strong> — the earth conductor in the EV
+                charger circuit must have low resistance continuity from the charger back plate to
+                the main earthing terminal. A broken or omitted earth conductor will trigger the
+                EVSE earth fault interlock. This is confirmed with a low-resistance earth continuity
+                test (R1+R2 measurement).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT supply earthing</strong> — properties with a TT earthing system
-                (common in rural areas) require a local earth electrode. The electrode resistance
-                must be low enough to ensure RCD operation under fault conditions. A high-resistance
+                <strong>TT supply earthing</strong> — properties with a TT earthing system (common
+                in rural areas) require a local earth electrode. The electrode resistance must be
+                low enough to ensure RCD operation under fault conditions. A high-resistance
                 electrode can prevent the EVSE earth fault monitor from being satisfied.
               </span>
             </li>
@@ -422,11 +425,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Call immediately</strong> — any earth fault error that persists after a
-                soft reset, RCD tripping that cannot be explained by a simple load issue, visible
-                scorch marks or burning smell from the charger or consumer unit, or water ingress
-                into the charger enclosure. Switch off the dedicated circuit and do not use the
-                charger until inspected.
+                <strong>Call immediately</strong> — any earth fault error that persists after a soft
+                reset, RCD tripping that cannot be explained by a simple load issue, visible scorch
+                marks or burning smell from the charger or consumer unit, or water ingress into the
+                charger enclosure. Switch off the dedicated circuit and do not use the charger until
+                inspected.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,10 +444,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify OZEV approval</strong> — check that your chosen electrician is
-                listed on the OZEV approved installer register before commissioning any remedial
-                work. OZEV approval is required to maintain compliance with grant conditions and
-                to issue the correct completion documentation.
+                <strong>Verify OZEV approval</strong> — check that your chosen electrician is listed
+                on the OZEV approved installer register before commissioning any remedial work. OZEV
+                approval is required to maintain compliance with grant conditions and to issue the
+                correct completion documentation.
               </span>
             </li>
           </ul>
@@ -458,9 +461,9 @@ const sections = [
     content: (
       <>
         <p>
-          EV charger fault finding is a growing area of work for domestic electricians. As the
-          UK EV fleet grows — there are now over a million registered EVs — the installed base
-          of home chargers requiring maintenance and remediation is expanding rapidly.
+          EV charger fault finding is a growing area of work for domestic electricians. As the UK EV
+          fleet grows — there are now over a million registered EVs — the installed base of home
+          chargers requiring maintenance and remediation is expanding rapidly.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -474,8 +477,8 @@ const sections = [
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete installation and minor works certificates on site. Covers BS 7671
-                  Section 722 requirements, RCD type recording, earthing arrangement, and
-                  OZEV compliance fields.
+                  Section 722 requirements, RCD type recording, earthing arrangement, and OZEV
+                  compliance fields.
                 </p>
               </div>
             </div>
@@ -486,13 +489,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EICR for EV Charger Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When carrying out an EICR on a property with an existing EV charger, verify
-                  RCD type, earth conductor continuity, and PME compliance at the charger location.
-                  Use the{' '}
+                  When carrying out an EICR on a property with an existing EV charger, verify RCD
+                  type, earth conductor continuity, and PME compliance at the charger location. Use
+                  the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to record observations against the specific circuit and generate the report on site.
+                  to record observations against the specific circuit and generate the report on
+                  site.
                 </p>
               </div>
             </div>
@@ -500,7 +504,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate EV charger installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to certificate EV charger installations, complete EICRs, and generate BS 7671-compliant documentation on site. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -537,7 +541,7 @@ export default function EVChargerNotWorkingPage() {
       faqHeading="Frequently Asked Questions About EV Charger Faults"
       relatedPages={relatedPages}
       ctaHeading="Certificate EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger installation certificates, EICRs, and BS 7671-compliant documentation. 7-day free trial, cancel anytime."
     />
   );
 }

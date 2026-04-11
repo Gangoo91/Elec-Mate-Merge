@@ -85,14 +85,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description: 'When and why to upgrade your consumer unit, including metal enclosure requirements.',
+    description:
+      'When and why to upgrade your consumer unit, including metal enclosure requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
-    description: 'Current regulations for consumer units including RCBO, AFDD, and metal enclosure requirements.',
+    description:
+      'Current regulations for consumer units including RCBO, AFDD, and metal enclosure requirements.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -139,8 +141,8 @@ const sections = [
         <p>
           You are standing in the hallway and you notice it — a low, persistent hum coming from the
           consumer unit (fuse box). It might be something you have only just noticed, or something
-          that has been getting louder over time. Either way, a noise from the thing that controls all
-          the electricity in your home is understandably concerning.
+          that has been getting louder over time. Either way, a noise from the thing that controls
+          all the electricity in your home is understandably concerning.
         </p>
         <p>
           Consumer units contain electromagnetic components — coils, contacts, and bimetallic strips
@@ -151,8 +153,8 @@ const sections = [
         <p>
           This guide explains what causes the different types of humming noise, helps you assess
           whether what you are hearing is normal or a warning sign, and tells you when to call an
-          electrician. If you are an electrician, the later sections cover the diagnostic approach for
-          consumer unit noise complaints and the relevant{' '}
+          electrician. If you are an electrician, the later sections cover the diagnostic approach
+          for consumer unit noise complaints and the relevant{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">
             consumer unit regulations
           </SEOInternalLink>
@@ -167,10 +169,10 @@ const sections = [
     content: (
       <>
         <p>
-          Inside every MCB (Miniature Circuit Breaker) is an electromagnetic coil. When current flows
-          through the coil, it creates a magnetic field. This magnetic field is what enables the MCB
-          to trip quickly on a short circuit — the sudden surge of current generates a strong magnetic
-          force that mechanically opens the contacts.
+          Inside every MCB (Miniature Circuit Breaker) is an electromagnetic coil. When current
+          flows through the coil, it creates a magnetic field. This magnetic field is what enables
+          the MCB to trip quickly on a short circuit — the sudden surge of current generates a
+          strong magnetic force that mechanically opens the contacts.
         </p>
         <p>
           Under normal load, a much weaker magnetic field is present. This field oscillates at 50Hz
@@ -197,14 +199,16 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not seated properly on the busbar</strong> — if the MCB is not clicked fully
-                onto the DIN rail or the busbar connection is not clean and tight, vibration increases.
+                onto the DIN rail or the busbar connection is not clean and tight, vibration
+                increases.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Defective</strong> — internal wear, a weakened trip mechanism, or a loose
-                internal connection can cause excessive vibration. A defective MCB should be replaced.
+                internal connection can cause excessive vibration. A defective MCB should be
+                replaced.
               </span>
             </li>
           </ul>
@@ -220,28 +224,29 @@ const sections = [
         <p>
           RCDs (Residual Current Devices) and RCBOs contain a toroidal transformer — a ring-shaped
           coil through which the live and neutral conductors pass. This transformer is the sensing
-          element that detects current imbalance. Like any transformer, it can produce a hum at mains
-          frequency, particularly under load.
+          element that detects current imbalance. Like any transformer, it can produce a hum at
+          mains frequency, particularly under load.
         </p>
         <p>
           The hum from an RCD is usually quieter than from an MCB because the toroidal transformer
-          carries very little current itself — it only detects the difference between live and neutral
-          currents. However, if the RCD is protecting multiple circuits and the total load through it
-          is high, the hum may become noticeable.
+          carries very little current itself — it only detects the difference between live and
+          neutral currents. However, if the RCD is protecting multiple circuits and the total load
+          through it is high, the hum may become noticeable.
         </p>
         <p>
           Some consumer units also contain contactors — electromechanical switches used for time
           clocks, immersion heater control, or Economy 7/10 switching. Contactors have a more
-          substantial electromagnetic coil and are one of the loudest sources of humming in a consumer
-          unit. A contactor hum is normal when the contactor is energised (for example, when the
-          immersion heater is on). If the contactor buzzes loudly or chatters (makes a rapid clicking
-          sound), the coil or contacts may be worn and the contactor should be replaced.
+          substantial electromagnetic coil and are one of the loudest sources of humming in a
+          consumer unit. A contactor hum is normal when the contactor is energised (for example,
+          when the immersion heater is on). If the contactor buzzes loudly or chatters (makes a
+          rapid clicking sound), the coil or contacts may be worn and the contactor should be
+          replaced.
         </p>
         <p>
           Section 421 of BS 7671 establishes fundamental protection objectives including limiting
-          thermal effects through appropriate protective device selection and ensuring discrimination
-          between devices. Correctly rated and properly installed protective devices should operate
-          quietly under normal conditions.
+          thermal effects through appropriate protective device selection and ensuring
+          discrimination between devices. Correctly rated and properly installed protective devices
+          should operate quietly under normal conditions.
         </p>
       </>
     ),
@@ -252,10 +257,11 @@ const sections = [
     content: (
       <>
         <p>
-          This is where a humming consumer unit goes from "probably fine" to "potentially dangerous."
-          The busbars in a consumer unit are copper or tinned copper strips that distribute power from
-          the main switch to each individual MCB, RCBO, or RCD. Each device clips onto the busbar,
-          and the connection relies on spring tension and physical contact pressure.
+          This is where a humming consumer unit goes from "probably fine" to "potentially
+          dangerous." The busbars in a consumer unit are copper or tinned copper strips that
+          distribute power from the main switch to each individual MCB, RCBO, or RCD. Each device
+          clips onto the busbar, and the connection relies on spring tension and physical contact
+          pressure.
         </p>
         <p>
           If a busbar connection is loose — because the device is not fully seated, the busbar is
@@ -268,36 +274,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat damage cycle</strong> — a loose busbar connection generates heat. The heat
-                causes thermal expansion, which can loosen the connection further. The looser
-                connection has even higher resistance, generating more heat. This cycle can escalate to
-                melting the busbar, damaging adjacent devices, and in the worst case, causing a fire
-                within the consumer unit enclosure.
+                <strong>Heat damage cycle</strong> — a loose busbar connection generates heat. The
+                heat causes thermal expansion, which can loosen the connection further. The looser
+                connection has even higher resistance, generating more heat. This cycle can escalate
+                to melting the busbar, damaging adjacent devices, and in the worst case, causing a
+                fire within the consumer unit enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Terminal connections</strong> — the outgoing cables from each MCB or RCBO are
-                secured by terminal screws. If these are loose, the same heat-vibration cycle applies.
-                Terminals should be checked and retorqued to the manufacturer specification during
-                every inspection.
+                <strong>Terminal connections</strong> — the outgoing cables from each MCB or RCBO
+                are secured by terminal screws. If these are loose, the same heat-vibration cycle
+                applies. Terminals should be checked and retorqued to the manufacturer specification
+                during every inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main switch connections</strong> — the meter tails connect to the main switch.
-                If these connections are loose, the entire installation is affected. A loose main switch
-                connection carrying the full household load is one of the most dangerous faults in a
-                domestic installation.
+                <strong>Main switch connections</strong> — the meter tails connect to the main
+                switch. If these connections are loose, the entire installation is affected. A loose
+                main switch connection carrying the full household load is one of the most dangerous
+                faults in a domestic installation.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          This is why a humming consumer unit should never be dismissed without investigation. The hum
-          itself is harmless — but the loose connection causing it can be lethal.
+          This is why a humming consumer unit should never be dismissed without investigation. The
+          hum itself is harmless — but the loose connection causing it can be lethal.
         </p>
       </>
     ),
@@ -316,13 +322,11 @@ const sections = [
         <p>
           Regulation 826.1.4 of BS 7671 requires that overload and short-circuit currents must be
           determined at every point where protection is installed, for every configuration of the
-          installation, to ensure correct protective device selection. If circuits have been added or
-          loads increased since the original installation, the protective devices may no longer be
-          correctly rated for the actual load.
+          installation, to ensure correct protective device selection. If circuits have been added
+          or loads increased since the original installation, the protective devices may no longer
+          be correctly rated for the actual load.
         </p>
-        <p>
-          Common signs of an overloaded circuit include:
-        </p>
+        <p>Common signs of an overloaded circuit include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -358,8 +362,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The solution to circuit overloading is to redistribute the load across additional circuits or
-          to upgrade the existing circuit (larger cable, higher-rated MCB if appropriate). This
+          The solution to circuit overloading is to redistribute the load across additional circuits
+          or to upgrade the existing circuit (larger cable, higher-rated MCB if appropriate). This
           typically involves a{' '}
           <SEOInternalLink href="/guides/consumer-unit-upgrade">
             consumer unit upgrade
@@ -377,20 +381,18 @@ const sections = [
         <p>
           Heat is the enemy of electrical connections. Regulation 133.2 of BS 7671 requires that
           conductor cross-sectional area is determined considering maximum permissible temperature,
-          particularly when cables pass through thermal insulation where heat dissipation is reduced.
-          The same principle applies inside the consumer unit — heat must be able to dissipate from the
-          devices and connections.
+          particularly when cables pass through thermal insulation where heat dissipation is
+          reduced. The same principle applies inside the consumer unit — heat must be able to
+          dissipate from the devices and connections.
         </p>
         <p>
-          Modern consumer units are required to be metal-enclosed (since January 2016 under Amendment 3
-          to BS 7671). The metal enclosure provides fire containment — if a fault causes overheating
-          inside the consumer unit, the metal box prevents the fire from spreading to the surrounding
-          building fabric. Older plastic consumer units do not provide this protection and are one of
-          the reasons why consumer unit upgrades are recommended.
+          Modern consumer units are required to be metal-enclosed (since January 2016 under
+          Amendment 3 to BS 7671). The metal enclosure provides fire containment — if a fault causes
+          overheating inside the consumer unit, the metal box prevents the fire from spreading to
+          the surrounding building fabric. Older plastic consumer units do not provide this
+          protection and are one of the reasons why consumer unit upgrades are recommended.
         </p>
-        <p>
-          Signs of thermal effects in a consumer unit include:
-        </p>
+        <p>Signs of thermal effects in a consumer unit include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -404,8 +406,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Discolouration</strong> — brown or yellow marks on a white or grey enclosure,
-                particularly near specific devices, indicate localised heating at that point.
+                <strong>Discolouration</strong> — brown or yellow marks on a white or grey
+                enclosure, particularly near specific devices, indicate localised heating at that
+                point.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -420,8 +423,8 @@ const sections = [
               <Thermometer className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Melted cable insulation</strong> — visible only when the enclosure cover is
-                removed, but can sometimes be detected by smell. Melted insulation confirms sustained
-                overheating.
+                removed, but can sometimes be detected by smell. Melted insulation confirms
+                sustained overheating.
               </span>
             </li>
           </ul>
@@ -494,14 +497,15 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Any burning smell</strong> — this is the single most important warning sign.
-                Isolate the main switch and call an electrician. Do not open the consumer unit yourself.
+                Isolate the main switch and call an electrician. Do not open the consumer unit
+                yourself.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The enclosure is warm</strong> — touch the consumer unit cover with the back of
-                your hand. If it is noticeably warm, there is excessive heat generation inside.
+                <strong>The enclosure is warm</strong> — touch the consumer unit cover with the back
+                of your hand. If it is noticeably warm, there is excessive heat generation inside.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -522,12 +526,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          The electrician will carry out a visual inspection with the cover removed, tightness checks
-          on all connections, thermal imaging (if available) to identify hot spots, and may recommend
-          a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
-            EICR
-          </SEOInternalLink>{' '}
+          The electrician will carry out a visual inspection with the cover removed, tightness
+          checks on all connections, thermal imaging (if available) to identify hot spots, and may
+          recommend a full <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
           if the consumer unit shows signs of ageing or the installation has not been inspected
           recently. If the consumer unit is an older plastic type, the electrician may recommend an
           upgrade to a modern metal-enclosed unit with RCBO protection.
@@ -564,10 +565,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Visual Inspection and Tightness</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Isolate the main switch. Remove the cover. Inspect all connections for discolouration,
-                  melted insulation, or carbon deposits. Check that all devices are fully seated on the
-                  DIN rail and busbar. Retorque all terminal connections to manufacturer specification.
-                  Pay particular attention to the main switch terminals and the neutral bar connections.
+                  Isolate the main switch. Remove the cover. Inspect all connections for
+                  discolouration, melted insulation, or carbon deposits. Check that all devices are
+                  fully seated on the DIN rail and busbar. Retorque all terminal connections to
+                  manufacturer specification. Pay particular attention to the main switch terminals
+                  and the neutral bar connections.
                 </p>
               </div>
             </div>
@@ -578,10 +580,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">3. Load Assessment</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  With the supply restored, use a clamp meter to measure the load on each circuit and
-                  the total load on the main switch. Compare against the rated capacity of each device
-                  and the maximum demand of the installation. If any circuit is consistently above 80%
-                  of its rated capacity, recommend redistributing the load or adding circuits.
+                  With the supply restored, use a clamp meter to measure the load on each circuit
+                  and the total load on the main switch. Compare against the rated capacity of each
+                  device and the maximum demand of the installation. If any circuit is consistently
+                  above 80% of its rated capacity, recommend redistributing the load or adding
+                  circuits.
                 </p>
               </div>
             </div>
@@ -592,9 +595,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Document and Advise</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Record findings and any remedial work carried out. If the consumer unit is a plastic
-                  type, advise on upgrading to metal-enclosed. If the installation has not had an EICR
-                  within the recommended interval, recommend a full inspection. Issue an{' '}
+                  Record findings and any remedial work carried out. If the consumer unit is a
+                  plastic type, advise on upgrading to metal-enclosed. If the installation has not
+                  had an EICR within the recommended interval, recommend a full inspection. Issue an{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -643,7 +646,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Humming"
       relatedPages={relatedPages}
       ctaHeading="Inspect and Document Consumer Units on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI board scanning, professional EICR certificates, and fault documentation. 7-day free trial, cancel anytime."
     />
   );
 }

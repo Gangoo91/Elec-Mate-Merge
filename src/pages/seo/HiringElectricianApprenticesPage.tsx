@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'How much does it cost to hire an electrical apprentice?',
     answer:
-      'For non-levy employers (annual payroll below £3 million), the employer contribution is 5% of the training costs, up to the funding band maximum. For the Level 3 Electrician Apprenticeship Standard (ST0145), the funding band maximum is £27,000 over the full apprenticeship. Your contribution is therefore around £1,350 over three to four years, or roughly £400 per year. You also pay the apprentice\'s wages, National Insurance contributions, and any personal protective equipment or tool costs. Levy-paying employers pay nothing from their own pocket — all costs are drawn from their Digital Apprenticeship Service (DAS) account.',
+      "For non-levy employers (annual payroll below £3 million), the employer contribution is 5% of the training costs, up to the funding band maximum. For the Level 3 Electrician Apprenticeship Standard (ST0145), the funding band maximum is £27,000 over the full apprenticeship. Your contribution is therefore around £1,350 over three to four years, or roughly £400 per year. You also pay the apprentice's wages, National Insurance contributions, and any personal protective equipment or tool costs. Levy-paying employers pay nothing from their own pocket — all costs are drawn from their Digital Apprenticeship Service (DAS) account.",
   },
   {
     question: 'What is the ESFA and how does it fund apprenticeships?',
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'Do I need to register my apprentice with the JIB?',
     answer:
-      'Yes. If you are a JIB-registered employer (which most NICEIC and NAPIT members are), you must register your apprentice with the Joint Industry Board (JIB) at the start of their employment. Registration establishes the apprentice\'s grade (Apprentice Year 1), entitles them to JIB benefits (such as the Welfare Benefit Scheme and ECS Card), and creates their employment record which is used for future grading assessments. Registration is done online through the JIB portal and costs a small annual fee.',
+      "Yes. If you are a JIB-registered employer (which most NICEIC and NAPIT members are), you must register your apprentice with the Joint Industry Board (JIB) at the start of their employment. Registration establishes the apprentice's grade (Apprentice Year 1), entitles them to JIB benefits (such as the Welfare Benefit Scheme and ECS Card), and creates their employment record which is used for future grading assessments. Registration is done online through the JIB portal and costs a small annual fee.",
   },
   {
     question: 'Can I take on an apprentice if I am a sole trader?',
@@ -85,7 +85,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-business-growth',
     title: 'Growing Your Electrical Business',
-    description: 'Strategies for scaling from sole trader to employer in the UK electrical industry.',
+    description:
+      'Strategies for scaling from sole trader to employer in the UK electrical industry.',
     icon: Building2,
     category: 'Guide',
   },
@@ -106,7 +107,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/job-scheduling',
     title: 'Job Scheduling App',
-    description: 'Schedule your apprentice alongside your regular jobs with drag-and-drop planning.',
+    description:
+      'Schedule your apprentice alongside your regular jobs with drag-and-drop planning.',
     icon: ClipboardCheck,
     category: 'Tool',
   },
@@ -149,18 +151,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>End-point assessment (EPA)</strong> — at the end of the apprenticeship,
-                the apprentice is assessed by an independent end-point assessment organisation
-                (EPAO). The EPA includes a practical task, knowledge test, and professional
-                discussion. Passing the EPA is required to complete the apprenticeship standard.
+                <strong>End-point assessment (EPA)</strong> — at the end of the apprenticeship, the
+                apprentice is assessed by an independent end-point assessment organisation (EPAO).
+                The EPA includes a practical task, knowledge test, and professional discussion.
+                Passing the EPA is required to complete the apprenticeship standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Apprenticeship agreement</strong> — you must sign a written apprenticeship
-                agreement with the apprentice setting out the terms of employment, training, and
-                the apprenticeship standard being followed. This is a legal requirement under the
+                agreement with the apprentice setting out the terms of employment, training, and the
+                apprenticeship standard being followed. This is a legal requirement under the
                 Apprenticeships, Skills, Children and Learning Act 2009.
               </span>
             </li>
@@ -189,8 +191,8 @@ const sections = [
       <>
         <p>
           The <strong>Education & Skills Funding Agency (ESFA)</strong> administers apprenticeship
-          funding in England. The amount of government support depends on whether your business
-          pays the Apprenticeship Levy.
+          funding in England. The amount of government support depends on whether your business pays
+          the Apprenticeship Levy.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -198,9 +200,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Funding band maximum</strong> — the ESFA sets a maximum funding band for
-                each apprenticeship standard. For the Level 3 Electrician Standard (ST0145) this
-                is £27,000. Training costs must not exceed this cap. Your training provider will
-                agree a price within the band.
+                each apprenticeship standard. For the Level 3 Electrician Standard (ST0145) this is
+                £27,000. Training costs must not exceed this cap. Your training provider will agree
+                a price within the band.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -262,9 +264,9 @@ const sections = [
               <span>
                 <strong>Non-levy employers</strong> — businesses with a wage bill below £3 million
                 (the vast majority of independent electrical contractors) pay just 5% of training
-                costs as a co-investment. The ESFA pays 95% directly to the training provider.
-                For a £20,000 training programme, your contribution is £1,000 spread over three to
-                four years — typically invoiced quarterly.
+                costs as a co-investment. The ESFA pays 95% directly to the training provider. For a
+                £20,000 training programme, your contribution is £1,000 spread over three to four
+                years — typically invoiced quarterly.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -297,20 +299,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>National Minimum Wage (apprentice rate)</strong> — £6.40 per hour from
-                April 2024. This applies to all apprentices in their first year, and to apprentices
-                under 19 in any year. Once an apprentice is 19 or older and past Year 1, the
-                age-band NMW applies (£11.44 per hour for those aged 21+).
+                <strong>National Minimum Wage (apprentice rate)</strong> — £6.40 per hour from April
+                2024. This applies to all apprentices in their first year, and to apprentices under
+                19 in any year. Once an apprentice is 19 or older and past Year 1, the age-band NMW
+                applies (£11.44 per hour for those aged 21+).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>JIB recommended scales</strong> — the Joint Industry Board recommends
-                apprentice pay as a percentage of the Approved Electrician (AE) rate. Year 1: 40%
-                of AE rate; Year 2: 50%; Year 3: 65%; Year 4: 75%. At the 2025 JIB AE rate of
-                approximately £20.00/hour, this equates to roughly £8.00, £10.00, £13.00, and
-                £15.00 per hour across the four years.
+                apprentice pay as a percentage of the Approved Electrician (AE) rate. Year 1: 40% of
+                AE rate; Year 2: 50%; Year 3: 65%; Year 4: 75%. At the 2025 JIB AE rate of
+                approximately £20.00/hour, this equates to roughly £8.00, £10.00, £13.00, and £15.00
+                per hour across the four years.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -325,8 +327,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pension auto-enrolment</strong> — apprentices must be auto-enrolled into
-                a workplace pension once they meet the age and earnings criteria (aged 22+, earnings
+                <strong>Pension auto-enrolment</strong> — apprentices must be auto-enrolled into a
+                workplace pension once they meet the age and earnings criteria (aged 22+, earnings
                 above £10,000/year). Most electrical apprentices will meet these thresholds before
                 the end of their apprenticeship.
               </span>
@@ -352,8 +354,9 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ESFA registered providers</strong> — you must use a provider on the ESFA
-                Register of Apprenticeship Training Providers (RoATP). Search the Find Apprenticeship
-                Training service at gov.uk to find providers delivering ST0145 in your area.
+                Register of Apprenticeship Training Providers (RoATP). Search the Find
+                Apprenticeship Training service at gov.uk to find providers delivering ST0145 in
+                your area.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,17 +416,17 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ECS Apprentice Card</strong> — once registered, the apprentice applies for
-                an Electrotechnical Certification Scheme (ECS) Apprentice Card. This must be
-                carried on site and proves they are a registered apprentice. Many principal
-                contractors will not allow unregistered apprentices on site.
+                an Electrotechnical Certification Scheme (ECS) Apprentice Card. This must be carried
+                on site and proves they are a registered apprentice. Many principal contractors will
+                not allow unregistered apprentices on site.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual registration renewal</strong> — JIB apprentice registration must be
-                renewed annually. The training provider usually handles this in conjunction with
-                the employer. Failure to renew means the apprentice may not be covered by the JIB
+                renewed annually. The training provider usually handles this in conjunction with the
+                employer. Failure to renew means the apprentice may not be covered by the JIB
                 Welfare Benefit Scheme.
               </span>
             </li>
@@ -432,8 +435,8 @@ const sections = [
               <span>
                 <strong>Grading on completion</strong> — on successful completion of the
                 apprenticeship standard and EPA, submit the apprentice's grading application to the
-                JIB for Approved Electrician status. This entitles them to an ECS Gold Card and
-                the full Approved Electrician rate under the Working Rule Agreement.
+                JIB for Approved Electrician status. This entitles them to an ECS Gold Card and the
+                full Approved Electrician rate under the Working Rule Agreement.
               </span>
             </li>
           </ul>
@@ -458,8 +461,9 @@ const sections = [
               <span>
                 <strong>Designated mentor</strong> — appoint a named, qualified electrician as the
                 apprentice's workplace mentor. This person should ideally hold an Approved
-                Electrician or Technician grade and have some experience of working with apprentices.
-                A mentoring award (such as City & Guilds 6317) is not mandatory but is beneficial.
+                Electrician or Technician grade and have some experience of working with
+                apprentices. A mentoring award (such as City & Guilds 6317) is not mandatory but is
+                beneficial.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -500,8 +504,8 @@ const sections = [
     content: (
       <>
         <p>
-          Once your apprentice is on board, the practical challenge is keeping your business
-          running smoothly while delivering the varied work experience and supervision they need.
+          Once your apprentice is on board, the practical challenge is keeping your business running
+          smoothly while delivering the varied work experience and supervision they need.
           Elec-Mate's{' '}
           <SEOInternalLink href="/tools/job-scheduling">job scheduling tools</SEOInternalLink> make
           it easier to plan apprentice-appropriate work alongside your regular jobs.
@@ -529,9 +533,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Track Varied Work for EPA Evidence</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Use job records in Elec-Mate to log the types of work your apprentice has
-                  assisted with. This creates a useful evidence base for progress reviews and
-                  end-point assessment preparation.
+                  Use job records in Elec-Mate to log the types of work your apprentice has assisted
+                  with. This creates a useful evidence base for progress reviews and end-point
+                  assessment preparation.
                 </p>
               </div>
             </div>
@@ -539,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your apprentice alongside your business with Elec-Mate"
-          description="Scheduling, job management, certificates, and invoicing in one app. Join 430+ UK electricians using Elec-Mate to run their business more efficiently. 7-day free trial."
+          description="Scheduling, job management, certificates, and invoicing in one app. Join 1,000+ UK electricians using Elec-Mate to run their business more efficiently. 7-day free trial."
           icon={GraduationCap}
         />
       </>
@@ -576,7 +580,7 @@ export default function HiringElectricianApprenticesPage() {
       faqHeading="Frequently Asked Questions About Hiring Electrical Apprentices"
       relatedPages={relatedPages}
       ctaHeading="Run your electrical business and manage your apprentice with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for job scheduling, electrical certificates, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

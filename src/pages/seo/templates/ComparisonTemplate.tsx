@@ -185,7 +185,7 @@ export default function ComparisonTemplate({
             {(index + 1) % 2 === 0 && index < (sections?.length ?? 0) - 1 && (
               <SEOAppBridge
                 title="Try Elec-Mate free for 7 days"
-                description="Calculators, certificates, AI agents, and training — everything an electrician needs in one app."
+                description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
                 ctaText="Start free trial"
                 icon={Zap}
               />

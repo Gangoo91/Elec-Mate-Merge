@@ -613,7 +613,7 @@ export default function OffJobTrainingHoursPage() {
       faqHeading="Frequently Asked Questions About Off-the-Job Training"
       relatedPages={relatedPages}
       ctaHeading="Track your OJT hours effortlessly"
-      ctaSubheading="Join 430+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, compliance tracking, and Ofsted-ready records. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices tracking off-the-job training hours with Elec-Mate. Automatic logging, compliance tracking, and Ofsted-ready records. 7-day free trial, cancel anytime."
     />
   );
 }

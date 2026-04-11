@@ -143,11 +143,11 @@ const sections = [
     content: (
       <>
         <p>
-          Bradford is West Yorkshire's second-largest city with a population of around 540,000 across
-          the metropolitan district. The city has a rich industrial heritage in wool and textile
-          manufacturing and is undergoing significant regeneration, particularly as the UK City of
-          Culture 2025. Bradford sits at the heart of the West Yorkshire Combined Authority area,
-          with good transport links to Leeds (10 miles east), Halifax, and Skipton.
+          Bradford is West Yorkshire's second-largest city with a population of around 540,000
+          across the metropolitan district. The city has a rich industrial heritage in wool and
+          textile manufacturing and is undergoing significant regeneration, particularly as the UK
+          City of Culture 2025. Bradford sits at the heart of the West Yorkshire Combined Authority
+          area, with good transport links to Leeds (10 miles east), Halifax, and Skipton.
         </p>
         <p>
           For electricians, Bradford offers a substantial and varied market. The city's dense stock
@@ -189,25 +189,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask for a gold card or scheme ID card</strong> — registered electricians
-                carry a card confirming their scheme membership and expiry date. The card ID can
-                be verified online before the electrician starts work.
+                carry a card confirming their scheme membership and expiry date. The card ID can be
+                verified online before the electrician starts work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Get a written survey and quote</strong> — reputable Bradford electricians
-                will visit and survey before quoting. Walk-in verbal quotes for rewires or
-                consumer unit replacements, without seeing the existing installation, are a
-                warning sign.
+                will visit and survey before quoting. Walk-in verbal quotes for rewires or consumer
+                unit replacements, without seeing the existing installation, are a warning sign.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm documentation</strong> — after notifiable work, you must receive
-                a Part P compliance certificate and a BS 7671 EIC. For an EICR, you must receive
-                the full inspection report, not just a summary letter.
+                <strong>Confirm documentation</strong> — after notifiable work, you must receive a
+                Part P compliance certificate and a BS 7671 EIC. For an EICR, you must receive the
+                full inspection report, not just a summary letter.
               </span>
             </li>
           </ul>
@@ -293,9 +292,7 @@ const sections = [
     heading: 'Common Electrical Jobs in Bradford',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Bradford in 2026:
-        </p>
+        <p>The most in-demand electrical services in Bradford in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -327,9 +324,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — growing steadily across Bradford's
-                residential areas. NPG G98 notifications are required for solar PV generation;
-                EV charger installations do not require G98 unless paired with battery storage,
-                but must comply with BS 7671 and Part P.
+                residential areas. NPG G98 notifications are required for solar PV generation; EV
+                charger installations do not require G98 unless paired with battery storage, but
+                must comply with BS 7671 and Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -352,8 +349,8 @@ const sections = [
     content: (
       <>
         <p>
-          Bradford is in England and Part P of the Building Regulations 2010 applies to all
-          domestic electrical work. Notifiable work must be handled through one of two routes:
+          Bradford is in England and Part P of the Building Regulations 2010 applies to all domestic
+          electrical work. Notifiable work must be handled through one of two routes:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -402,46 +399,45 @@ const sections = [
     heading: 'Bradford Property Types and Electrical Characteristics',
     content: (
       <>
-        <p>
-          Bradford's housing stock is diverse and reflects the city's industrial history:
-        </p>
+        <p>Bradford's housing stock is diverse and reflects the city's industrial history:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Stone Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Bradford's most distinctive property type — dense rows of back-to-back and
-              through terraces built in millstone grit. Areas including Manningham, Heaton,
-              Girlington, and Shipley have large stocks of these properties. Solid stone
-              walls make cable routing challenging; floor voids and roof spaces are the
-              primary cable routes. Many have rubber-insulated wiring and old fuse boards.
+              Bradford's most distinctive property type — dense rows of back-to-back and through
+              terraces built in millstone grit. Areas including Manningham, Heaton, Girlington, and
+              Shipley have large stocks of these properties. Solid stone walls make cable routing
+              challenging; floor voids and roof spaces are the primary cable routes. Many have
+              rubber-insulated wiring and old fuse boards.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Post-War Council and Social Housing</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Post-War Council and Social Housing
+            </h3>
             <p className="text-white text-sm leading-relaxed">
-              Large estates across areas such as Buttershaw, Holmewood, and Thorpe Edge were
-              built as post-war social housing. Properties from the 1950s–1970s have wiring
-              that is now past its expected service life. EICRs in these properties commonly
-              generate multiple C2 observations requiring consumer unit upgrades or partial
-              rewires.
+              Large estates across areas such as Buttershaw, Holmewood, and Thorpe Edge were built
+              as post-war social housing. Properties from the 1950s–1970s have wiring that is now
+              past its expected service life. EICRs in these properties commonly generate multiple
+              C2 observations requiring consumer unit upgrades or partial rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Modern Private Development</h3>
             <p className="text-white text-sm leading-relaxed">
-              Areas such as Apperley Bridge, Wrose, and the Aire Valley corridor have modern
-              private housing built to current standards. Work here focuses on EV charger
-              installations, additional circuits, kitchen and bathroom work, and smart home
-              systems. Customers expect professional documentation and a high-quality finish.
+              Areas such as Apperley Bridge, Wrose, and the Aire Valley corridor have modern private
+              housing built to current standards. Work here focuses on EV charger installations,
+              additional circuits, kitchen and bathroom work, and smart home systems. Customers
+              expect professional documentation and a high-quality finish.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">HMOs and Student Accommodation</h3>
             <p className="text-white text-sm leading-relaxed">
               Bradford has a significant HMO and student accommodation sector, driven by the
-              University of Bradford. HMOs require annual or five-yearly EICRs depending on
-              their licensing status. Fire alarm and emergency lighting testing and maintenance
-              are additional recurring requirements for HMO landlords.
+              University of Bradford. HMOs require annual or five-yearly EICRs depending on their
+              licensing status. Fire alarm and emergency lighting testing and maintenance are
+              additional recurring requirements for HMO landlords.
             </p>
           </div>
         </div>
@@ -471,11 +467,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site and send to Bradford landlords and homeowners before you leave. Same-day
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site and send to Bradford landlords and homeowners before you leave. Same-day
                   documentation sets professional electricians apart in a competitive market.
                 </p>
               </div>
@@ -492,8 +485,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to send professional, detailed quotes to Bradford homeowners, landlords, and
-                  letting agents. Itemised quotes with accurate Bradford pricing win more work
-                  in a competitive market.
+                  letting agents. Itemised quotes with accurate Bradford pricing win more work in a
+                  competitive market.
                 </p>
               </div>
             </div>
@@ -501,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bradford electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -538,7 +531,7 @@ export default function ElectricianBradfordPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bradford"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bradford Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Bradford and West Yorkshire. 7-day free trial."
     />
   );
 }

@@ -659,7 +659,7 @@ export default function BusbarSizingCalculatorPage() {
         },
       ]}
       ctaHeading="Size Busbars in Seconds on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. Busbar sizing, cable sizing, voltage drop, and 50+ other calculators. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. Busbar sizing, cable sizing, voltage drop, and 50+ other calculators. 7-day free trial, cancel anytime."
     />
   );
 }

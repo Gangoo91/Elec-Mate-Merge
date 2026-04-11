@@ -113,8 +113,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Create professional PDF quotes with itemised pricing. Built for electricians.',
+    description: 'Create professional PDF quotes with itemised pricing. Built for electricians.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -129,8 +128,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete electrical certificates on site. Professional PDFs for your customers.',
+    description: 'Complete electrical certificates on site. Professional PDFs for your customers.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -149,14 +147,14 @@ const sections = [
         <p>
           Every electrical job you take on either makes you money or costs you money — and the
           difference is almost always decided at the estimating stage, not on site. Get your
-          estimate wrong and you are locked into a price that either loses you money or prices
-          you out of the job.
+          estimate wrong and you are locked into a price that either loses you money or prices you
+          out of the job.
         </p>
         <p>
-          This guide covers the core estimating methods used by UK electricians in 2026:
-          per-point pricing for fast domestic quotes, detailed labour-and-material estimates
-          for larger jobs, material markup strategy, how to calculate a sustainable labour rate,
-          and the contingency you need to protect your margin.
+          This guide covers the core estimating methods used by UK electricians in 2026: per-point
+          pricing for fast domestic quotes, detailed labour-and-material estimates for larger jobs,
+          material markup strategy, how to calculate a sustainable labour rate, and the contingency
+          you need to protect your margin.
         </p>
         <p>
           Whether you are a newly qualified sparky pricing your first rewire or an experienced
@@ -172,10 +170,10 @@ const sections = [
     content: (
       <>
         <p>
-          Per-point pricing is the most common method for domestic electrical work. One
-          "point" is a single socket outlet, light fitting, light switch, fused connection
-          unit (FCU), or data point. Each point includes the cable run, back box, front plate,
-          accessories, first fix, second fix, and testing.
+          Per-point pricing is the most common method for domestic electrical work. One "point" is a
+          single socket outlet, light fitting, light switch, fused connection unit (FCU), or data
+          point. Each point includes the cable run, back box, front plate, accessories, first fix,
+          second fix, and testing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
@@ -185,36 +183,48 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h5 className="font-bold text-white mb-2">London & South East</h5>
               <ul className="space-y-1">
-                <li>New build: <strong className="text-yellow-400">£100 to £130</strong></li>
-                <li>Existing property: <strong className="text-yellow-400">£120 to £150</strong></li>
+                <li>
+                  New build: <strong className="text-yellow-400">£100 to £130</strong>
+                </li>
+                <li>
+                  Existing property: <strong className="text-yellow-400">£120 to £150</strong>
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <h5 className="font-bold text-white mb-2">Midlands & South West</h5>
               <ul className="space-y-1">
-                <li>New build: <strong className="text-yellow-400">£85 to £110</strong></li>
-                <li>Existing property: <strong className="text-yellow-400">£100 to £130</strong></li>
+                <li>
+                  New build: <strong className="text-yellow-400">£85 to £110</strong>
+                </li>
+                <li>
+                  Existing property: <strong className="text-yellow-400">£100 to £130</strong>
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-purple-500/10 border border-purple-500/20 p-4">
               <h5 className="font-bold text-white mb-2">North & Scotland</h5>
               <ul className="space-y-1">
-                <li>New build: <strong className="text-yellow-400">£80 to £100</strong></li>
-                <li>Existing property: <strong className="text-yellow-400">£90 to £120</strong></li>
+                <li>
+                  New build: <strong className="text-yellow-400">£80 to £100</strong>
+                </li>
+                <li>
+                  Existing property: <strong className="text-yellow-400">£90 to £120</strong>
+                </li>
               </ul>
             </div>
           </div>
         </div>
         <p>
-          <strong>What is NOT included in a point:</strong> The consumer unit, distribution
-          board, main switch, bonding, earthing, smoke detection (unless specified), external
-          supplies, specialist fittings, very long cable runs (over 15m), or making good of
-          chases beyond basic filling. These should be priced as additional line items.
+          <strong>What is NOT included in a point:</strong> The consumer unit, distribution board,
+          main switch, bonding, earthing, smoke detection (unless specified), external supplies,
+          specialist fittings, very long cable runs (over 15m), or making good of chases beyond
+          basic filling. These should be priced as additional line items.
         </p>
         <p>
-          Per-point pricing works well for standard domestic work — extensions, rewires,
-          new builds. For commercial, industrial, or complex domestic work, use a detailed
-          labour-and-material estimate instead.
+          Per-point pricing works well for standard domestic work — extensions, rewires, new builds.
+          For commercial, industrial, or complex domestic work, use a detailed labour-and-material
+          estimate instead.
         </p>
       </>
     ),
@@ -225,9 +235,9 @@ const sections = [
     content: (
       <>
         <p>
-          Marking up materials is not a dodgy practice — it is a standard part of running a
-          trade business. You incur real costs sourcing, collecting, transporting, and storing
-          materials. The markup compensates for those costs and the risk you carry.
+          Marking up materials is not a dodgy practice — it is a standard part of running a trade
+          business. You incur real costs sourcing, collecting, transporting, and storing materials.
+          The markup compensates for those costs and the risk you carry.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -235,10 +245,10 @@ const sections = [
               <Percent className="w-5 h-5 text-green-400" /> Standard Materials
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Cable, back boxes, trunking, conduit, clips, fixings, socket fronts, switch
-              plates — mark up by <strong>20% to 25%</strong> on your trade price. These are
-              low-value, high-handling items. The markup covers your collection trips, waste,
-              off-cuts, and van storage.
+              Cable, back boxes, trunking, conduit, clips, fixings, socket fronts, switch plates —
+              mark up by <strong>20% to 25%</strong> on your trade price. These are low-value,
+              high-handling items. The markup covers your collection trips, waste, off-cuts, and van
+              storage.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -246,17 +256,17 @@ const sections = [
               <Percent className="w-5 h-5 text-blue-400" /> High-Value Items
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Consumer units, EV chargers, lighting packages, distribution boards — mark up
-              by <strong>10% to 15%</strong>. The absolute margin is higher on these items even
-              at a lower percentage. Customers can easily price-check high-value items online,
-              so keep the markup reasonable.
+              Consumer units, EV chargers, lighting packages, distribution boards — mark up by{' '}
+              <strong>10% to 15%</strong>. The absolute margin is higher on these items even at a
+              lower percentage. Customers can easily price-check high-value items online, so keep
+              the markup reasonable.
             </p>
           </div>
         </div>
         <p>
           <strong>Always itemise materials</strong> on your quotes. Customers appreciate
-          transparency, and it protects you if the specification changes. Use your trade
-          account prices as your cost base, not retail.
+          transparency, and it protects you if the specification changes. Use your trade account
+          prices as your cost base, not retail.
         </p>
       </>
     ),
@@ -267,13 +277,14 @@ const sections = [
     content: (
       <>
         <p>
-          Most electricians massively underestimate what they need to charge per hour. They
-          think "I want to earn £35/hour" and charge £35 — ignoring the fact that £35/hour
-          gross does not cover their business costs, unbillable time, holidays, or pension.
+          Most electricians massively underestimate what they need to charge per hour. They think "I
+          want to earn £35/hour" and charge £35 — ignoring the fact that £35/hour gross does not
+          cover their business costs, unbillable time, holidays, or pension.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-yellow-400" /> Labour Rate Calculator (Sole Trader, 2026)
+            <Calculator className="w-4 h-4 text-yellow-400" /> Labour Rate Calculator (Sole Trader,
+            2026)
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="flex justify-between border-b border-white/10 pb-2">
@@ -328,8 +339,8 @@ const sections = [
         </div>
         <p>
           Round up to £52 or £55/hour. That is the minimum you need to charge to hit a £40,000
-          take-home. If you want a profit margin on top (to grow the business, replace equipment,
-          or build a buffer), add 10% to 20% — taking you to £57 to £66/hour.
+          take-home. If you want a profit margin on top (to grow the business, replace equipment, or
+          build a buffer), add 10% to 20% — taking you to £57 to £66/hour.
         </p>
       </>
     ),
@@ -340,9 +351,8 @@ const sections = [
     content: (
       <>
         <p>
-          Contingency is a percentage added to your estimate to cover unknowns. Overheads are
-          the fixed costs of running your business that must be recovered through every job you
-          price.
+          Contingency is a percentage added to your estimate to cover unknowns. Overheads are the
+          fixed costs of running your business that must be recovered through every job you price.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Contingency Guidelines by Job Type</h4>
@@ -374,11 +384,10 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Overheads</strong> (van, insurance, tools, admin) should already be built
-          into your hourly rate. Do not add them as a separate line item on the quote — this
-          confuses customers and makes your price look inflated. The customer should see:
-          labour, materials, and a total. Your overheads are invisible to them but built into
-          your rate.
+          <strong>Overheads</strong> (van, insurance, tools, admin) should already be built into
+          your hourly rate. Do not add them as a separate line item on the quote — this confuses
+          customers and makes your price look inflated. The customer should see: labour, materials,
+          and a total. Your overheads are invisible to them but built into your rate.
         </p>
       </>
     ),
@@ -393,11 +402,13 @@ const sections = [
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Pricing to Win Instead of Pricing to Profit</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Pricing to Win Instead of Pricing to Profit
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   If you are winning 80%+ of your quotes, your prices are too low. A healthy
-                  conversion rate is 30% to 50%. Being the cheapest means you are subsidising
-                  your customers from your own pocket. Price for sustainability, not desperation.
+                  conversion rate is 30% to 50%. Being the cheapest means you are subsidising your
+                  customers from your own pocket. Price for sustainability, not desperation.
                 </p>
               </div>
             </div>
@@ -409,8 +420,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Forgetting Unbillable Time</h4>
                 <p className="text-white text-sm leading-relaxed">
                   A job that takes 8 hours on site actually costs you 10 to 12 hours when you
-                  include travel, material collection, quoting, invoicing, and follow-up. If
-                  you only price for on-site time, you are working those extra hours for free.
+                  include travel, material collection, quoting, invoicing, and follow-up. If you
+                  only price for on-site time, you are working those extra hours for free.
                 </p>
               </div>
             </div>
@@ -421,10 +432,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Not Specifying Exclusions</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  "Full rewire — £5,000" with no specification leads to disputes. Always list
-                  what is included AND what is excluded. Specify the number of points, consumer
-                  unit type, whether you are making good chases, and whether decoration is
-                  included (it almost never should be).
+                  "Full rewire — £5,000" with no specification leads to disputes. Always list what
+                  is included AND what is excluded. Specify the number of points, consumer unit
+                  type, whether you are making good chases, and whether decoration is included (it
+                  almost never should be).
                 </p>
               </div>
             </div>
@@ -433,11 +444,13 @@ const sections = [
             <div className="flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-red-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Quoting from Memory Instead of a Schedule</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Quoting from Memory Instead of a Schedule
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always walk the job with a checklist and count every point, circuit, and
-                  special requirement. "I can do that for about five grand" is not estimating —
-                  it is guessing. Guesses are wrong more often than they are right.
+                  Always walk the job with a checklist and count every point, circuit, and special
+                  requirement. "I can do that for about five grand" is not estimating — it is
+                  guessing. Guesses are wrong more often than they are right.
                 </p>
               </div>
             </div>
@@ -453,7 +466,9 @@ const sections = [
       <>
         <div className="space-y-6 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-            <h4 className="font-bold text-white mb-4">Example 1: Kitchen Rewire (Midlands, 2026)</h4>
+            <h4 className="font-bold text-white mb-4">
+              Example 1: Kitchen Rewire (Midlands, 2026)
+            </h4>
             <div className="space-y-2 text-white text-sm">
               <div className="flex justify-between border-b border-white/10 pb-2">
                 <span>12 points (6 sockets, 4 lights, 1 extractor, 1 cooker) x £110</span>
@@ -486,7 +501,9 @@ const sections = [
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-            <h4 className="font-bold text-white mb-4">Example 2: 3-Bed Semi Rewire (North West, 2026)</h4>
+            <h4 className="font-bold text-white mb-4">
+              Example 2: 3-Bed Semi Rewire (North West, 2026)
+            </h4>
             <div className="space-y-2 text-white text-sm">
               <div className="flex justify-between border-b border-white/10 pb-2">
                 <span>48 points x £95</span>
@@ -528,8 +545,8 @@ const sections = [
     content: (
       <>
         <p>
-          Good estimating is a skill that improves with every job. Track your actual costs
-          against your estimates on every project — this feedback loop is how you get better.
+          Good estimating is a skill that improves with every job. Track your actual costs against
+          your estimates on every project — this feedback loop is how you get better.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -541,9 +558,9 @@ const sections = [
                   The{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
-                  </SEOInternalLink>
-                  {' '}builds your per-point rates, material markup, and contingency into
-                  professional PDF quotes in minutes.
+                  </SEOInternalLink>{' '}
+                  builds your per-point rates, material markup, and contingency into professional
+                  PDF quotes in minutes.
                 </p>
               </div>
             </div>
@@ -554,9 +571,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Track Your Win Rate</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Log every quote you send and whether you win or lose it. If your win rate is
-                  above 50%, raise your prices. If it is below 25%, review your presentation
-                  and follow-up process — it may not be price at all.
+                  Log every quote you send and whether you win or lose it. If your win rate is above
+                  50%, raise your prices. If it is below 25%, review your presentation and follow-up
+                  process — it may not be price at all.
                 </p>
               </div>
             </div>
@@ -601,7 +618,7 @@ export default function ElectricalEstimatingGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Estimating"
       relatedPages={relatedPages}
       ctaHeading="Quote Faster, Win More Profitable Work"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional PDF quotes with built-in per-point pricing. 7-day free trial, cancel anytime."
     />
   );
 }

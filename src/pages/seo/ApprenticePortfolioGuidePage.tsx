@@ -581,7 +581,7 @@ export default function ApprenticePortfolioGuidePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start building your portfolio today"
-        subheading="Join 430+ UK electricians and apprentices managing their careers with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians and apprentices managing their careers with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

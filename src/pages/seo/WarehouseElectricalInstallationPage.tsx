@@ -63,7 +63,8 @@ const faqs = [
       'EV charging installations in warehouses must comply with: BS 7671:2018+A3:2024 Section 722 (Supplies for Electric Vehicles); the Electric Vehicles (Smart Charge Points) Regulations 2021 (which require smart charge point functionality for new private charge points); and PAS 1899:2022 (the British Standard for electric vehicle smart charging). Where the EV charging demand is significant (more than 50 kW total), a dynamic load management system is strongly recommended to prevent simultaneous charging from overloading the incoming supply. All EV charge points must be protected by a 30mA Type B RCD (or Type A where the charge point manufacturer confirms no DC residual current above 6mA will flow).',
   },
   {
-    question: 'How should fire detection cables be installed in a warehouse electrical installation?',
+    question:
+      'How should fire detection cables be installed in a warehouse electrical installation?',
     answer:
       'Fire detection cabling in warehouses must use fire-resistant cable in accordance with Regulation 521.10 of BS 7671 and the requirements of BS 5839-1. The cable must maintain circuit integrity in fire conditions for a period appropriate to the evacuation requirements of the building — typically 30 or 60 minutes. Enhanced fire-resistant cables (such as Pyrotenax MICC or equivalent) are used where longer survival times are required. Fire alarm cables must be segregated from general wiring. Cables must not pass through fire compartment walls without appropriate fire stopping to maintain the fire compartmentation of the building.',
   },
@@ -180,9 +181,9 @@ const sections = [
       <>
         <p>
           LED high-bay luminaires have transformed warehouse lighting. Modern LED high-bays offer
-          efficacies of 150 to 200 lumens per watt, compared to 80 to 100 lm/W for legacy
-          metal halide or high-pressure sodium fittings. For a large warehouse, switching to LED
-          typically reduces lighting energy consumption by 60 to 70 per cent.
+          efficacies of 150 to 200 lumens per watt, compared to 80 to 100 lm/W for legacy metal
+          halide or high-pressure sodium fittings. For a large warehouse, switching to LED typically
+          reduces lighting energy consumption by 60 to 70 per cent.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -192,18 +193,18 @@ const sections = [
                 <strong>Photometric design:</strong> A DIALux or Relux photometric design study
                 should be carried out for all warehouse lighting installations. The design must
                 demonstrate that the specified luminaires achieve the required maintained average
-                illuminance (Em), uniformity ratio (Uo), and glare rating (UGR) in accordance
-                with CIBSE LG1 and the task requirements of the specific warehouse operation.
+                illuminance (Em), uniformity ratio (Uo), and glare rating (UGR) in accordance with
+                CIBSE LG1 and the task requirements of the specific warehouse operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Controls:</strong> DALI (Digital Addressable Lighting Interface) or
-                wireless lighting control systems allow individual luminaire addressing, daylight
-                dimming, occupancy-based switching, and zone control. BREEAM and Part L of the
-                Building Regulations require automatic lighting controls in warehouses, with
-                automatic switching or dimming in response to occupancy and daylighting.
+                <strong>Controls:</strong> DALI (Digital Addressable Lighting Interface) or wireless
+                lighting control systems allow individual luminaire addressing, daylight dimming,
+                occupancy-based switching, and zone control. BREEAM and Part L of the Building
+                Regulations require automatic lighting controls in warehouses, with automatic
+                switching or dimming in response to occupancy and daylighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -211,9 +212,9 @@ const sections = [
               <span>
                 <strong>Circuit design:</strong> High-bay lighting circuits in warehouses are
                 typically single-phase final circuits, each serving a row or zone of luminaires.
-                Circuit loading should not exceed 80 per cent of the protective device rating.
-                Where DALI control is used, a separate 2-wire DALI bus circuit is required in
-                addition to the power circuit.
+                Circuit loading should not exceed 80 per cent of the protective device rating. Where
+                DALI control is used, a separate 2-wire DALI bus circuit is required in addition to
+                the power circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -247,10 +248,10 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board (MDB):</strong> The MDB receives the incoming LV
-                supply and distributes it to zone distribution boards throughout the warehouse.
-                The MDB should include main incomer protection (typically a motorised circuit
-                breaker or air circuit breaker), metering, power factor correction, and outgoing
-                MCCB-protected feeders to zone boards.
+                supply and distributes it to zone distribution boards throughout the warehouse. The
+                MDB should include main incomer protection (typically a motorised circuit breaker or
+                air circuit breaker), metering, power factor correction, and outgoing MCCB-protected
+                feeders to zone boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,24 +269,24 @@ const sections = [
               <span>
                 <strong>Busbar trunking systems:</strong> For large warehouses with high power
                 requirements, overhead busbar trunking (busway) provides a flexible distribution
-                method. Tap-off boxes can be installed at any point along the busway to provide
-                a supply, and repositioned as the warehouse layout changes. Busway eliminates
-                the need for extensive cable tray runs and is particularly suited to warehouses
-                with regularly changing layouts.
+                method. Tap-off boxes can be installed at any point along the busway to provide a
+                supply, and repositioned as the warehouse layout changes. Busway eliminates the need
+                for extensive cable tray runs and is particularly suited to warehouses with
+                regularly changing layouts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage drop:</strong> In a large warehouse the distance from the MDB to
-                the furthest distribution board can be 150 metres or more. Cable sizing must ensure
-                that voltage drop from the origin to the furthest point of use does not exceed
-                the limits of{' '}
+                <strong>Voltage drop:</strong> In a large warehouse the distance from the MDB to the
+                furthest distribution board can be 150 metres or more. Cable sizing must ensure that
+                voltage drop from the origin to the furthest point of use does not exceed the limits
+                of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 Appendix 12
                 </SEOInternalLink>{' '}
-                — typically 3 per cent on sub-main circuits and 5 per cent total from the origin
-                of the installation.
+                — typically 3 per cent on sub-main circuits and 5 per cent total from the origin of
+                the installation.
               </span>
             </li>
           </ul>
@@ -302,16 +303,16 @@ const sections = [
           EV charging is rapidly becoming one of the most significant electrical requirements for
           new warehouse construction and refurbishment. Logistics operators are electrifying their
           delivery van and HGV fleets, and warehouse employees increasingly need workplace charging.
-          The electrical infrastructure must be designed to accommodate very large future EV charging
-          demands without requiring costly supply upgrades.
+          The electrical infrastructure must be designed to accommodate very large future EV
+          charging demands without requiring costly supply upgrades.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 Section 722:</strong> All EV charging installations must comply
-                with Section 722 of BS 7671, which specifies requirements for supplies for electric
+                <strong>BS 7671 Section 722:</strong> All EV charging installations must comply with
+                Section 722 of BS 7671, which specifies requirements for supplies for electric
                 vehicles including RCD protection (30mA Type B, or Type A where no DC residual
                 current exceeds 6mA), earthing arrangements, and the requirements for mode of
                 charging.
@@ -332,18 +333,18 @@ const sections = [
               <span>
                 <strong>Load management:</strong> A dynamic load management (DLM) or energy
                 management system (EMS) is essential for large warehouse EV charging installations.
-                The DLM monitors the available supply headroom and allocates charging power to
-                each charge point, preventing the aggregate EV charging demand from exceeding
-                the available supply capacity. This allows a much larger number of charge points
-                to be installed without upgrading the incoming supply.
+                The DLM monitors the available supply headroom and allocates charging power to each
+                charge point, preventing the aggregate EV charging demand from exceeding the
+                available supply capacity. This allows a much larger number of charge points to be
+                installed without upgrading the incoming supply.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Infrastructure-ready provisions:</strong> For cost efficiency, PAS 1899
-                and BREEAM recommend installing ducting and distribution boards for future EV
-                charging during the initial construction, even if charge points are not installed
+                <strong>Infrastructure-ready provisions:</strong> For cost efficiency, PAS 1899 and
+                BREEAM recommend installing ducting and distribution boards for future EV charging
+                during the initial construction, even if charge points are not installed
                 immediately. This avoids disruptive and costly groundworks when EV adoption
                 accelerates.
               </span>
@@ -379,9 +380,9 @@ const sections = [
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Half-hourly metering:</strong> Warehouse operators with a maximum demand
-                above 100 kW are required to have a half-hourly electricity meter. This data
-                allows the operator to manage demand charges (capacity unit charges applied by
-                utilities to maximum demand) and identify energy waste.
+                above 100 kW are required to have a half-hourly electricity meter. This data allows
+                the operator to manage demand charges (capacity unit charges applied by utilities to
+                maximum demand) and identify energy waste.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -407,18 +408,18 @@ const sections = [
         <p>
           Warehouses are high-risk environments for fire due to the concentration of combustible
           goods, the height of racking (which delays detection and suppression), and the potential
-          for fork-lift truck impacts on electrical equipment. The electrical installation plays
-          a critical role in the fire detection and suppression systems.
+          for fork-lift truck impacts on electrical equipment. The electrical installation plays a
+          critical role in the fire detection and suppression systems.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5839-1 compliance:</strong> The fire detection and alarm system must
-                be designed, installed, commissioned, and maintained in accordance with BS 5839-1.
-                For large warehouses, Category L2 (automatic detection in areas of highest fire
-                risk) or L1 (full automatic detection throughout) is typically specified.
+                <strong>BS 5839-1 compliance:</strong> The fire detection and alarm system must be
+                designed, installed, commissioned, and maintained in accordance with BS 5839-1. For
+                large warehouses, Category L2 (automatic detection in areas of highest fire risk) or
+                L1 (full automatic detection throughout) is typically specified.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -426,9 +427,8 @@ const sections = [
               <span>
                 <strong>Fire-resistant cable:</strong> Regulation 521.10 of BS 7671 requires that
                 wiring systems supplying fire safety equipment (fire alarms, emergency lighting,
-                sprinkler system pumps, smoke ventilation) must maintain circuit integrity in
-                fire conditions. Fire-resistant cable complying with BS EN 50200 or BS 7629 must
-                be used.
+                sprinkler system pumps, smoke ventilation) must maintain circuit integrity in fire
+                conditions. Fire-resistant cable complying with BS EN 50200 or BS 7629 must be used.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -452,8 +452,8 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting in a warehouse must ensure that all occupants can safely evacuate
-          the building in the event of a mains power failure. The large floor area, complex racking
+          Emergency lighting in a warehouse must ensure that all occupants can safely evacuate the
+          building in the event of a mains power failure. The large floor area, complex racking
           layouts, and multiple exit routes of a warehouse create significant emergency lighting
           design challenges.
         </p>
@@ -462,10 +462,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5266-1 requirements:</strong> Emergency luminaires must be positioned
-                at all changes of direction, at every exit door, at stairways, and to illuminate
-                every exit sign. The minimum maintained illuminance on escape routes is 1 lux at
-                floor level along the centreline. Anti-panic lighting in the body of the warehouse
+                <strong>BS 5266-1 requirements:</strong> Emergency luminaires must be positioned at
+                all changes of direction, at every exit door, at stairways, and to illuminate every
+                exit sign. The minimum maintained illuminance on escape routes is 1 lux at floor
+                level along the centreline. Anti-panic lighting in the body of the warehouse
                 requires 0.5 lux minimum.
               </span>
             </li>
@@ -485,8 +485,8 @@ const sections = [
                 <strong>Testing and records:</strong> Emergency lighting must be tested monthly
                 (brief functional test) and annually (full rated duration test). Test results must
                 be recorded in a log book as required by BS 5266-1. The Regulatory Reform (Fire
-                Safety) Order 2005 requires the responsible person to ensure emergency lighting
-                is maintained in working order.
+                Safety) Order 2005 requires the responsible person to ensure emergency lighting is
+                maintained in working order.
               </span>
             </li>
           </ul>
@@ -510,9 +510,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding:</strong> All metallic services entering the
-                warehouse (gas, water, oil pipelines, structural steelwork) must be connected
-                by main protective bonding conductors to the main earthing terminal in accordance
-                with Regulation 411.3.1.2 of BS 7671.
+                warehouse (gas, water, oil pipelines, structural steelwork) must be connected by
+                main protective bonding conductors to the main earthing terminal in accordance with
+                Regulation 411.3.1.2 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -528,10 +528,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Static bonding for racking:</strong> Metal racking systems in dry
-                warehouses handling plastic packaging, granular materials, or powders can
-                accumulate dangerous electrostatic charges. Earth bonding straps connecting
-                racking sections to the building earth system dissipate these charges safely.
+                <strong>Static bonding for racking:</strong> Metal racking systems in dry warehouses
+                handling plastic packaging, granular materials, or powders can accumulate dangerous
+                electrostatic charges. Earth bonding straps connecting racking sections to the
+                building earth system dissipate these charges safely.
               </span>
             </li>
           </ul>
@@ -546,8 +546,8 @@ const sections = [
       <>
         <p>
           Warehouse electrical contracting is a substantial and growing market for UK electrical
-          contractors. New logistics parks, distribution centre refurbishments, and the retrofit
-          of EV charging and LED lighting in existing warehouses all generate significant contract
+          contractors. New logistics parks, distribution centre refurbishments, and the retrofit of
+          EV charging and LED lighting in existing warehouses all generate significant contract
           opportunities.
         </p>
         <div className="space-y-4 my-4">
@@ -559,8 +559,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Large warehouse installations require extensive testing and commissioning
                   documentation. Emergency lighting duration tests, fire detection system
-                  commissioning, EV charger commissioning, and full EICR documentation must all
-                  be provided to the client on completion. Use the{' '}
+                  commissioning, EV charger commissioning, and full EICR documentation must all be
+                  provided to the client on completion. Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certification app
                   </SEOInternalLink>{' '}
@@ -575,8 +575,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Large Projects Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Warehouse projects involve large cable quantities, significant containment systems,
-                  and multiple sub-systems. Use the{' '}
+                  Warehouse projects involve large cable quantities, significant containment
+                  systems, and multiple sub-systems. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
@@ -589,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage warehouse electrical projects with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -626,7 +626,7 @@ export default function WarehouseElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions — Warehouse Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Warehouse Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. 7-day free trial, cancel anytime."
     />
   );
 }

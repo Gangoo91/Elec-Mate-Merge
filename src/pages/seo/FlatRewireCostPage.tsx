@@ -42,7 +42,7 @@ const keyTakeaways = [
   'A one-bedroom flat rewire averages £2,000 to £3,000; a two-bedroom flat £2,500 to £3,800; and a three-bedroom flat £3,500 to £4,500.',
   'Flat rewires are notifiable under Part P of the Building Regulations and require an Electrical Installation Certificate (EIC) upon completion.',
   'Regulation 411.3.3 of BS 7671 requires 30mA RCD protection on all socket outlet circuits up to 32A and all circuits in bathrooms and outdoors.',
-  'Flats may require freeholder or managing agent consent before electrical work begins, and communal area wiring is typically the freeholder\'s responsibility.',
+  "Flats may require freeholder or managing agent consent before electrical work begins, and communal area wiring is typically the freeholder's responsibility.",
 ];
 
 const faqs = [
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Do I need freeholder consent to rewire a flat?',
     answer:
-      'If you own a leasehold flat, you should check your lease for clauses relating to structural alterations or electrical work. Most leases require you to notify the freeholder or managing agent before carrying out a rewire, particularly if the work involves running cables through communal areas or making penetrations in party walls or floors. The electrician should only work within your flat\'s demise — communal wiring is the freeholder\'s responsibility.',
+      "If you own a leasehold flat, you should check your lease for clauses relating to structural alterations or electrical work. Most leases require you to notify the freeholder or managing agent before carrying out a rewire, particularly if the work involves running cables through communal areas or making penetrations in party walls or floors. The electrician should only work within your flat's demise — communal wiring is the freeholder's responsibility.",
   },
   {
     question: 'Can I live in the flat during a rewire?',
@@ -130,14 +130,13 @@ const sections = [
     content: (
       <>
         <p>
-          A flat rewire replaces all of the electrical wiring, accessories, and the consumer unit
-          in a flat with a completely new installation compliant with{' '}
+          A flat rewire replaces all of the electrical wiring, accessories, and the consumer unit in
+          a flat with a completely new installation compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>
-          . It is typically necessary when the existing wiring is more than 25 to 30 years old,
-          when an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has identified
+          . It is typically necessary when the existing wiring is more than 25 to 30 years old, when
+          an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has identified
           serious deficiencies, or as part of a major renovation.
         </p>
         <p>
@@ -161,17 +160,17 @@ const sections = [
     content: (
       <>
         <p>
-          Here are realistic 2026 costs for flat rewires in the UK, including all materials,
-          labour, testing, Part P notification, and the EIC.
+          Here are realistic 2026 costs for flat rewires in the UK, including all materials, labour,
+          testing, Part P notification, and the EIC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio or one-bedroom flat</strong> — £2,000 to £3,000 total. Typically
-                4 to 6 circuits. Materials: £600 to £900 (consumer unit, cable, accessories).
-                Labour: £1,200 to £1,800 (3 to 5 days). Certification: £50 to £80.
+                <strong>Studio or one-bedroom flat</strong> — £2,000 to £3,000 total. Typically 4 to
+                6 circuits. Materials: £600 to £900 (consumer unit, cable, accessories). Labour:
+                £1,200 to £1,800 (3 to 5 days). Certification: £50 to £80.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -218,16 +217,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power circuits</strong> — new ring final circuits or 32A radial circuits
-                to socket outlets throughout the flat. Radial circuits are increasingly common in
-                flats due to shorter cable runs.
+                <strong>Power circuits</strong> — new ring final circuits or 32A radial circuits to
+                socket outlets throughout the flat. Radial circuits are increasingly common in flats
+                due to shorter cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lighting circuits</strong> — new 6A lighting circuits with modern cable
-                and ceiling roses or downlight connections.
+                <strong>Lighting circuits</strong> — new 6A lighting circuits with modern cable and
+                ceiling roses or downlight connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -240,30 +239,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bathroom wiring</strong> — IP-rated fittings, extractor fan, shaver
-                socket, all compliant with BS 7671 Section 701 zone requirements.
+                <strong>Bathroom wiring</strong> — IP-rated fittings, extractor fan, shaver socket,
+                all compliant with BS 7671 Section 701 zone requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smoke and heat detection</strong> — hardwired interlinked smoke detectors
-                in hallways and living rooms, heat detectors in the kitchen, as required by
-                Building Regulations.
+                <strong>Smoke and heat detection</strong> — hardwired interlinked smoke detectors in
+                hallways and living rooms, heat detectors in the kitchen, as required by Building
+                Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bonding</strong> — main protective bonding to gas, water, and oil
-                services. Supplementary bonding where required.
+                <strong>Bonding</strong> — main protective bonding to gas, water, and oil services.
+                Supplementary bonding where required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing and certification</strong> — full testing of every circuit to
-                BS 7671 standards and issue of an EIC.
+                <strong>Testing and certification</strong> — full testing of every circuit to BS
+                7671 standards and issue of an EIC.
               </span>
             </li>
           </ul>
@@ -346,9 +345,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Asbestos</strong> — older flats (1950s to 1980s) may have asbestos in
-                floor tiles, textured coatings, or around heating pipes. If asbestos is
-                encountered, work must stop until an asbestos survey and safe removal are completed.
+                <strong>Asbestos</strong> — older flats (1950s to 1980s) may have asbestos in floor
+                tiles, textured coatings, or around heating pipes. If asbestos is encountered, work
+                must stop until an asbestos survey and safe removal are completed.
               </span>
             </li>
           </ul>
@@ -362,15 +361,15 @@ const sections = [
     content: (
       <>
         <p>
-          A flat rewire is notifiable work under Part P of the Building Regulations. The
-          electrician must be registered with a competent person scheme to self-certify, or
-          Building Control must be notified before work starts.
+          A flat rewire is notifiable work under Part P of the Building Regulations. The electrician
+          must be registered with a competent person scheme to self-certify, or Building Control
+          must be notified before work starts.
         </p>
         <p>
           Key BS 7671 requirements for a flat rewire include Regulation 411.3.3 requiring 30mA RCD
           protection on socket outlet circuits up to 32A, all bathroom circuits, and any circuits
-          supplying equipment outdoors (such as a balcony light). Regulation 421.1.201 requires
-          the consumer unit to be a non-combustible enclosure in domestic premises. An SPD must be
+          supplying equipment outdoors (such as a balcony light). Regulation 421.1.201 requires the
+          consumer unit to be a non-combustible enclosure in domestic premises. An SPD must be
           installed following the risk assessment under Regulation 443.4.
         </p>
         <p>
@@ -389,8 +388,8 @@ const sections = [
       <>
         <p>
           Flat rewires often involve practical challenges that house rewires do not. The electrician
-          should only work within the flat's demise — the boundary of your leasehold ownership.
-          Key considerations include:
+          should only work within the flat's demise — the boundary of your leasehold ownership. Key
+          considerations include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -398,8 +397,8 @@ const sections = [
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Freeholder notification</strong> — most leases require you to notify the
-                freeholder or managing agent before carrying out major electrical work. Some
-                require written consent.
+                freeholder or managing agent before carrying out major electrical work. Some require
+                written consent.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -448,9 +447,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Survey Thoroughly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Check floor construction (timber or concrete), wall type (plasterboard or
-                  solid), access to voids, and the condition of the incoming supply. These factors
-                  have the biggest impact on labour time.
+                  Check floor construction (timber or concrete), wall type (plasterboard or solid),
+                  access to voids, and the condition of the incoming supply. These factors have the
+                  biggest impact on labour time.
                 </p>
               </div>
             </div>
@@ -500,8 +499,7 @@ export default function FlatRewireCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Flat Rewire Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          Flat Rewire Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to rewire a flat in the UK? This guide covers realistic 2026 pricing for studio, one-bedroom, two-bedroom, and three-bedroom flat rewires — including materials, labour, timescales, and the unique challenges of rewiring flats."
@@ -512,7 +510,7 @@ export default function FlatRewireCostPage() {
       faqHeading="Frequently Asked Questions About Flat Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Flat Rewires with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

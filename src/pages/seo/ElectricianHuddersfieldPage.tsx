@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'What electrical work is most common in Huddersfield?',
     answer:
-      "The most common electrical jobs in Huddersfield include EICR inspections for landlords (driven by the large rental market including student accommodation near the university), consumer unit replacements in the older Victorian and Edwardian terrace stock, full and partial rewires (particularly following EICR C2 observations in period properties), EV charger installations in residential and commercial settings, and fire alarm testing and maintenance in HMOs and commercial premises. The Colne and Holme Valleys also have a significant number of older rural properties requiring periodic rewiring.",
+      'The most common electrical jobs in Huddersfield include EICR inspections for landlords (driven by the large rental market including student accommodation near the university), consumer unit replacements in the older Victorian and Edwardian terrace stock, full and partial rewires (particularly following EICR C2 observations in period properties), EV charger installations in residential and commercial settings, and fire alarm testing and maintenance in HMOs and commercial premises. The Colne and Holme Valleys also have a significant number of older rural properties requiring periodic rewiring.',
   },
   {
     question: 'How do I find a qualified electrician in Huddersfield?',
@@ -150,12 +150,12 @@ const sections = [
           significant Victorian architectural heritage.
         </p>
         <p>
-          For electricians, Huddersfield offers a solid and varied market. The town's dense Victorian
-          and Edwardian stone terrace housing stock generates consistent demand for EICRs, consumer
-          unit upgrades, and full rewires. The University of Huddersfield and its associated student
-          and HMO accommodation creates a strong rental compliance market. The wider Kirklees area,
-          including Dewsbury, Batley, Mirfield, and the rural Holme Valley villages, extends the
-          territory for electricians based in Huddersfield town.
+          For electricians, Huddersfield offers a solid and varied market. The town's dense
+          Victorian and Edwardian stone terrace housing stock generates consistent demand for EICRs,
+          consumer unit upgrades, and full rewires. The University of Huddersfield and its
+          associated student and HMO accommodation creates a strong rental compliance market. The
+          wider Kirklees area, including Dewsbury, Batley, Mirfield, and the rural Holme Valley
+          villages, extends the territory for electricians based in Huddersfield town.
         </p>
         <p>
           This guide covers finding a reliable electrician in Huddersfield, typical costs for common
@@ -170,16 +170,14 @@ const sections = [
     heading: 'Finding a Qualified Electrician in Huddersfield',
     content: (
       <>
-        <p>
-          To find a qualified and trustworthy electrician in Huddersfield, use these methods:
-        </p>
+        <p>To find a qualified and trustworthy electrician in Huddersfield, use these methods:</p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC or NAPIT registered</strong> — use the official contractor search
-                at niceic.com or napit.org.uk with your Huddersfield postcode. Only registered
+                <strong>NICEIC or NAPIT registered</strong> — use the official contractor search at
+                niceic.com or napit.org.uk with your Huddersfield postcode. Only registered
                 electricians can self-certify notifiable work under Part P and issue valid
                 compliance certificates without involving Kirklees Council Building Control.
               </span>
@@ -188,34 +186,33 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Check scheme card</strong> — ask to see the electrician's scheme
-                registration card before they start work. The card ID can be verified online
-                against the NICEIC or NAPIT register.
+                registration card before they start work. The card ID can be verified online against
+                the NICEIC or NAPIT register.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Survey before quoting</strong> — reputable Huddersfield electricians
-                will visit to survey the existing installation before providing a quote for
-                rewires or consumer unit replacements. Any quote given without seeing the
-                property should be treated with caution.
+                <strong>Survey before quoting</strong> — reputable Huddersfield electricians will
+                visit to survey the existing installation before providing a quote for rewires or
+                consumer unit replacements. Any quote given without seeing the property should be
+                treated with caution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm documentation on completion</strong> — for notifiable work,
-                you must receive a Part P compliance certificate and a BS 7671 EIC. For an
-                EICR, you must receive the full inspection report with all observations
-                individually classified.
+                <strong>Confirm documentation on completion</strong> — for notifiable work, you must
+                receive a Part P compliance certificate and a BS 7671 EIC. For an EICR, you must
+                receive the full inspection report with all observations individually classified.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Recommendation from neighbours in the same street is particularly valuable for
-          Huddersfield stone terrace properties — an electrician who has worked in your
-          street before will already understand the construction and typical challenges.
+          Huddersfield stone terrace properties — an electrician who has worked in your street
+          before will already understand the construction and typical challenges.
         </p>
       </>
     ),
@@ -279,10 +276,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Stone terrace rewires and work in the Holme and Colne Valley properties can cost more
-          than equivalent work in modern cavity-wall properties, reflecting the additional time
-          required for cable routing through solid walls and difficult access. Always get a
-          fixed-price quote after a proper survey.
+          Stone terrace rewires and work in the Holme and Colne Valley properties can cost more than
+          equivalent work in modern cavity-wall properties, reflecting the additional time required
+          for cable routing through solid walls and difficult access. Always get a fixed-price quote
+          after a proper survey.
         </p>
       </>
     ),
@@ -297,38 +294,38 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">EICRs and Landlord Compliance</h3>
             <p className="text-white text-sm leading-relaxed">
               Huddersfield's large rental market, including significant HMO and student
-              accommodation near the university, generates consistent EICR demand. HMO
-              EICRs cover more circuits and take longer than standard residential EICRs.
-              Kirklees Council actively enforces landlord compliance — electricians who
-              build relationships with local letting agents benefit from a reliable pipeline.
+              accommodation near the university, generates consistent EICR demand. HMO EICRs cover
+              more circuits and take longer than standard residential EICRs. Kirklees Council
+              actively enforces landlord compliance — electricians who build relationships with
+              local letting agents benefit from a reliable pipeline.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Consumer Unit Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
-              Old fuse boards are widespread across Huddersfield's Victorian and post-war
-              housing stock. Consumer unit replacements to dual-RCD or RCBO boards are
-              consistently among the most requested jobs. Many are triggered by EICR C2
-              observations or by property purchase surveys that reveal outdated protection.
+              Old fuse boards are widespread across Huddersfield's Victorian and post-war housing
+              stock. Consumer unit replacements to dual-RCD or RCBO boards are consistently among
+              the most requested jobs. Many are triggered by EICR C2 observations or by property
+              purchase surveys that reveal outdated protection.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Stone Terrace Rewires</h3>
             <p className="text-white text-sm leading-relaxed">
-              Full and partial rewires in Huddersfield's stone terrace stock are a
-              significant source of work. Rubber and early PVC-insulated wiring is
-              common in properties built before 1970. Rewires require careful planning
-              around solid stone walls and original features. Asbestos surveys are
-              essential for pre-1980s properties before invasive work begins.
+              Full and partial rewires in Huddersfield's stone terrace stock are a significant
+              source of work. Rubber and early PVC-insulated wiring is common in properties built
+              before 1970. Rewires require careful planning around solid stone walls and original
+              features. Asbestos surveys are essential for pre-1980s properties before invasive work
+              begins.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">EV Chargers and Solar PV</h3>
             <p className="text-white text-sm leading-relaxed">
-              EV charger installations are growing steadily in Huddersfield's residential
-              areas, particularly in the town's more prosperous suburbs and the Holme Valley
-              villages. Solar PV is popular in rural and semi-rural properties with south-facing
-              roofs. NPG G98 notifications apply for solar PV installations up to 16A per phase.
+              EV charger installations are growing steadily in Huddersfield's residential areas,
+              particularly in the town's more prosperous suburbs and the Holme Valley villages.
+              Solar PV is popular in rural and semi-rural properties with south-facing roofs. NPG
+              G98 notifications apply for solar PV installations up to 16A per phase.
             </p>
           </div>
         </div>
@@ -342,8 +339,8 @@ const sections = [
       <>
         <p>
           All domestic electrical work in Huddersfield must comply with Part P of the Building
-          Regulations and BS 7671:2018+A3:2024. The local authority is Kirklees Metropolitan
-          Borough Council:
+          Regulations and BS 7671:2018+A3:2024. The local authority is Kirklees Metropolitan Borough
+          Council:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -367,9 +364,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671 compliance</strong> — all work must comply with BS
-                7671:2018+A3:2024. RCD protection is required for all socket outlet circuits up
-                to 32A under Regulation 411.3.3, and for circuits in kitchens, bathrooms, and
-                outdoors.
+                7671:2018+A3:2024. RCD protection is required for all socket outlet circuits up to
+                32A under Regulation 411.3.3, and for circuits in kitchens, bathrooms, and outdoors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -395,38 +391,38 @@ const sections = [
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian Stone Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Huddersfield's dominant housing type — rows of solid millstone grit terraces
-              across areas including Lockwood, Marsh, Moldgreen, Milnsbridge, and Slaithwaite.
-              Solid stone walls make concealed wiring difficult. Floor voids and roof spaces
-              are the primary cable routes. Many have ageing wiring and inadequate earthing.
+              Huddersfield's dominant housing type — rows of solid millstone grit terraces across
+              areas including Lockwood, Marsh, Moldgreen, Milnsbridge, and Slaithwaite. Solid stone
+              walls make concealed wiring difficult. Floor voids and roof spaces are the primary
+              cable routes. Many have ageing wiring and inadequate earthing.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Housing Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Areas including Brackenhall, Birkby, and Crosland Moor have 1950s–1970s
-              housing estates with wiring approaching the end of its safe working life.
-              Consumer unit upgrades and full rewires are common following EICRs. Cavity
-              walls make cable routing easier than in solid stone terraces.
+              Areas including Brackenhall, Birkby, and Crosland Moor have 1950s–1970s housing
+              estates with wiring approaching the end of its safe working life. Consumer unit
+              upgrades and full rewires are common following EICRs. Cavity walls make cable routing
+              easier than in solid stone terraces.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Holme and Colne Valley Villages</h3>
             <p className="text-white text-sm leading-relaxed">
-              The villages of Holmfirth, Meltham, Marsden, and Slaithwaite in the Holme and
-              Colne Valleys have older stone cottages and farmhouses with complex wiring
-              histories. Some rural properties have TT earthing. Solar PV is popular in
-              properties with south-facing rural roof space.
+              The villages of Holmfirth, Meltham, Marsden, and Slaithwaite in the Holme and Colne
+              Valleys have older stone cottages and farmhouses with complex wiring histories. Some
+              rural properties have TT earthing. Solar PV is popular in properties with south-facing
+              rural roof space.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">HMOs and University Accommodation</h3>
             <p className="text-white text-sm leading-relaxed">
-              Streets surrounding the University of Huddersfield have a high concentration of
-              HMOs and student accommodation. These properties require rigorous electrical
-              compliance — EICRs, fire alarm testing, and emergency lighting. HMO licensing
-              conditions from Kirklees Council may impose additional requirements above the
-              statutory five-year EICR cycle.
+              Streets surrounding the University of Huddersfield have a high concentration of HMOs
+              and student accommodation. These properties require rigorous electrical compliance —
+              EICRs, fire alarm testing, and emergency lighting. HMO licensing conditions from
+              Kirklees Council may impose additional requirements above the statutory five-year EICR
+              cycle.
             </p>
           </div>
         </div>
@@ -441,9 +437,10 @@ const sections = [
         <p>
           Huddersfield provides a consistent and rewarding market for electricians. The substantial
           Victorian stone terrace housing stock generates reliable EICR, consumer unit, and rewiring
-          work throughout the year. The university and its associated rental market creates recurring
-          HMO compliance demand. The wider Kirklees area — including Dewsbury, Batley, and the
-          Holme and Colne Valleys — extends the territory available to Huddersfield-based electricians.
+          work throughout the year. The university and its associated rental market creates
+          recurring HMO compliance demand. The wider Kirklees area — including Dewsbury, Batley, and
+          the Holme and Colne Valleys — extends the territory available to Huddersfield-based
+          electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -456,12 +453,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  directly on site in Huddersfield. Same-day documentation keeps landlords
-                  compliant and builds referrals in the competitive Kirklees rental market.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
+                  directly on site in Huddersfield. Same-day documentation keeps landlords compliant
+                  and builds referrals in the competitive Kirklees rental market.
                 </p>
               </div>
             </div>
@@ -476,9 +470,9 @@ const sections = [
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
-                  to accurately size cables for rewires in Huddersfield's stone terrace and
-                  valley housing. Long cable runs in terrace properties require careful
-                  voltage drop calculations to comply with BS 7671.
+                  to accurately size cables for rewires in Huddersfield's stone terrace and valley
+                  housing. Long cable runs in terrace properties require careful voltage drop
+                  calculations to comply with BS 7671.
                 </p>
               </div>
             </div>
@@ -493,9 +487,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to produce professional PDF quotes for Huddersfield homeowners, landlords,
-                  and letting agents. Clear, itemised quotes at accurate West Yorkshire rates
-                  help win work in a competitive market.
+                  to produce professional PDF quotes for Huddersfield homeowners, landlords, and
+                  letting agents. Clear, itemised quotes at accurate West Yorkshire rates help win
+                  work in a competitive market.
                 </p>
               </div>
             </div>
@@ -503,7 +497,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Huddersfield electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and Kirklees. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and Kirklees. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -540,7 +534,7 @@ export default function ElectricianHuddersfieldPage() {
       faqHeading="Frequently Asked Questions About Electricians in Huddersfield"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Huddersfield Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and the wider Kirklees area. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and rental electrical market in Huddersfield and the wider Kirklees area. 7-day free trial."
     />
   );
 }

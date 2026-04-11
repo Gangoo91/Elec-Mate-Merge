@@ -105,7 +105,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Complete Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -151,8 +152,7 @@ const sections = [
                 <strong>Socket-outlet circuits</strong> — plan for more double sockets than you
                 think you need. A living room extension should have a minimum of six to eight double
                 sockets. Kitchen extensions require dedicated 32A circuits for ovens, 20A for
-                dishwashers and washing machines, and 13A fused spurs for fridges and
-                microwaves.
+                dishwashers and washing machines, and 13A fused spurs for fridges and microwaves.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -160,15 +160,15 @@ const sections = [
               <span>
                 <strong>Heating circuits</strong> — if the extension includes electric underfloor
                 heating, a dedicated circuit sized to the heater wattage is required. Underfloor
-                heating in a wet room requires a thermostat with a floor sensor and must have
-                RCD protection under Regulation 701.411.3.3 of BS 7671.
+                heating in a wet room requires a thermostat with a floor sensor and must have RCD
+                protection under Regulation 701.411.3.3 of BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data and communications</strong> — plan conduit runs for ethernet cables
-                at the same time as electrical first fix. Retro-fitting data cables is far more
+                <strong>Data and communications</strong> — plan conduit runs for ethernet cables at
+                the same time as electrical first fix. Retro-fitting data cables is far more
                 disruptive and expensive than running them during the build.
               </span>
             </li>
@@ -178,7 +178,9 @@ const sections = [
           The electrician should produce a circuit schedule before first fix begins. This records
           every circuit, its cable size, protective device rating, and RCD protection type. This
           document forms the basis of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">Electrical Installation Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/eic-certificate">
+            Electrical Installation Certificate
+          </SEOInternalLink>{' '}
           issued on completion.
         </p>
       </>
@@ -190,28 +192,28 @@ const sections = [
     content: (
       <>
         <p>
-          Adding new circuits for a house extension places additional demand on the existing consumer
-          unit and incoming supply. A capacity check must be carried out before any new circuits are
-          installed.
+          Adding new circuits for a house extension places additional demand on the existing
+          consumer unit and incoming supply. A capacity check must be carried out before any new
+          circuits are installed.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Spare ways</strong> — count the number of unused circuit breaker ways in
-                the consumer unit. Each new circuit in the extension requires at least one way (or
-                two for an RCBO). If no spare ways exist, the consumer unit must be upgraded or
-                a separate distribution board added for the extension.
+                <strong>Spare ways</strong> — count the number of unused circuit breaker ways in the
+                consumer unit. Each new circuit in the extension requires at least one way (or two
+                for an RCBO). If no spare ways exist, the consumer unit must be upgraded or a
+                separate distribution board added for the extension.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main fuse rating</strong> — the incoming supply fuse (typically 60A, 80A,
-                or 100A) limits the total load the property can draw. For a large extension with
-                underfloor heating and kitchen appliances, a 100A main fuse may be required. If
-                the existing fuse is 60A, the DNO (Distribution Network Operator) must be consulted
+                <strong>Main fuse rating</strong> — the incoming supply fuse (typically 60A, 80A, or
+                100A) limits the total load the property can draw. For a large extension with
+                underfloor heating and kitchen appliances, a 100A main fuse may be required. If the
+                existing fuse is 60A, the DNO (Distribution Network Operator) must be consulted
                 about an upgrade.
               </span>
             </li>
@@ -237,8 +239,8 @@ const sections = [
         </div>
         <p>
           If the existing consumer unit is to be upgraded as part of the extension project, the
-          entire consumer unit installation becomes notifiable under Part P and must be covered
-          by the EIC.
+          entire consumer unit installation becomes notifiable under Part P and must be covered by
+          the EIC.
         </p>
       </>
     ),
@@ -259,8 +261,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extending a ring main — when it works</strong> — if the existing ring
-                final circuit serves a modest floor area, has acceptable earth fault loop impedance
+                <strong>Extending a ring main — when it works</strong> — if the existing ring final
+                circuit serves a modest floor area, has acceptable earth fault loop impedance
                 values, and has spare capacity, extending it into the new room is electrically
                 sound. The electrician must re-test the entire ring after extension and verify that
                 the R1 + R2 values remain within limits for the protective device.
@@ -283,16 +285,16 @@ const sections = [
                 most extensions, running new circuits back to the consumer unit is the cleanest
                 solution. It provides a known, tested installation; keeps the extension circuits
                 independently protected; and avoids disturbing the existing installation. Where
-                there are no spare ways in the consumer unit, a new consumer unit or sub-distribution
-                board is required.
+                there are no spare ways in the consumer unit, a new consumer unit or
+                sub-distribution board is required.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The decision should be driven by test results and load calculations, not convenience.
-          A competent electrician will test the existing installation before advising on the
-          most appropriate approach.
+          The decision should be driven by test results and load calculations, not convenience. A
+          competent electrician will test the existing installation before advising on the most
+          appropriate approach.
         </p>
       </>
     ),
@@ -312,8 +314,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person scheme route</strong> — the simplest route to compliance
-                is using an electrician registered with NICEIC, NAPIT, ELECSA, or another
+                <strong>Competent person scheme route</strong> — the simplest route to compliance is
+                using an electrician registered with NICEIC, NAPIT, ELECSA, or another
                 government-approved competent person scheme. The electrician notifies the scheme on
                 completion; the scheme notifies the local authority on your behalf. No building
                 control involvement is required. You receive a completion certificate.
@@ -331,8 +333,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consequences of non-notification</strong> — failing to notify Part P work
-                is a breach of the Building Regulations. When you come to sell the property, your
+                <strong>Consequences of non-notification</strong> — failing to notify Part P work is
+                a breach of the Building Regulations. When you come to sell the property, your
                 solicitor will ask for evidence of electrical compliance. If you cannot produce an
                 EIC and Part P notification, the sale can be delayed or fall through. Retrospective
                 regularisation is possible but costly.
@@ -385,8 +387,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD operating time</strong> — all RCDs protecting socket-outlet circuits
-                must trip within 300ms at rated residual current (IΔn) and within 40ms at 5×IΔn,
-                in accordance with BS EN 61008 and BS 7671 Chapter 53.
+                must trip within 300ms at rated residual current (IΔn) and within 40ms at 5×IΔn, in
+                accordance with BS EN 61008 and BS 7671 Chapter 53.
               </span>
             </li>
           </ul>
@@ -394,8 +396,8 @@ const sections = [
         <p>
           All test results are recorded on the schedule of test results, which forms part of the
           Electrical Installation Certificate. The inspector must sign the EIC confirming that the
-          installation has been designed, installed, inspected, and tested in accordance with
-          BS 7671.
+          installation has been designed, installed, inspected, and tested in accordance with BS
+          7671.
         </p>
       </>
     ),
@@ -407,9 +409,9 @@ const sections = [
       <>
         <p>
           An Electrical Installation Certificate (EIC) is the legal document confirming that new
-          electrical work has been designed, installed, inspected, and tested in accordance with
-          BS 7671. For house extension electrical work, an EIC is mandatory — without one, the
-          work cannot be signed off under Part P.
+          electrical work has been designed, installed, inspected, and tested in accordance with BS
+          7671. For house extension electrical work, an EIC is mandatory — without one, the work
+          cannot be signed off under Part P.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -427,8 +429,8 @@ const sections = [
               <span>
                 <strong>Who issues it</strong> — the EIC must be signed by the designer, the
                 installer, and the inspector/tester. In most domestic extension projects, one
-                qualified electrician performs all three roles and signs all three declarations.
-                The electrician must be competent to do so under BS 7671.
+                qualified electrician performs all three roles and signs all three declarations. The
+                electrician must be competent to do so under BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,16 +438,15 @@ const sections = [
               <span>
                 <strong>Keep it safe</strong> — the EIC must be provided to the homeowner on
                 completion and kept with the property's building regulations documentation. It will
-                be required when the property is sold and may be requested by insurers following
-                an electrical incident.
+                be required when the property is sold and may be requested by insurers following an
+                electrical incident.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Use the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
-          complete the Electrical Installation Certificate on site, including the schedule of
+          Use the <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+          to complete the Electrical Installation Certificate on site, including the schedule of
           test results. Generate a professional PDF and send it to the client before you leave.
         </p>
       </>
@@ -491,8 +492,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to build professional extension quotes with itemised materials and labour.
-                  Homeowners commissioning extensions are quality-focused — a professional,
-                  detailed quote wins the job over a verbal estimate every time.
+                  Homeowners commissioning extensions are quality-focused — a professional, detailed
+                  quote wins the job over a verbal estimate every time.
                 </p>
               </div>
             </div>
@@ -500,7 +501,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your extension jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance. Complete more jobs per day with less paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and Part P compliance. Complete more jobs per day with less paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -537,7 +538,7 @@ export default function HouseExtensionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Extension EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

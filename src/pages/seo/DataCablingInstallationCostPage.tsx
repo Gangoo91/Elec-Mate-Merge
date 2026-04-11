@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Can an electrician install data cabling?',
     answer:
-      'Yes. Data cabling installation is a natural extension of an electrician\'s skill set — you are already experienced in cable routing, containment, and termination. The key additional skill is correct termination of RJ45 connectors and patch panel modules to the T568A or T568B wiring standard, and testing with a cable certifier. Many electricians offer data cabling as an add-on service and find it a profitable diversification from traditional electrical work.',
+      "Yes. Data cabling installation is a natural extension of an electrician's skill set — you are already experienced in cable routing, containment, and termination. The key additional skill is correct termination of RJ45 connectors and patch panel modules to the T568A or T568B wiring standard, and testing with a cable certifier. Many electricians offer data cabling as an add-on service and find it a profitable diversification from traditional electrical work.",
   },
   {
     question: 'How long does a data cabling installation take?',
@@ -86,24 +86,21 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/cctv-installation-electrical-cost',
     title: 'CCTV Installation Electrical Cost',
-    description:
-      'Electrical and cabling costs for CCTV installations including PoE and Cat6 runs.',
+    description: 'Electrical and cabling costs for CCTV installations including PoE and Cat6 runs.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/guides/commercial-electrical-installation',
     title: 'Commercial Electrical Installation',
-    description:
-      'Guide to commercial electrical work including containment and distribution.',
+    description: 'Guide to commercial electrical work including containment and distribution.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete Electrical Installation Certificates for data cabling power circuits.',
+    description: 'Complete Electrical Installation Certificates for data cabling power circuits.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -174,7 +171,9 @@ const sections = [
           ends and tested.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Per-Point Pricing (Fully Installed and Tested)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Per-Point Pricing (Fully Installed and Tested)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -198,7 +197,8 @@ const sections = [
               <span>
                 <strong>Double data point (two cables to one faceplate)</strong> — £140 to £260 per
                 position. A dual-port faceplate with two independent cable runs back to the patch
-                panel. Common at desk positions where a PC and VoIP phone both need wired connections.
+                panel. Common at desk positions where a PC and VoIP phone both need wired
+                connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -235,8 +235,8 @@ const sections = [
               <span>
                 <strong>Horizontal cabling</strong> — the Cat6 or Cat6a cable runs from the comms
                 cabinet to each data point. Maximum 90 metres for permanent link, 100 metres for
-                channel (including patch leads). Cable is sold in 305m boxes — a box typically serves
-                8 to 15 data points depending on run lengths.
+                channel (including patch leads). Cable is sold in 305m boxes — a box typically
+                serves 8 to 15 data points depending on run lengths.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -253,16 +253,16 @@ const sections = [
               <span>
                 <strong>Comms cabinet</strong> — wall-mounted cabinets (6U to 12U) cost £80 to £200.
                 Floor-standing cabinets (22U to 42U) cost £250 to £600. The cabinet houses the patch
-                panel, network switch, router, and other networking equipment. Include a shelf,
-                fan tray, and power distribution unit (PDU).
+                panel, network switch, router, and other networking equipment. Include a shelf, fan
+                tray, and power distribution unit (PDU).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Faceplates and modules</strong> — single or double-gang faceplates with
-                snap-in Cat6 modules at each data point. Budget £5 to £12 per faceplate with modules.
-                Use colour-coded modules to distinguish data, voice, and WiFi connections.
+                snap-in Cat6 modules at each data point. Budget £5 to £12 per faceplate with
+                modules. Use colour-coded modules to distinguish data, voice, and WiFi connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -277,9 +277,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Patch leads</strong> — short cables connecting the patch panel to the network
-                switch, and from the faceplate to the device. Budget £3 to £8 per patch lead.
-                Typically two per data point (one at each end).
+                <strong>Patch leads</strong> — short cables connecting the patch panel to the
+                network switch, and from the faceplate to the device. Budget £3 to £8 per patch
+                lead. Typically two per data point (one at each end).
               </span>
             </li>
           </ul>
@@ -293,12 +293,13 @@ const sections = [
     content: (
       <>
         <p>
-          A typical small office data cabling installation serves 5 to 10 desk positions with
-          double data points (PC and phone), plus a few single points for printers and WiFi access
-          points.
+          A typical small office data cabling installation serves 5 to 10 desk positions with double
+          data points (PC and phone), plus a few single points for printers and WiFi access points.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Small Office Cost Breakdown (15 Points)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Small Office Cost Breakdown (15 Points)
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
@@ -326,7 +327,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3 pt-2 border-t border-white/10">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Total: £1,725 to £3,430</strong></span>
+              <span>
+                <strong>Total: £1,725 to £3,430</strong>
+              </span>
             </li>
           </ul>
         </div>
@@ -344,9 +347,9 @@ const sections = [
     content: (
       <>
         <p>
-          Larger commercial installations involve significantly more planning, materials, and labour.
-          They often include multiple floors, multiple comms cabinets, fibre backbone links between
-          floors, and integration with building management systems.
+          Larger commercial installations involve significantly more planning, materials, and
+          labour. They often include multiple floors, multiple comms cabinets, fibre backbone links
+          between floors, and integration with building management systems.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Large Commercial Cost Ranges</h3>
@@ -354,24 +357,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>50-point installation</strong> — £5,000 to £9,000 total. Single floor,
-                one comms cabinet, Cat6 throughout. Includes patch panels, containment, testing, and
+                <strong>50-point installation</strong> — £5,000 to £9,000 total. Single floor, one
+                comms cabinet, Cat6 throughout. Includes patch panels, containment, testing, and
                 documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>100-point installation</strong> — £9,000 to £18,000 total. May span
-                multiple floors with floor-standing comms cabinets on each floor and fibre backbone
-                between them. Cat6 or Cat6a depending on requirements.
+                <strong>100-point installation</strong> — £9,000 to £18,000 total. May span multiple
+                floors with floor-standing comms cabinets on each floor and fibre backbone between
+                them. Cat6 or Cat6a depending on requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>200+ point installation</strong> — £18,000 to £35,000+ total. Multiple
-                comms rooms, extensive containment systems, fibre backbone, and detailed project
+                <strong>200+ point installation</strong> — £18,000 to £35,000+ total. Multiple comms
+                rooms, extensive containment systems, fibre backbone, and detailed project
                 management. Often includes WiFi access point cabling throughout.
               </span>
             </li>
@@ -391,9 +394,10 @@ const sections = [
     content: (
       <>
         <p>
-          Every professional WiFi installation requires wired backhaul to each access point. Consumer
-          mesh systems and WiFi extenders cannot match the performance of properly cabled access
-          points, and any business relying on WiFi should invest in structured cabling for their APs.
+          Every professional WiFi installation requires wired backhaul to each access point.
+          Consumer mesh systems and WiFi extenders cannot match the performance of properly cabled
+          access points, and any business relying on WiFi should invest in structured cabling for
+          their APs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -408,9 +412,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PoE power</strong> — modern WiFi access points are powered via PoE
-                (Power over Ethernet), receiving both data and power through the same Cat6 cable from
-                a PoE network switch. This eliminates the need for a separate power supply at each AP
+                <strong>PoE power</strong> — modern WiFi access points are powered via PoE (Power
+                over Ethernet), receiving both data and power through the same Cat6 cable from a PoE
+                network switch. This eliminates the need for a separate power supply at each AP
                 position, reducing installation cost.
               </span>
             </li>
@@ -427,7 +431,8 @@ const sections = [
         <p>
           For electricians, WiFi AP cabling is an excellent add-on to any office data cabling
           project. The cable runs are identical to standard data points, and the PoE switch in the
-          comms cabinet powers all the APs without any additional electrical work at the AP positions.
+          comms cabinet powers all the APs without any additional electrical work at the AP
+          positions.
         </p>
       </>
     ),
@@ -465,7 +470,8 @@ const sections = [
               <span>
                 <strong>Fibre termination and testing</strong> — fusion splicing and OTDR testing
                 requires specialist equipment. Budget £200 to £500 per fibre link (each end
-                terminated and tested). Some installers subcontract fibre termination to specialists.
+                terminated and tested). Some installers subcontract fibre termination to
+                specialists.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,10 +508,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Channel test</strong> — tests the complete link from patch panel to faceplate
-                including patch leads. Measures insertion loss, return loss, NEXT (near-end crosstalk),
-                FEXT (far-end crosstalk), and propagation delay. A Fluke DSX-5000 or equivalent
-                certifier is the industry standard.
+                <strong>Channel test</strong> — tests the complete link from patch panel to
+                faceplate including patch leads. Measures insertion loss, return loss, NEXT
+                (near-end crosstalk), FEXT (far-end crosstalk), and propagation delay. A Fluke
+                DSX-5000 or equivalent certifier is the industry standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -520,9 +526,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Certification report</strong> — each cable run gets an individual pass/fail
-                result against the relevant standard (Cat6 = TIA-568-C.2 Class E, Cat6a = TIA-568-C.2
-                Class EA). The full set of test reports is provided to the client as proof of
-                compliance.
+                result against the relevant standard (Cat6 = TIA-568-C.2 Class E, Cat6a =
+                TIA-568-C.2 Class EA). The full set of test reports is provided to the client as
+                proof of compliance.
               </span>
             </li>
           </ul>
@@ -530,8 +536,9 @@ const sections = [
         <p>
           Testing typically costs £5 to £15 per point when included in the installation project.
           Standalone testing and certification of existing cabling costs £10 to £25 per point as the
-          tester must set up at both ends of every link. A cable certifier is a significant investment
-          (£5,000 to £15,000 for a Fluke DSX series) but essential for professional data cabling work.
+          tester must set up at both ends of every link. A cable certifier is a significant
+          investment (£5,000 to £15,000 for a Fluke DSX series) but essential for professional data
+          cabling work.
         </p>
       </>
     ),
@@ -543,9 +550,9 @@ const sections = [
       <>
         <p>
           Data cabling is one of the most profitable add-on services an electrician can offer. The
-          skills overlap significantly with electrical installation — cable routing, containment, and
-          termination — and the margins are typically better than domestic electrical work. Here are
-          tips for quoting data cabling effectively:
+          skills overlap significantly with electrical installation — cable routing, containment,
+          and termination — and the margins are typically better than domestic electrical work. Here
+          are tips for quoting data cabling effectively:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -554,10 +561,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Per Point Plus Fixed Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Break your quote into a per-point rate (covering cable, termination, faceplate, and
-                  testing) plus fixed costs (comms cabinet, patch panel, containment, mobilisation).
-                  This makes it easy for the client to understand the cost and to add or remove points
-                  during the project.
+                  Break your quote into a per-point rate (covering cable, termination, faceplate,
+                  and testing) plus fixed costs (comms cabinet, patch panel, containment,
+                  mobilisation). This makes it easy for the client to understand the cost and to add
+                  or remove points during the project.
                 </p>
               </div>
             </div>
@@ -568,10 +575,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Survey Before Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always survey the building before providing a fixed-price quote. Check ceiling void
-                  access, wall construction, cable route obstacles, and the location for the comms
-                  cabinet. A desktop quote based on a floor plan will miss the practical difficulties
-                  that determine the real cost.
+                  Always survey the building before providing a fixed-price quote. Check ceiling
+                  void access, wall construction, cable route obstacles, and the location for the
+                  comms cabinet. A desktop quote based on a floor plan will miss the practical
+                  difficulties that determine the real cost.
                 </p>
               </div>
             </div>
@@ -582,10 +589,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Invest in a Cable Certifier</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A cable certifier (Fluke DSX-5000 or equivalent) is essential for professional data
-                  cabling work. It provides documented proof that every link meets the required
-                  standard and gives the client confidence in the installation. The certifier pays for
-                  itself within a few medium-sized projects.
+                  A cable certifier (Fluke DSX-5000 or equivalent) is essential for professional
+                  data cabling work. It provides documented proof that every link meets the required
+                  standard and gives the client confidence in the installation. The certifier pays
+                  for itself within a few medium-sized projects.
                 </p>
               </div>
             </div>
@@ -593,7 +600,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote data cabling projects professionally"
-          description="Join 430+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into data cabling with confidence. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting with itemised pricing, professional PDF output, and AI cost engineering. Diversify into data cabling with confidence. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -630,7 +637,7 @@ export default function DataCablingInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Data Cabling Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Data Cabling Projects with Professional Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and AI-powered cost engineering. Diversify into data cabling with confidence. 7-day free trial, cancel anytime."
     />
   );
 }

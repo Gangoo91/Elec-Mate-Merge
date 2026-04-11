@@ -616,7 +616,7 @@ export default function FP200CableGuidePage() {
         },
       ]}
       ctaHeading="Certify Fire-Critical Installations"
-      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates document FP200 cable installations with full test results and compliance checks. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's fire alarm and emergency lighting certificates document FP200 cable installations with full test results and compliance checks. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

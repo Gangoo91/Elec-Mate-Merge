@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What IP rating is needed near wash basins in a hair salon?',
     answer:
-      'Electrical accessories within 600mm of a wash basin in a hair salon should be IP44 rated minimum (protection against splashing water from any direction). Socket outlets should not be positioned directly above or within arm\'s reach of the wash basin. Light fittings directly above wash stations should be IP44 rated. The zones around wash basins in hair salons are not as strictly defined as bathrooms in BS 7671, but the principle of protection against water ingress applies. RCD protection per Regulation 411.3.3 is mandatory for all circuits serving the wash area.',
+      "Electrical accessories within 600mm of a wash basin in a hair salon should be IP44 rated minimum (protection against splashing water from any direction). Socket outlets should not be positioned directly above or within arm's reach of the wash basin. Light fittings directly above wash stations should be IP44 rated. The zones around wash basins in hair salons are not as strictly defined as bathrooms in BS 7671, but the principle of protection against water ingress applies. RCD protection per Regulation 411.3.3 is mandatory for all circuits serving the wash area.",
   },
   {
     question: 'What lighting is best for a hair salon?',
@@ -131,13 +131,13 @@ const sections = [
       <>
         <p>
           Hair salon electrical installation combines high-density power outlets at styling
-          stations, water-adjacent wiring at wash stations, carefully designed lighting for
-          colour accuracy, and feature lighting that creates the salon's atmosphere. It is
-          detailed, specification-driven work that rewards careful planning.
+          stations, water-adjacent wiring at wash stations, carefully designed lighting for colour
+          accuracy, and feature lighting that creates the salon's atmosphere. It is detailed,
+          specification-driven work that rewards careful planning.
         </p>
         <p>
-          For salon owners, the electrical installation is one of the most important elements of
-          the fit-out — poor lighting loses clients, insufficient sockets frustrate stylists, and
+          For salon owners, the electrical installation is one of the most important elements of the
+          fit-out — poor lighting loses clients, insufficient sockets frustrate stylists, and
           unreliable power disrupts business. For electricians, salon fit-outs are regular,
           well-paid commercial work with repeat business potential from salon chains and
           refurbishments.
@@ -161,40 +161,40 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlets</strong> — Minimum 2 double sockets (4 outlets) per
-                station at counter height (1,000mm). Position to avoid cable drape across the
-                client. Cost: £30 to £50 per double socket installed including cable run.
+                <strong>Socket outlets</strong> — Minimum 2 double sockets (4 outlets) per station
+                at counter height (1,000mm). Position to avoid cable drape across the client. Cost:
+                £30 to £50 per double socket installed including cable run.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>USB charging points</strong> — 1 USB-A/USB-C socket per station for
-                client phone charging. Can be integrated into the socket outlet or a separate
-                unit. Cost: £15 to £30 per point.
+                <strong>USB charging points</strong> — 1 USB-A/USB-C socket per station for client
+                phone charging. Can be integrated into the socket outlet or a separate unit. Cost:
+                £15 to £30 per point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hood dryer connections</strong> — Free-standing hood dryers draw 2 to
-                3kW and should be on dedicated radial circuits. A 20A radial circuit can serve
-                2 to 3 hood dryers. Cost: £80 to £150 per connection point.
+                <strong>Hood dryer connections</strong> — Free-standing hood dryers draw 2 to 3kW
+                and should be on dedicated radial circuits. A 20A radial circuit can serve 2 to 3
+                hood dryers. Cost: £80 to £150 per connection point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mirror lighting</strong> — Illuminated mirror surrounds or vanity
-                lighting strips provide shadow-free face lighting. LED strip (CRI 90+, 4000K
-                to 5000K): £40 to £100 per station including driver and wiring.
+                <strong>Mirror lighting</strong> — Illuminated mirror surrounds or vanity lighting
+                strips provide shadow-free face lighting. LED strip (CRI 90+, 4000K to 5000K): £40
+                to £100 per station including driver and wiring.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Total electrical cost per styling station: £150 to £350 depending on specification.
-          For a 6-chair salon, station wiring costs approximately £900 to £2,100.
+          Total electrical cost per styling station: £150 to £350 depending on specification. For a
+          6-chair salon, station wiring costs approximately £900 to £2,100.
         </p>
       </>
     ),
@@ -205,9 +205,9 @@ const sections = [
     content: (
       <>
         <p>
-          Wash stations present the main water-related electrical safety challenge in a hair
-          salon. Water from backwash basins, spray, and general splashing means that electrical
-          accessories in this area require appropriate IP ratings and RCD protection.
+          Wash stations present the main water-related electrical safety challenge in a hair salon.
+          Water from backwash basins, spray, and general splashing means that electrical accessories
+          in this area require appropriate IP ratings and RCD protection.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Wash Area Electrical Requirements</h3>
@@ -222,18 +222,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — All circuits serving the wash area must have
-                30mA RCD protection per Regulation 411.3.3 of BS 7671. Use individual RCBOs
-                for wash area circuits to avoid nuisance tripping affecting other salon circuits.
+                <strong>RCD protection</strong> — All circuits serving the wash area must have 30mA
+                RCD protection per Regulation 411.3.3 of BS 7671. Use individual RCBOs for wash area
+                circuits to avoid nuisance tripping affecting other salon circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Water heater connection</strong> — Instantaneous electric water heaters
-                (7 to 10kW) require a dedicated circuit with an isolator. If the salon uses a
-                stored hot water system, a dedicated 3kW immersion circuit is needed. The water
-                heater type significantly affects the electrical load calculation.
+                <strong>Water heater connection</strong> — Instantaneous electric water heaters (7
+                to 10kW) require a dedicated circuit with an isolator. If the salon uses a stored
+                hot water system, a dedicated 3kW immersion circuit is needed. The water heater type
+                significantly affects the electrical load calculation.
               </span>
             </li>
           </ul>
@@ -247,18 +247,18 @@ const sections = [
     content: (
       <>
         <p>
-          Lighting is arguably the most important element of a hair salon's electrical
-          installation. It affects the client's experience, the stylist's ability to work
-          accurately, and the overall atmosphere of the business.
+          Lighting is arguably the most important element of a hair salon's electrical installation.
+          It affects the client's experience, the stylist's ability to work accurately, and the
+          overall atmosphere of the business.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Styling Area Lighting</h3>
             <p className="text-white text-sm leading-relaxed">
               LED downlights or surface-mounted panels, CRI 90+ minimum, 4000K to 5000K colour
-              temperature, 300 to 500 lux at styling height. Dimmable for mood adjustment.
-              Cost: £40 to £80 per downlight installed, or £80 to £150 per panel. A 6-chair
-              salon typically needs 12 to 18 downlights in the styling area.
+              temperature, 300 to 500 lux at styling height. Dimmable for mood adjustment. Cost: £40
+              to £80 per downlight installed, or £80 to £150 per panel. A 6-chair salon typically
+              needs 12 to 18 downlights in the styling area.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -283,27 +283,25 @@ const sections = [
     heading: 'Cost Breakdown by Salon Size',
     content: (
       <>
-        <p>
-          Here are realistic total electrical installation costs for hair salons in 2026:
-        </p>
+        <p>Here are realistic total electrical installation costs for hair salons in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small salon, 3 chairs (£3,000 to £5,000)</strong> — Consumer unit, 6 to
-                8 double sockets at stations, 2 to 4 general sockets, basic LED downlight
-                lighting, wash station wiring with IP44 accessories, emergency lighting, signage
-                circuit. 3 to 4 days installation.
+                <strong>Small salon, 3 chairs (£3,000 to £5,000)</strong> — Consumer unit, 6 to 8
+                double sockets at stations, 2 to 4 general sockets, basic LED downlight lighting,
+                wash station wiring with IP44 accessories, emergency lighting, signage circuit. 3 to
+                4 days installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium salon, 6 to 8 chairs (£5,000 to £7,500)</strong> — Consumer unit
-                with RCBOs and SPD, 12 to 16 double sockets at stations, hood dryer circuits,
-                feature reception lighting, wash station IP44 wiring, mirror lighting, emergency
-                lighting, signage circuit, extractor fan. 4 to 6 days installation.
+                <strong>Medium salon, 6 to 8 chairs (£5,000 to £7,500)</strong> — Consumer unit with
+                RCBOs and SPD, 12 to 16 double sockets at stations, hood dryer circuits, feature
+                reception lighting, wash station IP44 wiring, mirror lighting, emergency lighting,
+                signage circuit, extractor fan. 4 to 6 days installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,9 +309,9 @@ const sections = [
               <span>
                 <strong>Large salon, 10+ chairs (£7,500 to £10,000+)</strong> — Full distribution
                 with sub-board, 20+ double sockets at stations, multiple hood dryer circuits,
-                premium lighting design with dimming, colour processing room wiring, multiple
-                wash stations, retail display lighting, air conditioning supply, comprehensive
-                emergency lighting. 1 to 2 weeks installation.
+                premium lighting design with dimming, colour processing room wiring, multiple wash
+                stations, retail display lighting, air conditioning supply, comprehensive emergency
+                lighting. 1 to 2 weeks installation.
               </span>
             </li>
           </ul>
@@ -343,9 +341,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection (Regulation 411.3.3)</strong> — All socket outlets up to
-                32A require 30mA RCD protection. This is particularly important in the wash area
-                where water and electricity are in close proximity.
+                <strong>RCD protection (Regulation 411.3.3)</strong> — All socket outlets up to 32A
+                require 30mA RCD protection. This is particularly important in the wash area where
+                water and electricity are in close proximity.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -367,8 +365,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — Does not apply to commercial premises.
-                However, the installation must comply with the Building Regulations and an EIC
-                must be issued.
+                However, the installation must comply with the Building Regulations and an EIC must
+                be issued.
               </span>
             </li>
           </ul>
@@ -393,8 +391,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Work from the Salon Layout</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Get the salon floor plan showing every styling station, wash station, reception
-                  desk, and back-of-house area. Price per station plus common areas. Use
-                  Elec-Mate's{' '}
+                  desk, and back-of-house area. Price per station plus common areas. Use Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -422,9 +419,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Offer Maintenance Packages</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Hair salons need regular EICR inspections and emergency lighting testing.
-                  Offer an annual maintenance package when quoting the fit-out — this builds
-                  an ongoing revenue stream and a long-term client relationship.
+                  Hair salons need regular EICR inspections and emergency lighting testing. Offer an
+                  annual maintenance package when quoting the fit-out — this builds an ongoing
+                  revenue stream and a long-term client relationship.
                 </p>
               </div>
             </div>
@@ -469,7 +466,7 @@ export default function HairSalonElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Hair Salon Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Hair Salon Fit-Outs with Per-Station Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for salon quoting with station-by-station pricing, lighting specifications, and professional PDF output. 7-day free trial."
     />
   );
 }

@@ -125,13 +125,13 @@ const sections = [
     content: (
       <>
         <p>
-          A bungalow rewire replaces all electrical wiring, accessories, and the consumer unit
-          with a modern installation compliant with{' '}
+          A bungalow rewire replaces all electrical wiring, accessories, and the consumer unit with
+          a modern installation compliant with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>
-          . Many bungalows in the UK were built in the post-war period and have original wiring
-          that is now 50 to 70 years old — well beyond its serviceable life.
+          . Many bungalows in the UK were built in the post-war period and have original wiring that
+          is now 50 to 70 years old — well beyond its serviceable life.
         </p>
         <p>
           Common issues found in older bungalows include rubber-sheathed or lead-sheathed cables
@@ -142,9 +142,9 @@ const sections = [
           bungalow commonly returns multiple C2 (potentially dangerous) observations.
         </p>
         <p>
-          The good news is that bungalows are typically easier to rewire than two-storey houses.
-          The single-storey layout means all rooms are accessible from the loft void, making cable
-          runs straightforward and reducing the amount of disruptive wall chasing.
+          The good news is that bungalows are typically easier to rewire than two-storey houses. The
+          single-storey layout means all rooms are accessible from the loft void, making cable runs
+          straightforward and reducing the amount of disruptive wall chasing.
         </p>
       </>
     ),
@@ -171,16 +171,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom bungalow</strong> — £3,800 to £5,200 total. Typically 10 to
-                14 circuits. Materials: £1,000 to £1,500. Labour: £2,400 to £3,200 (5 to 8 days).
+                <strong>Three-bedroom bungalow</strong> — £3,800 to £5,200 total. Typically 10 to 14
+                circuits. Materials: £1,000 to £1,500. Labour: £2,400 to £3,200 (5 to 8 days).
                 Certification: £50 to £80.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom bungalow</strong> — £4,500 to £6,000 total. Typically 12 to
-                16 circuits. Materials: £1,200 to £1,800. Labour: £2,800 to £3,700 (7 to 10 days).
+                <strong>Four-bedroom bungalow</strong> — £4,500 to £6,000 total. Typically 12 to 16
+                circuits. Materials: £1,200 to £1,800. Labour: £2,800 to £3,700 (7 to 10 days).
                 Certification: £50 to £80.
               </span>
             </li>
@@ -261,17 +261,17 @@ const sections = [
     content: (
       <>
         <p>
-          Bungalow rewires benefit from the single-storey layout. All cable runs can be made
-          through the loft void and dropped down through the ceiling to wall-mounted accessories.
-          This significantly reduces the need for wall chasing compared to a two-storey house.
+          Bungalow rewires benefit from the single-storey layout. All cable runs can be made through
+          the loft void and dropped down through the ceiling to wall-mounted accessories. This
+          significantly reduces the need for wall chasing compared to a two-storey house.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>First fix (cable installation)</strong> — 3 to 6 days depending on
-                bungalow size. Most cable runs via the loft void, with minimal wall chasing.
+                <strong>First fix (cable installation)</strong> — 3 to 6 days depending on bungalow
+                size. Most cable runs via the loft void, with minimal wall chasing.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,23 +315,23 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No inter-floor cable routes</strong> — there are no cables to run between
-                ground and first floors, eliminating one of the most time-consuming aspects of
-                house rewires.
+                ground and first floors, eliminating one of the most time-consuming aspects of house
+                rewires.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reduced wall chasing</strong> — cables can drop from the loft to
-                accessories with only short vertical chases in the wall, reducing disruption and
-                redecoration costs.
+                <strong>Reduced wall chasing</strong> — cables can drop from the loft to accessories
+                with only short vertical chases in the wall, reducing disruption and redecoration
+                costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single consumer unit location</strong> — no need for sub-distribution
-                boards on upper floors, keeping the installation simple and cost-effective.
+                <strong>Single consumer unit location</strong> — no need for sub-distribution boards
+                on upper floors, keeping the installation simple and cost-effective.
               </span>
             </li>
           </ul>
@@ -372,8 +372,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional circuits</strong> — EV charger, solar PV, underfloor heating,
-                or electric cooking appliances each require dedicated circuits.
+                <strong>Additional circuits</strong> — EV charger, solar PV, underfloor heating, or
+                electric cooking appliances each require dedicated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -394,9 +394,9 @@ const sections = [
     content: (
       <>
         <p>
-          A bungalow rewire is notifiable under Part P of the Building Regulations. The
-          electrician must be registered with a competent person scheme (NICEIC, NAPIT, ELECSA) to
-          self-certify the work.
+          A bungalow rewire is notifiable under Part P of the Building Regulations. The electrician
+          must be registered with a competent person scheme (NICEIC, NAPIT, ELECSA) to self-certify
+          the work.
         </p>
         <p>
           Key requirements under{' '}
@@ -404,13 +404,13 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           include: Regulation 411.3.3 requiring 30mA RCD protection on socket circuits up to 32A,
-          bathroom circuits, and outdoor circuits; Regulation 421.1.201 requiring a
-          non-combustible consumer unit enclosure; and Regulation 443.4 requiring a risk assessment
-          for SPD installation (almost always resulting in SPD being fitted).
+          bathroom circuits, and outdoor circuits; Regulation 421.1.201 requiring a non-combustible
+          consumer unit enclosure; and Regulation 443.4 requiring a risk assessment for SPD
+          installation (almost always resulting in SPD being fitted).
         </p>
         <p>
-          An Electrical Installation Certificate (EIC) must be issued upon completion, covering
-          the design, construction, inspection, and testing of the entire new installation.
+          An Electrical Installation Certificate (EIC) must be issued upon completion, covering the
+          design, construction, inspection, and testing of the entire new installation.
         </p>
       </>
     ),
@@ -421,9 +421,8 @@ const sections = [
     content: (
       <>
         <p>
-          Bungalow rewires are among the most straightforward domestic rewire jobs. The loft
-          access and single-storey layout make them quicker and more predictable than house
-          rewires.
+          Bungalow rewires are among the most straightforward domestic rewire jobs. The loft access
+          and single-storey layout make them quicker and more predictable than house rewires.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -445,10 +444,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on your
-                  phone using Elec-Mate. Voice-entry for test results and PDF export before you
-                  leave. Quote and invoice with the{' '}
+                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  on your phone using Elec-Mate. Voice-entry for test results and PDF export before
+                  you leave. Quote and invoice with the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -485,8 +483,7 @@ export default function BungalowRewireCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Bungalow Rewire Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          Bungalow Rewire Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does it cost to rewire a bungalow? Bungalows are typically easier and cheaper to rewire than two-storey houses thanks to full loft access. This guide covers realistic 2026 pricing, what is included, and the factors that affect your quote."
@@ -497,7 +494,7 @@ export default function BungalowRewireCostPage() {
       faqHeading="Frequently Asked Questions About Bungalow Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bungalow Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site EIC certificates, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

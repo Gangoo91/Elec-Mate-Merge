@@ -609,7 +609,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Glasgow electrical business smarter with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to quote jobs, complete certificates on site, and manage their business from their phone. 7-day free trial."
           icon={PoundSterling}
         />
       </>
@@ -646,7 +646,7 @@ export default function ElectricianSalaryGlasgowPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Maximise Your Glasgow Electrician Earnings with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote faster, complete certificates on site, and get paid sooner. 7-day free trial, cancel anytime."
     />
   );
 }

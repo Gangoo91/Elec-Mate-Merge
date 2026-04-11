@@ -108,7 +108,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/commercial-kitchen-electrical',
     title: 'Commercial Kitchen Electrical Guide',
-    description: 'Electrical requirements for commercial kitchen installations including three-phase.',
+    description:
+      'Electrical requirements for commercial kitchen installations including three-phase.',
     icon: UtensilsCrossed,
     category: 'Guide',
   },
@@ -152,10 +153,11 @@ const sections = [
           appliances, and sometimes lighting all need to reach the island.
         </p>
         <p>
-          The challenge is almost entirely about cable routing. The electrical circuits themselves are
-          standard domestic work — a dedicated radial for the hob, sockets from the ring or a new
-          radial. But getting the cables from the consumer unit or existing circuits to the island,
-          without visible cables crossing the floor, requires planning at the right stage of the build.
+          The challenge is almost entirely about cable routing. The electrical circuits themselves
+          are standard domestic work — a dedicated radial for the hob, sockets from the ring or a
+          new radial. But getting the cables from the consumer unit or existing circuits to the
+          island, without visible cables crossing the floor, requires planning at the right stage of
+          the build.
         </p>
         <p>
           This guide covers the three main methods for routing power to an island, induction hob
@@ -174,36 +176,36 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-3">Floor Box</h3>
             <p className="text-white text-sm leading-relaxed">
               Cables run under the floor (in screed, through a floor void, or in conduit beneath
-              floorboards) and terminate in a flush metal floor box recessed into the floor. The floor
-              box sits directly below the island and is accessed by removing the island plinth. Best for
-              new builds and renovations where the floor is being relaid. Provides the cleanest finish
-              with no visible cables.
+              floorboards) and terminate in a flush metal floor box recessed into the floor. The
+              floor box sits directly below the island and is accessed by removing the island
+              plinth. Best for new builds and renovations where the floor is being relaid. Provides
+              the cleanest finish with no visible cables.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-3">Island Pillar</h3>
             <p className="text-white text-sm leading-relaxed">
-              A vertical post (usually matching the island worktop material) at one end of the island
-              contains the cables. Cables route from the ceiling void, down through the pillar, and into
-              the island carcass. Good for retrofits where the floor cannot be lifted. The pillar adds a
-              design element but takes up worktop space. Socket outlets can be integrated into the
-              pillar face.
+              A vertical post (usually matching the island worktop material) at one end of the
+              island contains the cables. Cables route from the ceiling void, down through the
+              pillar, and into the island carcass. Good for retrofits where the floor cannot be
+              lifted. The pillar adds a design element but takes up worktop space. Socket outlets
+              can be integrated into the pillar face.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-base mb-3">Ceiling/Pendant Drop</h3>
             <p className="text-white text-sm leading-relaxed">
-              Cables drop from the ceiling directly above the island. This works for pendant lighting
-              and can also supply power through a vertical conduit or decorative cable channel. Less
-              common for power sockets (it looks industrial), but some modern kitchen designs incorporate
-              a ceiling-mounted socket rail above the island.
+              Cables drop from the ceiling directly above the island. This works for pendant
+              lighting and can also supply power through a vertical conduit or decorative cable
+              channel. Less common for power sockets (it looks industrial), but some modern kitchen
+              designs incorporate a ceiling-mounted socket rail above the island.
             </p>
           </div>
         </div>
         <p>
-          The choice between these methods should be made during the kitchen design stage — not after
-          the floor is laid and the island is fitted. Discuss the options with the kitchen designer and
-          customer early.
+          The choice between these methods should be made during the kitchen design stage — not
+          after the floor is laid and the island is fitted. Discuss the options with the kitchen
+          designer and customer early.
         </p>
       </>
     ),
@@ -219,18 +221,30 @@ const sections = [
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
-            <li><strong>Standard 4-zone induction hob:</strong> 7.0kW to 7.4kW — 32A circuit, 6.0mm² cable, 32A connection unit or cooker switch</li>
-            <li><strong>Large 5-zone induction hob:</strong> 7.4kW to 9.2kW — 40A circuit, 10.0mm² cable</li>
-            <li><strong>Premium/commercial-style hob:</strong> 9kW to 11kW — 45A circuit, 10.0mm² cable</li>
-            <li><strong>Vented induction hob (with downdraft):</strong> 7kW to 8kW for the hob plus the extraction motor — check combined rating</li>
+            <li>
+              <strong>Standard 4-zone induction hob:</strong> 7.0kW to 7.4kW — 32A circuit, 6.0mm²
+              cable, 32A connection unit or cooker switch
+            </li>
+            <li>
+              <strong>Large 5-zone induction hob:</strong> 7.4kW to 9.2kW — 40A circuit, 10.0mm²
+              cable
+            </li>
+            <li>
+              <strong>Premium/commercial-style hob:</strong> 9kW to 11kW — 45A circuit, 10.0mm²
+              cable
+            </li>
+            <li>
+              <strong>Vented induction hob (with downdraft):</strong> 7kW to 8kW for the hob plus
+              the extraction motor — check combined rating
+            </li>
           </ul>
         </div>
         <p>
           The hob must be connected via a dedicated radial circuit with a connection unit or cooker
           switch within 2 metres of the hob. For an island installation, the connection unit is
-          typically inside the island carcass (accessed via the plinth or a service panel) or mounted on
-          the wall behind the island if close enough. The cable must be correctly sized for the load
-          and the run length — use the{' '}
+          typically inside the island carcass (accessed via the plinth or a service panel) or
+          mounted on the wall behind the island if close enough. The cable must be correctly sized
+          for the load and the run length — use the{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
@@ -252,36 +266,37 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fused spur from ring final circuit</strong> — a fused connection unit (13A fuse)
-                on the existing kitchen ring supplies the island sockets. This is the simplest method if
-                the ring has capacity and the cable run is practical. Maximum load at the island sockets
-                is limited to 13A.
+                <strong>Fused spur from ring final circuit</strong> — a fused connection unit (13A
+                fuse) on the existing kitchen ring supplies the island sockets. This is the simplest
+                method if the ring has capacity and the cable run is practical. Maximum load at the
+                island sockets is limited to 13A.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New radial circuit</strong> — a dedicated 20A radial circuit from the consumer
-                unit to the island sockets. This provides more capacity and is the better option if the
-                island will have multiple high-draw appliances (food processor, stand mixer, kettle).
+                <strong>New radial circuit</strong> — a dedicated 20A radial circuit from the
+                consumer unit to the island sockets. This provides more capacity and is the better
+                option if the island will have multiple high-draw appliances (food processor, stand
+                mixer, kettle).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extension of ring final circuit</strong> — if the ring routes conveniently past
-                the island position, the ring can be extended to include sockets on the island. This
-                must comply with the ring circuit rules in BS 7671 and is not always practical depending
-                on the ring route.
+                <strong>Extension of ring final circuit</strong> — if the ring routes conveniently
+                past the island position, the ring can be extended to include sockets on the island.
+                This must comply with the ring circuit rules in BS 7671 and is not always practical
+                depending on the ring route.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          All socket outlets must be RCD protected in accordance with BS 7671 Regulation 411.3.3 (30mA
-          RCD for socket outlets rated up to 32A). Position the sockets on the seating side of the
-          island, away from the cooking zone, at a height of approximately 200mm above the worktop or
-          integrated into the island end panel.
+          All socket outlets must be RCD protected in accordance with BS 7671 Regulation 411.3.3
+          (30mA RCD for socket outlets rated up to 32A). Position the sockets on the seating side of
+          the island, away from the cooking zone, at a height of approximately 200mm above the
+          worktop or integrated into the island end panel.
         </p>
       </>
     ),
@@ -292,8 +307,9 @@ const sections = [
     content: (
       <>
         <p>
-          The single biggest mistake with kitchen island electrical work is timing. If the cables are
-          not in place before the floor goes down, the options become much more expensive and disruptive.
+          The single biggest mistake with kitchen island electrical work is timing. If the cables
+          are not in place before the floor goes down, the options become much more expensive and
+          disruptive.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -301,26 +317,26 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Before screed/floor</strong> — lay conduit or cable in the floor void to the
-                exact island position. Use 25mm or 32mm conduit so cables can be pulled through later if
-                the specification changes. Mark the conduit exit point clearly on the sub-floor so the
-                floor layer does not cover it.
+                exact island position. Use 25mm or 32mm conduit so cables can be pulled through
+                later if the specification changes. Mark the conduit exit point clearly on the
+                sub-floor so the floor layer does not cover it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm island position in writing</strong> — get the exact dimensions and
-                position from the kitchen designer before installing the floor route. If the island moves
-                by even 200mm, the floor box or conduit exit may be in the wrong place.
+                position from the kitchen designer before installing the floor route. If the island
+                moves by even 200mm, the floor box or conduit exit may be in the wrong place.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Run extra conduit</strong> — it costs almost nothing to lay an extra conduit run
-                during first fix. Run one for the hob circuit and one for the socket circuit. You can
-                also run a conduit for island lighting or a network cable. Future-proofing during first
-                fix is almost free; retrofitting later is very expensive.
+                <strong>Run extra conduit</strong> — it costs almost nothing to lay an extra conduit
+                run during first fix. Run one for the hob circuit and one for the socket circuit.
+                You can also run a conduit for island lighting or a network cable. Future-proofing
+                during first fix is almost free; retrofitting later is very expensive.
               </span>
             </li>
           </ul>
@@ -337,13 +353,13 @@ const sections = [
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
               <strong>Design coordination</strong> — confirm island position, hob model (kW rating),
-              number of sockets, and cable route method (floor box, pillar, or ceiling drop) with the
-              kitchen designer and customer.
+              number of sockets, and cable route method (floor box, pillar, or ceiling drop) with
+              the kitchen designer and customer.
             </li>
             <li>
-              <strong>First fix (before floor)</strong> — lay conduit from the consumer unit area to the
-              island position. Install floor box frame if using floor box method. Draw cables through
-              conduit or lay cables in the floor void.
+              <strong>First fix (before floor)</strong> — lay conduit from the consumer unit area to
+              the island position. Install floor box frame if using floor box method. Draw cables
+              through conduit or lay cables in the floor void.
             </li>
             <li>
               <strong>Consumer unit</strong> — install RCBO for the hob circuit (32A or 40A) and, if
@@ -351,16 +367,16 @@ const sections = [
             </li>
             <li>
               <strong>Second fix (after kitchen fitted)</strong> — terminate cables at the hob
-              connection unit and island socket outlets. Connect the hob to the connection unit per the
-              manufacturer instructions.
+              connection unit and island socket outlets. Connect the hob to the connection unit per
+              the manufacturer instructions.
             </li>
             <li>
-              <strong>Test</strong> — continuity, insulation resistance, polarity, Zs, RCD operation.
-              Functional test of hob and socket outlets.
+              <strong>Test</strong> — continuity, insulation resistance, polarity, Zs, RCD
+              operation. Functional test of hob and socket outlets.
             </li>
             <li>
-              <strong>Certify</strong> — issue an EIC for new circuits or a Minor Works Certificate if
-              the work is a fused spur from an existing ring.
+              <strong>Certify</strong> — issue an EIC for new circuits or a Minor Works Certificate
+              if the work is a fused spur from an existing ring.
             </li>
           </ol>
         </div>
@@ -372,31 +388,35 @@ const sections = [
     heading: 'Testing and Certification',
     content: (
       <>
-        <p>
-          Testing requirements depend on the scope of work:
-        </p>
+        <p>Testing requirements depend on the scope of work:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>New dedicated circuit (hob or sockets): full initial verification — continuity, insulation resistance, polarity, Zs, RCD. Issue an EIC.</span>
+              <span>
+                New dedicated circuit (hob or sockets): full initial verification — continuity,
+                insulation resistance, polarity, Zs, RCD. Issue an EIC.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Fused spur from existing ring: test the new spur — continuity, insulation resistance, polarity, Zs at the new socket. Issue a Minor Works Certificate.</span>
+              <span>
+                Fused spur from existing ring: test the new spur — continuity, insulation
+                resistance, polarity, Zs at the new socket. Issue a Minor Works Certificate.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>If both a new hob circuit and new socket circuit are installed, a single EIC covering both circuits is appropriate.</span>
+              <span>
+                If both a new hob circuit and new socket circuit are installed, a single EIC
+                covering both circuits is appropriate.
+              </span>
             </li>
           </ul>
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
-            EIC certificate app
-          </SEOInternalLink>{' '}
-          or{' '}
+          <SEOInternalLink href="/tools/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works certificate app
           </SEOInternalLink>{' '}
@@ -412,13 +432,33 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
-            <li><strong>Island sockets only (fused spur from ring):</strong> £200 to £400 — materials, labour, Minor Works certificate</li>
-            <li><strong>Dedicated hob circuit (32A):</strong> £350 to £600 — RCBO, 6.0mm² cable, connection unit, EIC</li>
-            <li><strong>Both hob + socket circuits:</strong> £500 to £900 — two circuits, full testing, EIC</li>
-            <li><strong>Floor box supply and install:</strong> £150 to £300 — stainless steel floor box, conduit, installation during first fix</li>
-            <li><strong>Retrofit through existing floor:</strong> add £300 to £600 — floor cutting, conduit, making good</li>
-            <li><strong>Island pillar fabrication and wiring:</strong> add £200 to £400 — depends on pillar design and materials</li>
-            <li><strong>Consumer unit upgrade:</strong> add £350 to £600 if no spare ways</li>
+            <li>
+              <strong>Island sockets only (fused spur from ring):</strong> £200 to £400 — materials,
+              labour, Minor Works certificate
+            </li>
+            <li>
+              <strong>Dedicated hob circuit (32A):</strong> £350 to £600 — RCBO, 6.0mm² cable,
+              connection unit, EIC
+            </li>
+            <li>
+              <strong>Both hob + socket circuits:</strong> £500 to £900 — two circuits, full
+              testing, EIC
+            </li>
+            <li>
+              <strong>Floor box supply and install:</strong> £150 to £300 — stainless steel floor
+              box, conduit, installation during first fix
+            </li>
+            <li>
+              <strong>Retrofit through existing floor:</strong> add £300 to £600 — floor cutting,
+              conduit, making good
+            </li>
+            <li>
+              <strong>Island pillar fabrication and wiring:</strong> add £200 to £400 — depends on
+              pillar design and materials
+            </li>
+            <li>
+              <strong>Consumer unit upgrade:</strong> add £350 to £600 if no spare ways
+            </li>
           </ul>
         </div>
       </>
@@ -436,9 +476,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Coordinate with the Kitchen Fitter</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The kitchen fitter needs to know where cables will emerge from the floor or ceiling.
-                  You need to know the exact island position and carcass layout. A 15-minute call before
-                  first fix prevents expensive mistakes.
+                  The kitchen fitter needs to know where cables will emerge from the floor or
+                  ceiling. You need to know the exact island position and carcass layout. A
+                  15-minute call before first fix prevents expensive mistakes.
                 </p>
               </div>
             </div>
@@ -447,10 +487,12 @@ const sections = [
             <div className="flex items-start gap-4">
               <Calculator className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Quote First Fix and Second Fix Separately</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Quote First Fix and Second Fix Separately
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Kitchen island work often has weeks or months between first fix and second fix. Quote
-                  them as separate visits in the{' '}
+                  Kitchen island work often has weeks or months between first fix and second fix.
+                  Quote them as separate visits in the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -462,7 +504,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen island electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. 7-day free trial."
           icon={UtensilsCrossed}
         />
       </>
@@ -499,7 +541,7 @@ export default function KitchenIslandPowerPage() {
       faqHeading="Frequently Asked Questions About Kitchen Island Power Supply"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Kitchen Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

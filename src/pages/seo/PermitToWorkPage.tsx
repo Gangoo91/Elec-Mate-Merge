@@ -748,7 +748,7 @@ export default function PermitToWorkPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Generate PTW templates and RAMS with AI"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered RAMS generation, safe isolation checklists, and professional safety documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered RAMS generation, safe isolation checklists, and professional safety documentation. 7-day free trial, cancel anytime."
     />
   );
 }

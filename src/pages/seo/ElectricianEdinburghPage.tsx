@@ -144,18 +144,17 @@ const sections = [
         <p>
           Edinburgh is Scotland's capital and one of the UK's most architecturally distinctive
           cities. For electricians, working in Edinburgh means understanding Scottish Building
-          Standards (not Part P), navigating conservation area and listed building restrictions,
-          and dealing with a property stock that ranges from 18th-century Georgian townhouses in
-          the New Town to stone tenements in Marchmont and Bruntsfield, Victorian villas in
-          Morningside, and modern new-build estates in areas like Craigmillar and Granton.
+          Standards (not Part P), navigating conservation area and listed building restrictions, and
+          dealing with a property stock that ranges from 18th-century Georgian townhouses in the New
+          Town to stone tenements in Marchmont and Bruntsfield, Victorian villas in Morningside, and
+          modern new-build estates in areas like Craigmillar and Granton.
         </p>
         <p>
           The city has a strong and growing demand for electrical services. The Edinburgh rental
-          market requires regular EICRs, the council's net zero ambitions are driving EV charger
-          and heat pump installations, and the Festival season creates seasonal demand for
-          temporary electrical installations. Edinburgh electricians who understand the local
-          regulations, property types, and DNO requirements can build a profitable and varied
-          practice.
+          market requires regular EICRs, the council's net zero ambitions are driving EV charger and
+          heat pump installations, and the Festival season creates seasonal demand for temporary
+          electrical installations. Edinburgh electricians who understand the local regulations,
+          property types, and DNO requirements can build a profitable and varied practice.
         </p>
         <p>
           This guide covers the regulatory framework, DNO details, property-specific challenges,
@@ -171,8 +170,7 @@ const sections = [
       <>
         <p>
           One of the most important differences for electricians working in Scotland is that Part P
-          of the Building Regulations does not apply. Scotland has its own regulatory framework:
-          the{' '}
+          of the Building Regulations does not apply. Scotland has its own regulatory framework: the{' '}
           <strong>Scottish Building Standards</strong>, administered under the Building (Scotland)
           Act 2003.
         </p>
@@ -200,9 +198,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Completion certificates</strong> — after the work is finished, a completion
-                certificate must be submitted to the council with the EIC as evidence of
-                compliance. The council may inspect the work before accepting the completion
-                certificate.
+                certificate must be submitted to the council with the EIC as evidence of compliance.
+                The council may inspect the work before accepting the completion certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -210,8 +207,8 @@ const sections = [
               <span>
                 <strong>SELECT registration</strong> — SELECT is Scotland's trade association for
                 the electrical industry. SELECT-registered contractors can use the SELECT
-                Certification Services scheme to certify work, which simplifies the building
-                warrant process. Many Edinburgh customers specifically look for SELECT-registered
+                Certification Services scheme to certify work, which simplifies the building warrant
+                process. Many Edinburgh customers specifically look for SELECT-registered
                 electricians.
               </span>
             </li>
@@ -220,8 +217,8 @@ const sections = [
         <p>
           The practical impact is that electricians moving from England to Scotland (or taking on
           Scottish work) need to understand the building warrant process. The electrical
-          installation standards are the same (BS 7671), but the compliance and certification
-          route is different.
+          installation standards are the same (BS 7671), but the compliance and certification route
+          is different.
         </p>
       </>
     ),
@@ -232,9 +229,8 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>SPEN (SP Energy Networks)</strong> is the DNO for
-          Edinburgh and the surrounding Lothians region. All DNO-related work in Edinburgh goes
-          through SPEN:
+          <strong>SPEN (SP Energy Networks)</strong> is the DNO for Edinburgh and the surrounding
+          Lothians region. All DNO-related work in Edinburgh goes through SPEN:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -250,9 +246,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
-                generation equipment must be notified to SPEN. G98 (up to 16A per phase) is a
-                simple notification. G99 (larger systems) requires prior approval and can take 6 to
-                12 weeks.
+                generation equipment must be notified to SPEN. G98 (up to 16A per phase) is a simple
+                notification. G99 (larger systems) requires prior approval and can take 6 to 12
+                weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,17 +256,17 @@ const sections = [
               <span>
                 <strong>Earthing arrangements</strong> — Edinburgh properties are predominantly
                 TN-C-S (PME) or TN-S. Older tenements may have TT earthing, particularly if the
-                original lead sheath cable has been replaced. Always verify the earthing
-                arrangement at the supply intake and confirm with SPEN if unclear.
+                original lead sheath cable has been replaced. Always verify the earthing arrangement
+                at the supply intake and confirm with SPEN if unclear.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Looped services in tenements</strong> — some Edinburgh tenements have
-                shared or looped service cables, particularly in older buildings. This can affect
-                maximum demand calculations and must be considered when adding high-power loads
-                such as EV chargers or heat pumps.
+                <strong>Looped services in tenements</strong> — some Edinburgh tenements have shared
+                or looped service cables, particularly in older buildings. This can affect maximum
+                demand calculations and must be considered when adding high-power loads such as EV
+                chargers or heat pumps.
               </span>
             </li>
           </ul>
@@ -350,12 +346,12 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Stone Tenements</h3>
             <p className="text-white text-sm leading-relaxed">
-              The defining property type of Edinburgh. Typically 3 to 5 storeys, solid stone
-              walls, shared stairwells, and individual flats. Rewiring requires surface-mounted
-              trunking or careful routing through floor voids. Asbestos surveys are essential in
-              pre-1980s properties. Consumer units are often in hallways or cupboards with limited
-              space. Common stairwell lighting is a shared responsibility, usually managed by a
-              property factor. Areas: Marchmont, Bruntsfield, Morningside, Leith, Stockbridge.
+              The defining property type of Edinburgh. Typically 3 to 5 storeys, solid stone walls,
+              shared stairwells, and individual flats. Rewiring requires surface-mounted trunking or
+              careful routing through floor voids. Asbestos surveys are essential in pre-1980s
+              properties. Consumer units are often in hallways or cupboards with limited space.
+              Common stairwell lighting is a shared responsibility, usually managed by a property
+              factor. Areas: Marchmont, Bruntsfield, Morningside, Leith, Stockbridge.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -372,10 +368,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Modern New Builds</h3>
             <p className="text-white text-sm leading-relaxed">
               Edinburgh has significant new-build development in areas like Granton Waterfront,
-              Craigmillar, and South East Edinburgh. These properties are built to current
-              standards with cavity walls, standard cable routes, and modern consumer units. Work
-              is typically additions and modifications rather than rewires. EV charger installation
-              is common in new-build estates.
+              Craigmillar, and South East Edinburgh. These properties are built to current standards
+              with cavity walls, standard cable routes, and modern consumer units. Work is typically
+              additions and modifications rather than rewires. EV charger installation is common in
+              new-build estates.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -419,8 +415,8 @@ const sections = [
               <span>
                 <strong>Generator installations</strong> — many temporary venues use diesel
                 generators as the primary or backup supply. Generator installations require
-                appropriate earthing (often TT with an earth rod), overcurrent protection,
-                and clear isolation arrangements.
+                appropriate earthing (often TT with an earth rod), overcurrent protection, and clear
+                isolation arrangements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -437,9 +433,9 @@ const sections = [
               <span>
                 <strong>Seasonal opportunity</strong> — the Festival season (July setup through
                 September takedown) is a significant revenue opportunity for Edinburgh electricians.
-                Rates for temporary installation work are typically 20% to 30% above standard
-                rates, and the work is concentrated in a short period. Building relationships with
-                venue operators and production companies leads to repeat work each year.
+                Rates for temporary installation work are typically 20% to 30% above standard rates,
+                and the work is concentrated in a short period. Building relationships with venue
+                operators and production companies leads to repeat work each year.
               </span>
             </li>
           </ul>
@@ -528,9 +524,9 @@ const sections = [
     content: (
       <>
         <p>
-          Edinburgh offers excellent opportunities for electricians who understand the local
-          market. The combination of period properties, a thriving rental sector, new-build
-          development, and seasonal Festival work creates a diverse and profitable workload.
+          Edinburgh offers excellent opportunities for electricians who understand the local market.
+          The combination of period properties, a thriving rental sector, new-build development, and
+          seasonal Festival work creates a diverse and profitable workload.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -543,11 +539,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning and voice test entry. Scottish building
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning and voice test entry. Scottish building
                   warrant compliance requires professional documentation — deliver it from your
                   phone before you leave site.
                 </p>
@@ -565,8 +558,8 @@ const sections = [
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for long cable runs in tenement properties. Surface-mounted trunking routes in
-                  tenements often result in longer cable runs than cavity-wall properties —
-                  accurate voltage drop calculations prevent problems.
+                  tenements often result in longer cable runs than cavity-wall properties — accurate
+                  voltage drop calculations prevent problems.
                 </p>
               </div>
             </div>
@@ -581,9 +574,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Account for the higher material costs and labour times associated with
-                  tenement and period property work. Send professional PDF quotes to Edinburgh
-                  customers from the survey.
+                  . Account for the higher material costs and labour times associated with tenement
+                  and period property work. Send professional PDF quotes to Edinburgh customers from
+                  the survey.
                 </p>
               </div>
             </div>
@@ -591,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Edinburgh electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the challenges of Edinburgh's property stock. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the challenges of Edinburgh's property stock. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -616,8 +609,7 @@ export default function ElectricianEdinburghPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Edinburgh:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Edinburgh: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Edinburgh's unique property stock — from stone tenements and Georgian townhouses to UNESCO World Heritage Sites — demands electricians who understand Scottish Building Standards, SPEN connections, and heritage property challenges."
@@ -628,7 +620,7 @@ export default function ElectricianEdinburghPage() {
       faqHeading="Frequently Asked Questions About Electricians in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Edinburgh Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Edinburgh's tenements, listed buildings, and Scottish regulations. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the realities of Edinburgh's tenements, listed buildings, and Scottish regulations. 7-day free trial."
     />
   );
 }

@@ -427,8 +427,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Learning outcome</strong> — what you learned. Be specific: not "attended
-                18th Edition update" but "learned about Amendment 3 changes to Section 530
-                regarding bidirectional devices."
+                18th Edition update" but "learned about Amendment 3 changes to Section 530 regarding
+                bidirectional devices."
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -565,7 +565,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Make CPD effortless"
-          description="Structured courses, automatic hour tracking, and a professional CPD record you can generate for your scheme assessor. Join 430+ electricians managing their CPD on Elec-Mate. 7-day free trial."
+          description="Structured courses, automatic hour tracking, and a professional CPD record you can generate for your scheme assessor. Join 1,000+ electricians managing their CPD on Elec-Mate. 7-day free trial."
           icon={Award}
         />
       </>
@@ -602,7 +602,7 @@ export default function ProfessionalDevelopmentElectricianPage() {
       faqHeading="Frequently Asked Questions About Electrician CPD"
       relatedPages={relatedPages}
       ctaHeading="Manage Your CPD on Your Phone"
-      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 430+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
+      ctaSubheading="Structured courses, automatic hour tracking, and a professional CPD record for your scheme assessor. Join 1,000+ electricians doing CPD the easy way. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -585,7 +585,7 @@ export default function CDMRegulationsCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Understand your CDM duties and work with confidence"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. CDM modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. CDM modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/cdm-regulations-course"
     />

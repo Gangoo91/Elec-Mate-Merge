@@ -143,18 +143,18 @@ const sections = [
         <p>
           Landlords in England have specific legal obligations for electrical safety in rented
           properties. Since July 2020, the Electrical Safety Standards in the Private Rented Sector
-          (England) Regulations 2020 have required landlords to ensure their electrical installations
-          are inspected and tested at least every 5 years.
+          (England) Regulations 2020 have required landlords to ensure their electrical
+          installations are inspected and tested at least every 5 years.
         </p>
         <p>
           Combined with the Smoke and Carbon Monoxide Alarm (Amendment) Regulations 2022, the
-          Landlord and Tenant Act 1985, and general health and safety duties, landlords must maintain
-          a comprehensive approach to electrical safety. Failure to comply can result in financial
-          penalties of up to £30,000 per offence.
+          Landlord and Tenant Act 1985, and general health and safety duties, landlords must
+          maintain a comprehensive approach to electrical safety. Failure to comply can result in
+          financial penalties of up to £30,000 per offence.
         </p>
         <p>
-          This guide provides a clear checklist of landlord electrical safety obligations: the 5-year
-          EICR requirement, smoke and CO alarm rules, PAT testing guidance, record-keeping
+          This guide provides a clear checklist of landlord electrical safety obligations: the
+          5-year EICR requirement, smoke and CO alarm rules, PAT testing guidance, record-keeping
           requirements, and the penalties for non-compliance.
         </p>
       </>
@@ -205,8 +205,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The EICR must be carried out by a person who is qualified and competent. In practice,
-          this means a registered electrician who is a member of a competent person scheme such as{' '}
+          The EICR must be carried out by a person who is qualified and competent. In practice, this
+          means a registered electrician who is a member of a competent person scheme such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA.
         </p>
@@ -237,17 +237,16 @@ const sections = [
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test at start of each tenancy</strong> — the landlord must check that each
-                alarm is in working order on the day a new tenancy begins. After that, the tenant
-                is responsible for ongoing testing and battery replacement.
+                alarm is in working order on the day a new tenancy begins. After that, the tenant is
+                responsible for ongoing testing and battery replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery or mains powered</strong> — there is no requirement for
-                mains-wired alarms under these regulations, but mains-wired alarms with battery
-                backup are recommended as they are more reliable and eliminate the risk of flat
-                batteries.
+                <strong>Battery or mains powered</strong> — there is no requirement for mains-wired
+                alarms under these regulations, but mains-wired alarms with battery backup are
+                recommended as they are more reliable and eliminate the risk of flat batteries.
               </span>
             </li>
           </ul>
@@ -258,8 +257,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Best practice:</strong> While the regulations allow battery-only alarms,
               electricians should recommend mains-wired, interlinked smoke alarms with battery
-              backup. These are more reliable, activate all alarms when one detects smoke, and
-              meet the higher standards expected for HMOs and new-build properties.
+              backup. These are more reliable, activate all alarms when one detects smoke, and meet
+              the higher standards expected for HMOs and new-build properties.
             </p>
           </div>
         </div>
@@ -271,9 +270,7 @@ const sections = [
     heading: 'Carbon Monoxide Alarms',
     content: (
       <>
-        <p>
-          The same 2022 regulations require carbon monoxide alarms in specific locations:
-        </p>
+        <p>The same 2022 regulations require carbon monoxide alarms in specific locations:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -295,8 +292,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tested at each tenancy start</strong> — same obligation as smoke alarms.
-                The landlord must confirm the CO alarm is working at the start of each new tenancy.
+                <strong>Tested at each tenancy start</strong> — same obligation as smoke alarms. The
+                landlord must confirm the CO alarm is working at the start of each new tenancy.
               </span>
             </li>
           </ul>
@@ -318,10 +315,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord-supplied appliances</strong> — if you provide appliances as part
-                of the tenancy (cooker, washing machine, fridge-freezer, microwave, kettle), you
-                have a duty to ensure they are safe. Annual visual inspection and PAT testing is
-                the recommended approach.
+                <strong>Landlord-supplied appliances</strong> — if you provide appliances as part of
+                the tenancy (cooker, washing machine, fridge-freezer, microwave, kettle), you have a
+                duty to ensure they are safe. Annual visual inspection and PAT testing is the
+                recommended approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -358,39 +355,27 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Current and previous EICR reports (keep for at least 10 years)
-              </span>
+              <span>Current and previous EICR reports (keep for at least 10 years)</span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Certificates for remedial work carried out following EICR observations
-              </span>
+              <span>Certificates for remedial work carried out following EICR observations</span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Records of smoke alarm and CO alarm installation and testing dates
-              </span>
+              <span>Records of smoke alarm and CO alarm installation and testing dates</span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                PAT testing records (if appliances are supplied)
-              </span>
+              <span>PAT testing records (if appliances are supplied)</span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Copies of EICR and certificates supplied to tenants (with dates)
-              </span>
+              <span>Copies of EICR and certificates supplied to tenants (with dates)</span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>
-                Correspondence with tenants about electrical safety issues
-              </span>
+              <span>Correspondence with tenants about electrical safety issues</span>
             </li>
           </ul>
         </div>
@@ -472,8 +457,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting and Invoicing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote remedial work on site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
-                  Landlords want a clear, itemised price for repairs — provide it before you leave.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                    quoting app
+                  </SEOInternalLink>
+                  . Landlords want a clear, itemised price for repairs — provide it before you
+                  leave.
                 </p>
               </div>
             </div>
@@ -518,7 +506,7 @@ export default function LandlordElectricalChecklistPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Professional EICR Reports for Landlords"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for landlord EICR reports, quoting, and invoicing. Complete on-site, send instantly. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -116,13 +116,13 @@ export default function ElecMateVsElectricalOMPage() {
                 app.
               </p>
               <p>
-                The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar
-                PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
-                calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide,
-                Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and
-                Regulation Lookup), full training courses (18th Edition, Level 2/3, AM2, EPA
-                simulator), and business management features (quoting, invoicing, Stripe payments,
-                Xero integration).
+                The platform includes 16 certificate types (EICR, EIC, Minor Works, EV Charger,
+                Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
+                electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer,
+                Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety,
+                Fault Finder, and Regulation Lookup), full training courses (18th Edition, Level
+                2/3, AM2, EPA simulator), and business management features (quoting, invoicing,
+                Stripe payments, Xero integration).
               </p>
               <SEOAppBridge
                 title="Everything in One App"
@@ -144,7 +144,7 @@ export default function ElecMateVsElectricalOMPage() {
                 certificates, both platforms deliver professional results.
               </p>
               <p>
-                The difference is in scope. Elec-Mate includes 8 certificate types in total, adding
+                The difference is in scope. Elec-Mate includes 16 certificate types in total, adding
                 EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and
                 PAT Testing certificates. As the industry expands into EV charging, renewable
                 energy, and fire safety, these specialist certificates are increasingly important.
@@ -174,11 +174,11 @@ export default function ElecMateVsElectricalOMPage() {
             certificates, it provides a workable solution.
           </p>
           <p>
-            Elec-Mate offers significantly more. The combination of 8 certificate types, 70+ BS 7671
-            calculators, 8 Elec-AI specialist tools, full training courses, and business management
-            (quoting, invoicing, Stripe payments, Xero integration) makes it a genuinely all-in-one
-            platform. There is no need for separate calculator apps, separate training platforms,
-            separate invoicing software, or separate AI subscriptions.
+            Elec-Mate offers significantly more. The combination of 16 certificate types, 70+ BS
+            7671 calculators, 8 Elec-AI specialist tools, full training courses, and business
+            management (quoting, invoicing, Stripe payments, Xero integration) makes it a genuinely
+            all-in-one platform. There is no need for separate calculator apps, separate training
+            platforms, separate invoicing software, or separate AI subscriptions.
           </p>
           <p>
             The value calculation is straightforward: Elec-Mate from £5.99 per month includes
@@ -256,7 +256,7 @@ export default function ElecMateVsElectricalOMPage() {
         {
           question: 'How much does Elec-Mate cost compared to Electrical OM?',
           answer:
-            'Elec-Mate starts from £5.99 per month and includes all features: 8 certificate types, 70+ calculators, 8 AI tools, training courses, and business management. Electrical OM pricing varies. When you factor in the cost of separate calculator apps, training platforms, and invoicing software that Elec-Mate replaces, the all-in-one approach typically saves money.',
+            'Elec-Mate starts from £5.99 per month and includes all features: 16 certificate types, 70+ calculators, 8 AI tools, training courses, and business management. Electrical OM pricing varies. When you factor in the cost of separate calculator apps, training platforms, and invoicing software that Elec-Mate replaces, the all-in-one approach typically saves money.',
         },
         {
           question: 'Does Elec-Mate work on iPhone and Android?',
@@ -292,7 +292,7 @@ export default function ElecMateVsElectricalOMPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

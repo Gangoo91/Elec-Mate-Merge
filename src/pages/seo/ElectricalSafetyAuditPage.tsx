@@ -605,7 +605,7 @@ export default function ElectricalSafetyAuditPage() {
         },
       ]}
       ctaHeading="Stay Audit-Ready With Elec-Mate"
-      ctaSubheading="Digital certificates, automatic re-inspection reminders, full audit trails, and AI-powered safety documentation. Join 430+ UK electricians who never worry about missing paperwork. 7-day free trial."
+      ctaSubheading="Digital certificates, automatic re-inspection reminders, full audit trails, and AI-powered safety documentation. Join 1,000+ UK electricians who never worry about missing paperwork. 7-day free trial."
     />
   );
 }

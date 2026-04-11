@@ -638,7 +638,7 @@ export default function MarinaElectricalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Certify Special Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital certificates, AI fault diagnosis, and BS 7671 calculators. Handles special installations including marinas. 7-day free trial."
     />
   );
 }

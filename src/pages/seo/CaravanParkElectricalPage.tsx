@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/marina-mooring-electrical',
     title: 'Marina & Mooring Electrical (Section 709)',
-    description: 'Shore power connections, galvanic corrosion protection, and RCD requirements for marinas.',
+    description:
+      'Shore power connections, galvanic corrosion protection, and RCD requirements for marinas.',
     icon: Plug,
     category: 'Guide',
   },
   {
     href: '/agricultural-electrical-installation',
     title: 'Agricultural Electrical Installation (Section 705)',
-    description: 'BS 7671 Section 705 requirements for farm buildings, livestock areas, and rural sites.',
+    description:
+      'BS 7671 Section 705 requirements for farm buildings, livestock areas, and rural sites.',
     icon: Building2,
     category: 'Guide',
   },
@@ -137,9 +139,9 @@ const sections = [
               <span>
                 <strong>Scope</strong> — Section 708 covers electrical installations for supplying
                 electricity to caravans, motorhomes, and other leisure vehicles at caravan parks,
-                camping parks, and similar locations. It applies to the fixed installation from
-                the origin of supply to (and including) the pitch supply equipment. The internal
-                wiring of individual caravans is covered by a separate standard (BS EN 1648).
+                camping parks, and similar locations. It applies to the fixed installation from the
+                origin of supply to (and including) the pitch supply equipment. The internal wiring
+                of individual caravans is covered by a separate standard (BS EN 1648).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -154,8 +156,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Risk profile</strong> — caravan park installations present elevated risk
-                due to outdoor environments with weather exposure, non-expert users connecting and
+                <strong>Risk profile</strong> — caravan park installations present elevated risk due
+                to outdoor environments with weather exposure, non-expert users connecting and
                 disconnecting supplies, high pedestrian traffic near electrical equipment, seasonal
                 heavy loading, and proximity of metallic structures (caravan bodies, water pipes)
                 that may become energised in fault conditions.
@@ -190,19 +192,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overcurrent protection</strong> — each pitch supply must incorporate an
-                MCB or fuse providing overcurrent protection. The rating is typically 16 A for
-                standard pitches, matching the 16 A IEC 60309 socket outlet. The MCB must be
-                accessible to enable isolation of the pitch without affecting other pitches.
+                <strong>Overcurrent protection</strong> — each pitch supply must incorporate an MCB
+                or fuse providing overcurrent protection. The rating is typically 16 A for standard
+                pitches, matching the 16 A IEC 60309 socket outlet. The MCB must be accessible to
+                enable isolation of the pitch without affecting other pitches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection</strong> — a 30 mA residual current device must protect
-                each pitch supply. The RCD and MCB are typically combined as an RCBO in modern
-                pitch supply units, providing both fault current protection and overcurrent
-                protection in a single device per pitch.
+                <strong>RCD protection</strong> — a 30 mA residual current device must protect each
+                pitch supply. The RCD and MCB are typically combined as an RCBO in modern pitch
+                supply units, providing both fault current protection and overcurrent protection in
+                a single device per pitch.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -210,8 +212,8 @@ const sections = [
               <span>
                 <strong>Weatherproof enclosure</strong> — the supply equipment assembly must be
                 housed in an enclosure with a minimum IP rating of IP44. Enclosures in exposed
-                locations may require IP54 or IP65. Enclosures must maintain their IP rating
-                whether a plug is inserted or not.
+                locations may require IP54 or IP65. Enclosures must maintain their IP rating whether
+                a plug is inserted or not.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,26 +247,26 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Colour coding</strong> — CEE connectors are colour-coded by voltage and
-                frequency. Blue indicates 200–250 V, 50/60 Hz. Three pins (line, neutral, earth)
-                for single-phase, and the 6h clock position for 230 V single-phase prevents
-                incorrect connection between different voltage systems.
+                frequency. Blue indicates 200–250 V, 50/60 Hz. Three pins (line, neutral, earth) for
+                single-phase, and the 6h clock position for 230 V single-phase prevents incorrect
+                connection between different voltage systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP rating</strong> — IEC 60309 socket outlets are available in IP44 and
-                IP67 ratings. IP44 is the minimum for outdoor caravan park use. A self-closing
-                cover on the socket face maintains the IP rating when no plug is inserted.
+                <strong>IP rating</strong> — IEC 60309 socket outlets are available in IP44 and IP67
+                ratings. IP44 is the minimum for outdoor caravan park use. A self-closing cover on
+                the socket face maintains the IP rating when no plug is inserted.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth contact first</strong> — CEE connectors are designed so the earth
-                contact engages first when connecting and disengages last when disconnecting.
-                This earthing-before-energising sequence is a fundamental safety feature of the
-                IEC 60309 design.
+                contact engages first when connecting and disengages last when disconnecting. This
+                earthing-before-energising sequence is a fundamental safety feature of the IEC 60309
+                design.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,8 +274,8 @@ const sections = [
               <span>
                 <strong>EHU cables</strong> — caravan users connect via a proprietary electric
                 hookup (EHU) cable with a CEE plug at one end and an inlet socket at the caravan
-                end. These cables must be rated for outdoor use and must not exceed the 25 m
-                maximum length specified in Section 708.
+                end. These cables must be rated for outdoor use and must not exceed the 25 m maximum
+                length specified in Section 708.
               </span>
             </li>
           </ul>
@@ -288,8 +290,8 @@ const sections = [
       <>
         <p>
           Residual current device (RCD) protection is a cornerstone of caravan park electrical
-          safety. The outdoor environment, non-expert users, and proximity to earthed metalwork
-          make 30 mA RCD protection at each pitch a non-negotiable requirement under Section 708.
+          safety. The outdoor environment, non-expert users, and proximity to earthed metalwork make
+          30 mA RCD protection at each pitch a non-negotiable requirement under Section 708.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -299,8 +301,8 @@ const sections = [
                 <strong>30 mA maximum IΔn</strong> — Regulation 708.411.3.3 requires each pitch
                 supply socket outlet be protected by an RCD with a rated residual operating current
                 not exceeding 30 mA. This threshold provides protection against fatal electric
-                shock: the let-go current for most adults is around 10–15 mA, and a 30 mA RCD
-                limits the duration of a shock to prevent cardiac fibrillation.
+                shock: the let-go current for most adults is around 10–15 mA, and a 30 mA RCD limits
+                the duration of a shock to prevent cardiac fibrillation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -308,19 +310,19 @@ const sections = [
               <span>
                 <strong>Type A RCDs</strong> — modern caravans and motorhomes contain electronic
                 equipment (battery chargers, inverter-chargers) that can produce pulsating DC
-                residual currents. Type AC RCDs do not detect pulsating DC currents. Type A RCDs
-                are required where such equipment may be connected — in practice, all new pitch
-                supply installations.
+                residual currents. Type AC RCDs do not detect pulsating DC currents. Type A RCDs are
+                required where such equipment may be connected — in practice, all new pitch supply
+                installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT systems and earth electrode resistance</strong> — where TT earthing
-                is used, the product of the earth electrode resistance (RA) and the RCD rated
-                operating current (IΔn) must not exceed 50 V: RA × IΔn ≤ 50 V. With a 30 mA
-                RCD this means the earth electrode resistance must not exceed 1667 Ω, though
-                in practice a much lower resistance (under 200 Ω) is recommended.
+                <strong>TT systems and earth electrode resistance</strong> — where TT earthing is
+                used, the product of the earth electrode resistance (RA) and the RCD rated operating
+                current (IΔn) must not exceed 50 V: RA × IΔn ≤ 50 V. With a 30 mA RCD this means the
+                earth electrode resistance must not exceed 1667 Ω, though in practice a much lower
+                resistance (under 200 Ω) is recommended.
               </span>
             </li>
           </ul>
@@ -364,17 +366,17 @@ const sections = [
               <span>
                 <strong>One supply point per pitch</strong> — each caravan pitch must have its own
                 dedicated supply point. Sharing a supply point between multiple pitches is not
-                permitted, as it prevents individual isolation, makes metering impractical, and
-                may compromise individual RCD protection requirements.
+                permitted, as it prevents individual isolation, makes metering impractical, and may
+                compromise individual RCD protection requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Height and accessibility</strong> — supply points should be mounted at
-                0.5–1.0 m above finished ground level and positioned to avoid obstruction by
-                caravan awnings, steps, or stabiliser legs. The socket outlet must be accessible
-                without tools.
+                0.5–1.0 m above finished ground level and positioned to avoid obstruction by caravan
+                awnings, steps, or stabiliser legs. The socket outlet must be accessible without
+                tools.
               </span>
             </li>
           </ul>
@@ -388,10 +390,10 @@ const sections = [
     content: (
       <>
         <p>
-          Earthing at caravan parks is one of the most technically demanding aspects of a Section 708
-          installation. The earthing system must reliably limit touch voltages in fault conditions,
-          support RCD operation, and remain effective across seasonal variations in ground conditions
-          typical of UK sites.
+          Earthing at caravan parks is one of the most technically demanding aspects of a Section
+          708 installation. The earthing system must reliably limit touch voltages in fault
+          conditions, support RCD operation, and remain effective across seasonal variations in
+          ground conditions typical of UK sites.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -399,19 +401,19 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>TT systems</strong> — many caravan parks are supplied by overhead lines
-                where a TN-C-S protective earth is not reliably available at each pitch. TT
-                earthing using local earth electrodes is common. Earth electrode resistance must
-                be measured during commissioning and at each periodic inspection.
+                where a TN-C-S protective earth is not reliably available at each pitch. TT earthing
+                using local earth electrodes is common. Earth electrode resistance must be measured
+                during commissioning and at each periodic inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipotential bonding</strong> — all metallic structures in the vicinity
-                of pitch supply equipment — fencing, water pipes, drainage channels — must be
-                assessed for supplementary equipotential bonding. Where metallic structures are
-                within arm's reach of live equipment, bonding is required to prevent dangerous
-                potential differences in fault conditions.
+                <strong>Equipotential bonding</strong> — all metallic structures in the vicinity of
+                pitch supply equipment — fencing, water pipes, drainage channels — must be assessed
+                for supplementary equipotential bonding. Where metallic structures are within arm's
+                reach of live equipment, bonding is required to prevent dangerous potential
+                differences in fault conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,8 +438,8 @@ const sections = [
       <>
         <p>
           Larger caravan parks distribute electricity to pitches via a hierarchical system: a main
-          incoming supply and metering, submain distribution cables to zone distribution boards,
-          and individual pitch supply units. Metering may be provided at individual pitches or
+          incoming supply and metering, submain distribution cables to zone distribution boards, and
+          individual pitch supply units. Metering may be provided at individual pitches or
           electricity cost may be included in the pitch fee.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -446,8 +448,8 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Individual metering</strong> — where per-pitch metering is provided
-                (increasingly common at premium sites), the meter is installed within or adjacent
-                to the pitch supply unit. Prepayment meters are popular as they eliminate billing
+                (increasingly common at premium sites), the meter is installed within or adjacent to
+                the pitch supply unit. Prepayment meters are popular as they eliminate billing
                 complexity. Metering equipment must be weatherproof and suitable for outdoor use.
               </span>
             </li>
@@ -463,10 +465,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Diversity</strong> — maximum demand calculations must apply diversity.
-                Not all pitches will be occupied simultaneously, and caravans rarely run at full
-                connected load. The design must ensure that under realistic worst-case loading
-                the supply is adequate and voltage drop limits are not exceeded.
+                <strong>Diversity</strong> — maximum demand calculations must apply diversity. Not
+                all pitches will be occupied simultaneously, and caravans rarely run at full
+                connected load. The design must ensure that under realistic worst-case loading the
+                supply is adequate and voltage drop limits are not exceeded.
               </span>
             </li>
           </ul>
@@ -524,7 +526,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Specialist inspection work made simple with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, RCD test recording, and instant PDF export. Ideal for caravan park annual inspections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, RCD test recording, and instant PDF export. Ideal for caravan park annual inspections. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -561,7 +563,7 @@ export default function CaravanParkElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan Park Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Caravan Park EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, RCD test entry, and instant PDF export. Perfect for annual caravan park inspections. 7-day free trial."
     />
   );
 }

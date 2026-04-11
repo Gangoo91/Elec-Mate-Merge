@@ -92,28 +92,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
+    description:
+      'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
+    description:
+      'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/consumer-unit-replacement-sheffield',
     title: 'Consumer Unit Replacement Sheffield',
-    description: 'Consumer unit and fuse box replacement in Sheffield — costs, regulations, and qualified electricians.',
+    description:
+      'Consumer unit and fuse box replacement in Sheffield — costs, regulations, and qualified electricians.',
     icon: Building2,
     category: 'Guide',
   },
@@ -138,10 +142,10 @@ const sections = [
       <>
         <p>
           A consumer unit replacement is one of the most significant electrical upgrades a Liverpool
-          homeowner or landlord can make. The consumer unit — often called a fuse box — is the
-          heart of a domestic electrical installation. It distributes power to every circuit in
-          the property and provides the overcurrent and fault protection that keeps occupants safe.
-          When a consumer unit fails, becomes outdated, or no longer meets current regulations,
+          homeowner or landlord can make. The consumer unit — often called a fuse box — is the heart
+          of a domestic electrical installation. It distributes power to every circuit in the
+          property and provides the overcurrent and fault protection that keeps occupants safe. When
+          a consumer unit fails, becomes outdated, or no longer meets current regulations,
           replacement is the appropriate action.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -162,16 +166,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable work</strong> — consumer unit replacement must be notified
-                under Part P of the Building Regulations. The easiest route is to use an NICEIC,
-                NAPIT, or ELECSA registered electrician who handles the notification for you.
+                <strong>Notifiable work</strong> — consumer unit replacement must be notified under
+                Part P of the Building Regulations. The easiest route is to use an NICEIC, NAPIT, or
+                ELECSA registered electrician who handles the notification for you.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Liverpool context</strong> — Liverpool and Merseyside have large amounts
-                of older housing stock, particularly in inner-city areas such as Toxteth, Wavertree,
+                <strong>Liverpool context</strong> — Liverpool and Merseyside have large amounts of
+                older housing stock, particularly in inner-city areas such as Toxteth, Wavertree,
                 Anfield, and Kensington. Consumer unit replacement demand is high across all these
                 postcodes and the surrounding areas of Wirral, Knowsley, and Sefton.
               </span>
@@ -189,19 +193,19 @@ const sections = [
         <p>
           The requirement for non-combustible consumer unit enclosures in domestic premises was
           introduced by Amendment 2 to BS 7671:2008, effective 1 July 2016. It is carried forward
-          unchanged in BS 7671:2018+A3:2024, which is the current edition applicable to all work
-          in Liverpool and across England.
+          unchanged in BS 7671:2018+A3:2024, which is the current edition applicable to all work in
+          Liverpool and across England.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire safety basis</strong> — arc flash events inside a consumer unit
-                during a short circuit release intense heat. A metal enclosure contains this
-                energy and prevents ignition of surrounding materials. A plastic enclosure can
-                melt, ignite, and propagate a fire into joists, wall cavities, and other structural
-                elements of a Liverpool terrace where fire spread can be very rapid.
+                <strong>Fire safety basis</strong> — arc flash events inside a consumer unit during
+                a short circuit release intense heat. A metal enclosure contains this energy and
+                prevents ignition of surrounding materials. A plastic enclosure can melt, ignite,
+                and propagate a fire into joists, wall cavities, and other structural elements of a
+                Liverpool terrace where fire spread can be very rapid.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -209,18 +213,18 @@ const sections = [
               <span>
                 <strong>Applies at point of replacement</strong> — existing plastic consumer units
                 in Liverpool properties are not subject to mandatory immediate replacement. The
-                requirement applies when a replacement is carried out for any reason. At that
-                point, a compliant metal unit is required — you cannot replace a plastic unit
-                with another plastic unit.
+                requirement applies when a replacement is carried out for any reason. At that point,
+                a compliant metal unit is required — you cannot replace a plastic unit with another
+                plastic unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR coding</strong> — a plastic consumer unit installed before July 2016
-                is typically coded C3 (improvement recommended) on an EICR, not C2, as it was
-                compliant at the time of installation. However, any heat damage or deterioration
-                to the enclosure would attract a more serious code.
+                <strong>EICR coding</strong> — a plastic consumer unit installed before July 2016 is
+                typically coded C3 (improvement recommended) on an EICR, not C2, as it was compliant
+                at the time of installation. However, any heat damage or deterioration to the
+                enclosure would attract a more serious code.
               </span>
             </li>
           </ul>
@@ -243,9 +247,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket-outlet circuits</strong> — all socket-outlet circuits rated up to
-                32A must have 30mA RCD protection. This applies to ring final circuits and radial
-                socket circuits throughout the dwelling.
+                <strong>Socket-outlet circuits</strong> — all socket-outlet circuits rated up to 32A
+                must have 30mA RCD protection. This applies to ring final circuits and radial socket
+                circuits throughout the dwelling.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,11 +264,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dual-RCD vs RCBO</strong> — the choice between a dual-RCD consumer unit
-                and an all-RCBO consumer unit affects both cost and resilience. RCBOs cost more
-                per device but provide individual circuit protection, preventing a single fault
-                from tripping an entire group of circuits. For Liverpool rental properties, RCBOs
-                reduce tenant disruption when a fault occurs.
+                <strong>Dual-RCD vs RCBO</strong> — the choice between a dual-RCD consumer unit and
+                an all-RCBO consumer unit affects both cost and resilience. RCBOs cost more per
+                device but provide individual circuit protection, preventing a single fault from
+                tripping an entire group of circuits. For Liverpool rental properties, RCBOs reduce
+                tenant disruption when a fault occurs.
               </span>
             </li>
           </ul>
@@ -279,8 +283,9 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations (England) makes consumer unit replacement notifiable
-          work. Liverpool City Council is the local building control authority, though self-certified
-          work by registered competent persons bypasses the need for direct council involvement.
+          work. Liverpool City Council is the local building control authority, though
+          self-certified work by registered competent persons bypasses the need for direct council
+          involvement.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -290,15 +295,15 @@ const sections = [
                 <strong>Competent person route</strong> — the standard route for consumer unit
                 replacement in Liverpool. An NICEIC, NAPIT, or ELECSA registered electrician
                 notifies Liverpool City Council building control and issues a Building Regulations
-                Compliance Certificate. No action required from the householder other than
-                retaining the paperwork.
+                Compliance Certificate. No action required from the householder other than retaining
+                the paperwork.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Installation Certificate</strong> — the electrician must issue
-                a completed{' '}
+                <strong>Electrical Installation Certificate</strong> — the electrician must issue a
+                completed{' '}
                 <SEOInternalLink href="/tools/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
@@ -329,8 +334,8 @@ const sections = [
         <p>
           BS EN 61439-3 is the product standard for distribution boards (including domestic consumer
           units) intended for use by ordinary persons. Any consumer unit installed in a Liverpool
-          property must conform to this standard as well as the installation requirements of
-          BS 7671.
+          property must conform to this standard as well as the installation requirements of BS
+          7671.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -339,8 +344,8 @@ const sections = [
               <span>
                 <strong>Design verification</strong> — manufacturers must demonstrate that the
                 consumer unit assembly meets its rated values through testing or calculation. This
-                includes the prospective short-circuit current (PSCC) rating, which must be
-                adequate for the fault level at the Liverpool installation address.
+                includes the prospective short-circuit current (PSCC) rating, which must be adequate
+                for the fault level at the Liverpool installation address.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,17 +353,17 @@ const sections = [
               <span>
                 <strong>UKCA marking</strong> — consumer units placed on the UK market must carry
                 UKCA marking. Liverpool electricians should only install units from established
-                manufacturers such as Hager, Schneider Electric, Wylex, or Contactum that carry
-                this marking and comply with BS EN 61439-3.
+                manufacturers such as Hager, Schneider Electric, Wylex, or Contactum that carry this
+                marking and comply with BS EN 61439-3.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Routine verification</strong> — each consumer unit unit is tested by the
-                manufacturer during production. Site testing by your electrician under BS 7671
-                Part 6 then verifies the installed condition of all circuits, with results recorded
-                in the Schedule of Test Results.
+                manufacturer during production. Site testing by your electrician under BS 7671 Part
+                6 then verifies the installed condition of all circuits, with results recorded in
+                the Schedule of Test Results.
               </span>
             </li>
           </ul>
@@ -381,8 +386,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small flat or terrace (1–2 bed)</strong> — £380 to £520. Common across
-                L1, L4, L6, and L8 postcodes. Typically 6 to 10 circuits.
+                <strong>Small flat or terrace (1–2 bed)</strong> — £380 to £520. Common across L1,
+                L4, L6, and L8 postcodes. Typically 6 to 10 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -402,8 +407,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional work</strong> — earthing upgrades, main bonding conductors,
-                or meter tails replacement can add £100 to £350 depending on the scope identified
+                <strong>Additional work</strong> — earthing upgrades, main bonding conductors, or
+                meter tails replacement can add £100 to £350 depending on the scope identified
                 during the survey.
               </span>
             </li>
@@ -411,8 +416,8 @@ const sections = [
         </div>
         <p>
           Obtain at least two or three written quotes from NICEIC or NAPIT registered Liverpool
-          electricians. All quotes should explicitly state that testing, certification, and
-          Part P notification are included — these are not optional extras.
+          electricians. All quotes should explicitly state that testing, certification, and Part P
+          notification are included — these are not optional extras.
         </p>
       </>
     ),
@@ -424,9 +429,9 @@ const sections = [
       <>
         <p>
           Liverpool's housing stock presents specific considerations for consumer unit replacement.
-          The city's rich industrial heritage means large areas of Victorian and Edwardian terracing,
-          along with post-war council estates and more recent new-builds, each presenting different
-          electrical challenges.
+          The city's rich industrial heritage means large areas of Victorian and Edwardian
+          terracing, along with post-war council estates and more recent new-builds, each presenting
+          different electrical challenges.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -442,19 +447,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO properties</strong> — Liverpool has a large student population due
-                to the University of Liverpool and Liverpool John Moores University. Student HMOs
-                in Wavertree, Kensington, and Toxteth frequently require consumer unit upgrades
-                as landlords bring properties into EICR compliance.
+                <strong>HMO properties</strong> — Liverpool has a large student population due to
+                the University of Liverpool and Liverpool John Moores University. Student HMOs in
+                Wavertree, Kensington, and Toxteth frequently require consumer unit upgrades as
+                landlords bring properties into EICR compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wirral and Knowsley</strong> — properties on the Wirral peninsula (CH44
-                to CH48) and in Knowsley are covered by different local authorities but the same
-                Part P and BS 7671 requirements apply. Consumer unit replacement in these areas
-                follows identical regulations to Liverpool proper.
+                <strong>Wirral and Knowsley</strong> — properties on the Wirral peninsula (CH44 to
+                CH48) and in Knowsley are covered by different local authorities but the same Part P
+                and BS 7671 requirements apply. Consumer unit replacement in these areas follows
+                identical regulations to Liverpool proper.
               </span>
             </li>
           </ul>
@@ -482,13 +487,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Liverpool</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the full Electrical Installation Certificate and Schedule of Test
-                  Results while still at the Liverpool property. Record insulation resistance,
-                  earth fault loop impedance, and RCD test values directly. Generate and send
-                  the PDF before you leave. No paper, no evening admin.
+                  Results while still at the Liverpool property. Record insulation resistance, earth
+                  fault loop impedance, and RCD test values directly. Generate and send the PDF
+                  before you leave. No paper, no evening admin.
                 </p>
               </div>
             </div>
@@ -504,8 +507,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
-                  to quote the additional work on site. Liverpool landlords are far more likely
-                  to approve additional work while you are there to explain what you have found.
+                  to quote the additional work on site. Liverpool landlords are far more likely to
+                  approve additional work while you are there to explain what you have found.
                 </p>
               </div>
             </div>
@@ -513,7 +516,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Liverpool electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and complete more jobs per day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Eliminate paperwork and complete more jobs per day. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -550,7 +553,7 @@ export default function ConsumerUnitReplacementLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

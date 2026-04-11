@@ -98,8 +98,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-business-plan-template',
     title: 'Electrical Business Plan',
-    description:
-      'Financial projections and growth strategy for expanding into commercial work.',
+    description: 'Financial projections and growth strategy for expanding into commercial work.',
     icon: Briefcase,
     category: 'Guide',
   },
@@ -130,8 +129,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Professional electrical certificates for commercial installations.',
+    description: 'Professional electrical certificates for commercial installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -148,21 +146,20 @@ const sections = [
     content: (
       <>
         <p>
-          Domestic work is the bread and butter for most sole-trader electricians, but
-          commercial electrical work offers higher day rates, longer projects, repeat
-          business, and more predictable income. A domestic electrician might earn £200 to
-          £350 per day. A commercial electrician on the same level of qualification can earn
-          £280 to £450 per day.
+          Domestic work is the bread and butter for most sole-trader electricians, but commercial
+          electrical work offers higher day rates, longer projects, repeat business, and more
+          predictable income. A domestic electrician might earn £200 to £350 per day. A commercial
+          electrician on the same level of qualification can earn £280 to £450 per day.
         </p>
         <p>
-          The barrier to entry is not skill — if you can wire a house to BS 7671, you can
-          wire an office. The barrier is accreditation, insurance, and knowing where to find
-          the work. This guide covers all three.
+          The barrier to entry is not skill — if you can wire a house to BS 7671, you can wire an
+          office. The barrier is accreditation, insurance, and knowing where to find the work. This
+          guide covers all three.
         </p>
         <p>
-          You do not have to choose one or the other. Many successful electrical businesses
-          maintain a mix of domestic and commercial work — domestic for quick cash flow,
-          commercial for higher margins and steady contracts.
+          You do not have to choose one or the other. Many successful electrical businesses maintain
+          a mix of domestic and commercial work — domestic for quick cash flow, commercial for
+          higher margins and steady contracts.
         </p>
       </>
     ),
@@ -173,8 +170,8 @@ const sections = [
     content: (
       <>
         <p>
-          Tenders are formal invitations to bid on a contract. The client publishes the scope
-          of work, specification, and deadline — you submit your price and credentials.
+          Tenders are formal invitations to bid on a contract. The client publishes the scope of
+          work, specification, and deadline — you submit your price and credentials.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -183,10 +180,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Contracts Finder (Free)</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Government-run portal listing all public sector contracts above £12,000.
-                  Councils, NHS trusts, schools, MOD, housing associations. Search for
-                  "electrical installation", "electrical maintenance", "periodic inspection".
-                  Set up email alerts for your area and trade.
+                  Government-run portal listing all public sector contracts above £12,000. Councils,
+                  NHS trusts, schools, MOD, housing associations. Search for "electrical
+                  installation", "electrical maintenance", "periodic inspection". Set up email
+                  alerts for your area and trade.
                 </p>
               </div>
             </div>
@@ -198,9 +195,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Constructionline (From £300/year)</h4>
                 <p className="text-white text-sm leading-relaxed">
                   SSIP accreditation AND a tender portal in one. Over 10,000 buyers use
-                  Constructionline to find contractors. Silver level includes SSIP
-                  accreditation. Gold level adds additional certification. Registration also
-                  gets you onto many main contractor approved lists automatically.
+                  Constructionline to find contractors. Silver level includes SSIP accreditation.
+                  Gold level adds additional certification. Registration also gets you onto many
+                  main contractor approved lists automatically.
                 </p>
               </div>
             </div>
@@ -212,8 +209,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">CompeteFor (Free)</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Links businesses to contract opportunities from major projects. Particularly
-                  active around large infrastructure and development projects. Free to register
-                  and bid. Good for subcontracting opportunities.
+                  active around large infrastructure and development projects. Free to register and
+                  bid. Good for subcontracting opportunities.
                 </p>
               </div>
             </div>
@@ -228,9 +225,9 @@ const sections = [
     content: (
       <>
         <p>
-          Many commercial contracts — especially smaller ones — are never publicly tendered.
-          They go to electricians the client already knows and trusts. Building relationships
-          is how you access this hidden market.
+          Many commercial contracts — especially smaller ones — are never publicly tendered. They go
+          to electricians the client already knows and trusts. Building relationships is how you
+          access this hidden market.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -238,18 +235,18 @@ const sections = [
               <Handshake className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Build relationships with builders and main contractors.</strong> Attend
-                local construction networking events, join the Federation of Master Builders
-                events, and contact local main contractors directly. Offer to be their go-to
-                electrical subcontractor. Reliability wins more commercial work than price.
+                local construction networking events, join the Federation of Master Builders events,
+                and contact local main contractors directly. Offer to be their go-to electrical
+                subcontractor. Reliability wins more commercial work than price.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Handshake className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Connect with architects and building services consultants.</strong> They
-                specify the electrical work and often recommend contractors to their clients.
-                A good relationship with two or three local architectural practices can
-                generate a steady stream of work.
+                specify the electrical work and often recommend contractors to their clients. A good
+                relationship with two or three local architectural practices can generate a steady
+                stream of work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,24 +269,24 @@ const sections = [
     content: (
       <>
         <p>
-          Facilities management companies manage buildings on behalf of their owners. They
-          need local electrical contractors for three types of work:
+          Facilities management companies manage buildings on behalf of their owners. They need
+          local electrical contractors for three types of work:
         </p>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Reactive</h3>
             <p className="text-white text-sm leading-relaxed">
-              Emergency call-outs: power failures, tripping RCDs, faulty lighting. Typically
-              4-hour response. Rates: £50 to £80/hour plus materials, or fixed call-out fee
-              of £120 to £200.
+              Emergency call-outs: power failures, tripping RCDs, faulty lighting. Typically 4-hour
+              response. Rates: £50 to £80/hour plus materials, or fixed call-out fee of £120 to
+              £200.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">PPM</h3>
             <p className="text-white text-sm leading-relaxed">
-              Planned preventative maintenance: EICR testing, emergency lighting testing,
-              PAT testing, lamp replacement schedules. Steady, predictable work — often on a
-              12-month contract.
+              Planned preventative maintenance: EICR testing, emergency lighting testing, PAT
+              testing, lamp replacement schedules. Steady, predictable work — often on a 12-month
+              contract.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -302,10 +299,10 @@ const sections = [
         </div>
         <p>
           <strong>How to approach FM companies:</strong> Research which FM companies manage
-          properties in your area (LinkedIn is useful for this). Contact their procurement
-          or supply chain team. Provide your accreditations, insurance certificates, a company
-          profile, and two or three references. Ask to be added to their approved supplier
-          list. Follow up monthly until you get your first instruction.
+          properties in your area (LinkedIn is useful for this). Contact their procurement or supply
+          chain team. Provide your accreditations, insurance certificates, a company profile, and
+          two or three references. Ask to be added to their approved supplier list. Follow up
+          monthly until you get your first instruction.
         </p>
       </>
     ),
@@ -316,9 +313,9 @@ const sections = [
     content: (
       <>
         <p>
-          A framework agreement is a pre-qualification process. Once accepted, you can bid
-          on contracts within the framework without going through full pre-qualification
-          each time. This saves enormous amounts of admin.
+          A framework agreement is a pre-qualification process. Once accepted, you can bid on
+          contracts within the framework without going through full pre-qualification each time.
+          This saves enormous amounts of admin.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white text-sm">
@@ -326,24 +323,24 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local council frameworks</strong> — many councils maintain frameworks for
-                electrical work across their properties (schools, offices, social housing).
-                Check your local council procurement pages for framework opportunities.
+                electrical work across their properties (schools, offices, social housing). Check
+                your local council procurement pages for framework opportunities.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Housing association frameworks</strong> — social housing providers need
-                electrical contractors for rewires, testing, and upgrades. Large volumes,
-                repeat work, predictable income. Register with housing associations in your area.
+                electrical contractors for rewires, testing, and upgrades. Large volumes, repeat
+                work, predictable income. Register with housing associations in your area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NHS Supply Chain</strong> — NHS trusts procure electrical work through
-                frameworks. The pre-qualification is rigorous but the contracts are long-term
-                and well-paid.
+                frameworks. The pre-qualification is rigorous but the contracts are long-term and
+                well-paid.
               </span>
             </li>
           </ul>
@@ -357,9 +354,9 @@ const sections = [
     content: (
       <>
         <p>
-          Subcontracting means working under a main contractor on their contract. They manage
-          the client, the programme, and the overall project — you provide the electrical
-          labour and expertise.
+          Subcontracting means working under a main contractor on their contract. They manage the
+          client, the programme, and the overall project — you provide the electrical labour and
+          expertise.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -432,8 +429,8 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial work is priced differently from domestic. Per-point pricing does not
-          work — instead, use a detailed schedule of quantities or day rates.
+          Commercial work is priced differently from domestic. Per-point pricing does not work —
+          instead, use a detailed schedule of quantities or day rates.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4">Commercial Day Rates (2026)</h4>
@@ -465,10 +462,10 @@ const sections = [
     content: (
       <>
         <p>
-          Breaking into commercial work does not happen overnight, but the steps are clear:
-          get your accreditations, register on tender portals, contact FM companies, and
-          start building relationships with main contractors. The first contract is the
-          hardest — after that, your track record does the selling.
+          Breaking into commercial work does not happen overnight, but the steps are clear: get your
+          accreditations, register on tender portals, contact FM companies, and start building
+          relationships with main contractors. The first contract is the hardest — after that, your
+          track record does the selling.
         </p>
         <SEOAppBridge
           title="Manage commercial and domestic work in one place"
@@ -509,7 +506,7 @@ export default function FindingCommercialWorkPage() {
       faqHeading="Frequently Asked Questions About Commercial Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Manage Commercial Work Professionally"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional documentation that commercial clients expect. 7-day free trial, cancel anytime."
     />
   );
 }

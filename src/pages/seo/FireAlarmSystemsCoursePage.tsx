@@ -579,7 +579,7 @@ export default function FireAlarmSystemsCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in fire alarm systems?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any BS 5839 question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 8 structured modules, interactive quizzes, video content, and an AI tutor for any BS 5839 question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/fire-alarm-systems"
     />

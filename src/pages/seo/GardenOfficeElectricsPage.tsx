@@ -603,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garden offices faster"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for garden office electrics in one app. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for garden office electrics in one app. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -640,7 +640,7 @@ export default function GardenOfficeElectricsPage() {
       faqHeading="Frequently Asked Questions About Garden Office Electrics"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Garden Office Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for SWA cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for SWA cable sizing, professional quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

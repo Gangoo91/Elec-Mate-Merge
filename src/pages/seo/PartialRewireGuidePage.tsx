@@ -524,7 +524,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify partial rewires from your phone"
-          description="Join 430+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site, and send everything to the client instantly. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to turn EICR defects into priced quotes, complete EIC certificates on site, and send everything to the client instantly. 7-day free trial."
           icon={FileCheck2}
         />
       </>

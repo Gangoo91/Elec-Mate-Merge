@@ -479,7 +479,7 @@ export default function SmartHomeAutomationCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to specialise in smart home automation?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 9 structured modules, interactive quizzes, video content, and an AI tutor for any KNX or IoT question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 9 structured modules, interactive quizzes, video content, and an AI tutor for any KNX or IoT question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/smart-home-automation"
     />

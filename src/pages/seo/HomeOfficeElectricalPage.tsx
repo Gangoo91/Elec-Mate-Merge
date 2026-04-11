@@ -102,7 +102,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on the office circuit — particularly for longer runs to upstairs rooms.',
+    description:
+      'Check voltage drop on the office circuit — particularly for longer runs to upstairs rooms.',
     icon: Zap,
     category: 'Tool',
   },
@@ -117,8 +118,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
-    description:
-      'Price home office electrical upgrades with itemised materials and labour costs.',
+    description: 'Price home office electrical upgrades with itemised materials and labour costs.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -153,14 +153,14 @@ const sections = [
         <p>
           The shift to remote and hybrid working has made the home office one of the most common
           electrical upgrade requests in UK domestic work. Homeowners who previously made do with a
-          laptop on the kitchen table now want a properly equipped, permanent workspace with reliable
-          power, good lighting, and wired networking.
+          laptop on the kitchen table now want a properly equipped, permanent workspace with
+          reliable power, good lighting, and wired networking.
         </p>
         <p>
           A well-designed home office electrical setup makes a real difference to productivity,
           comfort, and equipment reliability. It also adds value to the property — estate agents
-          increasingly list a dedicated home office as a selling point. The work ranges from a simple
-          socket upgrade (£200) to a comprehensive room fit-out with dedicated circuits, data
+          increasingly list a dedicated home office as a selling point. The work ranges from a
+          simple socket upgrade (£200) to a comprehensive room fit-out with dedicated circuits, data
           cabling, smart lighting, and integrated charging (£1,500).
         </p>
         <p>
@@ -261,8 +261,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum provision</strong> — 3 double sockets at desk height (6 positions)
-                plus 1 double at floor level. This accommodates: computer/laptop charger, monitor(s),
-                printer, desk lamp, phone charger, and a spare.
+                plus 1 double at floor level. This accommodates: computer/laptop charger,
+                monitor(s), printer, desk lamp, phone charger, and a spare.
               </span>
             </li>
           </ul>
@@ -278,16 +278,16 @@ const sections = [
         <p>
           Wired ethernet is a significant upgrade over Wi-Fi for anyone working from home full-time.
           Wi-Fi is affected by interference from neighbouring networks, microwave ovens, Bluetooth
-          devices, and structural elements in the building. A wired Cat6 or Cat6a connection provides
-          consistent speed, low latency, and zero dropouts.
+          devices, and structural elements in the building. A wired Cat6 or Cat6a connection
+          provides consistent speed, low latency, and zero dropouts.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Cat6</h3>
             <p className="text-white text-sm leading-relaxed">
               Supports gigabit ethernet (1 Gbps) at up to 100 metres. Adequate for current broadband
-              speeds and local network file transfers. Lower cost than Cat6a. The standard choice for
-              most home office installations.
+              speeds and local network file transfers. Lower cost than Cat6a. The standard choice
+              for most home office installations.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -305,9 +305,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Route</strong> — typically from the router position (living room, hallway, or
-                under the stairs) through the loft or under the floor to the office. Avoid running
-                data cable parallel to mains cable in the same void — maintain at least 50mm
+                <strong>Route</strong> — typically from the router position (living room, hallway,
+                or under the stairs) through the loft or under the floor to the office. Avoid
+                running data cable parallel to mains cable in the same void — maintain at least 50mm
                 separation or use crossovers at 90 degrees.
               </span>
             </li>
@@ -324,9 +324,9 @@ const sections = [
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Multiple runs</strong> — if the customer has two desks or wants a network
-                point for a NAS (Network Attached Storage) or IP phone, run two or three Cat6a cables
-                in the same route. The incremental cost of additional cables during installation is
-                small compared to retrofitting later.
+                point for a NAS (Network Attached Storage) or IP phone, run two or three Cat6a
+                cables in the same route. The incremental cost of additional cables during
+                installation is small compared to retrofitting later.
               </span>
             </li>
           </ul>
@@ -349,18 +349,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>USB-C PD (Power Delivery)</strong> — specify USB-C sockets that support Power
-                Delivery at 30W or higher. This is enough to charge a phone quickly and can slow-
-                charge most laptops. Standard USB-A outlets (5V, 2.1A) are adequate for phones but
-                cannot charge laptops.
+                <strong>USB-C PD (Power Delivery)</strong> — specify USB-C sockets that support
+                Power Delivery at 30W or higher. This is enough to charge a phone quickly and can
+                slow- charge most laptops. Standard USB-A outlets (5V, 2.1A) are adequate for phones
+                but cannot charge laptops.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Usb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Combined socket plates</strong> — double socket outlets with integrated USB-C
-                ports are available from most accessory manufacturers. These fit in a standard double
-                back box and provide two 13A sockets plus USB-C charging in a single face plate.
+                <strong>Combined socket plates</strong> — double socket outlets with integrated
+                USB-C ports are available from most accessory manufacturers. These fit in a standard
+                double back box and provide two 13A sockets plus USB-C charging in a single face
+                plate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -392,8 +393,8 @@ const sections = [
               <span>
                 <strong>Tuneable white LED</strong> — fittings with adjustable colour temperature
                 (2700K to 5000K) allow the light to match the time of day and task. Cooler light
-                (4000K to 5000K) promotes alertness during morning focus work. Warmer light (2700K to
-                3000K) is more comfortable for video calls and evening sessions.
+                (4000K to 5000K) promotes alertness during morning focus work. Warmer light (2700K
+                to 3000K) is more comfortable for video calls and evening sessions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -450,8 +451,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <BatteryCharging className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Laptop users</strong> — the laptop battery provides natural UPS functionality.
-                A UPS is less critical but still useful for the monitor, router, and peripherals.
+                <strong>Laptop users</strong> — the laptop battery provides natural UPS
+                functionality. A UPS is less critical but still useful for the monitor, router, and
+                peripherals.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -485,9 +487,9 @@ const sections = [
               <Wifi className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Router on UPS</strong> — the simplest approach is to plug the broadband
-                router into the UPS alongside the computer. A typical router draws 10W to 20W, adding
-                minimal load to the UPS but extending broadband availability for hours during a power
-                cut.
+                router into the UPS alongside the computer. A typical router draws 10W to 20W,
+                adding minimal load to the UPS but extending broadband availability for hours during
+                a power cut.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -544,8 +546,8 @@ const sections = [
               <span>
                 <strong>Additional sockets on existing circuit</strong> — if the work is limited to
                 adding sockets to an existing circuit (no consumer unit work), a Minor Works
-                Certificate is appropriate. Test the existing circuit to confirm it remains compliant
-                after the alteration.
+                Certificate is appropriate. Test the existing circuit to confirm it remains
+                compliant after the alteration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -553,8 +555,8 @@ const sections = [
               <span>
                 <strong>Data cabling</strong> — data cabling is not covered by BS 7671 (it is extra-
                 low voltage), but it should be tested with a cable tester to verify all 8 wires are
-                correctly terminated and paired. Provide the customer with a test report for the data
-                runs.
+                correctly terminated and paired. Provide the customer with a test report for the
+                data runs.
               </span>
             </li>
           </ul>
@@ -611,9 +613,7 @@ const sections = [
     heading: 'Typical Costs (2026 UK Pricing)',
     content: (
       <>
-        <p>
-          Home office electrical costs vary with the scope of work:
-        </p>
+        <p>Home office electrical costs vary with the scope of work:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -694,7 +694,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify home office electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting and on-site certification. Quick, clean documentation for domestic electrical upgrades. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification. Quick, clean documentation for domestic electrical upgrades. 7-day free trial."
           icon={Monitor}
         />
       </>
@@ -731,7 +731,7 @@ export default function HomeOfficeElectricalPage() {
       faqHeading="Frequently Asked Questions About Home Office Electrical Setup"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Home Office Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site certification. 7-day free trial, cancel anytime."
     />
   );
 }

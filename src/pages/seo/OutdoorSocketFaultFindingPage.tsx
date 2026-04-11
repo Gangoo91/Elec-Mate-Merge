@@ -98,7 +98,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/garage-door-electrical-fault',
     title: 'Garage Door Electrical Fault',
-    description: 'Motor control board faults, limit switches, safety sensors, and power supply issues.',
+    description:
+      'Motor control board faults, limit switches, safety sensors, and power supply issues.',
     icon: Wrench,
     category: 'Fault Finding',
   },
@@ -141,43 +142,42 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection mandatory</strong> — all outdoor socket outlets rated up to
-                32A must be protected by a 30mA residual current device under Regulation 411.3.3.
-                No exceptions.
+                32A must be protected by a 30mA residual current device under Regulation 411.3.3. No
+                exceptions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP44 minimum ingress protection</strong> — outdoor sockets must be housed
-                in an enclosure rated at minimum IP44 (protected against solid objects over 1mm
-                and against splashing water from any direction). Exposed positions require IP55
-                or IP65.
+                <strong>IP44 minimum ingress protection</strong> — outdoor sockets must be housed in
+                an enclosure rated at minimum IP44 (protected against solid objects over 1mm and
+                against splashing water from any direction). Exposed positions require IP55 or IP65.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Weatherproof cover</strong> — the socket must be fitted with a
-                spring-loaded cover that keeps the socket face sealed and protected from rain
-                when not in use. The cover must remain closed by spring pressure alone — it
-                should not rely on the user to close it.
+                <strong>Weatherproof cover</strong> — the socket must be fitted with a spring-loaded
+                cover that keeps the socket face sealed and protected from rain when not in use. The
+                cover must remain closed by spring pressure alone — it should not rely on the user
+                to close it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct cable type</strong> — outdoor sockets must be supplied via
-                cable suitable for the installation method. Underground cable must be armoured
-                (SWA) or in protective conduit. Surface-run cable on exterior walls must be
-                rated for outdoor UV exposure or installed in outdoor-rated conduit.
+                <strong>Correct cable type</strong> — outdoor sockets must be supplied via cable
+                suitable for the installation method. Underground cable must be armoured (SWA) or in
+                protective conduit. Surface-run cable on exterior walls must be rated for outdoor UV
+                exposure or installed in outdoor-rated conduit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Part P notification</strong> — installing a new outdoor socket or
-                modifying the outdoor circuit is notifiable under Part P Building Regulations
-                in England and Wales. An Electrical Installation Certificate must be issued.
+                <strong>Part P notification</strong> — installing a new outdoor socket or modifying
+                the outdoor circuit is notifiable under Part P Building Regulations in England and
+                Wales. An Electrical Installation Certificate must be issued.
               </span>
             </li>
           </ul>
@@ -202,30 +202,29 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Options for adding RCD protection</strong> — (1) Replace the MCB at the
-                consumer unit with an RCBO (combined MCB and RCD) — cleanest solution, protects
-                only the outdoor circuit; (2) Add an RCD upstream of the outdoor socket at the
-                consumer unit or a sub-board; (3) Replace the outdoor socket with an RCD socket
-                (has a built-in 30mA RCD) — useful where consumer unit work is not practical.
+                consumer unit with an RCBO (combined MCB and RCD) — cleanest solution, protects only
+                the outdoor circuit; (2) Add an RCD upstream of the outdoor socket at the consumer
+                unit or a sub-board; (3) Replace the outdoor socket with an RCD socket (has a
+                built-in 30mA RCD) — useful where consumer unit work is not practical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD socket with built-in protection</strong> — an RCD socket replaces the
-                standard socket outlet and provides 30mA RCD protection at the point of use. It
-                has test and reset buttons on the front face. This is a practical solution for
-                adding protection to an outdoor socket that is already installed, without
-                modifying the consumer unit. The RCD socket must itself be housed in a weatherproof
-                enclosure.
+                standard socket outlet and provides 30mA RCD protection at the point of use. It has
+                test and reset buttons on the front face. This is a practical solution for adding
+                protection to an outdoor socket that is already installed, without modifying the
+                consumer unit. The RCD socket must itself be housed in a weatherproof enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing outdoor RCDs</strong> — press the RCD test button monthly. The
-                RCD should trip immediately. If it does not trip, the RCD has failed and the
-                socket must not be used until the RCD is replaced. A functioning RCD is the
-                primary protection against electric shock from an outdoor socket fault.
+                <strong>Testing outdoor RCDs</strong> — press the RCD test button monthly. The RCD
+                should trip immediately. If it does not trip, the RCD has failed and the socket must
+                not be used until the RCD is replaced. A functioning RCD is the primary protection
+                against electric shock from an outdoor socket fault.
               </span>
             </li>
           </ul>
@@ -239,44 +238,43 @@ const sections = [
     content: (
       <>
         <p>
-          The IP (Ingress Protection) rating of an outdoor socket enclosure determines how well
-          it is protected against water and dust. The rating system is defined in BS EN 60529.
-          Choosing the correct IP rating for the installation environment prevents water ingress
-          faults.
+          The IP (Ingress Protection) rating of an outdoor socket enclosure determines how well it
+          is protected against water and dust. The rating system is defined in BS EN 60529. Choosing
+          the correct IP rating for the installation environment prevents water ingress faults.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP44</strong> — minimum for outdoor sockets. Protected against splash
-                water from any direction. Suitable for covered positions under a porch, eave,
-                or canopy where direct rain does not reach the socket face.
+                <strong>IP44</strong> — minimum for outdoor sockets. Protected against splash water
+                from any direction. Suitable for covered positions under a porch, eave, or canopy
+                where direct rain does not reach the socket face.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP55</strong> — water jet resistant. Suitable for most exposed external
-                wall positions. The recommended minimum for new outdoor socket installations in
-                exposed positions.
+                <strong>IP55</strong> — water jet resistant. Suitable for most exposed external wall
+                positions. The recommended minimum for new outdoor socket installations in exposed
+                positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP65</strong> — fully dust-tight and water jet resistant. Recommended
-                for positions subject to pressure washing, heavy rain from multiple directions,
-                or significant dust (near building works, in farmyards, etc.).
+                <strong>IP65</strong> — fully dust-tight and water jet resistant. Recommended for
+                positions subject to pressure washing, heavy rain from multiple directions, or
+                significant dust (near building works, in farmyards, etc.).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plug-in adaptors and extension reels</strong> — any plug-in accessory
-                used outdoors must also have an appropriate IP rating. Standard indoor extension
-                leads are not rated for outdoor use. Outdoor extension reels must be fully
-                unwound during use to prevent overheating.
+                <strong>Plug-in adaptors and extension reels</strong> — any plug-in accessory used
+                outdoors must also have an appropriate IP rating. Standard indoor extension leads
+                are not rated for outdoor use. Outdoor extension reels must be fully unwound during
+                use to prevent overheating.
               </span>
             </li>
           </ul>
@@ -290,35 +288,37 @@ const sections = [
     content: (
       <>
         <p>
-          An outdoor socket that trips the RCD when used, or that causes the RCD to trip when
-          the circuit is first switched on, has developed an earth leakage fault. Systematic
-          diagnosis identifies the fault source before calling an electrician.
+          An outdoor socket that trips the RCD when used, or that causes the RCD to trip when the
+          circuit is first switched on, has developed an earth leakage fault. Systematic diagnosis
+          identifies the fault source before calling an electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — disconnect all appliances</strong> — unplug everything from
-                the outdoor socket. Reset the RCD. If the RCD holds with nothing connected, the
-                fault is in one of the appliances that was plugged in. Reconnect appliances one
-                at a time, resetting the RCD between each, to identify the faulty appliance.
+                <strong>Step 1 — disconnect all appliances</strong> — unplug everything from the
+                outdoor socket. Reset the RCD. If the RCD holds with nothing connected, the fault is
+                in one of the appliances that was plugged in. Reconnect appliances one at a time,
+                resetting the RCD between each, to identify the faulty appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — check the socket enclosure</strong> — inspect the socket
-                enclosure for visible water, condensation, or debris. If the enclosure contains
-                water, isolate the circuit and allow the socket to dry out completely before
-                testing. A socket that has flooded will need to be replaced even after drying,
-                as the contacts will have corroded.
+                <strong>Step 2 — check the socket enclosure</strong> — inspect the socket enclosure
+                for visible water, condensation, or debris. If the enclosure contains water, isolate
+                the circuit and allow the socket to dry out completely before testing. A socket that
+                has flooded will need to be replaced even after drying, as the contacts will have
+                corroded.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — call an electrician if the RCD trips with nothing connected</strong>
+                <strong>
+                  Step 3 — call an electrician if the RCD trips with nothing connected
+                </strong>
                 — if the RCD trips immediately when the circuit is energised even with the socket
                 empty, the fault is in the socket enclosure itself or in the supply cable. This
                 requires insulation resistance testing by a qualified electrician to locate the
@@ -336,8 +336,8 @@ const sections = [
     content: (
       <>
         <p>
-          Earth faults in outdoor socket circuits can arise from degraded cable insulation,
-          corroded socket contacts, or water bridging between live parts and the earthed enclosure.
+          Earth faults in outdoor socket circuits can arise from degraded cable insulation, corroded
+          socket contacts, or water bridging between live parts and the earthed enclosure.
           Insulation resistance testing is the definitive test.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -348,29 +348,29 @@ const sections = [
                 <strong>Insulation resistance testing</strong> — after safe isolation, disconnect
                 the outdoor socket from the supply. Using a multifunction tester set to 500V DC
                 insulation resistance, measure between: (1) live and earth; (2) neutral and earth;
-                (3) live and neutral. All readings should be above 1MΩ (BS 7671 minimum for
-                existing installations). New installations must read above 200MΩ.
+                (3) live and neutral. All readings should be above 1MΩ (BS 7671 minimum for existing
+                installations). New installations must read above 200MΩ.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity</strong> — verify the earth conductor is continuous from
-                the socket back to the consumer unit. A broken or missing earth connection means
-                the socket has no fault protection — any fault to the metal enclosure would make
-                the enclosure live. Earth continuity is measured using the low-resistance ohms
-                function on a multifunction tester.
+                the socket back to the consumer unit. A broken or missing earth connection means the
+                socket has no fault protection — any fault to the metal enclosure would make the
+                enclosure live. Earth continuity is measured using the low-resistance ohms function
+                on a multifunction tester.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extraneous conductive parts</strong> — metal posts, fence posts, and
-                other metal structures in the garden can become live if they come into contact
-                with a damaged cable or faulty fitting. Ensure no metal garden structures are
-                in contact with electrical cables or luminaire enclosures. Where metal garden
-                structures are bonded to electrical earthing, this must be done by a qualified
-                electrician in accordance with BS 7671.
+                <strong>Extraneous conductive parts</strong> — metal posts, fence posts, and other
+                metal structures in the garden can become live if they come into contact with a
+                damaged cable or faulty fitting. Ensure no metal garden structures are in contact
+                with electrical cables or luminaire enclosures. Where metal garden structures are
+                bonded to electrical earthing, this must be done by a qualified electrician in
+                accordance with BS 7671.
               </span>
             </li>
           </ul>
@@ -384,8 +384,8 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor sockets can develop circuit faults independent of the socket enclosure itself —
-          in the supply cable, at junction points, or at the consumer unit connection.
+          Outdoor sockets can develop circuit faults independent of the socket enclosure itself — in
+          the supply cable, at junction points, or at the consumer unit connection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -393,10 +393,10 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Open-circuit neutral</strong> — a broken neutral connection causes the
-                socket to appear dead (nothing operates) but the socket face may still be live
-                at the line terminal. This is a dangerous condition — the socket appears safe
-                to touch but is live. Always prove dead with a voltage indicator before
-                investigating any fault.
+                socket to appear dead (nothing operates) but the socket face may still be live at
+                the line terminal. This is a dangerous condition — the socket appears safe to touch
+                but is live. Always prove dead with a voltage indicator before investigating any
+                fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -404,18 +404,18 @@ const sections = [
               <span>
                 <strong>Undersized or overloaded circuit</strong> — if the outdoor socket is
                 connected to an existing ring main that is already heavily loaded, adding high-draw
-                garden appliances (pressure washers, hedge trimmers, power tools) can overload
-                the circuit and cause the MCB to trip. A dedicated outdoor socket circuit avoids
-                this issue.
+                garden appliances (pressure washers, hedge trimmers, power tools) can overload the
+                circuit and cause the MCB to trip. A dedicated outdoor socket circuit avoids this
+                issue.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fused spur fault</strong> — if the outdoor socket is on a fused spur from
-                an indoor ring main, the fuse in the fused connection unit (FCU) may have blown.
-                Check the FCU and replace the fuse cartridge (typically 3A or 13A depending on
-                the load) if the fuse has failed.
+                <strong>Fused spur fault</strong> — if the outdoor socket is on a fused spur from an
+                indoor ring main, the fuse in the fused connection unit (FCU) may have blown. Check
+                the FCU and replace the fuse cartridge (typically 3A or 13A depending on the load)
+                if the fuse has failed.
               </span>
             </li>
           </ul>
@@ -441,8 +441,8 @@ const sections = [
                 <strong>Inspection and maintenance</strong> — inspect outdoor sockets annually.
                 Check the weatherproof cover closes and springs back correctly. Inspect the
                 enclosure fixing screws — these are a common water entry point. Check the cable
-                entry point is sealed with an appropriately sized cable gland and that the
-                gland is correctly tightened.
+                entry point is sealed with an appropriately sized cable gland and that the gland is
+                correctly tightened.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -459,10 +459,10 @@ const sections = [
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Correctly installed covers</strong> — the weatherproof cover must be the
-                correct type for the socket and installed with the drain hole at the bottom to
-                allow any water that enters to drain away rather than pool inside the enclosure.
-                Many ingress faults occur because the enclosure was installed upside-down or
-                without the drain hole.
+                correct type for the socket and installed with the drain hole at the bottom to allow
+                any water that enters to drain away rather than pool inside the enclosure. Many
+                ingress faults occur because the enclosure was installed upside-down or without the
+                drain hole.
               </span>
             </li>
           </ul>
@@ -484,17 +484,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket replacement (like-for-like)</strong> — £60 to £120 all-in. Socket
-                and enclosure £15 to £40, labour £45 to £80. A Minor Works Certificate must be
-                issued.
+                <strong>Socket replacement (like-for-like)</strong> — £60 to £120 all-in. Socket and
+                enclosure £15 to £40, labour £45 to £80. A Minor Works Certificate must be issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Adding RCD protection to existing socket</strong> — £80 to £200. Options
-                include replacing the socket with an RCD socket (£80 to £130) or adding an RCBO
-                at the consumer unit (£120 to £200 including labour).
+                include replacing the socket with an RCD socket (£80 to £130) or adding an RCBO at
+                the consumer unit (£120 to £200 including labour).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -507,18 +506,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Underground cable repair</strong> — £150 to £400. Excavating to locate
-                and repair the damaged section, fitting an underground junction enclosure or
-                replacing the full cable run, reinstatement, and certification.
+                <strong>Underground cable repair</strong> — £150 to £400. Excavating to locate and
+                repair the damaged section, fitting an underground junction enclosure or replacing
+                the full cable run, reinstatement, and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New outdoor socket circuit</strong> — £200 to £500 from consumer unit
-                to single outdoor position, including armoured or outdoor-rated cable, RCD
-                protection, weatherproof enclosure, and Electrical Installation Certificate.
-                Double or twin socket, or longer cable run, increases cost.
+                <strong>New outdoor socket circuit</strong> — £200 to £500 from consumer unit to
+                single outdoor position, including armoured or outdoor-rated cable, RCD protection,
+                weatherproof enclosure, and Electrical Installation Certificate. Double or twin
+                socket, or longer cable run, increases cost.
               </span>
             </li>
           </ul>
@@ -532,15 +531,13 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket installation is notifiable work under Part P of the Building Regulations
-          in England and Wales. Electricians registered with NICEIC, NAPIT, or ELECSA can
-          self-certify the work. A Minor Electrical Installation Works Certificate is required
-          for simple socket replacements; an Electrical Installation Certificate is required for
-          new circuits or significant modifications.
+          Outdoor socket installation is notifiable work under Part P of the Building Regulations in
+          England and Wales. Electricians registered with NICEIC, NAPIT, or ELECSA can self-certify
+          the work. A Minor Electrical Installation Works Certificate is required for simple socket
+          replacements; an Electrical Installation Certificate is required for new circuits or
+          significant modifications.
         </p>
-        <p>
-          Key checklist for any outdoor socket installation or repair:
-        </p>
+        <p>Key checklist for any outdoor socket installation or repair:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -570,15 +567,17 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Issue Certificates Before Leaving Site</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Issue Certificates Before Leaving Site
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Elec-Mate Minor Works Certificate app
                   </SEOInternalLink>{' '}
                   to complete and issue the certificate on site. Record test results, circuit
-                  details, and observations directly on your phone. Instant PDF to the customer —
-                  no chasing paperwork later.
+                  details, and observations directly on your phone. Instant PDF to the customer — no
+                  chasing paperwork later.
                 </p>
               </div>
             </div>
@@ -586,7 +585,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete outdoor electrical certificates on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -623,7 +622,7 @@ export default function OutdoorSocketFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Outdoor Socket Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Outdoor Electrical Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'How do I get CHAS accreditation?',
     answer:
-      'To obtain CHAS accreditation: (1) Register on the CHAS portal at chas.co.uk; (2) Select the appropriate accreditation level (Worksafe for sole traders, CHAS Standard for small contractors); (3) Submit your health and safety policy, employer\'s liability insurance certificate, public liability insurance certificate, and risk assessments for your key activities; (4) A CHAS assessor reviews your submission and may request additional information or amendments; (5) On approval, you receive a CHAS certificate valid for 12 months. Fees start from approximately £300 for sole traders and increase for larger businesses. Renewal is required annually. Many clients accept other SSIP (Safety Schemes in Procurement) member schemes (Safe Contractor, Constructionline, Acclaim) in place of CHAS.',
+      "To obtain CHAS accreditation: (1) Register on the CHAS portal at chas.co.uk; (2) Select the appropriate accreditation level (Worksafe for sole traders, CHAS Standard for small contractors); (3) Submit your health and safety policy, employer's liability insurance certificate, public liability insurance certificate, and risk assessments for your key activities; (4) A CHAS assessor reviews your submission and may request additional information or amendments; (5) On approval, you receive a CHAS certificate valid for 12 months. Fees start from approximately £300 for sole traders and increase for larger businesses. Renewal is required annually. Many clients accept other SSIP (Safety Schemes in Procurement) member schemes (Safe Contractor, Constructionline, Acclaim) in place of CHAS.",
   },
   {
     question: 'Do I need a health and safety policy as an electrician?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'What is ISO 45001 and do I need it?',
     answer:
-      'ISO 45001 is the international standard for Occupational Health and Safety Management Systems. It replaces the previous OHSAS 18001 standard. Certification demonstrates that you have a systematic, audited approach to managing H&S in your business — not just individual policies and procedures but an integrated management system. It is required by some public sector framework contracts, NHS procurement frameworks, and large private sector clients above certain contract value thresholds. Obtaining ISO 45001 requires a gap analysis, implementation of any missing system elements, an internal audit, and a third-party certification audit by an accredited body (BSI, Bureau Veritas, Lloyd\'s Register, and others). Cost typically ranges from £2,000 to £8,000 for implementation and certification depending on business size.',
+      "ISO 45001 is the international standard for Occupational Health and Safety Management Systems. It replaces the previous OHSAS 18001 standard. Certification demonstrates that you have a systematic, audited approach to managing H&S in your business — not just individual policies and procedures but an integrated management system. It is required by some public sector framework contracts, NHS procurement frameworks, and large private sector clients above certain contract value thresholds. Obtaining ISO 45001 requires a gap analysis, implementation of any missing system elements, an internal audit, and a third-party certification audit by an accredited body (BSI, Bureau Veritas, Lloyd's Register, and others). Cost typically ranges from £2,000 to £8,000 for implementation and certification depending on business size.",
   },
   {
     question: 'What must I report under RIDDOR as an electrical contractor?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tender-writing-electrician',
     title: 'Tender Writing Guide',
-    description: 'How to price and write winning commercial electrical tenders including H&S sections.',
+    description:
+      'How to price and write winning commercial electrical tenders including H&S sections.',
     icon: FileText,
     category: 'Guide',
   },
@@ -143,40 +144,40 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrician as designer</strong> — if you make any design decisions
-                (cable type selection, circuit layouts, containment routes), you have designer
-                duties under CDM 2015. You must consider buildability, safe access for
-                maintenance, and future flexibility during the design process, and provide
-                pre-construction information relevant to your design.
+                <strong>Electrician as designer</strong> — if you make any design decisions (cable
+                type selection, circuit layouts, containment routes), you have designer duties under
+                CDM 2015. You must consider buildability, safe access for maintenance, and future
+                flexibility during the design process, and provide pre-construction information
+                relevant to your design.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrician as contractor</strong> — if you employ or manage workers
-                on a construction project, you are a contractor under CDM 2015. You must: plan,
-                manage and monitor the work under your control; ensure workers have the right
-                skills, knowledge, and training; comply with any construction phase plan; and
-                co-operate with the principal contractor.
+                <strong>Electrician as contractor</strong> — if you employ or manage workers on a
+                construction project, you are a contractor under CDM 2015. You must: plan, manage
+                and monitor the work under your control; ensure workers have the right skills,
+                knowledge, and training; comply with any construction phase plan; and co-operate
+                with the principal contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Notifiable projects</strong> — a project is notifiable to the HSE if
-                it will last more than 30 working days with more than 20 workers simultaneously,
-                or exceed 500 person-days of construction work. On notifiable projects, a
-                principal designer and principal contractor must be appointed. The notification
-                is the client's responsibility, but contractors should ensure it has been done.
+                <strong>Notifiable projects</strong> — a project is notifiable to the HSE if it will
+                last more than 30 working days with more than 20 workers simultaneously, or exceed
+                500 person-days of construction work. On notifiable projects, a principal designer
+                and principal contractor must be appointed. The notification is the client's
+                responsibility, but contractors should ensure it has been done.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Construction phase plan</strong> — the principal contractor must produce
-                a construction phase plan before any construction work begins. As an electrical
-                subcontractor, you must comply with the plan and contribute information about
-                your activities to it.
+                <strong>Construction phase plan</strong> — the principal contractor must produce a
+                construction phase plan before any construction work begins. As an electrical
+                subcontractor, you must comply with the plan and contribute information about your
+                activities to it.
               </span>
             </li>
           </ul>
@@ -195,8 +196,8 @@ const sections = [
     content: (
       <>
         <p>
-          A Risk Assessment and Method Statement (RAMS) is the foundational H&amp;S document for
-          any electrical activity on a commercial site. It demonstrates that you have thought
+          A Risk Assessment and Method Statement (RAMS) is the foundational H&amp;S document for any
+          electrical activity on a commercial site. It demonstrates that you have thought
           systematically about the hazards involved in your work and have planned how to manage
           them. Main contractors require approved RAMS before you can start work.
         </p>
@@ -206,48 +207,46 @@ const sections = [
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Risk Assessment</strong> — identifies each hazard associated with the
-                activity, assesses the likelihood and severity of harm, identifies who is at
-                risk, and specifies control measures that reduce the risk to an acceptable level.
-                Use the hierarchy of controls: eliminate, substitute, isolate, control,
-                PPE (in that order of preference).
+                activity, assesses the likelihood and severity of harm, identifies who is at risk,
+                and specifies control measures that reduce the risk to an acceptable level. Use the
+                hierarchy of controls: eliminate, substitute, isolate, control, PPE (in that order
+                of preference).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Method Statement</strong> — describes the sequence and method of work,
-                step by step. It translates the risk assessment controls into a practical
-                procedure. Workers must read and sign the method statement before starting work.
+                <strong>Method Statement</strong> — describes the sequence and method of work, step
+                by step. It translates the risk assessment controls into a practical procedure.
+                Workers must read and sign the method statement before starting work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Activity-specific RAMS</strong> — common activities requiring separate
-                RAMS include: cable installation and termination; working at height (on ladders,
-                MEWPs, scaffolding); working in confined spaces; work on or near live conductors
-                (live working RAMS); installation of consumer units and distribution boards;
-                testing and commissioning; and use of power tools.
+                <strong>Activity-specific RAMS</strong> — common activities requiring separate RAMS
+                include: cable installation and termination; working at height (on ladders, MEWPs,
+                scaffolding); working in confined spaces; work on or near live conductors (live
+                working RAMS); installation of consumer units and distribution boards; testing and
+                commissioning; and use of power tools.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardList className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Review and sign-off</strong> — RAMS must be reviewed by workers before
-                starting the activity, not simply filed. Many sites require workers to sign a
-                RAMS briefing sheet. Keep signed copies as a record.
+                starting the activity, not simply filed. Many sites require workers to sign a RAMS
+                briefing sheet. Keep signed copies as a record.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/rams-generator">
-            Elec-Mate RAMS generator
-          </SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
           to produce professional, activity-specific RAMS quickly. Building a library of approved
-          RAMS that can be customised for each site and contract is the most time-efficient
-          approach for electricians working on multiple commercial sites.
+          RAMS that can be customised for each site and contract is the most time-efficient approach
+          for electricians working on multiple commercial sites.
         </p>
       </>
     ),
@@ -267,41 +266,41 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When PTW is required</strong> — live working where energised conductors
-                must be accessed (only where de-energisation is not reasonably practicable);
-                work in confined spaces; electrical work in explosion-risk areas (ATEX zones);
-                work in hospitals, data centres, or other facilities where power interruption
-                carries life-safety or operational risk; and any high-voltage work.
+                <strong>When PTW is required</strong> — live working where energised conductors must
+                be accessed (only where de-energisation is not reasonably practicable); work in
+                confined spaces; electrical work in explosion-risk areas (ATEX zones); work in
+                hospitals, data centres, or other facilities where power interruption carries
+                life-safety or operational risk; and any high-voltage work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PTW components</strong> — a valid PTW specifies: the exact equipment
-                or area of work; all isolations made and verified (proved dead by a suitably
-                rated test instrument before work commences); earthing applied where required;
-                the names of authorised workers; the duration of the permit; the controls
-                required; and the sign-off process for returning equipment to service.
+                <strong>PTW components</strong> — a valid PTW specifies: the exact equipment or area
+                of work; all isolations made and verified (proved dead by a suitably rated test
+                instrument before work commences); earthing applied where required; the names of
+                authorised workers; the duration of the permit; the controls required; and the
+                sign-off process for returning equipment to service.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe isolation procedure</strong> — for all electrical work, follow the
-                safe isolation procedure before touching any conductor: identify the correct
-                isolation point; isolate and lock off (use a lock and hasp system); prove dead
-                at the point of work using a suitably rated approved voltage indicator; and test
-                the voltage indicator before and after use (on a known live source). This
-                procedure must be followed even when a PTW is in place.
+                <strong>Safe isolation procedure</strong> — for all electrical work, follow the safe
+                isolation procedure before touching any conductor: identify the correct isolation
+                point; isolate and lock off (use a lock and hasp system); prove dead at the point of
+                work using a suitably rated approved voltage indicator; and test the voltage
+                indicator before and after use (on a known live source). This procedure must be
+                followed even when a PTW is in place.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The Electricity at Work Regulations 1989 (Regulation 14) permits live working only
-          where it is "unreasonable in all the circumstances" to work dead. "Unreasonable" is
-          a very high bar — the HSE's guidance makes clear that live working should be the
-          exception, not the norm.
+          The Electricity at Work Regulations 1989 (Regulation 14) permits live working only where
+          it is "unreasonable in all the circumstances" to work dead. "Unreasonable" is a very high
+          bar — the HSE's guidance makes clear that live working should be the exception, not the
+          norm.
         </p>
       </>
     ),
@@ -312,10 +311,10 @@ const sections = [
     content: (
       <>
         <p>
-          CHAS (Contractors Health and Safety Assessment Scheme) is a Safety Schemes in
-          Procurement (SSIP) member scheme and is the most widely recognised H&amp;S
-          pre-qualification credential in UK construction. It is accepted by over 50,000 buyers
-          as evidence of H&amp;S competence.
+          CHAS (Contractors Health and Safety Assessment Scheme) is a Safety Schemes in Procurement
+          (SSIP) member scheme and is the most widely recognised H&amp;S pre-qualification
+          credential in UK construction. It is accepted by over 50,000 buyers as evidence of H&amp;S
+          competence.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -324,27 +323,27 @@ const sections = [
               <span>
                 <strong>CHAS assessment criteria</strong> — your H&amp;S policy and management
                 arrangements; risk assessment procedures; method statement procedures; employer's
-                liability insurance (minimum £5m); public liability insurance (minimum £2m,
-                though many clients require £5m or £10m); accident reporting procedures;
-                worker training and competency records; and sub-contractor management.
+                liability insurance (minimum £5m); public liability insurance (minimum £2m, though
+                many clients require £5m or £10m); accident reporting procedures; worker training
+                and competency records; and sub-contractor management.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SSIP mutual recognition</strong> — CHAS is an SSIP member scheme,
-                meaning assessments are mutually recognised across all other SSIP member schemes
-                (Safe Contractor, Constructionline Health and Safety, Acclaim, and others). If
-                you hold a current CHAS certificate, you can apply for other SSIP schemes at a
-                reduced fee using the dossier route.
+                <strong>SSIP mutual recognition</strong> — CHAS is an SSIP member scheme, meaning
+                assessments are mutually recognised across all other SSIP member schemes (Safe
+                Contractor, Constructionline Health and Safety, Acclaim, and others). If you hold a
+                current CHAS certificate, you can apply for other SSIP schemes at a reduced fee
+                using the dossier route.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual renewal</strong> — CHAS certificates must be renewed annually.
-                Set a renewal reminder 60 days before expiry. A lapse in CHAS certification
-                can result in being removed from client supply chain registers until renewed.
+                <strong>Annual renewal</strong> — CHAS certificates must be renewed annually. Set a
+                renewal reminder 60 days before expiry. A lapse in CHAS certification can result in
+                being removed from client supply chain registers until renewed.
               </span>
             </li>
           </ul>
@@ -358,8 +357,8 @@ const sections = [
     content: (
       <>
         <p>
-          Safe Contractor (operated by Alcumus) is an alternative SSIP H&amp;S accreditation
-          widely accepted by facilities management contractors, retail sector clients, housing
+          Safe Contractor (operated by Alcumus) is an alternative SSIP H&amp;S accreditation widely
+          accepted by facilities management contractors, retail sector clients, housing
           associations, and NHS trusts. Some clients specify Safe Contractor rather than CHAS.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -367,29 +366,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Assessment process</strong> — similar to CHAS, Safe Contractor assesses
-                your H&amp;S policy, risk assessment procedures, insurance evidence, training
-                records, and accident reporting procedures. The assessment can be conducted
-                online with document upload or via an on-site audit for higher-risk categories.
+                <strong>Assessment process</strong> — similar to CHAS, Safe Contractor assesses your
+                H&amp;S policy, risk assessment procedures, insurance evidence, training records,
+                and accident reporting procedures. The assessment can be conducted online with
+                document upload or via an on-site audit for higher-risk categories.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify database</strong> — Safe Contractor is part of the Alcumus
-                Verify platform, used by many FM contractors and housing associations to check
-                subcontractor pre-qualification status in real time. Registration on Verify
-                exposes your credentials to a wider pool of potential clients.
+                <strong>Verify database</strong> — Safe Contractor is part of the Alcumus Verify
+                platform, used by many FM contractors and housing associations to check
+                subcontractor pre-qualification status in real time. Registration on Verify exposes
+                your credentials to a wider pool of potential clients.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Which scheme to choose</strong> — if you are targeting national main
-                contractors and public sector work, CHAS combined with Constructionline Gold
-                is the strongest combination. If you are targeting FM, housing, and retail
-                clients, Safe Contractor may be more appropriate. Many established electrical
-                contractors hold both.
+                contractors and public sector work, CHAS combined with Constructionline Gold is the
+                strongest combination. If you are targeting FM, housing, and retail clients, Safe
+                Contractor may be more appropriate. Many established electrical contractors hold
+                both.
               </span>
             </li>
           </ul>
@@ -412,21 +411,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What ISO 45001 requires</strong> — a documented OH&amp;S management
-                system covering: leadership commitment; worker participation; hazard
-                identification and risk assessment; operational controls; emergency preparedness;
-                performance evaluation; and continual improvement. The standard uses the same
-                Plan-Do-Check-Act (PDCA) framework as ISO 9001 and ISO 14001.
+                <strong>What ISO 45001 requires</strong> — a documented OH&amp;S management system
+                covering: leadership commitment; worker participation; hazard identification and
+                risk assessment; operational controls; emergency preparedness; performance
+                evaluation; and continual improvement. The standard uses the same Plan-Do-Check-Act
+                (PDCA) framework as ISO 9001 and ISO 14001.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Who needs it</strong> — ISO 45001 is required for some public sector
-                procurement frameworks, NHS supply chains above certain value thresholds,
-                and large private sector framework contracts. If you are targeting this tier
-                of work, ISO 45001 is a necessary investment. For smaller commercial and
-                domestic work, CHAS is sufficient.
+                procurement frameworks, NHS supply chains above certain value thresholds, and large
+                private sector framework contracts. If you are targeting this tier of work, ISO
+                45001 is a necessary investment. For smaller commercial and domestic work, CHAS is
+                sufficient.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,9 +433,9 @@ const sections = [
               <span>
                 <strong>Integrated management systems</strong> — many electrical contractors
                 pursuing ISO 45001 also obtain ISO 9001 (quality management) and ISO 14001
-                (environmental management) simultaneously, since the three standards share
-                a common framework. An integrated management system (IMS) is more efficient
-                to implement and maintain than three separate systems.
+                (environmental management) simultaneously, since the three standards share a common
+                framework. An integrated management system (IMS) is more efficient to implement and
+                maintain than three separate systems.
               </span>
             </li>
           </ul>
@@ -444,8 +443,8 @@ const sections = [
         <p>
           ISO 45001 certification is maintained through annual surveillance audits and a full
           recertification audit every three years. Choose an accredited certification body
-          (UKAS-accredited for UK credibility) — BSI, Bureau Veritas, SGS, and Lloyd's Register
-          are among the most recognised in the construction sector.
+          (UKAS-accredited for UK credibility) — BSI, Bureau Veritas, SGS, and Lloyd's Register are
+          among the most recognised in the construction sector.
         </p>
       </>
     ),
@@ -457,39 +456,38 @@ const sections = [
       <>
         <p>
           A health and safety policy is the foundation of your H&amp;S management system. It
-          demonstrates your commitment to managing H&amp;S and sets the framework for all your
-          other H&amp;S procedures and arrangements.
+          demonstrates your commitment to managing H&amp;S and sets the framework for all your other
+          H&amp;S procedures and arrangements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Policy statement</strong> — a signed statement from the most senior
-                person in the business (sole trader, director, or partner) committing the
-                organisation to: providing a safe working environment; complying with H&amp;S
-                legislation; consulting with workers on H&amp;S matters; and continually
-                improving H&amp;S performance. Review and re-sign at least annually.
+                <strong>Policy statement</strong> — a signed statement from the most senior person
+                in the business (sole trader, director, or partner) committing the organisation to:
+                providing a safe working environment; complying with H&amp;S legislation; consulting
+                with workers on H&amp;S matters; and continually improving H&amp;S performance.
+                Review and re-sign at least annually.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Organisation</strong> — who in your business is responsible for
-                what: H&amp;S management responsibilities by role; the name of your
-                competent person for H&amp;S (which can be yourself if you have relevant
-                training and experience); and how you consult with workers (safety
-                representatives, toolbox talks, briefings).
+                <strong>Organisation</strong> — who in your business is responsible for what:
+                H&amp;S management responsibilities by role; the name of your competent person for
+                H&amp;S (which can be yourself if you have relevant training and experience); and
+                how you consult with workers (safety representatives, toolbox talks, briefings).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileText className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Arrangements</strong> — your specific procedures for: risk assessment
-                and method statements; accident reporting under RIDDOR; fire safety; first aid
-                provision; manual handling; working at height; asbestos awareness; electrical
-                safety (safe isolation); PPE provision and use; training and competency
-                assessment; and sub-contractor management.
+                <strong>Arrangements</strong> — your specific procedures for: risk assessment and
+                method statements; accident reporting under RIDDOR; fire safety; first aid
+                provision; manual handling; working at height; asbestos awareness; electrical safety
+                (safe isolation); PPE provision and use; training and competency assessment; and
+                sub-contractor management.
               </span>
             </li>
           </ul>
@@ -505,8 +503,8 @@ const sections = [
         <p>
           The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR)
           require employers (including self-employed sole traders) to report certain workplace
-          accidents, diseases, and dangerous occurrences to the HSE. Failure to report is a
-          criminal offence.
+          accidents, diseases, and dangerous occurrences to the HSE. Failure to report is a criminal
+          offence.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -515,29 +513,29 @@ const sections = [
               <span>
                 <strong>What to report</strong> — worker deaths (immediate report); specified
                 injuries (amputation, fractures other than fingers/thumbs/toes, loss of
-                consciousness, serious burns covering more than 10 per cent of the body);
-                worker incapacitation for more than seven consecutive days; occupational diseases
-                including carpal tunnel syndrome, vibration white finger, and occupational
-                deafness; and dangerous occurrences (near misses that could have caused specified
-                injury or death).
+                consciousness, serious burns covering more than 10 per cent of the body); worker
+                incapacitation for more than seven consecutive days; occupational diseases including
+                carpal tunnel syndrome, vibration white finger, and occupational deafness; and
+                dangerous occurrences (near misses that could have caused specified injury or
+                death).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How to report</strong> — via the HSE website (riddor.gov.uk). Deaths
-                and specified injuries must be reported immediately by phone or online.
-                Over-seven-day incapacitation must be reported within 15 days. Keep a record
-                of all reports for at least three years.
+                <strong>How to report</strong> — via the HSE website (riddor.gov.uk). Deaths and
+                specified injuries must be reported immediately by phone or online. Over-seven-day
+                incapacitation must be reported within 15 days. Keep a record of all reports for at
+                least three years.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Accident book</strong> — maintain an accident book (or equivalent
-                record) for all work-related incidents, including those that do not require
-                RIDDOR reporting. Your CHAS and ISO 45001 assessors will check your accident
-                records as part of the assessment process.
+                <strong>Accident book</strong> — maintain an accident book (or equivalent record)
+                for all work-related incidents, including those that do not require RIDDOR
+                reporting. Your CHAS and ISO 45001 assessors will check your accident records as
+                part of the assessment process.
               </span>
             </li>
           </ul>
@@ -551,9 +549,9 @@ const sections = [
     content: (
       <>
         <p>
-          Maintaining current, professional H&amp;S documentation is time-consuming but
-          essential for commercial work. The right tools reduce the administrative burden
-          and improve the quality of your submissions.
+          Maintaining current, professional H&amp;S documentation is time-consuming but essential
+          for commercial work. The right tools reduce the administrative burden and improve the
+          quality of your submissions.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -563,10 +561,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI-Generated RAMS</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional, activity-specific RAMS using the Elec-Mate AI assistant.
-                  Describe the activity and site conditions; the AI produces a draft RAMS
-                  aligned with current legislation and best practice. Review, customise, and
-                  export to PDF for submission. Build a library of approved RAMS for your most
-                  common activities. See also the{' '}
+                  Describe the activity and site conditions; the AI produces a draft RAMS aligned
+                  with current legislation and best practice. Review, customise, and export to PDF
+                  for submission. Build a library of approved RAMS for your most common activities.
+                  See also the{' '}
                   <SEOInternalLink href="/subcontracting-guide">
                     subcontracting guide
                   </SEOInternalLink>{' '}
@@ -582,9 +580,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">H&S Policy and Procedure Templates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Access professional H&amp;S policy templates and procedure documents through
-                  Elec-Mate. Customise to your business and maintain a library of current,
-                  signed documents ready for CHAS, Safe Contractor, and Constructionline
-                  submissions.
+                  Elec-Mate. Customise to your business and maintain a library of current, signed
+                  documents ready for CHAS, Safe Contractor, and Constructionline submissions.
                 </p>
               </div>
             </div>
@@ -592,7 +589,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build professional H&S documentation with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools. Win more commercial work with better documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S policy templates, and business management tools. Win more commercial work with better documentation. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -629,7 +626,7 @@ export default function HealthSafetyAuditElectricianPage() {
       faqHeading="Frequently Asked Questions About H&S for Electrical Contractors"
       relatedPages={relatedPages}
       ctaHeading="Build Professional H&S Documentation with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-generated RAMS, H&S templates, and business tools. Win more commercial work with better documentation. 7-day free trial, cancel anytime."
     />
   );
 }

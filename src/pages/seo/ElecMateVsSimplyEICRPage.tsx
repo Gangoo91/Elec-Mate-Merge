@@ -47,7 +47,7 @@ export default function ElecMateVsSimplyEICRPage() {
           <span className="text-yellow-400">SimplyEICR</span>
         </>
       }
-      heroSubtitle="SimplyEICR is built around EICRs and basic certificate generation. Elec-Mate delivers certificates plus AI-powered site tools, 50+ calculators, 46+ training courses, and full business management. Here is how every feature stacks up."
+      heroSubtitle="SimplyEICR is built around EICRs and basic certificate generation. Elec-Mate delivers certificates plus AI-powered site tools, 70+ calculators, 46+ training courses, and full business management. Here is how every feature stacks up."
       readingTime={10}
       comparisonColumns={['Feature', 'Elec-Mate', 'SimplyEICR']}
       comparisonRows={[
@@ -55,7 +55,7 @@ export default function ElecMateVsSimplyEICRPage() {
         { feature: 'Voice Test Entry', values: [true, false] },
         { feature: 'Defect Code AI', values: [true, false] },
         { feature: 'AI Remedial Cost Estimator', values: [true, false] },
-        { feature: '8 Certificate Types', values: [true, 'EICR focus'] },
+        { feature: '16 Certificate Types', values: [true, 'EICR focus'] },
         { feature: 'Digital Signatures', values: [true, true] },
         { feature: 'PDF Export', values: [true, true] },
         { feature: '50+ BS 7671 Calculators', values: [true, false] },
@@ -68,7 +68,7 @@ export default function ElecMateVsSimplyEICRPage() {
       ]}
       comparisonHeading="Feature-by-Feature Comparison"
       keyTakeaways={[
-        'SimplyEICR focuses on EICR certificate generation. Elec-Mate combines 8 certificate types with AI tools, 50+ calculators, 46+ training courses, and business management in a single subscription.',
+        'SimplyEICR focuses on EICR certificate generation. Elec-Mate combines 16 certificate types with AI tools, 70+ calculators, 46+ training courses, and business management in a single subscription.',
         'Elec-Mate is the only platform with an AI Board Scanner that photographs a consumer unit and auto-populates circuit data into your certificate, saving 5-10 minutes per inspection.',
         'Voice Test Entry lets you speak readings aloud while holding test leads. The AI transcribes directly into your schedule of test results — no need to put instruments down to type.',
         'The AI Remedial Cost Estimator converts EICR defects into a priced remedial works quotation using real UK trade pricing, so you leave site with both the report and the repair quote.',
@@ -112,9 +112,9 @@ export default function ElecMateVsSimplyEICRPage() {
                 app.
               </p>
               <p>
-                The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar
-                PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 50 specialist electrical
-                calculators, 5{' '}
+                The platform includes 16 certificate types (EICR, EIC, Minor Works, EV Charger,
+                Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 50 specialist
+                electrical calculators, 5{' '}
                 <SEOInternalLink href="/tools/ai-electrician">
                   Elec-AI specialist agents
                 </SEOInternalLink>{' '}
@@ -235,7 +235,7 @@ export default function ElecMateVsSimplyEICRPage() {
           <p>
             The AI features — Board Scanner, Voice Test Entry, Defect Code AI, and Remedial Cost
             Estimator — make even the certification workflow significantly faster than SimplyEICR.
-            Add in 50+ calculators, 46+ training courses, and business management tools, and
+            Add in 70+ calculators, 46+ training courses, and business management tools, and
             Elec-Mate provides substantially more value.
           </p>
           <p>
@@ -302,12 +302,12 @@ export default function ElecMateVsSimplyEICRPage() {
         {
           question: 'How much does SimplyEICR cost compared to Elec-Mate?',
           answer:
-            'SimplyEICR offers various pricing options for its EICR functionality. Check their website for current pricing. Elec-Mate starts from £5.99 per month with unlimited usage across all features — 8 certificate types, 50+ calculators, all AI tools, 46+ training courses, and business management. There are no per-certificate charges. When you factor in everything Elec-Mate includes that SimplyEICR does not, the value proposition is considerably stronger.',
+            'SimplyEICR offers various pricing options for its EICR functionality. Check their website for current pricing. Elec-Mate starts from £5.99 per month with unlimited usage across all features — 16 certificate types, 70+ calculators, all AI tools, 46+ training courses, and business management. There are no per-certificate charges. When you factor in everything Elec-Mate includes that SimplyEICR does not, the value proposition is considerably stronger.',
         },
         {
           question: 'What certificate types does Elec-Mate support that SimplyEICR does not?',
           answer:
-            'Elec-Mate supports 8 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing. SimplyEICR focuses primarily on EICRs. As specialist installations like EV chargers and solar PV become more common, having these certificate types built into your app saves time and eliminates paper forms or separate software.',
+            'Elec-Mate supports 16 certificate types: EICR, EIC, Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing. SimplyEICR focuses primarily on EICRs. As specialist installations like EV chargers and solar PV become more common, having these certificate types built into your app saves time and eliminates paper forms or separate software.',
         },
         {
           question: 'Do both apps work offline?',
@@ -349,7 +349,7 @@ export default function ElecMateVsSimplyEICRPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

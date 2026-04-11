@@ -42,11 +42,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, protective devices, earthing and bonding using observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, protective devices, earthing and bonding using observation codes.",
   'Leicester EICR costs are broadly in line with Midlands averages. Expect to pay between £150 and £280 for a two-bedroom flat and £250 to £400 for a three-bedroom house in 2026.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Failure to comply can result in fines of up to £30,000 per breach, enforced by Leicester City Council.',
   'Leicester has a large private rented sector, particularly around the university area (Clarendon Park, Evington, Highfields). Leicester City Council actively enforces electrical safety standards and operates an HMO licensing scheme.',
-  'National Grid Electricity Distribution (NGED, formerly Western Power Distribution) is the Distribution Network Operator for Leicester. Supply-side issues such as aged cut-outs or earthing deficiencies on older properties are NGED\'s responsibility.',
+  "National Grid Electricity Distribution (NGED, formerly Western Power Distribution) is the Distribution Network Operator for Leicester. Supply-side issues such as aged cut-outs or earthing deficiencies on older properties are NGED's responsibility.",
 ];
 
 const faqs = [
@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -126,7 +127,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,31 +146,30 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
-          (insulation resistance, earth fault loop impedance, RCD operation times,
-          continuity of protective conductors). The results are recorded on Schedules of
-          Circuit Details and Test Results, which form part of the report. Each observation is
-          classified using a code system (C1, C2, C3, FI) that indicates the severity and urgency of
-          any defects found.
+          (insulation resistance, earth fault loop impedance, RCD operation times, continuity of
+          protective conductors). The results are recorded on Schedules of Circuit Details and Test
+          Results, which form part of the report. Each observation is classified using a code system
+          (C1, C2, C3, FI) that indicates the severity and urgency of any defects found.
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -179,9 +180,10 @@ const sections = [
     content: (
       <>
         <p>
-          Leicester EICR costs are broadly in line with Midlands averages. The city has a competitive
-          market for electrical inspection work, driven by the large private rented sector around the
-          University of Leicester and De Montfort University. Below are typical 2026 prices:
+          Leicester EICR costs are broadly in line with Midlands averages. The city has a
+          competitive market for electrical inspection work, driven by the large private rented
+          sector around the University of Leicester and De Montfort University. Below are typical
+          2026 prices:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -217,10 +219,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Leicester has
-                a large number of HMOs, particularly in the student areas. HMOs have multiple
-                consumer units, fire alarm systems, and emergency lighting that all form part of
-                the inspection scope.
+                <strong>HMO (House in Multiple Occupation)</strong> — £350 to £700+. Leicester has a
+                large number of HMOs, particularly in the student areas. HMOs have multiple consumer
+                units, fire alarm systems, and emergency lighting that all form part of the
+                inspection scope.
               </span>
             </li>
           </ul>
@@ -250,8 +252,8 @@ const sections = [
               <span>
                 <strong>Before a new tenancy</strong> — the landlord must ensure the electrical
                 installation is inspected and tested by a qualified person, and obtain an EICR,
-                before a new tenant moves in. This applies to all new tenancies from 1 July 2020
-                and all existing tenancies from 1 April 2021.
+                before a new tenant moves in. This applies to all new tenancies from 1 July 2020 and
+                all existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,8 +318,8 @@ const sections = [
               <span>
                 <strong>HMO licensing</strong> — Leicester City Council operates mandatory HMO
                 licensing for larger HMOs (five or more occupants forming two or more households)
-                and additional licensing schemes in designated areas. A valid EICR is a condition
-                of all HMO licences.
+                and additional licensing schemes in designated areas. A valid EICR is a condition of
+                all HMO licences.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,9 +376,9 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action is required. Common C2 findings
-              include absent or inadequate earthing, lack of RCD protection on socket circuits,
-              overloaded circuits, and deteriorated cable insulation.
+              Could become dangerous. Urgent remedial action is required. Common C2 findings include
+              absent or inadequate earthing, lack of RCD protection on socket circuits, overloaded
+              circuits, and deteriorated cable insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -411,8 +413,8 @@ const sections = [
     content: (
       <>
         <p>
-          Landlords with properties in Leicester must comply with both the national electrical safety
-          regulations and any additional conditions imposed by Leicester City Council through
+          Landlords with properties in Leicester must comply with both the national electrical
+          safety regulations and any additional conditions imposed by Leicester City Council through
           licensing schemes. Key obligations include:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -583,8 +585,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. Searching these
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. Searching these
                 registers for Leicester-based inspectors is the most reliable way to find a
                 qualified person. NAPIT is headquartered in nearby Mansfield, and many
                 Leicester-area electricians are NAPIT-registered.
@@ -671,7 +673,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -708,7 +710,7 @@ export default function EICRLeicesterPage() {
       faqHeading="Frequently Asked Questions About EICRs in Leicester"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

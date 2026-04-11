@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Electrical issues rarely affect a property\'s asking price at listing stage — vendors and their agents often underestimate them. However, they become a major negotiating factor once discovered during surveys or a buyer-commissioned EICR.',
+  "Electrical issues rarely affect a property's asking price at listing stage — vendors and their agents often underestimate them. However, they become a major negotiating factor once discovered during surveys or a buyer-commissioned EICR.",
   'Mortgage surveyors (RICS valuers acting for the lender) flag electrical defects that affect safety or lendability. A report noting "full rewire required" can lead to a mortgage being offered subject to completion of the works.',
   'Some lenders will withhold a retention from the mortgage advance (typically the cost of the work plus 10%) until a satisfactory completion certificate is provided. This affects the amount of money available to the buyer at completion.',
   'A full rewire does not add pound-for-pound value to a property — but the absence of a modern, certified electrical installation reduces the pool of buyers who can finance the purchase and reduces achievable sale price.',
@@ -64,10 +64,10 @@ const faqs = [
   {
     question: 'How much should I reduce my offer for a rewire?',
     answer:
-      'A reasonable offer reduction for a required rewire is the mid-point of two or three written quotes from NICEIC or NAPIT registered electricians, plus a realistic allowance for redecoration (typically 30 to 50 per cent of the rewire cost for a full redecoration, or 15 to 25 per cent for a basic making-good). For a three-bedroom house, this might mean a rewire quote of £5,500 plus £1,500 for redecoration — a total reduction request of £7,000. Some negotiation is expected; the final reduction may be £5,000 to £6,500 depending on the vendor\'s position.',
+      "A reasonable offer reduction for a required rewire is the mid-point of two or three written quotes from NICEIC or NAPIT registered electricians, plus a realistic allowance for redecoration (typically 30 to 50 per cent of the rewire cost for a full redecoration, or 15 to 25 per cent for a basic making-good). For a three-bedroom house, this might mean a rewire quote of £5,500 plus £1,500 for redecoration — a total reduction request of £7,000. Some negotiation is expected; the final reduction may be £5,000 to £6,500 depending on the vendor's position.",
   },
   {
-    question: 'What does a mortgage surveyor look for in a property\'s electrics?',
+    question: "What does a mortgage surveyor look for in a property's electrics?",
     answer:
       'A RICS mortgage surveyor is not a qualified electrician and will not carry out electrical testing. They will note visible indicators of condition: the age and type of consumer unit, presence of rewirable fuse holders, visible wiring type, and any obvious damage or non-standard installations. If they see a rewirable fuse board, rubber-insulated wiring, or note that an EICR has not been provided, they will typically flag this in their report and recommend a specialist electrical inspection. This recommendation can then be used by the buyer to commission an EICR.',
   },
@@ -82,7 +82,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/buying-house-electrical-guide',
     title: 'Buying a House Electrical Checklist',
-    description: 'What to check at viewing, signs of DIY work, and rewire costs to factor into your offer.',
+    description:
+      'What to check at viewing, signs of DIY work, and rewire costs to factor into your offer.',
     icon: Home,
     category: 'Guide',
   },
@@ -103,7 +104,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -127,11 +129,11 @@ const sections = [
     content: (
       <>
         <p>
-          The relationship between electrical condition and property value is more nuanced than
-          many buyers and vendors realise. An estate agent's valuation is typically based on
-          comparable sales and does not factor in the cost of electrical remediation unless the
-          issues are blatant. However, once electrical defects are identified during the purchase
-          process, they become a significant negotiating factor.
+          The relationship between electrical condition and property value is more nuanced than many
+          buyers and vendors realise. An estate agent's valuation is typically based on comparable
+          sales and does not factor in the cost of electrical remediation unless the issues are
+          blatant. However, once electrical defects are identified during the purchase process, they
+          become a significant negotiating factor.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -148,31 +150,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extended marketing periods</strong> — properties with undisclosed
-                electrical issues that surface during survey often fall through at the survey
-                stage. Multiple abortive sales increase marketing time and typically result in
-                eventual price reductions. Vendors who disclose electrical issues upfront and
-                price accordingly tend to achieve faster sales.
+                <strong>Extended marketing periods</strong> — properties with undisclosed electrical
+                issues that surface during survey often fall through at the survey stage. Multiple
+                abortive sales increase marketing time and typically result in eventual price
+                reductions. Vendors who disclose electrical issues upfront and price accordingly
+                tend to achieve faster sales.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insurance implications</strong> — insurers increasingly ask about the
-                age and condition of the electrical installation. A property with original
+                <strong>Insurance implications</strong> — insurers increasingly ask about the age
+                and condition of the electrical installation. A property with original
                 rubber-insulated wiring or no consumer unit may be uninsurable or attract
-                significantly higher premiums. This is a material consideration for mortgage
-                lenders and buyers alike.
+                significantly higher premiums. This is a material consideration for mortgage lenders
+                and buyers alike.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingDown className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EPC implications</strong> — while the EPC (Energy Performance
-                Certificate) primarily focuses on thermal performance, significant electrical
-                issues may indicate an installation that is not energy-efficient (older wiring
-                with higher resistance losses, lack of smart controls). Poor EPC ratings
-                increasingly affect mortgage availability and buyer appetite.
+                <strong>EPC implications</strong> — while the EPC (Energy Performance Certificate)
+                primarily focuses on thermal performance, significant electrical issues may indicate
+                an installation that is not energy-efficient (older wiring with higher resistance
+                losses, lack of smart controls). Poor EPC ratings increasingly affect mortgage
+                availability and buyer appetite.
               </span>
             </li>
           </ul>
@@ -186,10 +188,10 @@ const sections = [
     content: (
       <>
         <p>
-          A RICS mortgage valuation surveyor is not an electrician and will not carry out
-          electrical testing. Their role is to assess whether the property is suitable security
-          for the mortgage advance, not to provide a detailed condition survey. However, they
-          will note visible electrical concerns that may affect lendability.
+          A RICS mortgage valuation surveyor is not an electrician and will not carry out electrical
+          testing. Their role is to assess whether the property is suitable security for the
+          mortgage advance, not to provide a detailed condition survey. However, they will note
+          visible electrical concerns that may affect lendability.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -205,36 +207,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visible rubber-insulated or fabric-braided wiring</strong> — wiring in
-                these materials, visible in the loft, under stairs, or in accessible cable runs,
-                will be noted as evidence of an old installation. The surveyor will recommend
-                further investigation.
+                <strong>Visible rubber-insulated or fabric-braided wiring</strong> — wiring in these
+                materials, visible in the loft, under stairs, or in accessible cable runs, will be
+                noted as evidence of an old installation. The surveyor will recommend further
+                investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No recent EICR</strong> — some lenders instruct surveyors to note
-                whether a valid EICR is available. Where no EICR exists and the property is
-                older than a certain age (often 25 or 30 years), the surveyor may recommend
-                one as a condition.
+                <strong>No recent EICR</strong> — some lenders instruct surveyors to note whether a
+                valid EICR is available. Where no EICR exists and the property is older than a
+                certain age (often 25 or 30 years), the surveyor may recommend one as a condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-standard electrical installations</strong> — garden rooms with
-                unmarked sub-mains, non-standard wiring, or evidence of significant DIY
-                electrical work will be flagged. Uncertified Part P work is a concern for
-                insurers and lenders.
+                <strong>Non-standard electrical installations</strong> — garden rooms with unmarked
+                sub-mains, non-standard wiring, or evidence of significant DIY electrical work will
+                be flagged. Uncertified Part P work is a concern for insurers and lenders.
               </span>
             </li>
           </ul>
         </div>
         <p>
           When a surveyor's report contains an electrical observation, the lender will usually
-          require either an EICR before advancing the mortgage or impose a retention until
-          remedial work is completed and certified.
+          require either an EICR before advancing the mortgage or impose a retention until remedial
+          work is completed and certified.
         </p>
       </>
     ),
@@ -245,20 +245,20 @@ const sections = [
     content: (
       <>
         <p>
-          A mortgage retention is an amount the lender holds back from the mortgage advance
-          until specified conditions are met. Electrical issues are one of the most common
-          triggers for retentions in residential mortgage transactions.
+          A mortgage retention is an amount the lender holds back from the mortgage advance until
+          specified conditions are met. Electrical issues are one of the most common triggers for
+          retentions in residential mortgage transactions.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How retentions work</strong> — the lender offers the mortgage but
-                withholds a sum (typically the cost of the works plus 10% contingency) from
-                the advance. This money is released once a satisfactory completion certificate
-                (Electrical Installation Certificate) is provided. The buyer must fund the gap
-                between the reduced advance and the purchase price from other funds.
+                <strong>How retentions work</strong> — the lender offers the mortgage but withholds
+                a sum (typically the cost of the works plus 10% contingency) from the advance. This
+                money is released once a satisfactory completion certificate (Electrical
+                Installation Certificate) is provided. The buyer must fund the gap between the
+                reduced advance and the purchase price from other funds.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,20 +273,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When lenders decline entirely</strong> — in rare cases where the
-                electrical installation is considered immediately dangerous (C1 observations,
-                no earthing, rubber-insulated wiring throughout), the lender may decline to
-                advance until the work is completed. The vendor would need to carry out the
-                work at their cost before exchange.
+                <strong>When lenders decline entirely</strong> — in rare cases where the electrical
+                installation is considered immediately dangerous (C1 observations, no earthing,
+                rubber-insulated wiring throughout), the lender may decline to advance until the
+                work is completed. The vendor would need to carry out the work at their cost before
+                exchange.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Help to Buy and shared ownership</strong> — government-backed schemes
-                such as Help to Buy have specific property condition requirements. Properties
-                requiring significant electrical remediation may not qualify for these schemes,
-                further restricting the buyer pool.
+                <strong>Help to Buy and shared ownership</strong> — government-backed schemes such
+                as Help to Buy have specific property condition requirements. Properties requiring
+                significant electrical remediation may not qualify for these schemes, further
+                restricting the buyer pool.
               </span>
             </li>
           </ul>
@@ -301,8 +301,8 @@ const sections = [
       <>
         <p>
           A full rewire is the most significant electrical improvement that can be made to a
-          property. Its effect on value is real but indirect — it removes a major obstacle to
-          sale rather than adding to the perceived desirability of the property.
+          property. Its effect on value is real but indirect — it removes a major obstacle to sale
+          rather than adding to the perceived desirability of the property.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -310,10 +310,10 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Before a rewire</strong> — effectively priced as a property with a known
-                cost to remedy, accessible mainly to cash buyers and developers. Achievable price
-                is typically the market value minus the cost of the rewire, minus a further
-                discount for disruption, uncertainty, and risk — often a total discount of 1.5
-                to 2 times the cost of the work.
+                cost to remedy, accessible mainly to cash buyers and developers. Achievable price is
+                typically the market value minus the cost of the rewire, minus a further discount
+                for disruption, uncertainty, and risk — often a total discount of 1.5 to 2 times the
+                cost of the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -321,19 +321,18 @@ const sections = [
               <span>
                 <strong>After a rewire</strong> — priced as a standard property with no material
                 electrical issues. Accessible to the full buyer pool including high LTV mortgage
-                buyers. Achieves market rate without electrical discount. The rewire cost
-                (including redecoration) is typically recovered in full through the higher
-                achievable price.
+                buyers. Achieves market rate without electrical discount. The rewire cost (including
+                redecoration) is typically recovered in full through the higher achievable price.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation matters</strong> — a rewire is only fully valuable to
-                a buyer if it is properly documented. Ensure the electrician provides an
-                Electrical Installation Certificate (EIC) and that all Building Regulations
-                notifications under Part P have been made. An undocumented rewire creates
-                legal and insurance uncertainty for future buyers.
+                <strong>Documentation matters</strong> — a rewire is only fully valuable to a buyer
+                if it is properly documented. Ensure the electrician provides an Electrical
+                Installation Certificate (EIC) and that all Building Regulations notifications under
+                Part P have been made. An undocumented rewire creates legal and insurance
+                uncertainty for future buyers.
               </span>
             </li>
           </ul>
@@ -347,9 +346,9 @@ const sections = [
     content: (
       <>
         <p>
-          A consumer unit upgrade (replacing an old rewirable fuse board or a non-compliant
-          MCB-only board with a modern metal-clad RCBO or dual RCD unit) is a smaller but
-          significant improvement with a favourable return on investment.
+          A consumer unit upgrade (replacing an old rewirable fuse board or a non-compliant MCB-only
+          board with a modern metal-clad RCBO or dual RCD unit) is a smaller but significant
+          improvement with a favourable return on investment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -357,27 +356,27 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cost</strong> — a consumer unit replacement by a qualified electrician
-                typically costs £400 to £900, including the unit, labour, minor associated
-                works, and an Electrical Installation Certificate.
+                typically costs £400 to £900, including the unit, labour, minor associated works,
+                and an Electrical Installation Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Effect on lendability</strong> — a modern consumer unit with RCD
-                protection removes the most common electrical mortgage condition. Many mortgage
-                surveyors will not flag the installation if a modern compliant consumer unit
-                is present, even if the underlying wiring is older PVC.
+                <strong>Effect on lendability</strong> — a modern consumer unit with RCD protection
+                removes the most common electrical mortgage condition. Many mortgage surveyors will
+                not flag the installation if a modern compliant consumer unit is present, even if
+                the underlying wiring is older PVC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Effective return on investment</strong> — if a vendor pays £700 for a
-                consumer unit upgrade and avoids a £3,000 price reduction request from a buyer,
-                the return on that investment is excellent. Vendors facing a buyer negotiation
-                should consider whether pre-sale remediation is more cost-effective than
-                accepting a price reduction.
+                consumer unit upgrade and avoids a £3,000 price reduction request from a buyer, the
+                return on that investment is excellent. Vendors facing a buyer negotiation should
+                consider whether pre-sale remediation is more cost-effective than accepting a price
+                reduction.
               </span>
             </li>
           </ul>
@@ -392,32 +391,32 @@ const sections = [
       <>
         <p>
           An Unsatisfactory{' '}
-          <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink>{' '}
-          (one containing C1 or C2 observations) provides buyers with documented evidence of
-          defects and quantifiable remediation costs. This is the strongest possible position
-          for price negotiation.
+          <SEOInternalLink href="/electrical-survey-before-buying">EICR</SEOInternalLink> (one
+          containing C1 or C2 observations) provides buyers with documented evidence of defects and
+          quantifiable remediation costs. This is the strongest possible position for price
+          negotiation.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 observations</strong> — danger present. A C1 finding (such as an
-                exposed live conductor or failed earthing on a metal enclosure) is the most
-                serious EICR outcome. It typically requires immediate action and may result
-                in the inspector recommending isolation of affected circuits. A C1 finding
-                gives buyers the strongest grounds for price reduction — typically the full cost
-                of remediation plus a risk premium.
+                <strong>C1 observations</strong> — danger present. A C1 finding (such as an exposed
+                live conductor or failed earthing on a metal enclosure) is the most serious EICR
+                outcome. It typically requires immediate action and may result in the inspector
+                recommending isolation of affected circuits. A C1 finding gives buyers the strongest
+                grounds for price reduction — typically the full cost of remediation plus a risk
+                premium.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 observations</strong> — potentially dangerous. Common C2 findings
-                in older properties include absence of RCD protection (Regulation 411.3.3 of
-                BS 7671), inadequate main bonding, and deteriorated insulation. A C2 finding
-                makes the EICR Unsatisfactory and provides grounds for negotiation of the cost
-                of the specific remedial work identified.
+                <strong>C2 observations</strong> — potentially dangerous. Common C2 findings in
+                older properties include absence of RCD protection (Regulation 411.3.3 of BS 7671),
+                inadequate main bonding, and deteriorated insulation. A C2 finding makes the EICR
+                Unsatisfactory and provides grounds for negotiation of the cost of the specific
+                remedial work identified.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -425,8 +424,8 @@ const sections = [
               <span>
                 <strong>C3 observations only</strong> — the EICR is Satisfactory. C3 observations
                 (improvement recommended but not dangerous) do not provide the same negotiating
-                leverage and are generally accepted by buyers without price adjustment, as the
-                EICR result is technically Satisfactory.
+                leverage and are generally accepted by buyers without price adjustment, as the EICR
+                result is technically Satisfactory.
               </span>
             </li>
           </ul>
@@ -441,8 +440,8 @@ const sections = [
       <>
         <p>
           When an EICR reveals electrical defects, calculating a fair offer reduction requires
-          combining the actual cost of remediation with reasonable allowances for disruption,
-          risk, and the time value of carrying out the work after completion.
+          combining the actual cost of remediation with reasonable allowances for disruption, risk,
+          and the time value of carrying out the work after completion.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -450,43 +449,42 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full rewire required</strong> — reduce by the mid-point of two or three
-                quotes, plus 20 to 30 per cent for redecoration, plus a modest risk premium
-                (5 to 10 per cent) for unforeseen complications. Example: rewire quotes of
-                £5,000, £5,500, and £6,000 → mid-point £5,500. Plus £1,500 redecoration.
-                Total reduction request: £7,000.
+                quotes, plus 20 to 30 per cent for redecoration, plus a modest risk premium (5 to 10
+                per cent) for unforeseen complications. Example: rewire quotes of £5,000, £5,500,
+                and £6,000 → mid-point £5,500. Plus £1,500 redecoration. Total reduction request:
+                £7,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement only</strong> — quote typically £400 to £900.
-                Reduction request: full quote amount. This is a minor and easily quantifiable
-                cost — vendors rarely dispute it.
+                Reduction request: full quote amount. This is a minor and easily quantifiable cost —
+                vendors rarely dispute it.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD retrofit and bonding</strong> — quote typically £300 to £700.
-                Reduction request: full quote amount. This is a standard, widely quoted piece
-                of remedial work.
+                <strong>RCD retrofit and bonding</strong> — quote typically £300 to £700. Reduction
+                request: full quote amount. This is a standard, widely quoted piece of remedial
+                work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple C2 observations without a full rewire</strong> — sum the
-                individual quotes for each item of remedial work. Present these as a schedule
-                with individual costs supported by quotes, then request the total as a price
-                reduction.
+                <strong>Multiple C2 observations without a full rewire</strong> — sum the individual
+                quotes for each item of remedial work. Present these as a schedule with individual
+                costs supported by quotes, then request the total as a price reduction.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A well-documented, evidence-based negotiation position (EICR report plus written
-          quotes) is far more effective than a round-number request without supporting evidence.
-          Vendors and their solicitors respond to documented costs.
+          A well-documented, evidence-based negotiation position (EICR report plus written quotes)
+          is far more effective than a round-number request without supporting evidence. Vendors and
+          their solicitors respond to documented costs.
         </p>
       </>
     ),
@@ -497,30 +495,30 @@ const sections = [
     content: (
       <>
         <p>
-          Use these 2026 indicative costs when assessing the value impact of electrical defects
-          and when preparing negotiation positions.
+          Use these 2026 indicative costs when assessing the value impact of electrical defects and
+          when preparing negotiation positions.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire — two-bedroom property</strong> — £3,500 to £5,500 plus
-                VAT at 5%.
+                <strong>Full rewire — two-bedroom property</strong> — £3,500 to £5,500 plus VAT at
+                5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire — three-bedroom property</strong> — £4,500 to £7,000 plus
-                VAT at 5%. Add £1,500 to £3,000 for redecoration.
+                <strong>Full rewire — three-bedroom property</strong> — £4,500 to £7,000 plus VAT at
+                5%. Add £1,500 to £3,000 for redecoration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire — four-bedroom property</strong> — £6,000 to £10,000 plus
-                VAT at 5%.
+                <strong>Full rewire — four-bedroom property</strong> — £6,000 to £10,000 plus VAT at
+                5%.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -533,38 +531,37 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD retrofit to existing consumer unit</strong> — £200 to £400. Where
-                the consumer unit can be upgraded rather than replaced.
+                <strong>RCD retrofit to existing consumer unit</strong> — £200 to £400. Where the
+                consumer unit can be upgraded rather than replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main equipotential bonding — gas and water</strong> — £150 to £300.
-                Fitting bonding conductors to incoming gas and water services.
+                <strong>Main equipotential bonding — gas and water</strong> — £150 to £300. Fitting
+                bonding conductors to incoming gas and water services.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode installation (TT system)</strong> — £300 to £600.
-                Installing or testing and replacing the earth electrode for a TT earthing
-                system.
+                <strong>Earth electrode installation (TT system)</strong> — £300 to £600. Installing
+                or testing and replacing the earth electrode for a TT earthing system.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewiring outbuilding or garage</strong> — £500 to £1,500 depending
-                on distance from the house and complexity.
+                <strong>Rewiring outbuilding or garage</strong> — £500 to £1,500 depending on
+                distance from the house and complexity.
               </span>
             </li>
           </ul>
         </div>
         <p>
           All prices are indicative. Always obtain multiple written quotes from NICEIC or NAPIT
-          registered electricians before negotiating. Prices vary significantly by region and
-          by the complexity of the specific installation.
+          registered electricians before negotiating. Prices vary significantly by region and by the
+          complexity of the specific installation.
         </p>
       </>
     ),
@@ -577,8 +574,8 @@ const sections = [
         <p>
           The house purchase market generates excellent remedial work opportunities. Buyers who
           commission an EICR and discover defects need both the EICR report quickly (for
-          negotiation) and written quotes for the remedial work. The electrician who provides
-          both on the same day wins the remedial work almost every time.
+          negotiation) and written quotes for the remedial work. The electrician who provides both
+          on the same day wins the remedial work almost every time.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -591,9 +588,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the full EICR on site and email the PDF to the buyer before you
-                  leave the property. Speed is critical — the buyer needs the report to support
-                  their negotiation with the vendor, and time is often short before exchange.
+                  to complete the full EICR on site and email the PDF to the buyer before you leave
+                  the property. Speed is critical — the buyer needs the report to support their
+                  negotiation with the vendor, and time is often short before exchange.
                 </p>
               </div>
             </div>
@@ -609,9 +606,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  and send it to the buyer with the EICR. This quote becomes their evidence in
-                  the price negotiation. Buyers who get the quote quickly use that electrician
-                  for the work.
+                  and send it to the buyer with the EICR. This quote becomes their evidence in the
+                  price negotiation. Buyers who get the quote quickly use that electrician for the
+                  work.
                 </p>
               </div>
             </div>
@@ -619,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win house purchase EICR and remedial work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to buyers before you leave. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion and instant quoting. Deliver both the EICR report and remedial work quote to buyers before you leave. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -656,7 +653,7 @@ export default function ElectricalIssuesHouseValuePage() {
       faqHeading="Frequently Asked Questions About Electrical Issues and House Value"
       relatedPages={relatedPages}
       ctaHeading="Deliver EICRs and Quotes to Buyers Before You Leave"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, instant PDF export, and same-day quoting. 7-day free trial, cancel anytime."
     />
   );
 }

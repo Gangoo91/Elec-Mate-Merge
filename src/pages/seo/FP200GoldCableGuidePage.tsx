@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'What is the maximum current rating of FP200 Gold cable?',
     answer:
-      'Current ratings for FP200 Gold depend on the conductor size and installation method. At 70°C ambient, 1.5mm² FP200 Gold carries approximately 14A clipped direct, and 2.5mm² carries approximately 20A. However, fire-resistant cables are typically used for fire alarm and emergency lighting circuits which draw very modest currents — far below these limits. Always refer to the manufacturer\'s data sheet and apply BS 7671 derating factors for grouping, ambient temperature, and installation method.',
+      "Current ratings for FP200 Gold depend on the conductor size and installation method. At 70°C ambient, 1.5mm² FP200 Gold carries approximately 14A clipped direct, and 2.5mm² carries approximately 20A. However, fire-resistant cables are typically used for fire alarm and emergency lighting circuits which draw very modest currents — far below these limits. Always refer to the manufacturer's data sheet and apply BS 7671 derating factors for grouping, ambient temperature, and installation method.",
   },
   {
     question: 'Do I need special tools to install FP200 Gold cable?',
@@ -147,16 +147,15 @@ const sections = [
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit integrity under fire</strong> — designed to maintain circuit
-                function at flame temperatures of 930°C for a minimum of 30 minutes per
-                BS 7629-1.
+                function at flame temperatures of 930°C for a minimum of 30 minutes per BS 7629-1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Low smoke, zero halogen</strong> — the outer sheath produces minimal
-                smoke and no corrosive halogen gases when burning, reducing toxic risk to
-                occupants and fire crews.
+                <strong>Low smoke, zero halogen</strong> — the outer sheath produces minimal smoke
+                and no corrosive halogen gases when burning, reducing toxic risk to occupants and
+                fire crews.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -170,9 +169,9 @@ const sections = [
         </div>
         <p>
           FP200 Gold is available in single-core, 2-core, 3-core, and multi-core variants in
-          conductor sizes from 1mm² to 4mm² for fire protection applications. The red outer
-          sheath colour is conventional for fire alarm cabling in the UK, though cream or white
-          sheath variants exist for use where red would be visually unacceptable.
+          conductor sizes from 1mm² to 4mm² for fire protection applications. The red outer sheath
+          colour is conventional for fire alarm cabling in the UK, though cream or white sheath
+          variants exist for use where red would be visually unacceptable.
         </p>
       </>
     ),
@@ -183,10 +182,10 @@ const sections = [
     content: (
       <>
         <p>
-          FP200 Gold has a continuous operating temperature rating of 105°C — significantly
-          higher than standard PVC cables rated at 70°C. More importantly, it is designed to
-          maintain circuit integrity under direct fire exposure, which is the requirement tested
-          under BS 7629-1.
+          FP200 Gold has a continuous operating temperature rating of 105°C — significantly higher
+          than standard PVC cables rated at 70°C. More importantly, it is designed to maintain
+          circuit integrity under direct fire exposure, which is the requirement tested under BS
+          7629-1.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,41 +193,41 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7629-1:2014 compliance</strong> — the standard specifies cable
-                construction, testing methods, and performance criteria. Cables are tested
-                at 930°C flame temperature whilst subjected to simultaneous water spray (simulating
-                fire suppression) and mechanical shock.
+                construction, testing methods, and performance criteria. Cables are tested at 930°C
+                flame temperature whilst subjected to simultaneous water spray (simulating fire
+                suppression) and mechanical shock.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>30-minute minimum integrity</strong> — the cable must maintain circuit
-                continuity for at least 30 minutes under the BS 7629-1 fire test conditions.
-                FP200 Gold is tested to maintain integrity beyond this minimum.
+                continuity for at least 30 minutes under the BS 7629-1 fire test conditions. FP200
+                Gold is tested to maintain integrity beyond this minimum.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage rating</strong> — FP200 Gold is rated at 300/500V, suitable
-                for mains voltage fire alarm power supplies and low-voltage detection circuits.
+                <strong>Voltage rating</strong> — FP200 Gold is rated at 300/500V, suitable for
+                mains voltage fire alarm power supplies and low-voltage detection circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CPR classification</strong> — under the Construction Products Regulation
-                (EU) 305/2011 as retained in UK law, FP200 Gold is classified as Cca-s1b,d1,a1
-                for reaction to fire — meeting requirements for life-safety cable specifications.
+                (EU) 305/2011 as retained in UK law, FP200 Gold is classified as Cca-s1b,d1,a1 for
+                reaction to fire — meeting requirements for life-safety cable specifications.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Specifiers and system designers should verify that the cable selected for a project
-          meets the required circuit integrity class (30, 60, or 90 minutes) and any additional
-          project-specific fire engineering requirements. The 30-minute minimum of BS 7629-1
-          is the baseline — some specifications require 60 or 90 minutes.
+          Specifiers and system designers should verify that the cable selected for a project meets
+          the required circuit integrity class (30, 60, or 90 minutes) and any additional
+          project-specific fire engineering requirements. The 30-minute minimum of BS 7629-1 is the
+          baseline — some specifications require 60 or 90 minutes.
         </p>
       </>
     ),
@@ -239,53 +238,52 @@ const sections = [
     content: (
       <>
         <p>
-          The two key standards requiring fire-resistant cabling in UK buildings are BS 5839-1
-          (fire detection and alarm systems) and BS 5266-1 (emergency lighting). Both standards
-          are referenced in the Building Regulations Approved Documents and in insurers'
-          requirements for commercial properties.
+          The two key standards requiring fire-resistant cabling in UK buildings are BS 5839-1 (fire
+          detection and alarm systems) and BS 5266-1 (emergency lighting). Both standards are
+          referenced in the Building Regulations Approved Documents and in insurers' requirements
+          for commercial properties.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5839-1:2017 (Fire Alarm Systems)</strong> — requires that all cables
-                in a fire alarm system either comply with BS 7629-1 (enhanced fire protection
-                cables such as FP200 Gold) or are mineral insulated copper sheathed (MICC) cables.
-                This requirement applies to detector circuits, sounder circuits, power supplies,
-                panel interconnects, and all associated wiring. Cables routed through areas of
-                high fire risk must be especially carefully considered.
+                <strong>BS 5839-1:2017 (Fire Alarm Systems)</strong> — requires that all cables in a
+                fire alarm system either comply with BS 7629-1 (enhanced fire protection cables such
+                as FP200 Gold) or are mineral insulated copper sheathed (MICC) cables. This
+                requirement applies to detector circuits, sounder circuits, power supplies, panel
+                interconnects, and all associated wiring. Cables routed through areas of high fire
+                risk must be especially carefully considered.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5266-1:2016 (Emergency Lighting)</strong> — requires that cables
-                serving escape route luminaires and open area emergency lighting be fire-resistant
-                in buildings where the loss of the circuit in a fire could compromise safe
-                evacuation. FP200 Gold satisfying BS 7629-1 meets this requirement. The standard
-                also requires that cable routes are designed to minimise fire exposure and that
-                multiple circuits are segregated.
+                <strong>BS 5266-1:2016 (Emergency Lighting)</strong> — requires that cables serving
+                escape route luminaires and open area emergency lighting be fire-resistant in
+                buildings where the loss of the circuit in a fire could compromise safe evacuation.
+                FP200 Gold satisfying BS 7629-1 meets this requirement. The standard also requires
+                that cable routes are designed to minimise fire exposure and that multiple circuits
+                are segregated.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Regulations Approved Document B</strong> — references both
-                BS 5839-1 and BS 5266-1 as part of fire safety requirements for new and
-                significantly altered buildings. Compliance with these standards is required
-                for Building Regulations sign-off on commercial, institutional, and multi-occupancy
-                residential buildings.
+                <strong>Building Regulations Approved Document B</strong> — references both BS
+                5839-1 and BS 5266-1 as part of fire safety requirements for new and significantly
+                altered buildings. Compliance with these standards is required for Building
+                Regulations sign-off on commercial, institutional, and multi-occupancy residential
+                buildings.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For domestic premises, fire alarm wiring is typically low-risk and standard cable
-          may be acceptable for Grade D (mains-powered with battery backup) systems. However,
-          for Grade A systems or any commercial or institutional building, FP200 Gold or
-          equivalent is required. Always follow the current edition of BS 5839-1 and the
-          specific project risk assessment.
+          For domestic premises, fire alarm wiring is typically low-risk and standard cable may be
+          acceptable for Grade D (mains-powered with battery backup) systems. However, for Grade A
+          systems or any commercial or institutional building, FP200 Gold or equivalent is required.
+          Always follow the current edition of BS 5839-1 and the specific project risk assessment.
         </p>
       </>
     ),
@@ -306,10 +304,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire-resistant fixings</strong> — use metal cable clips, steel saddles,
-                or approved fire-resistant cable cleats. Standard white plastic cable clips
-                melt at temperatures well below those in a building fire, releasing the cable.
-                This is one of the most common installation errors found on fire alarm audits.
+                <strong>Fire-resistant fixings</strong> — use metal cable clips, steel saddles, or
+                approved fire-resistant cable cleats. Standard white plastic cable clips melt at
+                temperatures well below those in a building fire, releasing the cable. This is one
+                of the most common installation errors found on fire alarm audits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -325,25 +323,24 @@ const sections = [
               <span>
                 <strong>Route segregation</strong> — fire-resistant cables should be routed
                 separately from standard power cables where practical. Where cables must pass
-                through high-risk areas (e.g., plant rooms, kitchens), additional protection
-                or alternative routing should be considered.
+                through high-risk areas (e.g., plant rooms, kitchens), additional protection or
+                alternative routing should be considered.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire stopping</strong> — all penetrations through fire-rated walls,
-                floors, and ceilings must be fire stopped with an approved intumescent system.
-                FP200 Gold must not be routed through penetrations that have not been properly
-                fire stopped.
+                <strong>Fire stopping</strong> — all penetrations through fire-rated walls, floors,
+                and ceilings must be fire stopped with an approved intumescent system. FP200 Gold
+                must not be routed through penetrations that have not been properly fire stopped.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum bend radius</strong> — the minimum bend radius for FP200 Gold
-                is 6× the overall cable diameter for fixed wiring (8× during installation).
-                Overbending can damage the mica tape layer and compromise fire performance.
+                <strong>Minimum bend radius</strong> — the minimum bend radius for FP200 Gold is 6×
+                the overall cable diameter for fixed wiring (8× during installation). Overbending
+                can damage the mica tape layer and compromise fire performance.
               </span>
             </li>
           </ul>
@@ -367,9 +364,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>FP200 Gold — easier installation</strong> — stripped with conventional
-                tools, terminated in standard screw terminals, jointed in standard junction
-                boxes. Lower installation labour cost. No specialist equipment required.
-                Better suited to most fire alarm and emergency lighting installations.
+                tools, terminated in standard screw terminals, jointed in standard junction boxes.
+                Lower installation labour cost. No specialist equipment required. Better suited to
+                most fire alarm and emergency lighting installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,9 +374,8 @@ const sections = [
               <span>
                 <strong>MICC — greater fire resistance</strong> — mineral insulated cable can
                 withstand significantly higher temperatures and longer fire exposure times than
-                FP200 Gold. MICC is preferred for high-risk environments, power circuits in
-                extreme conditions, and installations requiring 90-minute or greater circuit
-                integrity.
+                FP200 Gold. MICC is preferred for high-risk environments, power circuits in extreme
+                conditions, and installations requiring 90-minute or greater circuit integrity.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -395,21 +391,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flexibility</strong> — FP200 Gold is more flexible than MICC cable
-                and easier to route in congested ceiling voids and riser ducts. MICC is stiffer
-                and requires a bending former for larger sizes.
+                <strong>Flexibility</strong> — FP200 Gold is more flexible than MICC cable and
+                easier to route in congested ceiling voids and riser ducts. MICC is stiffer and
+                requires a bending former for larger sizes.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For most standard fire alarm and emergency lighting projects in commercial and
-          residential buildings, FP200 Gold is the preferred choice. MICC is specified where
-          extreme fire conditions are expected, such as generator room wiring, tunnel lighting,
-          or power circuits in petrochemical facilities. See the{' '}
-          <SEOInternalLink href="/mineral-insulated-cable-guide">
-            MICC cable guide
-          </SEOInternalLink>{' '}
+          For most standard fire alarm and emergency lighting projects in commercial and residential
+          buildings, FP200 Gold is the preferred choice. MICC is specified where extreme fire
+          conditions are expected, such as generator room wiring, tunnel lighting, or power circuits
+          in petrochemical facilities. See the{' '}
+          <SEOInternalLink href="/mineral-insulated-cable-guide">MICC cable guide</SEOInternalLink>{' '}
           for full details on mineral insulated cable installation.
         </p>
       </>
@@ -421,43 +415,43 @@ const sections = [
     content: (
       <>
         <p>
-          Correct clipping is essential for FP200 Gold installations. The clips must hold the
-          cable in position throughout the duration of the fire so that the cable does not fall
-          away from its intended route and expose unprotected lengths to the fire.
+          Correct clipping is essential for FP200 Gold installations. The clips must hold the cable
+          in position throughout the duration of the fire so that the cable does not fall away from
+          its intended route and expose unprotected lengths to the fire.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Horizontal runs</strong> — clip at maximum 250mm centres for 1.5mm²
-                and 2.5mm² cable. Larger cables may allow slightly greater spacing — refer
-                to the Prysmian FP200 Gold installation guide.
+                <strong>Horizontal runs</strong> — clip at maximum 250mm centres for 1.5mm² and
+                2.5mm² cable. Larger cables may allow slightly greater spacing — refer to the
+                Prysmian FP200 Gold installation guide.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vertical runs</strong> — clip at maximum 400mm centres. Gravity
-                loading on a vertical run during a fire is greater than on a horizontal run,
-                so vertical clips must grip the cable firmly.
+                <strong>Vertical runs</strong> — clip at maximum 400mm centres. Gravity loading on a
+                vertical run during a fire is greater than on a horizontal run, so vertical clips
+                must grip the cable firmly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Layers className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approved clip types</strong> — Prysmian's own FP200 Gold metal clips
-                (red and white) are specifically tested and rated for use with FP200 Gold.
-                Third-party metal clips and steel saddles are acceptable provided they are
-                rated for the fire conditions.
+                <strong>Approved clip types</strong> — Prysmian's own FP200 Gold metal clips (red
+                and white) are specifically tested and rated for use with FP200 Gold. Third-party
+                metal clips and steel saddles are acceptable provided they are rated for the fire
+                conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not acceptable</strong> — standard oval or round white PVC cable clips,
-                nylon cable ties used as the sole fixing, and self-adhesive cable clips are
-                all unacceptable for FP200 Gold and will fail in a fire.
+                nylon cable ties used as the sole fixing, and self-adhesive cable clips are all
+                unacceptable for FP200 Gold and will fail in a fire.
               </span>
             </li>
           </ul>
@@ -488,9 +482,8 @@ const sections = [
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
                   to complete and issue electrical certificates for fire alarm and emergency
-                  lighting installations on site. Record cable types, fixing methods, test
-                  results, and BS 5839-1 compliance details — generate the PDF before you
-                  leave.
+                  lighting installations on site. Record cable types, fixing methods, test results,
+                  and BS 5839-1 compliance details — generate the PDF before you leave.
                 </p>
               </div>
             </div>
@@ -535,7 +528,7 @@ export default function FP200GoldCableGuidePage() {
       faqHeading="Frequently Asked Questions About FP200 Gold Fire-Resistant Cable"
       relatedPages={relatedPages}
       ctaHeading="Complete Fire Alarm Installation Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to certify fire alarm and emergency lighting installations on site. Record cable types, test results, and BS 5839-1 compliance — instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to certify fire alarm and emergency lighting installations on site. Record cable types, test results, and BS 5839-1 compliance — instant PDF export. 7-day free trial."
     />
   );
 }

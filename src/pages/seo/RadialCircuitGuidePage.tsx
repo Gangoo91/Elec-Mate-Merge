@@ -712,7 +712,7 @@ export default function RadialCircuitGuidePage() {
       faqHeading="Frequently Asked Questions About Radial Circuits"
       relatedPages={relatedPages}
       ctaHeading="Design Radial Circuits Faster with Elec-Mate"
-      ctaSubheading="Cable sizing calculator, voltage drop checker, AI circuit designer, and digital certificates — all on your phone. Join 430+ UK electricians using Elec-Mate on site. 7-day free trial."
+      ctaSubheading="Cable sizing calculator, voltage drop checker, AI circuit designer, and digital certificates — all on your phone. Join 1,000+ UK electricians using Elec-Mate on site. 7-day free trial."
     />
   );
 }

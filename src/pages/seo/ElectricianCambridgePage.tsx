@@ -144,9 +144,9 @@ const sections = [
         <p>
           Cambridge is one of the most rewarding and demanding markets for electricians in the UK.
           The city combines an extraordinarily high concentration of listed buildings and heritage
-          properties with a fast-growing biotech and technology sector that demands high-specification
-          commercial electrical work. The result is a market where skilled electricians can command
-          premium rates across both domestic and commercial sectors.
+          properties with a fast-growing biotech and technology sector that demands
+          high-specification commercial electrical work. The result is a market where skilled
+          electricians can command premium rates across both domestic and commercial sectors.
         </p>
         <p>
           The University of Cambridge, with 31 colleges and hundreds of university buildings, is one
@@ -191,16 +191,16 @@ const sections = [
             </p>
             <p>
               <strong>G98/G99 notifications:</strong> Solar PV, battery storage, and any generation
-              or storage connected to the network requires G98 (up to 16A per phase) or G99
-              (larger systems) notification to UKPN before energisation. UKPN has an online
-              portal for G98 notifications.
+              or storage connected to the network requires G98 (up to 16A per phase) or G99 (larger
+              systems) notification to UKPN before energisation. UKPN has an online portal for G98
+              notifications.
             </p>
             <p>
               <strong>Earthing:</strong> Most of Cambridge is PME (TN-C-S). Older properties in the
               city centre may have TN-S (separate neutral and earth via lead sheath cable) or, in
               rare cases, TT earthing. Always verify the earthing arrangement at the service head.
-              Some older college buildings have complex earthing arrangements that have been modified
-              over many decades — do not assume.
+              Some older college buildings have complex earthing arrangements that have been
+              modified over many decades — do not assume.
             </p>
           </div>
         </div>
@@ -232,9 +232,9 @@ const sections = [
               <span>
                 <strong>Student accommodation</strong> — each college provides accommodation for
                 hundreds of students. Rooms require periodic inspection, PAT testing of provided
-                appliances, smoke detector maintenance, and regular upgrades to socket provision (modern
-                students expect USB charging points and multiple sockets). Summer vacation is the
-                primary window for major electrical work in student rooms.
+                appliances, smoke detector maintenance, and regular upgrades to socket provision
+                (modern students expect USB charging points and multiple sockets). Summer vacation
+                is the primary window for major electrical work in student rooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -271,8 +271,9 @@ const sections = [
         </div>
         <p>
           Getting onto a college approved contractor list requires patience, quality, and
-          reliability. Start with smaller colleges, deliver exceptional work, and let your reputation
-          build. Once established, college maintenance work provides stable, long-term revenue.
+          reliability. Start with smaller colleges, deliver exceptional work, and let your
+          reputation build. Once established, college maintenance work provides stable, long-term
+          revenue.
         </p>
       </>
     ),
@@ -369,17 +370,18 @@ const sections = [
                 require HEPA-filtered air handling with dedicated electrical supplies, lighting that
                 meets clean room classification requirements, and interlocked power and ventilation
                 systems. The electrical installation must not compromise the clean room integrity —
-                all penetrations must be sealed, and cable management must allow for regular cleaning.
+                all penetrations must be sealed, and cable management must allow for regular
+                cleaning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Microscope className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UPS and resilience</strong> — many biotech facilities require uninterruptible
-                power supply systems to protect biological samples, ongoing experiments, and data.
-                UPS sizing, battery maintenance, and automatic transfer switch installation are
-                regular requirements. Critical freezers storing biological samples at -80 degrees C
-                often have dual power feeds and dedicated monitoring.
+                <strong>UPS and resilience</strong> — many biotech facilities require
+                uninterruptible power supply systems to protect biological samples, ongoing
+                experiments, and data. UPS sizing, battery maintenance, and automatic transfer
+                switch installation are regular requirements. Critical freezers storing biological
+                samples at -80 degrees C often have dual power feeds and dedicated monitoring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -387,9 +389,9 @@ const sections = [
               <span>
                 <strong>Office and mixed-use</strong> — the broader Cambridge commercial market
                 includes office fit-outs, retail units (particularly on the rapidly developing North
-                East Cambridge site), and mixed-use developments. Standard commercial electrical work
-                — lighting, small power, data, fire alarm, and emergency lighting — forms a steady
-                base of work.
+                East Cambridge site), and mixed-use developments. Standard commercial electrical
+                work — lighting, small power, data, fire alarm, and emergency lighting — forms a
+                steady base of work.
               </span>
             </li>
           </ul>
@@ -410,8 +412,8 @@ const sections = [
         <p>
           Cambridge sits on the southern edge of the Fens — the low-lying, artificially drained
           landscape of eastern England. Several areas of Cambridge and the surrounding villages are
-          at risk of groundwater flooding, surface water flooding, and river flooding from the
-          River Cam and its tributaries.
+          at risk of groundwater flooding, surface water flooding, and river flooding from the River
+          Cam and its tributaries.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -429,9 +431,9 @@ const sections = [
               <Droplets className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Groundwater flooding</strong> — a particular issue in the Cambridge area,
-                where the chalk aquifer can rise to near surface level after prolonged rainfall. This
-                causes damp cellars and basements rather than dramatic river flooding, but the effect
-                on electrical installations at low level is the same — corrosion, insulation
+                where the chalk aquifer can rise to near surface level after prolonged rainfall.
+                This causes damp cellars and basements rather than dramatic river flooding, but the
+                effect on electrical installations at low level is the same — corrosion, insulation
                 degradation, and safety risk.
               </span>
             </li>
@@ -450,8 +452,8 @@ const sections = [
         <p>
           When working on properties in known flood risk areas, advise the customer of resilient
           installation options and document the discussion. The{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">EICR certificate app</SEOInternalLink>{' '}
-          can record flood-related observations and recommendations.
+          <SEOInternalLink href="/tools/eicr-certificate">EICR certificate app</SEOInternalLink> can
+          record flood-related observations and recommendations.
         </p>
       </>
     ),
@@ -533,8 +535,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICRs on site</SEOInternalLink>{' '}
-                  for college periodic inspections, landlord compliance in the student rental market,
-                  and commercial premises. AI-assisted observation coding and instant PDF export.
+                  for college periodic inspections, landlord compliance in the student rental
+                  market, and commercial premises. AI-assisted observation coding and instant PDF
+                  export.
                 </p>
               </div>
             </div>
@@ -574,7 +577,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional certification for Cambridge electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, commercial, or biotech — certify it all on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, commercial, or biotech — certify it all on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -611,7 +614,7 @@ export default function ElectricianCambridgePage() {
       faqHeading="Frequently Asked Questions About Electrical Work in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Electrical Work in Cambridge — On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, biotech, or new builds — certify it all on site. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, EICRs, EICs, and professional quoting. Heritage, biotech, or new builds — certify it all on site. 7-day free trial."
     />
   );
 }

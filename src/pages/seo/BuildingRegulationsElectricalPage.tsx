@@ -600,7 +600,7 @@ export default function BuildingRegulationsElectricalPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Certify Every Job Professionally"
-      ctaSubheading="Elec-Mate generates compliant EICs and Minor Works Certificates with auto-validated test results. Digital signatures, instant PDF delivery, professional formatting. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate generates compliant EICs and Minor Works Certificates with auto-validated test results. Digital signatures, instant PDF delivery, professional formatting. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

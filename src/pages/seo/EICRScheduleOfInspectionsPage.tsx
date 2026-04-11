@@ -224,8 +224,8 @@ const sections = [
               <Zap className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable routing:</strong> Are cables routed in safe zones where concealed in
-                walls? Any evidence of cables being routed through thermal
-                insulation without derating?
+                walls? Any evidence of cables being routed through thermal insulation without
+                derating?
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,9 +348,8 @@ const sections = [
               <ShieldCheck className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection:</strong> Are RCDs (30mA) fitted to circuits that require
-                additional protection? Socket outlet circuits up to 32A,
-                bathroom circuits (Section 701), outdoor circuits, and circuits supplying mobile
-                equipment used outdoors.
+                additional protection? Socket outlet circuits up to 32A, bathroom circuits (Section
+                701), outdoor circuits, and circuits supplying mobile equipment used outdoors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -705,7 +704,7 @@ export default function EICRScheduleOfInspectionsPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Schedule of Inspections Built Into the App"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs with the full BS 7671 Appendix 6 schedule of inspections. Tick items as you walk the installation. Board scanner pre-populates board details. 7-day free trial."
     />
   );
 }

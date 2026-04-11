@@ -643,7 +643,7 @@ export default function EarthingFaultDiagnosisPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Diagnosis"
       relatedPages={relatedPages}
       ctaHeading="AI-Powered Fault Diagnosis on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, voice test entry, and digital EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

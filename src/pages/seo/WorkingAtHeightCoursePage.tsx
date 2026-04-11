@@ -532,7 +532,7 @@ export default function WorkingAtHeightCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Protect yourself when working at height"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 6 focused modules, interactive quizzes, video demonstrations, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 6 focused modules, interactive quizzes, video demonstrations, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/working-at-height"
     />

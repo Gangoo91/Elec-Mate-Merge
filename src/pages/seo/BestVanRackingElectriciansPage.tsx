@@ -100,8 +100,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/best-multifunction-tester-2026',
     title: 'Best Multifunction Tester 2026',
-    description:
-      'The most important instrument to store securely in your van racking.',
+    description: 'The most important instrument to store securely in your van racking.',
     icon: Gauge,
     category: 'Guide',
   },
@@ -116,16 +115,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete certificates on site from the van — no need to carry paperwork.',
+    description: 'Complete certificates on site from the van — no need to carry paperwork.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/guides/best-cable-detector-2026',
     title: 'Best Cable Detector 2026',
-    description:
-      'Another essential tool for your van kit — cable detectors compared and reviewed.',
+    description: 'Another essential tool for your van kit — cable detectors compared and reviewed.',
     icon: Zap,
     category: 'Guide',
   },
@@ -151,13 +148,13 @@ const sections = [
       <>
         <p>
           Your van is your mobile workshop. The difference between a well-organised van with proper
-          racking and a van with loose tools rolling around in the back is not just about
-          tidiness — it directly affects your productivity, professionalism, and safety.
+          racking and a van with loose tools rolling around in the back is not just about tidiness —
+          it directly affects your productivity, professionalism, and safety.
         </p>
         <p>
-          An electrician with organised van racking spends 1 to 2 minutes finding a specific tool
-          or material. An electrician with a messy van spends 5 to 10 minutes — and sometimes gives
-          up and makes a trip to the wholesaler for something that was buried in the back all along.
+          An electrician with organised van racking spends 1 to 2 minutes finding a specific tool or
+          material. An electrician with a messy van spends 5 to 10 minutes — and sometimes gives up
+          and makes a trip to the wholesaler for something that was buried in the back all along.
           Over 250 working days, that time difference adds up to 60 to 120 hours per year. At 40
           pounds per hour, that is 2,400 to 4,800 pounds of productive time lost to poor
           organisation.
@@ -168,8 +165,8 @@ const sections = [
           items during a collision instead of turning them into projectiles).
         </p>
         <p>
-          This guide compares the main van racking systems available in the UK, with specific
-          advice for the van models most commonly used by electricians.
+          This guide compares the main van racking systems available in the UK, with specific advice
+          for the van models most commonly used by electricians.
         </p>
       </>
     ),
@@ -180,7 +177,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Sortimo — The Premium Modular System</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Sortimo — The Premium Modular System
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Sortimo is the market leader in commercial vehicle racking. German-engineered, fully
             modular, crash-tested, and used by major fleets including British Gas and BT. It is also
@@ -188,34 +187,50 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Material:</strong> Powder-coated steel and aluminium</p>
-              <p className="text-white text-sm"><strong>Crash tested:</strong> Yes (ECE R17)</p>
-              <p className="text-white text-sm"><strong>Modularity:</strong> Fully modular (L-BOXX system)</p>
-              <p className="text-white text-sm"><strong>Transferable:</strong> Yes (between van models)</p>
+              <p className="text-white text-sm">
+                <strong>Material:</strong> Powder-coated steel and aluminium
+              </p>
+              <p className="text-white text-sm">
+                <strong>Crash tested:</strong> Yes (ECE R17)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Modularity:</strong> Fully modular (L-BOXX system)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Transferable:</strong> Yes (between van models)
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Weight (typical install):</strong> 80 to 120 kg</p>
-              <p className="text-white text-sm"><strong>Warranty:</strong> 5 years</p>
-              <p className="text-white text-sm"><strong>Installation:</strong> Professional recommended</p>
-              <p className="text-white text-sm"><strong>Price range:</strong> 2,500 to 5,000 pounds fitted</p>
+              <p className="text-white text-sm">
+                <strong>Weight (typical install):</strong> 80 to 120 kg
+              </p>
+              <p className="text-white text-sm">
+                <strong>Warranty:</strong> 5 years
+              </p>
+              <p className="text-white text-sm">
+                <strong>Installation:</strong> Professional recommended
+              </p>
+              <p className="text-white text-sm">
+                <strong>Price range:</strong> 2,500 to 5,000 pounds fitted
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> The L-BOXX case system integrates directly with the racking —
-          cases slide in and out of the shelving and lock in place. Every component is engineered
-          to fit together precisely. The crash-testing certification means your contents are
-          contained in an accident. The modular design means you can reconfigure the layout as your
-          needs change, and transfer the modules to a new van. Build quality is outstanding —
-          Sortimo systems last 10 to 15 years with minimal wear. Resale value is strong.
+          cases slide in and out of the shelving and lock in place. Every component is engineered to
+          fit together precisely. The crash-testing certification means your contents are contained
+          in an accident. The modular design means you can reconfigure the layout as your needs
+          change, and transfer the modules to a new van. Build quality is outstanding — Sortimo
+          systems last 10 to 15 years with minimal wear. Resale value is strong.
         </p>
         <p>
           <strong>Weaknesses:</strong> The price. A full Sortimo installation for a Transit Custom
           costs 3,000 to 4,500 pounds. For a sole trader or small firm, this is a significant
           capital outlay. The system is also heavy — 80 to 120 kg for a typical two-side
           installation reduces your available payload. The L-BOXX cases are Sortimo-specific and
-          more expensive than generic tool cases. Professional fitting adds 500 to 800 pounds to
-          the material cost.
+          more expensive than generic tool cases. Professional fitting adds 500 to 800 pounds to the
+          material cost.
         </p>
         <p>
           <strong>Best for:</strong> Established electrical businesses with 3 or more vans, where
@@ -239,34 +254,50 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Material:</strong> Powder-coated steel</p>
-              <p className="text-white text-sm"><strong>Crash tested:</strong> Yes (ECE R17)</p>
-              <p className="text-white text-sm"><strong>Modularity:</strong> Fully modular (Bott box system)</p>
-              <p className="text-white text-sm"><strong>Transferable:</strong> Yes</p>
+              <p className="text-white text-sm">
+                <strong>Material:</strong> Powder-coated steel
+              </p>
+              <p className="text-white text-sm">
+                <strong>Crash tested:</strong> Yes (ECE R17)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Modularity:</strong> Fully modular (Bott box system)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Transferable:</strong> Yes
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Weight (typical install):</strong> 70 to 100 kg</p>
-              <p className="text-white text-sm"><strong>Warranty:</strong> 5 years</p>
-              <p className="text-white text-sm"><strong>Installation:</strong> Professional or self-fit</p>
-              <p className="text-white text-sm"><strong>Price range:</strong> 2,000 to 4,000 pounds fitted</p>
+              <p className="text-white text-sm">
+                <strong>Weight (typical install):</strong> 70 to 100 kg
+              </p>
+              <p className="text-white text-sm">
+                <strong>Warranty:</strong> 5 years
+              </p>
+              <p className="text-white text-sm">
+                <strong>Installation:</strong> Professional or self-fit
+              </p>
+              <p className="text-white text-sm">
+                <strong>Price range:</strong> 2,000 to 4,000 pounds fitted
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> Bott offers a slightly lighter system than Sortimo with
-          comparable build quality and crash-test certification. The Bott online configurator
-          lets you design your layout for your specific van model before ordering, which reduces
-          fitting errors. The steel construction is extremely durable. Bott has a strong UK dealer
-          network with fitting centres in most major cities. The Bott box system (drawer inserts,
-          compartment dividers) is well-designed for electrical components — cable glands, terminals,
-          connectors, and accessories all have appropriate compartment sizes.
+          comparable build quality and crash-test certification. The Bott online configurator lets
+          you design your layout for your specific van model before ordering, which reduces fitting
+          errors. The steel construction is extremely durable. Bott has a strong UK dealer network
+          with fitting centres in most major cities. The Bott box system (drawer inserts,
+          compartment dividers) is well-designed for electrical components — cable glands,
+          terminals, connectors, and accessories all have appropriate compartment sizes.
         </p>
         <p>
-          <strong>Weaknesses:</strong> Still expensive — 2,000 to 4,000 pounds is a large
-          investment for a sole trader. The aesthetic is functional rather than premium (Sortimo
-          looks slightly more polished). The Bott dealer network, while extensive, is smaller
-          than Sortimo's in some regions. The case system is Bott-specific and not compatible with
-          Sortimo L-BOXX or other industry-standard case systems.
+          <strong>Weaknesses:</strong> Still expensive — 2,000 to 4,000 pounds is a large investment
+          for a sole trader. The aesthetic is functional rather than premium (Sortimo looks slightly
+          more polished). The Bott dealer network, while extensive, is smaller than Sortimo's in
+          some regions. The case system is Bott-specific and not compatible with Sortimo L-BOXX or
+          other industry-standard case systems.
         </p>
         <p>
           <strong>Best for:</strong> Electrical contractors who want fleet-grade racking at a
@@ -282,24 +313,42 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Van Guard — The Mid-Range Sweet Spot</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Van Guard — The Mid-Range Sweet Spot
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
-            Van Guard is a UK-based manufacturer offering practical, affordable van racking that hits
-            the sweet spot between budget DIY and premium modular systems. It is the most popular
-            choice among sole-trader electricians.
+            Van Guard is a UK-based manufacturer offering practical, affordable van racking that
+            hits the sweet spot between budget DIY and premium modular systems. It is the most
+            popular choice among sole-trader electricians.
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Material:</strong> Steel with powder coating</p>
-              <p className="text-white text-sm"><strong>Crash tested:</strong> Some models (check spec)</p>
-              <p className="text-white text-sm"><strong>Modularity:</strong> Semi-modular (bolt-on shelving)</p>
-              <p className="text-white text-sm"><strong>Transferable:</strong> Possible but not designed for it</p>
+              <p className="text-white text-sm">
+                <strong>Material:</strong> Steel with powder coating
+              </p>
+              <p className="text-white text-sm">
+                <strong>Crash tested:</strong> Some models (check spec)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Modularity:</strong> Semi-modular (bolt-on shelving)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Transferable:</strong> Possible but not designed for it
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Weight (typical install):</strong> 40 to 70 kg</p>
-              <p className="text-white text-sm"><strong>Warranty:</strong> 3 years</p>
-              <p className="text-white text-sm"><strong>Installation:</strong> Self-fit (half day)</p>
-              <p className="text-white text-sm"><strong>Price range:</strong> 500 to 1,500 pounds</p>
+              <p className="text-white text-sm">
+                <strong>Weight (typical install):</strong> 40 to 70 kg
+              </p>
+              <p className="text-white text-sm">
+                <strong>Warranty:</strong> 3 years
+              </p>
+              <p className="text-white text-sm">
+                <strong>Installation:</strong> Self-fit (half day)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Price range:</strong> 500 to 1,500 pounds
+              </p>
             </div>
           </div>
         </div>
@@ -317,14 +366,14 @@ const sections = [
           <strong>Weaknesses:</strong> Not fully modular — you cannot easily reconfigure the layout
           once installed. Not all models are crash-tested (check the specific product
           specification). The case system is not integrated like Sortimo or Bott — you use your own
-          tool cases and boxes on the shelves. The shelving is not as precisely engineered as
-          the premium options — there may be small gaps or slight misalignments. Transferring to a
-          new van requires buying new van-specific brackets and refitting.
+          tool cases and boxes on the shelves. The shelving is not as precisely engineered as the
+          premium options — there may be small gaps or slight misalignments. Transferring to a new
+          van requires buying new van-specific brackets and refitting.
         </p>
         <p>
           <strong>Best for:</strong> Sole traders and small firms who want proper metal racking
-          without spending 3,000 pounds or more. If you are buying your first van racking system
-          and want the best value, Van Guard is the answer.
+          without spending 3,000 pounds or more. If you are buying your first van racking system and
+          want the best value, Van Guard is the answer.
         </p>
       </>
     ),
@@ -335,7 +384,9 @@ const sections = [
     content: (
       <>
         <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5 my-4">
-          <h3 className="font-bold text-white text-lg mb-3">Modul-System — The Scandinavian Approach</h3>
+          <h3 className="font-bold text-white text-lg mb-3">
+            Modul-System — The Scandinavian Approach
+          </h3>
           <p className="text-white text-sm leading-relaxed mb-3">
             Modul-System is a Swedish manufacturer with a strong presence in Scandinavian and
             European fleet markets. Their lightweight aluminium-based systems are gaining traction
@@ -343,34 +394,50 @@ const sections = [
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Material:</strong> Aluminium with steel reinforcement</p>
-              <p className="text-white text-sm"><strong>Crash tested:</strong> Yes (INSTA 7400)</p>
-              <p className="text-white text-sm"><strong>Modularity:</strong> Fully modular</p>
-              <p className="text-white text-sm"><strong>Transferable:</strong> Yes</p>
+              <p className="text-white text-sm">
+                <strong>Material:</strong> Aluminium with steel reinforcement
+              </p>
+              <p className="text-white text-sm">
+                <strong>Crash tested:</strong> Yes (INSTA 7400)
+              </p>
+              <p className="text-white text-sm">
+                <strong>Modularity:</strong> Fully modular
+              </p>
+              <p className="text-white text-sm">
+                <strong>Transferable:</strong> Yes
+              </p>
             </div>
             <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-              <p className="text-white text-sm"><strong>Weight (typical install):</strong> 50 to 80 kg</p>
-              <p className="text-white text-sm"><strong>Warranty:</strong> 5 years</p>
-              <p className="text-white text-sm"><strong>Installation:</strong> Professional recommended</p>
-              <p className="text-white text-sm"><strong>Price range:</strong> 2,000 to 4,000 pounds fitted</p>
+              <p className="text-white text-sm">
+                <strong>Weight (typical install):</strong> 50 to 80 kg
+              </p>
+              <p className="text-white text-sm">
+                <strong>Warranty:</strong> 5 years
+              </p>
+              <p className="text-white text-sm">
+                <strong>Installation:</strong> Professional recommended
+              </p>
+              <p className="text-white text-sm">
+                <strong>Price range:</strong> 2,000 to 4,000 pounds fitted
+              </p>
             </div>
           </div>
         </div>
         <p>
           <strong>Strengths:</strong> The aluminium construction makes Modul-System significantly
-          lighter than steel competitors — 50 to 80 kg versus 80 to 120 kg for a comparable
-          Sortimo installation. For vans with tight payload margins (especially smaller vans like
-          the Berlingo or Caddy), this weight saving is meaningful. The crash-testing standard
-          (INSTA 7400) is actually more stringent than ECE R17 used by some competitors. The
-          modular design is well-thought-out, and the Scandinavian engineering ethos means
-          everything fits together cleanly.
+          lighter than steel competitors — 50 to 80 kg versus 80 to 120 kg for a comparable Sortimo
+          installation. For vans with tight payload margins (especially smaller vans like the
+          Berlingo or Caddy), this weight saving is meaningful. The crash-testing standard (INSTA
+          7400) is actually more stringent than ECE R17 used by some competitors. The modular design
+          is well-thought-out, and the Scandinavian engineering ethos means everything fits together
+          cleanly.
         </p>
         <p>
-          <strong>Weaknesses:</strong> The UK dealer and fitting network is smaller than Sortimo
-          or Bott. Finding a local Modul-System fitter may require travelling to a larger city.
-          The aluminium construction, while lighter, is more susceptible to denting than steel.
-          The brand is less recognised among UK electricians, which does not affect functionality
-          but may affect resale value when selling the van. The price is comparable to Bott and
+          <strong>Weaknesses:</strong> The UK dealer and fitting network is smaller than Sortimo or
+          Bott. Finding a local Modul-System fitter may require travelling to a larger city. The
+          aluminium construction, while lighter, is more susceptible to denting than steel. The
+          brand is less recognised among UK electricians, which does not affect functionality but
+          may affect resale value when selling the van. The price is comparable to Bott and
           approaching Sortimo territory without the same brand recognition.
         </p>
         <p>
@@ -419,9 +486,9 @@ const sections = [
               <span>
                 <strong>Plastic storage systems (100 to 200 pounds)</strong> — heavy-duty plastic
                 crates and stackable boxes secured with ratchet straps or bungee cords. The cheapest
-                option and the easiest to install (no drilling). However, plastic crates slide around
-                in transit, offer no security against theft, and provide no crash protection. This is
-                a temporary solution at best.
+                option and the easiest to install (no drilling). However, plastic crates slide
+                around in transit, offer no security against theft, and provide no crash protection.
+                This is a temporary solution at best.
               </span>
             </li>
           </ul>
@@ -430,11 +497,11 @@ const sections = [
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
             <p className="text-white text-sm">
-              <strong>Safety warning:</strong> DIY racking is not crash-tested. In a collision at
-              30 mph, a 2 kg drill in an unsecured position hits you with the force of a 60 kg
-              weight. If you use DIY racking, at minimum ensure heavy items are stored as low as
-              possible and secured with straps or in closed containers. A lockable metal toolbox
-              bolted to the floor is a worthwhile safety investment even with DIY shelving.
+              <strong>Safety warning:</strong> DIY racking is not crash-tested. In a collision at 30
+              mph, a 2 kg drill in an unsecured position hits you with the force of a 60 kg weight.
+              If you use DIY racking, at minimum ensure heavy items are stored as low as possible
+              and secured with straps or in closed containers. A lockable metal toolbox bolted to
+              the floor is a worthwhile safety investment even with DIY shelving.
             </p>
           </div>
         </div>
@@ -458,8 +525,8 @@ const sections = [
               (between wheel arches 1,268mm), height 1,406mm. Payload 600 to 1,000 kg depending on
               model. Excellent for full nearside racking with cable drum storage on the offside
               floor. All major racking manufacturers offer Transit Custom-specific kits. The wider
-              cargo area between the wheel arches accommodates deeper shelving than the Vivaro.
-              The L2H1 (long wheelbase, standard roof) version offers an additional 370mm of cargo
+              cargo area between the wheel arches accommodates deeper shelving than the Vivaro. The
+              L2H1 (long wheelbase, standard roof) version offers an additional 370mm of cargo
               length for those who carry more stock.
             </p>
           </div>
@@ -475,13 +542,15 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Citroen Berlingo / Peugeot Partner / Vauxhall Combo</h4>
+            <h4 className="font-bold text-white mb-2">
+              Citroen Berlingo / Peugeot Partner / Vauxhall Combo
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               The smaller van option. Cargo length 1,817mm (M) or 2,167mm (XL), width 1,550mm
               (between wheel arches 1,229mm), height 1,236mm. Payload 650 to 1,000 kg. The smaller
               cargo area limits racking options — typically one side of shelving only, with the
-              floor area used for cable drums and larger items. Weight is critical in smaller vans
-              — choose lightweight racking (Modul-System or Van Guard) to preserve payload. The
+              floor area used for cable drums and larger items. Weight is critical in smaller vans —
+              choose lightweight racking (Modul-System or Van Guard) to preserve payload. The
               Berlingo is popular for domestic electricians and apprentices who do not need to carry
               large quantities of stock.
             </p>
@@ -497,8 +566,7 @@ const sections = [
       <>
         <p>
           Cable storage is the unique challenge of an electrician van. Cable drums are heavy,
-          awkward, and need to be accessible without emptying the van. Here are the main
-          approaches.
+          awkward, and need to be accessible without emptying the van. Here are the main approaches.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -516,9 +584,9 @@ const sections = [
               <Package className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable drum shelf</strong> — a low shelf at floor level designed to hold
-                multiple cable drums upright. This is the simplest approach — drums sit on the
-                shelf and are restrained by a bar or strap across the front. Less convenient than
-                reel holders (you need to lift drums in and out) but accommodates more drums and
+                multiple cable drums upright. This is the simplest approach — drums sit on the shelf
+                and are restrained by a bar or strap across the front. Less convenient than reel
+                holders (you need to lift drums in and out) but accommodates more drums and
                 different drum sizes.
               </span>
             </li>
@@ -535,8 +603,8 @@ const sections = [
         </div>
         <p>
           Most electricians settle on a combination — two or three cable reel holders for the most
-          commonly used sizes (2.5mm and 1.5mm twin and earth, 6.0mm twin and earth, 1.5mm flex)
-          and floor space for larger drums carried on a job-by-job basis.
+          commonly used sizes (2.5mm and 1.5mm twin and earth, 6.0mm twin and earth, 1.5mm flex) and
+          floor space for larger drums carried on a job-by-job basis.
         </p>
       </>
     ),
@@ -547,8 +615,8 @@ const sections = [
     content: (
       <>
         <p>
-          The financial case for van racking depends on how much time you save and how long you
-          keep the system.
+          The financial case for van racking depends on how much time you save and how long you keep
+          the system.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -557,7 +625,8 @@ const sections = [
               <span>
                 <strong>Time saving</strong> — 15 to 30 minutes per job in tool retrieval, averaged
                 over 250 working days, equals 62 to 125 hours per year. At 40 pounds per hour
-                charge-out rate, that is 2,500 to 5,000 pounds per year in recovered productive time.
+                charge-out rate, that is 2,500 to 5,000 pounds per year in recovered productive
+                time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -616,9 +685,9 @@ const sections = [
               Premium systems (Sortimo, Bott, Modul-System) are best professionally fitted. The
               fitter ensures the system is correctly installed, level, and crash-test compliant.
               Professional fitting typically costs 300 to 800 pounds depending on the complexity.
-              The fitter can also advise on the optimal layout for your specific work pattern.
-              Most Sortimo and Bott dealers have mobile fitting vans that come to your premises.
-              Allow half a day to a full day for installation.
+              The fitter can also advise on the optimal layout for your specific work pattern. Most
+              Sortimo and Bott dealers have mobile fitting vans that come to your premises. Allow
+              half a day to a full day for installation.
             </p>
           </div>
         </div>
@@ -635,8 +704,8 @@ const sections = [
           <p className="text-white text-sm leading-relaxed mb-3">
             <strong>For most sole-trader electricians: Van Guard.</strong> The best balance of cost,
             quality, and practicality. A nearside shelving unit with cable reel holders costs 800 to
-            1,200 pounds, self-fits in a day, and lasts 5 to 7 years. It pays for itself within
-            two months.
+            1,200 pounds, self-fits in a day, and lasts 5 to 7 years. It pays for itself within two
+            months.
           </p>
           <p className="text-white text-sm leading-relaxed mb-3">
             <strong>For firms with 3+ vans: Bott Smartvan.</strong> Fleet-grade quality with
@@ -694,7 +763,7 @@ export default function BestVanRackingElectriciansPage() {
       faqHeading="Frequently Asked Questions About Van Racking for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business From Your Van With Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site certificates. Professional tools on your phone — no paperwork, no office trips. 7-day free trial."
     />
   );
 }

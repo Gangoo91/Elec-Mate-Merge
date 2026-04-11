@@ -634,7 +634,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify battery storage systems"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for battery storage installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for battery storage installations. 7-day free trial."
           icon={Battery}
         />
       </>
@@ -671,7 +671,7 @@ export default function BatteryStorageGuidePage() {
       faqHeading="Frequently Asked Questions About Home Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify Battery Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for battery storage installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for battery storage installations. 7-day free trial, cancel anytime."
     />
   );
 }

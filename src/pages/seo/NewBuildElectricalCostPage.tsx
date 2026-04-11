@@ -47,7 +47,8 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'How much does electrical installation cost per square metre for a new build in 2026?',
+    question:
+      'How much does electrical installation cost per square metre for a new build in 2026?',
     answer:
       'New build electrical installation costs range from £35 to £85 per square metre in 2026. A basic builder-standard specification with minimum socket outlets and pendant lighting costs £35 to £45 per square metre. A mid-range specification with additional sockets, downlights, USB charging points, and outdoor lighting costs £50 to £65 per square metre. A premium specification with home automation, structured data wiring, underfloor heating controls, and EV charger installation costs £70 to £85 per square metre. These rates include first fix, second fix, consumer unit, testing, and the EIC.',
   },
@@ -113,7 +114,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote new build electrical packages with per-plot pricing and specification levels.',
+    description:
+      'Quote new build electrical packages with per-plot pricing and specification levels.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -132,8 +134,8 @@ const sections = [
         <p>
           Electrical installation in new build homes is structured around the two-fix system that
           aligns with the construction programme. First fix goes in after the building is
-          weathertight but before plastering. Second fix completes the installation after
-          decoration and before handover.
+          weathertight but before plastering. Second fix completes the installation after decoration
+          and before handover.
         </p>
         <p>
           Whether you are a developer pricing the electrical package for a new development, a
@@ -166,8 +168,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable and wiring</strong> — £800 to £2,000 per plot depending on size and
-                specification. Twin and earth, 3-core and earth, data cable, coaxial, and fire
-                alarm cable. A standard 3-bed house uses approximately 400 to 600 metres of cable.
+                specification. Twin and earth, 3-core and earth, data cable, coaxial, and fire alarm
+                cable. A standard 3-bed house uses approximately 400 to 600 metres of cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -181,9 +183,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labour (first fix)</strong> — £1,200 to £2,500 per plot. 2 to 3 days at
-                day rates of £250 to £350 per electrician, typically with a mate at £150 to £200
-                per day.
+                <strong>Labour (first fix)</strong> — £1,200 to £2,500 per plot. 2 to 3 days at day
+                rates of £250 to £350 per electrician, typically with a mate at £150 to £200 per
+                day.
               </span>
             </li>
           </ul>
@@ -211,8 +213,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit with RCBOs and SPD</strong> — £350 to £600 per plot. A
-                10 to 12-way board is standard for a 3-bedroom house.
+                <strong>Consumer unit with RCBOs and SPD</strong> — £350 to £600 per plot. A 10 to
+                12-way board is standard for a 3-bedroom house.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -227,15 +229,15 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Light fittings</strong> — £200 to £1,500 per plot depending on
-                specification. Builder-standard pendants and battens: £200 to £400. LED
-                downlights throughout: £600 to £1,000. Designer fittings: £1,000+.
+                specification. Builder-standard pendants and battens: £200 to £400. LED downlights
+                throughout: £600 to £1,000. Designer fittings: £1,000+.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Labour (second fix, testing, certification)</strong> — £1,000 to £2,000
-                per plot. 2 to 3 days including testing and EIC completion.
+                <strong>Labour (second fix, testing, certification)</strong> — £1,000 to £2,000 per
+                plot. 2 to 3 days including testing and EIC completion.
               </span>
             </li>
           </ul>
@@ -259,18 +261,18 @@ const sections = [
               <span>
                 <strong>Basic specification: £35 to £45/m²</strong> — Builder standard. Minimum
                 socket outlets per NHBC guidelines, pendant lighting, standard white accessories,
-                basic smoke detection, no downlights, no external lighting beyond a single
-                bulkhead. Typical for volume housebuilder affordable housing plots.
+                basic smoke detection, no downlights, no external lighting beyond a single bulkhead.
+                Typical for volume housebuilder affordable housing plots.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mid-range specification: £50 to £65/m²</strong> — Additional socket
-                outlets (6+ doubles in living areas), LED downlights in kitchen and bathroom, USB
-                charging sockets in bedrooms and kitchen, external lighting (2 to 4 fittings),
-                extractor fans, shaver socket, TV and data points in living room and bedrooms.
-                Typical for mid-market housebuilder private sale plots.
+                <strong>Mid-range specification: £50 to £65/m²</strong> — Additional socket outlets
+                (6+ doubles in living areas), LED downlights in kitchen and bathroom, USB charging
+                sockets in bedrooms and kitchen, external lighting (2 to 4 fittings), extractor
+                fans, shaver socket, TV and data points in living room and bedrooms. Typical for
+                mid-market housebuilder private sale plots.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,26 +303,26 @@ const sections = [
       <>
         <p>
           The specification level is agreed between the developer and the electrical contractor
-          before first fix begins. It defines exactly what is included in the electrical package
-          for each house type.
+          before first fix begins. It defines exactly what is included in the electrical package for
+          each house type.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Outlet Schedule</h3>
             <p className="text-white text-sm leading-relaxed">
               The outlet schedule defines the exact number and type of socket outlets, lighting
-              points, switches, and data points in each room of each house type. It is the
-              contract document that the electrician prices against. Any extras requested by the
-              buyer are charged as variations.
+              points, switches, and data points in each room of each house type. It is the contract
+              document that the electrician prices against. Any extras requested by the buyer are
+              charged as variations.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Buyer Upgrades</h3>
             <p className="text-white text-sm leading-relaxed">
               Many developers offer electrical upgrade packages to buyers — additional sockets,
-              downlights, USB charging, external lighting, and EV charger pre-wiring. These
-              upgrades are priced per item and typically carry a 30% to 50% margin for the
-              developer. The electrician receives the net cost plus a reasonable markup.
+              downlights, USB charging, external lighting, and EV charger pre-wiring. These upgrades
+              are priced per item and typically carry a 30% to 50% margin for the developer. The
+              electrician receives the net cost plus a reasonable markup.
             </p>
           </div>
         </div>
@@ -342,9 +344,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum outlet provision</strong> — NHBC requires adequate socket outlets
-                in all habitable rooms. Whilst BS 7671 does not specify minimum numbers, NHBC
-                Standards effectively set the baseline that builders must meet.
+                <strong>Minimum outlet provision</strong> — NHBC requires adequate socket outlets in
+                all habitable rooms. Whilst BS 7671 does not specify minimum numbers, NHBC Standards
+                effectively set the baseline that builders must meet.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -358,15 +360,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smoke and heat detection</strong> — Interlinked smoke and heat detection
-                to BS 5839-6. NHBC requires mains-powered detectors with battery backup.
+                <strong>Smoke and heat detection</strong> — Interlinked smoke and heat detection to
+                BS 5839-6. NHBC requires mains-powered detectors with battery backup.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charging</strong> — Approved Document S requires an EV charge point
-                for each new dwelling with associated parking. NHBC inspectors verify compliance.
+                <strong>EV charging</strong> — Approved Document S requires an EV charge point for
+                each new dwelling with associated parking. NHBC inspectors verify compliance.
               </span>
             </li>
           </ul>
@@ -395,18 +397,18 @@ const sections = [
         <p>
           An Electrical Installation Certificate (EIC) must be issued for each dwelling. The EIC
           must cover the complete installation including the consumer unit, all final circuits,
-          smoke detection, and the EV charger circuit. RCD protection is required for socket
-          outlets up to 32A per Regulation 411.3.3 of BS 7671.
+          smoke detection, and the EV charger circuit. RCD protection is required for socket outlets
+          up to 32A per Regulation 411.3.3 of BS 7671.
         </p>
         <p>
-          Part P notification is required for each dwelling. If you are registered with a
-          competent person scheme (NICEIC, NAPIT, ELECSA), you can self-certify. The Building
-          Regulations Compliance Certificate should be provided to the developer for inclusion
-          in the handover pack to the buyer.
+          Part P notification is required for each dwelling. If you are registered with a competent
+          person scheme (NICEIC, NAPIT, ELECSA), you can self-certify. The Building Regulations
+          Compliance Certificate should be provided to the developer for inclusion in the handover
+          pack to the buyer.
         </p>
         <p>
-          SPD (surge protection device) installation is required under Regulation 443.4 of
-          BS 7671. This should be included in every new build consumer unit as standard.
+          SPD (surge protection device) installation is required under Regulation 443.4 of BS 7671.
+          This should be included in every new build consumer unit as standard.
         </p>
       </>
     ),
@@ -418,8 +420,8 @@ const sections = [
       <>
         <p>
           New build electrical work is high-volume, predictable work that rewards efficient
-          organisation and tight material procurement. Here are tips for pricing new build
-          contracts profitably:
+          organisation and tight material procurement. Here are tips for pricing new build contracts
+          profitably:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -428,13 +430,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Price Per Plot, Quote Per Phase</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Calculate your cost per house type (based on the outlet schedule), then quote
-                  the development in phases. Use Elec-Mate's{' '}
+                  Calculate your cost per house type (based on the outlet schedule), then quote the
+                  development in phases. Use Elec-Mate's{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to build per-plot pricing templates that you can replicate across the
-                  development.
+                  to build per-plot pricing templates that you can replicate across the development.
                 </p>
               </div>
             </div>
@@ -446,10 +447,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Templates for Each House Type</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC template</SEOInternalLink>
-                  {' '}for each house type on the development. Pre-populate the circuit schedule,
-                  design current, and protective device details. On second fix, you only need to
-                  enter the test results for each plot — saving significant administration time.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC template</SEOInternalLink> for
+                  each house type on the development. Pre-populate the circuit schedule, design
+                  current, and protective device details. On second fix, you only need to enter the
+                  test results for each plot — saving significant administration time.
                 </p>
               </div>
             </div>
@@ -460,9 +461,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Material Procurement</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Bulk-buy cables and accessories for the full development. Negotiate trade
-                  account terms with your wholesaler based on the total order value. Pre-cut cable
-                  lengths for each house type to reduce waste and speed up first fix.
+                  Bulk-buy cables and accessories for the full development. Negotiate trade account
+                  terms with your wholesaler based on the total order value. Pre-cut cable lengths
+                  for each house type to reduce waste and speed up first fix.
                 </p>
               </div>
             </div>
@@ -495,8 +496,7 @@ export default function NewBuildElectricalCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          New Build Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Per m² Guide 2026</span>
+          New Build Electrical Cost: <span className="text-yellow-400">UK Per m² Guide 2026</span>
         </>
       }
       heroSubtitle="What does new build electrical installation cost per square metre? This guide covers first fix, second fix, specification levels from basic to premium, NHBC standards, and realistic pricing — for developers comparing tenders and electricians quoting new build contracts."
@@ -507,7 +507,7 @@ export default function NewBuildElectricalCostPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote New Build Electrical Packages with Per-Plot Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for new build quoting with outlet schedules, specification levels, and EIC templates. 7-day free trial."
     />
   );
 }

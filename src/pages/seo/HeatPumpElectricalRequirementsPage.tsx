@@ -49,12 +49,12 @@ const faqs = [
   {
     question: 'What size circuit does an air source heat pump need?',
     answer:
-      'The circuit size depends on the heat pump compressor electrical input, not the thermal output. A 5kW output ASHP with a COP of 3 has an electrical input of approximately 1.7kW — a 10A circuit is sufficient. A 12kW output ASHP with a COP of 3 has an electrical input of approximately 4kW — a 20A or 25A circuit is required. Larger ASHPs (16kW to 20kW output) may have electrical inputs of 5kW to 8kW, requiring a 32A or 40A single-phase circuit, or a three-phase connection. Always check the heat pump manufacturer\'s electrical specification before designing the circuit — the compressor rated current and the starting current (which may be significantly higher) are both relevant. Cable sizing must account for both the rated current and the voltage drop over the cable run from the consumer unit to the outdoor unit location.',
+      "The circuit size depends on the heat pump compressor electrical input, not the thermal output. A 5kW output ASHP with a COP of 3 has an electrical input of approximately 1.7kW — a 10A circuit is sufficient. A 12kW output ASHP with a COP of 3 has an electrical input of approximately 4kW — a 20A or 25A circuit is required. Larger ASHPs (16kW to 20kW output) may have electrical inputs of 5kW to 8kW, requiring a 32A or 40A single-phase circuit, or a three-phase connection. Always check the heat pump manufacturer's electrical specification before designing the circuit — the compressor rated current and the starting current (which may be significantly higher) are both relevant. Cable sizing must account for both the rated current and the voltage drop over the cable run from the consumer unit to the outdoor unit location.",
   },
   {
     question: 'Do I need to notify the DNO before installing an air source heat pump?',
     answer:
-      'Heat pumps are consumers, not generators — they do not export electricity to the grid, so DNO G99 (generation above 3.68kW) does not apply. However, a large ASHP (over 16A single-phase continuous load) may trigger a DNO load notification requirement under the Distribution Code or the specific DNO\'s connection agreement. In practice, most domestic ASHPs up to 12kW output can be connected without DNO pre-approval, but it is good practice to notify the local DNO for larger installations. Check the DNO\'s self-connection criteria for your region — these are available on the DNO website. Always confirm that the existing supply fuse (typically 60A, 80A, or 100A) has adequate capacity for the additional ASHP load.',
+      "Heat pumps are consumers, not generators — they do not export electricity to the grid, so DNO G99 (generation above 3.68kW) does not apply. However, a large ASHP (over 16A single-phase continuous load) may trigger a DNO load notification requirement under the Distribution Code or the specific DNO's connection agreement. In practice, most domestic ASHPs up to 12kW output can be connected without DNO pre-approval, but it is good practice to notify the local DNO for larger installations. Check the DNO's self-connection criteria for your region — these are available on the DNO website. Always confirm that the existing supply fuse (typically 60A, 80A, or 100A) has adequate capacity for the additional ASHP load.",
   },
   {
     question: 'Why is MCS certification needed for the Boiler Upgrade Scheme?',
@@ -87,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size the dedicated circuit cable for ASHP compressor supply including starting current considerations.',
+    description:
+      'Size the dedicated circuit cable for ASHP compressor supply including starting current considerations.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for heat pump circuits on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for heat pump circuits on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote heat pump electrical packages including dedicated circuit, immersion, and controls wiring.',
+    description:
+      'Quote heat pump electrical packages including dedicated circuit, immersion, and controls wiring.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -146,8 +149,8 @@ const sections = [
         </p>
         <p>
           The electrician's role in a heat pump installation typically covers: the dedicated circuit
-          from the consumer unit to the outdoor unit, the immersion heater backup circuit to the
-          hot water cylinder, the controls wiring for UFH zone valves and room thermostats, and the
+          from the consumer unit to the outdoor unit, the immersion heater backup circuit to the hot
+          water cylinder, the controls wiring for UFH zone valves and room thermostats, and the
           testing and certification of all electrical work under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
@@ -192,10 +195,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>16kW to 20kW output ASHP (COP 3)</strong> — electrical input 5.3kW to
-                6.7kW. Recommended circuit: 32A to 40A RCBO, 6mm twin and earth. Verify starting
-                current with manufacturer — may require a time-delay device at the consumer unit
-                if starting current is high.
+                <strong>16kW to 20kW output ASHP (COP 3)</strong> — electrical input 5.3kW to 6.7kW.
+                Recommended circuit: 32A to 40A RCBO, 6mm twin and earth. Verify starting current
+                with manufacturer — may require a time-delay device at the consumer unit if starting
+                current is high.
               </span>
             </li>
           </ul>
@@ -233,20 +236,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supply fuse capacity</strong> — the existing DNO supply fuse (typically
-                60A, 80A, or 100A) must have adequate capacity for the additional ASHP load. For
-                a house with an existing 60A fuse, adding a 10kW ASHP (4kW electrical input) on
-                top of the existing heating, hot water, and general loads may approach or exceed
-                the fuse capacity during a cold snap. Assess the maximum demand carefully.
+                <strong>Supply fuse capacity</strong> — the existing DNO supply fuse (typically 60A,
+                80A, or 100A) must have adequate capacity for the additional ASHP load. For a house
+                with an existing 60A fuse, adding a 10kW ASHP (4kW electrical input) on top of the
+                existing heating, hot water, and general loads may approach or exceed the fuse
+                capacity during a cold snap. Assess the maximum demand carefully.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO load notification</strong> — some DNOs require notification of new
-                large loads connected to the LV network. Check the relevant DNO's guidance for
-                your region. EDF Energy, National Grid, and UKPN all have self-connection
-                criteria — large single-phase loads over 11kVA may require notification.
+                <strong>DNO load notification</strong> — some DNOs require notification of new large
+                loads connected to the LV network. Check the relevant DNO's guidance for your
+                region. EDF Energy, National Grid, and UKPN all have self-connection criteria —
+                large single-phase loads over 11kVA may require notification.
               </span>
             </li>
           </ul>
@@ -268,9 +271,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dedicated circuit</strong> — a 16A circuit on 2.5mm twin and earth from
-                the consumer unit to the cylinder position, with a switched fused connection unit
-                (SFCU) adjacent to the cylinder. The SFCU allows local isolation for maintenance.
+                <strong>Dedicated circuit</strong> — a 16A circuit on 2.5mm twin and earth from the
+                consumer unit to the cylinder position, with a switched fused connection unit (SFCU)
+                adjacent to the cylinder. The SFCU allows local isolation for maintenance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,8 +282,8 @@ const sections = [
                 <strong>Anti-Legionella cycle</strong> — the heat pump controller typically manages
                 a weekly anti-Legionella cycle at 60°C, activating the immersion heater. This must
                 be enabled during commissioning — confirm with the heat pump engineer that the
-                anti-Legionella function is active and that the immersion element is correctly
-                wired to the controller relay output.
+                anti-Legionella function is active and that the immersion element is correctly wired
+                to the controller relay output.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,36 +313,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Room thermostats</strong> — one per heating zone (typically one per room
-                or floor). The thermostat signals demand to the manifold zone valve actuator or
-                to the heating controls hub. Wire according to the heat pump manufacturer's controls
+                <strong>Room thermostats</strong> — one per heating zone (typically one per room or
+                floor). The thermostat signals demand to the manifold zone valve actuator or to the
+                heating controls hub. Wire according to the heat pump manufacturer's controls
                 schematic — wiring conventions vary between brands.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Manifold zone valve actuators</strong> — motorised actuators (typically
-                24V or 230V) fitted to the manifold ports. They open or close to allow or prevent
-                flow to each zone based on the room thermostat signal. Actuators must be wired in
+                <strong>Manifold zone valve actuators</strong> — motorised actuators (typically 24V
+                or 230V) fitted to the manifold ports. They open or close to allow or prevent flow
+                to each zone based on the room thermostat signal. Actuators must be wired in
                 accordance with the manifold manufacturer's wiring diagram.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat pump enable signal</strong> — when at least one zone calls for heat,
-                a demand signal (volt-free contact or specific signal type depending on the heat
-                pump brand) is sent to the heat pump controller to start the compressor. Coordinate
-                the wiring of this signal with the heat pump installer.
+                <strong>Heat pump enable signal</strong> — when at least one zone calls for heat, a
+                demand signal (volt-free contact or specific signal type depending on the heat pump
+                brand) is sent to the heat pump controller to start the compressor. Coordinate the
+                wiring of this signal with the heat pump installer.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The controls wiring for a heat pump UFH system is low-voltage and is excluded from the
-          BS 7671 EIC scope in terms of circuit testing, but the mains supply to the controls hub
-          or room thermostats (if mains-powered) is included in the EIC scope.
+          The controls wiring for a heat pump UFH system is low-voltage and is excluded from the BS
+          7671 EIC scope in terms of circuit testing, but the mains supply to the controls hub or
+          room thermostats (if mains-powered) is included in the EIC scope.
         </p>
       </>
     ),
@@ -359,9 +362,9 @@ const sections = [
               <Leaf className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCS-certified installer</strong> — the heat pump installer must be
-                MCS-certified and must install an MCS-registered heat pump product. The
-                electrician sub-contractor does not need to be MCS-certified — their role is
-                to supply the EIC for the electrical work.
+                MCS-certified and must install an MCS-registered heat pump product. The electrician
+                sub-contractor does not need to be MCS-certified — their role is to supply the EIC
+                for the electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -369,17 +372,17 @@ const sections = [
               <span>
                 <strong>EPC requirement</strong> — the property must have an Energy Performance
                 Certificate (EPC) with a rating of A to D (not E, F, or G) to be eligible for the
-                BUS grant. The EPC must be current (less than 10 years old). If the property has
-                a low EPC rating, insulation improvements may be required before the heat pump
+                BUS grant. The EPC must be current (less than 10 years old). If the property has a
+                low EPC rating, insulation improvements may be required before the heat pump
                 installation proceeds.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Leaf className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grant application</strong> — the MCS-certified installer applies for the
-                BUS grant on behalf of the homeowner before installation begins. The grant is
-                deducted from the installation cost — the homeowner pays the net price.
+                <strong>Grant application</strong> — the MCS-certified installer applies for the BUS
+                grant on behalf of the homeowner before installation begins. The grant is deducted
+                from the installation cost — the homeowner pays the net price.
               </span>
             </li>
           </ul>
@@ -400,11 +403,17 @@ const sections = [
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Continuity of protective conductor (CPC) from MET to heat pump enclosure earth terminal</span>
+              <span>
+                Continuity of protective conductor (CPC) from MET to heat pump enclosure earth
+                terminal
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Insulation resistance (500V DC, minimum 1 megohm) — with the heat pump disconnected at the local isolator</span>
+              <span>
+                Insulation resistance (500V DC, minimum 1 megohm) — with the heat pump disconnected
+                at the local isolator
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -420,7 +429,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional test — energise the ASHP and verify that the compressor starts and runs correctly</span>
+              <span>
+                Functional test — energise the ASHP and verify that the compressor starts and runs
+                correctly
+              </span>
             </li>
           </ul>
         </div>
@@ -429,10 +441,9 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
-          must be issued covering all new circuits. The EIC should note the heat pump model,
-          the dedicated circuit rating, and the local isolator position. A copy of the EIC is
-          provided to the MCS-certified heat pump installer for inclusion in the commissioning
-          documentation.
+          must be issued covering all new circuits. The EIC should note the heat pump model, the
+          dedicated circuit rating, and the local isolator position. A copy of the EIC is provided
+          to the MCS-certified heat pump installer for inclusion in the commissioning documentation.
         </p>
       </>
     ),
@@ -443,10 +454,10 @@ const sections = [
     content: (
       <>
         <p>
-          Heat pump installations are a growing market and the electrical package — dedicated circuit,
-          immersion backup, and controls wiring — is typically worth £500 to £1,500 per installation
-          as a sub-contract element. Building relationships with MCS-certified heat pump installers
-          generates recurring referrals.
+          Heat pump installations are a growing market and the electrical package — dedicated
+          circuit, immersion backup, and controls wiring — is typically worth £500 to £1,500 per
+          installation as a sub-contract element. Building relationships with MCS-certified heat
+          pump installers generates recurring referrals.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -455,10 +466,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Check Supply Capacity First</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Before agreeing to connect the heat pump, check the DNO supply fuse rating and
-                  the existing consumer unit maximum demand. If the supply fuse is undersized for
-                  the additional ASHP load, a supply fuse upgrade is required — this involves the
-                  DNO and takes time. Flag this on the survey to avoid programme delays.
+                  Before agreeing to connect the heat pump, check the DNO supply fuse rating and the
+                  existing consumer unit maximum demand. If the supply fuse is undersized for the
+                  additional ASHP load, a supply fuse upgrade is required — this involves the DNO
+                  and takes time. Flag this on the survey to avoid programme delays.
                 </p>
               </div>
             </div>
@@ -484,7 +495,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify heat pump electrical installations"
-          description="Join 430+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification. Everything needed for heat pump electrical sub-contract work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for heat pump circuit sizing, professional quoting, and on-site EIC certification. Everything needed for heat pump electrical sub-contract work. 7-day free trial."
           icon={Leaf}
         />
       </>

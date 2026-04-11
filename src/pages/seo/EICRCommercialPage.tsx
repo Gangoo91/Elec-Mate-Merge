@@ -79,7 +79,7 @@ const faqs = [
   {
     question: 'Does a commercial landlord need to provide an EICR to the tenant?',
     answer:
-      'Commercial landlords do not have the same statutory obligation to provide EICRs as private residential landlords under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — those regulations apply to assured shorthold tenancies (residential), not commercial leases. However, commercial landlords have duties under the Electricity at Work Regulations 1989 and the Health and Safety at Work Act 1974 to maintain the electrical installation in a safe condition. In practice, most commercial lease agreements include a landlord\'s obligation to maintain the structure and services (including electrical installations). Many commercial tenants request an EICR as part of the pre-lease due diligence. During the tenancy, the landlord remains responsible for the condition of the electrical installation in the common parts.',
+      "Commercial landlords do not have the same statutory obligation to provide EICRs as private residential landlords under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — those regulations apply to assured shorthold tenancies (residential), not commercial leases. However, commercial landlords have duties under the Electricity at Work Regulations 1989 and the Health and Safety at Work Act 1974 to maintain the electrical installation in a safe condition. In practice, most commercial lease agreements include a landlord's obligation to maintain the structure and services (including electrical installations). Many commercial tenants request an EICR as part of the pre-lease due diligence. During the tenancy, the landlord remains responsible for the condition of the electrical installation in the common parts.",
   },
 ];
 
@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete commercial EICR reports on your phone with multiple distribution board schedules.',
+    description:
+      'Complete commercial EICR reports on your phone with multiple distribution board schedules.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -152,8 +153,9 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>
           . Unlike the domestic private rented sector, there is no single piece of legislation that
-          mandates a 5-year inspection interval for commercial premises — the interval is risk-based.
-          However, BS 7671 Appendix 6 recommends a maximum of 5 years for most commercial premises.
+          mandates a 5-year inspection interval for commercial premises — the interval is
+          risk-based. However, BS 7671 Appendix 6 recommends a maximum of 5 years for most
+          commercial premises.
         </p>
         <p>
           This guide covers inspection intervals, scope differences, the qualifications required,
@@ -174,27 +176,41 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Offices, retail, and general commercial</strong> — maximum 5 years</span>
+              <span>
+                <strong>Offices, retail, and general commercial</strong> — maximum 5 years
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Industrial premises</strong> — maximum 3 years</span>
+              <span>
+                <strong>Industrial premises</strong> — maximum 3 years
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Hotels and guesthouses</strong> — maximum 5 years</span>
+              <span>
+                <strong>Hotels and guesthouses</strong> — maximum 5 years
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Educational establishments</strong> — maximum 5 years</span>
+              <span>
+                <strong>Educational establishments</strong> — maximum 5 years
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Healthcare (fixed installation)</strong> — maximum 1 year (as determined by authorised person for electrical)</span>
+              <span>
+                <strong>Healthcare (fixed installation)</strong> — maximum 1 year (as determined by
+                authorised person for electrical)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Change of occupancy</strong> — inspection required regardless of when the previous inspection was carried out</span>
+              <span>
+                <strong>Change of occupancy</strong> — inspection required regardless of when the
+                previous inspection was carried out
+              </span>
             </li>
           </ul>
         </div>
@@ -233,7 +249,9 @@ const sections = [
             </ul>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-base mb-3">Commercial EICR Additional Scope</h3>
+            <h3 className="font-bold text-white text-base mb-3">
+              Commercial EICR Additional Scope
+            </h3>
             <ul className="space-y-2 text-white text-sm">
               <li>LV intake and metering</li>
               <li>Main switchgear (ACBs, MCCBs)</li>
@@ -323,18 +341,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sub-main cable condition</strong> — inspect the condition of sub-main
-                cables between the MDB and SDBs. Cable insulation degradation, mechanical damage,
-                or inadequate support are common C2 or C3 observations in older commercial
-                buildings.
+                <strong>Sub-main cable condition</strong> — inspect the condition of sub-main cables
+                between the MDB and SDBs. Cable insulation degradation, mechanical damage, or
+                inadequate support are common C2 or C3 observations in older commercial buildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth fault loop impedance on each phase</strong> — Zs must be measured
-                on each phase at each distribution board and compared against the maximum permitted
-                for the protective device. Three-phase values must be recorded separately.
+                <strong>Earth fault loop impedance on each phase</strong> — Zs must be measured on
+                each phase at each distribution board and compared against the maximum permitted for
+                the protective device. Three-phase values must be recorded separately.
               </span>
             </li>
           </ul>
@@ -389,17 +406,17 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial EICR pricing is typically based on the number of distribution boards, the number
-          of circuits, and the time required. Typical day rates for qualified commercial electrical
-          inspectors are £350 to £600 per day. Indicative costs:
+          Commercial EICR pricing is typically based on the number of distribution boards, the
+          number of circuits, and the time required. Typical day rates for qualified commercial
+          electrical inspectors are £350 to £600 per day. Indicative costs:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small commercial unit (under 200m², 1 distribution board)</strong> — £500
-                to £800. Half-day inspection, report same day.
+                <strong>Small commercial unit (under 200m², 1 distribution board)</strong> — £500 to
+                £800. Half-day inspection, report same day.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -412,9 +429,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large commercial building (1,000m²+, 5+ distribution boards)</strong> — £2,000
-                to £3,500+. Multi-day inspection with a team of inspectors, report with full schedule
-                of test results.
+                <strong>Large commercial building (1,000m²+, 5+ distribution boards)</strong> —
+                £2,000 to £3,500+. Multi-day inspection with a team of inspectors, report with full
+                schedule of test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,8 +466,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Always agree the inspection scope in writing — which distribution boards, which
                   floors, whether fire alarm and emergency lighting power supplies are included.
-                  Out-of-scope items must be noted on the EICR. A clear scope agreement protects
-                  you and manages client expectations.
+                  Out-of-scope items must be noted on the EICR. A clear scope agreement protects you
+                  and manages client expectations.
                 </p>
               </div>
             </div>
@@ -461,12 +478,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Issue Reports Quickly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Commercial clients need reports quickly — for insurance renewals, lease completions,
-                  and health and safety documentation. Use the{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICR app
-                  </SEOInternalLink>{' '}
-                  to complete and issue reports on site or within 24 hours. Fast turnaround is a
+                  Commercial clients need reports quickly — for insurance renewals, lease
+                  completions, and health and safety documentation. Use the{' '}
+                  <SEOInternalLink href="/tools/eicr-certificate">EICR app</SEOInternalLink> to
+                  complete and issue reports on site or within 24 hours. Fast turnaround is a
                   significant differentiator in the commercial market.
                 </p>
               </div>
@@ -482,9 +497,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to quote remedial works immediately after identifying C1 and C2 defects. Sending the
-                  remedial quote with the EICR report converts a one-off inspection into a repair job
-                  — and positions you as the natural choice to carry out the work.
+                  to quote remedial works immediately after identifying C1 and C2 defects. Sending
+                  the remedial quote with the EICR report converts a one-off inspection into a
+                  repair job — and positions you as the natural choice to carry out the work.
                 </p>
               </div>
             </div>
@@ -492,7 +507,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Build a commercial EICR business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for commercial EICR reports, remedial works quoting, and professional documentation. Issue EICR reports on site and remedial quotes the same day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for commercial EICR reports, remedial works quoting, and professional documentation. Issue EICR reports on site and remedial quotes the same day. 7-day free trial."
           icon={Building2}
         />
       </>

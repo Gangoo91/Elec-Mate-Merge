@@ -588,7 +588,7 @@ export default function NewBuildElectricalPage() {
       faqHeading="Frequently Asked Questions About New Build Electrical"
       relatedPages={relatedPages}
       ctaHeading="Design New Build Installations Faster"
-      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and EIC certificate app help you design, install, and certify new builds efficiently. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer, cable sizing calculator, and EIC certificate app help you design, install, and certify new builds efficiently. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

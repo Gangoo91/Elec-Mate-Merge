@@ -599,7 +599,7 @@ export default function ELECSARegistrationPage() {
       faqHeading="Frequently Asked Questions About ELECSA Registration"
       relatedPages={relatedPages}
       ctaHeading="Professional Certification for Scheme-Registered Electricians"
-      ctaSubheading="Elec-Mate creates BS 7671-compliant certificates that pass any scheme assessment. Digital EICs, MEIWCs, and EICRs with full test schedules, AI tools, and instant delivery. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate creates BS 7671-compliant certificates that pass any scheme assessment. Digital EICs, MEIWCs, and EICRs with full test schedules, AI tools, and instant delivery. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

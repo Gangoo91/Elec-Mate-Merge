@@ -47,7 +47,7 @@ const keyTakeaways = [
   'The same cable can have vastly different current-carrying capacities depending on the reference method — for example, 2.5 mm² T+E is rated at 20 A under Method A but 27 A under Method C.',
   'The most restrictive section of the cable run determines the reference method for the entire run, even if that restrictive section is only a short distance.',
   'Method C (clipped direct) is the most common for domestic T+E cable. Method A (enclosed in conduit in an insulating wall) is used when cables are chased into masonry with conduit.',
-  'Elec-Mate handles reference method selection as part of its cable sizing calculator, automatically applying the correct column from the Appendix 4 tables across its suite of 50+ calculators.',
+  'Elec-Mate handles reference method selection as part of its cable sizing calculator, automatically applying the correct column from the Appendix 4 tables across its suite of 70+ calculators.',
 ];
 
 const faqs = [
@@ -441,7 +441,7 @@ const sections = [
           choice — it forms part of the design records required by BS 7671.
         </p>
         <SEOAppBridge
-          title="50+ calculators built for UK electricians"
+          title="70+ calculators built for UK electricians"
           description="Cable sizing, voltage drop, max demand, Zs, PFC, adiabatic equation, conduit fill, trunking fill, power factor, diversity factor, three-phase power — all in one app, all working to BS 7671. 7-day free trial."
           icon={Calculator}
         />
@@ -630,7 +630,7 @@ export default function ReferenceMethodsGuidePage() {
       faqHeading="Frequently Asked Questions About Reference Methods"
       relatedPages={relatedPages}
       ctaHeading="Cable Sizing with Automatic Reference Methods"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 50+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators. Select the installation method, enter the conditions — cable sizing is done in seconds with the correct Appendix 4 table applied automatically. 7-day free trial, cancel anytime."
     />
   );
 }

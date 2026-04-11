@@ -171,7 +171,9 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Passive Detection (Live Cable Mode)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Passive Detection (Live Cable Mode)
+            </h3>
             <p className="text-white text-sm leading-relaxed mb-3">
               Detects the electromagnetic field radiated by current flowing in a buried conductor.
               Mains cables carrying 50Hz alternating current produce a characteristic 50Hz
@@ -180,11 +182,26 @@ const sections = [
               metallic conductors by man-made and natural radio frequency signals.
             </p>
             <ul className="space-y-1 text-white text-sm">
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>No preparation required</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Detects any energised mains cable</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Cannot detect de-energised cables</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Multiple cables cause mutual interference</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Cannot distinguish which service is which</span></li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>No preparation required</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Detects any energised mains cable</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Cannot detect de-energised cables</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Multiple cables cause mutual interference</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Cannot distinguish which service is which</span>
+              </li>
             </ul>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -195,11 +212,26 @@ const sections = [
               strong, clean signal on the specific cable being traced while ignoring other services.
             </p>
             <ul className="space-y-1 text-white text-sm">
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Traces a specific identified service</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Works on de-energised cables</span></li>
-              <li className="flex items-start gap-2"><span className="text-green-400">+</span><span>Stronger, more reliable signal</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Requires access to connect the Genny</span></li>
-              <li className="flex items-start gap-2"><span className="text-red-400">–</span><span>Signal can couple to adjacent services</span></li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Traces a specific identified service</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Works on de-energised cables</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400">+</span>
+                <span>Stronger, more reliable signal</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Requires access to connect the Genny</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400">–</span>
+                <span>Signal can couple to adjacent services</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -239,10 +271,11 @@ const sections = [
               <Radio className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Signal frequencies:</strong> Most Genny systems operate at 33kHz (general
-                purpose) and 8Hz (selective, lower coupling to adjacent services). The Radiodetection
-                CAT4+/Genny4 system uses 33kHz and 131kHz with automatic frequency detection in the
-                receiver. Lower frequencies travel further along services with less coupling to
-                adjacents; higher frequencies give a stronger signal over short distances.
+                purpose) and 8Hz (selective, lower coupling to adjacent services). The
+                Radiodetection CAT4+/Genny4 system uses 33kHz and 131kHz with automatic frequency
+                detection in the receiver. Lower frequencies travel further along services with less
+                coupling to adjacents; higher frequencies give a stronger signal over short
+                distances.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,9 +312,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Calculated from the ratio of signal strength at two antenna heights. Provides an
               approximate depth under ideal conditions — single isolated cable, homogeneous ground,
-              correct detector orientation. Error of ±10–15% under ideal conditions; much larger
-              in practice near multiple services, rebar, or heterogeneous ground. Always treat depth
-              as indicative — confirm by trial excavation before heavy plant work. PAS 128 quality
+              correct detector orientation. Error of ±10–15% under ideal conditions; much larger in
+              practice near multiple services, rebar, or heterogeneous ground. Always treat depth as
+              indicative — confirm by trial excavation before heavy plant work. PAS 128 quality
               levels define acceptable depth accuracy for survey work.
             </p>
           </div>
@@ -291,11 +324,12 @@ const sections = [
               Signal Strength Bar/Indicator
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Displays the relative strength of the detected signal. Signal strength increases as you
-              move directly over the cable and decreases as you move away. Used to track the cable
-              route by keeping to the line of maximum signal. Sensitivity should be set so the
+              Displays the relative strength of the detected signal. Signal strength increases as
+              you move directly over the cable and decreases as you move away. Used to track the
+              cable route by keeping to the line of maximum signal. Sensitivity should be set so the
               maximum on-cable reading is approximately 80% of full scale — not pegged to maximum,
-              as this saturates the display and makes it impossible to distinguish the peak location.
+              as this saturates the display and makes it impossible to distinguish the peak
+              location.
             </p>
           </div>
         </div>
@@ -307,10 +341,10 @@ const sections = [
           <p className="text-white text-sm leading-relaxed">
             Walk a grid pattern over the suspected cable area in two perpendicular directions. Mark
             cable positions from multiple sweeps. Cross-reference peak mode markings with null mode
-            markings (which are more precise) for accurate position. In congested areas with multiple
-            services, the signal patterns from individual cables overlap and must be carefully
-            interpreted. Call in a specialist buried services surveyor where services are densely
-            packed or high-risk.
+            markings (which are more precise) for accurate position. In congested areas with
+            multiple services, the signal patterns from individual cables overlap and must be
+            carefully interpreted. Call in a specialist buried services surveyor where services are
+            densely packed or high-risk.
           </p>
         </div>
       </>
@@ -321,9 +355,7 @@ const sections = [
     heading: 'Common Errors and How to Avoid Them',
     content: (
       <>
-        <p>
-          Cable detection errors lead to cable strikes. The most common errors are:
-        </p>
+        <p>Cable detection errors lead to cable strikes. The most common errors are:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -346,10 +378,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sweeping in one direction only:</strong> Cables run in unexpected directions.
-                Always sweep in at least two perpendicular directions. A cable running parallel to
-                your sweep direction may give only a weak, broad signal — sweeping perpendicular
-                gives a clear cross-cable reading.
+                <strong>Sweeping in one direction only:</strong> Cables run in unexpected
+                directions. Always sweep in at least two perpendicular directions. A cable running
+                parallel to your sweep direction may give only a weak, broad signal — sweeping
+                perpendicular gives a clear cross-cable reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -457,8 +489,8 @@ const sections = [
     content: (
       <>
         <p>
-          Cable detection integrates into the pre-work safety routine for any job involving drilling,
-          chasing, or excavation. Here is the systematic approach recommended by HSG47:
+          Cable detection integrates into the pre-work safety routine for any job involving
+          drilling, chasing, or excavation. Here is the systematic approach recommended by HSG47:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-decimal list-inside">
@@ -474,7 +506,8 @@ const sections = [
             </li>
             <li>
               <strong>Passive CAT sweep</strong> — sweep the work area in power mode (50Hz) and
-              radio mode to identify all detected services. Mark positions with marking spray or pins.
+              radio mode to identify all detected services. Mark positions with marking spray or
+              pins.
             </li>
             <li>
               <strong>Active Genny tracing</strong> — connect the Genny to known accessible services
@@ -485,8 +518,8 @@ const sections = [
               service records. Investigate any discrepancies before proceeding.
             </li>
             <li>
-              <strong>Trial excavation</strong> — hand dig trial holes to expose and visually confirm
-              service positions and depths before using mechanical plant.
+              <strong>Trial excavation</strong> — hand dig trial holes to expose and visually
+              confirm service positions and depths before using mechanical plant.
             </li>
           </ol>
         </div>
@@ -529,7 +562,7 @@ export default function CableDetectorBuyingGuidePage() {
       faqHeading="Frequently Asked Questions About Cable Detectors"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements and Risk Assessments for Cable Work"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-generated method statements, risk assessments, and professional EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

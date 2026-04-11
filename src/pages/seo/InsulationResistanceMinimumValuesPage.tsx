@@ -559,7 +559,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-validate every IR reading on site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Instant BS 7671 validation for insulation resistance, Zs, R1+R2, and RCD results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Instant BS 7671 validation for insulation resistance, Zs, R1+R2, and RCD results. 7-day free trial, cancel anytime."
     />
   );
 }

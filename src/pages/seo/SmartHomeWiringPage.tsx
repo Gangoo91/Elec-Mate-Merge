@@ -651,7 +651,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify smart home installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for smart home electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for smart home electrical work. 7-day free trial."
           icon={Wifi}
         />
       </>
@@ -688,7 +688,7 @@ export default function SmartHomeWiringPage() {
       faqHeading="Frequently Asked Questions About Smart Home Wiring"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Smart Home Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Everything you need for smart home electrical work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates. Everything you need for smart home electrical work. 7-day free trial, cancel anytime."
     />
   );
 }

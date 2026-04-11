@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Edinburgh', href: '/guides/landlord-electrical-safety-edinburgh' },
+  {
+    label: 'Landlord Electrical Safety Edinburgh',
+    href: '/guides/landlord-electrical-safety-edinburgh',
+  },
 ];
 
 const tocItems = [
@@ -44,14 +47,14 @@ const keyTakeaways = [
   'Under the Repairing Standard, Edinburgh landlords must ensure the electrical installation in a let property is in a reasonable state of repair and in proper working order. An EICR (or Electrical Installation Condition Report) is the standard means of demonstrating compliance.',
   'Disputes and enforcement relating to the Repairing Standard are handled by the First-tier Tribunal for Scotland (Housing and Property Chamber) — NOT by City of Edinburgh Council, which handles HMO licensing separately.',
   'RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Absence of RCD protection is a common finding that renders an EICR Unsatisfactory, triggering the Repairing Standard obligation to carry out remedial work.',
-  'Edinburgh\'s private rented sector is one of the largest in Scotland, with a high concentration of tenement flats that frequently have ageing electrical installations requiring attention.',
+  "Edinburgh's private rented sector is one of the largest in Scotland, with a high concentration of tenement flats that frequently have ageing electrical installations requiring attention.",
 ];
 
 const faqs = [
   {
     question: 'What are the landlord electrical safety requirements in Edinburgh?',
     answer:
-      'In Edinburgh — and across Scotland — landlords are governed by the Housing (Scotland) Act 2006 Repairing Standard, not the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. The Repairing Standard requires that the electrical installation in a let property is in a reasonable state of repair and in proper working order throughout the tenancy. An EICR carried out by a qualified person is the standard means of demonstrating compliance. Landlords of HMOs in Edinburgh must also comply with City of Edinburgh Council\'s HMO licensing conditions, which include specific EICR requirements.',
+      "In Edinburgh — and across Scotland — landlords are governed by the Housing (Scotland) Act 2006 Repairing Standard, not the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. The Repairing Standard requires that the electrical installation in a let property is in a reasonable state of repair and in proper working order throughout the tenancy. An EICR carried out by a qualified person is the standard means of demonstrating compliance. Landlords of HMOs in Edinburgh must also comply with City of Edinburgh Council's HMO licensing conditions, which include specific EICR requirements.",
   },
   {
     question: 'Who enforces electrical safety for landlords in Edinburgh?',
@@ -76,7 +79,7 @@ const faqs = [
   {
     question: 'How much does a landlord EICR cost in Edinburgh?',
     answer:
-      'EICR costs in Edinburgh reflect the city\'s elevated labour rates. A one-bedroom tenement flat typically costs £130 to £220. A two-bedroom flat runs from £180 to £300. A three-bedroom house costs around £250 to £420. HMOs cost £350 to £700 or more, depending on the number of consumer units and circuits. Edinburgh prices are generally higher than Glasgow but lower than London.',
+      "EICR costs in Edinburgh reflect the city's elevated labour rates. A one-bedroom tenement flat typically costs £130 to £220. A two-bedroom flat runs from £180 to £300. A three-bedroom house costs around £250 to £420. HMOs cost £350 to £700 or more, depending on the number of consumer units and circuits. Edinburgh prices are generally higher than Glasgow but lower than London.",
   },
   {
     question: 'What is the First-tier Tribunal for Scotland and how does it relate to landlords?',
@@ -86,7 +89,7 @@ const faqs = [
   {
     question: 'What qualifications must an EICR inspector have in Edinburgh?',
     answer:
-      'The inspector must be qualified and competent. In practice this means holding City and Guilds 2391 (Inspection and Testing) or equivalent, and a current BS 7671 qualification (C&G 2382 18th Edition). Registration with SELECT (the Electrical Contractors\' Association of Scotland), NICEIC, or NAPIT provides assurance of qualifications and regular assessment. Professional indemnity insurance is also required.',
+      "The inspector must be qualified and competent. In practice this means holding City and Guilds 2391 (Inspection and Testing) or equivalent, and a current BS 7671 qualification (C&G 2382 18th Edition). Registration with SELECT (the Electrical Contractors' Association of Scotland), NICEIC, or NAPIT provides assurance of qualifications and regular assessment. Professional indemnity insurance is also required.",
   },
 ];
 
@@ -94,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -165,10 +169,10 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recommended frequency</strong> — although the Act does not specify a
-                mandatory inspection interval, an EICR every five years or at change of tenancy
-                is the widely accepted best practice and the standard recommended by SELECT and
-                NICEIC. Edinburgh HMO licences require inspections at the intervals specified
-                in the licence conditions.
+                mandatory inspection interval, an EICR every five years or at change of tenancy is
+                the widely accepted best practice and the standard recommended by SELECT and NICEIC.
+                Edinburgh HMO licences require inspections at the intervals specified in the licence
+                conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,39 +209,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>First-tier Tribunal for Scotland</strong> — the Housing and Property
-                Chamber of the First-tier Tribunal is the primary enforcement body for Repairing
-                Standard disputes. Tenants who believe the electrical installation does not meet
-                the Repairing Standard can apply to the Tribunal without cost. The Tribunal can
-                issue Repairing Standard Enforcement Orders requiring specific remedial work.
+                <strong>First-tier Tribunal for Scotland</strong> — the Housing and Property Chamber
+                of the First-tier Tribunal is the primary enforcement body for Repairing Standard
+                disputes. Tenants who believe the electrical installation does not meet the
+                Repairing Standard can apply to the Tribunal without cost. The Tribunal can issue
+                Repairing Standard Enforcement Orders requiring specific remedial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>City of Edinburgh Council — HMO licensing</strong> — the Council has
-                significant powers through HMO licensing. EICR compliance is a condition of
-                the HMO licence. The Council can refuse to grant or renew a licence, or impose
-                licence conditions, where electrical safety requirements are not met.
+                significant powers through HMO licensing. EICR compliance is a condition of the HMO
+                licence. The Council can refuse to grant or renew a licence, or impose licence
+                conditions, where electrical safety requirements are not met.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord registration</strong> — City of Edinburgh Council administers
-                the landlord registration scheme. Persistent failure to meet Repairing Standard
-                obligations can result in refusal to register or removal from the register,
-                which makes renting property illegal in Scotland.
+                <strong>Landlord registration</strong> — City of Edinburgh Council administers the
+                landlord registration scheme. Persistent failure to meet Repairing Standard
+                obligations can result in refusal to register or removal from the register, which
+                makes renting property illegal in Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No council-issued fixed penalties</strong> — unlike in England, there are
-                no fixed civil penalties of up to £30,000 per breach issued by the council for
-                failure to obtain an EICR. The Scottish system operates through the Tribunal,
-                with Rent Relief Orders as the main financial sanction against non-compliant
-                landlords.
+                <strong>No council-issued fixed penalties</strong> — unlike in England, there are no
+                fixed civil penalties of up to £30,000 per breach issued by the council for failure
+                to obtain an EICR. The Scottish system operates through the Tribunal, with Rent
+                Relief Orders as the main financial sanction against non-compliant landlords.
               </span>
             </li>
           </ul>
@@ -252,8 +255,8 @@ const sections = [
       <>
         <p>
           Edinburgh has one of the UK's largest proportional HMO sectors, driven by its large
-          student population at the University of Edinburgh and Edinburgh Napier University. City
-          of Edinburgh Council operates mandatory HMO licensing and takes compliance seriously.
+          student population at the University of Edinburgh and Edinburgh Napier University. City of
+          Edinburgh Council operates mandatory HMO licensing and takes compliance seriously.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -270,8 +273,8 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection frequency</strong> — Edinburgh HMO licence conditions typically
-                require EICRs at shorter intervals than the standard five years. Check your
-                specific licence conditions for the required frequency.
+                require EICRs at shorter intervals than the standard five years. Check your specific
+                licence conditions for the required frequency.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,17 +282,17 @@ const sections = [
               <span>
                 <strong>Communal areas and fire safety systems</strong> — the EICR must cover all
                 fixed electrical installations in an HMO, including communal corridors, stair
-                lighting, fire alarm systems, and emergency lighting. Regulation 411.3.3 applies
-                to all circuits including those in communal areas.
+                lighting, fire alarm systems, and emergency lighting. Regulation 411.3.3 applies to
+                all circuits including those in communal areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consequences of non-compliance</strong> — operating an unlicensed HMO
-                in Edinburgh is a criminal offence. Failure to comply with EICR requirements
-                can result in licence refusal or revocation. The Council actively monitors
-                the student and private rented sector.
+                <strong>Consequences of non-compliance</strong> — operating an unlicensed HMO in
+                Edinburgh is a criminal offence. Failure to comply with EICR requirements can result
+                in licence refusal or revocation. The Council actively monitors the student and
+                private rented sector.
               </span>
             </li>
           </ul>
@@ -313,9 +316,9 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tenant application</strong> — any tenant in a private rented property in
-                Scotland can apply to the Tribunal if they believe the landlord has failed to
-                comply with the Repairing Standard. The application is free and can be made online.
-                The tenant does not need legal representation.
+                Scotland can apply to the Tribunal if they believe the landlord has failed to comply
+                with the Repairing Standard. The application is free and can be made online. The
+                tenant does not need legal representation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,16 +332,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rent Relief Order</strong> — if a landlord fails to comply with an RSEO,
-                the Tribunal can issue a Rent Relief Order (RRO) reducing the rent by up to 90
-                per cent. This is a significant financial sanction for non-compliant landlords.
+                <strong>Rent Relief Order</strong> — if a landlord fails to comply with an RSEO, the
+                Tribunal can issue a Rent Relief Order (RRO) reducing the rent by up to 90 per cent.
+                This is a significant financial sanction for non-compliant landlords.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord registration impact</strong> — a finding against a landlord at
-                the Tribunal can affect their registration status with City of Edinburgh Council,
+                <strong>Landlord registration impact</strong> — a finding against a landlord at the
+                Tribunal can affect their registration status with City of Edinburgh Council,
                 potentially preventing them from renting property in Scotland.
               </span>
             </li>
@@ -353,27 +356,27 @@ const sections = [
     content: (
       <>
         <p>
-          Tenants in Edinburgh's private rented sector have rights under the Housing (Scotland)
-          Act 2006 Repairing Standard. These rights apply throughout the tenancy — not just at
-          the start.
+          Tenants in Edinburgh's private rented sector have rights under the Housing (Scotland) Act
+          2006 Repairing Standard. These rights apply throughout the tenancy — not just at the
+          start.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a safe electrical installation</strong> — tenants have the right
-                to a property where the electrical installation is in a reasonable state of repair
-                and in proper working order throughout the tenancy.
+                <strong>Right to a safe electrical installation</strong> — tenants have the right to
+                a property where the electrical installation is in a reasonable state of repair and
+                in proper working order throughout the tenancy.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to request the EICR</strong> — tenants can ask their landlord for
-                a copy of the current EICR. If the landlord cannot provide one, or if the report
-                shows C1 or C2 observations that have not been addressed, the tenant can apply to
-                the First-tier Tribunal for Scotland.
+                <strong>Right to request the EICR</strong> — tenants can ask their landlord for a
+                copy of the current EICR. If the landlord cannot provide one, or if the report shows
+                C1 or C2 observations that have not been addressed, the tenant can apply to the
+                First-tier Tribunal for Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -381,8 +384,8 @@ const sections = [
               <span>
                 <strong>Right to apply to the Tribunal</strong> — tenants can apply to the
                 First-tier Tribunal for Scotland (Housing and Property Chamber) at no cost if they
-                believe the Repairing Standard is not being met. Guidance is available from
-                Shelter Scotland and Citizens Advice Scotland.
+                believe the Repairing Standard is not being met. Guidance is available from Shelter
+                Scotland and Citizens Advice Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -436,19 +439,18 @@ const sections = [
               <span>
                 <strong>Written evidence of remedial work</strong> — once remedial work is
                 completed, the landlord should obtain written confirmation from a qualified
-                electrician that the work has been done satisfactorily. Keep this evidence —
-                it may be needed if the tenant makes a Tribunal application or at HMO licence
-                renewal.
+                electrician that the work has been done satisfactorily. Keep this evidence — it may
+                be needed if the tenant makes a Tribunal application or at HMO licence renewal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common Edinburgh remedial work</strong> — typical remedial work in
-                Edinburgh rental properties includes fitting RCD protection (Regulation 411.3.3),
-                replacing outdated plastic consumer units with metal enclosures, upgrading earthing
-                and bonding, and replacing deteriorated rubber-insulated cables common in the
-                tenement stock.
+                <strong>Common Edinburgh remedial work</strong> — typical remedial work in Edinburgh
+                rental properties includes fitting RCD protection (Regulation 411.3.3), replacing
+                outdated plastic consumer units with metal enclosures, upgrading earthing and
+                bonding, and replacing deteriorated rubber-insulated cables common in the tenement
+                stock.
               </span>
             </li>
           </ul>
@@ -463,25 +465,26 @@ const sections = [
       <>
         <p>
           Edinburgh has a good supply of qualified electricians capable of carrying out EICRs.
-          Landlords should verify qualifications and certification before commissioning an inspection.
+          Landlords should verify qualifications and certification before commissioning an
+          inspection.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SELECT, NICEIC, or NAPIT registration</strong> — search the online
-                registers for Edinburgh-based inspectors. SELECT is the Scottish trade association
-                and its register is a good starting point for landlords in Scotland.
+                <strong>SELECT, NICEIC, or NAPIT registration</strong> — search the online registers
+                for Edinburgh-based inspectors. SELECT is the Scottish trade association and its
+                register is a good starting point for landlords in Scotland.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Required qualifications</strong> — the inspector should hold City and
-                Guilds 2391 (Inspection and Testing) or equivalent, a current BS 7671 qualification
-                (C&G 2382), and ideally experience with Edinburgh's tenement and Victorian
-                property stock.
+                <strong>Required qualifications</strong> — the inspector should hold City and Guilds
+                2391 (Inspection and Testing) or equivalent, a current BS 7671 qualification (C&G
+                2382), and ideally experience with Edinburgh's tenement and Victorian property
+                stock.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,10 +498,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Avoid unusually cheap quotes</strong> — a thorough EICR for a
-                two-bedroom Edinburgh tenement flat requires 2 to 4 hours and calibrated test
-                equipment. Prices substantially below £130 for a one-bedroom flat may indicate
-                inadequate testing.
+                <strong>Avoid unusually cheap quotes</strong> — a thorough EICR for a two-bedroom
+                Edinburgh tenement flat requires 2 to 4 hours and calibrated test equipment. Prices
+                substantially below £130 for a one-bedroom flat may indicate inadequate testing.
               </span>
             </li>
           </ul>
@@ -520,15 +522,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom tenement flat</strong> — £130 to £220. The most common EICR
-                in Edinburgh, typically 3 to 5 circuits.
+                <strong>One-bedroom tenement flat</strong> — £130 to £220. The most common EICR in
+                Edinburgh, typically 3 to 5 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £180 to £300. Usually 5 to 8 circuits.
-                Victorian tenement conversions may take longer than modern flats.
+                <strong>Two-bedroom flat</strong> — £180 to £300. Usually 5 to 8 circuits. Victorian
+                tenement conversions may take longer than modern flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -549,8 +551,8 @@ const sections = [
         </div>
         <p>
           These prices cover inspection and report only. Remedial work is quoted and charged
-          separately. Some Edinburgh electricians offer combined EICR and remedial packages
-          which can be cost-effective for landlords with multiple properties.
+          separately. Some Edinburgh electricians offer combined EICR and remedial packages which
+          can be cost-effective for landlords with multiple properties.
         </p>
       </>
     ),
@@ -561,10 +563,10 @@ const sections = [
     content: (
       <>
         <p>
-          Edinburgh's large private rented sector — dominated by tenement flats housing students
-          and young professionals — creates consistent demand for landlord EICRs. Electricians
-          who understand the Scottish Repairing Standard framework and its differences from the
-          English 2020 Regulations are well-placed to advise Edinburgh landlords.
+          Edinburgh's large private rented sector — dominated by tenement flats housing students and
+          young professionals — creates consistent demand for landlord EICRs. Electricians who
+          understand the Scottish Repairing Standard framework and its differences from the English
+          2020 Regulations are well-placed to advise Edinburgh landlords.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -577,9 +579,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork. Send the
-                  report to the landlord before you leave the property.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork. Send the report to
+                  the landlord before you leave the property.
                 </p>
               </div>
             </div>
@@ -604,7 +606,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Edinburgh with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -641,7 +643,7 @@ export default function LandlordElectricalSafetyEdinburghPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Edinburgh"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

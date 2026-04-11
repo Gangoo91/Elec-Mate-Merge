@@ -562,7 +562,7 @@ export default function LeadershipOnSiteCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to lead with confidence?"
-      ctaSubheading="Join 430+ UK electricians building their careers with Elec-Mate. Leadership modules, team management tools, and an AI tutor for any supervisory question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians building their careers with Elec-Mate. Leadership modules, team management tools, and an AI tutor for any supervisory question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/leadership-on-site"
     />

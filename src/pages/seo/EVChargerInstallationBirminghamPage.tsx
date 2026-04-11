@@ -142,10 +142,10 @@ const sections = [
     content: (
       <>
         <p>
-          Birmingham is the UK's second-largest city and a major hub for EV adoption. The
-          Birmingham Clean Air Zone (CAZ), which charges older polluting vehicles entering the city
-          centre, has accelerated the switch to electric vehicles across the West Midlands. Home EV
-          charger installation demand is strong and growing.
+          Birmingham is the UK's second-largest city and a major hub for EV adoption. The Birmingham
+          Clean Air Zone (CAZ), which charges older polluting vehicles entering the city centre, has
+          accelerated the switch to electric vehicles across the West Midlands. Home EV charger
+          installation demand is strong and growing.
         </p>
         <p>
           Birmingham's housing stock is diverse — from Victorian terraces in Moseley and Kings Heath
@@ -154,8 +154,8 @@ const sections = [
           and costs.
         </p>
         <p>
-          This guide covers the real costs of EV charger installation in Birmingham, property-specific
-          challenges, the DNO notification process through{' '}
+          This guide covers the real costs of EV charger installation in Birmingham,
+          property-specific challenges, the DNO notification process through{' '}
           <strong>National Grid Electricity Distribution (NGED)</strong>, and available grants.
         </p>
       </>
@@ -172,7 +172,9 @@ const sections = [
           depending on the specific installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Typical Birmingham Costs (7kW Single-Phase, 2026)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Typical Birmingham Costs (7kW Single-Phase, 2026)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -212,9 +214,7 @@ const sections = [
     heading: 'Birmingham Property Challenges for EV Charger Installation',
     content: (
       <>
-        <p>
-          Birmingham's property stock presents a range of challenges:
-        </p>
+        <p>Birmingham's property stock presents a range of challenges:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -240,8 +240,8 @@ const sections = [
               <span>
                 <strong>City centre flats and apartments</strong> — the Jewellery Quarter, Digbeth,
                 and central Birmingham have significant apartment stock. Shared parking, communal
-                electrics, and management company approvals complicate installations. Load management
-                is often needed.
+                electrics, and management company approvals complicate installations. Load
+                management is often needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,9 +441,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EIC certificate
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                   on your phone after installation and testing. NGED notification, Part P building
                   control, and professional PDF certificate — all from site.
                 </p>
@@ -453,7 +451,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify Birmingham EV installations"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
           icon={Car}
         />
       </>
@@ -490,7 +488,7 @@ export default function EVChargerInstallationBirminghamPage() {
       faqHeading="Frequently Asked Questions About EV Charger Installation in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify EV Charger Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, AI-powered quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

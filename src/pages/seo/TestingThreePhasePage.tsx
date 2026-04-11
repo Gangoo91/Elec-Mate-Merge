@@ -587,7 +587,7 @@ export default function TestingThreePhasePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Three-phase certificates with per-phase validation"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. Full three-phase support with per-phase auto-validation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Full three-phase support with per-phase auto-validation. 7-day free trial, cancel anytime."
     />
   );
 }

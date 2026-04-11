@@ -55,7 +55,7 @@ export default function ElecMateVsEasyEICRPage() {
         { feature: 'Observations to Quote', values: [true, false] },
         { feature: 'Send Invoice from Cert', values: [true, false] },
         { feature: 'WhatsApp Delivery', values: [true, false] },
-        { feature: '8 Certificate Types', values: [true, 'Limited'] },
+        { feature: '16 Certificate Types', values: [true, 'Limited'] },
         { feature: '70+ Calculators', values: [true, false] },
         { feature: 'AI Agents', values: ['5 Agents', false] },
         { feature: 'Training Courses', values: ['46+', false] },
@@ -117,9 +117,9 @@ export default function ElecMateVsEasyEICRPage() {
                 app.
               </p>
               <p>
-                The platform includes 8 certificate types (EICR, EIC, Minor Works, EV Charger, Solar
-                PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist electrical
-                calculators, 5{' '}
+                The platform includes 16 certificate types (EICR, EIC, Minor Works, EV Charger,
+                Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
+                electrical calculators, 5{' '}
                 <SEOInternalLink href="/tools/ai-electrician">
                   Elec-AI specialist agents
                 </SEOInternalLink>{' '}
@@ -329,7 +329,7 @@ export default function ElecMateVsEasyEICRPage() {
         {
           question: 'How much does Easy EICR cost compared to Elec-Mate?',
           answer:
-            'Easy EICR offers various pricing options for its certificate functionality. Check their website for current pricing as it may change. Elec-Mate starts from £5.99 per month with unlimited usage across all features — all 8 certificate types, all 70+ calculators, all AI tools, all 46+ training courses, and all business management features. There are no per-certificate charges and no feature restrictions. When you consider that Elec-Mate includes calculators, AI tools, training, and business management that Easy EICR does not offer, the value proposition is significantly stronger for electricians who use more than just certificates in their daily work.',
+            'Easy EICR offers various pricing options for its certificate functionality. Check their website for current pricing as it may change. Elec-Mate starts from £5.99 per month with unlimited usage across all features — all 16 certificate types, all 70+ calculators, all AI tools, all 46+ training courses, and all business management features. There are no per-certificate charges and no feature restrictions. When you consider that Elec-Mate includes calculators, AI tools, training, and business management that Easy EICR does not offer, the value proposition is significantly stronger for electricians who use more than just certificates in their daily work.',
         },
         {
           question: 'Do both apps work offline?',
@@ -339,7 +339,7 @@ export default function ElecMateVsEasyEICRPage() {
         {
           question: 'What certificate types does Elec-Mate support that Easy EICR does not?',
           answer:
-            'Elec-Mate supports 8 certificate types: EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing. Easy EICR focuses primarily on EICRs with some additional certificate types. The specialist certificates for EV charger installations, solar PV systems, fire alarm commissioning, and emergency lighting are increasingly important as the electrical industry diversifies. Having these certificate types built into your app saves time and eliminates the need for paper forms or separate software for specialist work.',
+            'Elec-Mate supports 16 certificate types: EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works, EV Charger Installation, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing. Easy EICR focuses primarily on EICRs with some additional certificate types. The specialist certificates for EV charger installations, solar PV systems, fire alarm commissioning, and emergency lighting are increasingly important as the electrical industry diversifies. Having these certificate types built into your app saves time and eliminates the need for paper forms or separate software for specialist work.',
         },
         {
           question: 'Can Elec-Mate generate a quote from EICR defects?',
@@ -376,7 +376,7 @@ export default function ElecMateVsEasyEICRPage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
+            'All 16 certificate types with AI board scanner, voice test entry, defect AI, and digital signatures.',
           icon: FileCheck2,
           category: 'Tools',
         },

@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'Are there asbestos risks in Middlesbrough properties?',
     answer:
-      'Yes. Middlesbrough\'s substantial stock of 1960s and 1970s council-built housing — across Berwick Hills, Park End, Pallister, and Ormesby — may contain asbestos in textured ceiling coatings (artex), floor tiles, insulating board around pipe runs, and ceiling tiles. Many of these properties have since been sold under right-to-buy and are now privately owned or let. Pre-1985 properties anywhere in Middlesbrough should be treated as potentially containing asbestos. An asbestos survey is recommended before any invasive electrical work. If asbestos is discovered during electrical work, stop immediately, seal the area, and contact a licensed asbestos removal contractor before proceeding.',
+      "Yes. Middlesbrough's substantial stock of 1960s and 1970s council-built housing — across Berwick Hills, Park End, Pallister, and Ormesby — may contain asbestos in textured ceiling coatings (artex), floor tiles, insulating board around pipe runs, and ceiling tiles. Many of these properties have since been sold under right-to-buy and are now privately owned or let. Pre-1985 properties anywhere in Middlesbrough should be treated as potentially containing asbestos. An asbestos survey is recommended before any invasive electrical work. If asbestos is discovered during electrical work, stop immediately, seal the area, and contact a licensed asbestos removal contractor before proceeding.",
   },
 ];
 
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables correctly for rewires across Middlesbrough\'s varied housing stock, from Linthorpe terraces to Coulby Newham new-builds.',
+      "Size cables correctly for rewires across Middlesbrough's varied housing stock, from Linthorpe terraces to Coulby Newham new-builds.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -143,10 +143,10 @@ const sections = [
     content: (
       <>
         <p>
-          Middlesbrough is a unitary authority on the south bank of the Tees, at the centre of
-          the Tees Valley Combined Authority area alongside Stockton, Redcar and Cleveland,
-          Hartlepool, and Darlington. With a population of around 140,000, it covers a wide range
-          of neighbourhoods — from the Victorian terraced streets of Linthorpe and Newport in the
+          Middlesbrough is a unitary authority on the south bank of the Tees, at the centre of the
+          Tees Valley Combined Authority area alongside Stockton, Redcar and Cleveland, Hartlepool,
+          and Darlington. With a population of around 140,000, it covers a wide range of
+          neighbourhoods — from the Victorian terraced streets of Linthorpe and Newport in the
           centre, through the large post-war estates of Berwick Hills, Park End, Pallister, and
           Ormesby to the east, to the more affluent suburban areas of Acklam, Marton, and Nunthorpe
           to the south, and the planned private estates of Coulby Newham and Hemlington further out.
@@ -155,17 +155,17 @@ const sections = [
           Born of the Industrial Revolution as a centre for iron and steel, Middlesbrough is now
           undergoing one of the most significant industrial regeneration projects in the UK through
           the South Tees Development Corporation (STDC). The STDC site covers the former SSI
-          steelworks at Redcar and extends across thousands of acres of ex-industrial land —
-          with a pipeline of energy, advanced manufacturing, and logistics investment running
-          through 2025 to 2030. This is creating substantial demand for electrical infrastructure
-          work at a scale rarely seen outside major city centres.
+          steelworks at Redcar and extends across thousands of acres of ex-industrial land — with a
+          pipeline of energy, advanced manufacturing, and logistics investment running through 2025
+          to 2030. This is creating substantial demand for electrical infrastructure work at a scale
+          rarely seen outside major city centres.
         </p>
         <p>
           Beyond the STDC zone, the Teesside industrial corridor — home to SABIC, Huntsman, and
           Nufarm chemical plants, PD Ports and Teesport, and the NHS's James Cook University
           Hospital (the largest hospital in the North East) — sustains a year-round commercial and
-          industrial electrical workload. Teesside University adds further institutional demand.
-          For domestic electricians, Middlesbrough's large rental market, high proportion of pre-1970s
+          industrial electrical workload. Teesside University adds further institutional demand. For
+          domestic electricians, Middlesbrough's large rental market, high proportion of pre-1970s
           housing, and Redcar's proximity to developing offshore wind infrastructure create a
           well-rounded and consistent workload.
         </p>
@@ -193,28 +193,28 @@ const sections = [
               <span>
                 <strong>Competent person scheme</strong> — NICEIC, NAPIT, or ELECSA registration
                 allows self-certification. The scheme notifies Middlesbrough Council Building
-                Control on the electrician's behalf and issues a compliance certificate to
-                the customer. This applies to work in all Middlesbrough neighbourhoods, from
-                a consumer unit replacement in Berwick Hills to a rewire in Coulby Newham.
+                Control on the electrician's behalf and issues a compliance certificate to the
+                customer. This applies to work in all Middlesbrough neighbourhoods, from a consumer
+                unit replacement in Berwick Hills to a rewire in Coulby Newham.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 7671 compliance</strong> — all work must comply with BS 7671:2018+A3:2024.
-                RCD protection under Regulation 411.3.3 is required for socket outlets up to 32A
-                and for circuits in locations of increased shock risk.
+                <strong>BS 7671 compliance</strong> — all work must comply with BS
+                7671:2018+A3:2024. RCD protection under Regulation 411.3.3 is required for socket
+                outlets up to 32A and for circuits in locations of increased shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rental property EICRs</strong> — five-yearly EICRs required under the
-                Electrical Safety Standards in the Private Rented Sector (England) Regulations
-                2020. Periodic inspection follows Section 631 of BS 7671. Given Middlesbrough's
-                large private rented sector — concentrated in the terraced streets of Linthorpe,
-                Newport, and Gresham, and across the former council estates — EICR demand is
-                consistently high.
+                Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.
+                Periodic inspection follows Section 631 of BS 7671. Given Middlesbrough's large
+                private rented sector — concentrated in the terraced streets of Linthorpe, Newport,
+                and Gresham, and across the former council estates — EICR demand is consistently
+                high.
               </span>
             </li>
           </ul>
@@ -228,8 +228,8 @@ const sections = [
     content: (
       <>
         <p>
-          <strong>Northern Powergrid</strong> is the DNO for Middlesbrough, the Tees Valley, and
-          the wider North East and Yorkshire region:
+          <strong>Northern Powergrid</strong> is the DNO for Middlesbrough, the Tees Valley, and the
+          wider North East and Yorkshire region:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -249,9 +249,9 @@ const sections = [
                 <strong>G98/G99 notifications</strong> — solar PV and battery storage. G98 for
                 systems up to 16A per phase is processed online and is increasingly relevant as
                 solar installations grow in the suburban areas of Nunthorpe, Marton, and Coulby
-                Newham. G99 for larger systems requires pre-approval. The Tees Valley's proximity
-                to Redcar's offshore wind development is also accelerating local interest in
-                battery storage and EV infrastructure.
+                Newham. G99 for larger systems requires pre-approval. The Tees Valley's proximity to
+                Redcar's offshore wind development is also accelerating local interest in battery
+                storage and EV infrastructure.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -280,11 +280,11 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Central neighbourhoods including Linthorpe, Newport, and Gresham contain a dense
-              stock of Victorian and Edwardian terraced housing. These properties typically have
-              ageing wiring — rubber-insulated cable and rewirable fuse boards are still regularly
-              found. Limited socket provision, mixed partial rewires, and no RCD protection are
-              common findings on EICRs. Full rewires and consumer unit replacements are the
+              Central neighbourhoods including Linthorpe, Newport, and Gresham contain a dense stock
+              of Victorian and Edwardian terraced housing. These properties typically have ageing
+              wiring — rubber-insulated cable and rewirable fuse boards are still regularly found.
+              Limited socket provision, mixed partial rewires, and no RCD protection are common
+              findings on EICRs. Full rewires and consumer unit replacements are the
               bread-and-butter jobs in these areas.
             </p>
           </div>
@@ -293,29 +293,29 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Berwick Hills, Park End, Pallister, Ormesby, and parts of Hemlington were built as
               large council estates in the 1960s and 1970s. Many have since been sold under
-              right-to-buy and are now owner-occupied or privately let. The original consumer
-              units — often rewirable fuse boards — remain in a significant number of these
-              properties. Potential asbestos in textured ceiling coatings (artex) and floor
-              tiles requires care during invasive electrical work.
+              right-to-buy and are now owner-occupied or privately let. The original consumer units
+              — often rewirable fuse boards — remain in a significant number of these properties.
+              Potential asbestos in textured ceiling coatings (artex) and floor tiles requires care
+              during invasive electrical work.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Interwar and Suburban Semis</h3>
             <p className="text-white text-sm leading-relaxed">
-              Acklam and Marton have substantial interwar and post-war semi-detached stock.
-              Coulby Newham and Nunthorpe feature larger private estates built from the 1980s
-              onwards — generally in better electrical condition but increasingly requiring
-              consumer unit upgrades to accommodate EV chargers, solar PV, and additional circuits.
-              Higher-value properties in Nunthorpe and Marton support premium rates for quality
-              domestic electrical work.
+              Acklam and Marton have substantial interwar and post-war semi-detached stock. Coulby
+              Newham and Nunthorpe feature larger private estates built from the 1980s onwards —
+              generally in better electrical condition but increasingly requiring consumer unit
+              upgrades to accommodate EV chargers, solar PV, and additional circuits. Higher-value
+              properties in Nunthorpe and Marton support premium rates for quality domestic
+              electrical work.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Industrial and Commercial</h3>
             <p className="text-white text-sm leading-relaxed">
               The South Tees Development Corporation zone, the Teesside chemical corridor (SABIC,
-              Huntsman, Nufarm), PD Ports and Teesport, James Cook University Hospital, and
-              Teesside University all generate commercial and industrial electrical demand. CompEx
+              Huntsman, Nufarm), PD Ports and Teesport, James Cook University Hospital, and Teesside
+              University all generate commercial and industrial electrical demand. CompEx
               certification is required for work in hazardous areas on the chemical sites.
               Three-phase supplies, motor control, and industrial standards knowledge is an
               advantage for any electrician targeting this sector.
@@ -345,26 +345,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full house rewires</strong> — essential on pre-1970s Victorian and
-                Edwardian terraces in Linthorpe, Newport, and Gresham. Mixed wiring from
-                successive partial rewires is common and complicates assessment. Rubber-insulated
-                cable is still found in some properties.
+                <strong>Full house rewires</strong> — essential on pre-1970s Victorian and Edwardian
+                terraces in Linthorpe, Newport, and Gresham. Mixed wiring from successive partial
+                rewires is common and complicates assessment. Rubber-insulated cable is still found
+                in some properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rental property EICRs</strong> — consistent demand throughout the year
-                from Middlesbrough's large private rented sector. Five-yearly obligation under
-                the 2020 Regulations. Landlords in the terraced streets of Linthorpe and the
-                former council estates of Berwick Hills and Ormesby are the primary client base.
+                <strong>Rental property EICRs</strong> — consistent demand throughout the year from
+                Middlesbrough's large private rented sector. Five-yearly obligation under the 2020
+                Regulations. Landlords in the terraced streets of Linthorpe and the former council
+                estates of Berwick Hills and Ormesby are the primary client base.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charger installations</strong> — growing demand in the suburban areas
-                of Nunthorpe, Marton, Coulby Newham, and Acklam. Northern Powergrid notification
+                <strong>EV charger installations</strong> — growing demand in the suburban areas of
+                Nunthorpe, Marton, Coulby Newham, and Acklam. Northern Powergrid notification
                 required where supply capacity needs upgrading. The Tees Valley's offshore wind
                 investment is supporting broader EV infrastructure growth.
               </span>
@@ -373,10 +373,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>South Tees Development Corporation work</strong> — the STDC regeneration
-                zone is creating substantial electrical infrastructure demand through 2025–2030.
-                New industrial units, energy infrastructure, and logistics facilities all require
-                electrical installation and commissioning. This is the largest single source of
-                new industrial electrical work in the Tees Valley.
+                zone is creating substantial electrical infrastructure demand through 2025–2030. New
+                industrial units, energy infrastructure, and logistics facilities all require
+                electrical installation and commissioning. This is the largest single source of new
+                industrial electrical work in the Tees Valley.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -384,8 +384,7 @@ const sections = [
               <span>
                 <strong>James Cook University Hospital and NHS estates</strong> — the largest
                 hospital in the North East is a major employer of directly contracted electrical
-                contractors and M&amp;E firms. Ongoing maintenance and upgrade work runs
-                year-round.
+                contractors and M&amp;E firms. Ongoing maintenance and upgrade work runs year-round.
               </span>
             </li>
           </ul>
@@ -462,10 +461,10 @@ const sections = [
         <p>
           Middlesbrough provides steady, reliable work for qualified electricians. The combination
           of an ageing housing stock concentrated in Berwick Hills, Park End, Pallister, Ormesby,
-          Linthorpe, and Newport; a large private rented sector requiring five-yearly EICRs; and
-          the significant commercial and industrial opportunity of the South Tees Development
-          Corporation regeneration creates a well-rounded workload across domestic, commercial,
-          and industrial sectors.
+          Linthorpe, and Newport; a large private rented sector requiring five-yearly EICRs; and the
+          significant commercial and industrial opportunity of the South Tees Development
+          Corporation regeneration creates a well-rounded workload across domestic, commercial, and
+          industrial sectors.
         </p>
         <p>
           Middlesbrough College is the primary training provider for the Level 3 Electrical
@@ -485,13 +484,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Get professional documentation to Middlesbrough landlords and customers
-                  the same day — particularly useful when working through a busy EICR schedule
-                  across the rental terraces of Linthorpe and Newport.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Get professional documentation to Middlesbrough landlords and customers the
+                  same day — particularly useful when working through a busy EICR schedule across
+                  the rental terraces of Linthorpe and Newport.
                 </p>
               </div>
             </div>
@@ -506,9 +502,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Send professional PDF quotes to Middlesbrough customers before a competitor
-                  does — useful for rewire estimates in the older terraced streets and consumer
-                  unit replacements across the Tees Valley.
+                  . Send professional PDF quotes to Middlesbrough customers before a competitor does
+                  — useful for rewire estimates in the older terraced streets and consumer unit
+                  replacements across the Tees Valley.
                 </p>
               </div>
             </div>
@@ -516,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Middlesbrough electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -553,7 +549,7 @@ export default function ElectricianMiddlesbroughPage() {
       faqHeading="Frequently Asked Questions About Electricians in Middlesbrough"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Middlesbrough Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for electricians working across Teesside and the North East. 7-day free trial."
     />
   );
 }

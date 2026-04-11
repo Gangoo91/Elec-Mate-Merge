@@ -145,15 +145,15 @@ const sections = [
           Liverpool is a city of contrasts for electricians. The historic waterfront, dock
           regeneration, and city centre commercial developments offer high-value commercial and
           residential electrical work. Meanwhile, the extensive terraced housing stock in inner
-          suburbs provides a steady stream of domestic rewires, consumer unit upgrades, and
-          landlord compliance work.
+          suburbs provides a steady stream of domestic rewires, consumer unit upgrades, and landlord
+          compliance work.
         </p>
         <p>
           The city has two major universities driving a significant HMO market, 36 conservation
-          areas requiring sensitive electrical work, and one of the UK's most ambitious
-          regeneration programmes transforming the dock area. Liverpool electricians who can work
-          across this range — from a terraced house rewire in Wavertree to a commercial fit-out
-          in the Baltic Triangle — have excellent earning potential.
+          areas requiring sensitive electrical work, and one of the UK's most ambitious regeneration
+          programmes transforming the dock area. Liverpool electricians who can work across this
+          range — from a terraced house rewire in Wavertree to a commercial fit-out in the Baltic
+          Triangle — have excellent earning potential.
         </p>
         <p>
           This guide covers the DNO details, regeneration opportunities, conservation area
@@ -180,8 +180,8 @@ const sections = [
               <span>
                 <strong>New connections and upgrades</strong> — new supplies, capacity upgrades
                 (single-phase to three-phase, 60A to 100A for EV chargers or heat pumps), and
-                service cable replacements go through the SPEN connections portal. Standard
-                domestic upgrades typically take 6 to 10 weeks.
+                service cable replacements go through the SPEN connections portal. Standard domestic
+                upgrades typically take 6 to 10 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -190,16 +190,16 @@ const sections = [
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
                 generation equipment must be notified to SPEN. G98 (up to 16A per phase) is a
                 notification — submit and proceed. G99 for larger systems requires prior approval
-                and can take 8 to 14 weeks. Network capacity constraints in some areas of
-                Liverpool can delay G99 approvals.
+                and can take 8 to 14 weeks. Network capacity constraints in some areas of Liverpool
+                can delay G99 approvals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Liverpool properties are predominantly
-                TN-C-S (PME) in newer areas and TN-S in older areas. Victorian terraces may have
-                TT earthing or rely on lead water pipes. Always verify the earthing arrangement —
+                TN-C-S (PME) in newer areas and TN-S in older areas. Victorian terraces may have TT
+                earthing or rely on lead water pipes. Always verify the earthing arrangement —
                 Liverpool Water has replaced many lead water pipes in recent years, potentially
                 removing the earth electrode in TT/water pipe installations.
               </span>
@@ -224,18 +224,18 @@ const sections = [
     content: (
       <>
         <p>
-          Liverpool's waterfront and dock area regeneration is one of the largest in Europe, and
-          it creates significant electrical work opportunities. The key developments:
+          Liverpool's waterfront and dock area regeneration is one of the largest in Europe, and it
+          creates significant electrical work opportunities. The key developments:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Liverpool Waters</h3>
             <p className="text-white text-sm leading-relaxed">
               A 60-hectare, multi-billion pound development by Peel Holdings transforming the
-              Central and Northern Docks into a mixed-use neighbourhood. Residential towers, Grade
-              A offices, hotels, cruise terminal, and public spaces. Electrical work ranges from
-              large-scale commercial installations to high-specification apartment fit-outs.
-              Ongoing for 20+ years with continuous opportunities.
+              Central and Northern Docks into a mixed-use neighbourhood. Residential towers, Grade A
+              offices, hotels, cruise terminal, and public spaces. Electrical work ranges from
+              large-scale commercial installations to high-specification apartment fit-outs. Ongoing
+              for 20+ years with continuous opportunities.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -254,8 +254,8 @@ const sections = [
               The area around Paddington Village, the Royal Liverpool University Hospital, and the
               University of Liverpool is undergoing major development. Science and technology
               buildings, student accommodation, and healthcare facilities. Electrical work is
-              predominantly commercial — three-phase installations, data cabling, emergency
-              systems, and specialist healthcare electrical requirements.
+              predominantly commercial — three-phase installations, data cabling, emergency systems,
+              and specialist healthcare electrical requirements.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -293,17 +293,17 @@ const sections = [
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Georgian Quarter</strong> — the Canning Street, Falkner Square, and Hope
-                Street area contains some of the finest Georgian townhouses outside London. Many
-                are listed (Grade I and II). Electrical work requires listed building consent for
-                any external alterations and careful internal routing to avoid damaging original
+                Street area contains some of the finest Georgian townhouses outside London. Many are
+                listed (Grade I and II). Electrical work requires listed building consent for any
+                external alterations and careful internal routing to avoid damaging original
                 plasterwork, joinery, and decorative features.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Beatles Quarter (Mathew Street)</strong> — the area around Mathew Street
-                and the Cavern Quarter is a conservation area with significant tourism importance.
+                <strong>Beatles Quarter (Mathew Street)</strong> — the area around Mathew Street and
+                the Cavern Quarter is a conservation area with significant tourism importance.
                 External electrical work on commercial premises (signage, lighting, security) may
                 require planning permission. The council is protective of the area's character.
               </span>
@@ -313,19 +313,18 @@ const sections = [
               <span>
                 <strong>Ropewalks</strong> — the area around Bold Street and Seel Street is a
                 conservation area with a mix of Georgian, Victorian, and Edwardian commercial
-                buildings. Many are being converted to residential and mixed-use. Electrical work
-                in these conversions must respect the building fabric while meeting current
-                standards.
+                buildings. Many are being converted to residential and mixed-use. Electrical work in
+                these conversions must respect the building fabric while meeting current standards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Landmark className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Practical impact</strong> — when quoting for work in conservation areas
-                or on listed buildings, always advise the customer to check whether consent is
-                needed. Factor additional time into quotes for heritage work. Build relationships
-                with the Liverpool City Council conservation team — they can advise on acceptable
-                approaches before you commit to a cable route or equipment location.
+                <strong>Practical impact</strong> — when quoting for work in conservation areas or
+                on listed buildings, always advise the customer to check whether consent is needed.
+                Factor additional time into quotes for heritage work. Build relationships with the
+                Liverpool City Council conservation team — they can advise on acceptable approaches
+                before you commit to a cable route or equipment location.
               </span>
             </li>
           </ul>
@@ -339,8 +338,8 @@ const sections = [
     content: (
       <>
         <p>
-          Liverpool's housing stock is dominated by terraced houses, which form the core of
-          domestic electrical work in the city. Understanding the common property types:
+          Liverpool's housing stock is dominated by terraced houses, which form the core of domestic
+          electrical work in the city. Understanding the common property types:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -359,9 +358,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Found in the Georgian Quarter and parts of the city centre. Grand proportions, high
               ceilings, ornamental plasterwork, and period features. Many divided into flats.
-              Rewiring requires sensitive cable routing — surface-mounted mini-trunking is
-              sometimes necessary to avoid damaging original features. Listed building consent may
-              be required. Premium pricing: £5,000 to £9,000 for a large townhouse flat.
+              Rewiring requires sensitive cable routing — surface-mounted mini-trunking is sometimes
+              necessary to avoid damaging original features. Listed building consent may be
+              required. Premium pricing: £5,000 to £9,000 for a large townhouse flat.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -395,9 +394,8 @@ const sections = [
         <p>
           Liverpool has two major universities — the University of Liverpool and Liverpool John
           Moores University (LJMU) — with a combined student population of over 55,000. This,
-          combined with a significant private rental sector, drives a large HMO market
-          concentrated in L3 (city centre), L6 (Kensington), L7 (Edge Hill), L8 (Toxteth), and
-          L15 (Wavertree).
+          combined with a significant private rental sector, drives a large HMO market concentrated
+          in L3 (city centre), L6 (Kensington), L7 (Edge Hill), L8 (Toxteth), and L15 (Wavertree).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -424,11 +422,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire detection and emergency lighting</strong> — HMOs require fire
-                detection to BS 5839-6 (Grade D LD2 minimum) and emergency lighting on escape
-                routes. Liverpool City Council enforcement team conducts regular inspections and
-                issues improvement notices for non-compliant properties. Fire alarm installation
-                and annual testing is reliable, recurring work.
+                <strong>Fire detection and emergency lighting</strong> — HMOs require fire detection
+                to BS 5839-6 (Grade D LD2 minimum) and emergency lighting on escape routes.
+                Liverpool City Council enforcement team conducts regular inspections and issues
+                improvement notices for non-compliant properties. Fire alarm installation and annual
+                testing is reliable, recurring work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -510,11 +508,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Commercial rates in the dock area and city centre developments are higher — day rates
-          of £400 to £550 are typical for commercial fit-out work. Georgian Quarter heritage work
-          also commands a premium. Volume EICR work for landlords can be priced competitively
-          (£150 to £200 per unit) if you are servicing a portfolio and can batch inspections
-          efficiently.
+          Commercial rates in the dock area and city centre developments are higher — day rates of
+          £400 to £550 are typical for commercial fit-out work. Georgian Quarter heritage work also
+          commands a premium. Volume EICR work for landlords can be priced competitively (£150 to
+          £200 per unit) if you are servicing a portfolio and can batch inspections efficiently.
         </p>
       </>
     ),
@@ -541,13 +538,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning. The Liverpool HMO and landlord market
-                  demands fast, professional certification — deliver EICRs from your phone and
-                  email to the landlord before you leave.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning. The Liverpool HMO and landlord market
+                  demands fast, professional certification — deliver EICRs from your phone and email
+                  to the landlord before you leave.
                 </p>
               </div>
             </div>
@@ -589,7 +583,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Liverpool electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Liverpool's terraced houses, HMO market, and regeneration projects. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Liverpool's terraced houses, HMO market, and regeneration projects. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -626,7 +620,7 @@ export default function ElectricianLiverpoolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Liverpool"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Liverpool Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Liverpool's terraced housing, HMO market, and dock area regeneration. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Liverpool's terraced housing, HMO market, and dock area regeneration. 7-day free trial."
     />
   );
 }

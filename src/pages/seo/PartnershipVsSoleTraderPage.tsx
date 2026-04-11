@@ -95,48 +95,42 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-business-plan-template',
     title: 'Electrical Business Plan',
-    description:
-      'Model different business structures in your financial projections.',
+    description: 'Model different business structures in your financial projections.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/guides/cash-flow-management-electricians',
     title: 'Cash Flow Management',
-    description:
-      'Tax timing varies by structure — plan your cash flow accordingly.',
+    description: 'Tax timing varies by structure — plan your cash flow accordingly.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-estimating-guide',
     title: 'Electrical Estimating Guide',
-    description:
-      'Your business structure affects your true costs — factor it into your rates.',
+    description: 'Your business structure affects your true costs — factor it into your rates.',
     icon: Calculator,
     category: 'Guide',
   },
   {
     href: '/guides/hiring-first-employee-electrician',
     title: 'Hiring Your First Employee',
-    description:
-      'Hiring usually triggers the conversation about incorporating.',
+    description: 'Hiring usually triggers the conversation about incorporating.',
     icon: Users,
     category: 'Guide',
   },
   {
     href: '/guides/how-to-get-first-electrical-customer',
     title: 'Getting Your First Customer',
-    description:
-      'Start trading quickly as a sole trader — incorporate later when it makes sense.',
+    description: 'Start trading quickly as a sole trader — incorporate later when it makes sense.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Professional quotes with your business details — sole trader or Ltd.',
+    description: 'Professional quotes with your business details — sole trader or Ltd.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -153,16 +147,16 @@ const sections = [
     content: (
       <>
         <p>
-          Your business structure determines how much tax you pay, how much personal liability
-          you carry, how much admin you deal with, and how much it costs to run your business.
-          For electricians, there are three realistic options: sole trader, partnership (or
-          LLP), and limited company.
+          Your business structure determines how much tax you pay, how much personal liability you
+          carry, how much admin you deal with, and how much it costs to run your business. For
+          electricians, there are three realistic options: sole trader, partnership (or LLP), and
+          limited company.
         </p>
         <p>
           There is no one-size-fits-all answer. The right structure depends on your projected
-          income, whether you have a business partner, your appetite for risk, and how much
-          admin you are willing to handle. This guide compares all three options with specific
-          numbers for the 2026/27 tax year so you can make an informed decision.
+          income, whether you have a business partner, your appetite for risk, and how much admin
+          you are willing to handle. This guide compares all three options with specific numbers for
+          the 2026/27 tax year so you can make an informed decision.
         </p>
       </>
     ),
@@ -238,37 +232,44 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Ordinary Partnership</h3>
             <p className="text-white text-sm leading-relaxed">
-              Two or more people trading together. Each partner files a personal tax return
-              for their share of profits. Simple to set up — just register with HMRC.
-              <strong className="text-red-400"> CRITICAL: each partner has UNLIMITED personal
-              liability for ALL partnership debts</strong> — not just their share. If your
-              partner makes a mistake, you are personally liable for the full amount.
+              Two or more people trading together. Each partner files a personal tax return for
+              their share of profits. Simple to set up — just register with HMRC.
+              <strong className="text-red-400">
+                {' '}
+                CRITICAL: each partner has UNLIMITED personal liability for ALL partnership debts
+              </strong>{' '}
+              — not just their share. If your partner makes a mistake, you are personally liable for
+              the full amount.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">LLP (Limited Liability Partnership)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              LLP (Limited Liability Partnership)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
-              Registered at Companies House. Combines the tax transparency of a partnership
-              (each partner taxed on their share) with the liability protection of a limited
-              company (each partner&apos;s liability limited to their investment). Must file
-              accounts at Companies House. Higher accountancy costs (£1,000 to £2,000/year).
-              <strong className="text-green-400"> Recommended over ordinary partnership for
-              liability protection.</strong>
+              Registered at Companies House. Combines the tax transparency of a partnership (each
+              partner taxed on their share) with the liability protection of a limited company (each
+              partner&apos;s liability limited to their investment). Must file accounts at Companies
+              House. Higher accountancy costs (£1,000 to £2,000/year).
+              <strong className="text-green-400">
+                {' '}
+                Recommended over ordinary partnership for liability protection.
+              </strong>
             </p>
           </div>
         </div>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" /> Partnership Agreement: Non-Negotiable
+            <AlertTriangle className="w-5 h-5 text-yellow-400" /> Partnership Agreement:
+            Non-Negotiable
           </h4>
           <p className="text-white text-sm leading-relaxed">
             ALWAYS have a written partnership agreement. Cover: profit-sharing ratios, decision
-            making (equal or weighted), what happens if one partner wants to leave, how
-            disputes are resolved, who owns what assets, capital contributions, and non-compete
-            clauses. Without an agreement, the Partnership Act 1890 applies by default — which
-            assumes equal sharing regardless of who does more work or invested more money.
-            A solicitor can draft a partnership agreement for £500 to £1,500. It is the best
-            £500 you will ever spend.
+            making (equal or weighted), what happens if one partner wants to leave, how disputes are
+            resolved, who owns what assets, capital contributions, and non-compete clauses. Without
+            an agreement, the Partnership Act 1890 applies by default — which assumes equal sharing
+            regardless of who does more work or invested more money. A solicitor can draft a
+            partnership agreement for £500 to £1,500. It is the best £500 you will ever spend.
           </p>
         </div>
       </>
@@ -319,7 +320,8 @@ const sections = [
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
-                  More admin: payroll, corporation tax return, annual accounts, confirmation statement
+                  More admin: payroll, corporation tax return, annual accounts, confirmation
+                  statement
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
@@ -351,7 +353,8 @@ const sections = [
       <>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-            <Calculator className="w-4 h-4 text-yellow-400" /> Tax Comparison at Different Profit Levels
+            <Calculator className="w-4 h-4 text-yellow-400" /> Tax Comparison at Different Profit
+            Levels
           </h4>
           <div className="space-y-3 text-white text-sm">
             <div className="grid grid-cols-3 gap-4 font-bold border-b border-white/10 pb-3">
@@ -393,12 +396,12 @@ const sections = [
         </div>
         <p>
           <strong>Important:</strong> These figures are approximate and assume optimal
-          salary/dividend extraction, no other income, and basic rate taxpayer status for
-          dividends up to the relevant thresholds. Your actual figures will depend on your
-          personal circumstances. The Ltd figures do NOT include the additional accountancy
-          costs of £500 to £1,500/year — at £30,000 profit, the £300 tax saving is wiped out
-          by accountancy fees. The break-even point where Ltd genuinely saves you money
-          (after all costs) is approximately £40,000 to £50,000.
+          salary/dividend extraction, no other income, and basic rate taxpayer status for dividends
+          up to the relevant thresholds. Your actual figures will depend on your personal
+          circumstances. The Ltd figures do NOT include the additional accountancy costs of £500 to
+          £1,500/year — at £30,000 profit, the £300 tax saving is wiped out by accountancy fees. The
+          break-even point where Ltd genuinely saves you money (after all costs) is approximately
+          £40,000 to £50,000.
         </p>
       </>
     ),
@@ -414,11 +417,11 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400" /> Sole Trader: Unlimited Liability
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              You and your business are legally the same entity. If your business owes money —
-              to suppliers, to a customer who sues you, to HMRC — your personal assets are on
-              the line. Your house (if you own one), your van, your savings, everything. Public
-              liability insurance covers third-party claims, but it does not cover business
-              debts, tax liabilities, or contractual disputes.
+              You and your business are legally the same entity. If your business owes money — to
+              suppliers, to a customer who sues you, to HMRC — your personal assets are on the line.
+              Your house (if you own one), your van, your savings, everything. Public liability
+              insurance covers third-party claims, but it does not cover business debts, tax
+              liabilities, or contractual disputes.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -426,13 +429,12 @@ const sections = [
               <Shield className="w-5 h-5 text-green-400" /> Limited Company: Limited Liability
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              A limited company is a separate legal entity. Its debts are its own — your
-              personal liability is limited to the amount you invested in shares (typically
-              £1). However, this protection has limits: personal guarantees on loans or
-              leases bypass it (and most van finance and business loans require personal
-              guarantees), fraudulent or wrongful trading removes it, and HMRC can pursue
-              directors personally in some cases. Limited liability is valuable but not
-              bulletproof.
+              A limited company is a separate legal entity. Its debts are its own — your personal
+              liability is limited to the amount you invested in shares (typically £1). However,
+              this protection has limits: personal guarantees on loans or leases bypass it (and most
+              van finance and business loans require personal guarantees), fraudulent or wrongful
+              trading removes it, and HMRC can pursue directors personally in some cases. Limited
+              liability is valuable but not bulletproof.
             </p>
           </div>
         </div>
@@ -501,11 +503,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Incorporate when:</strong> Your annual profit consistently exceeds
-                £40,000 to £50,000 for at least 2 consecutive years. You want to split income
-                with a spouse through dividends. You are taking on significant commercial
-                contracts and want liability protection. You are planning to take on employees.
-                You want to build a business that can be sold.
+                <strong>Incorporate when:</strong> Your annual profit consistently exceeds £40,000
+                to £50,000 for at least 2 consecutive years. You want to split income with a spouse
+                through dividends. You are taking on significant commercial contracts and want
+                liability protection. You are planning to take on employees. You want to build a
+                business that can be sold.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -520,10 +522,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consider a partnership/LLP when:</strong> You are going into business
-                with another electrician. You want to share profits, risks, and workload.
-                Choose an LLP over an ordinary partnership for liability protection. Always
-                have a written partnership agreement.
+                <strong>Consider a partnership/LLP when:</strong> You are going into business with
+                another electrician. You want to share profits, risks, and workload. Choose an LLP
+                over an ordinary partnership for liability protection. Always have a written
+                partnership agreement.
               </span>
             </li>
           </ul>
@@ -537,10 +539,10 @@ const sections = [
     content: (
       <>
         <p>
-          The best advice is: start as a sole trader, learn the business, build your income,
-          and incorporate when the numbers justify it. Do not overcomplicate your first year
-          with company formation, payroll, and complex accounting when you could be spending
-          that time finding customers and doing work.
+          The best advice is: start as a sole trader, learn the business, build your income, and
+          incorporate when the numbers justify it. Do not overcomplicate your first year with
+          company formation, payroll, and complex accounting when you could be spending that time
+          finding customers and doing work.
         </p>
         <SEOAppBridge
           title="Manage your electrical business whatever your structure"
@@ -581,7 +583,7 @@ export default function PartnershipVsSoleTraderPage() {
       faqHeading="Frequently Asked Questions About Business Structure for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Run Your Business Your Way"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, invoicing, and job management. Works for sole traders, partnerships, and limited companies. 7-day free trial, cancel anytime."
     />
   );
 }

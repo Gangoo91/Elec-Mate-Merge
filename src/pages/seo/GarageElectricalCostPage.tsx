@@ -126,9 +126,9 @@ const sections = [
       <>
         <p>
           Whether you are wiring a detached garage for the first time or upgrading an existing
-          supply, a properly installed garage electrical system transforms the space. Lighting, power
-          tools, EV charging, and security are all possible with the right installation. The key
-          variables that affect cost are whether the garage is attached or detached, the length
+          supply, a properly installed garage electrical system transforms the space. Lighting,
+          power tools, EV charging, and security are all possible with the right installation. The
+          key variables that affect cost are whether the garage is attached or detached, the length
           of the cable run, and whether trenching is required.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -143,8 +143,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Integral (attached) garage</strong> — £400 to £800. No external cable
-                run required. Circuits fed from the main house consumer unit through the party wall.
+                <strong>Integral (attached) garage</strong> — £400 to £800. No external cable run
+                required. Circuits fed from the main house consumer unit through the party wall.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -158,9 +158,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          All garage electrical installations are notifiable under Part P of the Building Regulations.
-          A registered competent person scheme electrician self-certifies the work without a separate
-          building control application.
+          All garage electrical installations are notifiable under Part P of the Building
+          Regulations. A registered competent person scheme electrician self-certifies the work
+          without a separate building control application.
         </p>
       </>
     ),
@@ -172,36 +172,35 @@ const sections = [
       <>
         <p>
           A detached garage installation involves running an armoured cable from the main house
-          consumer unit to the garage, typically underground. The installation scope and cost
-          break down as follows:
+          consumer unit to the garage, typically underground. The installation scope and cost break
+          down as follows:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Short run (up to 10 metres, garden)</strong> — £800 to £1,200. Typically
-                one day's work. Includes 6mm² SWA cable, shallow trench through lawn, small
-                consumer unit, one lighting circuit, one socket circuit.
+                <strong>Short run (up to 10 metres, garden)</strong> — £800 to £1,200. Typically one
+                day's work. Includes 6mm² SWA cable, shallow trench through lawn, small consumer
+                unit, one lighting circuit, one socket circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Medium run (10–25 metres, mixed surfaces)</strong> — £1,200 to £1,600.
-                Longer cable run, possible trenching through path or patio, increased materials cost.
+                Longer cable run, possible trenching through path or patio, increased materials
+                cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long run (over 25 metres, or under concrete driveway)</strong> — £1,600
-                to £2,000+. Under-driveway cable requires diamond cutting or boring through the
+                <strong>Long run (over 25 metres, or under concrete driveway)</strong> — £1,600 to
+                £2,000+. Under-driveway cable requires diamond cutting or boring through the
                 concrete slab, significant reinstatement, and potentially a larger cable size to
                 account for volt drop (Regulation 525 of{' '}
-                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-                  BS 7671
-                </SEOInternalLink>
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>
                 ).
               </span>
             </li>
@@ -223,9 +222,9 @@ const sections = [
       <>
         <p>
           An integral or attached garage shares a wall with the house, making the electrical
-          installation significantly simpler. There is no external cable run, no armoured cable,
-          and no trenching. The circuits are fed from the main house consumer unit through the
-          party wall.
+          installation significantly simpler. There is no external cable run, no armoured cable, and
+          no trenching. The circuits are fed from the main house consumer unit through the party
+          wall.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -247,18 +246,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Integral garage with EV charger</strong> — £1,000 to £1,800. Dedicated
-                32A EV charger circuit, consumer unit work if required, and charger installation.
-                Does not include the cost of the charger unit itself.
+                <strong>Integral garage with EV charger</strong> — £1,000 to £1,800. Dedicated 32A
+                EV charger circuit, consumer unit work if required, and charger installation. Does
+                not include the cost of the charger unit itself.
               </span>
             </li>
           </ul>
         </div>
         <p>
           For an integral garage, standard 2.5mm² twin and earth cable is acceptable for the socket
-          circuit inside the garage wall, provided it is run in a safe zone or mechanically protected.
-          The supply from the house consumer unit to the garage can be via the party wall without
-          armoured cable if entirely within the building structure.
+          circuit inside the garage wall, provided it is run in a safe zone or mechanically
+          protected. The supply from the house consumer unit to the garage can be via the party wall
+          without armoured cable if entirely within the building structure.
         </p>
       </>
     ),
@@ -269,8 +268,8 @@ const sections = [
     content: (
       <>
         <p>
-          The underground supply to a detached garage must use SWA (Steel Wire Armoured) cable.
-          This is a robust cable designed for direct burial in the ground and provides mechanical
+          The underground supply to a detached garage must use SWA (Steel Wire Armoured) cable. This
+          is a robust cable designed for direct burial in the ground and provides mechanical
           protection against accidental damage from future excavation.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
@@ -287,8 +286,8 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger supply: 10mm² SWA</strong> — a 7kW EV charger draws 32A
-                continuously. On a longer cable run, 10mm² SWA is required to keep volt drop
-                within the 3% limit for the final circuit.
+                continuously. On a longer cable run, 10mm² SWA is required to keep volt drop within
+                the 3% limit for the final circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -302,10 +301,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overhead alternative</strong> — where trenching is not feasible, an
-                overhead supply on a catenary wire is an option. Minimum height of 3.5m above
-                ground (5.2m over a vehicle route). Cheaper than cutting through a concrete
-                driveway but less aesthetically pleasing.
+                <strong>Overhead alternative</strong> — where trenching is not feasible, an overhead
+                supply on a catenary wire is an option. Minimum height of 3.5m above ground (5.2m
+                over a vehicle route). Cheaper than cutting through a concrete driveway but less
+                aesthetically pleasing.
               </span>
             </li>
           </ul>
@@ -336,17 +335,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Larger 6–8 way consumer unit</strong> — £400 to £600 fitted. Accommodates
-                an EV charger circuit, workshop power circuit, outdoor sockets, and a security
-                lighting circuit in addition to the standard circuits.
+                <strong>Larger 6–8 way consumer unit</strong> — £400 to £600 fitted. Accommodates an
+                EV charger circuit, workshop power circuit, outdoor sockets, and a security lighting
+                circuit in addition to the standard circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Isolation switch</strong> — a lockable isolator on the garage consumer unit
-                is best practice, allowing the supply to the garage to be safely isolated. Particularly
-                useful if the garage is let to a tenant or shared.
+                is best practice, allowing the supply to the garage to be safely isolated.
+                Particularly useful if the garage is let to a tenant or shared.
               </span>
             </li>
           </ul>
@@ -370,34 +369,34 @@ const sections = [
               <Car className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>7kW (32A) home charger circuit</strong> — adds £200 to £400 to the
-                installation cost if done at the same time as the garage wiring. The main cable
-                and consumer unit costs are already covered.
+                installation cost if done at the same time as the garage wiring. The main cable and
+                consumer unit costs are already covered.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>As a standalone job</strong> — £600 to £1,200 for the EV charger circuit
-                and installation (not including the charger unit itself, which costs £500 to £900
-                for a quality smart charger).
+                <strong>As a standalone job</strong> — £600 to £1,200 for the EV charger circuit and
+                installation (not including the charger unit itself, which costs £500 to £900 for a
+                quality smart charger).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing for EV</strong> — a 7kW charger requires a 32A dedicated
-                circuit. At 32A continuous, the supply SWA cable must be sized for this current
-                with appropriate correction factors for burial depth and thermal insulation. On
-                runs over 20 metres, 10mm² SWA is typically required.
+                circuit. At 32A continuous, the supply SWA cable must be sized for this current with
+                appropriate correction factors for burial depth and thermal insulation. On runs over
+                20 metres, 10mm² SWA is typically required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Car className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV grant eligibility</strong> — the Electric Vehicle Infrastructure
-                Grant (formerly OZEV) is no longer available to most domestic properties but may
-                still apply in certain circumstances. Check current eligibility with the
-                Office for Zero Emission Vehicles (OZEV) before quoting.
+                <strong>OZEV grant eligibility</strong> — the Electric Vehicle Infrastructure Grant
+                (formerly OZEV) is no longer available to most domestic properties but may still
+                apply in certain circumstances. Check current eligibility with the Office for Zero
+                Emission Vehicles (OZEV) before quoting.
               </span>
             </li>
           </ul>
@@ -413,7 +412,8 @@ const sections = [
         <p>
           Garage electrical installations are notifiable under Part P of the Building Regulations
           (England and Wales). This applies whether the garage is detached or integral, and
-          regardless of whether the work is a full new installation or an upgrade to an existing one.
+          regardless of whether the work is a full new installation or an upgrade to an existing
+          one.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -430,12 +430,10 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
-                  EIC
-                </SEOInternalLink>{' '}
-                documents the design, construction, inspection, and test results. It is your
-                property's compliance evidence when you sell — solicitors routinely request it
-                for garage and outbuilding electrical work.
+                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> documents the
+                design, construction, inspection, and test results. It is your property's compliance
+                evidence when you sell — solicitors routinely request it for garage and outbuilding
+                electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -457,9 +455,10 @@ const sections = [
     content: (
       <>
         <p>
-          Garage electrical installations are a great bread-and-butter job for domestic electricians.
-          The work is straightforward, the scope is well-defined, and adding an EV charger as an
-          upsell is easy to justify when the main cable and consumer unit are already being installed.
+          Garage electrical installations are a great bread-and-butter job for domestic
+          electricians. The work is straightforward, the scope is well-defined, and adding an EV
+          charger as an upsell is easy to justify when the main cable and consumer unit are already
+          being installed.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -470,8 +469,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Never quote a detached garage job without walking the cable route. A 10-metre
                   garden run and a 25-metre run under a concrete driveway are entirely different
-                  jobs. Measure the route, identify obstacles, and quote the trenching separately
-                  as a line item.
+                  jobs. Measure the route, identify obstacles, and quote the trenching separately as
+                  a line item.
                 </p>
               </div>
             </div>
@@ -483,8 +482,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Always Offer the EV Charger</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If the customer has a car, offer the EV charger option. On a new garage
-                  installation, adding a 32A EV circuit costs far less than a standalone job.
-                  Use the{' '}
+                  installation, adding a 32A EV circuit costs far less than a standalone job. Use
+                  the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
@@ -497,7 +496,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote garage electrical installations professionally with Elec-Mate"
-          description="Create itemised garage electrical quotes with armoured cable, trenching, consumer unit, and EV charger options. Issue EICs on site. Join 430+ UK electricians. 7-day free trial."
+          description="Create itemised garage electrical quotes with armoured cable, trenching, consumer unit, and EV charger options. Issue EICs on site. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -534,7 +533,7 @@ export default function GarageElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Garage Electrical Installation Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Garage Electrical Installation in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional garage electrical quotes with armoured cable, trenching, and EV charger options. 7-day free trial, cancel anytime."
     />
   );
 }

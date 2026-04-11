@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Who can self-certify electrical work under Part P?',
     answer:
-      'Only electricians registered with an approved competent person scheme can self-certify. Approved schemes include NICEIC, NAPIT, ELECSA, STROMA, and BRE Certification. These schemes assess the electrician\'s technical competence, check that the work is carried out to BS 7671, and provide the homeowner with a certificate of compliance. Self-certification means the electrician — not building control — verifies that the work meets the requirements. The scheme then notifies the local authority on the electrician\'s behalf.',
+      "Only electricians registered with an approved competent person scheme can self-certify. Approved schemes include NICEIC, NAPIT, ELECSA, STROMA, and BRE Certification. These schemes assess the electrician's technical competence, check that the work is carried out to BS 7671, and provide the homeowner with a certificate of compliance. Self-certification means the electrician — not building control — verifies that the work meets the requirements. The scheme then notifies the local authority on the electrician's behalf.",
   },
   {
     question: 'What is non-notifiable electrical work?',
@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'What happens if notifiable work is done without notification?',
     answer:
-      'If notifiable work is carried out without notification, the local authority can issue an enforcement notice requiring the homeowner to have the work inspected and tested by a qualified person, or in extreme cases, to have non-compliant work removed and redone. The homeowner bears legal responsibility for Building Regulations compliance, but the electrician who carried out the work is expected to resolve the situation. Non-compliance causes significant problems when selling the property, as buyers\' solicitors will require evidence of compliance for any electrical work. Without a certificate, the sale may be delayed or the buyer may demand a price reduction.',
+      "If notifiable work is carried out without notification, the local authority can issue an enforcement notice requiring the homeowner to have the work inspected and tested by a qualified person, or in extreme cases, to have non-compliant work removed and redone. The homeowner bears legal responsibility for Building Regulations compliance, but the electrician who carried out the work is expected to resolve the situation. Non-compliance causes significant problems when selling the property, as buyers' solicitors will require evidence of compliance for any electrical work. Without a certificate, the sale may be delayed or the buyer may demand a price reduction.",
   },
   {
     question: 'Does Part P apply to outbuildings and garages?',
@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-work-notification-part-p',
     title: 'Electrical Work Notification Guide',
-    description: 'Detailed guide to exactly what work requires notification and how the process works.',
+    description:
+      'Detailed guide to exactly what work requires notification and how the process works.',
     icon: FileText,
     category: 'Guide',
   },
@@ -139,23 +140,23 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations (England) sets requirements for the design, installation,
-          inspection, and testing of electrical installations in dwellings. It came into force in
-          January 2005 following a series of house fires and electrocutions caused by unsafe DIY
-          electrical work.
+          Part P of the Building Regulations (England) sets requirements for the design,
+          installation, inspection, and testing of electrical installations in dwellings. It came
+          into force in January 2005 following a series of house fires and electrocutions caused by
+          unsafe DIY electrical work.
         </p>
         <p>
           Part P is implemented through Approved Document P, which was revised in 2013 to reduce the
           scope of notifiable work. The document requires that all electrical work in dwellings is
           designed and installed to comply with BS 7671 (the IET Wiring Regulations). For certain
           types of higher-risk work — defined as notifiable work — the installation must either be
-          self-certified by a registered competent person or notified to building control before work
-          commences.
+          self-certified by a registered competent person or notified to building control before
+          work commences.
         </p>
         <p>
           Part P applies to Scotland, Wales, and Northern Ireland under their own separate building
-          regulations, which have equivalent requirements. The specific competent person schemes
-          and notification procedures differ slightly by nation, but the underlying principle — that
+          regulations, which have equivalent requirements. The specific competent person schemes and
+          notification procedures differ slightly by nation, but the underlying principle — that
           significant electrical work in dwellings must be verified — is consistent across the UK.
         </p>
         <p>
@@ -172,9 +173,9 @@ const sections = [
     content: (
       <>
         <p>
-          Approved Document P defines notifiable work as work that requires either self-certification
-          by a competent person scheme member or prior notification to building control. The following
-          types of work in dwellings are notifiable:
+          Approved Document P defines notifiable work as work that requires either
+          self-certification by a competent person scheme member or prior notification to building
+          control. The following types of work in dwellings are notifiable:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -199,25 +200,25 @@ const sections = [
               <span>
                 <strong>Electrical work in kitchens</strong> — new circuits, additions to circuits,
                 and installation of new accessories in kitchens where the work involves the kitchen
-                circuit. Like-for-like replacement of accessories on existing circuits in kitchens is
-                non-notifiable.
+                circuit. Like-for-like replacement of accessories on existing circuits in kitchens
+                is non-notifiable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>All electrical work in bathrooms</strong> — any electrical work in a bathroom,
-                shower room, or en-suite (other than like-for-like replacement of accessories on
-                existing circuits) is notifiable. This includes new shower circuits, towel rail
-                supplies, and lighting changes.
+                <strong>All electrical work in bathrooms</strong> — any electrical work in a
+                bathroom, shower room, or en-suite (other than like-for-like replacement of
+                accessories on existing circuits) is notifiable. This includes new shower circuits,
+                towel rail supplies, and lighting changes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor supplies and new garden circuits</strong> — new outdoor socket circuits,
-                new garden lighting circuits, and new supplies to outbuildings (garages, sheds, summer
-                houses) are all notifiable.
+                <strong>Outdoor supplies and new garden circuits</strong> — new outdoor socket
+                circuits, new garden lighting circuits, and new supplies to outbuildings (garages,
+                sheds, summer houses) are all notifiable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -231,8 +232,9 @@ const sections = [
         </div>
         <p>
           The key principle is that notifiable work involves higher risk — either because it creates
-          new circuits that could be overloaded, or because it is in a location where the consequences
-          of an electrical fault are particularly serious (water present, escape route, etc.).
+          new circuits that could be overloaded, or because it is in a location where the
+          consequences of an electrical fault are particularly serious (water present, escape route,
+          etc.).
         </p>
       </>
     ),
@@ -244,23 +246,23 @@ const sections = [
       <>
         <p>
           Not all domestic electrical work requires notification. Non-notifiable work can be carried
-          out without building control involvement, provided it complies with BS 7671. Common examples
-          of non-notifiable work include:
+          out without building control involvement, provided it complies with BS 7671. Common
+          examples of non-notifiable work include:
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Like-for-like replacement of electrical accessories (sockets, switches, light fittings)
-                anywhere in a dwelling except bathrooms and special locations.
+                Like-for-like replacement of electrical accessories (sockets, switches, light
+                fittings) anywhere in a dwelling except bathrooms and special locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Adding additional sockets or fused connection units to an existing ring final circuit
-                in rooms that are not kitchens, bathrooms, or special locations.
+                Adding additional sockets or fused connection units to an existing ring final
+                circuit in rooms that are not kitchens, bathrooms, or special locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -280,9 +282,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                Replacing a like-for-like accessory in a kitchen on an existing circuit (for example,
-                replacing a socket outlet like-for-like). Note that adding new sockets or extending
-                a kitchen circuit is notifiable.
+                Replacing a like-for-like accessory in a kitchen on an existing circuit (for
+                example, replacing a socket outlet like-for-like). Note that adding new sockets or
+                extending a kitchen circuit is notifiable.
               </span>
             </li>
           </ul>
@@ -318,7 +320,9 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-                <span>NICEIC (National Inspection Council for Electrical Installation Contracting)</span>
+                <span>
+                  NICEIC (National Inspection Council for Electrical Installation Contracting)
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
@@ -364,9 +368,9 @@ const sections = [
           Scheme membership involves an assessment of the electrician's technical competence
           (including a site visit and inspection of previous work), annual registration fees, and
           compliance with the scheme's audit and complaint procedures. Annual fees range from
-          approximately £200 to £600 depending on the scheme and the number of installers registered.
-          For electricians who carry out regular notifiable domestic work, scheme membership pays for
-          itself quickly in saved building control fees and administrative time.
+          approximately £200 to £600 depending on the scheme and the number of installers
+          registered. For electricians who carry out regular notifiable domestic work, scheme
+          membership pays for itself quickly in saved building control fees and administrative time.
         </p>
         <SEOAppBridge
           title="Issue Part P certificates on site"
@@ -394,10 +398,10 @@ const sections = [
                 <p className="text-white text-sm mt-1 leading-relaxed">
                   A building notice is the simpler of the two routes. The homeowner submits a notice
                   to the local authority before work commences. The council will inspect the work on
-                  completion and issue a completion certificate if the work is satisfactory. Building
-                  notice fees for typical domestic electrical work range from £200 to £400 depending
-                  on the council. The council has no obligation to inspect during the work — the
-                  inspection is carried out at the end. If the work fails the inspection, the
+                  completion and issue a completion certificate if the work is satisfactory.
+                  Building notice fees for typical domestic electrical work range from £200 to £400
+                  depending on the council. The council has no obligation to inspect during the work
+                  — the inspection is carried out at the end. If the work fails the inspection, the
                   homeowner bears the cost of remediation.
                 </p>
               </div>
@@ -421,9 +425,9 @@ const sections = [
         <p>
           For most domestic electrical jobs, the building notice route is used where the electrician
           is not scheme-registered. However, the practical reality is that scheme registration is
-          almost always cheaper and faster than using building control. A building notice fee of £200
-          to £400 per job quickly exceeds a year's scheme membership fee for any electrician carrying
-          out regular domestic work.
+          almost always cheaper and faster than using building control. A building notice fee of
+          £200 to £400 per job quickly exceeds a year's scheme membership fee for any electrician
+          carrying out regular domestic work.
         </p>
       </>
     ),
@@ -450,9 +454,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Property sale delays</strong> — buyers' solicitors routinely request evidence
-                of Building Regulations compliance for any electrical work. Without a certificate,
-                the sale can be delayed or the buyer may demand a price reduction or retention.
+                <strong>Property sale delays</strong> — buyers' solicitors routinely request
+                evidence of Building Regulations compliance for any electrical work. Without a
+                certificate, the sale can be delayed or the buyer may demand a price reduction or
+                retention.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -495,16 +500,17 @@ const sections = [
         <p>
           If the seller cannot produce the relevant certificates, the buyer's solicitor may require
           an indemnity insurance policy to be purchased, which protects the buyer if the local
-          authority takes enforcement action. Indemnity policies can cost £100 to £500 per claim
-          and are not a substitute for proper certification — they simply provide financial
-          protection. Some buyers refuse to accept indemnity insurance and require the work to be
-          properly inspected and certified before exchange of contracts.
+          authority takes enforcement action. Indemnity policies can cost £100 to £500 per claim and
+          are not a substitute for proper certification — they simply provide financial protection.
+          Some buyers refuse to accept indemnity insurance and require the work to be properly
+          inspected and certified before exchange of contracts.
         </p>
         <p>
           For electricians, this creates both a risk and an opportunity. Any homeowner who has had
           notifiable work done without certification faces a problem when they sell. This generates
           demand for retrospective inspection and EICRs. However, electricians who fail to certify
-          their own work may find themselves called back to rectify the situation at their own expense.
+          their own work may find themselves called back to rectify the situation at their own
+          expense.
         </p>
         <SEOAppBridge
           title="Never forget to issue a certificate again"
@@ -536,8 +542,8 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site using Elec-Mate. AI board scanning populates the schedule of circuits
-                  automatically. Voice entry for test results. PDF issued to the customer before
-                  you leave.
+                  automatically. Voice entry for test results. PDF issued to the customer before you
+                  leave.
                 </p>
               </div>
             </div>
@@ -563,8 +569,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI Regulations Lookup</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Not sure if a specific job is notifiable? Elec-Mate's AI assistant can check Part P
-                  requirements and BS 7671 regulations for any installation scenario, so you can
+                  Not sure if a specific job is notifiable? Elec-Mate's AI assistant can check Part
+                  P requirements and BS 7671 regulations for any installation scenario, so you can
                   advise your customer confidently on site.
                 </p>
               </div>
@@ -605,7 +611,7 @@ export default function PartPBuildingRegulationsGuidePage() {
       faqHeading="Frequently Asked Questions About Part P Building Regulations"
       relatedPages={relatedPages}
       ctaHeading="Issue Part P Certificates On Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to issue EICs and Minor Works Certificates on site. AI board scanning, voice test entry, instant PDF — Part P documentation done before you leave. 7-day free trial."
     />
   );
 }

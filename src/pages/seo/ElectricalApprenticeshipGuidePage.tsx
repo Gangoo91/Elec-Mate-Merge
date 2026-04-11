@@ -521,7 +521,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="The Complete Apprentice Toolkit"
-          description="Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracker, portfolio builder, site diary, and BS 7671 run-through — all in one app. Join 430+ UK apprentices studying with Elec-Mate."
+          description="Flashcards, mock exams, EPA simulator, AM2 simulator, OJT tracker, portfolio builder, site diary, and BS 7671 run-through — all in one app. Join 1,000+ UK apprentices studying with Elec-Mate."
           icon={GraduationCap}
         />
       </>
@@ -554,7 +554,7 @@ export default function ElectricalApprenticeshipGuidePage() {
       faqHeading="Frequently Asked Questions About Electrical Apprenticeships"
       relatedPages={relatedPages}
       ctaHeading="Built for apprentices"
-      ctaSubheading="Join 430+ UK apprentices using Elec-Mate for flashcards, mock exams, EPA preparation, and OJT tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices using Elec-Mate for flashcards, mock exams, EPA preparation, and OJT tracking. 7-day free trial, cancel anytime."
     />
   );
 }

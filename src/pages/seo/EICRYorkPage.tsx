@@ -40,7 +40,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a detailed condition assessment using C1, C2, C3 and FI observation codes.",
   'York EICR costs are broadly in line with the Yorkshire average. Expect to pay between £110 and £210 for a two-bedroom flat and £170 to £300 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy begins and renew it every five years. City of York Council enforces these requirements and can fine non-compliant landlords up to £30,000 per breach.',
   'York has a uniquely high proportion of historic properties, including Medieval, Georgian, and Victorian buildings. Many are listed and require special consideration for both the EICR and any subsequent remedial work.',
@@ -61,12 +61,12 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in York properties?',
     answer:
-      'York\'s historic housing stock produces distinctive EICR findings. Absent RCD protection on socket circuits is the most common C2 finding, particularly in pre-1990s properties. Rubber-insulated and lead-sheathed cables in Georgian and Victorian properties are frequently identified as C1 or C2 observations. Inadequate earthing and bonding, poor circuit identification in properties with wiring from multiple eras, and overloaded circuits in converted historic buildings are also common. Medieval and early modern buildings in the city centre can present unusual challenges such as concealed timber-frame wiring routes.',
+      "York's historic housing stock produces distinctive EICR findings. Absent RCD protection on socket circuits is the most common C2 finding, particularly in pre-1990s properties. Rubber-insulated and lead-sheathed cables in Georgian and Victorian properties are frequently identified as C1 or C2 observations. Inadequate earthing and bonding, poor circuit identification in properties with wiring from multiple eras, and overloaded circuits in converted historic buildings are also common. Medieval and early modern buildings in the city centre can present unusual challenges such as concealed timber-frame wiring routes.",
   },
   {
     question: 'Do listed buildings in York need an EICR?',
     answer:
-      'Yes — the legal obligation to obtain an EICR applies regardless of listing status. However, remedial work in listed buildings in York may require listed building consent before work can proceed, particularly where the work affects historic fabric such as original plasterwork, timber panelling, or masonry. City of York Council\'s conservation team should be consulted before planning remedial work in Grade I or Grade II* listed properties. In practice, most work that can be completed without affecting historic fabric (such as replacing consumer units or adding RCD protection) does not require consent.',
+      "Yes — the legal obligation to obtain an EICR applies regardless of listing status. However, remedial work in listed buildings in York may require listed building consent before work can proceed, particularly where the work affects historic fabric such as original plasterwork, timber panelling, or masonry. City of York Council's conservation team should be consulted before planning remedial work in Grade I or Grade II* listed properties. In practice, most work that can be completed without affecting historic fabric (such as replacing consumer units or adding RCD protection) does not require consent.",
   },
   {
     question: 'How long does an EICR take in York?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -124,7 +125,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -171,8 +173,8 @@ const sections = [
       <>
         <p>
           York EICR prices are broadly in line with the Yorkshire average, though historic city
-          centre properties may attract higher rates due to their complexity. Below are typical
-          2026 prices:
+          centre properties may attract higher rates due to their complexity. Below are typical 2026
+          prices:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -186,17 +188,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £110 to £210. Georgian and Victorian
-                conversions in the city centre take longer to inspect than modern purpose-built
-                flats.
+                <strong>Two-bedroom flat</strong> — £110 to £210. Georgian and Victorian conversions
+                in the city centre take longer to inspect than modern purpose-built flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom house</strong> — £170 to £300. Victorian terraced properties
-                in areas like Bishopthorpe Road and Holgate are common in the private rented
-                sector.
+                in areas like Bishopthorpe Road and Holgate are common in the private rented sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -209,8 +209,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO</strong> — £320 to £600+. York's student HMO market is large. HMOs
-                have a broader inspection scope including fire alarm and emergency lighting systems.
+                <strong>HMO</strong> — £320 to £600+. York's student HMO market is large. HMOs have
+                a broader inspection scope including fire alarm and emergency lighting systems.
               </span>
             </li>
           </ul>
@@ -237,9 +237,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This applies to all new tenancies from 1 July 2020 and all
-                existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This applies to all new tenancies from 1 July 2020 and all existing
+                tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -253,23 +253,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tenant notification</strong> — a copy of the EICR must be provided to
-                the tenant within 28 days. New tenants must receive it before they move in.
+                <strong>Tenant notification</strong> — a copy of the EICR must be provided to the
+                tenant within 28 days. New tenants must receive it before they move in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days. Written confirmation must be provided to the tenant and to City of York
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days. Written confirmation must be provided to the tenant and to City of York
                 Council if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Penalties</strong> — City of York Council can issue civil penalties of
-                up to £30,000 per breach and may revoke HMO licences for persistent non-compliance.
+                <strong>Penalties</strong> — City of York Council can issue civil penalties of up to
+                £30,000 per breach and may revoke HMO licences for persistent non-compliance.
               </span>
             </li>
           </ul>
@@ -285,8 +285,8 @@ const sections = [
         <p>
           York is unique among UK cities for the density and quality of its historic built
           environment. The city contains a higher proportion of listed buildings per capita than
-          almost any other local authority in England. This creates distinctive challenges for
-          EICR inspectors:
+          almost any other local authority in England. This creates distinctive challenges for EICR
+          inspectors:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -295,17 +295,17 @@ const sections = [
               <span>
                 <strong>Rubber-insulated cables in period properties</strong> — Georgian and
                 Victorian properties in York's city centre frequently retain original or early
-                wiring. Rubber-insulated cables with braided sheathing degrade over time and
-                are typically classified as C1 or C2 depending on their condition.
+                wiring. Rubber-insulated cables with braided sheathing degrade over time and are
+                typically classified as C1 or C2 depending on their condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — BS 7671 requires additional protection
-                by RCD on socket circuits. Properties with pre-1990s
-                consumer units very commonly lack this protection, which is the most frequent
-                C2 finding across York's private rented sector.
+                <strong>Absent RCD protection</strong> — BS 7671 requires additional protection by
+                RCD on socket circuits. Properties with pre-1990s consumer units very commonly lack
+                this protection, which is the most frequent C2 finding across York's private rented
+                sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -330,8 +330,8 @@ const sections = [
         </div>
         <p>
           Electricians working in the city centre, Micklegate, Gillygate, The Mount, and Bootham
-          areas should allow extra time for EICRs and be familiar with the constraints of working
-          in listed and conservation area properties.
+          areas should allow extra time for EICRs and be familiar with the constraints of working in
+          listed and conservation area properties.
         </p>
       </>
     ),
@@ -352,33 +352,33 @@ const sections = [
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
-              Risk of injury exists. Immediate remedial action required. The inspector may
-              recommend disconnecting the dangerous circuit. In York properties this most
-              commonly relates to crumbling rubber-insulated cables or exposed live conductors.
+              Risk of injury exists. Immediate remedial action required. The inspector may recommend
+              disconnecting the dangerous circuit. In York properties this most commonly relates to
+              crumbling rubber-insulated cables or exposed live conductors.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
-              Could become dangerous. Urgent remedial action required. Absent RCD protection
-              is the most common C2 finding in York, followed by inadequate
-              earthing and deteriorated cable insulation.
+              Could become dangerous. Urgent remedial action required. Absent RCD protection is the
+              most common C2 finding in York, followed by inadequate earthing and deteriorated cable
+              insulation.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
-              Not immediately dangerous. C3 alone does not make the report Unsatisfactory.
-              Common in York properties where older accessories remain functional but would
-              benefit from replacement.
+              Not immediately dangerous. C3 alone does not make the report Unsatisfactory. Common in
+              York properties where older accessories remain functional but would benefit from
+              replacement.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
-              Particularly common in York's historic properties where cables run through inaccessible
-              voids, beneath stone floors, or within timber-frame structures that cannot be disturbed
-              without specialist consent.
+              Particularly common in York's historic properties where cables run through
+              inaccessible voids, beneath stone floors, or within timber-frame structures that
+              cannot be disturbed without specialist consent.
             </p>
           </div>
         </div>
@@ -441,16 +441,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property</strong> — at least every 5 years (legal
-                requirement under the 2020 Regulations).
+                <strong>Private rented property</strong> — at least every 5 years (legal requirement
+                under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Owner-occupied domestic</strong> — every 10 years recommended. York
-                properties over 25 years old (the vast majority of the city centre stock) should
-                be inspected every 5 years.
+                properties over 25 years old (the vast majority of the city centre stock) should be
+                inspected every 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -494,8 +494,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or
-                the 2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
+                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or the
+                2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
                 Experience with historic York properties is a significant advantage.
               </span>
             </li>
@@ -504,8 +504,8 @@ const sections = [
               <span>
                 <strong>Experience with listed buildings</strong> — for city centre properties,
                 choose an inspector who understands the constraints of working in listed and
-                conservation area buildings and can advise on remedial options that respect
-                historic fabric.
+                conservation area buildings and can advise on remedial options that respect historic
+                fabric.
               </span>
             </li>
           </ul>
@@ -535,9 +535,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete reports on your phone while still on site. AI board scanning reads
-                  the consumer unit, voice entry records test results, and instant PDF export
-                  delivers the report to landlords before you leave.
+                  to complete reports on your phone while still on site. AI board scanning reads the
+                  consumer unit, voice entry records test results, and instant PDF export delivers
+                  the report to landlords before you leave.
                 </p>
               </div>
             </div>
@@ -548,8 +548,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Instantly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When the EICR identifies C1 or C2 observations, quote the remedial work on
-                  the day using the{' '}
+                  When the EICR identifies C1 or C2 observations, quote the remedial work on the day
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -561,7 +561,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -598,7 +598,7 @@ export default function EICRYorkPage() {
       faqHeading="Frequently Asked Questions About EICRs in York"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

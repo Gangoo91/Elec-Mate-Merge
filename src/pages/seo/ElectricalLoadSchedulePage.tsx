@@ -367,7 +367,7 @@ export default function ElectricalLoadSchedulePage() {
           icon: Shield,
           title: 'BS 7671 Compliant',
           description:
-            "All diversity factors, load calculations, and documentation follow BS 7671:2018+A3:2024 and the IET On-Site Guide. Part of Elec-Mate's 50+ calculators.",
+            "All diversity factors, load calculations, and documentation follow BS 7671:2018+A3:2024 and the IET On-Site Guide. Part of Elec-Mate's 70+ calculators.",
         },
       ]}
       featuresHeading="Load Schedule Calculator Features"
@@ -455,7 +455,7 @@ export default function ElectricalLoadSchedulePage() {
         },
       ]}
       ctaHeading="Build load schedules in minutes"
-      ctaSubheading="Join UK electricians using Elec-Mate's 50+ calculators for on-site and design work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join UK electricians using Elec-Mate's 70+ calculators for on-site and design work. 7-day free trial, cancel anytime."
       toolPath="/tools/electrical-load-schedule"
     />
   );

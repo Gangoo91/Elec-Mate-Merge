@@ -497,7 +497,7 @@ export default function DataCablingCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to add data cabling to your skill set?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 8 structured modules covering copper and fibre cabling, structured design, termination, and testing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 8 structured modules covering copper and fibre cabling, structured design, termination, and testing. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/data-cabling"
     />

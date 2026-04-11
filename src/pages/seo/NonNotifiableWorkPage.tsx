@@ -674,7 +674,7 @@ export default function NonNotifiableWorkPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Professional certificates for every job — even non-notifiable"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification. Minor Works certificates in under 5 minutes. Auto-validated test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification. Minor Works certificates in under 5 minutes. Auto-validated test results. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Can a partial power loss be caused by a problem outside my installation?',
     answer:
-      'Yes. Partial power loss can be caused by a fault in the distribution network rather than in the internal installation. Common external causes include: loss of one phase on the distributor\'s LV network (affects all three-phase premises supplied from the affected phase); a blown cut-out fuse in the service head (the distributor\'s sealed fuse at the intake point — this requires the distributor to attend); a fault in the service cable between the street and the premises; and — on rural properties — a broken overhead line conductor. If testing at the consumer unit shows that the incoming supply voltage is incorrect (below 207V or above 253V, or missing on one phase), the fault is upstream of the installation and the distributor must be notified.',
+      "Yes. Partial power loss can be caused by a fault in the distribution network rather than in the internal installation. Common external causes include: loss of one phase on the distributor's LV network (affects all three-phase premises supplied from the affected phase); a blown cut-out fuse in the service head (the distributor's sealed fuse at the intake point — this requires the distributor to attend); a fault in the service cable between the street and the premises; and — on rural properties — a broken overhead line conductor. If testing at the consumer unit shows that the incoming supply voltage is incorrect (below 207V or above 253V, or missing on one phase), the fault is upstream of the installation and the distributor must be notified.",
   },
   {
     question: 'How do I check if the incoming supply is correct?',
@@ -84,7 +84,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-fault-finding-methodology',
     title: 'Electrical Fault Finding Methodology',
-    description: 'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',
+    description:
+      'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -141,30 +142,43 @@ const sections = [
           (which is almost always a supply issue or main switch fault), partial loss requires
           systematic diagnosis because several different faults can produce similar symptoms.
         </p>
-        <p>
-          The most common causes are:
-        </p>
+        <p>The most common causes are:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Tripped MCB</strong> — the most common cause. An overloaded or faulted circuit trips its MCB, cutting power to that circuit only.</span>
+              <span>
+                <strong>Tripped MCB</strong> — the most common cause. An overloaded or faulted
+                circuit trips its MCB, cutting power to that circuit only.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Tripped RCD</strong> — an RCD protecting a bank of circuits trips, cutting power to all circuits behind it.</span>
+              <span>
+                <strong>Tripped RCD</strong> — an RCD protecting a bank of circuits trips, cutting
+                power to all circuits behind it.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Failed MCB</strong> — an MCB that appears to be on but has failed internally (open circuit). Less common but easily missed.</span>
+              <span>
+                <strong>Failed MCB</strong> — an MCB that appears to be on but has failed internally
+                (open circuit). Less common but easily missed.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Open circuit neutral</strong> — a broken neutral conductor in the fixed wiring or supply. Dangerous in three-phase premises.</span>
+              <span>
+                <strong>Open circuit neutral</strong> — a broken neutral conductor in the fixed
+                wiring or supply. Dangerous in three-phase premises.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Missing phase</strong> — loss of one phase on a three-phase supply, causing all circuits on that phase to lose power.</span>
+              <span>
+                <strong>Missing phase</strong> — loss of one phase on a three-phase supply, causing
+                all circuits on that phase to lose power.
+              </span>
             </li>
           </ul>
         </div>
@@ -199,8 +213,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Diagnosis</strong> — measure line-to-neutral voltage at the main switch.
-                One phase will read zero. Confirm this is a supply issue, not an internal distribution
+                <strong>Diagnosis</strong> — measure line-to-neutral voltage at the main switch. One
+                phase will read zero. Confirm this is a supply issue, not an internal distribution
                 fault, by checking that the missing phase is absent at the incoming terminals of the
                 main switch (before the switch contacts).
               </span>
@@ -242,9 +256,9 @@ const sections = [
               <span>
                 <strong>Lost neutral in three-phase premises (PME)</strong> — on a TN-C-S (PME)
                 supply, the neutral and protective earth are combined in the supply cable. If the
-                supply neutral breaks, all PME earthed metalwork in the premises rises to a dangerous
-                voltage. This is a life-safety emergency — evacuate the premises and contact the
-                distributor immediately. Do not touch any metalwork.
+                supply neutral breaks, all PME earthed metalwork in the premises rises to a
+                dangerous voltage. This is a life-safety emergency — evacuate the premises and
+                contact the distributor immediately. Do not touch any metalwork.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -302,10 +316,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Action</strong> — replace the MCB with a device of the same type and
-                rating. Carry out safe isolation of the affected circuit before removing the
-                old MCB. Investigate why the MCB may have failed to determine whether there is
-                an underlying circuit fault.
+                <strong>Action</strong> — replace the MCB with a device of the same type and rating.
+                Carry out safe isolation of the affected circuit before removing the old MCB.
+                Investigate why the MCB may have failed to determine whether there is an underlying
+                circuit fault.
               </span>
             </li>
           </ul>
@@ -319,20 +333,24 @@ const sections = [
     content: (
       <>
         <p>
-          A multimeter is essential for diagnosing partial power loss. Here is a systematic
-          sequence of measurements:
+          A multimeter is essential for diagnosing partial power loss. Here is a systematic sequence
+          of measurements:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
                 <strong>Check the incoming supply</strong> — at the main switch, measure L to N and
                 L to E. Should be 230V. If missing, contact the distributor.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Check each MCB load terminal</strong> — with all MCBs on, measure L to N at
                 the load terminal of each MCB. Should be 230V. Zero on load terminal with 230V on
@@ -340,15 +358,20 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
-                <strong>Check at the affected accessory</strong> — measure L to N, L to E, and N
-                to E at a dead socket or light switch. Voltage present on L to E but not L to N
-                indicates an open neutral. No voltage on L to E indicates an open line or failed MCB.
+                <strong>Check at the affected accessory</strong> — measure L to N, L to E, and N to
+                E at a dead socket or light switch. Voltage present on L to E but not L to N
+                indicates an open neutral. No voltage on L to E indicates an open line or failed
+                MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
               <span>
                 <strong>Carry out safe isolation before hands-on work</strong> — always isolate the
                 circuit, verify dead with an approved voltage indicator, lock off, and prove safe
@@ -374,24 +397,47 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
-              <span>Identify the circuit to be isolated and confirm it is the correct circuit.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
+              <span>
+                Identify the circuit to be isolated and confirm it is the correct circuit.
+              </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
-              <span>Switch off the MCB or disconnect the fuse. Apply a lockout device and warning sign.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
+              <span>
+                Switch off the MCB or disconnect the fuse. Apply a lockout device and warning sign.
+              </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
-              <span>Prove the voltage indicator is working on a known live source before and after testing.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
+              <span>
+                Prove the voltage indicator is working on a known live source before and after
+                testing.
+              </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
-              <span>Test all conductors (L, N, E) at the point of work with the approved voltage indicator. All should read zero.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
+              <span>
+                Test all conductors (L, N, E) at the point of work with the approved voltage
+                indicator. All should read zero.
+              </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">5</span>
-              <span>Confirm safe and begin work. Maintain the lockout throughout — do not rely on verbal confirmation from others that the circuit remains isolated.</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                5
+              </span>
+              <span>
+                Confirm safe and begin work. Maintain the lockout throughout — do not rely on verbal
+                confirmation from others that the circuit remains isolated.
+              </span>
             </li>
           </ol>
         </div>
@@ -415,10 +461,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Start at the Consumer Unit</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Ninety per cent of partial power loss calls are resolved at the consumer unit —
-                  a tripped MCB or RCD. Check every device before picking up a multimeter. Look
-                  for any MCB in an intermediate position, any RCD switched down, and any fuse
-                  carrier out of its holder.
+                  Ninety per cent of partial power loss calls are resolved at the consumer unit — a
+                  tripped MCB or RCD. Check every device before picking up a multimeter. Look for
+                  any MCB in an intermediate position, any RCD switched down, and any fuse carrier
+                  out of its holder.
                 </p>
               </div>
             </div>
@@ -431,9 +477,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Before touching anything, ask the occupant which areas have lost power and which
                   still have power. This immediately tells you whether the fault pattern is
-                  consistent with a single MCB, an RCD bank, a missing phase, or something else.
-                  On a three-phase premises, if power loss is patchy across the building, think
-                  phase loss. If it is a single room or area, think local MCB or RCD.
+                  consistent with a single MCB, an RCD bank, a missing phase, or something else. On
+                  a three-phase premises, if power loss is patchy across the building, think phase
+                  loss. If it is a single room or area, think local MCB or RCD.
                 </p>
               </div>
             </div>
@@ -473,7 +519,7 @@ export default function PartialPowerLossPage() {
       faqHeading="Frequently Asked Questions About Partial Power Loss"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Findings and Issue Certificates on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and EICR app help you record findings, generate reports, and issue certificates on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

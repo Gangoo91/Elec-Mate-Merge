@@ -537,7 +537,7 @@ export default function FunctionalTestingGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never miss a functional test check"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing, certification, and compliance. Functional test checklists built into every certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing, certification, and compliance. Functional test checklists built into every certificate. 7-day free trial, cancel anytime."
     />
   );
 }

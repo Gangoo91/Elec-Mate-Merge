@@ -614,7 +614,7 @@ export default function SiteDiaryGuidePage() {
       faqHeading="Frequently Asked Questions About Site Diaries"
       relatedPages={relatedPages}
       ctaHeading="Build Your Site Diary Habit with Elec-Mate"
-      ctaSubheading="Join 430+ UK apprentices using Elec-Mate's site diary with structured prompts, photo attachments, portfolio linking, and OJT integration. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices using Elec-Mate's site diary with structured prompts, photo attachments, portfolio linking, and OJT integration. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -52,7 +52,8 @@ const faqs = [
       'CertsApp includes some electrical calculators alongside its certification features. Elec-Mate includes over 70 specialist calculators covering cable sizing (BS 7671 Appendix 4 method), voltage drop, maximum demand, diversity, conduit and trunking fill, earth fault loop impedance (Zs), prospective fault current, disconnection times, cable derating for grouping and ambient temperature, adiabatic equation for protective conductor sizing, and many more. For electricians who perform BS 7671 calculations regularly, Elec-Mate offers a significantly more comprehensive calculator suite.',
   },
   {
-    question: 'Does Elec-Mate work offline, and can I use it on site without an internet connection?',
+    question:
+      'Does Elec-Mate work offline, and can I use it on site without an internet connection?',
     answer:
       'Yes. Elec-Mate is a Progressive Web App (PWA) that can be installed on your phone or tablet and used offline. Certificates auto-save locally every 10 seconds, so you never lose work if you lose signal. When connectivity is restored, changes sync automatically to the cloud. Calculators work entirely offline as all calculation logic runs on the device. Some AI features require an internet connection, but all certificate and calculator functionality is available offline. This is particularly useful on construction sites or in rural areas where signal can be unreliable. CertsApp also supports offline use, so this is a feature both apps share.',
   },
@@ -61,7 +62,7 @@ const faqs = [
 const features = [
   {
     icon: FileCheck2,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. All with digital signatures, auto-save, and professional PDF export.',
   },
@@ -103,7 +104,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description:
-    'All-in-one platform for UK electricians: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, and business management.',
+    'All-in-one platform for UK electricians: 8 certificates, 70+ calculators, 8 Elec-AI tools, training courses, and business management.',
   url: 'https://elec-mate.com/compare/elec-mate-vs-certsapp',
   offers: {
     '@type': 'Offer',
@@ -231,15 +232,18 @@ export default function ElecMateVsCertsAppPage() {
               capabilities — all in a single mobile-first app.
             </p>
             <p>
-              The platform includes 8 certificate types (EICR,{' '}
+              The platform includes 16 certificate types (EICR,{' '}
               <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">EV Charger Installation</SEOInternalLink>, Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT
-              Testing), over 70 specialist electrical calculators referencing BS 7671:2018+A3:2024,
-              8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation Guide, Commissioning
-              Specialist, Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup),
-              full training courses (18th Edition, Level 2/3 Electrical Installation, AM2
-              preparation, EPA simulator), and business management features (job scheduling,
-              quoting, invoicing, Stripe payment collection, Xero accounting integration).
+              <SEOInternalLink href="/tools/ev-charger-certificate">
+                EV Charger Installation
+              </SEOInternalLink>
+              , Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing), over 70
+              specialist electrical calculators referencing BS 7671:2018+A3:2024, 8 Elec-AI tools
+              (Circuit Designer, Cost Engineer, Installation Guide, Commissioning Specialist,
+              Maintenance Agent, Health & Safety, Fault Finder, and Regulation Lookup), full
+              training courses (18th Edition, Level 2/3 Electrical Installation, AM2 preparation,
+              EPA simulator), and business management features (job scheduling, quoting, invoicing,
+              Stripe payment collection, Xero accounting integration).
             </p>
             <p>
               Elec-Mate works on iOS, Android, and desktop via a Progressive Web App (PWA). It
@@ -272,7 +276,7 @@ export default function ElecMateVsCertsAppPage() {
                 digital signatures and PDF export functionality.
               </p>
               <p>
-                Elec-Mate includes 8 certificate types in total. In addition to the standard EICR,
+                Elec-Mate includes 16 certificate types in total. In addition to the standard EICR,
                 EIC, and Minor Works, it covers EV Charger Installation, Solar PV, Fire Alarm
                 Commissioning, Emergency Lighting, and PAT Testing. These specialist certificate
                 types are becoming increasingly important as the electrical industry evolves — EV
@@ -559,10 +563,10 @@ export default function ElecMateVsCertsAppPage() {
               </p>
               <p>
                 Elec-Mate uses a flat monthly subscription starting from £5.99 per month. All
-                features are included: all 8 certificate types (unlimited), all 70 calculators, all
-                8 Elec-AI tools, all training courses, and all business management features. There
-                are no per-certificate charges, no credit limits, and no feature restrictions. Every
-                plan comes with a 7-day free trial that includes full access to everything.
+                features are included: all 16 certificate types (unlimited), all 70+ calculators,
+                all 8 Elec-AI tools, all training courses, and all business management features.
+                There are no per-certificate charges, no credit limits, and no feature restrictions.
+                Every plan comes with a 7-day free trial that includes full access to everything.
               </p>
               <p>
                 The break-even point is typically around 3 to 5 certificates per month, depending on
@@ -703,7 +707,7 @@ export default function ElecMateVsCertsAppPage() {
               market.
             </p>
             <p>
-              Elec-Mate offers substantially more breadth and depth. With 8 certificate types, 70
+              Elec-Mate offers substantially more breadth and depth. With 16 certificate types, 70
               calculators, 8 Elec-AI specialist tools, complete training courses, and integrated
               business management, it is designed to be the only app a UK electrician needs. The
               flat monthly pricing with unlimited usage makes it more economical for anyone

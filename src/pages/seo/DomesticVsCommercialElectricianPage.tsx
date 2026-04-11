@@ -686,7 +686,7 @@ export default function DomesticVsCommercialElectricianPage() {
       faqHeading="Frequently Asked Questions About Domestic vs Commercial Electricians"
       relatedPages={relatedPages}
       ctaHeading="Tools for Every Electrician"
-      ctaSubheading="Whether you work in domestic, commercial, or both sectors — Elec-Mate gives you digital certificates, AI tools, quoting, invoicing, and training courses. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Whether you work in domestic, commercial, or both sectors — Elec-Mate gives you digital certificates, AI tools, quoting, invoicing, and training courses. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

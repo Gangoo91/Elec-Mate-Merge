@@ -166,10 +166,10 @@ const sections = [
           <strong>Regulatory changes:</strong>{' '}
           <SEOInternalLink href="/training/eighteenth-edition-course">BS 7671</SEOInternalLink> is
           amended regularly. Amendment 3 was issued in July 2024, adding requirements for
-          bidirectional and unidirectional devices (Section 530, A3:2024 addition). Amendment 4 is expected
-          in 2026. Each amendment changes how installations must be designed, installed, and tested.
-          If you are not aware of the changes, you risk non-compliant work — which can fail scheme
-          inspections, invalidate certificates, and create liability issues.
+          bidirectional and unidirectional devices (Section 530, A3:2024 addition). Amendment 4 is
+          expected in 2026. Each amendment changes how installations must be designed, installed,
+          and tested. If you are not aware of the changes, you risk non-compliant work — which can
+          fail scheme inspections, invalidate certificates, and create liability issues.
         </p>
         <p>
           <strong>New technologies:</strong> The growth of EV charging, solar PV, battery storage,
@@ -520,7 +520,7 @@ export default function CPDForElectriciansPage() {
       faqHeading="Frequently Asked Questions About CPD for Electricians"
       relatedPages={relatedPages}
       ctaHeading="CPD tracked automatically"
-      ctaSubheading="Join 430+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying with Elec-Mate. 46+ courses, automatic CPD tracking, and scheme-ready reports. 7-day free trial, cancel anytime."
     />
   );
 }

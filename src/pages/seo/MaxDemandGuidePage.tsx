@@ -588,7 +588,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Max demand is just one of over 50 calculators on Elec-Mate. Others include{' '}
+                  Max demand is just one of over 70+ calculators on Elec-Mate. Others include{' '}
                   <SEOInternalLink href="/tools/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
@@ -615,7 +615,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="Try all 50+ calculators free for 7 days"
+          title="Try all 70+ calculators free for 7 days"
           description="Max demand, cable sizing, voltage drop, Zs, PFC, adiabatic, conduit fill, trunking fill, power factor, diversity factor, three-phase power — all in one app, designed for UK electricians working to BS 7671."
           icon={Calculator}
         />
@@ -653,7 +653,7 @@ export default function MaxDemandGuidePage() {
       faqHeading="Frequently Asked Questions About Max Demand Calculations"
       relatedPages={relatedPages}
       ctaHeading="Calculate Max Demand on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 50+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 70+ calculators including max demand, cable sizing, voltage drop, Zs, PFC, and more. 7-day free trial, cancel anytime."
     />
   );
 }

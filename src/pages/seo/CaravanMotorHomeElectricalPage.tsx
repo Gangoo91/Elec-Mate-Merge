@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'Is a caravan electric hookup connection safe to use?',
     answer:
-      'Yes, provided the hookup cable is in good condition, the site supply is properly installed to BS 7671 Section 708, and the caravan\'s mains socket inlet is in good condition. Before connecting, visually inspect the EHU cable for cuts, damaged insulation, or a damaged plug. Ensure the cable is fully uncoiled to prevent overheating. The RCD at the caravan park pitch supply unit provides earth fault protection, but the caravan may also have an internal RCD. If the RCD trips on connection, disconnect immediately and investigate before reconnecting.',
+      "Yes, provided the hookup cable is in good condition, the site supply is properly installed to BS 7671 Section 708, and the caravan's mains socket inlet is in good condition. Before connecting, visually inspect the EHU cable for cuts, damaged insulation, or a damaged plug. Ensure the cable is fully uncoiled to prevent overheating. The RCD at the caravan park pitch supply unit provides earth fault protection, but the caravan may also have an internal RCD. If the RCD trips on connection, disconnect immediately and investigate before reconnecting.",
   },
   {
     question: 'What is a galvanic isolator and do I need one?',
@@ -87,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/caravan-park-electrical',
     title: 'Caravan Park Electrical (BS 7671 Section 708)',
-    description: 'Site-side requirements for caravan park hookup installations — CEE connectors, RCDs, earthing.',
+    description:
+      'Site-side requirements for caravan park hookup installations — CEE connectors, RCDs, earthing.',
     icon: Plug,
     category: 'Guide',
   },
   {
     href: '/guides/battery-storage-guide',
     title: 'Battery Storage Systems Guide',
-    description: 'Leisure and domestic battery storage — technology, sizing, and installation guidance.',
+    description:
+      'Leisure and domestic battery storage — technology, sizing, and installation guidance.',
     icon: Battery,
     category: 'Guide',
   },
   {
     href: '/guides/solar-panel-installation',
     title: 'Solar Panel Installation Guide',
-    description: 'Solar PV installation — from panels and inverters to grid connection and certification.',
+    description:
+      'Solar PV installation — from panels and inverters to grid connection and certification.',
     icon: Sun,
     category: 'Guide',
   },
@@ -125,11 +128,11 @@ const sections = [
     content: (
       <>
         <p>
-          Modern caravans and motorhomes contain sophisticated electrical systems that combine
-          12V DC and 230V AC technology to provide comfort and convenience whether connected to
-          mains shore power or operating off-grid. Understanding how these systems work together
-          is essential for safe and effective use — and for the growing number of electricians
-          who work on leisure vehicle electrical systems.
+          Modern caravans and motorhomes contain sophisticated electrical systems that combine 12V
+          DC and 230V AC technology to provide comfort and convenience whether connected to mains
+          shore power or operating off-grid. Understanding how these systems work together is
+          essential for safe and effective use — and for the growing number of electricians who work
+          on leisure vehicle electrical systems.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -137,43 +140,40 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>12V DC system</strong> — the backbone of the leisure vehicle electrical
-                system. Powered from the leisure battery, the 12V system supplies internal
-                lighting (typically LED throughout modern vehicles), the water pump, the
-                heating system controls, the fridge (12V compressor or absorption cooling),
-                ventilation fans, and all 12V sockets and USB charging points.
+                system. Powered from the leisure battery, the 12V system supplies internal lighting
+                (typically LED throughout modern vehicles), the water pump, the heating system
+                controls, the fridge (12V compressor or absorption cooling), ventilation fans, and
+                all 12V sockets and USB charging points.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>230V AC system</strong> — provided when connected to shore power (EHU)
-                or when using an inverter. The 230V system supplies mains socket outlets for
-                appliances such as kettles, microwaves, hairdryers, and laptop chargers. In
-                motorhomes, the 230V system also typically supplies the mains charger
-                (converter) that charges the leisure battery from the EHU.
+                <strong>230V AC system</strong> — provided when connected to shore power (EHU) or
+                when using an inverter. The 230V system supplies mains socket outlets for appliances
+                such as kettles, microwaves, hairdryers, and laptop chargers. In motorhomes, the
+                230V system also typically supplies the mains charger (converter) that charges the
+                leisure battery from the EHU.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Charging sources</strong> — the leisure battery can be charged from
-                multiple sources: the vehicle's alternator via a battery-to-battery (B2B) charger
-                while driving; a solar panel via a solar charge controller; from the EHU via the
-                mains converter/charger; or from a portable generator via a mains charger.
-                Modern energy management systems (EMS) coordinate these sources automatically.
+                <strong>Charging sources</strong> — the leisure battery can be charged from multiple
+                sources: the vehicle's alternator via a battery-to-battery (B2B) charger while
+                driving; a solar panel via a solar charge controller; from the EHU via the mains
+                converter/charger; or from a portable generator via a mains charger. Modern energy
+                management systems (EMS) coordinate these sources automatically.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The internal electrical installation of leisure vehicles is not covered by BS 7671.
-          It is governed by BS EN 1648-1 (touring caravans) and BS EN 1648-2 (motorhomes),
-          which specify the requirements for 12V DC and 230V AC systems within the vehicle.
-          The shore power installation at the caravan park is covered by{' '}
-          <SEOInternalLink href="/caravan-park-electrical">
-            BS 7671 Section 708
-          </SEOInternalLink>
-          .
+          The internal electrical installation of leisure vehicles is not covered by BS 7671. It is
+          governed by BS EN 1648-1 (touring caravans) and BS EN 1648-2 (motorhomes), which specify
+          the requirements for 12V DC and 230V AC systems within the vehicle. The shore power
+          installation at the caravan park is covered by{' '}
+          <SEOInternalLink href="/caravan-park-electrical">BS 7671 Section 708</SEOInternalLink>.
         </p>
       </>
     ),
@@ -184,9 +184,9 @@ const sections = [
     content: (
       <>
         <p>
-          The leisure battery is the heart of the 12V electrical system. Choosing the right
-          battery type, sizing it correctly for your power requirements, and maintaining it
-          properly will determine how many hours of off-grid power you have available.
+          The leisure battery is the heart of the 12V electrical system. Choosing the right battery
+          type, sizing it correctly for your power requirements, and maintaining it properly will
+          determine how many hours of off-grid power you have available.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,42 +194,41 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lead-acid (flooded)</strong> — the traditional leisure battery. Relatively
-                low cost, widely available, and recyclable. Should not be discharged below 50%
-                of capacity (to around 12.0 V under load). Requires periodic topping-up with
-                distilled water if the cell caps are accessible. Produces hydrogen gas during
-                charging — must be used in a ventilated locker.
+                low cost, widely available, and recyclable. Should not be discharged below 50% of
+                capacity (to around 12.0 V under load). Requires periodic topping-up with distilled
+                water if the cell caps are accessible. Produces hydrogen gas during charging — must
+                be used in a ventilated locker.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AGM (Absorbent Glass Mat)</strong> — a sealed lead-acid variant where
-                the electrolyte is held in glass fibre mats rather than free liquid. Tolerates
-                deeper discharge (down to 50% recommended, 80% maximum), handles vibration
-                better, requires no maintenance, and can be mounted in any orientation. Higher
-                cost than flooded lead-acid but recommended for motorhomes due to vibration
-                tolerance.
+                <strong>AGM (Absorbent Glass Mat)</strong> — a sealed lead-acid variant where the
+                electrolyte is held in glass fibre mats rather than free liquid. Tolerates deeper
+                discharge (down to 50% recommended, 80% maximum), handles vibration better, requires
+                no maintenance, and can be mounted in any orientation. Higher cost than flooded
+                lead-acid but recommended for motorhomes due to vibration tolerance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lithium iron phosphate (LiFePO4)</strong> — the premium option.
-                Can be discharged to 80% depth of discharge (compared to 50% for lead-acid)
-                giving effectively 1.6× the usable capacity from the same nominal Ah rating.
-                Significantly lighter, charges faster, and lasts 3–5× as many cycles as
-                lead-acid. Requires a lithium-compatible charger and BMS (battery management
-                system) and cannot be charged below 0°C without a self-heating version.
+                <strong>Lithium iron phosphate (LiFePO4)</strong> — the premium option. Can be
+                discharged to 80% depth of discharge (compared to 50% for lead-acid) giving
+                effectively 1.6× the usable capacity from the same nominal Ah rating. Significantly
+                lighter, charges faster, and lasts 3–5× as many cycles as lead-acid. Requires a
+                lithium-compatible charger and BMS (battery management system) and cannot be charged
+                below 0°C without a self-heating version.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery sizing</strong> — calculate daily 12V consumption (sum of each
-                load in amps × hours of use). Double this figure for lead-acid (to stay above
-                50% depth of discharge) or divide by 0.8 for lithium. The result is the minimum
-                battery capacity in amp-hours required. Add margin for cloudy solar days or
-                reduced alternator charging time.
+                <strong>Battery sizing</strong> — calculate daily 12V consumption (sum of each load
+                in amps × hours of use). Double this figure for lead-acid (to stay above 50% depth
+                of discharge) or divide by 0.8 for lithium. The result is the minimum battery
+                capacity in amp-hours required. Add margin for cloudy solar days or reduced
+                alternator charging time.
               </span>
             </li>
           </ul>
@@ -243,43 +242,43 @@ const sections = [
     content: (
       <>
         <p>
-          Solar panels are now almost universal on touring motorhomes and increasingly fitted
-          to static caravans. A well-designed solar system provides free battery charging and
-          extends the time between EHU hookups.
+          Solar panels are now almost universal on touring motorhomes and increasingly fitted to
+          static caravans. A well-designed solar system provides free battery charging and extends
+          the time between EHU hookups.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Panel types</strong> — monocrystalline panels offer the highest
-                efficiency (typically 20–23%) and are best for roof installations where space
-                is limited. Flexible (thin-film) panels conform to curved roofs but are less
-                efficient (10–15%) and have shorter service lives. Semi-flexible panels
-                (monocrystalline cells on a thin backing) offer a compromise.
+                <strong>Panel types</strong> — monocrystalline panels offer the highest efficiency
+                (typically 20–23%) and are best for roof installations where space is limited.
+                Flexible (thin-film) panels conform to curved roofs but are less efficient (10–15%)
+                and have shorter service lives. Semi-flexible panels (monocrystalline cells on a
+                thin backing) offer a compromise.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MPPT vs. PWM controllers</strong> — an MPPT (Maximum Power Point
-                Tracking) solar charge controller extracts maximum power from the panels by
-                electronically optimising the operating point. A PWM controller applies simple
-                pulse-width modulation charging. MPPT controllers are 10–30% more efficient
-                and are recommended for any system with panels rated above 80–100W. MPPT
-                controllers also allow panels with a higher open-circuit voltage than the
-                battery voltage, giving more flexibility in panel selection.
+                <strong>MPPT vs. PWM controllers</strong> — an MPPT (Maximum Power Point Tracking)
+                solar charge controller extracts maximum power from the panels by electronically
+                optimising the operating point. A PWM controller applies simple pulse-width
+                modulation charging. MPPT controllers are 10–30% more efficient and are recommended
+                for any system with panels rated above 80–100W. MPPT controllers also allow panels
+                with a higher open-circuit voltage than the battery voltage, giving more flexibility
+                in panel selection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wiring and cable sizing</strong> — solar panel wiring must be rated
-                for the short-circuit current of the panel array (typically 1.25× the rated
-                short-circuit current). Minimise cable length and use appropriately sized
-                cable to limit voltage drop between the panel and the controller. All
-                connections must be weatherproof and suitable for outdoor UV exposure.
-                MC4 connectors are the industry standard for solar panel wiring.
+                <strong>Wiring and cable sizing</strong> — solar panel wiring must be rated for the
+                short-circuit current of the panel array (typically 1.25× the rated short-circuit
+                current). Minimise cable length and use appropriately sized cable to limit voltage
+                drop between the panel and the controller. All connections must be weatherproof and
+                suitable for outdoor UV exposure. MC4 connectors are the industry standard for solar
+                panel wiring.
               </span>
             </li>
           </ul>
@@ -293,41 +292,41 @@ const sections = [
     content: (
       <>
         <p>
-          Shore power (electric hookup, EHU) provides 230V AC mains electricity to the caravan
-          or motorhome from the site supply. Understanding how the hookup system works and how
-          to use it safely is essential for all leisure vehicle owners.
+          Shore power (electric hookup, EHU) provides 230V AC mains electricity to the caravan or
+          motorhome from the site supply. Understanding how the hookup system works and how to use
+          it safely is essential for all leisure vehicle owners.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IEC 60309 (CEE) connectors</strong> — shore power uses the blue 16A
-                IEC 60309 connector (the same as at caravan parks and marinas). The blue colour
-                indicates 230V single-phase. The earth pin engages first when connecting and
-                last when disconnecting. EHU cables are typically 10–25 m long and rated at
-                16A. The cable must not be used above its rated current.
+                <strong>IEC 60309 (CEE) connectors</strong> — shore power uses the blue 16A IEC
+                60309 connector (the same as at caravan parks and marinas). The blue colour
+                indicates 230V single-phase. The earth pin engages first when connecting and last
+                when disconnecting. EHU cables are typically 10–25 m long and rated at 16A. The
+                cable must not be used above its rated current.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power limitation</strong> — most UK caravan park pitches provide a
-                16A supply (maximum 3.68 kW). Be aware that running multiple high-load appliances
-                simultaneously (kettle, microwave, fan heater, battery charger) can exceed
-                this limit and trip the pitch RCD or MCB. A caravan energy management system
-                (EMS) automatically disconnects lower-priority loads to prevent overload.
+                <strong>Power limitation</strong> — most UK caravan park pitches provide a 16A
+                supply (maximum 3.68 kW). Be aware that running multiple high-load appliances
+                simultaneously (kettle, microwave, fan heater, battery charger) can exceed this
+                limit and trip the pitch RCD or MCB. A caravan energy management system (EMS)
+                automatically disconnects lower-priority loads to prevent overload.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reverse polarity</strong> — some older or poorly maintained sites have
-                reversed polarity on the pitch supply (live and neutral conductors swapped).
-                This is a safety hazard as it means switches in the appliance interrupt the
-                neutral rather than the live. A simple polarity tester plugged in after hookup
-                will detect this immediately. Do not use the supply if reverse polarity is
-                indicated — inform the site office.
+                reversed polarity on the pitch supply (live and neutral conductors swapped). This is
+                a safety hazard as it means switches in the appliance interrupt the neutral rather
+                than the live. A simple polarity tester plugged in after hookup will detect this
+                immediately. Do not use the supply if reverse polarity is indicated — inform the
+                site office.
               </span>
             </li>
           </ul>
@@ -341,9 +340,9 @@ const sections = [
     content: (
       <>
         <p>
-          An inverter converts 12V DC battery power to 230V AC, allowing mains appliances to
-          be used when not connected to shore power. Choosing the right type and size of inverter
-          is critical for reliable performance.
+          An inverter converts 12V DC battery power to 230V AC, allowing mains appliances to be used
+          when not connected to shore power. Choosing the right type and size of inverter is
+          critical for reliable performance.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -351,31 +350,31 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pure sine wave vs. modified sine wave</strong> — pure sine wave (PSW)
-                inverters produce a smooth 230V AC output identical to the mains supply.
-                They are compatible with all appliances. Modified sine wave (MSW) inverters
-                produce a stepped approximation that works with simple resistive loads but
-                can damage or fail to operate sensitive electronics, variable-speed motors,
-                and appliances with switched-mode power supplies.
+                inverters produce a smooth 230V AC output identical to the mains supply. They are
+                compatible with all appliances. Modified sine wave (MSW) inverters produce a stepped
+                approximation that works with simple resistive loads but can damage or fail to
+                operate sensitive electronics, variable-speed motors, and appliances with
+                switched-mode power supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inverter sizing</strong> — the inverter must be rated to handle the
-                peak power demand of all appliances that may be run simultaneously. Inductive
-                loads (motors, compressors) have a startup surge of 2–3× their running power.
-                As a rule, size the inverter at 1.5–2× the expected running load. Allow for
-                inverter efficiency (typically 85–90%) when calculating battery drain.
+                <strong>Inverter sizing</strong> — the inverter must be rated to handle the peak
+                power demand of all appliances that may be run simultaneously. Inductive loads
+                (motors, compressors) have a startup surge of 2–3× their running power. As a rule,
+                size the inverter at 1.5–2× the expected running load. Allow for inverter efficiency
+                (typically 85–90%) when calculating battery drain.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inverter-charger (combi units)</strong> — a combined inverter-charger
-                automatically switches from inverter mode (off-grid) to charger mode (on EHU)
-                when shore power is connected. This simplifies the system and provides
-                uninterruptible supply transition. Most modern motorhome installations use
-                an inverter-charger as the central power management device.
+                automatically switches from inverter mode (off-grid) to charger mode (on EHU) when
+                shore power is connected. This simplifies the system and provides uninterruptible
+                supply transition. Most modern motorhome installations use an inverter-charger as
+                the central power management device.
               </span>
             </li>
           </ul>
@@ -390,41 +389,40 @@ const sections = [
       <>
         <p>
           The 12V DC system is the most complex and varied part of a leisure vehicle's electrical
-          installation. Poor 12V wiring — undersized cables, poor connections, inadequate fusing
-          — is a common cause of fires in caravans and motorhomes.
+          installation. Poor 12V wiring — undersized cables, poor connections, inadequate fusing —
+          is a common cause of fires in caravans and motorhomes.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable sizing</strong> — 12V DC systems operate at low voltage, which
-                means current is high for a given power load. A 60W load at 12V draws 5A;
-                the same load at 230V draws only 0.26A. All 12V cables must be sized for the
-                maximum current they will carry, accounting for volt drop (typically limited
-                to 0.5V or 4% of 12V in leisure vehicle standards) and for continuous rather
-                than intermittent duty.
+                <strong>Cable sizing</strong> — 12V DC systems operate at low voltage, which means
+                current is high for a given power load. A 60W load at 12V draws 5A; the same load at
+                230V draws only 0.26A. All 12V cables must be sized for the maximum current they
+                will carry, accounting for volt drop (typically limited to 0.5V or 4% of 12V in
+                leisure vehicle standards) and for continuous rather than intermittent duty.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fusing and circuit protection</strong> — every 12V circuit must be
-                individually fused or protected by a circuit breaker as close to the battery
-                as practicable. The fuse or circuit breaker rating must not exceed the current
-                rating of the cable it protects. A fuse sized to protect the load rather than
-                the cable is a common and dangerous mistake in DIY 12V installations.
+                individually fused or protected by a circuit breaker as close to the battery as
+                practicable. The fuse or circuit breaker rating must not exceed the current rating
+                of the cable it protects. A fuse sized to protect the load rather than the cable is
+                a common and dangerous mistake in DIY 12V installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery-to-battery (B2B) chargers</strong> — a B2B charger (also called
-                a DC-DC charger) efficiently charges the leisure battery from the vehicle's
-                alternator while driving. Unlike a simple split-charge relay, a B2B charger
-                provides a controlled multi-stage charge profile suitable for AGM and lithium
-                batteries without risk of damaging the alternator or starter battery. Essential
-                for lithium battery systems.
+                <strong>Battery-to-battery (B2B) chargers</strong> — a B2B charger (also called a
+                DC-DC charger) efficiently charges the leisure battery from the vehicle's alternator
+                while driving. Unlike a simple split-charge relay, a B2B charger provides a
+                controlled multi-stage charge profile suitable for AGM and lithium batteries without
+                risk of damaging the alternator or starter battery. Essential for lithium battery
+                systems.
               </span>
             </li>
           </ul>
@@ -438,48 +436,47 @@ const sections = [
     content: (
       <>
         <p>
-          Shore power provides a convenient mains supply but introduces electrical hazards that
-          must be managed correctly. These are the most important safety practices for using
-          shore power at caravan parks, campsites, and marinas.
+          Shore power provides a convenient mains supply but introduces electrical hazards that must
+          be managed correctly. These are the most important safety practices for using shore power
+          at caravan parks, campsites, and marinas.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inspect the EHU cable before use</strong> — check the entire cable
-                for cuts, abrasions, or damage to the outer sheath. Check the plug and socket
-                faces for damage, discolouration from heat, or bent pins. A damaged EHU cable
-                must be taken out of service. Do not repair EHU cable insulation with tape —
-                replace the cable.
+                <strong>Inspect the EHU cable before use</strong> — check the entire cable for cuts,
+                abrasions, or damage to the outer sheath. Check the plug and socket faces for
+                damage, discolouration from heat, or bent pins. A damaged EHU cable must be taken
+                out of service. Do not repair EHU cable insulation with tape — replace the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check for reverse polarity</strong> — use a simple plug-in polarity
-                tester after every hookup connection. Reverse polarity is a fault condition,
-                not a minor inconvenience. It causes switches to interrupt the neutral rather
-                than the live, leaving appliance parts live when they appear switched off.
-                Do not use the supply if reverse polarity is detected.
+                <strong>Check for reverse polarity</strong> — use a simple plug-in polarity tester
+                after every hookup connection. Reverse polarity is a fault condition, not a minor
+                inconvenience. It causes switches to interrupt the neutral rather than the live,
+                leaving appliance parts live when they appear switched off. Do not use the supply if
+                reverse polarity is detected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Do not exceed the pitch current rating</strong> — most pitches are
-                rated at 16A (3.68 kW). Running a fan heater (2 kW), a kettle (2 kW), and a
-                microwave (1 kW) simultaneously will trip the pitch supply. Be aware of the
-                total connected load and manage it within the pitch rating.
+                <strong>Do not exceed the pitch current rating</strong> — most pitches are rated at
+                16A (3.68 kW). Running a fan heater (2 kW), a kettle (2 kW), and a microwave (1 kW)
+                simultaneously will trip the pitch supply. Be aware of the total connected load and
+                manage it within the pitch rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Galvanic isolator</strong> — at marinas and motorhome stopovers where
-                multiple vehicles share a common earth, fit a galvanic isolator to the shore
-                power earth conductor. This protects against galvanic corrosion of chassis
-                metalwork caused by DC currents flowing through the common earth.
+                multiple vehicles share a common earth, fit a galvanic isolator to the shore power
+                earth conductor. This protects against galvanic corrosion of chassis metalwork
+                caused by DC currents flowing through the common earth.
               </span>
             </li>
           </ul>
@@ -494,8 +491,8 @@ const sections = [
       <>
         <p>
           Regular electrical maintenance extends the life of the electrical system, prevents
-          failures at inconvenient times, and most importantly maintains safety. These are the
-          key maintenance tasks for caravan and motorhome owners.
+          failures at inconvenient times, and most importantly maintains safety. These are the key
+          maintenance tasks for caravan and motorhome owners.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -507,8 +504,8 @@ const sections = [
                   Before the first outing of the season, carry out or commission an annual
                   electrical check covering: leisure battery capacity and condition; all 12V
                   connections for corrosion; solar panel output; EHU cable and inlet socket
-                  condition; RCD functional test (press the test button — the RCD must trip);
-                  smoke detector and CO alarm battery replacement.
+                  condition; RCD functional test (press the test button — the RCD must trip); smoke
+                  detector and CO alarm battery replacement.
                 </p>
               </div>
             </div>
@@ -519,11 +516,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Winter Storage Battery Care</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Lead-acid leisure batteries must not be left in a discharged state during
-                  winter storage — sulphation will permanently reduce capacity. Either keep the
-                  battery connected to a maintenance charger throughout winter, or remove the
-                  battery and store it on a maintenance charger in a frost-free location. Lithium
-                  batteries should be stored at approximately 50% charge in a cool, dry location.
+                  Lead-acid leisure batteries must not be left in a discharged state during winter
+                  storage — sulphation will permanently reduce capacity. Either keep the battery
+                  connected to a maintenance charger throughout winter, or remove the battery and
+                  store it on a maintenance charger in a frost-free location. Lithium batteries
+                  should be stored at approximately 50% charge in a cool, dry location.
                 </p>
               </div>
             </div>
@@ -535,9 +532,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Annual Inspection</h4>
                 <p className="text-white text-sm leading-relaxed">
                   An annual professional electrical inspection by a qualified electrician
-                  experienced in leisure vehicle electrics provides peace of mind and may be
-                  a requirement of some insurance policies. The inspection should cover both
-                  the 12V DC and 230V AC systems and result in a written report. Use the{' '}
+                  experienced in leisure vehicle electrics provides peace of mind and may be a
+                  requirement of some insurance policies. The inspection should cover both the 12V
+                  DC and 230V AC systems and result in a written report. Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
@@ -549,7 +546,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Caravan & motorhome electrical checks made simple with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Ideal for leisure vehicle annual electrical checks. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Ideal for leisure vehicle annual electrical checks. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -586,7 +583,7 @@ export default function CaravanMotorHomeElectricalPage() {
       faqHeading="Frequently Asked Questions About Caravan and Motorhome Electrical Systems"
       relatedPages={relatedPages}
       ctaHeading="Complete Leisure Vehicle Electrical Inspections on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for caravan and motorhome annual electrical checks. 7-day free trial."
     />
   );
 }

@@ -160,9 +160,9 @@ const sections = [
           what travel qualifies, and how to keep records that satisfy HMRC.
         </p>
         <p>
-          The rules are different depending on whether you drive a car or a van, and whether you
-          use simplified expenses or actual costs. Getting this right can save you £1,000 to £3,000+
-          per year in tax and National Insurance.
+          The rules are different depending on whether you drive a car or a van, and whether you use
+          simplified expenses or actual costs. Getting this right can save you £1,000 to £3,000+ per
+          year in tax and National Insurance.
         </p>
       </>
     ),
@@ -183,9 +183,15 @@ const sections = [
                 <Car className="w-4 h-4 text-blue-400" /> Cars
               </h4>
               <ul className="space-y-2">
-                <li>First 10,000 miles: <strong className="text-yellow-400">45p per mile</strong></li>
-                <li>After 10,000 miles: <strong className="text-yellow-400">25p per mile</strong></li>
-                <li className="text-white text-xs mt-2">Covers fuel, insurance, road tax, MOT, servicing, depreciation</li>
+                <li>
+                  First 10,000 miles: <strong className="text-yellow-400">45p per mile</strong>
+                </li>
+                <li>
+                  After 10,000 miles: <strong className="text-yellow-400">25p per mile</strong>
+                </li>
+                <li className="text-white text-xs mt-2">
+                  Covers fuel, insurance, road tax, MOT, servicing, depreciation
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
@@ -193,9 +199,15 @@ const sections = [
                 <Fuel className="w-4 h-4 text-green-400" /> Vans
               </h4>
               <ul className="space-y-2">
-                <li>Simplified rate: <strong className="text-yellow-400">NOT available</strong></li>
-                <li>Must use: <strong className="text-yellow-400">Actual costs</strong></li>
-                <li className="text-white text-xs mt-2">Claim real costs x business-use percentage</li>
+                <li>
+                  Simplified rate: <strong className="text-yellow-400">NOT available</strong>
+                </li>
+                <li>
+                  Must use: <strong className="text-yellow-400">Actual costs</strong>
+                </li>
+                <li className="text-white text-xs mt-2">
+                  Claim real costs x business-use percentage
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-purple-500/10 border border-purple-500/20 p-4">
@@ -203,9 +215,15 @@ const sections = [
                 <Zap className="w-4 h-4 text-purple-400" /> Electric Vehicles
               </h4>
               <ul className="space-y-2">
-                <li>Advisory fuel rate: <strong className="text-yellow-400">7p per mile</strong></li>
-                <li>Or use: <strong className="text-yellow-400">Actual costs</strong></li>
-                <li className="text-white text-xs mt-2">Actual costs with capital allowances usually better</li>
+                <li>
+                  Advisory fuel rate: <strong className="text-yellow-400">7p per mile</strong>
+                </li>
+                <li>
+                  Or use: <strong className="text-yellow-400">Actual costs</strong>
+                </li>
+                <li className="text-white text-xs mt-2">
+                  Actual costs with capital allowances usually better
+                </li>
               </ul>
             </div>
           </div>
@@ -213,9 +231,8 @@ const sections = [
         <p>
           <strong>Important:</strong> The 45p/25p rate is a "simplified expense" — it replaces
           claiming actual running costs. If you use simplified mileage, you cannot also claim fuel,
-          insurance, road tax, or any other vehicle running cost. You choose one method or the
-          other for each vehicle, and once chosen, you must continue with that method for that
-          vehicle.
+          insurance, road tax, or any other vehicle running cost. You choose one method or the other
+          for each vehicle, and once chosen, you must continue with that method for that vehicle.
         </p>
       </>
     ),
@@ -244,20 +261,20 @@ const sections = [
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Vans: Actual Costs Only</h3>
             <p className="text-white text-sm leading-relaxed">
-              If you use a van, you MUST claim actual costs. Add up all your van running costs
-              for the year: fuel, insurance, road tax, MOT, servicing, repairs, tyres, breakdown
-              cover, parking, tolls, and either capital allowances on the purchase price or lease
-              payments. Calculate the percentage of your total miles that are business miles (for
-              example, 15,000 business miles out of 18,000 total = 83%). Apply that percentage to
-              your total costs. Keep every receipt and a complete mileage log.
+              If you use a van, you MUST claim actual costs. Add up all your van running costs for
+              the year: fuel, insurance, road tax, MOT, servicing, repairs, tyres, breakdown cover,
+              parking, tolls, and either capital allowances on the purchase price or lease payments.
+              Calculate the percentage of your total miles that are business miles (for example,
+              15,000 business miles out of 18,000 total = 83%). Apply that percentage to your total
+              costs. Keep every receipt and a complete mileage log.
             </p>
           </div>
         </div>
         <p>
-          <strong>Why the difference?</strong> HMRC classifies vehicles by type. A van is defined
-          as a goods vehicle with a design weight not exceeding 3,500kg — this includes all
-          standard panel vans used by electricians (Transit Custom, Vivaro, etc.). The simplified
-          mileage rates were designed for cars used partly for business, not for commercial vehicles.
+          <strong>Why the difference?</strong> HMRC classifies vehicles by type. A van is defined as
+          a goods vehicle with a design weight not exceeding 3,500kg — this includes all standard
+          panel vans used by electricians (Transit Custom, Vivaro, etc.). The simplified mileage
+          rates were designed for cars used partly for business, not for commercial vehicles.
         </p>
       </>
     ),
@@ -372,11 +389,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>For actual costs (vans):</strong> keep all fuel receipts, insurance
-                renewal documents, road tax confirmation, MOT certificate, service and repair
-                invoices, tyre receipts, breakdown cover confirmation, and the vehicle purchase
-                invoice or lease agreement. Record your total annual mileage (business + personal)
-                from odometer readings at the start and end of the tax year.
+                <strong>For actual costs (vans):</strong> keep all fuel receipts, insurance renewal
+                documents, road tax confirmation, MOT certificate, service and repair invoices, tyre
+                receipts, breakdown cover confirmation, and the vehicle purchase invoice or lease
+                agreement. Record your total annual mileage (business + personal) from odometer
+                readings at the start and end of the tax year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -392,9 +409,9 @@ const sections = [
         </div>
         <p>
           <strong>Mileage tracking apps</strong> such as MileIQ, Driversnote, and HMRC's own
-          receipts app can automate much of this. GPS-based apps record journeys automatically —
-          you just need to classify each one as business or personal. The monthly cost (typically
-          £5 to £10) is itself a tax-deductible business expense.
+          receipts app can automate much of this. GPS-based apps record journeys automatically — you
+          just need to classify each one as business or personal. The monthly cost (typically £5 to
+          £10) is itself a tax-deductible business expense.
         </p>
       </>
     ),
@@ -414,8 +431,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               You drive a car (not a van). Your vehicle running costs are relatively low. You want
               simple record keeping — just a mileage log, no fuel receipts. You drive fewer than
-              15,000 business miles per year. Your car is relatively inexpensive. You do not want
-              to track every single vehicle expense.
+              15,000 business miles per year. Your car is relatively inexpensive. You do not want to
+              track every single vehicle expense.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -481,9 +498,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Simplified mileage for EVs</strong> — if you use the simplified mileage rate
-                (45p/25p) for an electric car, the full rate applies — the same as a petrol or diesel
-                car. At 45p per mile with near-zero running costs, this can be extremely advantageous
-                for the first 10,000 business miles.
+                (45p/25p) for an electric car, the full rate applies — the same as a petrol or
+                diesel car. At 45p per mile with near-zero running costs, this can be extremely
+                advantageous for the first 10,000 business miles.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -531,9 +548,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Track Every Journey</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Use a mileage tracking app or a simple spreadsheet. Record every business
-                  journey on the day it happens. Five minutes per day saves you thousands at tax
-                  time and protects you in an HMRC enquiry.
+                  Use a mileage tracking app or a simple spreadsheet. Record every business journey
+                  on the day it happens. Five minutes per day saves you thousands at tax time and
+                  protects you in an HMRC enquiry.
                 </p>
               </div>
             </div>
@@ -547,8 +564,8 @@ const sections = [
                   Factor travel time and costs into your job pricing. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
-                  </SEOInternalLink>
-                  {' '}to build travel into your quotes transparently.
+                  </SEOInternalLink>{' '}
+                  to build travel into your quotes transparently.
                 </p>
               </div>
             </div>
@@ -562,9 +579,9 @@ const sections = [
                   Completing{' '}
                   <SEOInternalLink href="/tools/eic-certificate">
                     certificates on site
-                  </SEOInternalLink>
-                  {' '}means fewer return trips to hand over paperwork. Every trip saved is mileage
-                  saved — and time you can spend on the next paid job.
+                  </SEOInternalLink>{' '}
+                  means fewer return trips to hand over paperwork. Every trip saved is mileage saved
+                  — and time you can spend on the next paid job.
                 </p>
               </div>
             </div>
@@ -609,7 +626,7 @@ export default function MileageClaimsElectricianPage() {
       faqHeading="Frequently Asked Questions About Mileage Claims"
       relatedPages={relatedPages}
       ctaHeading="Save Time and Mileage with On-Site Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete everything on site, reduce return trips, and keep more of what you earn. 7-day free trial, cancel anytime."
     />
   );
 }

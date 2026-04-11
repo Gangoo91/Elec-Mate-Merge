@@ -137,8 +137,8 @@ const sections = [
         <p>
           Whether you are a warehouse operator planning a lighting upgrade, a facilities manager
           comparing quotations, or an electrical contractor pricing a warehouse lighting project,
-          this guide provides realistic per-fitting costs and practical guidance based on current
-          UK market rates.
+          this guide provides realistic per-fitting costs and practical guidance based on current UK
+          market rates.
         </p>
       </>
     ),
@@ -160,40 +160,40 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>100W LED high bay</strong> — £60 to £90 supply price. 14,000 to 16,000
-                lumens. Suitable for mounting heights of 4 to 6 metres. Covers approximately 25
-                to 35m² at 150 lux. Installation cost: £15 to £22 per fitting.
+                lumens. Suitable for mounting heights of 4 to 6 metres. Covers approximately 25 to
+                35m² at 150 lux. Installation cost: £15 to £22 per fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>150W LED high bay</strong> — £80 to £130 supply price. 21,000 to 24,000
-                lumens. Suitable for 6 to 8 metre mounting heights. Covers approximately 35 to
-                45m² at 150 lux. Installation cost: £20 to £30 per fitting.
+                lumens. Suitable for 6 to 8 metre mounting heights. Covers approximately 35 to 45m²
+                at 150 lux. Installation cost: £20 to £30 per fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>200W LED high bay</strong> — £120 to £180 supply price. 28,000 to 32,000
-                lumens. Suitable for 8 to 12 metre mounting heights. Covers approximately 40 to
-                50m² at 150 lux. Installation cost: £25 to £35 per fitting.
+                lumens. Suitable for 8 to 12 metre mounting heights. Covers approximately 40 to 50m²
+                at 150 lux. Installation cost: £25 to £35 per fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>240W+ LED high bay</strong> — £160 to £250 supply price. 34,000 to
-                40,000+ lumens. For mounting heights above 12 metres or high lux level
-                requirements. Installation cost: £30 to £40 per fitting.
+                <strong>240W+ LED high bay</strong> — £160 to £250 supply price. 34,000 to 40,000+
+                lumens. For mounting heights above 12 metres or high lux level requirements.
+                Installation cost: £30 to £40 per fitting.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Installation costs include mounting (chain suspension, bracket, or direct fix),
-          connection to the lighting circuit, and basic commissioning. They do not include the
-          distribution wiring from the board to the circuit junction points.
+          Installation costs include mounting (chain suspension, bracket, or direct fix), connection
+          to the lighting circuit, and basic commissioning. They do not include the distribution
+          wiring from the board to the circuit junction points.
         </p>
       </>
     ),
@@ -220,8 +220,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Packing and dispatch — 150 lux</strong> — The most common requirement
-                for general warehouse operations including picking, packing, and dispatch.
+                <strong>Packing and dispatch — 150 lux</strong> — The most common requirement for
+                general warehouse operations including picking, packing, and dispatch.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -241,16 +241,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loading bays — 150 lux</strong> — External and internal loading areas
-                where vehicles are loaded and unloaded.
+                <strong>Loading bays — 150 lux</strong> — External and internal loading areas where
+                vehicles are loaded and unloaded.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A professional lighting design using DIALux or Relux software should be produced for
-          every warehouse lighting project. This ensures compliance with BS EN 12464-1 and
-          prevents disputes about light levels after installation.
+          A professional lighting design using DIALux or Relux software should be produced for every
+          warehouse lighting project. This ensures compliance with BS EN 12464-1 and prevents
+          disputes about light levels after installation.
         </p>
       </>
     ),
@@ -262,26 +262,26 @@ const sections = [
       <>
         <p>
           Emergency lighting is a legal requirement in all warehouse premises under the Regulatory
-          Reform (Fire Safety) Order 2005. The system must comply with BS 5266-1 and be designed
-          to illuminate escape routes and high-risk areas in the event of a mains power failure.
+          Reform (Fire Safety) Order 2005. The system must comply with BS 5266-1 and be designed to
+          illuminate escape routes and high-risk areas in the event of a mains power failure.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Self-Contained Emergency</h3>
             <p className="text-white text-sm leading-relaxed">
-              Self-contained emergency luminaires with integral batteries are the most common
-              choice for warehouses. LED self-contained emergency fittings cost £30 to £80 each
-              installed. High bay emergency fittings for mounting heights above 6 metres cost
-              £80 to £150 each. 3-hour duration is standard for most premises.
+              Self-contained emergency luminaires with integral batteries are the most common choice
+              for warehouses. LED self-contained emergency fittings cost £30 to £80 each installed.
+              High bay emergency fittings for mounting heights above 6 metres cost £80 to £150 each.
+              3-hour duration is standard for most premises.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Central Battery Systems</h3>
             <p className="text-white text-sm leading-relaxed">
-              Central battery systems supply emergency power to dedicated emergency luminaires
-              or conversion kits built into standard fittings. Costs £5,000 to £15,000 for a
-              typical warehouse system. More expensive to install but easier to maintain and
-              test. The battery life is longer and more predictable than individual batteries.
+              Central battery systems supply emergency power to dedicated emergency luminaires or
+              conversion kits built into standard fittings. Costs £5,000 to £15,000 for a typical
+              warehouse system. More expensive to install but easier to maintain and test. The
+              battery life is longer and more predictable than individual batteries.
             </p>
           </div>
         </div>
@@ -307,8 +307,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Occupancy sensing</strong> — Microwave or PIR sensors that dim or switch
-                off lights in unoccupied zones. Particularly effective in racking aisles where
+                <strong>Occupancy sensing</strong> — Microwave or PIR sensors that dim or switch off
+                lights in unoccupied zones. Particularly effective in racking aisles where
                 individual aisles are only accessed intermittently. Savings: 20% to 40%.
               </span>
             </li>
@@ -316,8 +316,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Daylight harvesting</strong> — Photocells that reduce artificial light
-                output when natural daylight through rooflights or translucent panels is
-                sufficient. Effective in warehouses with good natural light. Savings: 15% to 30%.
+                output when natural daylight through rooflights or translucent panels is sufficient.
+                Effective in warehouses with good natural light. Savings: 15% to 30%.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,9 +331,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Time scheduling</strong> — Automatic on/off at shift times, reduced
-                output during breaks, and overnight security lighting levels. Simple to implement
-                with a time clock or BMS integration.
+                <strong>Time scheduling</strong> — Automatic on/off at shift times, reduced output
+                during breaks, and overnight security lighting levels. Simple to implement with a
+                time clock or BMS integration.
               </span>
             </li>
           </ul>
@@ -356,24 +356,24 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Basic high bay (no controls): £15 to £22/fitting</strong> — 100W fitting,
-                chain suspension, connection to existing wiring point. Suitable for simple
-                storage areas.
+                chain suspension, connection to existing wiring point. Suitable for simple storage
+                areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mid-range high bay with sensor: £22 to £32/fitting</strong> — 150 to
-                200W fitting with integrated occupancy sensor, DALI dimmable. Includes new
-                wiring from distribution point.
+                <strong>Mid-range high bay with sensor: £22 to £32/fitting</strong> — 150 to 200W
+                fitting with integrated occupancy sensor, DALI dimmable. Includes new wiring from
+                distribution point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-spec high bay with full controls: £32 to £40/fitting</strong> —
-                200W+ fitting with DALI dimming, daylight harvesting, occupancy sensing, and
-                wireless commissioning. Includes containment, wiring, and full commissioning.
+                <strong>High-spec high bay with full controls: £32 to £40/fitting</strong> — 200W+
+                fitting with DALI dimming, daylight harvesting, occupancy sensing, and wireless
+                commissioning. Includes containment, wiring, and full commissioning.
               </span>
             </li>
           </ul>
@@ -391,17 +391,15 @@ const sections = [
     heading: 'Regulations and Standards',
     content: (
       <>
-        <p>
-          Warehouse lighting installations must comply with several standards and regulations:
-        </p>
+        <p>Warehouse lighting installations must comply with several standards and regulations:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A3:2024</strong> — The wiring regulations covering the
-                electrical installation. RCD protection is required for lighting circuits in
-                certain circumstances per Regulation 411.3.3.
+                electrical installation. RCD protection is required for lighting circuits in certain
+                circumstances per Regulation 411.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -415,8 +413,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5266-1</strong> — Emergency lighting. Specifies minimum illumination
-                on escape routes, duration, and testing requirements.
+                <strong>BS 5266-1</strong> — Emergency lighting. Specifies minimum illumination on
+                escape routes, duration, and testing requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -430,8 +428,8 @@ const sections = [
         </div>
         <p>
           An Electrical Installation Certificate (EIC) must be issued for new lighting
-          installations. Emergency lighting requires a separate commissioning certificate
-          and an ongoing test log to BS 5266-1.
+          installations. Emergency lighting requires a separate commissioning certificate and an
+          ongoing test log to BS 5266-1.
         </p>
       </>
     ),
@@ -453,9 +451,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Get a Lighting Design First</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Always base your quote on a proper lighting design calculation. Most LED
-                  manufacturers (Thorlux, Tamlite, Philips) offer free lighting design services.
-                  The design gives you exact fitting quantities and positions, eliminating
-                  guesswork from your quote.
+                  manufacturers (Thorlux, Tamlite, Philips) offer free lighting design services. The
+                  design gives you exact fitting quantities and positions, eliminating guesswork
+                  from your quote.
                 </p>
               </div>
             </div>
@@ -468,8 +466,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculate the energy saving and payback period for the client. A warehouse
                   replacing 25 x 400W metal halide fittings with 25 x 150W LED high bays saves
-                  approximately 6,250W — at 12 hours/day, 260 days/year, that is roughly 19,500
-                  kWh per year or £5,850 at 30p/kWh. Present this in your quote.
+                  approximately 6,250W — at 12 hours/day, 260 days/year, that is roughly 19,500 kWh
+                  per year or £5,850 at 30p/kWh. Present this in your quote.
                 </p>
               </div>
             </div>
@@ -528,7 +526,7 @@ export default function WarehouseLightingCostPage() {
       faqHeading="Frequently Asked Questions About Warehouse Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Warehouse Lighting with Per-Fitting Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for commercial lighting quotes with fitting schedules, energy saving calculations, and professional PDF output. 7-day free trial."
     />
   );
 }

@@ -586,7 +586,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Never miss a Part P notification again"
-          description="Elec-Mate prompts you when a job is notifiable, generates the correct certificate, and reminds you to submit to your scheme provider. Join 430+ UK electricians staying compliant effortlessly. 7-day free trial."
+          description="Elec-Mate prompts you when a job is notifiable, generates the correct certificate, and reminds you to submit to your scheme provider. Join 1,000+ UK electricians staying compliant effortlessly. 7-day free trial."
           icon={Shield}
         />
       </>
@@ -623,7 +623,7 @@ export default function BuildingRegsElectricalPage() {
       faqHeading="Frequently Asked Questions About Building Regulations Electrical"
       relatedPages={relatedPages}
       ctaHeading="Generate Part P Compliant Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates. Correct BS 7671 format, instant PDF delivery, and scheme provider ready. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/outdoor-socket-fault-finding',
     title: 'Outdoor Socket Fault Finding',
-    description: 'RCD protection, weatherproof requirements, IP ratings, circuit issues, earth faults.',
+    description:
+      'RCD protection, weatherproof requirements, IP ratings, circuit issues, earth faults.',
     icon: Zap,
     category: 'Fault Finding',
   },
   {
     href: '/garage-door-electrical-fault',
     title: 'Garage Door Electrical Fault',
-    description: 'Motor control board faults, limit switches, safety sensors, and power supply issues.',
+    description:
+      'Motor control board faults, limit switches, safety sensors, and power supply issues.',
     icon: Wrench,
     category: 'Fault Finding',
   },
@@ -124,10 +126,10 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor electrical installations face hazards that do not exist indoors: rain, condensation,
-          UV degradation, ground movement, mechanical damage from gardening tools, and contact with
-          vegetation. These factors make outdoor electrical faults more common and more dangerous
-          than equivalent indoor faults.
+          Outdoor electrical installations face hazards that do not exist indoors: rain,
+          condensation, UV degradation, ground movement, mechanical damage from gardening tools, and
+          contact with vegetation. These factors make outdoor electrical faults more common and more
+          dangerous than equivalent indoor faults.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
@@ -148,8 +150,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe isolation first</strong> — switch off the outdoor lighting circuit
-                MCB at the consumer unit. If there is a dedicated outdoor circuit, this will be
+                <strong>Safe isolation first</strong> — switch off the outdoor lighting circuit MCB
+                at the consumer unit. If there is a dedicated outdoor circuit, this will be
                 labelled. If not, switch off the ring main or radial that feeds the outdoor socket
                 or junction box. Prove dead at the garden light supply point with a GS38-compliant
                 voltage indicator before touching any connections.
@@ -158,9 +160,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Never assume plug-in is safe</strong> — garden lights connected via a
-                plug to an outdoor socket are still live at mains voltage (230V) to the point of
-                the transformer. Always unplug before investigating connections or luminaire faults.
+                <strong>Never assume plug-in is safe</strong> — garden lights connected via a plug
+                to an outdoor socket are still live at mains voltage (230V) to the point of the
+                transformer. Always unplug before investigating connections or luminaire faults.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -183,19 +185,19 @@ const sections = [
     content: (
       <>
         <p>
-          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under
-          BS 7671:2018+A3:2024 (the 18th Edition Wiring Regulations). This requirement exists
-          because outdoor environments dramatically increase the risk of electric shock.
+          Residual Current Device (RCD) protection is mandatory for all outdoor circuits under BS
+          7671:2018+A3:2024 (the 18th Edition Wiring Regulations). This requirement exists because
+          outdoor environments dramatically increase the risk of electric shock.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3</strong> — requires RCD protection with a rated
-                residual operating current (IΔn) not exceeding 30mA for all socket circuits rated
-                up to 32A and for all circuits in outdoor locations. This applies to garden lighting
-                circuits whether they are hard-wired or socket-fed.
+                <strong>Regulation 411.3.3</strong> — requires RCD protection with a rated residual
+                operating current (IΔn) not exceeding 30mA for all socket circuits rated up to 32A
+                and for all circuits in outdoor locations. This applies to garden lighting circuits
+                whether they are hard-wired or socket-fed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -204,26 +206,26 @@ const sections = [
                 <strong>Where to fit the RCD</strong> — the RCD can be at the consumer unit (an
                 RCD-protected circuit or RCBO), at an outdoor consumer unit or distribution board,
                 or as an inline RCD socket. For plug-in garden lighting connected to an existing
-                indoor socket, an RCD plug adapter (BS 1363 with 30mA RCD) provides protection
-                at the point of use.
+                indoor socket, an RCD plug adapter (BS 1363 with 30mA RCD) provides protection at
+                the point of use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing RCD protection</strong> — if your outdoor lighting circuit was
-                installed before RCD protection was mandatory (pre-2008 installations), it may
-                lack RCD protection. This is a C2 (potentially dangerous) observation on an EICR
-                and should be rectified by a qualified electrician.
+                installed before RCD protection was mandatory (pre-2008 installations), it may lack
+                RCD protection. This is a C2 (potentially dangerous) observation on an EICR and
+                should be rectified by a qualified electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing</strong> — outdoor RCDs should be tested monthly using the
-                test button on the device. The test button simulates a fault and the RCD should
-                trip within 40 milliseconds. If the RCD does not trip when the test button is
-                pressed, it has failed and must be replaced immediately.
+                <strong>RCD testing</strong> — outdoor RCDs should be tested monthly using the test
+                button on the device. The test button simulates a fault and the RCD should trip
+                within 40 milliseconds. If the RCD does not trip when the test button is pressed, it
+                has failed and must be replaced immediately.
               </span>
             </li>
           </ul>
@@ -239,8 +241,8 @@ const sections = [
         <p>
           IP (Ingress Protection) ratings are defined in BS EN 60529 and indicate how well an
           electrical fitting is protected against solid particles (first digit) and water (second
-          digit). Understanding IP ratings is essential for choosing and diagnosing outdoor
-          lighting faults.
+          digit). Understanding IP ratings is essential for choosing and diagnosing outdoor lighting
+          faults.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -256,16 +258,16 @@ const sections = [
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP54 / IP55</strong> — dust-protected and splash-proof / water jet
-                resistant. Suitable for most exposed garden locations including wall lights and
-                post lights.
+                resistant. Suitable for most exposed garden locations including wall lights and post
+                lights.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP65</strong> — fully dust-tight and protected against low-pressure water
-                jets. The minimum recommended rating for exposed garden spotlights, path lights,
-                and ground-spike fittings.
+                jets. The minimum recommended rating for exposed garden spotlights, path lights, and
+                ground-spike fittings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -279,9 +281,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Using a fitting with a lower IP rating than required for its location is a common cause
-          of garden lighting faults. Water ingress causes corrosion of terminals, short circuits,
-          and degraded insulation — all of which can cause RCD tripping or complete failure. Always
+          Using a fitting with a lower IP rating than required for its location is a common cause of
+          garden lighting faults. Water ingress causes corrosion of terminals, short circuits, and
+          degraded insulation — all of which can cause RCD tripping or complete failure. Always
           check the IP rating label on the fitting and match it to the installation environment.
         </p>
       </>
@@ -302,9 +304,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Water-ingressed fitting</strong> — water inside the fitting creates a
-                leakage path to earth. The RCD trips when the circuit is energised. Disconnect
-                each fitting in turn, starting with any that appear wet or corroded, and reset the
-                RCD between each disconnection. When the RCD holds after disconnecting a particular
+                leakage path to earth. The RCD trips when the circuit is energised. Disconnect each
+                fitting in turn, starting with any that appear wet or corroded, and reset the RCD
+                between each disconnection. When the RCD holds after disconnecting a particular
                 fitting, that fitting is the fault source.
               </span>
             </li>
@@ -313,27 +315,27 @@ const sections = [
               <span>
                 <strong>Damaged underground cable</strong> — a nick, cut, or crush in the cable
                 insulation allows moisture to penetrate and create an earth fault. The RCD trips
-                reliably, regardless of which fitting is connected. Isolate all fittings and
-                perform an insulation resistance test on the cable to identify a cable fault.
+                reliably, regardless of which fitting is connected. Isolate all fittings and perform
+                an insulation resistance test on the cable to identify a cable fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failed transformer</strong> — if the transformer insulation has broken
-                down, leakage current from the primary winding to the casing (earth) will trip
-                the RCD. Disconnect the transformer and test it in isolation. If the RCD holds
-                with the transformer disconnected, the transformer is the fault source.
+                <strong>Failed transformer</strong> — if the transformer insulation has broken down,
+                leakage current from the primary winding to the casing (earth) will trip the RCD.
+                Disconnect the transformer and test it in isolation. If the RCD holds with the
+                transformer disconnected, the transformer is the fault source.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Nuisance tripping from natural capacitance</strong> — long outdoor cable
-                runs have significant capacitance to earth. In wet conditions, this capacitance
-                can produce enough leakage current to trip a sensitive 10mA RCD. If you have a
-                10mA RCD on the garden circuit, consider upgrading to a 30mA RCD (which is the
-                BS 7671 requirement anyway).
+                runs have significant capacitance to earth. In wet conditions, this capacitance can
+                produce enough leakage current to trip a sensitive 10mA RCD. If you have a 10mA RCD
+                on the garden circuit, consider upgrading to a 30mA RCD (which is the BS 7671
+                requirement anyway).
               </span>
             </li>
           </ul>
@@ -356,20 +358,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Spade or fork damage</strong> — the most common cause of underground
-                cable damage. A spade through a buried cable causes an immediate open circuit
-                (lights go out) or a direct earth fault (RCD trips). If you suspect cable damage
-                from gardening, mark the area and call an electrician — do not dig to investigate
-                without first isolating the circuit.
+                <strong>Spade or fork damage</strong> — the most common cause of underground cable
+                damage. A spade through a buried cable causes an immediate open circuit (lights go
+                out) or a direct earth fault (RCD trips). If you suspect cable damage from
+                gardening, mark the area and call an electrician — do not dig to investigate without
+                first isolating the circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Animal damage</strong> — rats, squirrels, and rabbits regularly chew
-                through outdoor cable. Low-voltage garden lighting cable (typically 1.5mm²
-                unarmoured) is particularly vulnerable. Armoured cable (SWA) or cable in conduit
-                provides much better protection against animal damage.
+                <strong>Animal damage</strong> — rats, squirrels, and rabbits regularly chew through
+                outdoor cable. Low-voltage garden lighting cable (typically 1.5mm² unarmoured) is
+                particularly vulnerable. Armoured cable (SWA) or cable in conduit provides much
+                better protection against animal damage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -385,9 +387,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Underburied cable</strong> — if cable was installed without being properly
-                buried (or has been partially exposed by soil erosion), it is at immediate risk
-                of damage. Cable must be reinstalled at the correct depth with armoured cable or
-                in protective conduit with warning tape above.
+                buried (or has been partially exposed by soil erosion), it is at immediate risk of
+                damage. Cable must be reinstalled at the correct depth with armoured cable or in
+                protective conduit with warning tape above.
               </span>
             </li>
           </ul>
@@ -413,8 +415,8 @@ const sections = [
                 <strong>Overloaded transformer</strong> — the transformer is rated for a maximum
                 total wattage of connected lamps. Adding more lamps than the rated capacity causes
                 the thermal protection to trip repeatedly or the transformer to fail permanently.
-                Calculate the total wattage of all connected lamps and ensure it is below 80% of
-                the transformer capacity.
+                Calculate the total wattage of all connected lamps and ensure it is below 80% of the
+                transformer capacity.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -422,9 +424,9 @@ const sections = [
               <span>
                 <strong>Transformer not resetting</strong> — most transformers have internal thermal
                 protection that cuts out when overloaded or overheated. Allow the transformer to
-                cool for 30 minutes before testing. If it powers up after cooling but cuts out
-                again under load, the transformer is overloaded or has a partially failed winding
-                that runs hot.
+                cool for 30 minutes before testing. If it powers up after cooling but cuts out again
+                under load, the transformer is overloaded or has a partially failed winding that
+                runs hot.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -433,17 +435,17 @@ const sections = [
                 <strong>Testing a plug-in transformer</strong> — plug the transformer into a known
                 working indoor socket (not the outdoor socket, in case that is the fault). Measure
                 the output voltage at the transformer terminals with a multimeter. A 12V transformer
-                should read 11 to 14V AC (or DC depending on type) with no load connected. No
-                output voltage confirms transformer failure.
+                should read 11 to 14V AC (or DC depending on type) with no load connected. No output
+                voltage confirms transformer failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transformer replacement</strong> — plug-in garden lighting transformers
-                cost £20 to £80 depending on capacity and quality. Hard-wired transformers require
-                an electrician to disconnect and replace. Always match the replacement transformer
-                to the voltage (12V AC or DC) and wattage requirements of the lighting system.
+                <strong>Transformer replacement</strong> — plug-in garden lighting transformers cost
+                £20 to £80 depending on capacity and quality. Hard-wired transformers require an
+                electrician to disconnect and replace. Always match the replacement transformer to
+                the voltage (12V AC or DC) and wattage requirements of the lighting system.
               </span>
             </li>
           </ul>
@@ -466,21 +468,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Failed gaskets and seals</strong> — the rubber gaskets that seal the lens
-                or diffuser of a garden fitting degrade with UV exposure and thermal cycling.
-                Inspect gaskets annually and replace when cracked, compressed, or no longer
-                sealing correctly. Replacement gaskets are available from the fitting manufacturer
-                or electrical wholesalers.
+                <strong>Failed gaskets and seals</strong> — the rubber gaskets that seal the lens or
+                diffuser of a garden fitting degrade with UV exposure and thermal cycling. Inspect
+                gaskets annually and replace when cracked, compressed, or no longer sealing
+                correctly. Replacement gaskets are available from the fitting manufacturer or
+                electrical wholesalers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable entry points</strong> — cable glands must be correctly sized for
-                the cable and tightened to form a watertight seal. Loose or incorrectly sized
-                glands allow water to track along the cable into the fitting body. If a fitting
-                is repeatedly ingressing water at the cable entry, re-gland or seal the entry
-                with self-amalgamating tape.
+                <strong>Cable entry points</strong> — cable glands must be correctly sized for the
+                cable and tightened to form a watertight seal. Loose or incorrectly sized glands
+                allow water to track along the cable into the fitting body. If a fitting is
+                repeatedly ingressing water at the cable entry, re-gland or seal the entry with
+                self-amalgamating tape.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -513,8 +515,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transformer replacement (plug-in)</strong> — £20 to £80 for the part.
-                DIY replacement is possible for plug-in units. No electrician required.
+                <strong>Transformer replacement (plug-in)</strong> — £20 to £80 for the part. DIY
+                replacement is possible for plug-in units. No electrician required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -528,9 +530,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Luminaire replacement</strong> — £20 to £150 per fitting depending on
-                type and quality. Lamp replacements for LED fittings are typically £5 to £25 per
-                lamp. Labour for fitting replacement is £30 to £60 per fitting.
+                <strong>Luminaire replacement</strong> — £20 to £150 per fitting depending on type
+                and quality. Lamp replacements for LED fittings are typically £5 to £25 per lamp.
+                Labour for fitting replacement is £30 to £60 per fitting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -545,17 +547,16 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD installation on existing circuit</strong> — £80 to £200. Adding RCD
-                protection to an existing outdoor circuit, including an RCBO or RCD at the
-                consumer unit. Notifiable work under Part P — a Minor Works Certificate must be
-                issued.
+                protection to an existing outdoor circuit, including an RCBO or RCD at the consumer
+                unit. Notifiable work under Part P — a Minor Works Certificate must be issued.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New outdoor lighting circuit</strong> — £300 to £700 from consumer unit
-                to garden positions. Includes armoured cable, consumer unit connection, RCD
-                protection, and Electrical Installation Certificate.
+                <strong>New outdoor lighting circuit</strong> — £300 to £700 from consumer unit to
+                garden positions. Includes armoured cable, consumer unit connection, RCD protection,
+                and Electrical Installation Certificate.
               </span>
             </li>
           </ul>
@@ -575,9 +576,7 @@ const sections = [
           registered with NICEIC, NAPIT, or ELECSA can self-certify outdoor electrical work and
           issue the relevant certificate on completion.
         </p>
-        <p>
-          Key BS 7671 requirements to verify on any outdoor lighting installation:
-        </p>
+        <p>Key BS 7671 requirements to verify on any outdoor lighting installation:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -591,15 +590,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                Underground cable at correct depth — SWA or cable in protective conduit with
-                warning tape above
+                Underground cable at correct depth — SWA or cable in protective conduit with warning
+                tape above
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                Cable route records provided to customer (sketch or photograph showing cable
-                routes) to prevent future accidental damage
+                Cable route records provided to customer (sketch or photograph showing cable routes)
+                to prevent future accidental damage
               </span>
             </li>
           </ul>
@@ -628,7 +627,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete outdoor electrical certificates on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site Minor Works certificates, EICs, and instant quoting. No evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -665,7 +664,7 @@ export default function GardenLightingFaultFindingPage() {
       faqHeading="Frequently Asked Questions — Garden Lighting Faults"
       relatedPages={relatedPages}
       ctaHeading="Complete Outdoor Electrical Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for Minor Works certificates, EICs, and on-site quoting. No evening paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

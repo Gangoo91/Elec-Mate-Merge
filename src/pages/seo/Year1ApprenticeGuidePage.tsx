@@ -635,7 +635,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Everything You Need for Year 1 — in One App"
-          description="Level 2 courses, flashcards, site diary, OJT tracker, electrical symbols, mental health hub, and learning videos. Join 430+ UK apprentices learning with Elec-Mate. 7-day free trial."
+          description="Level 2 courses, flashcards, site diary, OJT tracker, electrical symbols, mental health hub, and learning videos. Join 1,000+ UK apprentices learning with Elec-Mate. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -667,7 +667,7 @@ export default function Year1ApprenticeGuidePage() {
       faqHeading="Frequently Asked Questions About Year 1 Apprenticeships"
       relatedPages={relatedPages}
       ctaHeading="Start your apprenticeship on the right foot"
-      ctaSubheading="Join 430+ UK apprentices learning with Elec-Mate from day 1. Level 2 courses, flashcards, site diary, OJT tracker, and mental health support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices learning with Elec-Mate from day 1. Level 2 courses, flashcards, site diary, OJT tracker, and mental health support. 7-day free trial, cancel anytime."
     />
   );
 }

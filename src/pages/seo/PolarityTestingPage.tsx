@@ -97,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates with polarity test records on site.',
+    description:
+      'Complete Electrical Installation Certificates with polarity test records on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -196,8 +197,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Luminaires and lamp holders</strong> — for bayonet cap and Edison screw
-                lamp holders, the centre contact must be connected to the line conductor. The outer
+                <strong>Luminaires and lamp holders</strong> — for bayonet cap and Edison screw lamp
+                holders, the centre contact must be connected to the line conductor. The outer
                 contact or screwed shell must be connected to neutral.
               </span>
             </li>
@@ -212,7 +213,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete polarity verification records on your phone"
-          description="Elec-Mate's EICR app captures polarity test results for all circuits and accessories, generating professional inspection records that comply with BS 7671. Used by 430+ UK electricians."
+          description="Elec-Mate's EICR app captures polarity test results for all circuits and accessories, generating professional inspection records that comply with BS 7671. Used by 1,000+ UK electricians."
           icon={ClipboardCheck}
         />
       </>
@@ -274,7 +275,8 @@ const sections = [
               <span>
                 <strong>Reversed at socket outlets</strong> — the most common error. Line connected
                 to N terminal and neutral to L terminal. Often caused by incorrect termination
-                during fitting or when a socket has been replaced without checking conductor colours.
+                during fitting or when a socket has been replaced without checking conductor
+                colours.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -320,9 +322,7 @@ const sections = [
     heading: 'Regulation 643.5 — What It Requires',
     content: (
       <>
-        <p>
-          BS 7671:2018+A3:2024 Regulation 643.5 states that verification shall be made that:
-        </p>
+        <p>BS 7671:2018+A3:2024 Regulation 643.5 states that verification shall be made that:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -347,10 +347,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          On an EICR, polarity failures are typically coded as C2 (potentially dangerous) where
-          they represent a genuine shock risk — for example, a single-pole switch in the neutral,
-          or a reversed lamp holder where the user may come into contact with the live centre
-          contact. Reversed polarity at socket outlets is also typically C2.
+          On an EICR, polarity failures are typically coded as C2 (potentially dangerous) where they
+          represent a genuine shock risk — for example, a single-pole switch in the neutral, or a
+          reversed lamp holder where the user may come into contact with the live centre contact.
+          Reversed polarity at socket outlets is also typically C2.
         </p>
       </>
     ),
@@ -371,14 +371,16 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Phase-to-neutral voltage</strong> — each phase should read approximately
-                230V to neutral. Significant deviation indicates a connection error or supply problem.
+                230V to neutral. Significant deviation indicates a connection error or supply
+                problem.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Phase-to-phase voltage</strong> — each phase pair should read approximately
-                400V. Readings of 0V between two phases indicate they are connected to the same phase.
+                400V. Readings of 0V between two phases indicate they are connected to the same
+                phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -399,9 +401,7 @@ const sections = [
     heading: 'For Electricians: Efficient Polarity Testing',
     content: (
       <>
-        <p>
-          Polarity testing is straightforward but must be thorough. Here are practical tips:
-        </p>
+        <p>Polarity testing is straightforward but must be thorough. Here are practical tips:</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
@@ -410,9 +410,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Use a Socket Tester for Speed</h4>
                 <p className="text-white text-sm leading-relaxed">
                   A plug-in socket tester (RCD test + polarity indicator) takes seconds per socket
-                  and is faster than a multimeter for checking polarity at ring final circuit outlets.
-                  Always supplement with a multimeter at a sample of sockets to confirm the tester
-                  is working correctly.
+                  and is faster than a multimeter for checking polarity at ring final circuit
+                  outlets. Always supplement with a multimeter at a sample of sockets to confirm the
+                  tester is working correctly.
                 </p>
               </div>
             </div>
@@ -456,7 +456,9 @@ export default function PolarityTestingPage() {
       heroTitle={
         <>
           Polarity Testing:{' '}
-          <span className="text-yellow-400">Visual Inspection, Live Checks, and Common Failures</span>
+          <span className="text-yellow-400">
+            Visual Inspection, Live Checks, and Common Failures
+          </span>
         </>
       }
       heroSubtitle="A complete guide to polarity testing for UK electricians. Covers visual inspection first, live polarity checks, common polarity failures (reversed at accessories), three-phase polarity, and BS 7671 Regulation 643.5."
@@ -467,7 +469,7 @@ export default function PolarityTestingPage() {
       faqHeading="Frequently Asked Questions About Polarity Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Polarity Tests and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures polarity test results for all circuits and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

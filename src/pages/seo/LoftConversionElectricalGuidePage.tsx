@@ -98,14 +98,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/basement-conversion-electrical',
     title: 'Basement Conversion Electrical Work',
-    description: 'IP ratings, damp considerations, sump pumps, and emergency lighting for basements.',
+    description:
+      'IP ratings, damp considerations, sump pumps, and emergency lighting for basements.',
     icon: AlertTriangle,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Complete Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -129,8 +131,8 @@ const sections = [
     content: (
       <>
         <p>
-          The electrical requirements for a loft conversion depend on how the space will be used.
-          A bedroom, a home office, and an en-suite loft all have different circuit requirements.
+          The electrical requirements for a loft conversion depend on how the space will be used. A
+          bedroom, a home office, and an en-suite loft all have different circuit requirements.
           Agreeing on the intended use before first fix is essential to avoid expensive alterations
           later.
         </p>
@@ -142,14 +144,15 @@ const sections = [
                 <strong>Bedroom loft</strong> — a dedicated lighting circuit (or connection to the
                 nearest floor circuit), a minimum of six double socket-outlet positions, a phone or
                 USB charging point near the bed, and switched connections for bedside lamps. If
-                fitted wardrobes are planned, include sockets inside the wardrobe space for lighting.
+                fitted wardrobes are planned, include sockets inside the wardrobe space for
+                lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Home office loft</strong> — a minimum of eight double socket-outlets,
-                a dedicated circuit for a multi-monitor workstation, ethernet ports (run Cat6 during
+                <strong>Home office loft</strong> — a minimum of eight double socket-outlets, a
+                dedicated circuit for a multi-monitor workstation, ethernet ports (run Cat6 during
                 first fix), and a separate circuit for a printer or laser scanner. Consider an
                 uninterruptible power supply (UPS) socket position for the main workstation.
               </span>
@@ -157,8 +160,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>En-suite loft</strong> — if the loft includes a shower room or en-suite,
-                a separate 45A shower circuit is required (or 32A for electric shower units up to
+                <strong>En-suite loft</strong> — if the loft includes a shower room or en-suite, a
+                separate 45A shower circuit is required (or 32A for electric shower units up to
                 7.5kW). The bathroom circuits must comply with BS 7671 Section 701 (special
                 locations — bathrooms), including IP-rated fittings for the appropriate zones and
                 supplementary bonding where required.
@@ -167,9 +170,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Velux and roof window switches</strong> — electrically operated roof
-                windows require a dedicated switching circuit. This is often overlooked at planning
-                stage and is costly to add retrospectively.
+                <strong>Velux and roof window switches</strong> — electrically operated roof windows
+                require a dedicated switching circuit. This is often overlooked at planning stage
+                and is costly to add retrospectively.
               </span>
             </li>
           </ul>
@@ -191,11 +194,11 @@ const sections = [
     content: (
       <>
         <p>
-          Smoke detection is one of the most safety-critical elements of a loft conversion electrical
-          installation. Building Regulations Approved Document B and BS 5839-6:2019 (Fire detection
-          and fire alarm systems — Code of practice for the design, installation, commissioning and
-          maintenance of fire detection and fire alarm systems in domestic premises) set out the
-          requirements.
+          Smoke detection is one of the most safety-critical elements of a loft conversion
+          electrical installation. Building Regulations Approved Document B and BS 5839-6:2019 (Fire
+          detection and fire alarm systems — Code of practice for the design, installation,
+          commissioning and maintenance of fire detection and fire alarm systems in domestic
+          premises) set out the requirements.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -241,7 +244,9 @@ const sections = [
         <p>
           The smoke alarm installation forms part of the fixed electrical installation and must be
           included in the scope of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">Electrical Installation Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/eic-certificate">
+            Electrical Installation Certificate
+          </SEOInternalLink>{' '}
           issued on completion of the loft conversion electrical work.
         </p>
       </>
@@ -253,9 +258,9 @@ const sections = [
     content: (
       <>
         <p>
-          When a loft conversion creates a new storey (typically a loft room accessed via a
-          new staircase), Building Regulations Approved Document B requires that the escape
-          route from the new storey to the final exit at ground level is adequately lit.
+          When a loft conversion creates a new storey (typically a loft room accessed via a new
+          staircase), Building Regulations Approved Document B requires that the escape route from
+          the new storey to the final exit at ground level is adequately lit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -271,21 +276,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting — when required</strong> — dedicated emergency
-                lighting (self-contained battery-backed luminaires that illuminate automatically on
-                mains failure) is required where the escape route includes areas with no natural
-                light, where a building control officer determines the risk justifies it, or where
-                the loft is used for commercial or business purposes. For most residential loft
-                conversions, mains-powered luminaires on the escape route are sufficient.
+                <strong>Emergency lighting — when required</strong> — dedicated emergency lighting
+                (self-contained battery-backed luminaires that illuminate automatically on mains
+                failure) is required where the escape route includes areas with no natural light,
+                where a building control officer determines the risk justifies it, or where the loft
+                is used for commercial or business purposes. For most residential loft conversions,
+                mains-powered luminaires on the escape route are sufficient.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switch positions</strong> — staircase lighting must be controllable from
-                the top and bottom of each flight. Two-way and intermediate switching is required
-                where three or more switch positions are needed (for example, loft landing,
-                intermediate floor landing, and ground floor hallway).
+                <strong>Switch positions</strong> — staircase lighting must be controllable from the
+                top and bottom of each flight. Two-way and intermediate switching is required where
+                three or more switch positions are needed (for example, loft landing, intermediate
+                floor landing, and ground floor hallway).
               </span>
             </li>
           </ul>
@@ -306,8 +311,8 @@ const sections = [
         <p>
           Loft conversion electrical work is always notifiable under Part P of the Building
           Regulations 2010. There are no exemptions for loft conversions — even minor electrical
-          work in the new space (adding a single socket, for example) is notifiable if it forms
-          part of the conversion project.
+          work in the new space (adding a single socket, for example) is notifiable if it forms part
+          of the conversion project.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -315,9 +320,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use a competent person scheme electrician</strong> — this is the simplest
-                route. NICEIC, NAPIT, and ELECSA registered electricians can self-certify their
-                work and notify the scheme on completion. The scheme notifies the local authority
-                and you receive a completion certificate to keep with your property documents.
+                route. NICEIC, NAPIT, and ELECSA registered electricians can self-certify their work
+                and notify the scheme on completion. The scheme notifies the local authority and you
+                receive a completion certificate to keep with your property documents.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -351,8 +356,8 @@ const sections = [
       <>
         <p>
           Routing cables in a loft conversion presents unique challenges compared to standard
-          domestic work. The new staircase, insulation, and roof structure all create obstacles
-          and require careful planning.
+          domestic work. The new staircase, insulation, and roof structure all create obstacles and
+          require careful planning.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -368,11 +373,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Safe zones</strong> — under Regulation 522.6.101 of BS 7671, cables in
-                walls must run in defined safe zones (vertically above or below accessories, or
+                <strong>Safe zones</strong> — under Regulation 522.6.101 of BS 7671, cables in walls
+                must run in defined safe zones (vertically above or below accessories, or
                 horizontally from accessories) or be protected by metallic conduit or mechanical
-                protection. This is particularly important in stud walls, which are common in
-                loft conversions.
+                protection. This is particularly important in stud walls, which are common in loft
+                conversions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -380,8 +385,8 @@ const sections = [
               <span>
                 <strong>Routing from lower floors</strong> — the main feed cables from the consumer
                 unit to the loft will need to pass through existing floors and walls. Plan these
-                routes with the builder before boarding begins, as retro-fitting cable routes through
-                fire-stopped floors and insulated walls is significantly more disruptive.
+                routes with the builder before boarding begins, as retro-fitting cable routes
+                through fire-stopped floors and insulated walls is significantly more disruptive.
               </span>
             </li>
           </ul>
@@ -404,8 +409,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope of the EIC</strong> — the EIC must cover all new circuits installed
-                in the loft conversion, including lighting, sockets, shower (if applicable), smoke
+                <strong>Scope of the EIC</strong> — the EIC must cover all new circuits installed in
+                the loft conversion, including lighting, sockets, shower (if applicable), smoke
                 alarm interlink, and any underfloor heating. If the consumer unit is upgraded, the
                 EIC scope includes the consumer unit installation.
               </span>
@@ -423,17 +428,16 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Store the EIC safely</strong> — keep the EIC with the property's building
-                regulations completion certificate. Both documents are required when the property
-                is sold and may be requested by insurers.
+                regulations completion certificate. Both documents are required when the property is
+                sold and may be requested by insurers.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Use the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink> to
-          complete the full certificate on site, including the schedule of test results. Generate a
-          professional PDF and email it to the client immediately on completion.
+          Use the <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+          to complete the full certificate on site, including the schedule of test results. Generate
+          a professional PDF and email it to the client immediately on completion.
         </p>
       </>
     ),
@@ -486,7 +490,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage loft conversion jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for EIC certificates, quoting, job management, and compliance. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -523,7 +527,7 @@ export default function LoftConversionElectricalGuidePage() {
       faqHeading="Frequently Asked Questions About Loft Conversion Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Complete Loft Conversion EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

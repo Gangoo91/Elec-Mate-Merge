@@ -103,22 +103,23 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Complete Electrical Installation Certificates for kitchen rewires on your phone.',
+    description: 'Complete Electrical Installation Certificates for kitchen rewires on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create itemised quotes for kitchen rewires with accurate material and labour pricing.',
+    description:
+      'Create itemised quotes for kitchen rewires with accurate material and labour pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description: 'Kitchen rewires often require a consumer unit upgrade to accommodate new circuits.',
+    description:
+      'Kitchen rewires often require a consumer unit upgrade to accommodate new circuits.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -144,23 +145,23 @@ const sections = [
       <>
         <p>
           The kitchen is the most electrically demanding room in a UK home. It contains the
-          highest-power appliances (cooker, hob, oven, dishwasher, washing machine), the most
-          socket outlets, and increasingly sophisticated lighting. A kitchen rewire ensures that
-          the electrical installation can safely supply all these loads with modern cable,
-          properly rated circuits, and RCD protection.
+          highest-power appliances (cooker, hob, oven, dishwasher, washing machine), the most socket
+          outlets, and increasingly sophisticated lighting. A kitchen rewire ensures that the
+          electrical installation can safely supply all these loads with modern cable, properly
+          rated circuits, and RCD protection.
         </p>
         <p>
-          A typical kitchen rewire costs <strong>£800 to £2,500</strong> depending on the number
-          of circuits, the size of the kitchen, and whether a consumer unit upgrade is included.
-          The work is notifiable under{' '}
+          A typical kitchen rewire costs <strong>£800 to £2,500</strong> depending on the number of
+          circuits, the size of the kitchen, and whether a consumer unit upgrade is included. The
+          work is notifiable under{' '}
           <SEOInternalLink href="/guides/building-regulations-electrical">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           and must be carried out by a qualified electrician.
         </p>
         <p>
-          This guide breaks down the costs, explains the circuits required for a modern kitchen,
-          and covers the regulatory requirements.
+          This guide breaks down the costs, explains the circuits required for a modern kitchen, and
+          covers the regulatory requirements.
         </p>
       </>
     ),
@@ -171,43 +172,53 @@ const sections = [
     content: (
       <>
         <p>
-          The following table shows typical costs for kitchen electrical work in the UK. All
-          prices include materials and labour.
+          The following table shows typical costs for kitchen electrical work in the UK. All prices
+          include materials and labour.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-4">
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Basic kitchen rewire</p>
-                <p className="text-white text-sm">Ring main, cooker circuit, lighting, 6–8 sockets</p>
+                <p className="text-white text-sm">
+                  Ring main, cooker circuit, lighting, 6–8 sockets
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £1,200</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Mid-range kitchen rewire</p>
-                <p className="text-white text-sm">Ring main, cooker, dedicated appliance circuits, under-cabinet lighting, extractor</p>
+                <p className="text-white text-sm">
+                  Ring main, cooker, dedicated appliance circuits, under-cabinet lighting, extractor
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,200 – £1,800</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Large kitchen rewire</p>
-                <p className="text-white text-sm">All above plus island power, multiple lighting zones, consumer unit upgrade</p>
+                <p className="text-white text-sm">
+                  All above plus island power, multiple lighting zones, consumer unit upgrade
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,800 – £2,500</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Cooker circuit only</p>
-                <p className="text-white text-sm">45A switch, 6.0mm² cable, connection to consumer unit</p>
+                <p className="text-white text-sm">
+                  45A switch, 6.0mm² cable, connection to consumer unit
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£200 – £350</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Under-cabinet LED lighting</p>
-                <p className="text-white text-sm">LED strip or puck lights, switched supply, 3–5 metre run</p>
+                <p className="text-white text-sm">
+                  LED strip or puck lights, switched supply, 3–5 metre run
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£150 – £300</p>
             </div>
@@ -221,11 +232,11 @@ const sections = [
           </div>
         </div>
         <p>
-          Material costs are a relatively small proportion of the total. A 45A cooker control
-          unit costs from approximately £7.60 at trade price. An extractor fan isolator switch
-          costs from approximately £6 to £8. 2.5mm² twin and earth cable for the ring main costs
-          approximately £0.80 to £1.20 per metre. The majority of the cost is labour for
-          routing cables, fitting accessories, and testing.
+          Material costs are a relatively small proportion of the total. A 45A cooker control unit
+          costs from approximately £7.60 at trade price. An extractor fan isolator switch costs from
+          approximately £6 to £8. 2.5mm² twin and earth cable for the ring main costs approximately
+          £0.80 to £1.20 per metre. The majority of the cost is labour for routing cables, fitting
+          accessories, and testing.
         </p>
       </>
     ),
@@ -254,9 +265,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cooker circuit (32A or 45A)</strong> — a dedicated radial circuit for the
-                cooker or built-in oven and hob. Cable size depends on the cooker rating: 6.0mm²
-                for most cookers up to 13kW, 10.0mm² for larger range cookers. The circuit
-                terminates at a 45A cooker control unit.
+                cooker or built-in oven and hob. Cable size depends on the cooker rating: 6.0mm² for
+                most cookers up to 13kW, 10.0mm² for larger range cookers. The circuit terminates at
+                a 45A cooker control unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,17 +275,17 @@ const sections = [
               <span>
                 <strong>Dedicated appliance circuits</strong> — dishwasher, washing machine, and
                 tumble dryer should each have a dedicated fused connection unit (FCU) or unswitched
-                socket. This prevents a fault on one appliance from affecting others and ensures
-                the fridge-freezer remains powered if another appliance trips a breaker.
+                socket. This prevents a fault on one appliance from affecting others and ensures the
+                fridge-freezer remains powered if another appliance trips a breaker.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting circuit</strong> — kitchen lighting (ceiling downlights,
-                under-cabinet lights, pendant over island) on a dedicated lighting circuit or
-                shared with the ground floor lighting. Separate switching zones for general ceiling
-                light and under-cabinet task lighting.
+                under-cabinet lights, pendant over island) on a dedicated lighting circuit or shared
+                with the ground floor lighting. Separate switching zones for general ceiling light
+                and under-cabinet task lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -308,19 +319,19 @@ const sections = [
               supplied by a 32A circuit with 6.0mm² twin and earth cable. With the diversity
               allowance in BS 7671 Table 10.2 (first 10A + 30% of remainder + 5A for socket if
               fitted), the actual calculated demand is typically 20 to 30A. A 45A cooker control
-              unit (trade price from approximately £7.60 for a basic unit, or £12.60 for a unit
-              with neon indicator) provides the connection point and local isolation.
+              unit (trade price from approximately £7.60 for a basic unit, or £12.60 for a unit with
+              neon indicator) provides the connection point and local isolation.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Range Cooker (above 13kW)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large range cookers (such as Rangemaster, AGA, or Falcon) can draw 15 to 20kW or
-              more. These require a 45A circuit with 10.0mm² twin and earth cable and a 45A
-              connection unit. Some dual-fuel range cookers have a lower electrical rating because
-              the hob is gas — check the data plate for the actual electrical rating before
-              sizing the cable. The cable must be sized for voltage drop as well as current
-              capacity, especially on longer runs.
+              Large range cookers (such as Rangemaster, AGA, or Falcon) can draw 15 to 20kW or more.
+              These require a 45A circuit with 10.0mm² twin and earth cable and a 45A connection
+              unit. Some dual-fuel range cookers have a lower electrical rating because the hob is
+              gas — check the data plate for the actual electrical rating before sizing the cable.
+              The cable must be sized for voltage drop as well as current capacity, especially on
+              longer runs.
             </p>
           </div>
         </div>
@@ -362,7 +373,8 @@ const sections = [
                 <strong>Under-cabinet lighting</strong> — LED strip or individual puck lights
                 mounted under wall units to illuminate the worktop. Provides essential task lighting
                 for food preparation. LED strip costs £10 to £30 per metre. Requires a switched
-                fused spur or connection to the lighting circuit. Total installed cost: £150 to £300.
+                fused spur or connection to the lighting circuit. Total installed cost: £150 to
+                £300.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -386,9 +398,9 @@ const sections = [
     content: (
       <>
         <p>
-          Kitchen islands are increasingly popular, and many homeowners want power sockets on
-          the island for small appliances, phone charging, or a pop-up workspace. Providing power
-          to a freestanding island requires planning:
+          Kitchen islands are increasingly popular, and many homeowners want power sockets on the
+          island for small appliances, phone charging, or a pop-up workspace. Providing power to a
+          freestanding island requires planning:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -404,27 +416,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pop-up sockets</strong> — flush-mounted sockets that pop up from the
-                worktop when needed and push back flush when not in use. Available with 13A sockets
-                and USB charging. Trade price: £30 to £80 per unit. Popular with homeowners because
-                they keep the worktop clear.
+                <strong>Pop-up sockets</strong> — flush-mounted sockets that pop up from the worktop
+                when needed and push back flush when not in use. Available with 13A sockets and USB
+                charging. Trade price: £30 to £80 per unit. Popular with homeowners because they
+                keep the worktop clear.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kickboard sockets</strong> — sockets fitted into the kickboard (plinth)
-                of the island, below the overhanging worktop. Less visible than worktop-mounted
+                <strong>Kickboard sockets</strong> — sockets fitted into the kickboard (plinth) of
+                the island, below the overhanging worktop. Less visible than worktop-mounted
                 sockets. Requires coordination with the kitchen fitter to position the cut-out.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The key is to plan the island power supply during the first-fix stage. Once the floor
-          is tiled and the island is installed, adding a power supply retrospectively is
-          significantly more expensive and disruptive. Typical cost for island power (cable run
-          plus pop-up socket or kickboard socket): £150 to £350.
+          The key is to plan the island power supply during the first-fix stage. Once the floor is
+          tiled and the island is installed, adding a power supply retrospectively is significantly
+          more expensive and disruptive. Typical cost for island power (cable run plus pop-up socket
+          or kickboard socket): £150 to £350.
         </p>
       </>
     ),
@@ -454,19 +466,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification</strong> — an Electrical Installation Certificate (EIC)
-                must be issued for a kitchen rewire. The certificate confirms that the installation
-                has been designed, constructed, inspected, and tested in accordance with BS 7671.
-                The homeowner should retain this certificate for property sale and insurance
-                purposes.
+                <strong>Certification</strong> — an Electrical Installation Certificate (EIC) must
+                be issued for a kitchen rewire. The certificate confirms that the installation has
+                been designed, constructed, inspected, and tested in accordance with BS 7671. The
+                homeowner should retain this certificate for property sale and insurance purposes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — all circuits in a kitchen must have 30mA RCD
-                protection. This is provided by RCBOs at the consumer unit (one per circuit) or
-                by an RCD protecting a group of circuits. Socket outlets must have additional
+                protection. This is provided by RCBOs at the consumer unit (one per circuit) or by
+                an RCD protecting a group of circuits. Socket outlets must have additional
                 protection per Regulation 411.3.3.
               </span>
             </li>
@@ -481,9 +492,9 @@ const sections = [
     content: (
       <>
         <p>
-          Kitchen rewires are high-value domestic jobs with good margins. A typical kitchen
-          rewire takes 1.5 to 3 days and is worth £800 to £2,500. They also create opportunities
-          for upselling — under-cabinet lighting, island power, smart switches, and consumer unit
+          Kitchen rewires are high-value domestic jobs with good margins. A typical kitchen rewire
+          takes 1.5 to 3 days and is worth £800 to £2,500. They also create opportunities for
+          upselling — under-cabinet lighting, island power, smart switches, and consumer unit
           upgrades.
         </p>
         <div className="space-y-4 my-4">
@@ -530,8 +541,8 @@ const sections = [
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   after testing the kitchen rewire. AI board scanning captures all circuit details.
-                  Voice test entry speeds up the schedule of test results. Issue the certificate
-                  to the homeowner on the day of completion.
+                  Voice test entry speeds up the schedule of test results. Issue the certificate to
+                  the homeowner on the day of completion.
                 </p>
               </div>
             </div>
@@ -539,7 +550,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify kitchen rewires on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price kitchen rewires accurately and deliver professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Price kitchen rewires accurately and deliver professional documentation. 7-day free trial."
           icon={CookingPot}
         />
       </>
@@ -576,7 +587,7 @@ export default function KitchenRewireCostPage() {
       faqHeading="Frequently Asked Questions About Kitchen Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Kitchen Rewires on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for kitchen rewires. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for kitchen rewires. 7-day free trial, cancel anytime."
     />
   );
 }

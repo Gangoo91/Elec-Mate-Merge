@@ -36,7 +36,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A consumer unit replacement in Bristol typically costs between £380 and £650 for most domestic properties — towards the higher end of English regional cities, reflecting Bristol\'s elevated labour rates and strong economic activity.',
+  "A consumer unit replacement in Bristol typically costs between £380 and £650 for most domestic properties — towards the higher end of English regional cities, reflecting Bristol's elevated labour rates and strong economic activity.",
   'Under Regulation 421.1.201 of BS 7671:2018+A3:2024, all domestic consumer units must be a type-tested coordinated assembly housed in a non-combustible (metal) enclosure.',
   'Consumer unit replacement is notifiable work under Part P of the Building Regulations (England and Wales). A registered electrician will self-certify through NICEIC, NAPIT, or ELECSA.',
   'BS 7671:2018+A3:2024 requires 30 mA RCD protection for all socket-outlet circuits up to 32 A and for cables concealed in walls at a depth less than 50 mm — covering virtually every circuit in a modern domestic installation.',
@@ -52,7 +52,7 @@ const faqs = [
   {
     question: 'Is consumer unit replacement notifiable under Part P in Bristol?',
     answer:
-      'Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify the work, or you must notify Bristol City Council\'s Building Control department before work begins. Failing to notify can cause complications when selling the property.',
+      "Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with NICEIC, NAPIT, or ELECSA to self-certify the work, or you must notify Bristol City Council's Building Control department before work begins. Failing to notify can cause complications when selling the property.",
   },
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Bristol?',
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Why are consumer unit replacement costs higher in Bristol than some other cities?',
     answer:
-      'Bristol\'s electricians face higher operating costs compared to many English regional cities. Bristol consistently records some of the highest wages outside London, and demand for skilled trades remains strong due to high levels of construction and renovation activity across the city. The Clean Air Zone may also add minor costs for tradespeople working in the city centre.',
+      "Bristol's electricians face higher operating costs compared to many English regional cities. Bristol consistently records some of the highest wages outside London, and demand for skilled trades remains strong due to high levels of construction and renovation activity across the city. The Clean Air Zone may also add minor costs for tradespeople working in the city centre.",
   },
   {
     question: 'Do I need an SPD when replacing a consumer unit in Bristol?',
@@ -77,7 +77,7 @@ const faqs = [
   {
     question: 'What documents should I receive after a consumer unit replacement in Bristol?',
     answer:
-      'You should receive an Electrical Installation Certificate (EIC) and, within 30 days, a Building Regulations Compliance Certificate from your electrician\'s competent person scheme. Keep both — they are required when selling the property and may be requested by mortgage lenders.',
+      "You should receive an Electrical Installation Certificate (EIC) and, within 30 days, a Building Regulations Compliance Certificate from your electrician's competent person scheme. Keep both — they are required when selling the property and may be requested by mortgage lenders.",
   },
 ];
 
@@ -85,8 +85,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -125,8 +124,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -174,10 +172,10 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol electricians typically charge day rates of £280 to £380 — towards the upper
-          end of English regional rates, reflecting the city's high wages, strong trade demand,
-          and Clean Air Zone operating considerations. Most domestic consumer unit replacements
-          are completed within a single working day.
+          Bristol electricians typically charge day rates of £280 to £380 — towards the upper end of
+          English regional rates, reflecting the city's high wages, strong trade demand, and Clean
+          Air Zone operating considerations. Most domestic consumer unit replacements are completed
+          within a single working day.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Bristol Pricing Breakdown (2026)</h3>
@@ -193,34 +191,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £480 to
-                £650 total. The most common domestic job in Bristol. Materials: £260 to £390.
-                Labour: £260 to £310. EIC and Part P: £30 to £50.
+                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £480 to £650
+                total. The most common domestic job in Bristol. Materials: £260 to £390. Labour:
+                £260 to £310. EIC and Part P: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Larger semi or detached (14-way high-integrity with SPD)</strong> — £620 to
-                £950 total. For properties with 12+ circuits, EV charger, or solar PV.
-                Materials: £380 to £560. Labour: £300 to £380. EIC and Part P: £30 to £50.
+                £950 total. For properties with 12+ circuits, EV charger, or solar PV. Materials:
+                £380 to £560. Labour: £300 to £380. EIC and Part P: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,300 to £1,900+ total. Required for
-                larger homes or commercial premises with three-phase supply. Materials: £520 to
-                £820. Labour: £460 to £620. EIC and Part P: £50 to £80.
+                <strong>Three-phase property</strong> — £1,300 to £1,900+ total. Required for larger
+                homes or commercial premises with three-phase supply. Materials: £520 to £820.
+                Labour: £460 to £620. EIC and Part P: £50 to £80.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Properties within Bristol's Clean Air Zone may attract a small surcharge from
-          electricians operating diesel vans. Outer areas such as Yate, Keynsham, and Nailsea
-          may offer slightly more competitive rates from local contractors. Always obtain at
-          least three itemised quotes.
+          Properties within Bristol's Clean Air Zone may attract a small surcharge from electricians
+          operating diesel vans. Outer areas such as Yate, Keynsham, and Nailsea may offer slightly
+          more competitive rates from local contractors. Always obtain at least three itemised
+          quotes.
         </p>
       </>
     ),
@@ -247,16 +245,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic consumer unit</strong> — since January 2016, Regulation 421.1.201
-                of BS 7671 requires non-combustible (metal) enclosures. A plastic enclosure is a
-                fire risk in the event of an internal arc fault.
+                <strong>Plastic consumer unit</strong> — since January 2016, Regulation 421.1.201 of
+                BS 7671 requires non-combustible (metal) enclosures. A plastic enclosure is a fire
+                risk in the event of an internal arc fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
-                socket circuits and concealed cables. Boards without RCDs or RCBOs are a significant
+                <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection on socket
+                circuits and concealed cables. Boards without RCDs or RCBOs are a significant
                 electric shock risk.
               </span>
             </li>
@@ -291,15 +289,15 @@ const sections = [
           Regulations in England and Wales. In Bristol, the work must either be carried out by an
           electrician registered with a competent person scheme — such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Bristol City Council's Building Control department before
-          work begins.
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Bristol City Council's Building Control department before work
+          begins.
         </p>
         <p>
-          An Electrical Installation Certificate (EIC) must be issued under Regulation 421.1.201
-          of BS 7671. A registered electrician self-certifies and submits Part P notification
-          automatically through their scheme. You should receive a Building Regulations
-          Compliance Certificate within 30 days of the work being completed.
+          An Electrical Installation Certificate (EIC) must be issued under Regulation 421.1.201 of
+          BS 7671. A registered electrician self-certifies and submits Part P notification
+          automatically through their scheme. You should receive a Building Regulations Compliance
+          Certificate within 30 days of the work being completed.
         </p>
         <p>
           Keep both the EIC and the Compliance Certificate — they are required when selling the
@@ -322,8 +320,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Survey and isolation</strong> — the electrician surveys the board,
-                identifies all circuits, and safely isolates the mains at the DNO cutout. All
-                power is off for the duration of the work.
+                identifies all circuits, and safely isolates the mains at the DNO cutout. All power
+                is off for the duration of the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,8 +335,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit
-                is mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
+                <strong>Step 3: Install new consumer unit</strong> — a new metal consumer unit is
+                mounted, fitted with RCBOs and SPD, all circuits reconnected and labelled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -369,23 +367,23 @@ const sections = [
     content: (
       <>
         <p>
-          A standard like-for-like consumer unit replacement in a Bristol property typically takes
-          4 to 6 hours, including all testing and certification.
+          A standard like-for-like consumer unit replacement in a Bristol property typically takes 4
+          to 6 hours, including all testing and certification.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
-              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common
-              in post-1970s Bristol housing and modern waterfront developments.
+              Like-for-like replacement with adequate wiring and earthing. 4 to 6 hours. Common in
+              post-1970s Bristol housing and modern waterfront developments.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Complex Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
               Where earthing requires upgrading, meter tails need replacing, or cables need
-              extending. 6 to 10 hours. Common in Bristol's Victorian and Edwardian terraces
-              with original rubber-insulated wiring.
+              extending. 6 to 10 hours. Common in Bristol's Victorian and Edwardian terraces with
+              original rubber-insulated wiring.
             </p>
           </div>
         </div>
@@ -420,8 +418,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC included</strong> — confirm the Electrical Installation Certificate
-                and Part P notification are included in the price.
+                <strong>EIC included</strong> — confirm the Electrical Installation Certificate and
+                Part P notification are included in the price.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -472,7 +470,7 @@ export default function ConsumerUnitReplacementBristolPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Bristol"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

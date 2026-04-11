@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'What does an earth fault error mean on my EV charger?',
     answer:
-      'An earth fault error means the charger has detected current flowing through the protective earth conductor when it should not be. This is a safety-critical indication. The fault could be in the charger itself, in the charging cable, in the vehicle\'s onboard charger, or in the fixed wiring between the consumer unit and the charger. Do not repeatedly reset the charger to override this error — it exists to prevent electric shock. Have a qualified electrician test the circuit, including insulation resistance testing at 500V DC on the fixed wiring, and earth fault loop impedance measurement to verify the protective conductor is intact.',
+      "An earth fault error means the charger has detected current flowing through the protective earth conductor when it should not be. This is a safety-critical indication. The fault could be in the charger itself, in the charging cable, in the vehicle's onboard charger, or in the fixed wiring between the consumer unit and the charger. Do not repeatedly reset the charger to override this error — it exists to prevent electric shock. Have a qualified electrician test the circuit, including insulation resistance testing at 500V DC on the fixed wiring, and earth fault loop impedance measurement to verify the protective conductor is intact.",
   },
   {
     question: 'My Zappi shows a flashing red light — what does it mean?',
@@ -73,17 +73,17 @@ const faqs = [
   {
     question: 'Why does my EV charger show an overcurrent fault?',
     answer:
-      'An overcurrent fault means the charger has detected current exceeding its rated capacity. This can be caused by an issue in the vehicle\'s onboard charger drawing more current than negotiated, a fault in the charger\'s current measurement circuitry, or — more commonly — the charger\'s current limit has been set higher than the circuit can safely supply. Check that the charger\'s maximum current setting matches the circuit\'s capacity (the cable size and protective device rating). A 32A charger on a circuit protected by a 32A MCB with 6mm twin and earth cable is at its maximum — any additional load on the circuit could trigger an overcurrent condition.',
+      "An overcurrent fault means the charger has detected current exceeding its rated capacity. This can be caused by an issue in the vehicle's onboard charger drawing more current than negotiated, a fault in the charger's current measurement circuitry, or — more commonly — the charger's current limit has been set higher than the circuit can safely supply. Check that the charger's maximum current setting matches the circuit's capacity (the cable size and protective device rating). A 32A charger on a circuit protected by a 32A MCB with 6mm twin and earth cable is at its maximum — any additional load on the circuit could trigger an overcurrent condition.",
   },
   {
     question: 'What RCD type do I need for an EV charger?',
     answer:
-      'BS 7671 Regulation 722.531.2 requires at minimum a Type A RCD for EV charging circuits. However, many charger manufacturers — including myenergi (Zappi) and Andersen — require or recommend Type A RCD protection with the charger\'s built-in DC fault detection, or an external Type B RCD. A Type AC RCD is not suitable for EV charging circuits because it cannot detect the DC fault components that EV chargers can produce. If your existing consumer unit has Type AC RCDs, the EV charger circuit will need its own Type A or Type B RCBO, or the charger must have integrated DC fault protection.',
+      "BS 7671 Regulation 722.531.2 requires at minimum a Type A RCD for EV charging circuits. However, many charger manufacturers — including myenergi (Zappi) and Andersen — require or recommend Type A RCD protection with the charger's built-in DC fault detection, or an external Type B RCD. A Type AC RCD is not suitable for EV charging circuits because it cannot detect the DC fault components that EV chargers can produce. If your existing consumer unit has Type AC RCDs, the EV charger circuit will need its own Type A or Type B RCBO, or the charger must have integrated DC fault protection.",
   },
   {
     question: 'My Pod Point charger is offline — how do I fix it?',
     answer:
-      'A Pod Point charger showing as offline in the app typically has a communication fault rather than an electrical fault. Check your Wi-Fi signal strength at the charger location — Pod Point chargers need a reliable connection to the Pod Point servers. If the charger\'s LED shows a steady green or white light, the charger itself is operational and the issue is purely communication. Try restarting your router and power-cycling the charger. If the charger LED shows red or amber, there may be an electrical fault requiring professional attention. Pod Point\'s support team can remotely diagnose communication issues.',
+      "A Pod Point charger showing as offline in the app typically has a communication fault rather than an electrical fault. Check your Wi-Fi signal strength at the charger location — Pod Point chargers need a reliable connection to the Pod Point servers. If the charger's LED shows a steady green or white light, the charger itself is operational and the issue is purely communication. Try restarting your router and power-cycling the charger. If the charger LED shows red or amber, there may be an electrical fault requiring professional attention. Pod Point's support team can remotely diagnose communication issues.",
   },
   {
     question: 'Is it safe to charge my car if the charger previously showed an error?',
@@ -96,7 +96,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-certificate',
     title: 'EICR Guide',
-    description: 'How an EICR can identify issues with EV charger circuits and earthing arrangements.',
+    description:
+      'How an EICR can identify issues with EV charger circuits and earthing arrangements.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -110,14 +111,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding',
-    description: 'Systematic approach to diagnosing electrical faults including EV charger circuits.',
+    description:
+      'Systematic approach to diagnosing electrical faults including EV charger circuits.',
     icon: Search,
     category: 'Guide',
   },
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
-    description: 'BS 7671 requirements for consumer units including EV charging circuit protection.',
+    description:
+      'BS 7671 requirements for consumer units including EV charging circuit protection.',
     icon: Cable,
     category: 'Guide',
   },
@@ -135,16 +138,17 @@ const sections = [
       <>
         <p>
           Your EV charger is displaying an error code, a warning light, or has stopped charging
-          mid-session. Before you panic, understand that EV chargers have multiple layers of built-in
-          safety monitoring, and error codes are the charger doing its job — detecting a condition
-          and protecting you, your vehicle, and your property.
+          mid-session. Before you panic, understand that EV chargers have multiple layers of
+          built-in safety monitoring, and error codes are the charger doing its job — detecting a
+          condition and protecting you, your vehicle, and your property.
         </p>
         <p>
           EV charger errors generally fall into five categories: RCD trip (earth leakage detected),
           earth fault (protective conductor issue), overcurrent (too much current flowing),
           communication fault (loss of connection to app/server/vehicle), and temperature fault
-          (overheating). The first three are safety-critical and require professional investigation if
-          they persist. Communication and temperature faults are often resolved with simple steps.
+          (overheating). The first three are safety-critical and require professional investigation
+          if they persist. Communication and temperature faults are often resolved with simple
+          steps.
         </p>
         <p>
           This guide covers the most common error codes from the three most popular UK home charger
@@ -226,17 +230,18 @@ const sections = [
       <>
         <p>
           Pod Point chargers are widely installed through partnerships with car manufacturers and
-          energy companies. They communicate status primarily through LED colours and the Pod Point app.
+          energy companies. They communicate status primarily through LED colours and the Pod Point
+          app.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Red LED — Fault condition.</strong> A solid or flashing red LED indicates the
-                charger has detected a fault. The Pod Point app will typically show a specific error
-                message. Power-cycle the charger once. If the red LED returns, contact Pod Point
-                support or a qualified electrician.
+                <strong>Red LED — Fault condition.</strong> A solid or flashing red LED indicates
+                the charger has detected a fault. The Pod Point app will typically show a specific
+                error message. Power-cycle the charger once. If the red LED returns, contact Pod
+                Point support or a qualified electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -261,8 +266,8 @@ const sections = [
               <span>
                 <strong>Charge session ending prematurely.</strong> If the charger stops before the
                 vehicle is fully charged, check whether the vehicle's onboard charge timer or limit
-                is set. Also check for RCD trips at the consumer unit — the charger may be restarting
-                after each trip and losing the session.
+                is set. Also check for RCD trips at the consumer unit — the charger may be
+                restarting after each trip and losing the session.
               </span>
             </li>
           </ul>
@@ -367,8 +372,8 @@ const sections = [
         </div>
         <p>
           If your EV charger circuit is protected by a Type AC RCD (common in older consumer units),
-          this is the most likely cause of repeated RCD tripping. The solution is to install a Type A
-          or Type B RCBO dedicated to the EV circuit, or to upgrade the consumer unit.
+          this is the most likely cause of repeated RCD tripping. The solution is to install a Type
+          A or Type B RCBO dedicated to the EV circuit, or to upgrade the consumer unit.
         </p>
       </>
     ),
@@ -389,27 +394,40 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Damaged charging cable — insulation breakdown allowing current to reach the earth conductor or cable screen</span>
+              <span>
+                Damaged charging cable — insulation breakdown allowing current to reach the earth
+                conductor or cable screen
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Moisture ingress — water in the charger enclosure, cable connector, or vehicle charging port</span>
+              <span>
+                Moisture ingress — water in the charger enclosure, cable connector, or vehicle
+                charging port
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Vehicle onboard charger fault — the vehicle's internal charging electronics have developed an earth leakage</span>
+              <span>
+                Vehicle onboard charger fault — the vehicle's internal charging electronics have
+                developed an earth leakage
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Fixed wiring fault — damaged cable between consumer unit and charger, particularly where cable passes through walls or underground</span>
+              <span>
+                Fixed wiring fault — damaged cable between consumer unit and charger, particularly
+                where cable passes through walls or underground
+              </span>
             </li>
           </ul>
         </div>
         <p>
           An electrician investigating an earth fault on an EV charger circuit should perform
-          insulation resistance testing at 500V DC on the fixed wiring with the charger disconnected,
-          earth fault loop impedance testing, and visual inspection of all connections. If the fixed
-          wiring tests satisfactorily, the fault is in the charger or the vehicle.
+          insulation resistance testing at 500V DC on the fixed wiring with the charger
+          disconnected, earth fault loop impedance testing, and visual inspection of all
+          connections. If the fixed wiring tests satisfactorily, the fault is in the charger or the
+          vehicle.
         </p>
       </>
     ),
@@ -424,17 +442,15 @@ const sections = [
           configured to deliver. This is distinct from an RCD trip — overcurrent is about the
           magnitude of current, not earth leakage.
         </p>
-        <p>
-          Common causes include:
-        </p>
+        <p>Common causes include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Charger current limit set too high</strong> — a 7kW charger drawing 32A on
-                a circuit with 6mm cable and a 32A MCB is at its absolute maximum. The charger
-                should be set to 30A or lower to provide a safety margin.
+                <strong>Charger current limit set too high</strong> — a 7kW charger drawing 32A on a
+                circuit with 6mm cable and a 32A MCB is at its absolute maximum. The charger should
+                be set to 30A or lower to provide a safety margin.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -479,11 +495,13 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <h4 className="font-bold text-white mb-2">Charger-to-vehicle communication (pilot signal)</h4>
+            <h4 className="font-bold text-white mb-2">
+              Charger-to-vehicle communication (pilot signal)
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              The charger and vehicle communicate via the control pilot signal in the charging cable.
-              This negotiates the maximum charge rate and confirms safety checks before power flows.
-              A pilot fault prevents charging entirely. Causes include a damaged cable, dirty
+              The charger and vehicle communicate via the control pilot signal in the charging
+              cable. This negotiates the maximum charge rate and confirms safety checks before power
+              flows. A pilot fault prevents charging entirely. Causes include a damaged cable, dirty
               connector pins, a fault in the vehicle's charge port, or a charger control board
               issue.
             </p>
@@ -501,9 +519,7 @@ const sections = [
     heading: 'When to Call an Electrician',
     content: (
       <>
-        <p>
-          Not every EV charger error requires an electrician. Here is the urgency scale:
-        </p>
+        <p>Not every EV charger error requires an electrician. Here is the urgency scale:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -582,7 +598,8 @@ const sections = [
                   Isolate the charger and test the fixed wiring: insulation resistance at 500V DC
                   (L-E, N-E, L-N — minimum 1 megohm), continuity of protective conductor (R1+R2),
                   and earth fault loop impedance (Zs). Compare Zs with the maximum permitted for the
-                  protective device. For a 32A Type B MCB, the maximum Zs is 1.37 ohms at the origin.
+                  protective device. For a 32A Type B MCB, the maximum Zs is 1.37 ohms at the
+                  origin.
                 </p>
               </div>
             </div>
@@ -596,7 +613,8 @@ const sections = [
                   Verify the installation meets Section 722 requirements: dedicated circuit, correct
                   cable sizing for continuous load (Section 722.531.1 notes that EV charging is a
                   continuous load and must be rated accordingly), correct RCD type, and appropriate
-                  earthing arrangement. Many faults are caused by non-compliant original installations.
+                  earthing arrangement. Many faults are caused by non-compliant original
+                  installations.
                 </p>
               </div>
             </div>
@@ -629,8 +647,7 @@ export default function EVChargerErrorCodesPage() {
       badgeIcon={Car}
       heroTitle={
         <>
-          EV Charger Error Codes:{' '}
-          <span className="text-yellow-400">What They Mean</span>
+          EV Charger Error Codes: <span className="text-yellow-400">What They Mean</span>
         </>
       }
       heroSubtitle="Your EV charger is showing an error. This guide covers the most common fault codes from Zappi, Pod Point, and Andersen chargers — including RCD trips, earth faults, overcurrent, and communication errors — and tells you what to do next."
@@ -641,7 +658,7 @@ export default function EVChargerErrorCodesPage() {
       faqHeading="Frequently Asked Questions About EV Charger Errors"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document EV Charger Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, EV charger testing documentation, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

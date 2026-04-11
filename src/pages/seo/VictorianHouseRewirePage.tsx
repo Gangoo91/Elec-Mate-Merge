@@ -61,7 +61,8 @@ const faqs = [
       'A typical Victorian terraced house with three bedrooms takes 5 to 10 working days to rewire. Solid masonry walls (no cavity) make routing cables significantly harder than in modern houses — electricians must chase channels in plaster and masonry, or run surface conduit. Larger Victorian townhouses or those with complex layouts can take 2 to 3 weeks. The property is usually habitable during the rewire, though there will be periods without power.',
   },
   {
-    question: 'Do I need planning permission or listed building consent to rewire a Victorian house?',
+    question:
+      'Do I need planning permission or listed building consent to rewire a Victorian house?',
     answer:
       'Standard Victorian properties do not require planning permission for an electrical rewire. However, if your property is Grade I or Grade II listed, you will need listed building consent before carrying out any works that affect the character of the building — including chasing new cable routes into original plasterwork. See our listed building electrical guide for full details.',
   },
@@ -86,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/period-property-electrical',
     title: 'Period Property Electrical Guide',
-    description: 'General guide covering all pre-1966 properties — what to look for at survey and EICR importance.',
+    description:
+      'General guide covering all pre-1966 properties — what to look for at survey and EICR importance.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/edwardian-house-electrical',
     title: 'Edwardian House Electrical Guide',
-    description: 'Electrical hazards and rewiring considerations for 1900–1910 Edwardian properties.',
+    description:
+      'Electrical hazards and rewiring considerations for 1900–1910 Edwardian properties.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/listed-building-electrical',
     title: 'Listed Building Electrical Guide',
-    description: 'Rewiring Grade I and II listed Victorian properties — consent, conservation officers, and sympathetic installation.',
+    description:
+      'Rewiring Grade I and II listed Victorian properties — consent, conservation officers, and sympathetic installation.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -155,8 +159,8 @@ const sections = [
                 <strong>Lead-sheathed wiring</strong> — some Victorian properties have lead-sheathed
                 cables where the outer sheath is lead rather than rubber or PVC. Lead sheathing
                 provides some mechanical protection but the insulation inside still degrades.
-                Lead-sheathed cables are immediately identifiable by their dull grey metallic
-                outer sheath.
+                Lead-sheathed cables are immediately identifiable by their dull grey metallic outer
+                sheath.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -166,8 +170,8 @@ const sections = [
                 has only a live and a neutral conductor, with no earth. Under BS 7671:2018+A3:2024,
                 a missing protective earth conductor is classified as a C1 or C2 observation
                 depending on the context. Without an earth, fault protection relies entirely on
-                overcurrent devices (fuses), which may not operate quickly enough to prevent
-                injury or fire.
+                overcurrent devices (fuses), which may not operate quickly enough to prevent injury
+                or fire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -188,8 +192,9 @@ const sections = [
             EICR (Electrical Installation Condition Report)
           </SEOInternalLink>{' '}
           on an unmodernised Victorian property will almost always return a Satisfactory outcome
-          only if significant modernisation work has already been carried out. Original installations
-          will typically generate C1 and C2 observations making the report Unsatisfactory.
+          only if significant modernisation work has already been carried out. Original
+          installations will typically generate C1 and C2 observations making the report
+          Unsatisfactory.
         </p>
       </>
     ),
@@ -210,39 +215,39 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Knob-and-tube (pre-1920)</strong> — individual conductors run through
-                ceramic knobs nailed to joists and through ceramic tubes at penetration points.
-                No earth conductor. Conductors may be cloth-covered or rubber-insulated. This
-                wiring system has no mechanical protection between conductors and structural
-                timber — a serious fire risk if the insulation has degraded.
+                ceramic knobs nailed to joists and through ceramic tubes at penetration points. No
+                earth conductor. Conductors may be cloth-covered or rubber-insulated. This wiring
+                system has no mechanical protection between conductors and structural timber — a
+                serious fire risk if the insulation has degraded.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lead-sheathed and VIR (1900s–1950s)</strong> — Vulcanised India Rubber
-                (VIR) insulated cables with a lead sheath or woven braid outer covering. Often
-                run in steel or brass conduit, particularly for ring final circuits installed
-                after World War Two. The rubber insulation inside the conduit degrades even
-                though the conduit itself remains intact.
+                <strong>Lead-sheathed and VIR (1900s–1950s)</strong> — Vulcanised India Rubber (VIR)
+                insulated cables with a lead sheath or woven braid outer covering. Often run in
+                steel or brass conduit, particularly for ring final circuits installed after World
+                War Two. The rubber insulation inside the conduit degrades even though the conduit
+                itself remains intact.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Early PVC (1950s–1966)</strong> — PVC-insulated cables began appearing
-                in UK properties from the early 1950s. Pre-1966 PVC wiring is significantly
-                better than rubber but is now over 60 years old, may lack adequate earth
-                conductors, and was installed to older wiring regulations. An EICR will assess
-                whether it remains adequate for continued use.
+                <strong>Early PVC (1950s–1966)</strong> — PVC-insulated cables began appearing in UK
+                properties from the early 1950s. Pre-1966 PVC wiring is significantly better than
+                rubber but is now over 60 years old, may lack adequate earth conductors, and was
+                installed to older wiring regulations. An EICR will assess whether it remains
+                adequate for continued use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Round pin sockets</strong> — the presence of 5A or 15A round pin sockets
-                (BS 546) is a reliable indicator that the wiring has not been modernised. Round
-                pin sockets cannot accept modern 13A square pin plugs, so any extensions or
-                adaptors in use present an additional hazard.
+                <strong>Round pin sockets</strong> — the presence of 5A or 15A round pin sockets (BS
+                546) is a reliable indicator that the wiring has not been modernised. Round pin
+                sockets cannot accept modern 13A square pin plugs, so any extensions or adaptors in
+                use present an additional hazard.
               </span>
             </li>
           </ul>
@@ -256,10 +261,10 @@ const sections = [
     content: (
       <>
         <p>
-          Victorian and Edwardian properties that have had some electrical work carried out may
-          have a cast iron or Bakelite consumer unit (fuse board) installed between the 1940s and
-          1960s. These units were common in post-war housing improvement programmes but are now
-          considered obsolete and potentially dangerous.
+          Victorian and Edwardian properties that have had some electrical work carried out may have
+          a cast iron or Bakelite consumer unit (fuse board) installed between the 1940s and 1960s.
+          These units were common in post-war housing improvement programmes but are now considered
+          obsolete and potentially dangerous.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -267,10 +272,10 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — cast iron consumer units predate the
-                introduction of RCD (Residual Current Device) protection. Under Regulation
-                411.3.3 of BS 7671, RCD protection at 30mA is required on socket-outlet circuits.
-                Without RCD protection, a person receiving an electric shock may not be protected
-                from a potentially fatal current.
+                introduction of RCD (Residual Current Device) protection. Under Regulation 411.3.3
+                of BS 7671, RCD protection at 30mA is required on socket-outlet circuits. Without
+                RCD protection, a person receiving an electric shock may not be protected from a
+                potentially fatal current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -278,29 +283,28 @@ const sections = [
               <span>
                 <strong>Rewirable fuses</strong> — original fuse boards use rewirable fuse wire
                 rather than modern circuit breakers. If a previous occupant has replaced a blown
-                fuse with wire of an incorrect rating (or even a nail or piece of foil), the
-                circuit has no meaningful overcurrent protection. This is a significant fire risk.
+                fuse with wire of an incorrect rating (or even a nail or piece of foil), the circuit
+                has no meaningful overcurrent protection. This is a significant fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-combustible enclosure requirement</strong> — modern consumer units
-                must have a non-combustible enclosure (steel) following Amendment 3 to BS 7671.
-                Cast iron units are technically non-combustible but cannot accept modern protective
-                devices. Replacing a cast iron consumer unit with a modern metal-clad unit is
-                a significant improvement even if the underlying wiring is not replaced at the
-                same time.
+                <strong>Non-combustible enclosure requirement</strong> — modern consumer units must
+                have a non-combustible enclosure (steel) following Amendment 3 to BS 7671. Cast iron
+                units are technically non-combustible but cannot accept modern protective devices.
+                Replacing a cast iron consumer unit with a modern metal-clad unit is a significant
+                improvement even if the underlying wiring is not replaced at the same time.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Replacing a consumer unit alone (without rewiring) costs approximately £400 to £900
-          for a typical Victorian property. This does not address the underlying wiring condition
-          but does provide modern RCD protection and circuit breakers. In many cases, however,
-          the existing wiring is not suitable for connection to a new consumer unit without
-          further remedial work.
+          Replacing a consumer unit alone (without rewiring) costs approximately £400 to £900 for a
+          typical Victorian property. This does not address the underlying wiring condition but does
+          provide modern RCD protection and circuit breakers. In many cases, however, the existing
+          wiring is not suitable for connection to a new consumer unit without further remedial
+          work.
         </p>
       </>
     ),
@@ -313,9 +317,9 @@ const sections = [
         <p>
           One of the most significant practical challenges in rewiring a Victorian house is the
           absence of a cavity wall. Victorian properties were built with solid brick or stone
-          external walls, typically 225mm (9 inch) or 340mm (13 inch) brickwork. There is no
-          cavity through which cables can be routed — every cable must either be chased into the
-          masonry or surface-mounted.
+          external walls, typically 225mm (9 inch) or 340mm (13 inch) brickwork. There is no cavity
+          through which cables can be routed — every cable must either be chased into the masonry or
+          surface-mounted.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -325,9 +329,8 @@ const sections = [
                 <strong>Chasing masonry</strong> — cutting cable channels (chases) into Victorian
                 brickwork is significantly harder and more time-consuming than chasing modern
                 blockwork. The bricks are harder and denser, the lime mortar requires careful
-                handling, and the depth of plasterwork varies. Chasing adds considerable time
-                to the rewire — typically 20 to 40 per cent more than an equivalent modern
-                property.
+                handling, and the depth of plasterwork varies. Chasing adds considerable time to the
+                rewire — typically 20 to 40 per cent more than an equivalent modern property.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -335,18 +338,18 @@ const sections = [
               <span>
                 <strong>Making good</strong> — once cables are chased in and fixed, the channels
                 must be filled and made good. In a Victorian property with original horsehair
-                plaster or lime render, matching the existing finish is difficult and may require
-                a specialist plasterer. The electrician will typically leave the chases filled
-                with bonding coat; a plasterer or decorator finishes the surface.
+                plaster or lime render, matching the existing finish is difficult and may require a
+                specialist plasterer. The electrician will typically leave the chases filled with
+                bonding coat; a plasterer or decorator finishes the surface.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surface mounting</strong> — in some areas (loft spaces, garages, utility
-                rooms, and areas that will be covered by kitchen units) cables can be run in
-                surface conduit or mini-trunking to avoid chasing. This is faster and cheaper
-                but less aesthetically acceptable in main living areas.
+                rooms, and areas that will be covered by kitchen units) cables can be run in surface
+                conduit or mini-trunking to avoid chasing. This is faster and cheaper but less
+                aesthetically acceptable in main living areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -354,8 +357,8 @@ const sections = [
               <span>
                 <strong>Floor voids</strong> — Victorian properties with suspended timber ground
                 floors offer an alternative route for cables running at low level. Socket outlet
-                cables can often be run beneath floorboards rather than through walls, reducing
-                the amount of chasing required on the ground floor.
+                cables can often be run beneath floorboards rather than through walls, reducing the
+                amount of chasing required on the ground floor.
               </span>
             </li>
           </ul>
@@ -380,9 +383,9 @@ const sections = [
               <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ceiling roses</strong> — original Victorian ceiling roses are often large,
-                deeply moulded plaster features. Routing new lighting cables without disturbing
-                the rose requires careful work from the floor above. Where this is not possible,
-                the rose can be carefully removed, cables routed, and the rose refitted. Electricians
+                deeply moulded plaster features. Routing new lighting cables without disturbing the
+                rose requires careful work from the floor above. Where this is not possible, the
+                rose can be carefully removed, cables routed, and the rose refitted. Electricians
                 experienced in period properties understand how to do this without damage.
               </span>
             </li>
@@ -399,9 +402,9 @@ const sections = [
               <HardHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Picture rails</strong> — cables can sometimes be discretely run behind
-                picture rails where they exist. Some electricians use this as a practical route
-                for switch drops, particularly in reception rooms where cornicing makes wall
-                chasing very difficult.
+                picture rails where they exist. Some electricians use this as a practical route for
+                switch drops, particularly in reception rooms where cornicing makes wall chasing
+                very difficult.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -409,9 +412,9 @@ const sections = [
               <span>
                 <strong>Decorator involvement</strong> — a Victorian house rewire is invariably
                 followed by significant redecoration. It is worth planning the rewire and decoration
-                as a single project, scheduling the electrician first and the decorator second,
-                to minimise disruption and ensure all making-good is properly covered before
-                the final finish is applied.
+                as a single project, scheduling the electrician first and the decorator second, to
+                minimise disruption and ensure all making-good is properly covered before the final
+                finish is applied.
               </span>
             </li>
           </ul>
@@ -427,53 +430,52 @@ const sections = [
         <p>
           The cost of rewiring a Victorian house varies considerably depending on the size of the
           property, the number of circuits required, the difficulty of cable routing through solid
-          walls and period features, and the location. The following figures represent typical
-          costs for a full rewire including consumer unit, all circuits, sockets, switches, and
-          lighting points. Making good (plastering) is usually quoted separately.
+          walls and period features, and the location. The following figures represent typical costs
+          for a full rewire including consumer unit, all circuits, sockets, switches, and lighting
+          points. Making good (plastering) is usually quoted separately.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom Victorian terrace</strong> — £3,000 to £5,000. Typically
-                10 to 14 circuits. Solid wall construction adds 1 to 2 days compared to a
-                modern equivalent. London prices typically 20 to 30 per cent higher.
+                <strong>Two-bedroom Victorian terrace</strong> — £3,000 to £5,000. Typically 10 to
+                14 circuits. Solid wall construction adds 1 to 2 days compared to a modern
+                equivalent. London prices typically 20 to 30 per cent higher.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom Victorian terrace</strong> — £4,500 to £7,000. The most
-                common Victorian property type. Double-fronted Victorians may fall at the higher
-                end of this range.
+                <strong>Three-bedroom Victorian terrace</strong> — £4,500 to £7,000. The most common
+                Victorian property type. Double-fronted Victorians may fall at the higher end of
+                this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Four or five-bedroom Victorian townhouse</strong> — £6,000 to £12,000+.
-                Three-storey properties with multiple reception rooms, large kitchens, and
-                original features require considerably more labour. Listed properties at the
-                upper end.
+                Three-storey properties with multiple reception rooms, large kitchens, and original
+                features require considerably more labour. Listed properties at the upper end.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement only</strong> — £400 to £900. Replaces the
-                fuse board with a modern metal-clad unit with RCD protection, but does not
-                address the condition of the existing wiring. Only appropriate where the wiring
-                has already been assessed as adequate.
+                <strong>Consumer unit replacement only</strong> — £400 to £900. Replaces the fuse
+                board with a modern metal-clad unit with RCD protection, but does not address the
+                condition of the existing wiring. Only appropriate where the wiring has already been
+                assessed as adequate.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These prices do not include VAT (which applies at the standard rate on labour and
-          materials for residential electrical work) or making good. Always obtain at least
-          three quotes from NICEIC- or NAPIT-registered electricians and ask each to specify
-          the scope of work in writing.
+          materials for residential electrical work) or making good. Always obtain at least three
+          quotes from NICEIC- or NAPIT-registered electricians and ask each to specify the scope of
+          work in writing.
         </p>
       </>
     ),
@@ -494,10 +496,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>LED lighting throughout</strong> — replacing all lighting circuits with
-                LED fittings contributes directly to the EPC SAP calculation under the lighting
-                section. A rewire provides the opportunity to fit modern LED downlighters and
-                pendants on properly rated circuits.
+                <strong>LED lighting throughout</strong> — replacing all lighting circuits with LED
+                fittings contributes directly to the EPC SAP calculation under the lighting section.
+                A rewire provides the opportunity to fit modern LED downlighters and pendants on
+                properly rated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -505,35 +507,34 @@ const sections = [
               <span>
                 <strong>Air source heat pump readiness</strong> — an air source heat pump (ASHP)
                 requires a modern electrical supply with adequate earthing and an appropriately
-                rated circuit. Victorian wiring cannot safely supply an ASHP. A rewire is
-                therefore a prerequisite for heat pump installation.
+                rated circuit. Victorian wiring cannot safely supply an ASHP. A rewire is therefore
+                a prerequisite for heat pump installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charging point</strong> — an EV charger requires a dedicated circuit
-                with RCD protection and earthing. A rewired Victorian house can accommodate a
-                7kW home charger, which is not possible with original wiring or a cast iron
-                consumer unit.
+                <strong>EV charging point</strong> — an EV charger requires a dedicated circuit with
+                RCD protection and earthing. A rewired Victorian house can accommodate a 7kW home
+                charger, which is not possible with original wiring or a cast iron consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV and battery storage</strong> — solar panels and battery storage
-                systems require a modern consumer unit and appropriate earthing. A rewired
-                Victorian property can accommodate a solar PV system, which is one of the most
-                effective ways to improve an EPC rating from E or F to C or above.
+                systems require a modern consumer unit and appropriate earthing. A rewired Victorian
+                property can accommodate a solar PV system, which is one of the most effective ways
+                to improve an EPC rating from E or F to C or above.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Many Victorian houses in England currently have EPC ratings of E, F, or G. Government
-          policy is moving towards requiring rented properties to achieve EPC band C by 2028.
-          For landlords with Victorian properties, a rewire is often the necessary first step in
-          a broader programme of improvement.
+          policy is moving towards requiring rented properties to achieve EPC band C by 2028. For
+          landlords with Victorian properties, a rewire is often the necessary first step in a
+          broader programme of improvement.
         </p>
       </>
     ),
@@ -546,8 +547,8 @@ const sections = [
         <p>
           Victorian house rewires are some of the most rewarding — and most challenging — work
           available to domestic electricians. The combination of solid wall construction, period
-          features, and genuinely hazardous original wiring requires experience, planning, and
-          good communication with the client.
+          features, and genuinely hazardous original wiring requires experience, planning, and good
+          communication with the client.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -560,9 +561,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     EICR with the Elec-Mate app
                   </SEOInternalLink>{' '}
-                  before quoting a rewire. The EICR documents the existing condition, identifies
-                  all hazards, and gives the client a clear picture of why the rewire is necessary.
-                  It also protects you — you have a documented baseline before any work starts.
+                  before quoting a rewire. The EICR documents the existing condition, identifies all
+                  hazards, and gives the client a clear picture of why the rewire is necessary. It
+                  also protects you — you have a documented baseline before any work starts.
                 </p>
               </div>
             </div>
@@ -578,8 +579,8 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional quote for the rewire before you leave the property.
-                  Victorian house rewires are high-value jobs — a professional quote presented
-                  on the day significantly improves conversion rates.
+                  Victorian house rewires are high-value jobs — a professional quote presented on
+                  the day significantly improves conversion rates.
                 </p>
               </div>
             </div>
@@ -587,7 +588,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage Victorian house rewires with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, professional quoting, and job management. AI board scanning, voice test entry, instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -624,7 +625,7 @@ export default function VictorianHouseRewirePage() {
       faqHeading="Frequently Asked Questions About Victorian House Rewiring"
       relatedPages={relatedPages}
       ctaHeading="Complete Victorian House EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

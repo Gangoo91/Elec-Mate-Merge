@@ -614,7 +614,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify bathroom work on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for bathroom installation certificates. Zone compliance checking, voice test entry, instant PDF delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -651,7 +651,7 @@ export default function ElectricalWorkInBathroomPage() {
       faqHeading="Frequently Asked Questions About Bathroom Electrical Work"
       relatedPages={relatedPages}
       ctaHeading="Handle Bathroom Installations with Confidence"
-      ctaSubheading="Zone compliance checking, certificate production, voice test entry, and instant delivery. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="Zone compliance checking, certificate production, voice test entry, and instant delivery. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

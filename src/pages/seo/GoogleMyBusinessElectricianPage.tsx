@@ -64,7 +64,7 @@ const faqs = [
   {
     question: 'Should I use my home address or a service area?',
     answer:
-      'If you work from home and visit customers at their premises (which is the case for most electricians), you should set up a service area business — NOT display your home address. Google\'s guidelines state that you should only show an address if customers visit your location. Displaying your home address when customers do not visit it can result in your listing being suspended. Set your service area by entering the postcode districts, towns, or cities you cover. You can set a radius of up to 100km from your location.',
+      "If you work from home and visit customers at their premises (which is the case for most electricians), you should set up a service area business — NOT display your home address. Google's guidelines state that you should only show an address if customers visit your location. Displaying your home address when customers do not visit it can result in your listing being suspended. Set your service area by entering the postcode districts, towns, or cities you cover. You can set a radius of up to 100km from your location.",
   },
   {
     question: 'What categories should an electrician choose?',
@@ -121,8 +121,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Send professional PDF quotes that convert enquiries into booked jobs.',
+    description: 'Send professional PDF quotes that convert enquiries into booked jobs.',
     icon: FileCheck2,
     category: 'Tool',
   },
@@ -195,9 +194,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2. Enter your business name</strong> exactly as you want it to appear in
-                search results. Use your registered trading name — do not keyword-stuff (for example,
-                "Smith Electrical — Electrician in Manchester" violates Google's guidelines and can
-                get your listing suspended).
+                search results. Use your registered trading name — do not keyword-stuff (for
+                example, "Smith Electrical — Electrician in Manchester" violates Google's guidelines
+                and can get your listing suspended).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -211,8 +210,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4. Set your location type.</strong> If customers visit your premises (you
-                have a shop or office), add your address. If you visit customers (most electricians),
-                select "I deliver goods and services to my customers" and set a service area instead.
+                have a shop or office), add your address. If you visit customers (most
+                electricians), select "I deliver goods and services to my customers" and set a
+                service area instead.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,9 +226,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>6. Set your business hours.</strong> Be accurate — if you do not answer calls
-                at 7am on Sunday, do not list Sunday as open. Customers who call outside your listed
-                hours and get no answer will leave a negative impression.
+                <strong>6. Set your business hours.</strong> Be accurate — if you do not answer
+                calls at 7am on Sunday, do not list Sunday as open. Customers who call outside your
+                listed hours and get no answer will leave a negative impression.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,7 +272,9 @@ const sections = [
                 <li>Record a short video showing your business</li>
                 <li>Show branded van, uniform, or signage</li>
                 <li>Show surrounding area/street</li>
-                <li>Review: <strong className="text-yellow-400">24–48 hours</strong></li>
+                <li>
+                  Review: <strong className="text-yellow-400">24–48 hours</strong>
+                </li>
               </ul>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
@@ -283,7 +285,9 @@ const sections = [
                 <li>Available for some businesses</li>
                 <li>Google calls or texts a PIN</li>
                 <li>Enter PIN in your profile</li>
-                <li>Review: <strong className="text-yellow-400">Instant</strong></li>
+                <li>
+                  Review: <strong className="text-yellow-400">Instant</strong>
+                </li>
                 <li className="text-xs">Not always offered as an option</li>
               </ul>
             </div>
@@ -294,7 +298,9 @@ const sections = [
               <ul className="space-y-2">
                 <li>Google posts a PIN to your address</li>
                 <li>Enter PIN in your profile</li>
-                <li>Delivery: <strong className="text-yellow-400">5–14 days</strong></li>
+                <li>
+                  Delivery: <strong className="text-yellow-400">5–14 days</strong>
+                </li>
                 <li className="text-xs">Less common now but still used</li>
               </ul>
             </div>
@@ -323,7 +329,9 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Primary Category</h4>
               <p className="text-yellow-400 font-bold text-lg mb-2">Electrician</p>
-              <p>This is the highest-volume search term and should always be your primary category.</p>
+              <p>
+                This is the highest-volume search term and should always be your primary category.
+              </p>
             </div>
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Recommended Secondary Categories</h4>
@@ -353,9 +361,10 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Do not add irrelevant categories.</strong> Adding "Plumber" or "General Contractor"
-          if you are not one dilutes your relevance for electrical searches and can result in your
-          listing being flagged. Only add categories that genuinely describe services you provide.
+          <strong>Do not add irrelevant categories.</strong> Adding "Plumber" or "General
+          Contractor" if you are not one dilutes your relevance for electrical searches and can
+          result in your listing being flagged. Only add categories that genuinely describe services
+          you provide.
         </p>
       </>
     ),
@@ -418,8 +427,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certifications and Accreditations</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Photos of your NICEIC/NAPIT registration card, qualifications, and any specialist
-                  certifications (EV charging, fire alarm, solar PV). These serve as visual proof
-                  of your credentials and distinguish you from unqualified competitors.
+                  certifications (EV charging, fire alarm, solar PV). These serve as visual proof of
+                  your credentials and distinguish you from unqualified competitors.
                 </p>
               </div>
             </div>
@@ -471,9 +480,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Respond to every review.</strong> Thank customers who leave positive reviews.
-                Respond professionally to negative reviews. Google sees response activity as an
-                engagement signal, and potential customers see that you care.
+                <strong>Respond to every review.</strong> Thank customers who leave positive
+                reviews. Respond professionally to negative reviews. Google sees response activity
+                as an engagement signal, and potential customers see that you care.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -493,11 +502,15 @@ const sections = [
           <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span>Do NOT offer discounts or incentives for reviews (violates Google's policies)</span>
+              <span>
+                Do NOT offer discounts or incentives for reviews (violates Google's policies)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span>Do NOT buy fake reviews (Google detects and removes them; may suspend your listing)</span>
+              <span>
+                Do NOT buy fake reviews (Google detects and removes them; may suspend your listing)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
@@ -537,7 +550,9 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span>Seasonal offers (EICR before tenant renewal, outdoor lighting for summer)</span>
+                <span>
+                  Seasonal offers (EICR before tenant renewal, outdoor lighting for summer)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
@@ -586,8 +601,8 @@ const sections = [
     content: (
       <>
         <p>
-          Your service area tells Google where to show your listing in local searches. Get this right
-          and you appear for the right searches in the right locations.
+          Your service area tells Google where to show your listing in local searches. Get this
+          right and you appear for the right searches in the right locations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -619,7 +634,8 @@ const sections = [
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Update seasonally.</strong> If you take on work further afield in quieter
-                months, you can adjust your service area. Google allows you to change it at any time.
+                months, you can adjust your service area. Google allows you to change it at any
+                time.
               </span>
             </li>
           </ul>
@@ -642,26 +658,26 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keyword-stuffing your business name.</strong> Your business name must be
-                your real business name — not "Smith Electrical — Best Electrician in Manchester
-                — Emergency Electrician." Google will suspend listings that add keywords to the
+                your real business name — not "Smith Electrical — Best Electrician in Manchester —
+                Emergency Electrician." Google will suspend listings that add keywords to the
                 business name.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inconsistent NAP data.</strong> Your Name, Address, and Phone number must
-                be identical across your Google Business Profile, website, social media, and
-                directory listings. "Smith Electrical" on Google and "Smith Electrical Ltd" on your
-                website is an inconsistency that can reduce ranking.
+                <strong>Inconsistent NAP data.</strong> Your Name, Address, and Phone number must be
+                identical across your Google Business Profile, website, social media, and directory
+                listings. "Smith Electrical" on Google and "Smith Electrical Ltd" on your website is
+                an inconsistency that can reduce ranking.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not responding to reviews.</strong> Ignoring reviews (especially negative
-                ones) signals disengagement. Respond to every review — positive and negative — within
-                48 hours.
+                ones) signals disengagement. Respond to every review — positive and negative —
+                within 48 hours.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -729,7 +745,7 @@ export default function GoogleMyBusinessElectricianPage() {
       faqHeading="Frequently Asked Questions About Google Business Profile"
       relatedPages={relatedPages}
       ctaHeading="Convert Google Searches Into Booked Jobs"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Send professional quotes in minutes and win more of the jobs that find you on Google. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,40 +129,40 @@ const sections = [
         <p>
           An Electrical Installation Condition Report (EICR) is a formal document produced by a
           qualified electrician after inspecting and testing the fixed electrical installation in a
-          property. The inspection covers the consumer unit, all circuits, wiring, earthing, bonding,
-          sockets, and light fittings. The report is produced in accordance with{' '}
+          property. The inspection covers the consumer unit, all circuits, wiring, earthing,
+          bonding, sockets, and light fittings. The report is produced in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 18th Edition
           </SEOInternalLink>
           , the national wiring regulations standard.
         </p>
         <p>
-          Each observation in an EICR is given a classification code that indicates the severity
-          of the issue:
+          Each observation in an EICR is given a classification code that indicates the severity of
+          the issue:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C1 — Danger present:</strong> Immediate risk of injury. Remedial action
-                must be taken urgently. The inspector may recommend isolating the affected circuit.
+                <strong>C1 — Danger present:</strong> Immediate risk of injury. Remedial action must
+                be taken urgently. The inspector may recommend isolating the affected circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Potentially dangerous:</strong> Not immediately dangerous but
-                requires urgent remedial action. Under the 2020 Regulations, landlords must
-                complete rectification within 28 days.
+                <strong>C2 — Potentially dangerous:</strong> Not immediately dangerous but requires
+                urgent remedial action. Under the 2020 Regulations, landlords must complete
+                rectification within 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Improvement recommended:</strong> Does not meet current standards
-                but is not classified as dangerous. No mandatory action under the regulations,
-                but advisable to address over time.
+                <strong>C3 — Improvement recommended:</strong> Does not meet current standards but
+                is not classified as dangerous. No mandatory action under the regulations, but
+                advisable to address over time.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -175,8 +176,8 @@ const sections = [
         </div>
         <p>
           An EICR containing only C3 observations (or no observations) is classified as
-          Satisfactory. An EICR with any C1 or C2 observations is Unsatisfactory and requires
-          the landlord to arrange remedial work before they are compliant with the 2020 Regulations.
+          Satisfactory. An EICR with any C1 or C2 observations is Unsatisfactory and requires the
+          landlord to arrange remedial work before they are compliant with the 2020 Regulations.
         </p>
       </>
     ),
@@ -188,8 +189,8 @@ const sections = [
       <>
         <p>
           The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020
-          came into force for new tenancies on 1 June 2020 and for all existing tenancies on
-          1 April 2021. All private landlords in Sunderland are legally required to comply.
+          came into force for new tenancies on 1 June 2020 and for all existing tenancies on 1 April
+          2021. All private landlords in Sunderland are legally required to comply.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -204,9 +205,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New tenancies:</strong> A valid EICR must be provided to new tenants
-                before they take occupation of the property. If no valid EICR exists, one must
-                be obtained before the tenancy begins.
+                <strong>New tenancies:</strong> A valid EICR must be provided to new tenants before
+                they take occupation of the property. If no valid EICR exists, one must be obtained
+                before the tenancy begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -219,8 +220,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Council requests:</strong> If Sunderland City Council requests the EICR,
-                the landlord must provide it within seven days.
+                <strong>Council requests:</strong> If Sunderland City Council requests the EICR, the
+                landlord must provide it within seven days.
               </span>
             </li>
           </ul>
@@ -239,8 +240,8 @@ const sections = [
     content: (
       <>
         <p>
-          Sunderland City Council is the local housing authority responsible for enforcing the
-          2020 Regulations across the Sunderland City Council area, which includes Sunderland city
+          Sunderland City Council is the local housing authority responsible for enforcing the 2020
+          Regulations across the Sunderland City Council area, which includes Sunderland city
           centre, Washington, Houghton-le-Spring, and surrounding areas. The council's housing
           enforcement team investigates complaints about rented property conditions.
         </p>
@@ -250,32 +251,32 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Civil penalties up to £30,000:</strong> Each breach of the regulations
-                attracts a separate civil penalty. Failing to obtain an EICR, failing to share
-                it with tenants, and failing to complete remedial work are each separate breaches.
+                attracts a separate civil penalty. Failing to obtain an EICR, failing to share it
+                with tenants, and failing to complete remedial work are each separate breaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial notices:</strong> The council can serve a remedial notice on
-                a non-compliant landlord. If the landlord fails to carry out the work, the
-                council can arrange for it to be done and recover the costs.
+                <strong>Remedial notices:</strong> The council can serve a remedial notice on a
+                non-compliant landlord. If the landlord fails to carry out the work, the council can
+                arrange for it to be done and recover the costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restriction:</strong> A landlord who has not provided the
-                tenant with a valid EICR cannot serve a valid Section 21 notice for possession.
-                This is a significant practical consequence for Sunderland landlords.
+                <strong>Section 21 restriction:</strong> A landlord who has not provided the tenant
+                with a valid EICR cannot serve a valid Section 21 notice for possession. This is a
+                significant practical consequence for Sunderland landlords.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HHSRS assessments:</strong> The council also enforces the Housing
-                Health and Safety Rating System (HHSRS), under which electrical hazards can
-                trigger improvement or prohibition orders independently of the 2020 Regulations.
+                <strong>HHSRS assessments:</strong> The council also enforces the Housing Health and
+                Safety Rating System (HHSRS), under which electrical hazards can trigger improvement
+                or prohibition orders independently of the 2020 Regulations.
               </span>
             </li>
           </ul>
@@ -304,15 +305,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £150 to £180. Typical for purpose-built
-                flats in the city centre or Roker area.
+                <strong>One-bedroom flat</strong> — £150 to £180. Typical for purpose-built flats in
+                the city centre or Roker area.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £180 to £260. Most common rental type
-                in Sunderland. Older terraces in Pallion or Ford may attract higher prices.
+                <strong>Two-bedroom property</strong> — £180 to £260. Most common rental type in
+                Sunderland. Older terraces in Pallion or Ford may attract higher prices.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -325,17 +326,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO or four-bedroom plus</strong> — £300 to £500+. Multiple consumer
-                units and additional circuits significantly increase inspection time.
+                <strong>HMO or four-bedroom plus</strong> — £300 to £500+. Multiple consumer units
+                and additional circuits significantly increase inspection time.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The inspection and report are covered by these prices. Remedial work is quoted and
-          charged separately. Many Sunderland electricians offer to quote the remedial work
-          immediately after completing the inspection, which can save landlords time when working
-          to the 28-day remedial deadline.
+          The inspection and report are covered by these prices. Remedial work is quoted and charged
+          separately. Many Sunderland electricians offer to quote the remedial work immediately
+          after completing the inspection, which can save landlords time when working to the 28-day
+          remedial deadline.
         </p>
       </>
     ),
@@ -353,9 +354,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rental properties:</strong> At least every five years under
-                the 2020 Regulations. A new inspection is required when a new tenancy begins
-                if the existing EICR has expired or is close to expiry.
+                <strong>Private rental properties:</strong> At least every five years under the 2020
+                Regulations. A new inspection is required when a new tenancy begins if the existing
+                EICR has expired or is close to expiry.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -377,9 +378,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After significant electrical work:</strong> Following any major
-                installation or rewiring, an Electrical Installation Certificate (EIC) should
-                be issued. A new EICR will be needed when the EIC period expires.
+                <strong>After significant electrical work:</strong> Following any major installation
+                or rewiring, an Electrical Installation Certificate (EIC) should be issued. A new
+                EICR will be needed when the EIC period expires.
               </span>
             </li>
           </ul>
@@ -393,9 +394,9 @@ const sections = [
     content: (
       <>
         <p>
-          Sunderland has a substantial stock of Victorian, Edwardian, and post-war housing,
-          along with ex-local authority properties. These property types frequently generate
-          specific EICR findings that Sunderland landlords and electricians should be aware of.
+          Sunderland has a substantial stock of Victorian, Edwardian, and post-war housing, along
+          with ex-local authority properties. These property types frequently generate specific EICR
+          findings that Sunderland landlords and electricians should be aware of.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -404,8 +405,8 @@ const sections = [
               <span>
                 <strong>Old consumer units without RCD protection:</strong> Properties with
                 rewirable fuse boards or early MCB boards without RCDs are very common in
-                Sunderland's older housing stock. Absence of RCD protection on socket circuits
-                is typically recorded as a C2, requiring consumer unit replacement.
+                Sunderland's older housing stock. Absence of RCD protection on socket circuits is
+                typically recorded as a C2, requiring consumer unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,24 +414,24 @@ const sections = [
               <span>
                 <strong>Deteriorated wiring:</strong> Pre-1970 rubber-insulated wiring and
                 fabric-sheathed cables are frequently found in older Sunderland terraces and
-                semi-detached properties. These attract C1 or C2 observations where insulation
-                has cracked or perished.
+                semi-detached properties. These attract C1 or C2 observations where insulation has
+                cracked or perished.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inadequate bonding:</strong> Missing or undersized main protective
-                bonding conductors to gas and water services are common in ex-local authority
-                and older terraced properties. This is a frequent C2 finding.
+                <strong>Inadequate bonding:</strong> Missing or undersized main protective bonding
+                conductors to gas and water services are common in ex-local authority and older
+                terraced properties. This is a frequent C2 finding.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits:</strong> In student HMOs and converted properties,
-                circuits are sometimes extended beyond their original design capacity. Evidence
-                of overloading, such as overheating at accessories, attracts C1 or C2 observations.
+                circuits are sometimes extended beyond their original design capacity. Evidence of
+                overloading, such as overheating at accessories, attracts C1 or C2 observations.
               </span>
             </li>
           </ul>
@@ -453,9 +454,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants
-                in two or more households require a mandatory HMO licence from Sunderland City
-                Council. A current EICR is a mandatory condition of the licence.
+                <strong>Mandatory HMO licensing:</strong> Properties with five or more occupants in
+                two or more households require a mandatory HMO licence from Sunderland City Council.
+                A current EICR is a mandatory condition of the licence.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -470,17 +471,16 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency lighting:</strong> Where required under licence conditions,
-                emergency lighting is also included in the EICR inspection. Landlords should
-                confirm with Sunderland City Council whether their HMO requires emergency
-                lighting.
+                emergency lighting is also included in the EICR inspection. Landlords should confirm
+                with Sunderland City Council whether their HMO requires emergency lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Sunderland
-                is a criminal offence that can result in prosecution, an unlimited fine, and
-                a banning order preventing the landlord from letting property.
+                <strong>Unlicensed HMOs:</strong> Operating an unlicensed HMO in Sunderland is a
+                criminal offence that can result in prosecution, an unlimited fine, and a banning
+                order preventing the landlord from letting property.
               </span>
             </li>
           </ul>
@@ -494,11 +494,10 @@ const sections = [
     content: (
       <>
         <p>
-          Sunderland's private rented sector — including a significant number of student lets,
-          HMOs, and older terrace properties — creates strong demand for EICR inspections and
-          associated remedial work. Electricians in Sunderland and the wider North East who
-          invest in inspection and testing qualifications can build a reliable income stream
-          from this market.
+          Sunderland's private rented sector — including a significant number of student lets, HMOs,
+          and older terrace properties — creates strong demand for EICR inspections and associated
+          remedial work. Electricians in Sunderland and the wider North East who invest in
+          inspection and testing qualifications can build a reliable income stream from this market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -511,9 +510,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the full report on your phone while still on site. AI board
-                  scanning, voice test entry, and instant PDF export mean you hand the
-                  landlord a compliant PDF before you leave — no evening admin.
+                  to complete the full report on your phone while still on site. AI board scanning,
+                  voice test entry, and instant PDF export mean you hand the landlord a compliant
+                  PDF before you leave — no evening admin.
                 </p>
               </div>
             </div>
@@ -524,14 +523,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Win Remedial Work in Sunderland</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C2 findings such as unprotected consumer units come up — which is common
-                  in Sunderland's older housing stock — quote the remedial work immediately
-                  using the{' '}
+                  When C2 findings such as unprotected consumer units come up — which is common in
+                  Sunderland's older housing stock — quote the remedial work immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . Landlords under the 28-day clock almost always proceed with the electrician
-                  who inspected the property.
+                  . Landlords under the 28-day clock almost always proceed with the electrician who
+                  inspected the property.
                 </p>
               </div>
             </div>
@@ -539,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Sunderland with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -576,7 +574,7 @@ export default function EICRSunderlandPage() {
       faqHeading="Frequently Asked Questions About EICR in Sunderland"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Site — Anywhere in the North East"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

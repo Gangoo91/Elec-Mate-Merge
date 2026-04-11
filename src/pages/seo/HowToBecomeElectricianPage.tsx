@@ -739,7 +739,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="The Complete Platform for Your Career"
-          description="Elec-Mate grows with you. As an apprentice: flashcards, mock exams, AM2 simulator. As a newly qualified sparky: 8 certificate types, 70+ calculators, 5 AI agents. As a self-employed business owner: quoting, invoicing, expense tracking, cash flow planning. One app for every stage of your career."
+          description="Elec-Mate grows with you. As an apprentice: flashcards, mock exams, AM2 simulator. As a newly qualified sparky: 16 certificate types, 70+ calculators, 5 AI agents. As a self-employed business owner: quoting, invoicing, expense tracking, cash flow planning. One app for every stage of your career."
           icon={Zap}
         />
       </>

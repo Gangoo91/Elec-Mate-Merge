@@ -602,7 +602,7 @@ export default function ElectricalBoardTypesPage() {
         },
       ]}
       ctaHeading="Design Consumer Units with Confidence"
-      ctaSubheading="Elec-Mate's circuit designer, calculators, and certificate forms support every board type. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+      ctaSubheading="Elec-Mate's circuit designer, calculators, and certificate forms support every board type. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
     />
   );
 }

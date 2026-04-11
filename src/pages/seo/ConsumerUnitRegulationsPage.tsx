@@ -77,7 +77,7 @@ const features = [
   },
   {
     icon: FileText,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'Generate Electrical Installation Certificates for consumer unit replacements with all mandatory fields, test result validation, and professional PDF output.',
   },
@@ -309,10 +309,10 @@ export default function ConsumerUnitRegulationsPage() {
           </div>
           <div className="space-y-4 text-white leading-relaxed">
             <p>
-              BS 7671 Section 411 sets out the circumstances where additional
-              protection by a 30 mA RCD is required. The requirements have expanded with each
-              edition of the standard, and in the current 18th Edition, almost every circuit in a
-              domestic consumer unit requires RCD protection.
+              BS 7671 Section 411 sets out the circumstances where additional protection by a 30 mA
+              RCD is required. The requirements have expanded with each edition of the standard, and
+              in the current 18th Edition, almost every circuit in a domestic consumer unit requires
+              RCD protection.
             </p>
             <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
               <h3 className="font-bold text-white text-lg mb-4">
@@ -516,24 +516,24 @@ export default function ConsumerUnitRegulationsPage() {
                   the fault and allowing it to persist.
                 </p>
                 <p>
-                  BS 7671 Section 530 (Amendment 3) requires that where bidirectional current flow is possible,
-                  the protective devices must be suitable for operation in both directions, or
-                  additional measures must be taken to ensure correct fault clearance regardless of
-                  the direction of current flow. For consumer unit design, this means checking with
-                  the device manufacturer whether their MCBs and RCBOs are rated for bidirectional
-                  fault current, and if not, implementing appropriate measures such as dedicated
-                  protection for the battery or generator circuit that prevents reverse fault
-                  current from reaching the main distribution.
+                  BS 7671 Section 530 (Amendment 3) requires that where bidirectional current flow
+                  is possible, the protective devices must be suitable for operation in both
+                  directions, or additional measures must be taken to ensure correct fault clearance
+                  regardless of the direction of current flow. For consumer unit design, this means
+                  checking with the device manufacturer whether their MCBs and RCBOs are rated for
+                  bidirectional fault current, and if not, implementing appropriate measures such as
+                  dedicated protection for the battery or generator circuit that prevents reverse
+                  fault current from reaching the main distribution.
                 </p>
               </div>
             </div>
             <p>
-              Beyond the Section 530 bidirectional device requirements, Amendment 3 includes various corrections, clarifications,
-              and editorial amendments to the standard. It is important to note that Amendment 3
-              does not change the fundamental requirements for consumer unit design — metal
-              enclosures, RCD protection, circuit protection, and labelling requirements all remain
-              as per the main 18th Edition text. The amendment adds to the requirements rather than
-              replacing them.
+              Beyond the Section 530 bidirectional device requirements, Amendment 3 includes various
+              corrections, clarifications, and editorial amendments to the standard. It is important
+              to note that Amendment 3 does not change the fundamental requirements for consumer
+              unit design — metal enclosures, RCD protection, circuit protection, and labelling
+              requirements all remain as per the main 18th Edition text. The amendment adds to the
+              requirements rather than replacing them.
             </p>
           </div>
         </div>
@@ -646,8 +646,8 @@ export default function ConsumerUnitRegulationsPage() {
             Why Electricians Choose Elec-Mate
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
-            Purpose-built for UK electricians. 70 calculators, 8 AI agents, 8 certificate types, and
-            36+ training courses — all built to BS 7671:2018+A3:2024.
+            Purpose-built for UK electricians. 70+ calculators, 8 AI agents, 16 certificate types,
+            and 46+ training courses — all built to BS 7671:2018+A3:2024.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -698,7 +698,7 @@ export default function ConsumerUnitRegulationsPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Certify Consumer Unit Work Digitally"
-        subheading="Join 430+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians producing professional EICs with Elec-Mate. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

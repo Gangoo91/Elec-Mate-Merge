@@ -664,7 +664,7 @@ export default function TestingProceduresForApprenticesPage() {
       faqHeading="Frequently Asked Questions About Testing Procedures"
       relatedPages={relatedPages}
       ctaHeading="Build testing confidence from day one"
-      ctaSubheading="Join 430+ UK apprentices mastering testing procedures with Elec-Mate. Structured courses, practice questions, flashcards, and AI tutor support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices mastering testing procedures with Elec-Mate. Structured courses, practice questions, flashcards, and AI tutor support. 7-day free trial, cancel anytime."
     />
   );
 }

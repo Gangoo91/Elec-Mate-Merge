@@ -382,7 +382,7 @@ export default function PricingStrategyElectricianPage() {
         {
           question: 'How do I calculate my minimum hourly rate to break even?',
           answer:
-            'Start by calculating your total annual business costs: van finance or depreciation, insurance (public liability, employers\' liability, van, tools), fuel, tool maintenance and replacement, certification scheme fees, training and CPD, phone and software subscriptions, accountancy, and any other fixed overheads. Add your desired personal drawings (salary). Divide the total by your billable hours per year — typically 1,200 to 1,400 hours for a sole trader who does their own admin and quoting. The result is your break-even hourly rate. Add your target profit margin (typically 15% to 25%) to get your minimum charge-out rate. Most electricians who do this calculation for the first time discover their break-even rate is significantly higher than they expected, which is why many sole traders are effectively working below minimum wage without realising it.',
+            "Start by calculating your total annual business costs: van finance or depreciation, insurance (public liability, employers' liability, van, tools), fuel, tool maintenance and replacement, certification scheme fees, training and CPD, phone and software subscriptions, accountancy, and any other fixed overheads. Add your desired personal drawings (salary). Divide the total by your billable hours per year — typically 1,200 to 1,400 hours for a sole trader who does their own admin and quoting. The result is your break-even hourly rate. Add your target profit margin (typically 15% to 25%) to get your minimum charge-out rate. Most electricians who do this calculation for the first time discover their break-even rate is significantly higher than they expected, which is why many sole traders are effectively working below minimum wage without realising it.",
         },
       ]}
       relatedPages={[
@@ -434,7 +434,7 @@ export default function PricingStrategyElectricianPage() {
         },
       ]}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to quote accurately, track profitability, and build a business that pays what you deserve. 7-day free trial, cancel anytime."
       extraSchemas={[
         {
           '@type': 'SoftwareApplication',
@@ -453,7 +453,7 @@ export default function PricingStrategyElectricianPage() {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
-            ratingCount: '430',
+            ratingCount: '1000',
             bestRating: '5',
           },
         },

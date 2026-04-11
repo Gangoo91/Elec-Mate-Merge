@@ -95,8 +95,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description:
-      'Calculate R1+R2 values and verify Zs for your circuits automatically.',
+    description: 'Calculate R1+R2 values and verify Zs for your circuits automatically.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -111,16 +110,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-condition-report-guide',
     title: 'EICR Guide',
-    description:
-      'How to assess and code ADS failures during periodic inspection and testing.',
+    description: 'How to assess and code ADS failures during periodic inspection and testing.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study loop impedance testing, ADS verification, and fault finding for C&G 2391.',
+    description: 'Study loop impedance testing, ADS verification, and fault finding for C&G 2391.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -148,16 +145,17 @@ const sections = [
         </p>
         <p>
           The principle is straightforward: if a fault occurs that makes an exposed-conductive-part
-          live (for example, a live conductor contacts a metal enclosure), the protective device must
-          disconnect the supply fast enough to prevent a lethal electric shock. ADS is not a single
-          device — it is a combination of earthing, protective conductors, and protective devices
-          working together.
+          live (for example, a live conductor contacts a metal enclosure), the protective device
+          must disconnect the supply fast enough to prevent a lethal electric shock. ADS is not a
+          single device — it is a combination of earthing, protective conductors, and protective
+          devices working together.
         </p>
         <p>
           Understanding ADS is essential for every electrician. It determines how you select
-          protective devices, how you size cables, how you design earthing arrangements, and what you
-          test during initial verification and periodic inspection. If ADS fails, the consequence is
-          a sustained touch voltage on metalwork that people can contact — a direct risk to life.
+          protective devices, how you size cables, how you design earthing arrangements, and what
+          you test during initial verification and periodic inspection. If ADS fails, the
+          consequence is a sustained touch voltage on metalwork that people can contact — a direct
+          risk to life.
         </p>
       </>
     ),
@@ -167,19 +165,17 @@ const sections = [
     heading: 'The ADS Principle Explained',
     content: (
       <>
-        <p>
-          Regulation 411.3.1.1 states that ADS requires the coordination of two elements:
-        </p>
+        <p>Regulation 411.3.1.1 states that ADS requires the coordination of two elements:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>An earth fault current path</strong> — a low-impedance path from the point of
-                the fault, through the protective conductor, back to the source (transformer neutral).
-                This path must have sufficiently low impedance to allow enough fault current to flow to
-                operate the protective device. The total impedance of this path is the earth fault loop
-                impedance (Zs).
+                <strong>An earth fault current path</strong> — a low-impedance path from the point
+                of the fault, through the protective conductor, back to the source (transformer
+                neutral). This path must have sufficiently low impedance to allow enough fault
+                current to flow to operate the protective device. The total impedance of this path
+                is the earth fault loop impedance (Zs).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -188,28 +184,27 @@ const sections = [
                 <strong>A protective device that disconnects within the required time</strong> — an
                 MCB, fuse, RCBO, or RCD that will operate within the maximum disconnection time
                 specified by BS 7671 for the type of circuit and earthing system. The device must be
-                selected so that the fault current flowing through the Zs path is sufficient to trip it
-                within the required time.
+                selected so that the fault current flowing through the Zs path is sufficient to trip
+                it within the required time.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The relationship is governed by Ohm's law. When a line-to-earth fault occurs, the fault
-          current (If) equals the supply voltage (Uo) divided by the earth fault loop impedance (Zs):
+          current (If) equals the supply voltage (Uo) divided by the earth fault loop impedance
+          (Zs):
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 my-4">
-          <p className="text-white font-mono text-lg text-center">
-            If = Uo / Zs
-          </p>
+          <p className="text-white font-mono text-lg text-center">If = Uo / Zs</p>
           <p className="text-white text-sm mt-2 text-center">
             Where Uo = 230V (nominal), Zs = total earth fault loop impedance in ohms
           </p>
         </div>
         <p>
           If the fault current (If) is high enough, the MCB or fuse trips within the required time.
-          If Zs is too high, the fault current is too low, the device takes too long to trip, and the
-          person touching the faulty equipment is exposed to a dangerous voltage for too long.
+          If Zs is too high, the fault current is too low, the device takes too long to trip, and
+          the person touching the faulty equipment is exposed to a dangerous voltage for too long.
         </p>
       </>
     ),
@@ -240,16 +235,15 @@ const sections = [
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3 flex items-center gap-2">
-              <Timer className="w-5 h-5 text-amber-400" />
-              5 Seconds
+              <Timer className="w-5 h-5 text-amber-400" />5 Seconds
             </h3>
             <p className="text-white text-sm leading-relaxed">
-              Regulation 411.3.2.3 permits a maximum disconnection time of 5 seconds for distribution
-              circuits in TN systems. A distribution circuit supplies one or more distribution boards
-              (sub-mains) rather than directly supplying current-using equipment. The longer time is
-              permitted because the exposed-conductive-parts of distribution circuits are generally not
-              accessible to the general public and because simultaneous contact with earth and a
-              distribution conductor is less likely.
+              Regulation 411.3.2.3 permits a maximum disconnection time of 5 seconds for
+              distribution circuits in TN systems. A distribution circuit supplies one or more
+              distribution boards (sub-mains) rather than directly supplying current-using
+              equipment. The longer time is permitted because the exposed-conductive-parts of
+              distribution circuits are generally not accessible to the general public and because
+              simultaneous contact with earth and a distribution conductor is less likely.
             </p>
           </div>
         </div>
@@ -295,9 +289,9 @@ const sections = [
       <>
         <p>
           The maximum earth fault loop impedance (Zs) for a circuit depends on the type and rating
-          of the protective device. BS 7671 Table 41.3 provides maximum Zs values for MCBs to
-          BS EN 60898 and RCBOs to BS EN 61009. The values differ significantly between Type B, C,
-          and D MCBs because of their different magnetic trip thresholds:
+          of the protective device. BS 7671 Table 41.3 provides maximum Zs values for MCBs to BS EN
+          60898 and RCBOs to BS EN 61009. The values differ significantly between Type B, C, and D
+          MCBs because of their different magnetic trip thresholds:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">MCB Magnetic Trip Ranges</h4>
@@ -322,14 +316,17 @@ const sections = [
               <Activity className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type D</strong> — instantaneous trip between 10 and 20 times In. Used for
-                highly inductive loads (large motors, transformers, X-ray machines). Lowest maximum Zs
-                because the highest fault current is needed. Rarely used in domestic installations.
+                highly inductive loads (large motors, transformers, X-ray machines). Lowest maximum
+                Zs because the highest fault current is needed. Rarely used in domestic
+                installations.
               </span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h4 className="font-bold text-white mb-3">Common Maximum Zs Values (0.4s, at 70 degrees C)</h4>
+          <h4 className="font-bold text-white mb-3">
+            Common Maximum Zs Values (0.4s, at 70 degrees C)
+          </h4>
           <div className="overflow-x-auto">
             <table className="w-full text-white text-sm">
               <thead>
@@ -413,19 +410,22 @@ const sections = [
               The supply has a separate earth conductor — typically the lead sheath or steel wire
               armour of the supply cable. The Ze (external earth fault loop impedance) is typically
               0.35 to 0.8 ohms. ADS is straightforward in TN-S systems because the Ze is relatively
-              low and predictable. The main concern is older TN-S supplies where the cable sheath may
-              be deteriorating, increasing Ze over time.
+              low and predictable. The main concern is older TN-S supplies where the cable sheath
+              may be deteriorating, increasing Ze over time.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">TN-C-S (PME — Protective Multiple Earthing)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              TN-C-S (PME — Protective Multiple Earthing)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The supply neutral and earth are combined in a single PEN conductor, with the neutral
-              earthed at multiple points throughout the network. The Ze is typically very low — 0.2 to
-              0.35 ohms — giving excellent ADS performance. PME is the most common supply arrangement
-              for new-build domestic properties in the UK. The low Ze means most circuits will achieve
-              ADS with MCBs alone. However, PME carries a specific risk: if the PEN conductor is lost
-              (broken neutral), the installation metalwork can rise to a dangerous potential.
+              earthed at multiple points throughout the network. The Ze is typically very low — 0.2
+              to 0.35 ohms — giving excellent ADS performance. PME is the most common supply
+              arrangement for new-build domestic properties in the UK. The low Ze means most
+              circuits will achieve ADS with MCBs alone. However, PME carries a specific risk: if
+              the PEN conductor is lost (broken neutral), the installation metalwork can rise to a
+              dangerous potential.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -437,19 +437,17 @@ const sections = [
               conditions and electrode type. This high impedance means overcurrent devices (MCBs and
               fuses) cannot achieve ADS alone — the fault current is far too low to trip them within
               the required time. Regulation 411.5.2 requires an RCD as the protective device in TT
-              systems. A 30mA RCD can achieve ADS with a Zs up to 1667 ohms, making it effective even
-              with very high earth electrode resistance.
+              systems. A 30mA RCD can achieve ADS with a Zs up to 1667 ohms, making it effective
+              even with very high earth electrode resistance.
             </p>
           </div>
         </div>
         <p>
           When carrying out an{' '}
-          <SEOInternalLink href="/guides/eicr-condition-report-guide">
-            EICR
-          </SEOInternalLink>
-          , always confirm the earthing system type and measure Ze before assessing individual
-          circuits. The earthing system determines whether ADS by overcurrent device alone is
-          feasible or whether RCD protection is essential.
+          <SEOInternalLink href="/guides/eicr-condition-report-guide">EICR</SEOInternalLink>, always
+          confirm the earthing system type and measure Ze before assessing individual circuits. The
+          earthing system determines whether ADS by overcurrent device alone is feasible or whether
+          RCD protection is essential.
         </p>
       </>
     ),
@@ -461,8 +459,8 @@ const sections = [
       <>
         <p>
           Earth fault loop impedance testing is a core part of both initial verification (Regulation
-          643.7) and periodic inspection. The test confirms that the Zs at the furthest point of each
-          circuit is within the limits required for ADS.
+          643.7) and periodic inspection. The test confirms that the Zs at the furthest point of
+          each circuit is within the limits required for ADS.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h4 className="font-bold text-white mb-3">Testing Procedure</h4>
@@ -470,29 +468,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — Confirm safe to test.</strong> Earth fault loop impedance testing is
-                a live test. Confirm that RCDs are in circuit (the test instrument may trip them — use
-                a non-trip earth loop tester if needed, or temporarily bypass the RCD for the test
-                with appropriate precautions).
+                <strong>Step 1 — Confirm safe to test.</strong> Earth fault loop impedance testing
+                is a live test. Confirm that RCDs are in circuit (the test instrument may trip them
+                — use a non-trip earth loop tester if needed, or temporarily bypass the RCD for the
+                test with appropriate precautions).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — Test at the furthest point.</strong> Connect the tester at the
-                furthest point of the circuit. For a ring final circuit, test at each socket outlet —
-                the highest reading is at the mid-point of the ring (the point electrically furthest
-                from the origin in both directions). For a radial, test at the last point.
+                furthest point of the circuit. For a ring final circuit, test at each socket outlet
+                — the highest reading is at the mid-point of the ring (the point electrically
+                furthest from the origin in both directions). For a radial, test at the last point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Record and compare.</strong> Record the measured Zs. If testing at
-                ambient temperature (which is the normal case), the measured Zs must not exceed 80% of
-                the maximum tabulated Zs (to allow for the conductor resistance increasing at
-                operating temperature). Alternatively, multiply the measured (R1+R2) by the correction
-                factor from Table I1 in the On-Site Guide and add to Ze.
+                ambient temperature (which is the normal case), the measured Zs must not exceed 80%
+                of the maximum tabulated Zs (to allow for the conductor resistance increasing at
+                operating temperature). Alternatively, multiply the measured (R1+R2) by the
+                correction factor from Table I1 in the On-Site Guide and add to Ze.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -519,52 +517,81 @@ const sections = [
     heading: 'Worked Examples',
     content: (
       <>
-        <p>
-          These examples demonstrate how to verify ADS compliance for common domestic circuits.
-        </p>
+        <p>These examples demonstrate how to verify ADS compliance for common domestic circuits.</p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-            <h4 className="font-bold text-white mb-3">Example 1: Ring Final Circuit (32A Type B MCB)</h4>
+            <h4 className="font-bold text-white mb-3">
+              Example 1: Ring Final Circuit (32A Type B MCB)
+            </h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Given:</strong> Ze = 0.35 ohms (TN-C-S supply). Ring circuit in 2.5mm² T&E,
+              <p>
+                <strong>Given:</strong> Ze = 0.35 ohms (TN-C-S supply). Ring circuit in 2.5mm² T&E,
                 60m total ring length. R1+R2 per metre from tables = 0.0246 ohms/m (at 20 degrees
-                C).</p>
-              <p><strong>Calculate R1+R2 for the ring:</strong> For a ring circuit, the R1+R2 at the
+                C).
+              </p>
+              <p>
+                <strong>Calculate R1+R2 for the ring:</strong> For a ring circuit, the R1+R2 at the
                 mid-point = (total R1+R2) / 4 = (60 x 0.0246) / 4 = 1.476 / 4 = 0.369 ohms at 20
-                degrees C.</p>
-              <p><strong>Correct for operating temperature:</strong> Multiply by 1.20 (correction
-                factor for 70 degrees C PVC): 0.369 x 1.20 = 0.443 ohms.</p>
-              <p><strong>Calculate Zs:</strong> Zs = Ze + R1+R2 = 0.35 + 0.443 = 0.793 ohms.</p>
-              <p><strong>Compare:</strong> Maximum Zs for 32A Type B MCB = 1.37 ohms. 0.793 ohms is
-                well within the limit. <strong>Circuit complies.</strong></p>
+                degrees C.
+              </p>
+              <p>
+                <strong>Correct for operating temperature:</strong> Multiply by 1.20 (correction
+                factor for 70 degrees C PVC): 0.369 x 1.20 = 0.443 ohms.
+              </p>
+              <p>
+                <strong>Calculate Zs:</strong> Zs = Ze + R1+R2 = 0.35 + 0.443 = 0.793 ohms.
+              </p>
+              <p>
+                <strong>Compare:</strong> Maximum Zs for 32A Type B MCB = 1.37 ohms. 0.793 ohms is
+                well within the limit. <strong>Circuit complies.</strong>
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6">
-            <h4 className="font-bold text-white mb-3">Example 2: Long Radial Circuit (20A Type B MCB)</h4>
+            <h4 className="font-bold text-white mb-3">
+              Example 2: Long Radial Circuit (20A Type B MCB)
+            </h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Given:</strong> Ze = 0.72 ohms (TN-S supply, older area). Radial circuit in
-                2.5mm² T&E, 30m cable run. R1+R2 per metre = 0.0246 ohms/m.</p>
-              <p><strong>Calculate R1+R2:</strong> 30 x 0.0246 = 0.738 ohms at 20 degrees C.</p>
-              <p><strong>Correct for temperature:</strong> 0.738 x 1.20 = 0.886 ohms.</p>
-              <p><strong>Calculate Zs:</strong> 0.72 + 0.886 = 1.606 ohms.</p>
-              <p><strong>Compare:</strong> Maximum Zs for 20A Type B MCB = 2.30 ohms. 1.606 ohms is
+              <p>
+                <strong>Given:</strong> Ze = 0.72 ohms (TN-S supply, older area). Radial circuit in
+                2.5mm² T&E, 30m cable run. R1+R2 per metre = 0.0246 ohms/m.
+              </p>
+              <p>
+                <strong>Calculate R1+R2:</strong> 30 x 0.0246 = 0.738 ohms at 20 degrees C.
+              </p>
+              <p>
+                <strong>Correct for temperature:</strong> 0.738 x 1.20 = 0.886 ohms.
+              </p>
+              <p>
+                <strong>Calculate Zs:</strong> 0.72 + 0.886 = 1.606 ohms.
+              </p>
+              <p>
+                <strong>Compare:</strong> Maximum Zs for 20A Type B MCB = 2.30 ohms. 1.606 ohms is
                 within the limit. <strong>Circuit complies</strong> — but with less headroom than
                 Example 1. On a TN-S supply with higher Ze, long cable runs consume more of the
-                available Zs budget.</p>
+                available Zs budget.
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6">
-            <h4 className="font-bold text-white mb-3">Example 3: Failing Circuit (32A Type C MCB)</h4>
+            <h4 className="font-bold text-white mb-3">
+              Example 3: Failing Circuit (32A Type C MCB)
+            </h4>
             <div className="space-y-2 text-white text-sm">
-              <p><strong>Given:</strong> Ze = 0.35 ohms. Ring circuit in 2.5mm² T&E, 60m total ring
-                length. Type C MCB (incorrectly specified for a ring circuit).</p>
-              <p><strong>Zs at 70 degrees C:</strong> 0.35 + 0.443 = 0.793 ohms (same as Example
-                1).</p>
-              <p><strong>Compare:</strong> Maximum Zs for 32A Type C MCB = 0.68 ohms. 0.793 ohms
+              <p>
+                <strong>Given:</strong> Ze = 0.35 ohms. Ring circuit in 2.5mm² T&E, 60m total ring
+                length. Type C MCB (incorrectly specified for a ring circuit).
+              </p>
+              <p>
+                <strong>Zs at 70 degrees C:</strong> 0.35 + 0.443 = 0.793 ohms (same as Example 1).
+              </p>
+              <p>
+                <strong>Compare:</strong> Maximum Zs for 32A Type C MCB = 0.68 ohms. 0.793 ohms
                 exceeds the limit. <strong>Circuit does NOT comply.</strong> The Type C MCB needs a
                 higher fault current to trip magnetically, but the circuit impedance is too high.
                 Solution: change to a Type B MCB (maximum Zs = 1.37 ohms), or add RCD/RCBO
-                protection.</p>
+                protection.
+              </p>
             </div>
           </div>
         </div>
@@ -586,18 +613,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High Ze on TN-S supplies</strong> — older TN-S supplies with deteriorating
-                lead sheath can have Ze values above 0.8 ohms. Combined with long circuit cable runs,
-                Zs can exceed the limit. Solution: contact the DNO to check the supply earth, or add
-                RCD protection to circuits at risk.
+                lead sheath can have Ze values above 0.8 ohms. Combined with long circuit cable
+                runs, Zs can exceed the limit. Solution: contact the DNO to check the supply earth,
+                or add RCD protection to circuits at risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long cable runs</strong> — each metre of cable adds to R1+R2. Very long radial
-                circuits (particularly in larger properties, outbuildings, or agricultural
-                installations) can result in high Zs. Solution: increase cable size (lower resistance
-                per metre), reduce circuit length, or protect with an RCD.
+                <strong>Long cable runs</strong> — each metre of cable adds to R1+R2. Very long
+                radial circuits (particularly in larger properties, outbuildings, or agricultural
+                installations) can result in high Zs. Solution: increase cable size (lower
+                resistance per metre), reduce circuit length, or protect with an RCD.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -629,11 +656,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          On an{' '}
-          <SEOInternalLink href="/guides/eicr-condition-report-guide">
-            EICR
-          </SEOInternalLink>
-          , a circuit that fails ADS is typically coded C2 (potentially dangerous) — the protective
+          On an <SEOInternalLink href="/guides/eicr-condition-report-guide">EICR</SEOInternalLink>,
+          a circuit that fails ADS is typically coded C2 (potentially dangerous) — the protective
           measure is impaired and may not operate in the event of a fault. If the touch voltage
           exceeds 50V AC and disconnection will not occur, a C1 code (danger present) may be
           appropriate.
@@ -672,7 +696,7 @@ export default function Regulation411AutoDisconnectionPage() {
       faqHeading="Frequently Asked Questions About Regulation 411 and ADS"
       relatedPages={relatedPages}
       ctaHeading="Test, Record and Verify ADS Compliance on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for loop impedance recording, automatic Zs validation, and on-site EIC/EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

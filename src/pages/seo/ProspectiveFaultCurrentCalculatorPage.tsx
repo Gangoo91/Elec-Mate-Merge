@@ -459,7 +459,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               your phone or tablet.
             </p>
             <p>
-              Combined with 8 certificate types, 8 Elec-AI agents, 12 AI tools, 36+ training
+              Combined with 16 certificate types, 8 Elec-AI agents, 12 AI tools, 46+ training
               courses, and integration with Xero and QuickBooks, Elec-Mate is the complete platform
               for UK electricians.
             </p>
@@ -553,14 +553,14 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Elec-Mate is designed by electricians for electricians. The prospective fault current
-              calculator is one of 70 calculators that work the way you actually need them to on
+              calculator is one of 70+ calculators that work the way you actually need them to on
               site — fast, accurate, and available on your phone even without a signal. Enter your
               measured values, get the answer, move on.
             </p>
             <p>
-              The platform also includes 8 certificate types (EICR, EIC, Minor Works, emergency
+              The platform also includes 16 certificate types (EICR, EIC, Minor Works, emergency
               lighting, fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI
-              tools, and 36+ training courses. Xero and QuickBooks integration means you can manage
+              tools, and 46+ training courses. Xero and QuickBooks integration means you can manage
               your jobs, certificates, and invoicing all from one app.
             </p>
           </div>
@@ -607,7 +607,7 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Calculate fault current in seconds, not minutes"
-        subheading="Join 430+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using 70 professional calculators on their phone. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

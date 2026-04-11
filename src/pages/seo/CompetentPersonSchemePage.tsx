@@ -615,7 +615,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Pass your scheme assessment with confidence"
-          description="Elec-Mate generates properly formatted BS 7671 certificates with complete test results. Your assessor will see exactly what they expect. Join 430+ UK electricians using Elec-Mate for professional certification. 7-day free trial."
+          description="Elec-Mate generates properly formatted BS 7671 certificates with complete test results. Your assessor will see exactly what they expect. Join 1,000+ UK electricians using Elec-Mate for professional certification. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -652,7 +652,7 @@ export default function CompetentPersonSchemePage() {
       faqHeading="Frequently Asked Questions About Competent Person Schemes"
       relatedPages={relatedPages}
       ctaHeading="Produce Scheme-Ready Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Professional PDFs ready for your scheme provider. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EIC, Minor Works, and EICR certificates in the correct BS 7671 format. Professional PDFs ready for your scheme provider. 7-day free trial, cancel anytime."
     />
   );
 }

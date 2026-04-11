@@ -81,7 +81,7 @@ const faqs = [
   {
     question: 'How do I get a new electricity supply or meter upgrade in London?',
     answer:
-      'UKPN (UK Power Networks) is the DNO for all of Greater London. To request a new supply, upgraded supply (for example, from single-phase to three-phase for an EV charger or heat pump), or meter relocation, you apply through UKPN\'s website (ukpowernetworks.co.uk). In London, lead times for new connections can be 6 to 12 weeks due to the volume of applications and the complexity of the underground cable network. Costs vary significantly — a simple meter relocation might be £500 to £1,500, while a new three-phase supply to a London property can cost £3,000 to £10,000 depending on the distance from the existing network and the amount of streetwork required. Your electrician can advise on whether your existing supply is adequate for the planned work and submit the UKPN application on your behalf.',
+      "UKPN (UK Power Networks) is the DNO for all of Greater London. To request a new supply, upgraded supply (for example, from single-phase to three-phase for an EV charger or heat pump), or meter relocation, you apply through UKPN's website (ukpowernetworks.co.uk). In London, lead times for new connections can be 6 to 12 weeks due to the volume of applications and the complexity of the underground cable network. Costs vary significantly — a simple meter relocation might be £500 to £1,500, while a new three-phase supply to a London property can cost £3,000 to £10,000 depending on the distance from the existing network and the amount of streetwork required. Your electrician can advise on whether your existing supply is adequate for the planned work and submit the UKPN application on your behalf.",
   },
 ];
 
@@ -153,8 +153,8 @@ const sections = [
           electricians) tend to focus on commercial fit-outs, new-build developments, and large
           residential projects. Mid-size firms (3 to 10 electricians) handle a mix of domestic and
           commercial work including rewires, consumer unit upgrades, and landlord compliance. Sole
-          traders and two-person teams handle the majority of domestic work — socket additions, light
-          fitting installations, fault finding, and EICRs.
+          traders and two-person teams handle the majority of domestic work — socket additions,
+          light fitting installations, fault finding, and EICRs.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -163,17 +163,16 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
-          signed off by local authority building control. The most recognised competent person schemes
-          are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          signed off by local authority building control. The most recognised competent person
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -213,9 +212,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
-                recent London customers, or check verified reviews on platforms like
-                Checkatrade, Trustpilot, or Google Business. Look for reviews that mention
-                similar work to what you need.
+                recent London customers, or check verified reviews on platforms like Checkatrade,
+                Trustpilot, or Google Business. Look for reviews that mention similar work to what
+                you need.
               </span>
             </li>
           </ul>
@@ -246,7 +245,8 @@ const sections = [
               <span>
                 <strong>Full rewire (3-bed Victorian terrace)</strong> — £6,500 to £10,000 including
                 new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
-                certification. Victorian properties with lath-and-plaster walls are at the upper end.
+                certification. Victorian properties with lath-and-plaster walls are at the upper
+                end.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -271,9 +271,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket (from existing circuit)</strong> — £120 to £200 per single
-                socket, depending on cable run length and the ease of access to the existing circuit.
-                Surface-mounted in a garage is cheaper; flush-mounted in a solid brick wall with
-                plaster is more.
+                socket, depending on cable run length and the ease of access to the existing
+                circuit. Surface-mounted in a garage is cheaper; flush-mounted in a solid brick wall
+                with plaster is more.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -297,9 +297,9 @@ const sections = [
         </div>
         <p>
           These prices are indicative for 2026 and vary by London borough. Inner London boroughs
-          (Westminster, Camden, Kensington and Chelsea, Islington) tend to be 10% to 20% higher
-          than outer boroughs (Bromley, Croydon, Havering) due to higher parking and access costs.
-          Always get at least three written quotes for any significant work.
+          (Westminster, Camden, Kensington and Chelsea, Islington) tend to be 10% to 20% higher than
+          outer boroughs (Bromley, Croydon, Havering) due to higher parking and access costs. Always
+          get at least three written quotes for any significant work.
         </p>
       </>
     ),
@@ -342,8 +342,8 @@ const sections = [
               Many London Victorian and Edwardian houses have been converted into flats, often with
               shared rising mains and complex metering arrangements. The electrical installation for
               each flat may have been done at different times, to different standards, and by
-              different electricians. Establishing what belongs to each flat, where circuits run, and
-              which meter serves which flat is often the first challenge.
+              different electricians. Establishing what belongs to each flat, where circuits run,
+              and which meter serves which flat is often the first challenge.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -403,12 +403,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in London is overseen by the building control
-          department of your local borough council (there are 33 London boroughs, each with its
-          own building control team) or by an approved inspector. If your electrician is registered
-          with a competent person scheme, they self-certify and notify the borough on your behalf.
+          department of your local borough council (there are 33 London boroughs, each with its own
+          building control team) or by an approved inspector. If your electrician is registered with
+          a competent person scheme, they self-certify and notify the borough on your behalf.
         </p>
       </>
     ),
@@ -501,9 +500,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          For work within your own flat (not communal areas), Section 20 does not apply. You
-          arrange and pay for this directly, though you may need the freeholder's permission for
-          certain alterations depending on your lease terms.
+          For work within your own flat (not communal areas), Section 20 does not apply. You arrange
+          and pay for this directly, though you may need the freeholder's permission for certain
+          alterations depending on your lease terms.
         </p>
       </>
     ),
@@ -526,11 +525,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">London Operating Costs to Factor In</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Congestion charge (£15/day in central London), ULEZ (£12.50/day if your van is
-                  not compliant), parking (£15 to £30/day in inner boroughs, plus the risk of
-                  PCNs), higher fuel costs due to traffic, higher insurance premiums, and longer
-                  travel times between jobs. A London electrician's overhead is typically 30% to 50%
-                  higher than a comparable electrician outside the M25.
+                  Congestion charge (£15/day in central London), ULEZ (£12.50/day if your van is not
+                  compliant), parking (£15 to £30/day in inner boroughs, plus the risk of PCNs),
+                  higher fuel costs due to traffic, higher insurance premiums, and longer travel
+                  times between jobs. A London electrician's overhead is typically 30% to 50% higher
+                  than a comparable electrician outside the M25.
                 </p>
               </div>
             </div>
@@ -554,7 +553,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your London electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -591,7 +590,7 @@ export default function ElectricianLondonPage() {
       faqHeading="Frequently Asked Questions About Electricians in London"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in London and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in London and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

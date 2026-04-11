@@ -632,7 +632,7 @@ export default function NoPowerToSocketsPage() {
       faqHeading="Frequently Asked Questions About Dead Sockets"
       relatedPages={relatedPages}
       ctaHeading="Diagnose Socket Faults with Elec-Mate"
-      ctaSubheading="AI fault diagnosis, ring circuit calculator, digital EICR certificates, and voice test entry. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="AI fault diagnosis, ring circuit calculator, digital EICR certificates, and voice test entry. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

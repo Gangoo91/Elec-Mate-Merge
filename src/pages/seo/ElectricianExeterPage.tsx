@@ -41,9 +41,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
-  'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Exeter\'s DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
-  'Exeter\'s Roman heritage and medieval city centre create significant conservation and heritage constraints for electrical work. The Cathedral Close and surrounding streets have some of the strictest planning controls in the South West.',
-  'The University of Exeter is expanding rapidly, driving strong demand for student HMO compliance work and purpose-built student accommodation installations across Pennsylvania, St David\'s, and Mount Pleasant.',
+  "NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Exeter's DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.",
+  "Exeter's Roman heritage and medieval city centre create significant conservation and heritage constraints for electrical work. The Cathedral Close and surrounding streets have some of the strictest planning controls in the South West.",
+  "The University of Exeter is expanding rapidly, driving strong demand for student HMO compliance work and purpose-built student accommodation installations across Pennsylvania, St David's, and Mount Pleasant.",
   'The South West has one of the highest rates of eco-retrofit activity in England, with air source heat pumps, solar PV, and battery storage installations growing significantly — all requiring qualified electricians.',
 ];
 
@@ -51,7 +51,7 @@ const faqs = [
   {
     question: 'How much does an electrician cost in Exeter?',
     answer:
-      'Exeter electrician day rates typically range from £230 to £330 per day for a qualified electrician. Hourly rates are usually £35 to £55 per hour, with emergency call-out rates of £65 to £100 per hour. Exeter rates are slightly above the South West average, reflecting the city\'s relative affluence, the university-driven demand, and the shortage of electricians in the region. Eco-retrofit work (heat pumps, solar PV, battery storage) commands premium rates due to the specialist knowledge required. Always get a fixed quote for defined work rather than agreeing to day rates where possible.',
+      "Exeter electrician day rates typically range from £230 to £330 per day for a qualified electrician. Hourly rates are usually £35 to £55 per hour, with emergency call-out rates of £65 to £100 per hour. Exeter rates are slightly above the South West average, reflecting the city's relative affluence, the university-driven demand, and the shortage of electricians in the region. Eco-retrofit work (heat pumps, solar PV, battery storage) commands premium rates due to the specialist knowledge required. Always get a fixed quote for defined work rather than agreeing to day rates where possible.",
   },
   {
     question: 'How do I check if an Exeter electrician is properly qualified?',
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'How long does a full rewire take in an Exeter period property?',
     answer:
-      'A full rewire of a typical 3-bedroom Victorian or Edwardian terraced house in areas like Mount Pleasant, St Leonard\'s, or Newtown takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Exeter has a mix of stone and brick construction — the older properties near the city centre often have thick stone walls that are extremely difficult to chase, while later Victorian terraces use brick. Properties near the Quay or in St Thomas may have been built with local red sandstone, which crumbles when drilled. Many period properties have high ceilings, ornate plasterwork, and multiple previous partial rewires that add to the complexity.',
+      "A full rewire of a typical 3-bedroom Victorian or Edwardian terraced house in areas like Mount Pleasant, St Leonard's, or Newtown takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Exeter has a mix of stone and brick construction — the older properties near the city centre often have thick stone walls that are extremely difficult to chase, while later Victorian terraces use brick. Properties near the Quay or in St Thomas may have been built with local red sandstone, which crumbles when drilled. Many period properties have high ceilings, ornate plasterwork, and multiple previous partial rewires that add to the complexity.",
   },
   {
     question: 'Do I need building control approval for electrical work in Exeter?',
@@ -76,10 +76,11 @@ const faqs = [
   {
     question: 'Who is the electricity supplier for Exeter and how do I get a new connection?',
     answer:
-      'NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Exeter and the wider South West. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Exeter are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £7,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.',
+      "NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Exeter and the wider South West. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Exeter are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £7,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.",
   },
   {
-    question: 'My Exeter property is near the river. Should I worry about flood risk for electrical work?',
+    question:
+      'My Exeter property is near the river. Should I worry about flood risk for electrical work?',
     answer:
       'Properties along the River Exe and in low-lying areas (St Thomas, the Quay, parts of Countess Wear, Topsham) are in flood risk zones. For these properties, consider relocating the consumer unit above the maximum recorded flood level (or at least 1.5 metres above finished floor level), using radial circuits for ground floor areas so they can be individually isolated, and specifying higher IP-rated accessories at ground level. After any flood event, the electrical installation must be inspected and tested by a qualified electrician before being re-energised. Exeter has a flood defence scheme, but it does not protect all riverside properties.',
   },
@@ -150,16 +151,16 @@ const sections = [
           Exeter is Devon's county city with a population of around 130,000 (210,000 including the
           wider urban area), and one of the fastest-growing cities in the South West. The University
           of Exeter — consistently ranked in the UK top 15 — drives a large student economy, while
-          the city's position as the South West's administrative and commercial centre creates steady
-          demand for both domestic and commercial electrical work.
+          the city's position as the South West's administrative and commercial centre creates
+          steady demand for both domestic and commercial electrical work.
         </p>
         <p>
           The Exeter electrical market is shaped by several distinct factors: a Roman and medieval
-          city centre with strict heritage constraints, rapid university expansion creating new-build
-          and student HMO demand, a strong eco-retrofit movement driven by the South West's
-          environmental focus, and flood risk areas along the River Exe. Domestic work ranges from
-          rewires in Victorian terraces around Mount Pleasant to EV charger installations in new-build
-          estates at Cranbrook and Pinhoe.
+          city centre with strict heritage constraints, rapid university expansion creating
+          new-build and student HMO demand, a strong eco-retrofit movement driven by the South
+          West's environmental focus, and flood risk areas along the River Exe. Domestic work ranges
+          from rewires in Victorian terraces around Mount Pleasant to EV charger installations in
+          new-build estates at Cranbrook and Pinhoe.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -169,16 +170,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by Exeter City Council building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -300,8 +300,8 @@ const sections = [
         </div>
         <p>
           These prices are indicative for 2026. The city centre and St Leonard's tend to be at the
-          higher end; outer areas like Beacon Heath and Burnthouse Lane are more moderate. Always get
-          at least three written quotes for any significant work.
+          higher end; outer areas like Beacon Heath and Burnthouse Lane are more moderate. Always
+          get at least three written quotes for any significant work.
         </p>
       </>
     ),
@@ -312,8 +312,8 @@ const sections = [
     content: (
       <>
         <p>
-          Exeter's property stock spans nearly 2,000 years, from Roman foundations in the city centre
-          to modern new-build estates on the outskirts. This historical range creates varied
+          Exeter's property stock spans nearly 2,000 years, from Roman foundations in the city
+          centre to modern new-build estates on the outskirts. This historical range creates varied
           challenges for electrical work.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -345,10 +345,10 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The University of Exeter (Streatham and St Luke's campuses) drives a large student
               rental market in Pennsylvania, Mount Pleasant, St David's, and Stoke Hill. HMOs must
-              meet Exeter City Council licensing conditions including mains-powered interlinked smoke
-              and heat detection, emergency lighting on escape routes, and RCD protection on all
-              circuits. The university's continued expansion and rising student numbers mean demand
-              for compliant student housing is increasing year on year.
+              meet Exeter City Council licensing conditions including mains-powered interlinked
+              smoke and heat detection, emergency lighting on escape routes, and RCD protection on
+              all circuits. The university's continued expansion and rising student numbers mean
+              demand for compliant student housing is increasing year on year.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -383,8 +383,8 @@ const sections = [
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase (increasingly common for
-                heat pumps and EV chargers), you apply to NGED. Exeter lead times are typically 4
-                to 8 weeks. The rapid growth at Cranbrook and Pinhoe has required significant NGED
+                heat pumps and EV chargers), you apply to NGED. Exeter lead times are typically 4 to
+                8 weeks. The rapid growth at Cranbrook and Pinhoe has required significant NGED
                 network investment.
               </span>
             </li>
@@ -393,8 +393,8 @@ const sections = [
               <span>
                 <strong>Meter relocations</strong> — moving the electricity meter requires NGED to
                 disconnect and reconnect the supply. Your electrician installs the new meter tails;
-                NGED moves the meter and cutout. This is common during extensions and conversions
-                in Exeter's older properties.
+                NGED moves the meter and cutout. This is common during extensions and conversions in
+                Exeter's older properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -410,8 +410,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Exeter is overseen by Exeter City Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf.
@@ -434,10 +433,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The Cathedral Close</strong> — Exeter Cathedral and the surrounding Close
-                is one of the most architecturally significant areas in the South West. Properties
-                here are Grade I or Grade II listed, and any electrical work affecting the character
-                of the buildings requires Listed Building Consent from Exeter City Council. This
+                <strong>The Cathedral Close</strong> — Exeter Cathedral and the surrounding Close is
+                one of the most architecturally significant areas in the South West. Properties here
+                are Grade I or Grade II listed, and any electrical work affecting the character of
+                the buildings requires Listed Building Consent from Exeter City Council. This
                 includes external lighting, surface-mounted conduit, and even internal work if it
                 affects original features. Electricians must have experience with heritage buildings
                 and use appropriate fixings and routing methods.
@@ -447,10 +446,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Southernhay and the city centre</strong> — Southernhay's Georgian terraces
-                and the Princesshay area include listed buildings and conservation zone restrictions.
-                Commercial electrical work for businesses in these areas must respect heritage
-                constraints on external signage, lighting, and cable routing. The restored Roman
-                wall sections also constrain cable routing and excavation in certain areas.
+                and the Princesshay area include listed buildings and conservation zone
+                restrictions. Commercial electrical work for businesses in these areas must respect
+                heritage constraints on external signage, lighting, and cable routing. The restored
+                Roman wall sections also constrain cable routing and excavation in certain areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -476,8 +475,9 @@ const sections = [
         <p>
           The South West has one of the highest rates of eco-retrofit activity in England, and
           Exeter is at the forefront of this trend. Exeter City Council has declared a climate
-          emergency and set a net-zero carbon target, and the city's environmentally aware population
-          is driving strong demand for renewable energy and energy efficiency installations:
+          emergency and set a net-zero carbon target, and the city's environmentally aware
+          population is driving strong demand for renewable energy and energy efficiency
+          installations:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -487,20 +487,21 @@ const sections = [
                 <strong>Air source heat pumps</strong> — demand for air source heat pump
                 installations is growing rapidly in Exeter, driven by the Boiler Upgrade Scheme
                 grant (currently £7,500) and Exeter's relatively mild climate (which improves heat
-                pump efficiency). The electrical work includes a dedicated 32A or 40A circuit, supply
-                assessment (some properties need an upgrade), and ensuring the earthing system can
-                accommodate the additional load. MCS certification is required for grant eligibility.
+                pump efficiency). The electrical work includes a dedicated 32A or 40A circuit,
+                supply assessment (some properties need an upgrade), and ensuring the earthing
+                system can accommodate the additional load. MCS certification is required for grant
+                eligibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Solar PV and battery storage</strong> — the South West has some of the best
-                solar irradiation levels in England, and Exeter rooftops are increasingly fitted with
-                solar PV arrays. Electrical work includes AC and DC isolation, G98/G99 notification
-                to NGED, consumer unit modifications, and battery storage integration. The growing
-                availability of time-of-use tariffs (like Octopus Agile) is driving battery storage
-                installations alongside solar PV.
+                solar irradiation levels in England, and Exeter rooftops are increasingly fitted
+                with solar PV arrays. Electrical work includes AC and DC isolation, G98/G99
+                notification to NGED, consumer unit modifications, and battery storage integration.
+                The growing availability of time-of-use tariffs (like Octopus Agile) is driving
+                battery storage installations alongside solar PV.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -508,17 +509,17 @@ const sections = [
               <span>
                 <strong>EV charging</strong> — Exeter's position on the M5 corridor and the city's
                 growing population of electric vehicle owners mean strong demand for domestic EV
-                charger installations. New-build estates at Cranbrook and Pinhoe often have pre-wired
-                EV charging points; older properties need a new dedicated circuit from the consumer
-                unit to the charger location, with earthing and Part P certification.
+                charger installations. New-build estates at Cranbrook and Pinhoe often have
+                pre-wired EV charging points; older properties need a new dedicated circuit from the
+                consumer unit to the charger location, with earthing and Part P certification.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Electricians in the Exeter area who add MCS certification, solar PV competence, and heat
-          pump electrical knowledge to their skillset are well positioned for the growing eco-retrofit
-          market across Devon and the wider South West.
+          pump electrical knowledge to their skillset are well positioned for the growing
+          eco-retrofit market across Devon and the wider South West.
         </p>
       </>
     ),
@@ -571,7 +572,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Exeter electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -608,7 +609,7 @@ export default function ElectricianExeterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Exeter"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Exeter and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Exeter and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

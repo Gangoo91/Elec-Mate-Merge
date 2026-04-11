@@ -55,7 +55,7 @@ const faqs = [
   {
     question: 'Is a fuse board upgrade notifiable under Part P in Birmingham?',
     answer:
-      'Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify the work, or you must notify Birmingham City Council\'s Building Control department before the work begins. Failure to notify can cause problems when selling the property.',
+      "Yes. Consumer unit replacement is notifiable work under Part P of the Building Regulations in England and Wales. Your electrician must be registered with a competent person scheme (NICEIC, NAPIT, or ELECSA) to self-certify the work, or you must notify Birmingham City Council's Building Control department before the work begins. Failure to notify can cause problems when selling the property.",
   },
   {
     question: 'Do I need RCD protection when replacing a consumer unit in Birmingham?',
@@ -88,8 +88,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
-    description:
-      'National price guide with material costs, labour rates, and trade pricing data.',
+    description: 'National price guide with material costs, labour rates, and trade pricing data.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -128,8 +127,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -188,17 +186,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small flat or bedsit (6-way board)</strong> — £350 to £450 total.
-                Common in purpose-built flats and converted terraces across Selly Oak and Edgbaston.
+                <strong>Small flat or bedsit (6-way board)</strong> — £350 to £450 total. Common in
+                purpose-built flats and converted terraces across Selly Oak and Edgbaston.
                 Materials: £120 to £200. Labour: £200 to £220. EIC: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £450 to
-                £600 total. The most common domestic job in Birmingham. Materials: £250 to £380.
-                Labour: £250 to £280. EIC and Part P: £30 to £50.
+                <strong>Standard terraced house (10-way with RCBOs and SPD)</strong> — £450 to £600
+                total. The most common domestic job in Birmingham. Materials: £250 to £380. Labour:
+                £250 to £280. EIC and Part P: £30 to £50.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -212,9 +210,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase property</strong> — £1,200 to £1,800+ total. Required for
-                larger homes with three-phase supply, workshops, or commercial premises.
-                Materials: £500 to £800. Labour: £450 to £600. EIC and Part P: £50 to £80.
+                <strong>Three-phase property</strong> — £1,200 to £1,800+ total. Required for larger
+                homes with three-phase supply, workshops, or commercial premises. Materials: £500 to
+                £800. Labour: £450 to £600. EIC and Part P: £50 to £80.
               </span>
             </li>
           </ul>
@@ -250,24 +248,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plastic consumer unit</strong> — since January 2016, domestic consumer
-                units must use a non-combustible (metal) enclosure under Regulation 421.1.201 of
-                BS 7671. A plastic enclosure is a fire risk in the event of an internal arc fault.
+                <strong>Plastic consumer unit</strong> — since January 2016, domestic consumer units
+                must use a non-combustible (metal) enclosure under Regulation 421.1.201 of BS 7671.
+                A plastic enclosure is a fire risk in the event of an internal arc fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — BS 7671 requires 30 mA RCD protection for
-                socket-outlet circuits and concealed cables. Boards without RCDs or RCBOs present
-                a significant electric shock risk.
+                socket-outlet circuits and concealed cables. Boards without RCDs or RCBOs present a
+                significant electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Signs of overheating or damage</strong> — discolouration, burning smell,
-                or visible damage to the consumer unit enclosure or connections.
+                <strong>Signs of overheating or damage</strong> — discolouration, burning smell, or
+                visible damage to the consumer unit enclosure or connections.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -299,19 +297,18 @@ const sections = [
       <>
         <p>
           Consumer unit replacement is classified as notifiable work under Part P of the Building
-          Regulations in England and Wales. In Birmingham, this means the work must either be carried
-          out by an electrician registered with a competent person scheme — such as{' '}
+          Regulations in England and Wales. In Birmingham, this means the work must either be
+          carried out by an electrician registered with a competent person scheme — such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Birmingham City Council's Building Control department before
-          the work starts.
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Birmingham City Council's Building Control department before the
+          work starts.
         </p>
         <p>
-          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate
-          (EIC) must be issued for consumer unit replacements. The EIC documents the design,
-          construction, inspection, and testing of the installation. A registered electrician will
-          self-certify the work and submit notification to Birmingham City Council through their
-          scheme provider.
+          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate (EIC)
+          must be issued for consumer unit replacements. The EIC documents the design, construction,
+          inspection, and testing of the installation. A registered electrician will self-certify
+          the work and submit notification to Birmingham City Council through their scheme provider.
         </p>
         <p>
           If you use a non-registered electrician, you will need to apply to Birmingham City
@@ -382,10 +379,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          In Birmingham terraced houses, the consumer unit is often located in the hallway or
-          under the stairs. In inter-war semis, it may be in a cupboard near the front door or
-          in the kitchen. Access arrangements and the location of the existing board should be
-          confirmed with your electrician before work begins.
+          In Birmingham terraced houses, the consumer unit is often located in the hallway or under
+          the stairs. In inter-war semis, it may be in a cupboard near the front door or in the
+          kitchen. Access arrangements and the location of the existing board should be confirmed
+          with your electrician before work begins.
         </p>
       </>
     ),
@@ -396,8 +393,8 @@ const sections = [
     content: (
       <>
         <p>
-          A straightforward like-for-like consumer unit replacement typically takes 4 to 6 hours
-          in a standard Birmingham property. This includes isolation, removal, installation,
+          A straightforward like-for-like consumer unit replacement typically takes 4 to 6 hours in
+          a standard Birmingham property. This includes isolation, removal, installation,
           reconnection, labelling, testing, and certification.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -412,16 +409,16 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Complex Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
               Where meter tails need replacing, earthing requires upgrading, cables need extending,
-              or additional circuits are being added. 6 to 10 hours — a full day. Common in
-              pre-war Birmingham properties with rubber-insulated wiring.
+              or additional circuits are being added. 6 to 10 hours — a full day. Common in pre-war
+              Birmingham properties with rubber-insulated wiring.
             </p>
           </div>
         </div>
         <p>
           Birmingham-specific factors that can add time include dealing with ageing wiring in
           back-to-back terraces, upgrading earthing arrangements that do not meet current
-          requirements, and accessing boards in tight understairs cupboards. Your electrician
-          should give a clear time estimate after surveying the installation.
+          requirements, and accessing boards in tight understairs cupboards. Your electrician should
+          give a clear time estimate after surveying the installation.
         </p>
       </>
     ),
@@ -441,16 +438,15 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person scheme registration</strong> — verify they are registered
-                with NICEIC, NAPIT, or ELECSA. Check the scheme's online register. This is
-                essential for Part P self-certification without the need for Building Control
-                notification.
+                with NICEIC, NAPIT, or ELECSA. Check the scheme's online register. This is essential
+                for Part P self-certification without the need for Building Control notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local to your area</strong> — choose an electrician based in your part
-                of Birmingham or the West Midlands. Travel charges can add to the cost if the
+                <strong>Local to your area</strong> — choose an electrician based in your part of
+                Birmingham or the West Midlands. Travel charges can add to the cost if the
                 electrician is based far away.
               </span>
             </li>
@@ -458,15 +454,15 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Itemised quote</strong> — the quote should break down materials, labour,
-                Part P notification, and VAT separately. Be cautious of single-figure quotes with
-                no breakdown.
+                Part P notification, and VAT separately. Be cautious of single-figure quotes with no
+                breakdown.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC included</strong> — confirm the quote includes an Electrical Installation
-                Certificate and Part P notification. Some lower quotes exclude these.
+                <strong>EIC included</strong> — confirm the quote includes an Electrical
+                Installation Certificate and Part P notification. Some lower quotes exclude these.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,7 +513,7 @@ export default function ConsumerUnitReplacementBirminghamPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements in Birmingham"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

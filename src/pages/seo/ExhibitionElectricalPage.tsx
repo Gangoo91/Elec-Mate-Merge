@@ -101,14 +101,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/rcd-types-explained',
     title: 'RCD Types Explained',
-    description: 'Type AC, A, F, and B RCDs — which to use and why it matters for temporary installations.',
+    description:
+      'Type AC, A, F, and B RCDs — which to use and why it matters for temporary installations.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
-    description: 'Complete pre-energisation checks and inspection reports on your phone with instant PDF export.',
+    description:
+      'Complete pre-energisation checks and inspection reports on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -125,12 +127,12 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7909:2011 — Code of Practice for Temporary Electrical Systems for Entertainment
-          and Related Purposes — is the primary technical standard governing temporary electrical
+          BS 7909:2011 — Code of Practice for Temporary Electrical Systems for Entertainment and
+          Related Purposes — is the primary technical standard governing temporary electrical
           installations at UK events. It applies to exhibitions, trade shows, music concerts,
-          outdoor festivals, film and television productions, conferences, sports events, and
-          any other temporary gathering requiring an electrical installation designed for a
-          defined period.
+          outdoor festivals, film and television productions, conferences, sports events, and any
+          other temporary gathering requiring an electrical installation designed for a defined
+          period.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -138,10 +140,10 @@ const sections = [
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Relationship to BS 7671</strong> — BS 7909 is complementary to, not a
-                replacement for, BS 7671. Temporary event installations must comply with both
-                BS 7671 (which sets the fundamental electrical safety requirements) and BS 7909
-                (which addresses the specific management, documentation, and operational
-                requirements of temporary systems). Where BS 7909 is silent, BS 7671 applies.
+                replacement for, BS 7671. Temporary event installations must comply with both BS
+                7671 (which sets the fundamental electrical safety requirements) and BS 7909 (which
+                addresses the specific management, documentation, and operational requirements of
+                temporary systems). Where BS 7909 is silent, BS 7671 applies.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -149,20 +151,20 @@ const sections = [
               <span>
                 <strong>Legal framework</strong> — while BS 7909 is not in itself a statutory
                 instrument, compliance with it provides a means of satisfying the legal duties
-                imposed by the Electricity at Work Regulations 1989 and the Health and Safety
-                at Work etc. Act 1974. Local authorities licensing events and venue operators
-                routinely require evidence of BS 7909 compliance. The Event Safety Guide
-                (the Purple Guide) also references BS 7909.
+                imposed by the Electricity at Work Regulations 1989 and the Health and Safety at
+                Work etc. Act 1974. Local authorities licensing events and venue operators routinely
+                require evidence of BS 7909 compliance. The Event Safety Guide (the Purple Guide)
+                also references BS 7909.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Temporary vs. permanent</strong> — a temporary electrical installation
-                is defined as one designed and installed for a specific event or series of events
-                over a defined period. It is erected before the event and dismantled after. The
-                temporary nature does not reduce the safety standards required — a temporary
-                installation must be as safe as a permanent one.
+                <strong>Temporary vs. permanent</strong> — a temporary electrical installation is
+                defined as one designed and installed for a specific event or series of events over
+                a defined period. It is erected before the event and dismantled after. The temporary
+                nature does not reduce the safety standards required — a temporary installation must
+                be as safe as a permanent one.
               </span>
             </li>
           </ul>
@@ -186,28 +188,28 @@ const sections = [
         <p>
           The responsible person (RP) is central to the BS 7909 framework. The RP is a competent
           individual who takes professional responsibility for the electrical installation from
-          design through to de-energisation. On large events, a team of RPs may be appointed,
-          each responsible for a defined area or system.
+          design through to de-energisation. On large events, a team of RPs may be appointed, each
+          responsible for a defined area or system.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competence requirements</strong> — the RP must have adequate knowledge
-                of BS 7671 and BS 7909, experience in designing and supervising temporary
-                electrical systems, and hold appropriate qualifications. In practice, RPs are
-                typically qualified electricians with experience in the entertainment sector,
-                often holding additional training certificates specific to event electrical work.
+                <strong>Competence requirements</strong> — the RP must have adequate knowledge of BS
+                7671 and BS 7909, experience in designing and supervising temporary electrical
+                systems, and hold appropriate qualifications. In practice, RPs are typically
+                qualified electricians with experience in the entertainment sector, often holding
+                additional training certificates specific to event electrical work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Design responsibilities</strong> — the RP reviews or produces the
-                electrical design, including the single-line diagram, cable schedules, protection
-                coordination, earthing design, and load calculations. On smaller events the RP
-                may be the designer; on larger events the RP reviews designs produced by others.
+                <strong>Design responsibilities</strong> — the RP reviews or produces the electrical
+                design, including the single-line diagram, cable schedules, protection coordination,
+                earthing design, and load calculations. On smaller events the RP may be the
+                designer; on larger events the RP reviews designs produced by others.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -215,8 +217,8 @@ const sections = [
               <span>
                 <strong>Pre-energisation check</strong> — the RP oversees or carries out the
                 pre-energisation check (PEC) and signs off the installation as safe to energise.
-                This is a formal process with recorded test results. The RP must be satisfied
-                that the installation complies with the design before energisation.
+                This is a formal process with recorded test results. The RP must be satisfied that
+                the installation complies with the design before energisation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -239,40 +241,40 @@ const sections = [
     content: (
       <>
         <p>
-          Temporary event electrical distribution typically follows a hierarchical structure,
-          from the primary power source through secondary and tertiary distribution to individual
-          loads. Each level of the hierarchy has defined protection and documentation requirements.
+          Temporary event electrical distribution typically follows a hierarchical structure, from
+          the primary power source through secondary and tertiary distribution to individual loads.
+          Each level of the hierarchy has defined protection and documentation requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Primary distribution</strong> — from the power source (mains incomer
-                or generator) to primary distribution boards (PDBs). Primary distribution
-                typically uses large-section armoured or rubber-insulated flexible cables and
-                Ceeform or camlock connectors rated at 200 A to 400 A. Overcurrent protection
-                at the primary level uses moulded case circuit breakers (MCCBs).
+                <strong>Primary distribution</strong> — from the power source (mains incomer or
+                generator) to primary distribution boards (PDBs). Primary distribution typically
+                uses large-section armoured or rubber-insulated flexible cables and Ceeform or
+                camlock connectors rated at 200 A to 400 A. Overcurrent protection at the primary
+                level uses moulded case circuit breakers (MCCBs).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Secondary distribution</strong> — from PDBs to secondary distribution
-                boards (SDBs) serving individual areas, stages, or zones. Secondary distribution
-                cables are typically 16–70 mm² flexible rubber insulated. Secondary distribution
-                boards incorporate MCBs or RCBOs per outgoing circuit with appropriate time
-                delays for discrimination.
+                <strong>Secondary distribution</strong> — from PDBs to secondary distribution boards
+                (SDBs) serving individual areas, stages, or zones. Secondary distribution cables are
+                typically 16–70 mm² flexible rubber insulated. Secondary distribution boards
+                incorporate MCBs or RCBOs per outgoing circuit with appropriate time delays for
+                discrimination.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Final distribution</strong> — from SDBs to 32 A or 16 A socket outlet
-                boards, lighting dimmer racks, or directly to fixed equipment. Every socket
-                outlet circuit at the final level must have 30 mA RCBO protection. Socket outlet
-                boards used at events must be purpose-built for event use — domestic consumer
-                units are not suitable.
+                boards, lighting dimmer racks, or directly to fixed equipment. Every socket outlet
+                circuit at the final level must have 30 mA RCBO protection. Socket outlet boards
+                used at events must be purpose-built for event use — domestic consumer units are not
+                suitable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -280,8 +282,8 @@ const sections = [
               <span>
                 <strong>Cable management</strong> — all cables in public areas must be protected
                 against damage and must not create trip hazards. Cable ramps, cable bridges, and
-                overhead cable routes are standard. All cables must be clearly labelled at both
-                ends and at regular intervals. Cable routes must be marked on the event site plan.
+                overhead cable routes are standard. All cables must be clearly labelled at both ends
+                and at regular intervals. Cable routes must be marked on the event site plan.
               </span>
             </li>
           </ul>
@@ -304,32 +306,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Generator earthing</strong> — a generator supplying a temporary
-                installation must be earthed by connecting its star-point neutral to an earth
-                electrode driven at or near the generator. This establishes a TN-S system where
-                the neutral and protective earth conductors are separate throughout the
-                distribution system. The neutral must NOT be connected to the generator's
-                metallic frame without first establishing an earth electrode connection.
+                <strong>Generator earthing</strong> — a generator supplying a temporary installation
+                must be earthed by connecting its star-point neutral to an earth electrode driven at
+                or near the generator. This establishes a TN-S system where the neutral and
+                protective earth conductors are separate throughout the distribution system. The
+                neutral must NOT be connected to the generator's metallic frame without first
+                establishing an earth electrode connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth electrode resistance</strong> — the earth electrode at the
-                generator must be tested before the generator is loaded. For a TN-S system,
-                the earth electrode resistance must be low enough to ensure that the prospective
-                fault current is sufficient to operate the overcurrent protective devices within
-                the required disconnection times.
+                <strong>Earth electrode resistance</strong> — the earth electrode at the generator
+                must be tested before the generator is loaded. For a TN-S system, the earth
+                electrode resistance must be low enough to ensure that the prospective fault current
+                is sufficient to operate the overcurrent protective devices within the required
+                disconnection times.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Generator output cables</strong> — output cables from the generator
-                must be rated for the generator's full output and for the physical conditions
-                at the site. Connections must be made using appropriate connectors rated for
-                the current and installed by a competent person. Generator output cables in
-                public areas must be routed to prevent damage from vehicles or foot traffic.
+                <strong>Generator output cables</strong> — output cables from the generator must be
+                rated for the generator's full output and for the physical conditions at the site.
+                Connections must be made using appropriate connectors rated for the current and
+                installed by a competent person. Generator output cables in public areas must be
+                routed to prevent damage from vehicles or foot traffic.
               </span>
             </li>
           </ul>
@@ -343,30 +345,30 @@ const sections = [
     content: (
       <>
         <p>
-          RCD protection is the primary line of defence against electric shock in temporary
-          event installations. The combination of outdoor environments, high pedestrian traffic,
-          flexible cables subject to damage, and large numbers of members of the public makes
-          comprehensive RCD protection non-negotiable.
+          RCD protection is the primary line of defence against electric shock in temporary event
+          installations. The combination of outdoor environments, high pedestrian traffic, flexible
+          cables subject to damage, and large numbers of members of the public makes comprehensive
+          RCD protection non-negotiable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA for all socket outlet circuits</strong> — every socket outlet
-                circuit at the final distribution level must be protected by a 30 mA RCBO.
-                This is a mandatory requirement under BS 7671 Regulation 411.3.3 and is
-                reinforced by BS 7909. There are no exceptions for temporary event installations.
+                <strong>30 mA for all socket outlet circuits</strong> — every socket outlet circuit
+                at the final distribution level must be protected by a 30 mA RCBO. This is a
+                mandatory requirement under BS 7671 Regulation 411.3.3 and is reinforced by BS 7909.
+                There are no exceptions for temporary event installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Discrimination — upstream time-delayed RCDs</strong> — primary and
-                secondary distribution boards should incorporate time-delayed RCDs (S-type,
-                with a short time delay) rated at 100 mA to 300 mA. These provide discrimination
-                so that a 30 mA trip at a socket outlet level does not trip the upstream 300 mA
-                device, preserving power to the rest of the event.
+                <strong>Discrimination — upstream time-delayed RCDs</strong> — primary and secondary
+                distribution boards should incorporate time-delayed RCDs (S-type, with a short time
+                delay) rated at 100 mA to 300 mA. These provide discrimination so that a 30 mA trip
+                at a socket outlet level does not trip the upstream 300 mA device, preserving power
+                to the rest of the event.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,8 +376,8 @@ const sections = [
               <span>
                 <strong>RCD testing before energisation</strong> — all RCDs must be functionally
                 tested as part of the pre-energisation check. The test records must include the
-                operating time at IΔn and at 5× IΔn. Only calibrated test instruments must be
-                used; the test button on the RCD face does not verify operating time.
+                operating time at IΔn and at 5× IΔn. Only calibrated test instruments must be used;
+                the test button on the RCD face does not verify operating time.
               </span>
             </li>
           </ul>
@@ -396,43 +398,42 @@ const sections = [
     content: (
       <>
         <p>
-          TN-S earthing is the preferred and most straightforward earthing arrangement for
-          temporary event electrical installations. Understanding why TN-S is preferred — and
-          why PME (TN-C-S) must not be used — is essential for electricians working in the
-          events sector.
+          TN-S earthing is the preferred and most straightforward earthing arrangement for temporary
+          event electrical installations. Understanding why TN-S is preferred — and why PME (TN-C-S)
+          must not be used — is essential for electricians working in the events sector.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why TN-S for temporary systems</strong> — in a TN-S system, the neutral
-                and protective earth conductors are separate from the source to every point in
-                the installation. A break in the neutral conductor does not cause dangerous
-                voltages on the protective earth conductor and hence on equipment metalwork.
-                In temporary systems, where cable connections are made and remade many times,
-                this separation provides a critical safety margin.
+                <strong>Why TN-S for temporary systems</strong> — in a TN-S system, the neutral and
+                protective earth conductors are separate from the source to every point in the
+                installation. A break in the neutral conductor does not cause dangerous voltages on
+                the protective earth conductor and hence on equipment metalwork. In temporary
+                systems, where cable connections are made and remade many times, this separation
+                provides a critical safety margin.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why PME must not be used</strong> — in a PME (TN-C-S) system, the
-                protective earth is derived from the combined PEN conductor. If this conductor
-                is broken between the source and a connected piece of equipment, the equipment's
-                metalwork can rise to near-full line voltage. In temporary systems, an open PEN
-                fault is a realistic risk. For this reason, BS 7909 and network operator
-                engineering standards restrict the use of PME for temporary event installations.
+                <strong>Why PME must not be used</strong> — in a PME (TN-C-S) system, the protective
+                earth is derived from the combined PEN conductor. If this conductor is broken
+                between the source and a connected piece of equipment, the equipment's metalwork can
+                rise to near-full line voltage. In temporary systems, an open PEN fault is a
+                realistic risk. For this reason, BS 7909 and network operator engineering standards
+                restrict the use of PME for temporary event installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation transformers</strong> — where a mains supply providing only
-                PME earthing is the available power source, an isolation transformer may be used
-                to derive a local TN-S (or IT) system. The transformer secondary is earthed
-                via a local earth electrode, establishing a safe TN-S arrangement for the
-                temporary installation.
+                <strong>Isolation transformers</strong> — where a mains supply providing only PME
+                earthing is the available power source, an isolation transformer may be used to
+                derive a local TN-S (or IT) system. The transformer secondary is earthed via a local
+                earth electrode, establishing a safe TN-S arrangement for the temporary
+                installation.
               </span>
             </li>
           </ul>
@@ -446,21 +447,20 @@ const sections = [
     content: (
       <>
         <p>
-          A formal pre-energisation check (PEC) is required before any temporary installation
-          is energised for the first time. The PEC follows the same principles as an initial
-          verification under BS 7671 and must be carried out by a competent person appointed
-          by the responsible person.
+          A formal pre-energisation check (PEC) is required before any temporary installation is
+          energised for the first time. The PEC follows the same principles as an initial
+          verification under BS 7671 and must be carried out by a competent person appointed by the
+          responsible person.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation resistance testing</strong> — all distribution cables and
-                board wiring must be tested for insulation resistance before energisation.
-                Tests are carried out phase-to-neutral, phase-to-earth, and neutral-to-earth
-                using a 500 V DC insulation resistance tester. The minimum acceptable value
-                is 1 MΩ per BS 7671.
+                <strong>Insulation resistance testing</strong> — all distribution cables and board
+                wiring must be tested for insulation resistance before energisation. Tests are
+                carried out phase-to-neutral, phase-to-earth, and neutral-to-earth using a 500 V DC
+                insulation resistance tester. The minimum acceptable value is 1 MΩ per BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,26 +468,25 @@ const sections = [
               <span>
                 <strong>Protective conductor continuity</strong> — continuity of all protective
                 earth conductors must be verified from each load point back to the main earthing
-                terminal. Earth continuity must be confirmed before energisation, as a break
-                in the protective conductor is not detectable during normal operation until a
-                fault occurs.
+                terminal. Earth continuity must be confirmed before energisation, as a break in the
+                protective conductor is not detectable during normal operation until a fault occurs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD functional testing</strong> — all RCDs at every distribution level
-                must be tested with a calibrated RCD tester before energisation. Operating times
-                at IΔn and 5× IΔn must be recorded and verified against BS 7671 maximum values.
+                <strong>RCD functional testing</strong> — all RCDs at every distribution level must
+                be tested with a calibrated RCD tester before energisation. Operating times at IΔn
+                and 5× IΔn must be recorded and verified against BS 7671 maximum values.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation</strong> — all PEC test results must be recorded and
-                retained as part of the event documentation package. The RP signs off the PEC
-                report and retains it throughout the event. The PEC report should be available
-                for inspection by the local authority or safety officer if requested.
+                <strong>Documentation</strong> — all PEC test results must be recorded and retained
+                as part of the event documentation package. The RP signs off the PEC report and
+                retains it throughout the event. The PEC report should be available for inspection
+                by the local authority or safety officer if requested.
               </span>
             </li>
           </ul>
@@ -502,25 +501,27 @@ const sections = [
       <>
         <p>
           Temporary event electrical work is a demanding and rewarding specialism. Exhibition,
-          festival, and event electricians need excellent knowledge of BS 7909 and BS 7671,
-          physical stamina for installation work in all weather conditions, and the ability
-          to work to tight deadlines. Day rates for experienced event electricians and responsible
-          persons are typically above the national average for electrical work.
+          festival, and event electricians need excellent knowledge of BS 7909 and BS 7671, physical
+          stamina for installation work in all weather conditions, and the ability to work to tight
+          deadlines. Day rates for experienced event electricians and responsible persons are
+          typically above the national average for electrical work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete Pre-Energisation Checks On Site</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete Pre-Energisation Checks On Site
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate inspection app
                   </SEOInternalLink>{' '}
                   to record pre-energisation check test results on your phone — insulation
-                  resistance, continuity, and RCD test results — and generate the PDF PEC
-                  report before energisation. No paper, no delays.
+                  resistance, continuity, and RCD test results — and generate the PDF PEC report
+                  before energisation. No paper, no delays.
                 </p>
               </div>
             </div>
@@ -536,9 +537,9 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce professional quotes for exhibition and event electrical packages —
-                  covering design, supply of distribution equipment, installation, PEC, and
-                  de-rig. Professional quotes help win repeat contracts with event production
-                  companies and exhibition stand builders.
+                  covering design, supply of distribution equipment, installation, PEC, and de-rig.
+                  Professional quotes help win repeat contracts with event production companies and
+                  exhibition stand builders.
                 </p>
               </div>
             </div>
@@ -546,7 +547,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Event electrical work made simple with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export. Ideal for exhibition and event electrical work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, pre-energisation check documentation, and instant PDF export. Ideal for exhibition and event electrical work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -583,7 +584,7 @@ export default function ExhibitionElectricalPage() {
       faqHeading="Frequently Asked Questions About Exhibition and Event Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Event Pre-Energisation Checks on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, test result recording, and instant PDF export. Perfect for BS 7909 pre-energisation checks. 7-day free trial."
     />
   );
 }

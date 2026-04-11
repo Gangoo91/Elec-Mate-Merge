@@ -373,7 +373,7 @@ export default function CableTrayCalculatorPage() {
           icon: Shield,
           title: 'BS EN 61537 Compliant',
           description:
-            "All tray specifications and load ratings reference BS EN 61537. Part of Elec-Mate's 50+ calculators for UK electricians.",
+            "All tray specifications and load ratings reference BS EN 61537. Part of Elec-Mate's 70+ calculators for UK electricians.",
         },
       ]}
       featuresHeading="Cable Tray Calculator Features"
@@ -460,7 +460,7 @@ export default function CableTrayCalculatorPage() {
         },
       ]}
       ctaHeading="Size cable tray correctly every time"
-      ctaSubheading="Join UK electricians using Elec-Mate's 50+ calculators for on-site and design work. 7-day free trial, cancel anytime."
+      ctaSubheading="Join UK electricians using Elec-Mate's 70+ calculators for on-site and design work. 7-day free trial, cancel anytime."
       toolPath="/tools/cable-tray-sizing-calculator"
     />
   );

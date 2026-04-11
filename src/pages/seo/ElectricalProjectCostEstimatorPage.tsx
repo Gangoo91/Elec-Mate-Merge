@@ -636,7 +636,7 @@ export default function ElectricalProjectCostEstimatorPage() {
       faqHeading="Frequently Asked Questions About Electrical Cost Estimating"
       relatedPages={relatedPages}
       ctaHeading="Price Every Job for Profit"
-      ctaSubheading="AI-powered cost estimating, professional PDF quotes, and job profitability tracking. Join 430+ UK electricians using Elec-Mate to run a profitable business. 7-day free trial, cancel anytime."
+      ctaSubheading="AI-powered cost estimating, professional PDF quotes, and job profitability tracking. Join 1,000+ UK electricians using Elec-Mate to run a profitable business. 7-day free trial, cancel anytime."
       pagePath="/tools/electrical-project-cost-estimator"
     />
   );

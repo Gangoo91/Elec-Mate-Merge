@@ -38,9 +38,9 @@ const tocItems = [
 const keyTakeaways = [
   'Warrington is in Cheshire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Warrington Borough Council Building Control.',
   'Electricity North West (ENW) is the DNO for Warrington. All new connections, supply upgrades, and G98/G99 generation notifications for solar PV and battery storage go through ENW.',
-  'Warrington has a strong industrial and logistics economy alongside a large residential sector. The town has one of the UK\'s highest concentrations of distribution centres and logistics parks, creating significant commercial and industrial electrical demand.',
-  'Warrington\'s New Town development from the 1970s created large residential estates with ageing wiring that is now approaching or past its safe working life, generating significant rewiring and consumer unit upgrade work.',
-  'Electrician rates in Warrington are mid-range for the North West — typically £42 to £60 per hour for a qualified, registered electrician in 2026, reflecting the town\'s strong economy and proximity to Manchester and Liverpool.',
+  "Warrington has a strong industrial and logistics economy alongside a large residential sector. The town has one of the UK's highest concentrations of distribution centres and logistics parks, creating significant commercial and industrial electrical demand.",
+  "Warrington's New Town development from the 1970s created large residential estates with ageing wiring that is now approaching or past its safe working life, generating significant rewiring and consumer unit upgrade work.",
+  "Electrician rates in Warrington are mid-range for the North West — typically £42 to £60 per hour for a qualified, registered electrician in 2026, reflecting the town's strong economy and proximity to Manchester and Liverpool.",
 ];
 
 const faqs = [
@@ -62,22 +62,22 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Warrington?',
     answer:
-      'An EICR in Warrington typically costs £160 to £270 for a standard residential property. Commercial EICRs cost more, reflecting the larger size and complexity of commercial installations. Warrington rates are broadly in line with other Cheshire towns — slightly above Blackpool and Burnley but below Manchester city centre. The town\'s active rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.',
+      "An EICR in Warrington typically costs £160 to £270 for a standard residential property. Commercial EICRs cost more, reflecting the larger size and complexity of commercial installations. Warrington rates are broadly in line with other Cheshire towns — slightly above Blackpool and Burnley but below Manchester city centre. The town's active rental sector generates consistent EICR demand from landlords, who must comply with The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020.",
   },
   {
     question: 'Is there much commercial electrical work in Warrington?',
     answer:
-      'Yes. Warrington has a very strong commercial and industrial economy. The town has one of the UK\'s highest concentrations of logistics and distribution centres (benefiting from its position between Manchester and Liverpool on the M6 and M62 motorways), along with significant manufacturing, retail, and service sector employers. Commercial and industrial electrical work — warehouses, distribution centres, offices, and retail parks — is a significant part of the Warrington electrician\'s market. Appropriate qualifications, including 17th or 18th Edition and experience with three-phase installations, are essential for commercial work.',
+      "Yes. Warrington has a very strong commercial and industrial economy. The town has one of the UK's highest concentrations of logistics and distribution centres (benefiting from its position between Manchester and Liverpool on the M6 and M62 motorways), along with significant manufacturing, retail, and service sector employers. Commercial and industrial electrical work — warehouses, distribution centres, offices, and retail parks — is a significant part of the Warrington electrician's market. Appropriate qualifications, including 17th or 18th Edition and experience with three-phase installations, are essential for commercial work.",
   },
   {
     question: 'What qualifications do I need to work as an electrician in Warrington?',
     answer:
-      'The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P, NICEIC or NAPIT registration is required. Electricians targeting Warrington\'s commercial and industrial sector should also consider qualifications in three-phase installations and, for sites with hazardous areas, CompEx (explosion-protected equipment) certification may be required for certain industrial sites.',
+      "The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P, NICEIC or NAPIT registration is required. Electricians targeting Warrington's commercial and industrial sector should also consider qualifications in three-phase installations and, for sites with hazardous areas, CompEx (explosion-protected equipment) certification may be required for certain industrial sites.",
   },
   {
     question: 'What EV charger demand is there in Warrington?',
     answer:
-      'Warrington has strong EV charger demand driven by its high car ownership levels, strong commercial economy, and a demographic that includes many commuters travelling to Manchester and Liverpool. Residential EV charger installations are popular in Warrington\'s private residential areas (Appleton, Stockton Heath, Lymm, Great Sankey). Commercial EV charger installations in logistics parks, office developments, and retail car parks are a growing market. All EV charger circuits require ENW G98 notification if they include generation or storage equipment; standard EV charger circuits for homes do not require DNO notification but must comply with BS 7671.',
+      "Warrington has strong EV charger demand driven by its high car ownership levels, strong commercial economy, and a demographic that includes many commuters travelling to Manchester and Liverpool. Residential EV charger installations are popular in Warrington's private residential areas (Appleton, Stockton Heath, Lymm, Great Sankey). Commercial EV charger installations in logistics parks, office developments, and retail car parks are a growing market. All EV charger circuits require ENW G98 notification if they include generation or storage equipment; standard EV charger circuits for homes do not require DNO notification but must comply with BS 7671.",
   },
 ];
 
@@ -144,8 +144,8 @@ const sections = [
       <>
         <p>
           Warrington is a large town in Cheshire with one of the strongest economies outside the
-          major UK cities. Its location between Manchester and Liverpool, at the junction of the
-          M6 and M62 motorways, has made it a hub for logistics, distribution, manufacturing, and
+          major UK cities. Its location between Manchester and Liverpool, at the junction of the M6
+          and M62 motorways, has made it a hub for logistics, distribution, manufacturing, and
           retail. For electricians, Warrington offers a diverse and well-paid market: residential
           work across a large housing stock (including significant New Town development from the
           1970s), commercial and industrial electrical work in logistics parks and offices, and
@@ -160,8 +160,8 @@ const sections = [
         </p>
         <p>
           This guide covers the regulatory framework, DNO contacts, local property types, industrial
-          and commercial sector context, typical jobs, pricing, and practical advice for electricians
-          working in and around Warrington.
+          and commercial sector context, typical jobs, pricing, and practical advice for
+          electricians working in and around Warrington.
         </p>
       </>
     ),
@@ -204,9 +204,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS
-                7671 Section 631. Landlords must have a valid EICR every five years under the
-                Private Rented Sector regulations, with C1/C2 defects remedied within 28 days.
+                <strong>Periodic inspection (Section 631)</strong> — EICRs must comply with BS 7671
+                Section 631. Landlords must have a valid EICR every five years under the Private
+                Rented Sector regulations, with C1/C2 defects remedied within 28 days.
               </span>
             </li>
           </ul>
@@ -220,35 +220,37 @@ const sections = [
     content: (
       <>
         <p>
-          Warrington's housing stock reflects its history as an industrial town transformed by
-          New Town designation in the 1970s:
+          Warrington's housing stock reflects its history as an industrial town transformed by New
+          Town designation in the 1970s:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Town Centre</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian and Edwardian Town Centre
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Orford, Longford, and parts of the town centre have Victorian and Edwardian terrace
-              properties with old rubber-insulated wiring and inadequate consumer units. Many
-              have been converted to HMOs. Rewires and consumer unit upgrades are the primary
-              job types. Asbestos surveys are essential before invasive work.
+              properties with old rubber-insulated wiring and inadequate consumer units. Many have
+              been converted to HMOs. Rewires and consumer unit upgrades are the primary job types.
+              Asbestos surveys are essential before invasive work.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">New Town Estates (1970s–1980s)</h3>
             <p className="text-white text-sm leading-relaxed">
-              Birchwood, Westbrook, Peel Hall, and Chapelford were built as part of Warrington
-              New Town development. These properties are now 40 to 50 years old with wiring
-              approaching the end of its safe working life. Consumer unit upgrades, partial
-              rewires, and EV charger installations are the most common jobs.
+              Birchwood, Westbrook, Peel Hall, and Chapelford were built as part of Warrington New
+              Town development. These properties are now 40 to 50 years old with wiring approaching
+              the end of its safe working life. Consumer unit upgrades, partial rewires, and EV
+              charger installations are the most common jobs.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Affluent Private Residential</h3>
             <p className="text-white text-sm leading-relaxed">
               Appleton, Stockton Heath, and Lymm have higher-value private properties. Work here
-              includes EV charger installations, smart home systems, kitchen extensions, and
-              garden electrical work. Customers expect high quality and professional documentation.
-              Rates can be at the upper end of the Warrington range.
+              includes EV charger installations, smart home systems, kitchen extensions, and garden
+              electrical work. Customers expect high quality and professional documentation. Rates
+              can be at the upper end of the Warrington range.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -270,8 +272,8 @@ const sections = [
     content: (
       <>
         <p>
-          Warrington's strong economy creates significant commercial and industrial electrical
-          work opportunities for qualified electricians with the right experience:
+          Warrington's strong economy creates significant commercial and industrial electrical work
+          opportunities for qualified electricians with the right experience:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -297,8 +299,8 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial EV charger installations</strong> — logistics parks, office
-                developments, and retail car parks are investing in EV charging infrastructure.
-                This is a growing and well-paid market for Warrington electricians with EV charger
+                developments, and retail car parks are investing in EV charging infrastructure. This
+                is a growing and well-paid market for Warrington electricians with EV charger
                 installation experience.
               </span>
             </li>
@@ -320,33 +322,31 @@ const sections = [
     heading: 'Common Residential Electrical Jobs in Warrington',
     content: (
       <>
-        <p>
-          The most in-demand residential electrical services in Warrington in 2026:
-        </p>
+        <p>The most in-demand residential electrical services in Warrington in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICRs for landlords</strong> — Warrington's active rental market
-                generates consistent EICR demand. Landlords must have a valid EICR every five
-                years under the Private Rented Sector regulations.
+                <strong>EICRs for landlords</strong> — Warrington's active rental market generates
+                consistent EICR demand. Landlords must have a valid EICR every five years under the
+                Private Rented Sector regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — New Town properties from the
-                1970s frequently need consumer unit upgrades. This is one of the most common
-                jobs across Warrington's residential areas.
+                <strong>Consumer unit replacements</strong> — New Town properties from the 1970s
+                frequently need consumer unit upgrades. This is one of the most common jobs across
+                Warrington's residential areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — strong demand in Warrington's
-                residential areas, particularly in Appleton, Stockton Heath, and newer estates
-                where car ownership is high and many residents commute by car.
+                residential areas, particularly in Appleton, Stockton Heath, and newer estates where
+                car ownership is high and many residents commute by car.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,9 +368,9 @@ const sections = [
     content: (
       <>
         <p>
-          Warrington electrician rates in 2026 are mid-to-upper range for the North West,
-          reflecting the town's strong economy and the commercial sector's willingness to pay
-          competitive rates:
+          Warrington electrician rates in 2026 are mid-to-upper range for the North West, reflecting
+          the town's strong economy and the commercial sector's willingness to pay competitive
+          rates:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -431,11 +431,11 @@ const sections = [
     content: (
       <>
         <p>
-          Warrington offers excellent opportunities for electricians across both the residential
-          and commercial sectors. The combination of a large residential housing stock generating
+          Warrington offers excellent opportunities for electricians across both the residential and
+          commercial sectors. The combination of a large residential housing stock generating
           consistent EICR and rewiring work, and a strong commercial and logistics economy
-          generating higher-value commercial electrical work, makes it one of the stronger
-          North West markets.
+          generating higher-value commercial electrical work, makes it one of the stronger North
+          West markets.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -448,11 +448,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Fast, professional documentation wins repeat business from Warrington
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Fast, professional documentation wins repeat business from Warrington
                   landlords and commercial clients.
                 </p>
               </div>
@@ -478,7 +475,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Warrington electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -515,7 +512,7 @@ export default function ElectricianWarringtonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Warrington"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Warrington Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the residential and commercial electrical market in Warrington. 7-day free trial."
     />
   );
 }

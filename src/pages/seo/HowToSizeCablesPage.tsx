@@ -66,7 +66,7 @@ const appPreviewFeatures = [
     icon: Calculator,
     title: '70 Electrical Calculators',
     description:
-      'Cable sizing is one of 70 calculators. Also includes voltage drop, Zs lookup, diversity, max demand, conduit fill, and 64 more.',
+      'Cable sizing is one of 70+ calculators. Also includes voltage drop, Zs lookup, diversity, max demand, conduit fill, and 64 more.',
   },
   {
     icon: Brain,
@@ -76,7 +76,7 @@ const appPreviewFeatures = [
   },
   {
     icon: FileCheck,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Emergency Lighting, Fire Alarm, Solar PV, and PAT \u2014 auto-filled, digitally signed, PDF exported.',
   },
@@ -127,7 +127,7 @@ const faqs = [
   },
   {
     q: 'Is Elec-Mate\u2019s cable sizing calculator free?',
-    a: 'Elec-Mate offers a 7-day free trial with full access to all 70 calculators, 8 certificate types, 8 Elec-AI agents, and 36+ training courses. After the trial, plans start from \u00A34.99/month. Cancel anytime \u2014 no contracts, no lock-in.',
+    a: 'Elec-Mate offers a 7-day free trial with full access to all 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses. After the trial, plans start from \u00A34.99/month. Cancel anytime \u2014 no contracts, no lock-in.',
   },
 ];
 
@@ -447,10 +447,14 @@ export default function HowToSizeCablesPage() {
                 <h3 className="text-xl font-bold text-white mb-3">Verify Voltage Drop</h3>
                 <p className="text-white leading-relaxed mb-4">
                   Check the cable selection meets BS 7671{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                    voltage drop
+                  </SEOInternalLink>{' '}
                   limits: <strong>3% for lighting</strong> (6.9V from 230V) and{' '}
                   <strong>5% for power</strong> (11.5V from 230V). Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing calculator</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                    cable sizing calculator
+                  </SEOInternalLink>{' '}
                   to automate these checks.
                 </p>
                 <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10 mb-4">
@@ -588,7 +592,7 @@ export default function HowToSizeCablesPage() {
       {/* What you get inside */}
       <SEOAppPreview
         heading="What You Get Inside Elec-Mate"
-        subheading="The cable sizing calculator is one of 70 calculators inside the complete platform. Here's what else is waiting for you:"
+        subheading="The cable sizing calculator is one of 70+ calculators inside the complete platform. Here's what else is waiting for you:"
         features={appPreviewFeatures}
       />
 
@@ -600,7 +604,7 @@ export default function HowToSizeCablesPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Cable Sizing Calculator Built for UK Electricians"
-            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional — and all 70 calculators, including full BS 7671 cable sizing, are included."
+            description="Elec-Mate's digital EICR and test certificates make inspection reporting faster and more professional — and all 70+ calculators, including full BS 7671 cable sizing, are included."
             ctaText="Try Elec-Mate free"
             ctaHref="/auth/signup"
             icon={Cable}
@@ -628,7 +632,7 @@ export default function HowToSizeCablesPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Size Cables in Seconds, Not Minutes"
-        subheading="Join 430+ UK electricians using Elec-Mate. 70 calculators, 8 certificate types, 8 Elec-AI agents, and 36+ training courses — all BS 7671:2018+A3:2024 compliant."
+        subheading="Join 1,000+ UK electricians using Elec-Mate. 70+ calculators, 16 certificate types, 8 Elec-AI agents, and 46+ training courses — all BS 7671:2018+A3:2024 compliant."
       />
     </PublicPageLayout>
   );

@@ -481,7 +481,7 @@ export default function COSHHCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Know your substances — protect your health"
-      ctaSubheading="Join 430+ UK electricians training smarter with Elec-Mate. 5 focused modules, interactive quizzes, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians training smarter with Elec-Mate. 5 focused modules, interactive quizzes, AI study assistant, and CPD certificate. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/coshh"
     />

@@ -98,7 +98,7 @@ const features = [
     icon: Award,
     title: 'Part of 36+ Training Courses',
     description:
-      "PASMA training sits within Elec-Mate's library of 36+ courses, including IPAF, asbestos awareness, working at height, and BS 7671:2018+A3:2024.",
+      "PASMA training sits within Elec-Mate's library of 46+ courses, including IPAF, asbestos awareness, working at height, and BS 7671:2018+A3:2024.",
   },
 ];
 
@@ -115,7 +115,7 @@ const courseSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'From £5.99/month — access all 36+ training courses',
+    description: 'From £5.99/month — access all 46+ training courses',
   },
   courseMode: 'online',
   educationalLevel: 'Professional',
@@ -187,14 +187,14 @@ export default function PASMATrainingPage() {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8 text-sm text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              430+ electricians learning
+              1,000+ electricians learning
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />8 Elec-AI agents
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-              70 calculators included
+              70+ calculators included
             </span>
           </div>
         </div>
@@ -454,7 +454,7 @@ export default function PASMATrainingPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start Your PASMA Study Today"
-        subheading="Join 430+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for training and professional development. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

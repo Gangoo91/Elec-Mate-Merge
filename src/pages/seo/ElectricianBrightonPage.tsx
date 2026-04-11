@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'Who is the DNO for Brighton?',
     answer:
-      'Brighton is served by UKPN (UK Power Networks), which operates the electricity distribution network across South East England, the East of England, and London. For new connections, supply upgrades, or meter relocations, apply through UKPN\'s website (ukpowernetworks.co.uk). For power cuts, call 105. When completing an EIC or EICR in Brighton, reference UKPN as the DNO. The earthing arrangement in most Brighton properties is TN-C-S (PME), though some of the older Regency and Victorian properties may be TN-S.',
+      "Brighton is served by UKPN (UK Power Networks), which operates the electricity distribution network across South East England, the East of England, and London. For new connections, supply upgrades, or meter relocations, apply through UKPN's website (ukpowernetworks.co.uk). For power cuts, call 105. When completing an EIC or EICR in Brighton, reference UKPN as the DNO. The earthing arrangement in most Brighton properties is TN-C-S (PME), though some of the older Regency and Victorian properties may be TN-S.",
   },
   {
     question: 'Can I install solar panels on a listed building in Brighton?',
@@ -69,12 +69,12 @@ const faqs = [
   {
     question: 'What are the challenges of electrical work in Regency properties?',
     answer:
-      'Brighton\'s Regency properties (built 1800 to 1840) present specific challenges: ornate plasterwork, cornicing, and ceiling roses that must not be damaged during rewiring; lath-and-plaster walls on timber studwork that crumble when chased; original timber floorboards that may need careful lifting and relaying; listed building constraints on surface-mounted cable routes and accessory positions; and often complex previous wiring installations accumulated over 200 years. A full rewire of a Regency property takes significantly longer than a standard Victorian terrace and costs 30% to 50% more due to the care required.',
+      "Brighton's Regency properties (built 1800 to 1840) present specific challenges: ornate plasterwork, cornicing, and ceiling roses that must not be damaged during rewiring; lath-and-plaster walls on timber studwork that crumble when chased; original timber floorboards that may need careful lifting and relaying; listed building constraints on surface-mounted cable routes and accessory positions; and often complex previous wiring installations accumulated over 200 years. A full rewire of a Regency property takes significantly longer than a standard Victorian terrace and costs 30% to 50% more due to the care required.",
   },
   {
     question: 'Do I need building control approval for electrical work in Brighton?',
     answer:
-      'Notifiable electrical work in Brighton is governed by Part P of the Building Regulations (England and Wales). If your electrician is registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or others), they can self-certify and notify Brighton and Hove City Council on your behalf. If not registered, you must apply to building control before work starts — typically costing £250 to £400. For listed buildings, you also need Listed Building Consent from the planning department for any work affecting the building\'s character, which is separate from Part P requirements.',
+      "Notifiable electrical work in Brighton is governed by Part P of the Building Regulations (England and Wales). If your electrician is registered with a competent person scheme (NICEIC, NAPIT, ELECSA, or others), they can self-certify and notify Brighton and Hove City Council on your behalf. If not registered, you must apply to building control before work starts — typically costing £250 to £400. For listed buildings, you also need Listed Building Consent from the planning department for any work affecting the building's character, which is separate from Part P requirements.",
   },
 ];
 
@@ -104,7 +104,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
-    description: 'EV charger installation guidance including conservation area and seafront considerations.',
+    description:
+      'EV charger installation guidance including conservation area and seafront considerations.',
     icon: Zap,
     category: 'Guide',
   },
@@ -164,7 +165,7 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -195,9 +196,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Public liability insurance</strong> — minimum £2 million, ideally £5 million
-                for work in listed and high-value Regency properties. The cost of making good
-                damage to ornate plasterwork or original features in a listed building is
-                substantial.
+                for work in listed and high-value Regency properties. The cost of making good damage
+                to ornate plasterwork or original features in a listed building is substantial.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -239,8 +239,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed standard Victorian/Edwardian)</strong> — £4,500 to
-                £6,500 for non-listed properties in Hanover, Elm Grove, or Preston Park.
+                <strong>Full rewire (3-bed standard Victorian/Edwardian)</strong> — £4,500 to £6,500
+                for non-listed properties in Hanover, Elm Grove, or Preston Park.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -254,8 +254,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR</strong> — £190 to £320 for a house, £170 to £270 for a flat.
-                Required every 5 years for rented properties.
+                <strong>EICR</strong> — £190 to £320 for a house, £170 to £270 for a flat. Required
+                every 5 years for rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -296,14 +296,16 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Regency Properties (Brunswick/Kemp Town)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Regency Properties (Brunswick/Kemp Town)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               Brighton's iconic Regency terraces and crescents (built 1800 to 1840) in Brunswick,
               Kemp Town, and along the seafront are predominantly Grade I or Grade II listed. They
               feature ornate cornicing, decorative plasterwork, original shutters, and curved bay
               windows. Electrical work must preserve these features — surface-mounted cable routes
-              are unacceptable, chasing must avoid original plasterwork, and Listed Building
-              Consent is required for any work affecting the building's character.
+              are unacceptable, chasing must avoid original plasterwork, and Listed Building Consent
+              is required for any work affecting the building's character.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -311,18 +313,20 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The University of Sussex (Falmer) and University of Brighton drive HMO demand in
               Moulsecoomb, Bevendean, Lewes Road, Elm Grove, and Hanover. HMO properties require
-              enhanced fire detection (LD2 to BS 5839-6), emergency lighting, 30mA RCD protection
-              on all circuits, and a valid EICR. Brighton and Hove City
-              Council actively enforces HMO licensing conditions.
+              enhanced fire detection (LD2 to BS 5839-6), emergency lighting, 30mA RCD protection on
+              all circuits, and a valid EICR. Brighton and Hove City Council actively enforces HMO
+              licensing conditions.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces (Hanover/Preston Park)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian Terraces (Hanover/Preston Park)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
-              Dense Victorian terraces in Hanover, Elm Grove, Preston Park, and Fiveways are
-              typical of many UK cities — lath-and-plaster walls, high ceilings, and multiple
-              previous partial rewires. Brighton's hilly topography means some Hanover properties
-              have steep access issues for cable delivery and skip placement.
+              Dense Victorian terraces in Hanover, Elm Grove, Preston Park, and Fiveways are typical
+              of many UK cities — lath-and-plaster walls, high ceilings, and multiple previous
+              partial rewires. Brighton's hilly topography means some Hanover properties have steep
+              access issues for cable delivery and skip placement.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -354,17 +358,17 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New connections and supply upgrades</strong> — apply through UKPN's website
-                (ukpowernetworks.co.uk). Brighton lead times are typically 4 to 8 weeks for
-                standard domestic connections. Three-phase upgrades for heat pumps and EV chargers
-                are increasingly common.
+                (ukpowernetworks.co.uk). Brighton lead times are typically 4 to 8 weeks for standard
+                domestic connections. Three-phase upgrades for heat pumps and EV chargers are
+                increasingly common.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notification</strong> — Brighton's high rate of solar PV adoption
-                means G98 notifications to UKPN are very common. Systems up to 16A per phase
-                require G98 notification; larger systems require G99 approval before connection.
+                means G98 notifications to UKPN are very common. Systems up to 16A per phase require
+                G98 notification; larger systems require G99 approval before connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,11 +382,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          compliance, notifiable work is overseen by Brighton and Hove City Council Building
-          Control or an approved inspector. Registered electricians self-certify and notify the
-          council on your behalf.
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          compliance, notifiable work is overseen by Brighton and Hove City Council Building Control
+          or an approved inspector. Registered electricians self-certify and notify the council on
+          your behalf.
         </p>
       </>
     ),
@@ -405,10 +408,10 @@ const sections = [
               <span>
                 <strong>Listed Building Consent</strong> — any electrical work affecting the
                 character of a listed building requires Listed Building Consent from Brighton and
-                Hove City Council. This includes surface-mounted cable routes on original walls,
-                new socket and switch positions on original plasterwork, external light fittings,
-                and any work that disturbs original features. Apply before work starts — carrying
-                out unauthorised work on a listed building is a criminal offence.
+                Hove City Council. This includes surface-mounted cable routes on original walls, new
+                socket and switch positions on original plasterwork, external light fittings, and
+                any work that disturbs original features. Apply before work starts — carrying out
+                unauthorised work on a listed building is a criminal offence.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -417,9 +420,9 @@ const sections = [
                 <strong>Cable routing in Regency properties</strong> — the key skill is routing
                 cables without damaging ornate plasterwork, cornicing, and ceiling roses. Use
                 existing voids (under floorboards, through ceiling voids above cornicing line),
-                route cables through cupboards and behind built-in joinery where possible, and
-                avoid chasing original lime plaster. Period-appropriate accessory plates (brass,
-                nickel) are preferable to standard white plastic.
+                route cables through cupboards and behind built-in joinery where possible, and avoid
+                chasing original lime plaster. Period-appropriate accessory plates (brass, nickel)
+                are preferable to standard white plastic.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -500,8 +503,8 @@ const sections = [
     content: (
       <>
         <p>
-          Brighton has one of the highest rates of domestic renewable energy adoption in the UK.
-          The city's environmentally conscious population drives strong demand for solar PV, battery
+          Brighton has one of the highest rates of domestic renewable energy adoption in the UK. The
+          city's environmentally conscious population drives strong demand for solar PV, battery
           storage, heat pump installations, and EV chargers — all of which create electrical work.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
@@ -595,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Brighton electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -632,7 +635,7 @@ export default function ElectricianBrightonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Brighton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Brighton and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Brighton and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

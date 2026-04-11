@@ -631,7 +631,7 @@ export default function AFDDGuidePage() {
         },
       ]}
       ctaHeading="Certify AFDD Installations Digitally"
-      ctaSubheading="Elec-Mate's certificate forms include AFDD fields, AI regulations lookup, and consumer unit design guidance. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's certificate forms include AFDD fields, AI regulations lookup, and consumer unit design guidance. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

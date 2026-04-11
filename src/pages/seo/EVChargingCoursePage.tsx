@@ -537,7 +537,7 @@ export default function EVChargingCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to install EV chargers?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 7 structured modules, interactive quizzes, video content, and an AI tutor for any EV charging question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 7 structured modules, interactive quizzes, video content, and an AI tutor for any EV charging question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/ev-charger-installation"
     />

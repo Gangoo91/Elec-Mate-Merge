@@ -677,7 +677,7 @@ export default function MultifunctionTesterGuidePage() {
       faqHeading="Frequently Asked Questions About Multifunction Testers"
       relatedPages={relatedPages}
       ctaHeading="Voice-Enter MFT Results into Your Certificate"
-      ctaSubheading="Elec-Mate turns your MFT readings into professional EICR and EIC certificates. Voice entry, AI defect coding, and instant PDF export. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate turns your MFT readings into professional EICR and EIC certificates. Voice entry, AI defect coding, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

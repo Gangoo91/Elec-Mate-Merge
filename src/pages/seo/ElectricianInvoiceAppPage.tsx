@@ -116,7 +116,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -489,8 +489,8 @@ export default function ElectricianInvoiceAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Elec-Mate is not just an invoicing app — it is the complete platform for running an
-              electrical business. Your subscription includes 70 calculators (56 technical + 14
-              business), 8 Elec-AI agents and 12 AI tools, 36+ training courses with 8 certificate
+              electrical business. Your subscription includes 70+ calculators (56 technical + 14
+              business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with 8 certificate
               types, digital EICR and EIC certification, quoting with AI cost estimation, invoicing
               with Stripe payments, and accounting integration.
             </p>
@@ -499,9 +499,11 @@ export default function ElectricianInvoiceAppPage() {
               complement the 56 technical calculators. Together with the AI tools and training
               courses, Elec-Mate covers every aspect of electrical work — from design and
               calculation, through installation and testing, to{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">EICR certification</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, invoicing, and
-              payment. One platform, one subscription, no gaps.
+              <SEOInternalLink href="/electrical-certification/eicr">
+                EICR certification
+              </SEOInternalLink>
+              , <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>,
+              invoicing, and payment. One platform, one subscription, no gaps.
             </p>
           </div>
         </div>
@@ -565,7 +567,7 @@ export default function ElectricianInvoiceAppPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Get Paid Faster, Chase Less"
-        subheading="Join 430+ UK electricians using Elec-Mate for professional invoicing and payments. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for professional invoicing and payments. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

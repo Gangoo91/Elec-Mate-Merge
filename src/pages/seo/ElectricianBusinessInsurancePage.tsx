@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'Do I need professional indemnity insurance?',
     answer:
-      'If you design electrical installations, specify equipment, provide energy assessments, produce reports, or give advice that clients rely on financially, then yes — professional indemnity insurance protects you if that advice or design turns out to be wrong and causes a financial loss. For example, if you design a circuit that turns out to be undersized and the client has to pay for it to be ripped out and redone, professional indemnity covers your liability. If you purely carry out installation work to someone else\'s design, professional indemnity is less critical — but increasingly, electricians are designing and installing, which blurs the line.',
+      "If you design electrical installations, specify equipment, provide energy assessments, produce reports, or give advice that clients rely on financially, then yes — professional indemnity insurance protects you if that advice or design turns out to be wrong and causes a financial loss. For example, if you design a circuit that turns out to be undersized and the client has to pay for it to be ripped out and redone, professional indemnity covers your liability. If you purely carry out installation work to someone else's design, professional indemnity is less critical — but increasingly, electricians are designing and installing, which blurs the line.",
   },
   {
     question: 'When do I need employers liability insurance?',
@@ -186,41 +186,58 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-              <span>A customer trips over your cable and breaks their wrist — medical costs and compensation</span>
+              <span>
+                A customer trips over your cable and breaks their wrist — medical costs and
+                compensation
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-              <span>You accidentally drill through a water pipe and flood the kitchen — repair costs and water damage</span>
+              <span>
+                You accidentally drill through a water pipe and flood the kitchen — repair costs and
+                water damage
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-              <span>A fire starts due to your installation work — property damage and legal defence costs</span>
+              <span>
+                A fire starts due to your installation work — property damage and legal defence
+                costs
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-              <span>Your ladder damages a customer's parquet flooring — repair or replacement costs</span>
+              <span>
+                Your ladder damages a customer's parquet flooring — repair or replacement costs
+              </span>
             </li>
           </ul>
         </div>
         <div className="grid gap-4 sm:grid-cols-3 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-4 text-centre">
             <p className="font-bold text-white text-lg">£1 Million</p>
-            <p className="text-white text-sm">Minimum for most domestic work and competent person schemes</p>
+            <p className="text-white text-sm">
+              Minimum for most domestic work and competent person schemes
+            </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-4 text-centre">
             <p className="font-bold text-white text-lg">£2-5 Million</p>
-            <p className="text-white text-sm">Standard for established electricians and commercial work</p>
+            <p className="text-white text-sm">
+              Standard for established electricians and commercial work
+            </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-4 text-centre">
             <p className="font-bold text-white text-lg">£10 Million</p>
-            <p className="text-white text-sm">Required by some main contractors and large commercial projects</p>
+            <p className="text-white text-sm">
+              Required by some main contractors and large commercial projects
+            </p>
           </div>
         </div>
         <p>
           <strong>Cost:</strong> Public liability insurance for a sole trader electrician typically
-          costs £100 to £300 per year for £1-2 million of cover, rising to £200 to £500 for
-          £5 million. The cost increases with your turnover, the number of employees, and your
-          claims history.
+          costs £100 to £300 per year for £1-2 million of cover, rising to £200 to £500 for £5
+          million. The cost increases with your turnover, the number of employees, and your claims
+          history.
         </p>
       </>
     ),
@@ -241,7 +258,9 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span>You design electrical installations (circuit design, cable calculations)</span>
+                <span>
+                  You design electrical installations (circuit design, cable calculations)
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
@@ -266,11 +285,15 @@ const sections = [
             <ul className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>You design a circuit with inadequate cable sizing — client pays for re-work</span>
+                <span>
+                  You design a circuit with inadequate cable sizing — client pays for re-work
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
-                <span>You recommend the wrong type of consumer unit — client has to replace it</span>
+                <span>
+                  You recommend the wrong type of consumer unit — client has to replace it
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
@@ -284,9 +307,9 @@ const sections = [
           </div>
         </div>
         <p>
-          <strong>Cost:</strong> Professional indemnity cover of £100,000 to £250,000 typically costs
-          £50 to £150 per year as a standalone policy. It is often included in combined business
-          insurance packages at no extra cost.
+          <strong>Cost:</strong> Professional indemnity cover of £100,000 to £250,000 typically
+          costs £50 to £150 per year as a standalone policy. It is often included in combined
+          business insurance packages at no extra cost.
         </p>
       </>
     ),
@@ -297,9 +320,9 @@ const sections = [
     content: (
       <>
         <p>
-          Employers liability insurance is the only business insurance that is a legal requirement in
-          the UK. If you employ anyone — even one person, even part-time — you must have employers
-          liability insurance with a minimum of £5 million cover.
+          Employers liability insurance is the only business insurance that is a legal requirement
+          in the UK. If you employ anyone — even one person, even part-time — you must have
+          employers liability insurance with a minimum of £5 million cover.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h4 className="font-bold text-white mb-3 flex items-center gap-2">
@@ -308,23 +331,38 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Required from day one</strong> — must be in place before your first employee starts</span>
+              <span>
+                <strong>Required from day one</strong> — must be in place before your first employee
+                starts
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Minimum cover: £5 million</strong> (most policies provide £10 million as standard)</span>
+              <span>
+                <strong>Minimum cover: £5 million</strong> (most policies provide £10 million as
+                standard)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Fine: £2,500 per day</strong> for every day you operate without employers liability insurance</span>
+              <span>
+                <strong>Fine: £2,500 per day</strong> for every day you operate without employers
+                liability insurance
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Fine: £1,000</strong> for failing to display the certificate (or make it accessible electronically)</span>
+              <span>
+                <strong>Fine: £1,000</strong> for failing to display the certificate (or make it
+                accessible electronically)
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-              <span><strong>Applies to:</strong> full-time, part-time, temporary staff, apprentices, and some subcontractors</span>
+              <span>
+                <strong>Applies to:</strong> full-time, part-time, temporary staff, apprentices, and
+                some subcontractors
+              </span>
             </li>
           </ul>
         </div>
@@ -334,9 +372,9 @@ const sections = [
           employees, the type of work they do, and your claims history.
         </p>
         <p>
-          <strong>Exception:</strong> If you are a sole trader with no employees, or a single-director
-          limited company with no other staff, you do not need employers liability insurance. But the
-          moment you hire anyone — including an apprentice — you must have it.
+          <strong>Exception:</strong> If you are a sole trader with no employees, or a
+          single-director limited company with no other staff, you do not need employers liability
+          insurance. But the moment you hire anyone — including an apprentice — you must have it.
         </p>
       </>
     ),
@@ -347,7 +385,8 @@ const sections = [
     content: (
       <>
         <p>
-          Beyond the three core policies, several additional cover types are relevant to electricians.
+          Beyond the three core policies, several additional cover types are relevant to
+          electricians.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -361,8 +400,8 @@ const sections = [
                   dedicated{' '}
                   <SEOInternalLink href="/guides/electrician-tool-insurance">
                     tool insurance guide
-                  </SEOInternalLink>
-                  {' '}for full details.
+                  </SEOInternalLink>{' '}
+                  for full details.
                 </p>
               </div>
             </div>
@@ -373,9 +412,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Van Insurance</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Commercial van insurance covering your vehicle for business use. Make sure
-                  your policy covers business use (not just social/domestic/commuting). If you use
-                  your van for carrying tools and materials to job sites, you need "carriage of own
+                  Commercial van insurance covering your vehicle for business use. Make sure your
+                  policy covers business use (not just social/domestic/commuting). If you use your
+                  van for carrying tools and materials to job sites, you need "carriage of own
                   goods" cover.
                 </p>
               </div>
@@ -442,10 +481,19 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Sole Trader (No Employees)</h4>
               <ul className="space-y-2">
-                <li>Public liability (£2m): <strong className="text-yellow-400">£100–£250/year</strong></li>
-                <li>Professional indemnity: <strong className="text-yellow-400">£50–£150/year</strong></li>
-                <li>Personal accident: <strong className="text-yellow-400">£50–£150/year</strong></li>
-                <li>Tool cover (£10k): <strong className="text-yellow-400">£100–£300/year</strong></li>
+                <li>
+                  Public liability (£2m):{' '}
+                  <strong className="text-yellow-400">£100–£250/year</strong>
+                </li>
+                <li>
+                  Professional indemnity: <strong className="text-yellow-400">£50–£150/year</strong>
+                </li>
+                <li>
+                  Personal accident: <strong className="text-yellow-400">£50–£150/year</strong>
+                </li>
+                <li>
+                  Tool cover (£10k): <strong className="text-yellow-400">£100–£300/year</strong>
+                </li>
                 <li className="pt-2 border-t border-white/10">
                   <strong>Combined policy: </strong>
                   <strong className="text-yellow-400">£300–£800/year</strong>
@@ -455,10 +503,21 @@ const sections = [
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Small Firm (1-5 Employees)</h4>
               <ul className="space-y-2">
-                <li>Public liability (£5m): <strong className="text-yellow-400">£200–£500/year</strong></li>
-                <li>Employers liability (£10m): <strong className="text-yellow-400">£100–£300/year</strong></li>
-                <li>Professional indemnity: <strong className="text-yellow-400">£100–£250/year</strong></li>
-                <li>Tool cover + fleet: <strong className="text-yellow-400">£300–£800/year</strong></li>
+                <li>
+                  Public liability (£5m):{' '}
+                  <strong className="text-yellow-400">£200–£500/year</strong>
+                </li>
+                <li>
+                  Employers liability (£10m):{' '}
+                  <strong className="text-yellow-400">£100–£300/year</strong>
+                </li>
+                <li>
+                  Professional indemnity:{' '}
+                  <strong className="text-yellow-400">£100–£250/year</strong>
+                </li>
+                <li>
+                  Tool cover + fleet: <strong className="text-yellow-400">£300–£800/year</strong>
+                </li>
                 <li className="pt-2 border-t border-white/10">
                   <strong>Combined policy: </strong>
                   <strong className="text-yellow-400">£700–£1,800/year</strong>
@@ -481,8 +540,8 @@ const sections = [
     content: (
       <>
         <p>
-          You can buy electrician business insurance from specialist trade insurers, general business
-          insurance brokers, or comparison sites. Here is what to consider.
+          You can buy electrician business insurance from specialist trade insurers, general
+          business insurance brokers, or comparison sites. Here is what to consider.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -491,8 +550,8 @@ const sections = [
               <span>
                 <strong>Specialist trade insurers</strong> (Rhino Trade Insurance, Kingsbridge,
                 Tradesman Saver) understand electrical work and offer policies tailored to
-                electricians. Claims handling tends to be faster because they are familiar with trade
-                risks.
+                electricians. Claims handling tends to be faster because they are familiar with
+                trade risks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -514,9 +573,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key factors:</strong> check cover limits, excess amounts, exclusions,
-                claims process, and whether the policy is "claims made" (covers claims made during
-                the policy period) or "claims occurring" (covers incidents during the policy period
+                <strong>Key factors:</strong> check cover limits, excess amounts, exclusions, claims
+                process, and whether the policy is "claims made" (covers claims made during the
+                policy period) or "claims occurring" (covers incidents during the policy period
                 regardless of when the claim is made). "Claims occurring" is better.
               </span>
             </li>
@@ -558,8 +617,8 @@ const sections = [
                   pricing using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
-                  </SEOInternalLink>
-                  {' '}so customers are paying for your professionalism, not eating into your profit.
+                  </SEOInternalLink>{' '}
+                  so customers are paying for your professionalism, not eating into your profit.
                 </p>
               </div>
             </div>
@@ -572,7 +631,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Store digital copies of your insurance certificates on your phone. Main
                   contractors and commercial clients often ask for proof of insurance before you can
-                  start work. Being able to send it immediately looks professional and avoids delays.
+                  start work. Being able to send it immediately looks professional and avoids
+                  delays.
                 </p>
               </div>
             </div>
@@ -617,7 +677,7 @@ export default function ElectricianBusinessInsurancePage() {
       faqHeading="Frequently Asked Questions About Electrician Business Insurance"
       relatedPages={relatedPages}
       ctaHeading="Build a Professional Electrical Business"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional tools that make you look professional. 7-day free trial, cancel anytime."
     />
   );
 }

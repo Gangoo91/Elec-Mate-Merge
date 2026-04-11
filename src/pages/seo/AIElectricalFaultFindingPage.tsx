@@ -576,7 +576,7 @@ export default function AIElectricalFaultFindingPage() {
         },
       ]}
       ctaHeading="Diagnose faults faster with AI"
-      ctaSubheading="Join 430+ UK electricians using AI-powered fault diagnosis. Describe the symptoms, get probable causes ranked by likelihood, and follow the optimal test sequence. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using AI-powered fault diagnosis. Describe the symptoms, get probable causes ranked by likelihood, and follow the optimal test sequence. 7-day free trial, cancel anytime."
     />
   );
 }

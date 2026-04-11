@@ -536,7 +536,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your solar PV business in the Northeast with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management. Complete EICs for solar installations before you leave site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, professional quoting, and job management. Complete EICs for solar installations before you leave site. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -573,7 +573,7 @@ export default function SolarPanelInstallationNewcastlePage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar Installation Certificates On Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, professional quoting, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

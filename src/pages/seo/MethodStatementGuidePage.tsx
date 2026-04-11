@@ -625,7 +625,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Complete RAMS in minutes, not hours"
-          description="Elec-Mate's RAMS generator creates risk assessments and method statements tailored to your specific job. Describe the work, get professional RAMS documentation ready for site. Used by 430+ UK electricians."
+          description="Elec-Mate's RAMS generator creates risk assessments and method statements tailored to your specific job. Describe the work, get professional RAMS documentation ready for site. Used by 1,000+ UK electricians."
           icon={Brain}
         />
       </>
@@ -662,7 +662,7 @@ export default function MethodStatementGuidePage() {
       faqHeading="Frequently Asked Questions About Method Statements for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Method Statements in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI RAMS generator to create site-specific method statements for any electrical task. Describe the job, get a professional document. 7-day free trial, cancel anytime."
     />
   );
 }

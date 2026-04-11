@@ -569,7 +569,7 @@ export default function Regulation530Page() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Stay Current with BS 7671 Amendments"
-      ctaSubheading="Elec-Mate certificates reference BS 7671:2018+A3:2024 automatically. Bidirectional device fields are built into solar PV and battery storage certificates. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate certificates reference BS 7671:2018+A3:2024 automatically. Bidirectional device fields are built into solar PV and battery storage certificates. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

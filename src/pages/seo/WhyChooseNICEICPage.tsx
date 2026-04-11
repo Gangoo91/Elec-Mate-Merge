@@ -551,7 +551,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Keep your NICEIC assessment hassle-free"
-          description="Join 430+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation, and cloud-stored records. 7-day free trial."
+          description="Join 1,000+ UK electricians creating assessment-ready certificates with Elec-Mate. AI board scanner, voice test entry, BS 7671 validation, and cloud-stored records. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -588,7 +588,7 @@ export default function WhyChooseNICEICPage() {
       faqHeading="Frequently Asked Questions About NICEIC"
       relatedPages={relatedPages}
       ctaHeading="Professional Certificates for Registered Electricians"
-      ctaSubheading="Join 430+ UK electricians creating assessment-ready certificates with AI-powered tools. EICR, EIC, Minor Works — all following BS 7671 Appendix 6. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating assessment-ready certificates with AI-powered tools. EICR, EIC, Minor Works — all following BS 7671 Appendix 6. 7-day free trial, cancel anytime."
     />
   );
 }

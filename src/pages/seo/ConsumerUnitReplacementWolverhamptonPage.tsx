@@ -21,7 +21,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement' },
-  { label: 'Consumer Unit Replacement Wolverhampton', href: '/consumer-unit-replacement-wolverhampton' },
+  {
+    label: 'Consumer Unit Replacement Wolverhampton',
+    href: '/consumer-unit-replacement-wolverhampton',
+  },
 ];
 
 const tocItems = [
@@ -51,7 +54,8 @@ const faqs = [
       'Consumer unit replacement in Wolverhampton typically costs £400 to £800 for a standard domestic property. A straightforward like-for-like replacement at the lower end of this range takes a qualified electrician around 4 to 6 hours. Larger properties, those requiring additional RCD protection, or those with aged wiring needing remedial work alongside the replacement will sit toward the upper end or beyond. Always obtain at least two written quotes.',
   },
   {
-    question: 'Do I need Building Control approval for a consumer unit replacement in Wolverhampton?',
+    question:
+      'Do I need Building Control approval for a consumer unit replacement in Wolverhampton?',
     answer:
       'Yes. Consumer unit replacement is notifiable Part P electrical work in England. It must either be notified to Wolverhampton City Council Building Control before work begins, or carried out by an electrician registered with a competent person scheme (such as NICEIC, NAPIT, or ELECSA) who can self-certify the work. A registered electrician will handle notification automatically. If you use an unregistered electrician, you or they must notify Building Control and pay the relevant fee.',
   },
@@ -114,7 +118,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-installation-certificate',
     title: 'Electrical Installation Certificate',
-    description: 'Issue EICs on site for consumer unit replacements. Instant PDF, fully BS 7671 compliant.',
+    description:
+      'Issue EICs on site for consumer unit replacements. Instant PDF, fully BS 7671 compliant.',
     icon: ShieldCheck,
     category: 'Certificate',
   },
@@ -131,11 +136,11 @@ const sections = [
     content: (
       <>
         <p>
-          A consumer unit — commonly called a fuse box or fuseboard — is the distribution board
-          that receives the mains electricity supply into your Wolverhampton property and distributes
-          it to individual circuits. It contains the main switch, overcurrent protective devices
-          (MCBs or fuses), and residual current devices (RCDs or RCBOs) that protect both the wiring
-          and the occupants.
+          A consumer unit — commonly called a fuse box or fuseboard — is the distribution board that
+          receives the mains electricity supply into your Wolverhampton property and distributes it
+          to individual circuits. It contains the main switch, overcurrent protective devices (MCBs
+          or fuses), and residual current devices (RCDs or RCBOs) that protect both the wiring and
+          the occupants.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -144,8 +149,8 @@ const sections = [
               <span>
                 <strong>MCBs (Miniature Circuit Breakers)</strong> — trip automatically when a
                 circuit is overloaded or when a short circuit occurs. They can be reset without
-                replacing a fuse wire. Each circuit in your home — lighting, sockets, cooker,
-                shower — has its own MCB sized to the cable it protects.
+                replacing a fuse wire. Each circuit in your home — lighting, sockets, cooker, shower
+                — has its own MCB sized to the cable it protects.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,8 +219,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Plastic enclosure</strong> — all consumer unit replacements since January
-                2016 require a metal enclosure. A plastic consumer unit installed after this date
-                is non-compliant with BS 7671 Amendment 3 requirements.
+                2016 require a metal enclosure. A plastic consumer unit installed after this date is
+                non-compliant with BS 7671 Amendment 3 requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -229,9 +234,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Frequent tripping</strong> — an overloaded or aging consumer unit that
-                trips frequently is a sign that the installation needs review. A qualified
-                electrician can assess whether replacement is required.
+                <strong>Frequent tripping</strong> — an overloaded or aging consumer unit that trips
+                frequently is a sign that the installation needs review. A qualified electrician can
+                assess whether replacement is required.
               </span>
             </li>
           </ul>
@@ -245,11 +250,11 @@ const sections = [
     content: (
       <>
         <p>
-          Amendment 3 to BS 7671:2008, which came into force on 1 January 2016, introduced Regulation
-          421.1.201 requiring that consumer units and similar switchgear assemblies in domestic
-          premises have an enclosure made of non-combustible material. In practice, this means a
-          metal enclosure. This requirement was carried forward into BS 7671:2018 (18th Edition) and
-          remains in BS 7671:2018+A3:2024, the current edition.
+          Amendment 3 to BS 7671:2008, which came into force on 1 January 2016, introduced
+          Regulation 421.1.201 requiring that consumer units and similar switchgear assemblies in
+          domestic premises have an enclosure made of non-combustible material. In practice, this
+          means a metal enclosure. This requirement was carried forward into BS 7671:2018 (18th
+          Edition) and remains in BS 7671:2018+A3:2024, the current edition.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -266,10 +271,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope</strong> — the requirement applies to all new consumer unit installations
-                and any replacement work in domestic premises. It does not retrospectively require the
-                replacement of plastic consumer units installed before January 2016, but any
-                replacement consumer unit must use a metal enclosure.
+                <strong>Scope</strong> — the requirement applies to all new consumer unit
+                installations and any replacement work in domestic premises. It does not
+                retrospectively require the replacement of plastic consumer units installed before
+                January 2016, but any replacement consumer unit must use a metal enclosure.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,8 +288,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          If a Wolverhampton electrician quotes to install a plastic consumer unit, this is a
-          red flag. A plastic enclosure has not been compliant for new domestic installations since
+          If a Wolverhampton electrician quotes to install a plastic consumer unit, this is a red
+          flag. A plastic enclosure has not been compliant for new domestic installations since
           January 2016.
         </p>
       </>
@@ -333,8 +338,8 @@ const sections = [
               <span>
                 <strong>What is included</strong> — supply and installation of the metal consumer
                 unit, connection of all existing circuits, main bonding check, testing of the
-                installation, Electrical Installation Certificate (EIC), and Part P notification
-                via competent person scheme.
+                installation, Electrical Installation Certificate (EIC), and Part P notification via
+                competent person scheme.
               </span>
             </li>
           </ul>
@@ -354,8 +359,8 @@ const sections = [
     content: (
       <>
         <p>
-          A professional consumer unit replacement in Wolverhampton follows a structured process
-          to ensure compliance with BS 7671 and Part P of the Building Regulations.
+          A professional consumer unit replacement in Wolverhampton follows a structured process to
+          ensure compliance with BS 7671 and Part P of the Building Regulations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -372,9 +377,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>2. Supply isolation</strong> — the DNO (Western Power Distribution /
-                National Grid Electricity Distribution) cut-out provides the point of isolation.
-                The electrician works with the supply isolated. The power will be off for the
-                duration of the replacement.
+                National Grid Electricity Distribution) cut-out provides the point of isolation. The
+                electrician works with the supply isolated. The power will be off for the duration
+                of the replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -382,8 +387,8 @@ const sections = [
               <span>
                 <strong>3. Installation</strong> — the old consumer unit is removed and the new
                 metal consumer unit is fitted. All circuit cables are connected to the appropriate
-                MCBs or RCBOs. Main earthing conductor and main bonding conductors are connected
-                and verified for correct size (Regulation 544.1.1).
+                MCBs or RCBOs. Main earthing conductor and main bonding conductors are connected and
+                verified for correct size (Regulation 544.1.1).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -400,9 +405,9 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>5. Certification and notification</strong> — an Electrical Installation
-                Certificate (EIC) is issued in accordance with Appendix 6 of BS 7671. The
-                competent person scheme notifies Wolverhampton City Council Building Control on
-                your behalf. You receive a Building Regulations Compliance Certificate.
+                Certificate (EIC) is issued in accordance with Appendix 6 of BS 7671. The competent
+                person scheme notifies Wolverhampton City Council Building Control on your behalf.
+                You receive a Building Regulations Compliance Certificate.
               </span>
             </li>
           </ul>
@@ -443,18 +448,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Get written quotes</strong> — obtain at least two written quotes that specify
-                the make and model of the consumer unit, number of ways, MCB/RCBO configuration,
-                and whether Part P notification is included. Verbal quotes are not sufficient.
+                <strong>Get written quotes</strong> — obtain at least two written quotes that
+                specify the make and model of the consumer unit, number of ways, MCB/RCBO
+                configuration, and whether Part P notification is included. Verbal quotes are not
+                sufficient.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Avoid unusually cheap quotes</strong> — a consumer unit replacement quoted
-                below £350 in Wolverhampton should prompt questions. A thorough job including
-                proper testing and certification takes a skilled electrician most of a day. Prices
-                well below market rate may indicate shortcuts on testing or non-compliant materials.
+                below £350 in Wolverhampton should prompt questions. A thorough job including proper
+                testing and certification takes a skilled electrician most of a day. Prices well
+                below market rate may indicate shortcuts on testing or non-compliant materials.
               </span>
             </li>
           </ul>
@@ -475,8 +481,8 @@ const sections = [
       <>
         <p>
           Consumer unit replacement is one of the most consistent revenue streams for domestic
-          electricians in Wolverhampton. With thousands of pre-2016 installations and a steady
-          flow of EICR-identified remedial work, demand is strong across the WV postcode area.
+          electricians in Wolverhampton. With thousands of pre-2016 installations and a steady flow
+          of EICR-identified remedial work, demand is strong across the WV postcode area.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -507,8 +513,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . Landlords must act within 28 days — the electrician who quotes on the day of
-                  the EICR wins the work.
+                  . Landlords must act within 28 days — the electrician who quotes on the day of the
+                  EICR wins the work.
                 </p>
               </div>
             </div>
@@ -516,7 +522,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, instant quoting, and certificate management. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -553,7 +559,7 @@ export default function ConsumerUnitReplacementWolverhamptonPage() {
       faqHeading="Frequently Asked Questions — Consumer Unit Replacement Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates On Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, AI board scanning, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

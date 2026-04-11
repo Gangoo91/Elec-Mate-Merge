@@ -93,7 +93,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrician-career-ladder-uk',
     title: 'Electrician Career Ladder UK',
-    description: 'From apprentice to electrical director — timelines, salaries, and qualifications.',
+    description:
+      'From apprentice to electrical director — timelines, salaries, and qualifications.',
     icon: TrendingUp,
     category: 'Guide',
   },
@@ -150,8 +151,8 @@ const sections = [
           places on skilled electrical labour in the capital.
         </p>
         <p>
-          This guide breaks down realistic London salary and day-rate figures for 2026, explains
-          why London rates are higher, and shows how to position yourself to maximise your earnings
+          This guide breaks down realistic London salary and day-rate figures for 2026, explains why
+          London rates are higher, and shows how to position yourself to maximise your earnings
           whether you are employed or self-employed.
         </p>
       </>
@@ -181,8 +182,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Experienced electrician (3–7 years)</strong> — £44,000 to £55,000. Working
-                on larger commercial or residential schemes for established M&amp;E contractors.
-                JIB approved electrician or technician grade.
+                on larger commercial or residential schemes for established M&amp;E contractors. JIB
+                approved electrician or technician grade.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,9 +273,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-voltage (HV) electrician</strong> — £70,000 to £95,000 employed,
-                £500 to £700 per day self-employed. Authorised Person (AP) or Competent Person (CP)
-                roles on distribution networks and large building substations.
+                <strong>High-voltage (HV) electrician</strong> — £70,000 to £95,000 employed, £500
+                to £700 per day self-employed. Authorised Person (AP) or Competent Person (CP) roles
+                on distribution networks and large building substations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -319,9 +320,7 @@ const sections = [
     heading: 'Why London Electrician Rates Are Higher',
     content: (
       <>
-        <p>
-          London rates are higher than the rest of the UK for several interconnected reasons:
-        </p>
+        <p>London rates are higher than the rest of the UK for several interconnected reasons:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -330,7 +329,8 @@ const sections = [
                 <strong>Higher cost of doing business</strong> — congestion zone charges (£15 per
                 day in the central zone), higher van insurance, more expensive parking, higher
                 accountancy and business service costs, and premium trade counter pricing all
-                increase the cost base for London electricians, which must be recovered in day rates.
+                increase the cost base for London electricians, which must be recovered in day
+                rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -440,9 +440,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Gain specialist qualifications</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  The biggest single salary step-changes come from specialist qualifications.
-                  CompEx for explosive atmospheres, HV authorisation, 2391 inspection and testing,
-                  and BMS qualifications all deliver immediate rate increases of 20 to 50%.
+                  The biggest single salary step-changes come from specialist qualifications. CompEx
+                  for explosive atmospheres, HV authorisation, 2391 inspection and testing, and BMS
+                  qualifications all deliver immediate rate increases of 20 to 50%.
                 </p>
               </div>
             </div>
@@ -477,7 +477,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your London electrical business more efficiently"
-          description="Elec-Mate helps London electricians quote accurately, complete certificates on site, and manage jobs on the go. Join 430+ UK electricians using the app to save hours each week."
+          description="Elec-Mate helps London electricians quote accurately, complete certificates on site, and manage jobs on the go. Join 1,000+ UK electricians using the app to save hours each week."
           icon={Wrench}
         />
       </>

@@ -124,22 +124,22 @@ const sections = [
       <>
         <p>
           PAT testing — Portable Appliance Testing — is the process of inspecting and testing
-          portable electrical equipment to check it is safe to use. It involves a visual
-          inspection of the appliance, cable, and plug, followed by electrical tests using a
-          dedicated PAT tester.
+          portable electrical equipment to check it is safe to use. It involves a visual inspection
+          of the appliance, cable, and plug, followed by electrical tests using a dedicated PAT
+          tester.
         </p>
         <p>
-          The term "PAT testing" is widely used across the UK, though technically it is a
-          tautology (the "T" already stands for "testing"). The process is guided by the IET Code
-          of Practice for In-Service Inspection and Testing of Electrical Equipment, now in its
-          5th Edition (2020).
+          The term "PAT testing" is widely used across the UK, though technically it is a tautology
+          (the "T" already stands for "testing"). The process is guided by the IET Code of Practice
+          for In-Service Inspection and Testing of Electrical Equipment, now in its 5th Edition
+          (2020).
         </p>
         <p>
           PAT testing applies to any electrical appliance that has a plug and can be moved —
           kettles, computers, power tools, phone chargers, extension leads, and much more. It is
           distinct from fixed installation testing (covered by{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink>), which tests
-          the permanent wiring in a building.
+          <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink>), which tests the
+          permanent wiring in a building.
         </p>
       </>
     ),
@@ -166,8 +166,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>20 to 50 appliances</strong> — £80 to £150 total. Per-appliance cost: £2
-                to £3. Typical for medium offices, salons, and small workshops.
+                <strong>20 to 50 appliances</strong> — £80 to £150 total. Per-appliance cost: £2 to
+                £3. Typical for medium offices, salons, and small workshops.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -180,8 +180,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>100 to 500 appliances</strong> — £1 to £1.50 per appliance. Large
-                offices, warehouses, and multi-site contracts.
+                <strong>100 to 500 appliances</strong> — £1 to £1.50 per appliance. Large offices,
+                warehouses, and multi-site contracts.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -205,32 +205,30 @@ const sections = [
     heading: 'Pricing Models',
     content: (
       <>
-        <p>
-          PAT testing companies and individual electricians use several pricing models:
-        </p>
+        <p>PAT testing companies and individual electricians use several pricing models:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Per Appliance</h3>
             <p className="text-white text-sm leading-relaxed">
               The most common model. A fixed price per appliance tested, typically with a minimum
-              call-out charge. Simple and transparent for both parties. Prices: £1 to £3 per
-              item depending on volume.
+              call-out charge. Simple and transparent for both parties. Prices: £1 to £3 per item
+              depending on volume.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Fixed Package</h3>
             <p className="text-white text-sm leading-relaxed">
-              A fixed price for a set number of appliances — for example, "up to 50 appliances
-              for £100" or "up to 100 appliances for £180". Good for customers who know roughly
-              how many appliances they have.
+              A fixed price for a set number of appliances — for example, "up to 50 appliances for
+              £100" or "up to 100 appliances for £180". Good for customers who know roughly how many
+              appliances they have.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Day Rate</h3>
             <p className="text-white text-sm leading-relaxed">
-              For large sites, some testers charge a day rate of £200 to £350 per day. A
-              competent tester can test 100 to 200 appliances per day depending on the type and
-              location of equipment.
+              For large sites, some testers charge a day rate of £200 to £350 per day. A competent
+              tester can test 100 to 200 appliances per day depending on the type and location of
+              equipment.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -256,19 +254,27 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Cable and plug condition — checking for damage, cuts, kinks, or exposed conductors</span>
+              <span>
+                Cable and plug condition — checking for damage, cuts, kinks, or exposed conductors
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Plug wiring — correct connections, appropriate fuse rating, cable grip secure</span>
+              <span>
+                Plug wiring — correct connections, appropriate fuse rating, cable grip secure
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Appliance condition — casing damage, ventilation blocked, signs of overheating</span>
+              <span>
+                Appliance condition — casing damage, ventilation blocked, signs of overheating
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Suitability for the environment — appropriate IP rating for wet or dusty conditions</span>
+              <span>
+                Suitability for the environment — appropriate IP rating for wet or dusty conditions
+              </span>
             </li>
           </ul>
         </div>
@@ -279,8 +285,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earth continuity</strong> (Class I only) — verifies a low-resistance path
-                from the earth pin of the plug to all exposed metalwork. Pass: typically below 0.1 ohms
-                plus the resistance of the cable.
+                from the earth pin of the plug to all exposed metalwork. Pass: typically below 0.1
+                ohms plus the resistance of the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -322,8 +328,8 @@ const sections = [
               <Building className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Landlords</strong> — any electrical appliances supplied with a rental
-                property (washing machine, cooker, kettle) should be PAT tested to demonstrate
-                duty of care.
+                property (washing machine, cooker, kettle) should be PAT tested to demonstrate duty
+                of care.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -398,9 +404,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IET Code of Practice (5th Edition, 2020)</strong> — not legislation, but
-                the industry-standard guide for in-service testing of portable equipment. It
-                provides testing methods, suggested frequencies, and pass/fail criteria.
+                <strong>IET Code of Practice (5th Edition, 2020)</strong> — not legislation, but the
+                industry-standard guide for in-service testing of portable equipment. It provides
+                testing methods, suggested frequencies, and pass/fail criteria.
               </span>
             </li>
           </ul>
@@ -414,8 +420,8 @@ const sections = [
     content: (
       <>
         <p>
-          The IET Code of Practice provides suggested testing intervals based on equipment type
-          and environment. These are guidelines, not legal requirements — a risk assessment should
+          The IET Code of Practice provides suggested testing intervals based on equipment type and
+          environment. These are guidelines, not legal requirements — a risk assessment should
           determine the actual frequency.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -437,8 +443,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hotels, schools, hospitals</strong> — combined inspection and test every
-                12 months for portable equipment.
+                <strong>Hotels, schools, hospitals</strong> — combined inspection and test every 12
+                months for portable equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,9 +483,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Equipment Investment</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  A mid-range PAT tester (Megger PAT420, Seaward PrimeTest 250+) costs £500 to
-                  £800. It pays for itself within 2 to 3 jobs. Add a label printer (£100 to £200)
-                  for professional pass/fail labels.
+                  A mid-range PAT tester (Megger PAT420, Seaward PrimeTest 250+) costs £500 to £800.
+                  It pays for itself within 2 to 3 jobs. Add a label printer (£100 to £200) for
+                  professional pass/fail labels.
                 </p>
               </div>
             </div>
@@ -490,8 +496,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Pricing Strategy</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Charge £1.50 to £3 per appliance with a minimum of £80. A 100-appliance office
-                  at £1.50 each gives £150 for approximately 3 hours of work — £50/hour before
+                  Charge £1.50 to £3 per appliance with a minimum of £80. A 100-appliance office at
+                  £1.50 each gives £150 for approximately 3 hours of work — £50/hour before
                   overheads. Target annual contracts for recurring revenue. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
@@ -529,8 +535,7 @@ export default function PATTestingCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          PAT Testing Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          PAT Testing Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does PAT testing cost? From small offices to large commercial premises, this guide covers realistic 2026 pricing, legal requirements, testing frequency, and what every PAT test involves — whether you are a business owner needing testing or an electrician offering it as a service."
@@ -541,7 +546,7 @@ export default function PATTestingCostPage() {
       faqHeading="Frequently Asked Questions About PAT Testing Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote PAT Testing Jobs Professionally"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, job tracking, and client management. 7-day free trial, cancel anytime."
     />
   );
 }

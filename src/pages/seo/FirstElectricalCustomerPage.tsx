@@ -54,7 +54,8 @@ const faqs = [
       'Most competent person schemes and commercial customers require a minimum of £2 million public liability cover. Many electricians opt for £5 million, and some commercial contracts require £10 million. Public liability insurance covers damage to third-party property and injury to third parties caused by your work. It does not cover your tools or van — you need separate tool insurance and commercial vehicle insurance for those. Professional indemnity insurance is also worth considering as it covers you if a customer claims financial loss due to your advice or design. Expect to pay £200 to £500 per year for a comprehensive self-employed electrician insurance package.',
   },
   {
-    question: 'Do I need to register with a competent person scheme before I can do electrical work?',
+    question:
+      'Do I need to register with a competent person scheme before I can do electrical work?',
     answer:
       'In England and Wales, domestic electrical work that falls under Part P of the Building Regulations must either be carried out by an electrician registered with a competent person scheme (CPS) or be notified to the local authority building control. If you are not registered with a CPS, you must notify building control before starting notifiable work and pay a fee (typically £250 to £400 per job), and building control will inspect the work. This is impractical for a business — registration with NICEIC, NAPIT, ELECSA, or a similar scheme allows you to self-certify your work and issue certificates directly. Annual registration costs range from £300 to £600 depending on the scheme.',
   },
@@ -148,7 +149,8 @@ const sections = [
       <>
         <p>
           Before you chase your first customer, make sure the foundations are in place. Missing any
-          of these can cost you far more than a lost job — it can end your business before it starts.
+          of these can cost you far more than a lost job — it can end your business before it
+          starts.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -187,9 +189,9 @@ const sections = [
                 <strong>HMRC registration</strong> — register as self-employed with HMRC within 3
                 months of starting your business. You will need to file a Self Assessment tax return
                 each year. If your turnover exceeds £90,000 (2026/27 threshold) you must also
-                register for VAT. Consider appointing an accountant who specialises in
-                tradespeople — the cost (typically £600 to £1,200 per year) is easily offset by the
-                tax savings they find.
+                register for VAT. Consider appointing an accountant who specialises in tradespeople
+                — the cost (typically £600 to £1,200 per year) is easily offset by the tax savings
+                they find.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -262,11 +264,11 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Photography Quality Matters</h3>
             <p className="text-white text-sm leading-relaxed">
-              Clean, well-lit photos of neat cabling, labelled boards, and tidy installations
-              sell your work better than any advert. Use your phone camera — modern phones take
-              excellent photos. Clean the work area before photographing. Take close-ups of
-              trunking runs, cable management, and labelled consumer units. Before-and-after
-              comparisons are particularly effective on social media.
+              Clean, well-lit photos of neat cabling, labelled boards, and tidy installations sell
+              your work better than any advert. Use your phone camera — modern phones take excellent
+              photos. Clean the work area before photographing. Take close-ups of trunking runs,
+              cable management, and labelled consumer units. Before-and-after comparisons are
+              particularly effective on social media.
             </p>
           </div>
         </div>
@@ -344,8 +346,8 @@ const sections = [
             <p>
               <strong>Step 1: Annual fixed costs.</strong> Add up insurance (£400), scheme
               registration (£500), van costs including fuel, insurance, and maintenance (£5,000),
-              tool maintenance and calibration (£500), accountancy (£800), phone and software (£600),
-              clothing and PPE (£300). Total: approximately £8,100 per year.
+              tool maintenance and calibration (£500), accountancy (£800), phone and software
+              (£600), clothing and PPE (£300). Total: approximately £8,100 per year.
             </p>
             <p>
               <strong>Step 2: Billable days.</strong> Assume 230 working days minus 25 days holiday,
@@ -395,9 +397,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Cost:</strong> £60 to £120/month plus lead fees in some categories.{' '}
               <strong>Pros:</strong> Strong brand recognition, vetting process adds credibility,
-              good review system.{' '}
-              <strong>Cons:</strong> Monthly commitment regardless of lead quality, customers often
-              comparing 3+ quotes on price alone. Best for building initial reviews and credibility.
+              good review system. <strong>Cons:</strong> Monthly commitment regardless of lead
+              quality, customers often comparing 3+ quotes on price alone. Best for building initial
+              reviews and credibility.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -405,9 +407,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Cost:</strong> Pay per lead (typically £5 to £30 per expression of interest).{' '}
               <strong>Pros:</strong> Only pay when you choose to respond, lower ongoing costs,
-              customers post detailed job descriptions.{' '}
-              <strong>Cons:</strong> Lead quality varies, you are competing with other tradespeople
-              responding to the same job. Best for cherry-picking jobs that suit your skills.
+              customers post detailed job descriptions. <strong>Cons:</strong> Lead quality varies,
+              you are competing with other tradespeople responding to the same job. Best for
+              cherry-picking jobs that suit your skills.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -415,9 +417,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Cost:</strong> Credit-based system, typically £5 to £20 per lead.{' '}
               <strong>Pros:</strong> Wide range of job types, quick setup, leads delivered
-              automatically.{' '}
-              <strong>Cons:</strong> Lead quality is often lower, many enquiries are price shoppers,
-              no vetting process means less credibility. Best as a supplement, not a primary source.
+              automatically. <strong>Cons:</strong> Lead quality is often lower, many enquiries are
+              price shoppers, no vetting process means less credibility. Best as a supplement, not a
+              primary source.
             </p>
           </div>
         </div>
@@ -454,9 +456,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Set up immediately</strong> — create your Google Business Profile before your
-                first job. Choose the correct category ("Electrician"), add your service area, phone
-                number, and business hours. Google will send a verification postcard or call.
+                <strong>Set up immediately</strong> — create your Google Business Profile before
+                your first job. Choose the correct category ("Electrician"), add your service area,
+                phone number, and business hours. Google will send a verification postcard or call.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -510,17 +512,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Build relationships with other trades</strong> — plumbers, builders,
-                kitchen fitters, and estate agents all need electricians they can recommend. Offer
-                the same courtesy back. A network of trusted tradespeople who refer work to each
-                other is the most sustainable source of leads.
+                <strong>Build relationships with other trades</strong> — plumbers, builders, kitchen
+                fitters, and estate agents all need electricians they can recommend. Offer the same
+                courtesy back. A network of trusted tradespeople who refer work to each other is the
+                most sustainable source of leads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MessageSquare className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Follow up after completion</strong> — send a text a week after the job:
-                "Hi [name], just checking everything is working well after the [job]. Any questions,
+                <strong>Follow up after completion</strong> — send a text a week after the job: "Hi
+                [name], just checking everything is working well after the [job]. Any questions,
                 just call." This small gesture generates an outsized amount of goodwill and
                 referrals.
               </span>
@@ -560,8 +562,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Professional quotes win more jobs and set clear expectations. No more handwritten
-                  estimates on the back of a receipt.
+                  . Professional quotes win more jobs and set clear expectations. No more
+                  handwritten estimates on the back of a receipt.
                 </p>
               </div>
             </div>
@@ -575,13 +577,13 @@ const sections = [
                   Issue{' '}
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
-                  </SEOInternalLink>
-                  {' '}and{' '}
+                  </SEOInternalLink>{' '}
+                  and{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificates
-                  </SEOInternalLink>
-                  {' '}on site. Hand the customer a professional PDF certificate before you leave.
-                  This alone sets you apart from most competitors.
+                  </SEOInternalLink>{' '}
+                  on site. Hand the customer a professional PDF certificate before you leave. This
+                  alone sets you apart from most competitors.
                 </p>
               </div>
             </div>
@@ -592,9 +594,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AI Board Scanner</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Scan consumer units with your phone camera and auto-populate schedules of circuits.
-                  Save time on every job and reduce errors. Your test results are stored securely
-                  and searchable.
+                  Scan consumer units with your phone camera and auto-populate schedules of
+                  circuits. Save time on every job and reduce errors. Your test results are stored
+                  securely and searchable.
                 </p>
               </div>
             </div>
@@ -602,7 +604,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Start your electrical business with professional tools"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Look professional from day one. 7-day free trial."
           icon={Briefcase}
         />
       </>
@@ -639,7 +641,7 @@ export default function FirstElectricalCustomerPage() {
       faqHeading="Frequently Asked Questions About Starting an Electrical Business"
       relatedPages={relatedPages}
       ctaHeading="Launch Your Electrical Business with Professional Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and business management. Look established from day one. 7-day free trial, cancel anytime."
     />
   );
 }

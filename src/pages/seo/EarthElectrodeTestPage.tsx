@@ -344,8 +344,8 @@ const sections = [
       <>
         <p>
           The maximum acceptable earth electrode resistance depends on the type of protective device
-          and its rated residual operating current. The fundamental requirement from BS 7671
-          BS 7671 Section 411 for TT systems is:
+          and its rated residual operating current. The fundamental requirement from BS 7671 BS 7671
+          Section 411 for TT systems is:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <p className="text-white font-mono text-lg text-center mb-4">RA x I&#916;n &le; 50 V</p>
@@ -615,7 +615,7 @@ export default function EarthElectrodeTestPage() {
       faqHeading="Frequently Asked Questions About Earth Electrode Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Earth Electrode Results by Voice"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to complete EICR and EIC certificates on site. Voice test entry, AI defect coding, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to complete EICR and EIC certificates on site. Voice test entry, AI defect coding, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

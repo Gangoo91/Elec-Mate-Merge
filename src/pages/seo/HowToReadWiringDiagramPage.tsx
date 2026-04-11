@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'How do I identify phases on a three-phase diagram?',
     answer:
-      'In the UK, three-phase conductors are labelled L1, L2, and L3 (replacing the old red, yellow, and blue colour coding, which was changed in 2004 to align with European harmonised colours). On diagrams, phases may also be shown as R, S, T (older convention) or A, B, C (American convention on some imported equipment). The neutral conductor is labelled N and the protective earth conductor is labelled PE. Combined neutral and earth conductors (PEN conductors, used in TN-C systems) are labelled PEN. Always check the diagram\'s legend to confirm the labelling convention used.',
+      "In the UK, three-phase conductors are labelled L1, L2, and L3 (replacing the old red, yellow, and blue colour coding, which was changed in 2004 to align with European harmonised colours). On diagrams, phases may also be shown as R, S, T (older convention) or A, B, C (American convention on some imported equipment). The neutral conductor is labelled N and the protective earth conductor is labelled PE. Combined neutral and earth conductors (PEN conductors, used in TN-C systems) are labelled PEN. Always check the diagram's legend to confirm the labelling convention used.",
   },
   {
     question: 'What does a star connection look like on a wiring diagram?',
@@ -86,28 +86,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrical-design-guide',
     title: 'Electrical Design Guide',
-    description: 'Principles of electrical system design, load assessment, diversity, and cable sizing.',
+    description:
+      'Principles of electrical system design, load assessment, diversity, and cable sizing.',
     icon: BookOpen,
     category: 'Technical Guide',
   },
   {
     href: '/single-phase-vs-three-phase',
     title: 'Single Phase vs Three Phase',
-    description: 'Differences between single-phase and three-phase supplies, when each is required, and upgrade costs.',
+    description:
+      'Differences between single-phase and three-phase supplies, when each is required, and upgrade costs.',
     icon: Zap,
     category: 'Technical Guide',
   },
   {
     href: '/continuity-testing-r1-r2',
     title: 'Continuity Testing R1+R2',
-    description: 'How to measure R1+R2 values, interpret results, and use test data in the schedule of test results.',
+    description:
+      'How to measure R1+R2 values, interpret results, and use test data in the schedule of test results.',
     icon: ClipboardCheck,
     category: 'Technical Guide',
   },
   {
     href: '/transformer-installation-guide',
     title: 'Transformer Installation Guide',
-    description: 'Specifying, installing, and commissioning distribution transformers in commercial installations.',
+    description:
+      'Specifying, installing, and commissioning distribution transformers in commercial installations.',
     icon: Grid2x2,
     category: 'Technical Guide',
   },
@@ -131,29 +135,28 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the difference between types of electrical diagram is the first step
-          to reading them confidently. Each type serves a different purpose and is used in
-          different contexts.
+          Understanding the difference between types of electrical diagram is the first step to
+          reading them confidently. Each type serves a different purpose and is used in different
+          contexts.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Schematic diagram (circuit diagram)</strong> — shows how components
-                are connected electrically, using standardised symbols. Does not show
-                physical layout. Used for understanding circuit operation and for fault-finding.
-                Components are represented by symbols, not their physical appearance.
+                <strong>Schematic diagram (circuit diagram)</strong> — shows how components are
+                connected electrically, using standardised symbols. Does not show physical layout.
+                Used for understanding circuit operation and for fault-finding. Components are
+                represented by symbols, not their physical appearance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wiring diagram</strong> — shows the physical connections between
-                components, including which terminals wires connect to, cable routes, and
-                sometimes the physical location of components. Used for installation
-                and maintenance. More practical but less clear than schematics for
-                understanding circuit logic.
+                <strong>Wiring diagram</strong> — shows the physical connections between components,
+                including which terminals wires connect to, cable routes, and sometimes the physical
+                location of components. Used for installation and maintenance. More practical but
+                less clear than schematics for understanding circuit logic.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -161,17 +164,16 @@ const sections = [
               <span>
                 <strong>Single-line diagram (SLD)</strong> — represents three-phase power
                 distribution systems using one line per circuit for clarity. Shows the full
-                distribution hierarchy from incoming supply through switchboards to final
-                circuits. Used in commercial and industrial electrical engineering.
+                distribution hierarchy from incoming supply through switchboards to final circuits.
+                Used in commercial and industrial electrical engineering.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BookOpen className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Block diagram</strong> — shows the functional blocks of a system
-                and how they relate to each other, without detailed component or connection
-                information. Used for system overviews and communication with non-technical
-                stakeholders.
+                <strong>Block diagram</strong> — shows the functional blocks of a system and how
+                they relate to each other, without detailed component or connection information.
+                Used for system overviews and communication with non-technical stakeholders.
               </span>
             </li>
           </ul>
@@ -185,39 +187,37 @@ const sections = [
     content: (
       <>
         <p>
-          UK electrical drawings use symbols from two overlapping standards. Understanding
-          which applies and how they relate prevents confusion when reading older or
-          internationally produced drawings.
+          UK electrical drawings use symbols from two overlapping standards. Understanding which
+          applies and how they relate prevents confusion when reading older or internationally
+          produced drawings.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IEC 60617 (current standard)</strong> — the International
-                Electrotechnical Commission standard for graphical symbols for electrical
-                diagrams. The UK adopted this as BS EN 60617. Modern UK electrical drawings
-                use IEC 60617 symbols. This is what you will encounter on current drawings
-                from UK and international engineers.
+                <strong>IEC 60617 (current standard)</strong> — the International Electrotechnical
+                Commission standard for graphical symbols for electrical diagrams. The UK adopted
+                this as BS EN 60617. Modern UK electrical drawings use IEC 60617 symbols. This is
+                what you will encounter on current drawings from UK and international engineers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Legacy BS symbols</strong> — older UK drawings (pre-2000s) may use
-                BS 3939 symbols, which differ from IEC 60617 in some respects. The most
-                commonly encountered differences are in switch and relay symbols, motor
-                representations, and transformer winding notation. When reading older
-                drawings, check for a legend.
+                <strong>Legacy BS symbols</strong> — older UK drawings (pre-2000s) may use BS 3939
+                symbols, which differ from IEC 60617 in some respects. The most commonly encountered
+                differences are in switch and relay symbols, motor representations, and transformer
+                winding notation. When reading older drawings, check for a legend.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Always check the drawing legend</strong> — any drawing that uses
-                non-standard or project-specific symbols should include a symbol legend.
-                If no legend is provided, assume IEC 60617 for modern drawings and
-                BS 3939 for older ones. When in doubt, clarify with the designer.
+                non-standard or project-specific symbols should include a symbol legend. If no
+                legend is provided, assume IEC 60617 for modern drawings and BS 3939 for older ones.
+                When in doubt, clarify with the designer.
               </span>
             </li>
           </ul>
@@ -231,72 +231,72 @@ const sections = [
     content: (
       <>
         <p>
-          The following are the most frequently encountered symbols on UK electrical drawings,
-          based on IEC 60617 / BS EN 60617.
+          The following are the most frequently encountered symbols on UK electrical drawings, based
+          on IEC 60617 / BS EN 60617.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switch (single-pole)</strong> — a line with a diagonal break, typically
-                with a small arc or angle. The diagonal indicates the switch can break the
-                circuit. A two-pole switch has two of these in parallel, connected by a
-                dashed line (indicating they operate together).
+                <strong>Switch (single-pole)</strong> — a line with a diagonal break, typically with
+                a small arc or angle. The diagonal indicates the switch can break the circuit. A
+                two-pole switch has two of these in parallel, connected by a dashed line (indicating
+                they operate together).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Circuit breaker (MCB)</strong> — a rectangle with a diagonal line
-                inside (or in some conventions, the standard switch symbol with a specific
-                annotation). On SLDs, circuit breakers are shown as a square with a diagonal
-                break, sometimes with the rating annotated (e.g., &quot;32A B-type&quot;).
+                <strong>Circuit breaker (MCB)</strong> — a rectangle with a diagonal line inside (or
+                in some conventions, the standard switch symbol with a specific annotation). On
+                SLDs, circuit breakers are shown as a square with a diagonal break, sometimes with
+                the rating annotated (e.g., &quot;32A B-type&quot;).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transformer</strong> — two circles side by side (representing the
-                primary and secondary windings) connected to the circuit. Star and delta
-                connections are indicated by Y and triangle symbols respectively. Transformer
-                ratios (e.g., 11kV/415V) are typically annotated alongside.
+                <strong>Transformer</strong> — two circles side by side (representing the primary
+                and secondary windings) connected to the circuit. Star and delta connections are
+                indicated by Y and triangle symbols respectively. Transformer ratios (e.g.,
+                11kV/415V) are typically annotated alongside.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Motor</strong> — a circle with the letter M inside. Three-phase motors
-                typically show three input lines. DC motors may show a circle with M and
-                arrows indicating direction of rotation. The motor rating (kW) and supply
-                voltage are usually annotated.
+                typically show three input lines. DC motors may show a circle with M and arrows
+                indicating direction of rotation. The motor rating (kW) and supply voltage are
+                usually annotated.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Relay coil</strong> — a rectangle or circle labelled with the
-                relay reference (e.g., K1, CR1). The coil is the electromagnetic component
-                that operates when energised. Relay contacts (controlled by the coil) are
-                shown separately in the circuit, linked by the same reference.
+                <strong>Relay coil</strong> — a rectangle or circle labelled with the relay
+                reference (e.g., K1, CR1). The coil is the electromagnetic component that operates
+                when energised. Relay contacts (controlled by the coil) are shown separately in the
+                circuit, linked by the same reference.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fuse</strong> — a rectangle with a line through it (sometimes shown
-                as a small rectangle or diamond). The fuse rating is annotated. BS 88 HRC
-                fuses, BS 1361 fuses, and BS 3036 rewirable fuses all use the same generic
-                symbol but may be annotated differently.
+                <strong>Fuse</strong> — a rectangle with a line through it (sometimes shown as a
+                small rectangle or diamond). The fuse rating is annotated. BS 88 HRC fuses, BS 1361
+                fuses, and BS 3036 rewirable fuses all use the same generic symbol but may be
+                annotated differently.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth symbol</strong> — three horizontal lines of decreasing length,
-                stacked vertically (or sometimes a single vertical line terminating in
-                three shorter lines). The protective earth (PE) symbol is connected to all
-                exposed conductive parts and metalwork.
+                <strong>Earth symbol</strong> — three horizontal lines of decreasing length, stacked
+                vertically (or sometimes a single vertical line terminating in three shorter lines).
+                The protective earth (PE) symbol is connected to all exposed conductive parts and
+                metalwork.
               </span>
             </li>
           </ul>
@@ -311,44 +311,44 @@ const sections = [
       <>
         <p>
           A circuit diagram shows the electrical path from supply to load. Reading it
-          systematically, from supply through protective device to load and back to supply,
-          is the most reliable approach.
+          systematically, from supply through protective device to load and back to supply, is the
+          most reliable approach.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1: Identify the supply</strong> — find the supply terminals
-                (usually at the top or left of the diagram). Note the voltage and frequency.
-                On a control circuit, this may be a 230V supply or a stepped-down 24V or
-                12V supply from a control transformer.
+                <strong>Step 1: Identify the supply</strong> — find the supply terminals (usually at
+                the top or left of the diagram). Note the voltage and frequency. On a control
+                circuit, this may be a 230V supply or a stepped-down 24V or 12V supply from a
+                control transformer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2: Identify protective devices</strong> — fuses, MCBs, or
-                RCBOs in series with the circuit. Note their ratings. These define the
-                maximum current the circuit can safely carry.
+                <strong>Step 2: Identify protective devices</strong> — fuses, MCBs, or RCBOs in
+                series with the circuit. Note their ratings. These define the maximum current the
+                circuit can safely carry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3: Trace the current path</strong> — follow the line from supply
-                through the protective device, through any switching devices, through the
-                load component, and back to the neutral or return. Identify all series and
-                parallel elements.
+                through the protective device, through any switching devices, through the load
+                component, and back to the neutral or return. Identify all series and parallel
+                elements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 4: Identify control elements</strong> — switches, relays, and
-                contactors that control when the load operates. On control circuits, a series
-                of normally open and normally closed contacts creates logic conditions
-                that must all be satisfied before the load can operate.
+                contactors that control when the load operates. On control circuits, a series of
+                normally open and normally closed contacts creates logic conditions that must all be
+                satisfied before the load can operate.
               </span>
             </li>
           </ul>
@@ -362,36 +362,36 @@ const sections = [
     content: (
       <>
         <p>
-          A wiring diagram shows which physical terminals are connected to which conductors.
-          It is the most directly useful diagram type for installation and fault-finding on site.
+          A wiring diagram shows which physical terminals are connected to which conductors. It is
+          the most directly useful diagram type for installation and fault-finding on site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Terminal numbering</strong> — terminals on components are numbered
-                or lettered in the wiring diagram. Wire references (e.g., W1, W2, or using
-                a wire numbering system) link the terminal on one component to the terminal
-                on another. Follow the wire reference to find where it goes.
+                <strong>Terminal numbering</strong> — terminals on components are numbered or
+                lettered in the wiring diagram. Wire references (e.g., W1, W2, or using a wire
+                numbering system) link the terminal on one component to the terminal on another.
+                Follow the wire reference to find where it goes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable references</strong> — cables are typically labelled with a
-                reference (e.g., C1, C2) that matches the cable schedule. The cable schedule
-                specifies the cable type, size, core colours, and length. Cross-reference
-                the wiring diagram with the cable schedule for full information.
+                <strong>Cable references</strong> — cables are typically labelled with a reference
+                (e.g., C1, C2) that matches the cable schedule. The cable schedule specifies the
+                cable type, size, core colours, and length. Cross-reference the wiring diagram with
+                the cable schedule for full information.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Multi-core cable representation</strong> — a thick line with a number
-                indicating the number of conductors (e.g., a line with &quot;4c&quot; means a
-                4-core cable). Individual cores within the cable may be shown branching from
-                the main line to their respective terminals.
+                indicating the number of conductors (e.g., a line with &quot;4c&quot; means a 4-core
+                cable). Individual cores within the cable may be shown branching from the main line
+                to their respective terminals.
               </span>
             </li>
           </ul>
@@ -405,58 +405,56 @@ const sections = [
     content: (
       <>
         <p>
-          Single-line diagrams (SLDs) are the primary tool for communicating the structure
-          of a power distribution system. They are used in commercial buildings, industrial
-          facilities, data centres, and any installation with a distribution hierarchy more
-          complex than a simple domestic consumer unit.
+          Single-line diagrams (SLDs) are the primary tool for communicating the structure of a
+          power distribution system. They are used in commercial buildings, industrial facilities,
+          data centres, and any installation with a distribution hierarchy more complex than a
+          simple domestic consumer unit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Read from top to bottom</strong> — SLDs typically show the incoming
-                supply at the top (DNO cutout, transformer, or site incoming point) and
-                cascade downward through the distribution hierarchy to final circuits and
-                loads. The &quot;parent&quot; board is above its &quot;child&quot; sub-boards.
+                <strong>Read from top to bottom</strong> — SLDs typically show the incoming supply
+                at the top (DNO cutout, transformer, or site incoming point) and cascade downward
+                through the distribution hierarchy to final circuits and loads. The
+                &quot;parent&quot; board is above its &quot;child&quot; sub-boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Busbar representation</strong> — horizontal lines represent busbars
-                (copper bars distributing supply to multiple circuit breakers). The main
-                LV busbar in a switchboard is shown as a thick horizontal line with circuit
-                breakers connecting to it vertically.
+                <strong>Busbar representation</strong> — horizontal lines represent busbars (copper
+                bars distributing supply to multiple circuit breakers). The main LV busbar in a
+                switchboard is shown as a thick horizontal line with circuit breakers connecting to
+                it vertically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protective device ratings</strong> — each circuit breaker, fuse, or
-                switch on the SLD is annotated with its rating (e.g., &quot;400A 4P ACB&quot; for
-                a 400-amp 4-pole air circuit breaker). Cable sizes between boards are also
-                annotated (e.g., &quot;4 x 240mm CWA SWA&quot;).
+                <strong>Protective device ratings</strong> — each circuit breaker, fuse, or switch
+                on the SLD is annotated with its rating (e.g., &quot;400A 4P ACB&quot; for a 400-amp
+                4-pole air circuit breaker). Cable sizes between boards are also annotated (e.g.,
+                &quot;4 x 240mm CWA SWA&quot;).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transformer representation</strong> — on SLDs, transformers are shown
-                as two circles side by side with winding notation (e.g., Dyn11 for delta
-                primary, star secondary, 11 o&apos;clock vector group). The primary and secondary
-                voltages and transformer rating (kVA) are annotated.
+                <strong>Transformer representation</strong> — on SLDs, transformers are shown as two
+                circles side by side with winding notation (e.g., Dyn11 for delta primary, star
+                secondary, 11 o&apos;clock vector group). The primary and secondary voltages and
+                transformer rating (kVA) are annotated.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/electrical-design-guide">
-            electrical design guide
-          </SEOInternalLink>{' '}
-          covers SLD production and interpretation in more detail for those working in
-          commercial electrical design.
+          <SEOInternalLink href="/electrical-design-guide">electrical design guide</SEOInternalLink>{' '}
+          covers SLD production and interpretation in more detail for those working in commercial
+          electrical design.
         </p>
       </>
     ),
@@ -467,28 +465,28 @@ const sections = [
     content: (
       <>
         <p>
-          Three-phase diagrams show all three phase conductors, neutral (if present), and
-          earth. They are used for motor starters, three-phase distribution boards, and
-          three-phase load connections.
+          Three-phase diagrams show all three phase conductors, neutral (if present), and earth.
+          They are used for motor starters, three-phase distribution boards, and three-phase load
+          connections.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Phase labelling</strong> — UK drawings label phases L1, L2, L3 (or
-                the older R, Y, B using red, yellow, blue colours). On three-phase diagrams
-                from European manufacturers, phases may be labelled L1, L2, L3 or 1, 2, 3.
-                American-convention drawings may label phases A, B, C. Always check the legend.
+                <strong>Phase labelling</strong> — UK drawings label phases L1, L2, L3 (or the older
+                R, Y, B using red, yellow, blue colours). On three-phase diagrams from European
+                manufacturers, phases may be labelled L1, L2, L3 or 1, 2, 3. American-convention
+                drawings may label phases A, B, C. Always check the legend.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Star (Y) connection</strong> — three loads or windings connected at
-                a common neutral point. Each load connects between a phase conductor and neutral.
-                Phase voltage (230V in a 400V system) is applied across each load. Used in
-                balanced and unbalanced resistive and inductive loads.
+                <strong>Star (Y) connection</strong> — three loads or windings connected at a common
+                neutral point. Each load connects between a phase conductor and neutral. Phase
+                voltage (230V in a 400V system) is applied across each load. Used in balanced and
+                unbalanced resistive and inductive loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -504,10 +502,10 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Star-delta starter</strong> — a common three-phase motor starting
-                arrangement. The motor starts in star (reduced voltage across each winding,
-                lower starting current) and is automatically switched to delta after a set
-                time (full voltage, full power). Shown on diagrams as two contactors (K2 star,
-                K3 delta) plus the main contactor (K1).
+                arrangement. The motor starts in star (reduced voltage across each winding, lower
+                starting current) and is automatically switched to delta after a set time (full
+                voltage, full power). Shown on diagrams as two contactors (K2 star, K3 delta) plus
+                the main contactor (K1).
               </span>
             </li>
           </ul>
@@ -517,8 +515,8 @@ const sections = [
           <SEOInternalLink href="/single-phase-vs-three-phase">
             single phase vs three phase guide
           </SEOInternalLink>{' '}
-          explains the practical difference between supply types and when three-phase
-          is required for UK installations.
+          explains the practical difference between supply types and when three-phase is required
+          for UK installations.
         </p>
       </>
     ),
@@ -529,44 +527,44 @@ const sections = [
     content: (
       <>
         <p>
-          Reading electrical drawings on site in a practical installation context requires
-          a different approach to reading them at a desk. The following habits save time
-          and reduce errors.
+          Reading electrical drawings on site in a practical installation context requires a
+          different approach to reading them at a desk. The following habits save time and reduce
+          errors.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Start with the drawing schedule</strong> — a drawing schedule lists
-                all drawings in the package and their revision status. Always confirm you have
-                the current revision of each drawing before working to it. Installing to
-                a superseded drawing is a common cause of rework.
+                <strong>Start with the drawing schedule</strong> — a drawing schedule lists all
+                drawings in the package and their revision status. Always confirm you have the
+                current revision of each drawing before working to it. Installing to a superseded
+                drawing is a common cause of rework.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cross-reference SLD to board schedule</strong> — the SLD gives the
-                big picture; the board schedule gives the detail (circuit numbers, protective
-                device ratings, cable sizes, load descriptions). Read both together.
+                <strong>Cross-reference SLD to board schedule</strong> — the SLD gives the big
+                picture; the board schedule gives the detail (circuit numbers, protective device
+                ratings, cable sizes, load descriptions). Read both together.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mark up drawings as you work</strong> — use a pencil or marked-up
-                PDF to record what you have installed, connections made, and any deviations
-                from the drawing. Your mark-ups form the basis of as-fitted (red line) drawings.
+                <strong>Mark up drawings as you work</strong> — use a pencil or marked-up PDF to
+                record what you have installed, connections made, and any deviations from the
+                drawing. Your mark-ups form the basis of as-fitted (red line) drawings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always verify with instruments</strong> — never assume a circuit is
-                correct based on the drawing alone. Use a multifunction tester to verify
-                polarity, continuity, and insulation resistance after installation. Drawings
-                can contain errors, and site conditions can deviate from design.
+                <strong>Always verify with instruments</strong> — never assume a circuit is correct
+                based on the drawing alone. Use a multifunction tester to verify polarity,
+                continuity, and insulation resistance after installation. Drawings can contain
+                errors, and site conditions can deviate from design.
               </span>
             </li>
           </ul>
@@ -580,9 +578,9 @@ const sections = [
     content: (
       <>
         <p>
-          The ability to read and work from electrical diagrams is a core competency for
-          any qualified electrician. It underpins accurate installation, effective
-          fault-finding, and complete certification.
+          The ability to read and work from electrical diagrams is a core competency for any
+          qualified electrician. It underpins accurate installation, effective fault-finding, and
+          complete certification.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -591,13 +589,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Record Your Circuits Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  After installation, the circuit details from your drawing feed directly into
-                  your test documentation and certificate. Use the{' '}
+                  After installation, the circuit details from your drawing feed directly into your
+                  test documentation and certificate. Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
-                  to enter circuit information, test results, and board details on your phone
-                  before you leave site.
+                  to enter circuit information, test results, and board details on your phone before
+                  you leave site.
                 </p>
               </div>
             </div>
@@ -609,8 +607,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Study Centre for Electrical Theory</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate&apos;s Study Centre includes modules on electrical theory, BS 7671
-                  regulations, and test and inspection — all designed for electricians in the
-                  trade. Access it alongside your practical work to build your technical knowledge.
+                  regulations, and test and inspection — all designed for electricians in the trade.
+                  Access it alongside your practical work to build your technical knowledge.
                 </p>
               </div>
             </div>
@@ -618,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certify your installation work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF certificates. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF certificates. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -644,7 +642,9 @@ export default function HowToReadWiringDiagramPage() {
       heroTitle={
         <>
           How to Read a Wiring Diagram:{' '}
-          <span className="text-yellow-400">Symbols, Single-Line Diagrams and Three-Phase Explained</span>
+          <span className="text-yellow-400">
+            Symbols, Single-Line Diagrams and Three-Phase Explained
+          </span>
         </>
       }
       heroSubtitle="Understanding electrical wiring diagrams is a core skill for any electrician or electrical engineer. This guide explains the difference between schematic, wiring, and single-line diagrams; IEC vs BS symbol sets; common symbols for switches, motors, transformers, and relays; how to read single-line and three-phase diagrams; and practical tips for working from drawings on site."
@@ -655,7 +655,7 @@ export default function HowToReadWiringDiagramPage() {
       faqHeading="Frequently Asked Questions About Reading Electrical Diagrams"
       relatedPages={relatedPages}
       ctaHeading="Complete Electrical Certificates with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC and EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
     />
   );
 }

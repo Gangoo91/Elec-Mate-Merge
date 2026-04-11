@@ -91,7 +91,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description: 'Modern consumer units with RCBO protection for all circuits including smoke detector feeds.',
+    description:
+      'Modern consumer units with RCBO protection for all circuits including smoke detector feeds.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -105,14 +106,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/downlights-flickering',
     title: 'Downlights Flickering',
-    description: 'Flickering lights can indicate wiring faults that also affect smoke detector circuits.',
+    description:
+      'Flickering lights can indicate wiring faults that also affect smoke detector circuits.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding',
-    description: 'Systematic fault finding guide for electricians diagnosing detector circuit issues.',
+    description:
+      'Systematic fault finding guide for electricians diagnosing detector circuit issues.',
     icon: Search,
     category: 'Guide',
   },
@@ -160,11 +163,13 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Chirp pattern every 30 seconds (sometimes 2 or 3 chirps)</h4>
+            <h4 className="font-bold text-white mb-2">
+              Chirp pattern every 30 seconds (sometimes 2 or 3 chirps)
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              <strong>End of life.</strong> The detector sensor has degraded beyond acceptable limits.
-              The entire unit needs replacing. Check the manufacture date on the back — if it is
-              over 10 years old, this is almost certainly the cause.
+              <strong>End of life.</strong> The detector sensor has degraded beyond acceptable
+              limits. The entire unit needs replacing. Check the manufacture date on the back — if
+              it is over 10 years old, this is almost certainly the cause.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -250,8 +255,8 @@ const sections = [
           normal air. At this point, it signals end of life with a distinctive chirp pattern.
         </p>
         <p>
-          To check the age of your detector, look for a manufacture date on the back of the unit.
-          If there is no date visible, and the detector has been in place for as long as you can
+          To check the age of your detector, look for a manufacture date on the back of the unit. If
+          there is no date visible, and the detector has been in place for as long as you can
           remember, assume it needs replacing.
         </p>
         <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-6 my-4">
@@ -259,7 +264,10 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>Replace all smoke detectors after 10 years, regardless of whether they appear to work</span>
+              <span>
+                Replace all smoke detectors after 10 years, regardless of whether they appear to
+                work
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
@@ -267,11 +275,16 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>Carbon monoxide detectors have a shorter lifespan — typically 5 to 7 years</span>
+              <span>
+                Carbon monoxide detectors have a shorter lifespan — typically 5 to 7 years
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
-              <span>When replacing, consider upgrading to interlinked detectors so all alarms sound when one detects smoke</span>
+              <span>
+                When replacing, consider upgrading to interlinked detectors so all alarms sound when
+                one detects smoke
+              </span>
             </li>
           </ul>
         </div>
@@ -289,9 +302,7 @@ const sections = [
           repeated false alarms cause people to disconnect or ignore their detectors, removing
           life-saving protection.
         </p>
-        <p>
-          Common causes of false alarms include:
-        </p>
+        <p>Common causes of false alarms include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -312,9 +323,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dust and insects</strong> — particles inside the sensor chamber scatter light
-                in optical detectors, mimicking smoke. Regular gentle vacuuming around the detector
-                helps prevent this.
+                <strong>Dust and insects</strong> — particles inside the sensor chamber scatter
+                light in optical detectors, mimicking smoke. Regular gentle vacuuming around the
+                detector helps prevent this.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -352,9 +363,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Backup battery low</strong> — even mains-powered detectors have a battery for
-                power cut backup. When this battery is low, the detector chirps. Replace the backup
-                battery.
+                <strong>Backup battery low</strong> — even mains-powered detectors have a battery
+                for power cut backup. When this battery is low, the detector chirps. Replace the
+                backup battery.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -387,12 +398,12 @@ const sections = [
     heading: 'What to Do Step by Step',
     content: (
       <>
-        <p>
-          Follow this process to diagnose and resolve a beeping smoke detector:
-        </p>
+        <p>Follow this process to diagnose and resolve a beeping smoke detector:</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 1: Identify which detector is beeping</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 1: Identify which detector is beeping
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               If you have multiple detectors, stand beneath each one and listen. The chirp or alarm
               should be loudest directly below the offending unit. Some interlinked systems show a
@@ -464,9 +475,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Interlinked system faults</strong> — if one detector in an interlinked system
-                triggers all detectors when there is no smoke, there may be a wiring fault on the
-                interconnect wire.
+                <strong>Interlinked system faults</strong> — if one detector in an interlinked
+                system triggers all detectors when there is no smoke, there may be a wiring fault on
+                the interconnect wire.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -514,8 +525,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Optical detectors for circulation areas and bedrooms (less prone to cooking false
                   alarms). Heat detectors for kitchens and garages. Multi-sensor detectors for
-                  enhanced protection. Ensure detector type is appropriate for the location to reduce
-                  nuisance alarms.
+                  enhanced protection. Ensure detector type is appropriate for the location to
+                  reduce nuisance alarms.
                 </p>
               </div>
             </div>
@@ -543,7 +554,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete fire alarm certificates on your phone"
-          description="Elec-Mate's fire alarm certificate app lets you document BS 5839-6 compliant installations with system design, test schedules, and instant PDF export. Join 430+ UK electricians."
+          description="Elec-Mate's fire alarm certificate app lets you document BS 5839-6 compliant installations with system design, test schedules, and instant PDF export. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -568,8 +579,7 @@ export default function SmokeDetectorBeepingPage() {
       badgeIcon={Bell}
       heroTitle={
         <>
-          Smoke Detector Beeping:{' '}
-          <span className="text-yellow-400">Why and What to Do</span>
+          Smoke Detector Beeping: <span className="text-yellow-400">Why and What to Do</span>
         </>
       }
       heroSubtitle="A beeping smoke detector is trying to tell you something. This guide explains every type of beep — low battery, end of life, false alarm — what to do step by step, and when you need an electrician."
@@ -580,7 +590,7 @@ export default function SmokeDetectorBeepingPage() {
       faqHeading="Frequently Asked Questions About Smoke Detector Beeping"
       relatedPages={relatedPages}
       ctaHeading="Document Fire Detection Systems on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for fire alarm certificates, BS 5839-6 compliance, and professional documentation. 7-day free trial, cancel anytime."
     />
   );
 }

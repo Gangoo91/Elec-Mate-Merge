@@ -23,11 +23,14 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Solar Panel Electrical Cost', href: '/guides/solar-panel-installation-electrical-cost' },
+  {
+    label: 'Solar Panel Electrical Cost',
+    href: '/guides/solar-panel-installation-electrical-cost',
+  },
 ];
 
 const tocItems = [
-  { id: 'overview', label: 'Electrician\'s Scope on Solar PV' },
+  { id: 'overview', label: "Electrician's Scope on Solar PV" },
   { id: 'dc-isolator', label: 'DC Isolator and AC Isolator' },
   { id: 'meter-tails', label: 'Meter Tails Upgrade' },
   { id: 'consumer-unit', label: 'Consumer Unit Connection' },
@@ -43,7 +46,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'The electrician\'s scope on a solar PV installation covers the DC isolator, AC isolator, meter tails upgrade (if needed), generation meter, consumer unit connection, earthing, and certification. This typically costs £500 to £1,500 on top of the panel and inverter cost.',
+  "The electrician's scope on a solar PV installation covers the DC isolator, AC isolator, meter tails upgrade (if needed), generation meter, consumer unit connection, earthing, and certification. This typically costs £500 to £1,500 on top of the panel and inverter cost.",
   'This guide covers the electrical work only — not panel mounting, roof work, or inverter installation. The electrical connection is the final stage of a solar PV installation and must be carried out by a competent electrician.',
   'MCS (Microgeneration Certification Scheme) certification is required for the customer to receive Smart Export Guarantee (SEG) payments. The installation must be carried out by an MCS-certified installer.',
   'DNO notification under G98 (for installations up to 3.68 kW per phase) or G99 (for larger installations) is mandatory. G98 is a simple notification; G99 requires application and approval before energisation.',
@@ -79,12 +82,12 @@ const faqs = [
   {
     question: 'Where should the AC and DC isolators be located?',
     answer:
-      'The DC isolator should be located adjacent to the inverter, within arm\'s reach, and clearly labelled. It allows the inverter to be safely isolated from the DC supply from the panels. The AC isolator should be located between the inverter and the consumer unit, and must be accessible to the DNO and emergency services. It is typically mounted next to the consumer unit or the meter. Both isolators must be clearly labelled with appropriate warning signs indicating the presence of dual supplies.',
+      "The DC isolator should be located adjacent to the inverter, within arm's reach, and clearly labelled. It allows the inverter to be safely isolated from the DC supply from the panels. The AC isolator should be located between the inverter and the consumer unit, and must be accessible to the DNO and emergency services. It is typically mounted next to the consumer unit or the meter. Both isolators must be clearly labelled with appropriate warning signs indicating the presence of dual supplies.",
   },
   {
     question: 'What earthing is required for solar PV?',
     answer:
-      'The solar PV system requires protective earthing of all exposed conductive parts — the panel frames, mounting system, inverter casing, and any metallic containment. An earth conductor (typically 4mm² or 6mm² green/yellow) connects all metallic parts back to the main earthing terminal. Additionally, equipotential bonding may be required for the mounting system if it is in contact with the building\'s structural metalwork. Lightning protection should be considered — an SPD (surge protection device) on both the DC and AC sides is strongly recommended.',
+      "The solar PV system requires protective earthing of all exposed conductive parts — the panel frames, mounting system, inverter casing, and any metallic containment. An earth conductor (typically 4mm² or 6mm² green/yellow) connects all metallic parts back to the main earthing terminal. Additionally, equipotential bonding may be required for the mounting system if it is in contact with the building's structural metalwork. Lightning protection should be considered — an SPD (surge protection device) on both the DC and AC sides is strongly recommended.",
   },
   {
     question: 'How long does the electrical work take for a solar PV installation?',
@@ -97,16 +100,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost',
-    description:
-      'Solar PV requires a spare way in the consumer unit — replacement may be needed.',
+    description: 'Solar PV requires a spare way in the consumer unit — replacement may be needed.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/three-phase-installation-cost',
     title: '3-Phase Installation Cost',
-    description:
-      'Larger solar PV systems may require or benefit from a 3-phase supply upgrade.',
+    description: 'Larger solar PV systems may require or benefit from a 3-phase supply upgrade.',
     icon: Zap,
     category: 'Guide',
   },
@@ -129,16 +130,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/ev-charger-installation-guide',
     title: 'EV Charger Installation Guide',
-    description:
-      'EV chargers and solar PV are commonly installed together for maximum savings.',
+    description: 'EV chargers and solar PV are commonly installed together for maximum savings.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/guides/spd-surge-protection',
     title: 'SPD Surge Protection Guide',
-    description:
-      'Surge protection is strongly recommended on both DC and AC sides of solar PV.',
+    description: 'Surge protection is strongly recommended on both DC and AC sides of solar PV.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -151,7 +150,7 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'overview',
-    heading: 'Electrician\'s Scope on a Solar PV Installation',
+    heading: "Electrician's Scope on a Solar PV Installation",
     content: (
       <>
         <p>
@@ -167,10 +166,10 @@ const sections = [
           the cost covers the electrical installation versus the panels and mounting.
         </p>
         <p>
-          The electrical work is the final stage of a solar PV installation. Panels are mounted,
-          DC cabling is run to the inverter location, and then the electrician takes over — installing
-          isolators, connecting the inverter to the consumer unit, completing the earthing, installing
-          metering, testing, and certifying the installation.
+          The electrical work is the final stage of a solar PV installation. Panels are mounted, DC
+          cabling is run to the inverter location, and then the electrician takes over — installing
+          isolators, connecting the inverter to the consumer unit, completing the earthing,
+          installing metering, testing, and certifying the installation.
         </p>
       </>
     ),
@@ -181,37 +180,39 @@ const sections = [
     content: (
       <>
         <p>
-          Two isolators are required on every solar PV installation: a DC isolator between the panels
-          and the inverter, and an AC isolator between the inverter and the consumer unit.
+          Two isolators are required on every solar PV installation: a DC isolator between the
+          panels and the inverter, and an AC isolator between the inverter and the consumer unit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DC isolator</strong> — £30 to £60 trade. A dedicated DC-rated isolator switch
-                mounted adjacent to the inverter. Must be rated for the maximum DC voltage and current
-                of the string. Typically 600V to 1000V DC, 25A to 32A. Must be load-break rated (can
-                safely interrupt DC current under load). Clearly labelled with "DC ISOLATOR — SOLAR PV"
-                and appropriate hazard warnings.
+                <strong>DC isolator</strong> — £30 to £60 trade. A dedicated DC-rated isolator
+                switch mounted adjacent to the inverter. Must be rated for the maximum DC voltage
+                and current of the string. Typically 600V to 1000V DC, 25A to 32A. Must be
+                load-break rated (can safely interrupt DC current under load). Clearly labelled with
+                "DC ISOLATOR — SOLAR PV" and appropriate hazard warnings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AC isolator</strong> — £25 to £50 trade. A double-pole isolator switch between
-                the inverter AC output and the consumer unit. Must be accessible to the DNO and
-                emergency services — typically mounted adjacent to the consumer unit or electricity
-                meter. Labelled "AC ISOLATOR — SOLAR PV" with dual supply warning labels.
+                <strong>AC isolator</strong> — £25 to £50 trade. A double-pole isolator switch
+                between the inverter AC output and the consumer unit. Must be accessible to the DNO
+                and emergency services — typically mounted adjacent to the consumer unit or
+                electricity meter. Labelled "AC ISOLATOR — SOLAR PV" with dual supply warning
+                labels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Warning labels</strong> — dual supply warning labels are mandatory at the
-                consumer unit, meter position, and all isolator locations. These alert firefighters and
-                DNO engineers that the installation has a second source of supply. Budget £10 to £20
-                for a complete set of labels compliant with BS 7671 and the fire service requirements.
+                consumer unit, meter position, and all isolator locations. These alert firefighters
+                and DNO engineers that the installation has a second source of supply. Budget £10 to
+                £20 for a complete set of labels compliant with BS 7671 and the fire service
+                requirements.
               </span>
             </li>
           </ul>
@@ -225,36 +226,36 @@ const sections = [
     content: (
       <>
         <p>
-          The meter tails connect the electricity meter to the consumer unit. In older installations,
-          these may be 16mm² — adequate for the original installation but potentially undersized when
-          solar PV generation is added.
+          The meter tails connect the electricity meter to the consumer unit. In older
+          installations, these may be 16mm² — adequate for the original installation but potentially
+          undersized when solar PV generation is added.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Meter tails assessment</strong> — check the existing tails size and condition.
-                25mm² tails are adequate for most domestic solar PV systems. If the tails are 16mm²
-                or show signs of deterioration, upgrade to 25mm².
+                <strong>Meter tails assessment</strong> — check the existing tails size and
+                condition. 25mm² tails are adequate for most domestic solar PV systems. If the tails
+                are 16mm² or show signs of deterioration, upgrade to 25mm².
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Upgrade cost</strong> — £100 to £250 for meter tails replacement. This
-                includes the cable (25mm² meter tails, approximately £8 to £12 per metre), the labour
-                to replace them, and coordination with the DNO if the meter needs to be moved or
-                re-sealed.
+                includes the cable (25mm² meter tails, approximately £8 to £12 per metre), the
+                labour to replace them, and coordination with the DNO if the meter needs to be moved
+                or re-sealed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Henley block</strong> — if the solar PV connection is made via a Henley block
-                (service connector block) on the meter tails rather than through the consumer unit, a
-                separate tails assessment and potentially a larger Henley block may be required.
-                Budget £30 to £50 for the Henley block.
+                <strong>Henley block</strong> — if the solar PV connection is made via a Henley
+                block (service connector block) on the meter tails rather than through the consumer
+                unit, a separate tails assessment and potentially a larger Henley block may be
+                required. Budget £30 to £50 for the Henley block.
               </span>
             </li>
           </ul>
@@ -277,9 +278,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dedicated RCBO</strong> — the solar PV circuit requires its own RCBO at the
-                consumer unit. Under BS 7671 Regulation 411.3.3, RCD protection with a rated residual
-                operating current not exceeding 30 mA is required. A 16A or 20A Type B RCBO is
-                typical for domestic solar PV. Cost: £35 to £55.
+                consumer unit. Under BS 7671 Regulation 411.3.3, RCD protection with a rated
+                residual operating current not exceeding 30 mA is required. A 16A or 20A Type B RCBO
+                is typical for domestic solar PV. Cost: £35 to £55.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,8 +299,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable from inverter to consumer unit</strong> — typically 4mm² or 6mm² twin
-                and earth, depending on cable run length and circuit rating. Cost: £2 to £4 per metre
-                plus containment. A typical domestic run is 5 to 15 metres.
+                and earth, depending on cable run length and circuit rating. Cost: £2 to £4 per
+                metre plus containment. A typical domestic run is 5 to 15 metres.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -329,8 +330,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Panel frame earthing</strong> — each panel frame must be earthed. This is
-                typically achieved through the mounting rail system, which provides a continuous earth
-                path through all panels. Earth bonding clips or lugs connect the rail to the
+                typically achieved through the mounting rail system, which provides a continuous
+                earth path through all panels. Earth bonding clips or lugs connect the rail to the
                 protective earth conductor.
               </span>
             </li>
@@ -390,8 +391,8 @@ const sections = [
               <span>
                 <strong>Export meter</strong> — if the customer does not have a smart meter, an
                 export meter may be needed to record electricity exported to the grid for SEG
-                payments. However, most energy suppliers now require or provide a smart meter for SEG,
-                which records export automatically.
+                payments. However, most energy suppliers now require or provide a smart meter for
+                SEG, which records export automatically.
               </span>
             </li>
           </ul>
@@ -463,9 +464,9 @@ const sections = [
               <GraduationCap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installer certification</strong> — the installation must be carried out
-                by an MCS-certified installer. MCS certification requires specific training, insurance,
-                and adherence to the MCS installation standards. The MCS certificate is issued by the
-                installer upon completion.
+                by an MCS-certified installer. MCS certification requires specific training,
+                insurance, and adherence to the MCS installation standards. The MCS certificate is
+                issued by the installer upon completion.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -482,8 +483,8 @@ const sections = [
                 <strong>For electricians</strong> — if you want to carry out complete solar PV
                 installations (not just the electrical connection), you need MCS certification. This
                 involves completing an MCS-approved training course, having appropriate insurance,
-                and registering with an MCS certification body. The investment pays for itself quickly
-                given the strong demand for solar PV installations.
+                and registering with an MCS certification body. The investment pays for itself
+                quickly given the strong demand for solar PV installations.
               </span>
             </li>
           </ul>
@@ -567,8 +568,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Requirements</strong> — to receive SEG payments, the installation must be
-                MCS-certified and a smart meter must be installed to record export data. The customer
-                registers with their chosen SEG supplier after the installation is complete.
+                MCS-certified and a smart meter must be installed to record export data. The
+                customer registers with their chosen SEG supplier after the installation is
+                complete.
               </span>
             </li>
           </ul>
@@ -594,11 +596,11 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Survey the Existing Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Before quoting, assess the existing meter tails (size and condition), consumer unit
-                  (spare ways available), earthing arrangement (TN-C-S, TN-S, or TT), and the cable
-                  route from the proposed inverter location to the consumer unit. These factors
-                  determine whether additional work (tails upgrade, board replacement, earthing
-                  upgrade) is needed.
+                  Before quoting, assess the existing meter tails (size and condition), consumer
+                  unit (spare ways available), earthing arrangement (TN-C-S, TN-S, or TT), and the
+                  cable route from the proposed inverter location to the consumer unit. These
+                  factors determine whether additional work (tails upgrade, board replacement,
+                  earthing upgrade) is needed.
                 </p>
               </div>
             </div>
@@ -628,9 +630,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If you are regularly carrying out solar PV electrical work, consider getting
                   MCS-certified to offer complete installations. The training investment (typically
-                  £1,000 to £2,000) and annual certification fee are quickly recovered through higher
-                  job values. MCS-certified electricians can offer the complete package from survey to
-                  commissioning.
+                  £1,000 to £2,000) and annual certification fee are quickly recovered through
+                  higher job values. MCS-certified electricians can offer the complete package from
+                  survey to commissioning.
                 </p>
               </div>
             </div>
@@ -638,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify solar PV electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for solar PV electrical connections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for solar PV electrical connections. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -663,8 +665,7 @@ export default function SolarPanelInstallationCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Solar Panel Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Wiring Guide 2026</span>
+          Solar Panel Electrical Cost: <span className="text-yellow-400">UK Wiring Guide 2026</span>
         </>
       }
       heroSubtitle="How much does the electrical work cost on a solar PV installation? This guide focuses on the electrician's scope — DC and AC isolators, meter tails, consumer unit connection, earthing, generation meters, and certification. Real costs for the electrical work that sits on top of the panel and inverter price."
@@ -675,7 +676,7 @@ export default function SolarPanelInstallationCostPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Solar PV Electrical Work with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

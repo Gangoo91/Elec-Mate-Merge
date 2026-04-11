@@ -598,7 +598,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional farm certificates on your phone"
-          description="Join 430+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating EICR and EIC certificates with AI-assisted observation coding, photo documentation, and instant PDF delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -635,7 +635,7 @@ export default function AgriculturalInstallationsPage() {
       faqHeading="Frequently Asked Questions About Agricultural Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Agricultural EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional certificates with AI observation coding, photo documentation, and instant PDF delivery. Built for specialist work including agricultural installations. 7-day free trial, cancel anytime."
     />
   );
 }

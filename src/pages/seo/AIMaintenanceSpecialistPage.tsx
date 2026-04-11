@@ -433,7 +433,7 @@ export default function AIMaintenanceSpecialistPage() {
       faqHeading="Frequently Asked Questions About AI Maintenance"
       relatedPages={relatedPages}
       ctaHeading="Deliver Proactive Maintenance with AI"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Maintenance Specialist. Intelligent scheduling, fault prediction, and compliance tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Maintenance Specialist. Intelligent scheduling, fault prediction, and compliance tracking. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-maintenance-specialist"
     />
   );

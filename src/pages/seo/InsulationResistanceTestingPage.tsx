@@ -138,19 +138,19 @@ const sections = [
         <p>
           Insulation resistance (IR) testing is one of the fundamental verification tests required
           by BS 7671:2018+A3:2024 as part of both the initial inspection and testing of a new
-          installation and the periodic inspection and testing of an existing installation (EICR). The
-          purpose of the test is to verify that the insulation surrounding the conductors is in good
-          condition and is providing adequate electrical separation between live conductors and
+          installation and the periodic inspection and testing of an existing installation (EICR).
+          The purpose of the test is to verify that the insulation surrounding the conductors is in
+          good condition and is providing adequate electrical separation between live conductors and
           between live conductors and earth.
         </p>
         <p>
           Over time, electrical insulation degrades due to heat, moisture, mechanical damage, UV
           exposure, and chemical attack. As insulation degrades, its resistance decreases. At very
           low insulation resistance values, significant leakage current can flow through the
-          insulation under normal operating conditions, causing energy loss, heating of the conductor
-          insulation, and — if the leakage path is to earth — operation of residual current devices.
-          In severe cases, low insulation resistance can lead to ignition of the insulation and
-          electrical fire.
+          insulation under normal operating conditions, causing energy loss, heating of the
+          conductor insulation, and — if the leakage path is to earth — operation of residual
+          current devices. In severe cases, low insulation resistance can lead to ignition of the
+          insulation and electrical fire.
         </p>
         <p>
           IR testing detects these problems before they become dangerous. A single IR test of a
@@ -175,9 +175,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-2">250V DC</h3>
             <p className="text-white text-sm leading-relaxed">
-              Used for SELV and PELV circuits with a nominal voltage up to 50V AC. Minimum IR
-              value: 0.5 MΩ. Applies to extra-low voltage circuits such as fire alarm wiring,
-              security systems, and ELV lighting.
+              Used for SELV and PELV circuits with a nominal voltage up to 50V AC. Minimum IR value:
+              0.5 MΩ. Applies to extra-low voltage circuits such as fire alarm wiring, security
+              systems, and ELV lighting.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -229,9 +229,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Older installation — borderline</strong> — values between 2 MΩ and 10 MΩ
-                on an existing installation may warrant a C3 observation on an EICR, noting that
-                whilst technically compliant, the deterioration trend should be monitored.
+                <strong>Older installation — borderline</strong> — values between 2 MΩ and 10 MΩ on
+                an existing installation may warrant a C3 observation on an EICR, noting that whilst
+                technically compliant, the deterioration trend should be monitored.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -265,7 +265,9 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
                 <strong>Disconnect all equipment</strong> — remove all luminaires, disconnect all
                 appliances, and remove or disconnect electronic equipment from the circuit. Leave
@@ -273,29 +275,37 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Link L and N at the board</strong> — at the consumer unit, link the line and
-                neutral terminals of the circuit together so both conductors are tested simultaneously.
-                The CPC (earth) is left separate.
+                neutral terminals of the circuit together so both conductors are tested
+                simultaneously. The CPC (earth) is left separate.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
                 <strong>Test L+N to E</strong> — connect the IR tester between the linked L+N
                 conductors and the earth (CPC). Apply 500V DC and record the reading.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
               <span>
                 <strong>Test L to N</strong> — remove the link and test between L and N to check
                 insulation between the two live conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">5</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                5
+              </span>
               <span>
                 <strong>Record results</strong> — note the measured IR value, the test voltage, and
                 the circuit designation on the schedule of test results.
@@ -353,8 +363,8 @@ const sections = [
               <span>
                 <strong>Discharge the circuit after testing</strong> — the IR tester charges the
                 circuit capacitance to the test voltage. After removing the test voltage, the
-                instrument should discharge the circuit — confirm the instrument is doing this before
-                reconnecting any equipment.
+                instrument should discharge the circuit — confirm the instrument is doing this
+                before reconnecting any equipment.
               </span>
             </li>
           </ul>
@@ -417,8 +427,8 @@ const sections = [
                   Surge protective devices (SPDs) are now mandatory on most new installations under
                   BS 7671:2018+A3:2024 Amendment 3. They are easily missed during inspection. Before
                   applying any IR test voltage, check the consumer unit, distribution board, and
-                  sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit gives a
-                  reading of virtually zero ohms — which can falsely condemn a sound installation.
+                  sub-boards for SPDs and disconnect them from the circuit. An SPD in circuit gives
+                  a reading of virtually zero ohms — which can falsely condemn a sound installation.
                 </p>
               </div>
             </div>
@@ -427,7 +437,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Test by Section on Large Installations</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Test by Section on Large Installations
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   On large commercial or industrial installations, test one section at a time and
                   record the reading for each section. This makes it easier to identify which
@@ -472,7 +484,7 @@ export default function InsulationResistanceTestingPage() {
       faqHeading="Frequently Asked Questions About Insulation Resistance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record IR Test Results and Complete EICRs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks IR readings against the BS 7671 minimum and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

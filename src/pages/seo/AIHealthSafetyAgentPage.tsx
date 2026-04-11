@@ -120,7 +120,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -358,7 +358,7 @@ export default function AIHealthSafetyAgentPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Trained specifically for UK electrical work. Generate professional, site-specific RAMS
-            in minutes instead of hours. Part of 70 calculators, 8 AI agents, and 36+ training
+            in minutes instead of hours. Part of 70+ calculators, 8 AI agents, and 46+ training
             courses.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
@@ -416,7 +416,7 @@ export default function AIHealthSafetyAgentPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Generate professional RAMS in minutes"
-        subheading="Join 430+ UK electricians using AI for CDM 2015 compliant health and safety documentation. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using AI for CDM 2015 compliant health and safety documentation. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

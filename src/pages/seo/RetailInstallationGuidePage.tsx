@@ -632,7 +632,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Professional retail certificates on your phone"
-          description="Join 430+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians creating professional EIC, EICR, and specialist certificates with AI board scanning, voice entry, and instant PDF delivery. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -669,7 +669,7 @@ export default function RetailInstallationGuidePage() {
       faqHeading="Frequently Asked Questions About Retail Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Retail Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional EIC and EICR certificates with AI board scanning, voice test entry, and instant PDF delivery. Built for commercial and retail fit-outs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional EIC and EICR certificates with AI board scanning, voice test entry, and instant PDF delivery. Built for commercial and retail fit-outs. 7-day free trial, cancel anytime."
     />
   );
 }

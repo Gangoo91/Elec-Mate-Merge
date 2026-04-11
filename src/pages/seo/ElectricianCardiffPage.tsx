@@ -125,8 +125,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description:
-      'Study for C&G 2391 — essential for Cardiff HMO and landlord certification work.',
+    description: 'Study for C&G 2391 — essential for Cardiff HMO and landlord certification work.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -144,17 +143,15 @@ const sections = [
       <>
         <p>
           Cardiff is the capital of Wales and its largest city, with a population approaching
-          370,000 and a growing metropolitan area. For electricians, Cardiff offers a strong
-          market combining the steady domestic work of a large city with the premium opportunities
-          of the Cardiff Bay regeneration and the unique regulatory considerations of working in
-          Wales.
+          370,000 and a growing metropolitan area. For electricians, Cardiff offers a strong market
+          combining the steady domestic work of a large city with the premium opportunities of the
+          Cardiff Bay regeneration and the unique regulatory considerations of working in Wales.
         </p>
         <p>
-          The city's property stock ranges from grand Victorian and Edwardian terraces in
-          Pontcanna and Canton to post-war estates in Ely and Llanrumney, modern apartments in
-          Cardiff Bay, and student HMOs in Cathays and Roath. The Welsh Government's presence in
-          Cardiff creates public sector electrical work opportunities that do not exist in other
-          Welsh cities.
+          The city's property stock ranges from grand Victorian and Edwardian terraces in Pontcanna
+          and Canton to post-war estates in Ely and Llanrumney, modern apartments in Cardiff Bay,
+          and student HMOs in Cathays and Roath. The Welsh Government's presence in Cardiff creates
+          public sector electrical work opportunities that do not exist in other Welsh cities.
         </p>
         <p>
           This guide covers the Welsh regulatory framework, DNO details, property-specific
@@ -191,11 +188,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Welsh Government administration</strong> — building regulations in Wales
-                are administered by the Welsh Government, not DLUHC (which covers England only).
-                Any future divergence between English and Welsh building regulations would be
-                published by the Welsh Government. As of 2026, the electrical safety requirements
-                are aligned.
+                <strong>Welsh Government administration</strong> — building regulations in Wales are
+                administered by the Welsh Government, not DLUHC (which covers England only). Any
+                future divergence between English and Welsh building regulations would be published
+                by the Welsh Government. As of 2026, the electrical safety requirements are aligned.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -219,10 +215,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For electricians crossing the Severn Bridge from England to work in Cardiff, the
-          practical differences are minimal — the same qualifications, the same competent person
-          schemes, and the same installation standards apply. The main differences are
-          administrative (Welsh Government oversight, Rent Smart Wales for landlords).
+          For electricians crossing the Severn Bridge from England to work in Cardiff, the practical
+          differences are minimal — the same qualifications, the same competent person schemes, and
+          the same installation standards apply. The main differences are administrative (Welsh
+          Government oversight, Rent Smart Wales for landlords).
         </p>
       </>
     ),
@@ -241,30 +237,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and upgrades</strong> — new supplies, capacity upgrades
-                (for EV chargers, heat pumps), and service cable replacements go through the
-                WPD/NGED connections portal. Standard domestic connections in Cardiff typically
-                take 4 to 8 weeks. Three-phase upgrades for larger properties or commercial
-                premises may take longer.
+                <strong>New connections and upgrades</strong> — new supplies, capacity upgrades (for
+                EV chargers, heat pumps), and service cable replacements go through the WPD/NGED
+                connections portal. Standard domestic connections in Cardiff typically take 4 to 8
+                weeks. Three-phase upgrades for larger properties or commercial premises may take
+                longer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
-                generation must be notified to WPD/NGED. G98 notifications (up to 16A per phase)
-                are straightforward. G99 applications for larger systems take 6 to 10 weeks.
-                Cardiff generally has good network capacity, but some areas of the Valleys
-                served by the same WPD/NGED region may have constraints.
+                generation must be notified to WPD/NGED. G98 notifications (up to 16A per phase) are
+                straightforward. G99 applications for larger systems take 6 to 10 weeks. Cardiff
+                generally has good network capacity, but some areas of the Valleys served by the
+                same WPD/NGED region may have constraints.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing arrangements</strong> — Cardiff properties are predominantly
-                TN-C-S (PME) in newer areas and TN-S in older areas. Victorian terraces in
-                Pontcanna, Canton, and Roath may have older earthing arrangements. Always verify
-                at the supply intake.
+                <strong>Earthing arrangements</strong> — Cardiff properties are predominantly TN-C-S
+                (PME) in newer areas and TN-S in older areas. Victorian terraces in Pontcanna,
+                Canton, and Roath may have older earthing arrangements. Always verify at the supply
+                intake.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,8 +269,8 @@ const sections = [
                 <strong>Welsh Government energy policy</strong> — the Welsh Government has its own
                 energy and climate change policies, including targets for renewable energy
                 generation and building decarbonisation. This may lead to Welsh-specific incentives
-                for solar PV, battery storage, and heat pump installations. Monitor Welsh
-                Government announcements for new schemes.
+                for solar PV, battery storage, and heat pump installations. Monitor Welsh Government
+                announcements for new schemes.
               </span>
             </li>
           </ul>
@@ -288,47 +284,47 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff's housing stock reflects its growth from a small market town to the Welsh
-          capital, with distinct areas presenting different electrical challenges:
+          Cardiff's housing stock reflects its growth from a small market town to the Welsh capital,
+          with distinct areas presenting different electrical challenges:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Pontcanna and Canton Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
-              Victorian and Edwardian terraced houses, many in excellent condition and highly
-              sought after. Solid brick or stone walls, suspended timber floors, original
-              plasterwork. These areas have undergone significant gentrification, with homeowners
-              willing to invest in quality electrical work — full rewires with premium fittings,
-              EV chargers, smart home systems, and garden room supplies. Pontcanna is one of
-              Cardiff's most desirable areas with rates at the top of the local range.
+              Victorian and Edwardian terraced houses, many in excellent condition and highly sought
+              after. Solid brick or stone walls, suspended timber floors, original plasterwork.
+              These areas have undergone significant gentrification, with homeowners willing to
+              invest in quality electrical work — full rewires with premium fittings, EV chargers,
+              smart home systems, and garden room supplies. Pontcanna is one of Cardiff's most
+              desirable areas with rates at the top of the local range.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Roath and Cathays</h3>
             <p className="text-white text-sm leading-relaxed">
-              A mix of Victorian terraces, many converted to HMOs or divided into flats. Cathays
-              is the primary student area (adjacent to Cardiff University) with one of the highest
-              HMO densities in Wales. Roath has a mix of student accommodation and family homes.
-              Electrical work ranges from HMO compliance (EICRs, fire alarms) to family home
-              rewires and upgrades. High-volume, steady work.
+              A mix of Victorian terraces, many converted to HMOs or divided into flats. Cathays is
+              the primary student area (adjacent to Cardiff University) with one of the highest HMO
+              densities in Wales. Roath has a mix of student accommodation and family homes.
+              Electrical work ranges from HMO compliance (EICRs, fire alarms) to family home rewires
+              and upgrades. High-volume, steady work.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Cardiff Bay</h3>
             <p className="text-white text-sm leading-relaxed">
               Modern apartments and townhouses in the regenerated docklands. Built to current
-              standards with modern electrical infrastructure. Work includes modifications,
-              smart home installations, EV charger connections in apartment car parks, and
-              commercial fit-outs in offices, restaurants, and leisure venues. Higher-value
-              customers and commercial clients. The Senedd and Wales Millennium Centre area
-              also generates public sector work.
+              standards with modern electrical infrastructure. Work includes modifications, smart
+              home installations, EV charger connections in apartment car parks, and commercial
+              fit-outs in offices, restaurants, and leisure venues. Higher-value customers and
+              commercial clients. The Senedd and Wales Millennium Centre area also generates public
+              sector work.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Suburban Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Post-war and modern estates in areas like Ely, Llanrumney, Pentwyn, and Llanishen.
-              A mix of council-built and private houses with cavity walls, concrete floors, and
+              Post-war and modern estates in areas like Ely, Llanrumney, Pentwyn, and Llanishen. A
+              mix of council-built and private houses with cavity walls, concrete floors, and
               standard cable routes. Many 1960s and 1970s properties are now due for rewires or
               consumer unit upgrades. EV charger installations are growing in these areas as EV
               adoption increases across all demographics.
@@ -344,9 +340,9 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff Bay is one of Europe's largest waterfront regeneration projects. The former
-          Tiger Bay docklands have been transformed into a modern mixed-use development that
-          continues to expand:
+          Cardiff Bay is one of Europe's largest waterfront regeneration projects. The former Tiger
+          Bay docklands have been transformed into a modern mixed-use development that continues to
+          expand:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -426,8 +422,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Languages className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial signage</strong> — some Cardiff businesses, particularly those
-                in public-facing locations and those receiving Welsh Government funding, display
+                <strong>Commercial signage</strong> — some Cardiff businesses, particularly those in
+                public-facing locations and those receiving Welsh Government funding, display
                 bilingual signage. If you are installing illuminated signs, external lighting for
                 signage, or power supplies for display boards, the signage may be bilingual.
               </span>
@@ -452,10 +448,10 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff has three universities — Cardiff University, Cardiff Metropolitan University,
-          and the University of South Wales (Treforest campus and Cardiff campus) — with a
-          combined student population of over 60,000. The primary student HMO areas are Cathays,
-          Roath, and parts of Plasnewydd.
+          Cardiff has three universities — Cardiff University, Cardiff Metropolitan University, and
+          the University of South Wales (Treforest campus and Cardiff campus) — with a combined
+          student population of over 60,000. The primary student HMO areas are Cathays, Roath, and
+          parts of Plasnewydd.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -463,8 +459,8 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licensing</strong> — Cardiff Council operates mandatory HMO licensing
-                for properties with 5+ occupants from 2+ households. The Cathays ward has one of
-                the highest HMO densities in Wales. Cardiff also has an additional licensing scheme
+                for properties with 5+ occupants from 2+ households. The Cathays ward has one of the
+                highest HMO densities in Wales. Cardiff also has an additional licensing scheme
                 covering smaller HMOs in designated areas.
               </span>
             </li>
@@ -482,10 +478,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire detection and emergency lighting</strong> — HMOs require fire
-                detection to BS 5839-6 (Grade D LD2 minimum) and emergency lighting on escape
-                routes. Cardiff Council enforcement is active, particularly in the Cathays area
-                where the density of student HMOs is highest.
+                <strong>Fire detection and emergency lighting</strong> — HMOs require fire detection
+                to BS 5839-6 (Grade D LD2 minimum) and emergency lighting on escape routes. Cardiff
+                Council enforcement is active, particularly in the Cathays area where the density of
+                student HMOs is highest.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -501,8 +497,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The Cardiff letting agent market is concentrated along City Road, Albany Road, and in
-          the city centre. Building relationships with agents who manage Cathays and Roath HMO
+          The Cardiff letting agent market is concentrated along City Road, Albany Road, and in the
+          city centre. Building relationships with agents who manage Cathays and Roath HMO
           portfolios creates steady, predictable work throughout the year.
         </p>
       </>
@@ -515,8 +511,8 @@ const sections = [
       <>
         <p>
           Cardiff electrician rates reflect the city's position as the Welsh capital with a strong
-          economy, balanced by the generally lower cost base in Wales compared to southern
-          England. Typical rates in 2026:
+          economy, balanced by the generally lower cost base in Wales compared to southern England.
+          Typical rates in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -571,9 +567,9 @@ const sections = [
         <p>
           Cardiff Bay work commands premium rates, particularly for high-specification apartment
           fit-outs and commercial installations. Pontcanna and Canton domestic work is also at the
-          higher end of the range due to the affluent customer base and quality expectations.
-          Volume HMO work in Cathays can be priced competitively at £150 to £210 per EICR when
-          batching inspections for landlord portfolios.
+          higher end of the range due to the affluent customer base and quality expectations. Volume
+          HMO work in Cathays can be priced competitively at £150 to £210 per EICR when batching
+          inspections for landlord portfolios.
         </p>
       </>
     ),
@@ -585,10 +581,10 @@ const sections = [
       <>
         <p>
           Cardiff is the strongest market for electricians in Wales, combining the steady domestic
-          work of the Victorian terraces with Cardiff Bay commercial opportunities, a large
-          student HMO market, and Welsh public sector work. Electricians who understand the
-          Welsh-specific regulatory elements (Rent Smart Wales, Welsh Language Standards) have an
-          edge in the local market.
+          work of the Victorian terraces with Cardiff Bay commercial opportunities, a large student
+          HMO market, and Welsh public sector work. Electricians who understand the Welsh-specific
+          regulatory elements (Rent Smart Wales, Welsh Language Standards) have an edge in the local
+          market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -601,11 +597,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning. Rent Smart Wales and HMO licensing both
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning. Rent Smart Wales and HMO licensing both
                   require professional electrical certification — deliver it from your phone before
                   you leave site.
                 </p>
@@ -649,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Cardiff electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Cardiff's Victorian terraces, Bay regeneration, and Welsh regulatory requirements. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Cardiff's Victorian terraces, Bay regeneration, and Welsh regulatory requirements. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -674,8 +667,7 @@ export default function ElectricianCardiffPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Cardiff:{' '}
-          <span className="text-yellow-400">Find Electricians 2026</span>
+          Electrician in Cardiff: <span className="text-yellow-400">Find Electricians 2026</span>
         </>
       }
       heroSubtitle="Cardiff combines Victorian terraces in Pontcanna and Canton, Cardiff Bay waterfront regeneration, one of Wales's largest student HMO markets, and Welsh-specific regulations including Rent Smart Wales — a strong and varied market for electricians."
@@ -686,7 +678,7 @@ export default function ElectricianCardiffPage() {
       faqHeading="Frequently Asked Questions About Electricians in Cardiff"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Cardiff Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Cardiff's terraced housing, Bay regeneration, and Welsh regulatory framework. 7-day free trial."
     />
   );
 }

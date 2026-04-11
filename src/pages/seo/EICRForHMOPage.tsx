@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'Do HMOs legally need an EICR?',
     answer:
-      'Yes. All HMOs are covered by the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, which require an EICR at least every five years. Mandatory licensed HMOs (five or more occupants, two or more households) also need a valid EICR as a condition of their HMO licence. Some local authorities require EICRs every three years for licensed HMOs — check your specific council\'s licence conditions.',
+      "Yes. All HMOs are covered by the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020, which require an EICR at least every five years. Mandatory licensed HMOs (five or more occupants, two or more households) also need a valid EICR as a condition of their HMO licence. Some local authorities require EICRs every three years for licensed HMOs — check your specific council's licence conditions.",
   },
   {
     question: 'What does an EICR inspector check in an HMO?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -109,7 +110,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/eicr-tenant-rights',
     title: 'Tenant Rights for EICR',
-    description: 'Tenants\' rights to electrical safety records and how to enforce them.',
+    description: "Tenants' rights to electrical safety records and how to enforce them.",
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -154,8 +155,8 @@ const sections = [
               <span>
                 <strong>Electrical Safety Standards Regulations 2020</strong> — all HMO landlords
                 must obtain an EICR at least every five years. C1 and C2 observations must be
-                remedied within 28 days (or sooner if specified). Copies must be provided to
-                tenants within 28 days and to the local authority within seven days if requested.
+                remedied within 28 days (or sooner if specified). Copies must be provided to tenants
+                within 28 days and to the local authority within seven days if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -163,25 +164,25 @@ const sections = [
               <span>
                 <strong>HMO Licensing Conditions</strong> — a valid EICR is a mandatory licence
                 condition for all mandatory licensed HMOs. Many councils also run additional HMO
-                licensing schemes covering smaller HMOs, with the same EICR condition attached.
-                Some councils require a three-year EICR interval for licensed HMOs.
+                licensing schemes covering smaller HMOs, with the same EICR condition attached. Some
+                councils require a three-year EICR interval for licensed HMOs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The Housing Health and Safety Rating System (HHSRS)</strong> — local
-                authorities can use HHSRS powers to require electrical safety improvements in
-                HMOs independent of the EICR regulations. A defective electrical installation is
-                a Category 1 hazard under HHSRS.
+                authorities can use HHSRS powers to require electrical safety improvements in HMOs
+                independent of the EICR regulations. A defective electrical installation is a
+                Category 1 hazard under HHSRS.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Scotland, Wales, and Northern Ireland have their own HMO and electrical safety legislation.
-          This guide covers England only. Scottish HMO landlords should refer to the Housing
-          (Scotland) Act 2006 and associated regulations.
+          Scotland, Wales, and Northern Ireland have their own HMO and electrical safety
+          legislation. This guide covers England only. Scottish HMO landlords should refer to the
+          Housing (Scotland) Act 2006 and associated regulations.
         </p>
       </>
     ),
@@ -192,8 +193,8 @@ const sections = [
     content: (
       <>
         <p>
-          Mandatory HMO licensing applies to properties occupied by five or more persons forming
-          two or more separate households. Additional HMO licensing, operated at the discretion of
+          Mandatory HMO licensing applies to properties occupied by five or more persons forming two
+          or more separate households. Additional HMO licensing, operated at the discretion of
           individual councils, can extend these requirements to smaller HMOs. Both types of licence
           carry electrical safety conditions beyond the baseline 2020 Regulations.
         </p>
@@ -203,44 +204,44 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shorter EICR intervals</strong> — many local authorities specify in their
-                licence conditions that HMOs must have an EICR every three years rather than
-                the standard five. This is common in London boroughs, Birmingham, Manchester,
-                and Leeds. Always read your specific licence conditions carefully.
+                licence conditions that HMOs must have an EICR every three years rather than the
+                standard five. This is common in London boroughs, Birmingham, Manchester, and Leeds.
+                Always read your specific licence conditions carefully.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Portable Appliance Testing (PAT)</strong> — many HMO licence conditions
-                also require annual PAT testing of all landlord-supplied electrical appliances.
-                PAT testing is separate from an EICR (which covers fixed installations only) but
-                is often required in the same licence renewal documentation.
+                <strong>Portable Appliance Testing (PAT)</strong> — many HMO licence conditions also
+                require annual PAT testing of all landlord-supplied electrical appliances. PAT
+                testing is separate from an EICR (which covers fixed installations only) but is
+                often required in the same licence renewal documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire detection system standards</strong> — licensed HMOs typically require
-                a mains-powered, interlinked fire detection system. The grade and category (e.g.,
-                Grade A LD2) depends on the property type and risk assessment. Fire alarm wiring
-                is part of the fixed electrical installation and is inspected during the EICR.
+                <strong>Fire detection system standards</strong> — licensed HMOs typically require a
+                mains-powered, interlinked fire detection system. The grade and category (e.g.,
+                Grade A LD2) depends on the property type and risk assessment. Fire alarm wiring is
+                part of the fixed electrical installation and is inspected during the EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting</strong> — larger HMOs, particularly those converted
-                from commercial buildings or with multiple floors, may be required to have
-                emergency lighting in communal corridors and stairwells. Emergency lighting
-                circuits are tested as part of the EICR and separately serviced under BS 5266-1.
+                <strong>Emergency lighting</strong> — larger HMOs, particularly those converted from
+                commercial buildings or with multiple floors, may be required to have emergency
+                lighting in communal corridors and stairwells. Emergency lighting circuits are
+                tested as part of the EICR and separately serviced under BS 5266-1.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The HMO licence conditions in your local authority area are the definitive source for
-          what is required. If you are unsure, contact your council's private rented sector team
-          or HMO licensing team directly.
+          The HMO licence conditions in your local authority area are the definitive source for what
+          is required. If you are unsure, contact your council's private rented sector team or HMO
+          licensing team directly.
         </p>
       </>
     ),
@@ -260,12 +261,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer units and distribution boards</strong> — the main consumer unit
-                and any sub-boards serving individual rooms or communal areas are inspected and
-                tested. The inspector checks that consumer units are correctly rated, that all
-                circuits are correctly labelled, that RCD protection is present on appropriate
-                circuits (Regulation 411.3.3 of BS 7671), and that the boards are in good
-                physical condition.
+                <strong>Consumer units and distribution boards</strong> — the main consumer unit and
+                any sub-boards serving individual rooms or communal areas are inspected and tested.
+                The inspector checks that consumer units are correctly rated, that all circuits are
+                correctly labelled, that RCD protection is present on appropriate circuits
+                (Regulation 411.3.3 of BS 7671), and that the boards are in good physical condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,9 +273,9 @@ const sections = [
               <span>
                 <strong>Circuit loading</strong> — inspectors assess whether ring circuits are
                 overloaded relative to their design capacity. HMOs with multiple occupants using
-                high-power devices (electric heaters, kettles, microwaves) simultaneously can
-                exceed the current-carrying capacity of circuits designed for a single family,
-                causing overheating and fire risk.
+                high-power devices (electric heaters, kettles, microwaves) simultaneously can exceed
+                the current-carrying capacity of circuits designed for a single family, causing
+                overheating and fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -336,19 +336,19 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection on socket-outlet circuits</strong> — required under
-                Regulation 411.3.3 of BS 7671 for socket-outlet circuits rated up to 32A. One
-                of the most common C2 observations in older HMOs where the consumer unit has
-                not been upgraded. Remedy: replace consumer unit with an RCD-protected board,
-                typically £600 to £1,200.
+                Regulation 411.3.3 of BS 7671 for socket-outlet circuits rated up to 32A. One of the
+                most common C2 observations in older HMOs where the consumer unit has not been
+                upgraded. Remedy: replace consumer unit with an RCD-protected board, typically £600
+                to £1,200.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overloaded ring circuits</strong> — a ring circuit serving too many
-                socket outlets across multiple bedrooms can exceed its designed current rating.
-                Remedy: add additional circuits from the consumer unit, separating bedrooms onto
-                their own dedicated circuits.
+                <strong>Overloaded ring circuits</strong> — a ring circuit serving too many socket
+                outlets across multiple bedrooms can exceed its designed current rating. Remedy: add
+                additional circuits from the consumer unit, separating bedrooms onto their own
+                dedicated circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -356,9 +356,9 @@ const sections = [
               <span>
                 <strong>Inadequate or missing main protective bonding</strong> — main bonding
                 conductors must connect gas and water installation pipework to the main earthing
-                terminal. Missing or undersized bonding is a common C2 in HMOs where kitchens
-                and bathrooms have been added or modified. Remedy: install correct cross-section
-                bonding conductors, typically £150 to £400.
+                terminal. Missing or undersized bonding is a common C2 in HMOs where kitchens and
+                bathrooms have been added or modified. Remedy: install correct cross-section bonding
+                conductors, typically £150 to £400.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -374,18 +374,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-compliant socket outlets in bathrooms</strong> — standard 13A socket
-                outlets in rooms containing a bath or shower are not permitted under BS 7671
-                (the only permitted outlets are shaver supply units to BS EN 61558-2-5). This
-                is commonly found in en-suite rooms in converted houses.
+                outlets in rooms containing a bath or shower are not permitted under BS 7671 (the
+                only permitted outlets are shaver supply units to BS EN 61558-2-5). This is commonly
+                found in en-suite rooms in converted houses.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          C1 observations (danger present) may include live parts accessible without tools,
-          broken consumer unit enclosures, exposed cable cores, or fire alarm cables incorrectly
-          run through fire compartments. C1 observations require immediate remedial action —
-          the inspector may recommend disconnecting the affected circuit on the day of inspection.
+          C1 observations (danger present) may include live parts accessible without tools, broken
+          consumer unit enclosures, exposed cable cores, or fire alarm cables incorrectly run
+          through fire compartments. C1 observations require immediate remedial action — the
+          inspector may recommend disconnecting the affected circuit on the day of inspection.
         </p>
       </>
     ),
@@ -407,24 +407,24 @@ const sections = [
               <span>
                 <strong>Consumer unit upgrade (RCD protection)</strong> — £600 to £1,500 for a
                 standard property. In a large HMO with multiple sub-boards, full RCD protection
-                upgrades can cost £2,000 to £4,000. This is the most common and most costly
-                single remediation item.
+                upgrades can cost £2,000 to £4,000. This is the most common and most costly single
+                remediation item.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional circuits</strong> — separating an overloaded ring circuit
-                into two or more dedicated circuits costs £300 to £800 per circuit, depending
-                on cable run lengths and ease of access.
+                <strong>Additional circuits</strong> — separating an overloaded ring circuit into
+                two or more dedicated circuits costs £300 to £800 per circuit, depending on cable
+                run lengths and ease of access.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main protective bonding</strong> — installing or replacing main bonding
-                conductors to gas and water typically costs £150 to £400 for a standard property.
-                In a large HMO with multiple water supplies and gas meter locations, this can be
+                conductors to gas and water typically costs £150 to £400 for a standard property. In
+                a large HMO with multiple water supplies and gas meter locations, this can be
                 higher.
               </span>
             </li>
@@ -432,9 +432,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fire alarm upgrade</strong> — upgrading a Grade D to a Grade A mains-wired
-                interlinked fire alarm system in a three-storey HMO typically costs £1,500 to
-                £3,500 depending on the number of detectors, heat detectors, and call points
-                required.
+                interlinked fire alarm system in a three-storey HMO typically costs £1,500 to £3,500
+                depending on the number of detectors, heat detectors, and call points required.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,8 +448,8 @@ const sections = [
         </div>
         <p>
           The electrician who carries out the EICR is well placed to quote for remedial work
-          immediately after completing the inspection. Getting a quote on the day reduces delays
-          and helps the landlord meet the 28-day deadline under the 2020 Regulations.
+          immediately after completing the inspection. Getting a quote on the day reduces delays and
+          helps the landlord meet the 28-day deadline under the 2020 Regulations.
         </p>
       </>
     ),
@@ -469,19 +468,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Civil penalty up to £30,000</strong> — under the Electrical Safety
-                Standards Regulations 2020, failing to obtain an EICR, failing to complete
-                remedial work, or failing to provide copies to tenants are each separate breaches
-                attracting a civil penalty of up to £30,000.
+                <strong>Civil penalty up to £30,000</strong> — under the Electrical Safety Standards
+                Regulations 2020, failing to obtain an EICR, failing to complete remedial work, or
+                failing to provide copies to tenants are each separate breaches attracting a civil
+                penalty of up to £30,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO licence revocation</strong> — operating an HMO without a valid EICR
-                breaches licence conditions. The local authority can revoke the licence, require
-                the HMO to cease operation, and issue a civil penalty of up to £30,000 for the
-                licence breach separately from the electrical safety penalty.
+                breaches licence conditions. The local authority can revoke the licence, require the
+                HMO to cease operation, and issue a civil penalty of up to £30,000 for the licence
+                breach separately from the electrical safety penalty.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -489,9 +488,8 @@ const sections = [
               <span>
                 <strong>Unlimited fine for unlicensed operation</strong> — operating a licensable
                 HMO without a licence is a criminal offence under the Housing Act 2004. On
-                conviction, courts can impose an unlimited fine. Local authorities can also
-                apply for a Rent Repayment Order recovering up to 12 months' rent from the
-                landlord.
+                conviction, courts can impose an unlimited fine. Local authorities can also apply
+                for a Rent Repayment Order recovering up to 12 months' rent from the landlord.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -506,8 +504,8 @@ const sections = [
         </div>
         <p>
           The combined maximum financial exposure from a single HMO with multiple breaches can
-          exceed £90,000. The cost of an EICR every three to five years — typically £400 to £800
-          for a licensed HMO — is negligible by comparison.
+          exceed £90,000. The cost of an EICR every three to five years — typically £400 to £800 for
+          a licensed HMO — is negligible by comparison.
         </p>
       </>
     ),
@@ -536,8 +534,8 @@ const sections = [
                   </SEOInternalLink>{' '}
                   to build the schedule of inspections and test results on your phone as you work
                   through each circuit. AI board scanning reads the consumer unit label at the
-                  start, and voice test entry means you never have to stop and type. Landlords
-                  get the PDF before you leave site.
+                  start, and voice test entry means you never have to stop and type. Landlords get
+                  the PDF before you leave site.
                 </p>
               </div>
             </div>
@@ -551,8 +549,8 @@ const sections = [
                   HMO landlords need reliable electricians who understand their compliance
                   obligations. An electrician who can handle the EICR, quote for remedials
                   immediately, and provide documentation suitable for the licensing authority
-                  becomes invaluable to an HMO portfolio landlord. Use Elec-Mate to manage
-                  recurring inspection schedules and reminders automatically.
+                  becomes invaluable to an HMO portfolio landlord. Use Elec-Mate to manage recurring
+                  inspection schedules and reminders automatically.
                 </p>
               </div>
             </div>
@@ -560,7 +558,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete HMO EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export. Complete complex HMO EICRs without evening paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. AI board scanning, voice test entry, and instant PDF export. Complete complex HMO EICRs without evening paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -585,8 +583,7 @@ export default function EICRForHMOPage() {
       badgeIcon={Building2}
       heroTitle={
         <>
-          EICR for HMO Properties:{' '}
-          <span className="text-yellow-400">What Landlords Must Know</span>
+          EICR for HMO Properties: <span className="text-yellow-400">What Landlords Must Know</span>
         </>
       }
       heroSubtitle="HMO landlords face stricter electrical safety requirements than standard landlords. This guide covers the mandatory EICR obligation, licensed HMO licence conditions, what inspectors look for, the most common C2 observation codes, typical remediation costs, and the penalties for getting it wrong."
@@ -597,7 +594,7 @@ export default function EICRForHMOPage() {
       faqHeading="Frequently Asked Questions: EICR for HMO Properties"
       relatedPages={relatedPages}
       ctaHeading="Complete HMO EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

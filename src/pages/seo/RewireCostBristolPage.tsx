@@ -582,7 +582,7 @@ export default function RewireCostBristolPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Quote Bristol Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

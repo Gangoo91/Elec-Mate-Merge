@@ -147,8 +147,8 @@ const sections = [
           you with homeowners who are actively looking for an electrician right now.
         </p>
         <p>
-          The three major platforms in the UK market are Checkatrade, MyBuilder, and Bark. Each has a
-          different pricing model, vetting process, and customer base. Choosing the right one (or
+          The three major platforms in the UK market are Checkatrade, MyBuilder, and Bark. Each has
+          a different pricing model, vetting process, and customer base. Choosing the right one (or
           combination) depends on your budget, your area, and the type of work you want.
         </p>
         <p>
@@ -165,8 +165,8 @@ const sections = [
     content: (
       <>
         <p>
-          Checkatrade is the most recognised lead generation platform in the UK. Founded in 1998,
-          it has strong brand awareness among homeowners — many customers specifically search
+          Checkatrade is the most recognised lead generation platform in the UK. Founded in 1998, it
+          has strong brand awareness among homeowners — many customers specifically search
           "Checkatrade electrician" rather than just "electrician near me".
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -215,8 +215,8 @@ const sections = [
       <>
         <p>
           MyBuilder takes a different approach — homeowners post detailed job descriptions, and
-          tradespeople pay a fee to express interest. There is no monthly membership. You only
-          spend money when you see a job you want.
+          tradespeople pay a fee to express interest. There is no monthly membership. You only spend
+          money when you see a job you want.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -320,8 +320,12 @@ const sections = [
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Checkatrade</h4>
               <ul className="space-y-2">
-                <li>Monthly fee: £90/month = <strong>£1,080/year</strong></li>
-                <li>Lead credits: ~£50/month = <strong>£600/year</strong></li>
+                <li>
+                  Monthly fee: £90/month = <strong>£1,080/year</strong>
+                </li>
+                <li>
+                  Lead credits: ~£50/month = <strong>£600/year</strong>
+                </li>
                 <li>Estimated leads: 180/year</li>
                 <li>Win rate: ~25%</li>
                 <li>Jobs won: ~45/year</li>
@@ -332,7 +336,9 @@ const sections = [
               <h4 className="font-bold text-white mb-3">MyBuilder</h4>
               <ul className="space-y-2">
                 <li>Monthly fee: £0</li>
-                <li>Lead fees: ~£15/lead x 100 = <strong>£1,500/year</strong></li>
+                <li>
+                  Lead fees: ~£15/lead x 100 = <strong>£1,500/year</strong>
+                </li>
                 <li>Estimated leads responded to: 100/year</li>
                 <li>Win rate: ~22%</li>
                 <li>Jobs won: ~22/year</li>
@@ -343,7 +349,9 @@ const sections = [
               <h4 className="font-bold text-white mb-3">Bark</h4>
               <ul className="space-y-2">
                 <li>Monthly fee: £0</li>
-                <li>Credits: ~£10/lead x 150 = <strong>£1,500/year</strong></li>
+                <li>
+                  Credits: ~£10/lead x 150 = <strong>£1,500/year</strong>
+                </li>
                 <li>Estimated leads: 150/year</li>
                 <li>Win rate: ~15%</li>
                 <li>Jobs won: ~23/year</li>
@@ -353,18 +361,18 @@ const sections = [
           </div>
         </div>
         <p>
-          These are indicative figures — your actual results will depend on your location,
-          response speed, quote quality, reviews, and the type of work you target. The key
-          insight is that Checkatrade delivers more volume at a lower cost per customer, but
-          requires a monthly commitment. MyBuilder and Bark give more spending flexibility but
-          at a higher cost per acquired customer.
+          These are indicative figures — your actual results will depend on your location, response
+          speed, quote quality, reviews, and the type of work you target. The key insight is that
+          Checkatrade delivers more volume at a lower cost per customer, but requires a monthly
+          commitment. MyBuilder and Bark give more spending flexibility but at a higher cost per
+          acquired customer.
         </p>
         <p>
-          <strong>Hidden costs:</strong> Do not forget to factor in the time you spend responding
-          to leads, travelling to site visits for quotes you do not win, and preparing quotes.
-          If you spend 30 minutes per lead (response, phone call, site visit, quote) and your
-          time is worth £35/hour, each lead costs you an additional £17.50 in time — regardless
-          of which platform it comes from.
+          <strong>Hidden costs:</strong> Do not forget to factor in the time you spend responding to
+          leads, travelling to site visits for quotes you do not win, and preparing quotes. If you
+          spend 30 minutes per lead (response, phone call, site visit, quote) and your time is worth
+          £35/hour, each lead costs you an additional £17.50 in time — regardless of which platform
+          it comes from.
         </p>
       </>
     ),
@@ -387,8 +395,8 @@ const sections = [
               <span>
                 <strong>Checkatrade lead quality</strong> — generally good. Homeowners who search
                 Checkatrade are actively looking for a tradesperson and are familiar with the review
-                and vetting system. They tend to value quality and reliability over the lowest price.
-                However, Checkatrade encourages customers to get multiple quotes, so price
+                and vetting system. They tend to value quality and reliability over the lowest
+                price. However, Checkatrade encourages customers to get multiple quotes, so price
                 competition exists.
               </span>
             </li>
@@ -397,17 +405,17 @@ const sections = [
               <span>
                 <strong>MyBuilder lead quality</strong> — moderate to good. The detailed job
                 description format attracts homeowners who have thought about what they need. The
-                effort of writing a description filters out the most casual enquiries. However,
-                some homeowners post on multiple platforms simultaneously.
+                effort of writing a description filters out the most casual enquiries. However, some
+                homeowners post on multiple platforms simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bark lead quality</strong> — variable. The low-friction enquiry process means
-                more casual leads enter the system. You will encounter more "just getting prices"
-                enquiries and more leads who do not respond to your contact. The conversion rate
-                reflects this.
+                <strong>Bark lead quality</strong> — variable. The low-friction enquiry process
+                means more casual leads enter the system. You will encounter more "just getting
+                prices" enquiries and more leads who do not respond to your contact. The conversion
+                rate reflects this.
               </span>
             </li>
           </ul>
@@ -456,8 +464,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               <strong>Recommendation: MyBuilder.</strong> For specialised work such as EV charger
               installation, battery storage, or commercial fit-outs, MyBuilder's detailed job
-              descriptions let you identify the right opportunities. Checkatrade and Bark are
-              better suited to general domestic enquiries.
+              descriptions let you identify the right opportunities. Checkatrade and Bark are better
+              suited to general domestic enquiries.
             </p>
           </div>
         </div>
@@ -487,9 +495,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Month 6 to 12:</strong> Google and referrals should be generating 30% to
-                50% of your enquiries. Evaluate platform ROI — drop the weakest performer. Invest
-                that budget in Google Ads or local sponsorship.
+                <strong>Month 6 to 12:</strong> Google and referrals should be generating 30% to 50%
+                of your enquiries. Evaluate platform ROI — drop the weakest performer. Invest that
+                budget in Google Ads or local sponsorship.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -503,8 +511,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The goal is to build a business that generates its own leads. Platforms are a tool to
-          get you there — not the destination.
+          The goal is to build a business that generates its own leads. Platforms are a tool to get
+          you there — not the destination.
         </p>
         <SEOAppBridge
           title="Win more jobs with professional quotes and certificates"
@@ -545,7 +553,7 @@ export default function CheckatradeVsMyBuilderPage() {
       faqHeading="Frequently Asked Questions About Lead Generation Platforms"
       relatedPages={relatedPages}
       ctaHeading="Convert More Leads with Professional Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional quotes and same-day certificates help you win jobs from any platform. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'What is load management and when is it needed?',
     answer:
-      'Load management (also called dynamic load balancing) allows a charge point — or a group of charge points — to monitor the overall electrical load on the building\'s supply and reduce charging current automatically when total demand approaches the supply capacity. This prevents the main fuse from blowing and avoids the cost of upgrading the incoming supply. It is particularly important for multi-charger installations (workplace, multi-unit residential) and for homes with limited single-phase supply (e.g., older properties with 60A or 80A main fuses). Chargers such as the Ohme ePod, Wallbox Pulsar Plus, and Easee Home support load management via CT clamp measurement.',
+      "Load management (also called dynamic load balancing) allows a charge point — or a group of charge points — to monitor the overall electrical load on the building's supply and reduce charging current automatically when total demand approaches the supply capacity. This prevents the main fuse from blowing and avoids the cost of upgrading the incoming supply. It is particularly important for multi-charger installations (workplace, multi-unit residential) and for homes with limited single-phase supply (e.g., older properties with 60A or 80A main fuses). Chargers such as the Ohme ePod, Wallbox Pulsar Plus, and Easee Home support load management via CT clamp measurement.",
   },
   {
     question: 'What is the randomised delay requirement in the Smart Charge Points Regulations?',
@@ -99,7 +99,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/ev-charging-legislation',
     title: 'EV Charging Legislation UK',
-    description: 'Full legal framework — Smart Charge Points Regulations, Part S, BS 7671 Section 722.',
+    description:
+      'Full legal framework — Smart Charge Points Regulations, Part S, BS 7671 Section 722.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -131,8 +132,8 @@ const sections = [
       <>
         <p>
           The Electric Vehicles (Smart Charge Points) Regulations 2021 (SI 2021/1467) came into
-          force on 30 June 2022 and fundamentally changed what it means to install an EV charger
-          in Great Britain. Every new privately-owned AC charge point up to 22kW sold or installed
+          force on 30 June 2022 and fundamentally changed what it means to install an EV charger in
+          Great Britain. Every new privately-owned AC charge point up to 22kW sold or installed
           since that date must incorporate smart functionality.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -149,8 +150,8 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Randomised delay</strong> — a randomised startup delay of up to 10 minutes
-                prevents simultaneous demand spikes when large numbers of vehicles are plugged in
-                at the same time (Regulation 11).
+                prevents simultaneous demand spikes when large numbers of vehicles are plugged in at
+                the same time (Regulation 11).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -180,11 +181,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          The regulations were made under powers in the Automated and Electric Vehicles Act 2018
-          and are enforced by the Office for Zero Emission Vehicles (OZEV). Installers and
-          manufacturers who supply non-compliant units face civil penalties. For installers, the
-          practical implication is straightforward: any charge point you install must appear on
-          the OZEV-approved product list, which only includes compliant smart chargers.
+          The regulations were made under powers in the Automated and Electric Vehicles Act 2018 and
+          are enforced by the Office for Zero Emission Vehicles (OZEV). Installers and manufacturers
+          who supply non-compliant units face civil penalties. For installers, the practical
+          implication is straightforward: any charge point you install must appear on the
+          OZEV-approved product list, which only includes compliant smart chargers.
         </p>
       </>
     ),
@@ -195,10 +196,10 @@ const sections = [
     content: (
       <>
         <p>
-          Smart charge points unlock access to time-of-use electricity tariffs that can
-          dramatically reduce the cost of charging. By combining a smart charger with an
-          appropriate energy tariff, many EV drivers achieve overnight charging costs of 7–10p
-          per kWh — a fraction of the standard rate.
+          Smart charge points unlock access to time-of-use electricity tariffs that can dramatically
+          reduce the cost of charging. By combining a smart charger with an appropriate energy
+          tariff, many EV drivers achieve overnight charging costs of 7–10p per kWh — a fraction of
+          the standard rate.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -217,33 +218,33 @@ const sections = [
               <span>
                 <strong>Octopus Go</strong> — a simpler fixed off-peak rate (around 7.5p per kWh
                 between midnight and 5am) available with any smart charger that supports scheduled
-                charging. No vehicle API integration required — you simply set a departure time
-                in the charger app.
+                charging. No vehicle API integration required — you simply set a departure time in
+                the charger app.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EDF GoElectric</strong> — a seven-hour off-peak window overnight at
-                a discounted rate. Available with a smart meter and compatible charger.
+                <strong>EDF GoElectric</strong> — a seven-hour off-peak window overnight at a
+                discounted rate. Available with a smart meter and compatible charger.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Agile Octopus</strong> — half-hourly variable pricing based on wholesale
-                electricity prices. During periods of high renewable generation, prices can drop
-                to zero or even go negative (Octopus pays you to charge). Best used with
-                automation via the Octopus API or a compatible smart charger.
+                electricity prices. During periods of high renewable generation, prices can drop to
+                zero or even go negative (Octopus pays you to charge). Best used with automation via
+                the Octopus API or a compatible smart charger.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For a vehicle with a 60kWh usable battery requiring a full charge, the cost difference
-          is substantial: approximately £4.20 on Intelligent Octopus Go versus £14.40–16.80 at
-          a standard 24–28p rate. Over 12 months of typical UK driving, smart tariff savings
-          can exceed £700–1,000 per year.
+          For a vehicle with a 60kWh usable battery requiring a full charge, the cost difference is
+          substantial: approximately £4.20 on Intelligent Octopus Go versus £14.40–16.80 at a
+          standard 24–28p rate. Over 12 months of typical UK driving, smart tariff savings can
+          exceed £700–1,000 per year.
         </p>
       </>
     ),
@@ -254,57 +255,57 @@ const sections = [
     content: (
       <>
         <p>
-          For homes and businesses with solar PV systems, a solar-integrated EV charger offers
-          the ability to use surplus generation to charge the vehicle rather than exporting it
-          to the grid at a low rate. This is one of the most compelling features of premium
-          smart chargers such as the Zappi from myenergi.
+          For homes and businesses with solar PV systems, a solar-integrated EV charger offers the
+          ability to use surplus generation to charge the vehicle rather than exporting it to the
+          grid at a low rate. This is one of the most compelling features of premium smart chargers
+          such as the Zappi from myenergi.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How solar diversion works</strong> — a current transformer (CT clamp)
-                is fitted to the grid import/export cable. The charger monitors the power flow
-                and, when surplus solar generation is detected, diverts that surplus into the EV
-                instead of exporting it to the grid. The charge rate varies dynamically to
-                match available surplus.
+                <strong>How solar diversion works</strong> — a current transformer (CT clamp) is
+                fitted to the grid import/export cable. The charger monitors the power flow and,
+                when surplus solar generation is detected, diverts that surplus into the EV instead
+                of exporting it to the grid. The charge rate varies dynamically to match available
+                surplus.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECO+ mode</strong> — charges only when surplus solar is available. No
-                grid import for EV charging. Ideal on sunny summer days. The charge rate can
-                be as low as 1.4kW (6A minimum on a 230V supply), so a full charge from solar
-                alone may take several days in poor weather.
+                <strong>ECO+ mode</strong> — charges only when surplus solar is available. No grid
+                import for EV charging. Ideal on sunny summer days. The charge rate can be as low as
+                1.4kW (6A minimum on a 230V supply), so a full charge from solar alone may take
+                several days in poor weather.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECO mode</strong> — supplements solar surplus with grid power to maintain
-                a minimum charge rate (typically 6A). This ensures the vehicle charges even when
-                solar output is limited, while still prioritising free solar energy.
+                <strong>ECO mode</strong> — supplements solar surplus with grid power to maintain a
+                minimum charge rate (typically 6A). This ensures the vehicle charges even when solar
+                output is limited, while still prioritising free solar energy.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Smart Export Guarantee vs charging</strong> — with SEG export rates
-                typically at 4–15p per kWh and grid import at 24–28p, every kWh of solar
-                diverted into the EV instead of exported saves 9–24p versus importing from
-                the grid. Solar diversion is almost always more economical than exporting.
+                typically at 4–15p per kWh and grid import at 24–28p, every kWh of solar diverted
+                into the EV instead of exported saves 9–24p versus importing from the grid. Solar
+                diversion is almost always more economical than exporting.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Solar integration requires a compatible charger (primarily Zappi, though some Ohme
-          and Wallbox models support similar functionality via third-party integrations), a CT
-          clamp installation, and ideally a battery storage system to maximise self-consumption.
-          As an electrician, CT clamp installation and configuration is a billable add-on to
-          the core charger installation.
+          Solar integration requires a compatible charger (primarily Zappi, though some Ohme and
+          Wallbox models support similar functionality via third-party integrations), a CT clamp
+          installation, and ideally a battery storage system to maximise self-consumption. As an
+          electrician, CT clamp installation and configuration is a billable add-on to the core
+          charger installation.
         </p>
       </>
     ),
@@ -316,38 +317,38 @@ const sections = [
       <>
         <p>
           Beyond personal savings, smart charge points play an increasingly important role in
-          balancing the electricity grid. As EV adoption grows towards the government's target
-          of ending new petrol and diesel car sales by 2035, coordinated demand response from
-          millions of charge points becomes a critical grid management tool.
+          balancing the electricity grid. As EV adoption grows towards the government's target of
+          ending new petrol and diesel car sales by 2035, coordinated demand response from millions
+          of charge points becomes a critical grid management tool.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flexibility services</strong> — National Grid ESO and distribution
-                network operators can request demand reduction from aggregated smart chargers
-                during periods of peak demand or low renewable generation. Some aggregators
-                pay EV owners for participating in these flexibility events.
+                <strong>Flexibility services</strong> — National Grid ESO and distribution network
+                operators can request demand reduction from aggregated smart chargers during periods
+                of peak demand or low renewable generation. Some aggregators pay EV owners for
+                participating in these flexibility events.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Vehicle-to-Grid (V2G)</strong> — while not yet mainstream, V2G technology
-                allows bidirectional charging: the EV battery can export power back to the home
-                or grid during peak periods. Nissan Leaf (CHAdeMO) and some other vehicles
-                support V2G. The government has invested in V2G trials and expects the technology
-                to become commercially available in the mid-2020s.
+                allows bidirectional charging: the EV battery can export power back to the home or
+                grid during peak periods. Nissan Leaf (CHAdeMO) and some other vehicles support V2G.
+                The government has invested in V2G trials and expects the technology to become
+                commercially available in the mid-2020s.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BarChart2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Octopus Power-Up</strong> — a demand response scheme where Octopus
-                Energy customers receive alerts and are paid in account credit for reducing
-                their electricity consumption (including pausing EV charging) during specific
-                half-hour periods of high grid demand.
+                <strong>Octopus Power-Up</strong> — a demand response scheme where Octopus Energy
+                customers receive alerts and are paid in account credit for reducing their
+                electricity consumption (including pausing EV charging) during specific half-hour
+                periods of high grid demand.
               </span>
             </li>
           </ul>
@@ -362,9 +363,9 @@ const sections = [
       <>
         <p>
           Load management allows a smart charge point to monitor the building's overall electrical
-          consumption and automatically reduce its charging current to prevent the main supply
-          fuse from tripping. It is essential for multi-charger installations and for properties
-          with limited incoming supply capacity.
+          consumption and automatically reduce its charging current to prevent the main supply fuse
+          from tripping. It is essential for multi-charger installations and for properties with
+          limited incoming supply capacity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -380,10 +381,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Avoiding supply upgrades</strong> — a supply upgrade from 60A to 100A
-                via the network operator (DNO) typically costs £1,000–3,000 and takes weeks.
-                Dynamic load management allows a 7kW charger to be installed on a 60A supply
-                without upgrading, by ensuring total demand never exceeds the fuse rating.
+                <strong>Avoiding supply upgrades</strong> — a supply upgrade from 60A to 100A via
+                the network operator (DNO) typically costs £1,000–3,000 and takes weeks. Dynamic
+                load management allows a 7kW charger to be installed on a 60A supply without
+                upgrading, by ensuring total demand never exceeds the fuse rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -391,17 +392,17 @@ const sections = [
               <span>
                 <strong>Multi-charger load sharing</strong> — in workplace and multi-unit
                 residential installations, a load management controller distributes available
-                capacity across multiple charge points. When one vehicle finishes charging,
-                capacity is automatically redistributed to other chargers.
+                capacity across multiple charge points. When one vehicle finishes charging, capacity
+                is automatically redistributed to other chargers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3-phase installations</strong> — three-phase supplies (typical in
-                commercial premises) provide up to 69kW per charger (22kW per phase × 3
-                phases). Load management across three phases is more complex and requires
-                chargers with 3-phase CT clamp inputs or a dedicated load management controller.
+                <strong>3-phase installations</strong> — three-phase supplies (typical in commercial
+                premises) provide up to 69kW per charger (22kW per phase × 3 phases). Load
+                management across three phases is more complex and requires chargers with 3-phase CT
+                clamp inputs or a dedicated load management controller.
               </span>
             </li>
           </ul>
@@ -417,16 +418,16 @@ const sections = [
         <p>
           Both residential and workplace EV charger grants administered by OZEV require the
           installed charger to be a smart charge point complying with the 2021 Regulations.
-          Understanding these requirements is essential for electricians specifying chargers
-          for grant-funded installations.
+          Understanding these requirements is essential for electricians specifying chargers for
+          grant-funded installations.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>OZEV-approved product list</strong> — the charger model must appear on
-                the OZEV-approved product list at the time of installation. This list is updated
+                <strong>OZEV-approved product list</strong> — the charger model must appear on the
+                OZEV-approved product list at the time of installation. This list is updated
                 regularly as new products are assessed. Always check the current list before
                 specifying a charger for a grant-funded installation at{' '}
                 <strong>www.gov.uk/guidance/ev-infrastructure-grant-for-staff-and-fleets</strong>.
@@ -447,10 +448,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grant amounts</strong> — the EV Homecharge Scheme (EVHS) provides £350
-                per socket for eligible households (flats and rental properties). The Workplace
-                Charging Scheme (WCS) provides £350 per socket up to a maximum of 40 sockets
-                (£14,000) per business. See our{' '}
+                <strong>Grant amounts</strong> — the EV Homecharge Scheme (EVHS) provides £350 per
+                socket for eligible households (flats and rental properties). The Workplace Charging
+                Scheme (WCS) provides £350 per socket up to a maximum of 40 sockets (£14,000) per
+                business. See our{' '}
                 <SEOInternalLink href="/ev-charger-grants">EV charger grants guide</SEOInternalLink>{' '}
                 for full eligibility criteria.
               </span>
@@ -466,11 +467,10 @@ const sections = [
     content: (
       <>
         <p>
-          EV charger installation is one of the fastest-growing revenue streams for UK
-          electricians. The Smart Charge Points Regulations 2021 mean that every installation
-          now involves a smart device requiring app configuration, CT clamp sizing, and
-          connectivity commissioning — increasing both the technical complexity and the day-rate
-          opportunity.
+          EV charger installation is one of the fastest-growing revenue streams for UK electricians.
+          The Smart Charge Points Regulations 2021 mean that every installation now involves a smart
+          device requiring app configuration, CT clamp sizing, and connectivity commissioning —
+          increasing both the technical complexity and the day-rate opportunity.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -483,10 +483,10 @@ const sections = [
                   <SEOInternalLink href="/tools/ev-charging-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
-                  to complete the BS 7671 Section 722 installation certificate on your phone
-                  while on site. Fill in supply details, load management settings, protective
-                  device ratings, and test results — then export to PDF and send to the
-                  customer before you leave.
+                  to complete the BS 7671 Section 722 installation certificate on your phone while
+                  on site. Fill in supply details, load management settings, protective device
+                  ratings, and test results — then export to PDF and send to the customer before you
+                  leave.
                 </p>
               </div>
             </div>
@@ -497,14 +497,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Solar Integration Add-Ons</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Customers with solar PV are prime candidates for solar-integrated chargers and
-                  CT clamp upgrades. Use the{' '}
+                  Customers with solar PV are prime candidates for solar-integrated chargers and CT
+                  clamp upgrades. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote CT clamp supply and fit, Zappi charger supply and install, and app
-                  configuration — a typical solar integration add-on is worth an additional
-                  £150–300 in labour.
+                  configuration — a typical solar integration add-on is worth an additional £150–300
+                  in labour.
                 </p>
               </div>
             </div>
@@ -512,7 +512,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EV charging installation business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Complete certificates on site, win more work, and get paid faster. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EV charging certificates, quoting, and job management. Complete certificates on site, win more work, and get paid faster. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -549,7 +549,7 @@ export default function SmartEVChargingPage() {
       faqHeading="Frequently Asked Questions About Smart EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Complete EV Charging Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EV charging certificates, quoting, and job management. 7-day free trial, cancel anytime."
     />
   );
 }

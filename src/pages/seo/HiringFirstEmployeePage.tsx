@@ -152,13 +152,13 @@ const sections = [
           Hiring your first employee is one of the biggest decisions you will make as a self-
           employed electrician. It changes everything — your income, your responsibilities, your
           daily routine, and the structure of your business. Get it right and it doubles your
-          capacity and revenue. Get it wrong and it becomes a financial drain that puts your
-          entire business at risk.
+          capacity and revenue. Get it wrong and it becomes a financial drain that puts your entire
+          business at risk.
         </p>
         <p>
           The right time to hire is when the work demand consistently exceeds what you can deliver
-          alone — not for one busy week, but for a sustained period of 3 to 6 months. You should
-          be turning down profitable work regularly, your diary should be booked 2 to 4 weeks in
+          alone — not for one busy week, but for a sustained period of 3 to 6 months. You should be
+          turning down profitable work regularly, your diary should be booked 2 to 4 weeks in
           advance, and your turnover should be high enough to cover the true cost of an employee
           (which is 25% to 35% more than their salary) while leaving you a reasonable profit.
         </p>
@@ -185,8 +185,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Employers liability insurance</strong> — minimum £5 million cover, required
-                by law from day one. Fine: up to £2,500 per day without it. The certificate must
-                be displayed or accessible to employees.
+                by law from day one. Fine: up to £2,500 per day without it. The certificate must be
+                displayed or accessible to employees.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,7 +226,8 @@ const sections = [
               <span>
                 <strong>Health and safety</strong> — provide a safe working environment, appropriate
                 PPE, and relevant training. If you have 5 or more employees, you must have a written
-                health and safety policy. Risk assessments are required regardless of employee count.
+                health and safety policy. Risk assessments are required regardless of employee
+                count.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -258,15 +259,15 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1: Register with HMRC</strong> — register as an employer online at
-                gov.uk. You can register up to 4 weeks before your first employee starts. HMRC
-                will send your PAYE reference number and Accounts Office reference.
+                gov.uk. You can register up to 4 weeks before your first employee starts. HMRC will
+                send your PAYE reference number and Accounts Office reference.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2: Choose payroll software</strong> — HMRC Basic PAYE Tools (free,
-                for up to 9 employees) or commercial software (Xero Payroll, QuickBooks, FreeAgent,
+                <strong>Step 2: Choose payroll software</strong> — HMRC Basic PAYE Tools (free, for
+                up to 9 employees) or commercial software (Xero Payroll, QuickBooks, FreeAgent,
                 BrightPay). Alternatively, use a payroll bureau or your accountant (typically £10 to
                 £25 per employee per month).
               </span>
@@ -284,8 +285,8 @@ const sections = [
               <span>
                 <strong>Step 4: Run payroll each period</strong> — calculate gross pay, deduct
                 income tax (using the employee's tax code), deduct employee NI, deduct pension
-                contribution, and pay the net amount. Submit a Full Payment Submission (FPS) to
-                HMRC on or before payday.
+                contribution, and pay the net amount. Submit a Full Payment Submission (FPS) to HMRC
+                on or before payday.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -300,9 +301,9 @@ const sections = [
         </div>
         <p>
           <strong>Employers National Insurance</strong> is an additional cost on top of the
-          employee's salary. For 2026/27, the rate is 13.8% on earnings above £175 per week
-          (the secondary threshold). On a salary of £35,000, employer NI is approximately
-          £3,760 per year — a cost many new employers forget to budget for.
+          employee's salary. For 2026/27, the rate is 13.8% on earnings above £175 per week (the
+          secondary threshold). On a salary of £35,000, employer NI is approximately £3,760 per year
+          — a cost many new employers forget to budget for.
         </p>
       </>
     ),
@@ -329,10 +330,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum contributions</strong> — employer minimum: 3% of qualifying
-                earnings (earnings between £6,240 and £50,270 for 2026/27). Employee minimum: 5%.
-                Total minimum: 8%. You can choose to pay more than the minimum — it is a useful
-                benefit for attracting and retaining good staff.
+                <strong>Minimum contributions</strong> — employer minimum: 3% of qualifying earnings
+                (earnings between £6,240 and £50,270 for 2026/27). Employee minimum: 5%. Total
+                minimum: 8%. You can choose to pay more than the minimum — it is a useful benefit
+                for attracting and retaining good staff.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -347,18 +348,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Employee opt-out</strong> — employees can choose to opt out within one
-                month of enrolment. If they opt out, you must refund their contributions. However,
-                you must re-enrol them every 3 years. You must NOT encourage employees to opt out —
-                this is an offence.
+                <strong>Employee opt-out</strong> — employees can choose to opt out within one month
+                of enrolment. If they opt out, you must refund their contributions. However, you
+                must re-enrol them every 3 years. You must NOT encourage employees to opt out — this
+                is an offence.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For an employee earning £35,000, the minimum employer pension contribution is approximately
-          £870 per year (3% of qualifying earnings between £6,240 and £35,000 = 3% of £28,760).
-          This is a direct cost to your business on top of salary and employer NI.
+          For an employee earning £35,000, the minimum employer pension contribution is
+          approximately £870 per year (3% of qualifying earnings between £6,240 and £35,000 = 3% of
+          £28,760). This is a direct cost to your business on top of salary and employer NI.
         </p>
       </>
     ),
@@ -376,13 +377,16 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Apprentice</h3>
             <p className="text-white text-sm leading-relaxed">
-              <strong>Salary:</strong> £6.40/hour minimum (apprentice rate 2026/27), rising with
-              age and experience. Typically £12,000 to £18,000 per year.<br />
+              <strong>Salary:</strong> £6.40/hour minimum (apprentice rate 2026/27), rising with age
+              and experience. Typically £12,000 to £18,000 per year.
+              <br />
               <strong>Pros:</strong> Lower cost, trainable to your standards, long-term loyalty,
-              government training funding (95% of training costs for non-levy employers).<br />
+              government training funding (95% of training costs for non-levy employers).
+              <br />
               <strong>Cons:</strong> Cannot work unsupervised for 3 to 4 years, slows you down
               initially, requires 20% off-the-job training time, you need patience and teaching
-              ability.<br />
+              ability.
+              <br />
               <strong>Best for:</strong> Established businesses with consistent domestic work where
               you can supervise an apprentice while working.
             </p>
@@ -391,13 +395,16 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Qualified Electrician</h3>
             <p className="text-white text-sm leading-relaxed">
               <strong>Salary:</strong> £28,000 to £40,000 per year depending on experience and
-              location.<br />
-              <strong>Pros:</strong> Productive from day one, can work independently, doubles
-              your capacity immediately, can handle their own jobs and customers.<br />
+              location.
+              <br />
+              <strong>Pros:</strong> Productive from day one, can work independently, doubles your
+              capacity immediately, can handle their own jobs and customers.
+              <br />
               <strong>Cons:</strong> Higher cost, may have established habits (good or bad), may
-              leave for better offers, harder to find reliable candidates.<br />
-              <strong>Best for:</strong> Businesses with more work than one person can handle,
-              where you need someone productive immediately.
+              leave for better offers, harder to find reliable candidates.
+              <br />
+              <strong>Best for:</strong> Businesses with more work than one person can handle, where
+              you need someone productive immediately.
             </p>
           </div>
         </div>
@@ -442,8 +449,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional clauses to consider:</strong> van use policy, tool ownership
-                (who owns tools purchased by the business), social media policy, confidentiality,
+                <strong>Additional clauses to consider:</strong> van use policy, tool ownership (who
+                owns tools purchased by the business), social media policy, confidentiality,
                 restrictive covenants (non-compete clauses — though these are hard to enforce for
                 electricians), and a clause on private work (whether the employee can do side jobs).
               </span>
@@ -452,9 +459,9 @@ const sections = [
         </div>
         <p>
           Use a template from a reputable source (ACAS, Citizens Advice, or your HR advisor) and
-          customise it. Do not download a generic template from the internet without checking it
-          is current and compliant with UK employment law. If in doubt, spend £200 to £500 on
-          an HR consultant to review your contract — it is cheap insurance against tribunal claims.
+          customise it. Do not download a generic template from the internet without checking it is
+          current and compliant with UK employment law. If in doubt, spend £200 to £500 on an HR
+          consultant to review your contract — it is cheap insurance against tribunal claims.
         </p>
       </>
     ),
@@ -466,8 +473,8 @@ const sections = [
       <>
         <p>
           One of the most common (and expensive) mistakes small electrical businesses make is
-          treating someone as a self-employed subcontractor under CIS when HMRC considers them
-          an employee who should be on PAYE.
+          treating someone as a self-employed subcontractor under CIS when HMRC considers them an
+          employee who should be on PAYE.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <div className="flex items-start gap-3">
@@ -475,9 +482,9 @@ const sections = [
             <div className="text-white text-sm space-y-3">
               <p>
                 <strong>If HMRC decides a worker was an employee, you owe:</strong> all the PAYE tax
-                and National Insurance that should have been deducted, employer National Insurance on
-                all payments made, interest on the unpaid amounts, and potentially penalties of up to
-                100% of the tax due for deliberate non-compliance.
+                and National Insurance that should have been deducted, employer National Insurance
+                on all payments made, interest on the unpaid amounts, and potentially penalties of
+                up to 100% of the tax due for deliberate non-compliance.
               </p>
               <p>
                 This can be financially devastating. A worker paid £35,000 under CIS who should have
@@ -503,8 +510,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Works set hours determined by you. Uses your tools and van. Cannot send a substitute.
               Works exclusively or mainly for you. Is paid a regular wage (hourly, daily, or
-              weekly). You direct where they go and what they do. Is integrated into your business
-              — wears your uniform, answers to your customers. Has no financial risk beyond their
+              weekly). You direct where they go and what they do. Is integrated into your business —
+              wears your uniform, answers to your customers. Has no financial risk beyond their
               employment.
             </p>
           </div>
@@ -524,9 +531,9 @@ const sections = [
     content: (
       <>
         <p>
-          IR35 applies when a worker provides their services through an intermediary (usually
-          their own limited company) but would be an employee if contracted directly. The
-          legislation aims to ensure they pay the same tax as an employee.
+          IR35 applies when a worker provides their services through an intermediary (usually their
+          own limited company) but would be an employee if contracted directly. The legislation aims
+          to ensure they pay the same tax as an employee.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -536,8 +543,8 @@ const sections = [
                 <strong>Small business exemption</strong> — if your business has fewer than 50
                 employees, annual turnover under £10.2 million, and a balance sheet under £5.1
                 million (meeting 2 of 3 criteria), you are a small business. The contractor is
-                responsible for determining their own IR35 status. You are not liable for their
-                tax classification.
+                responsible for determining their own IR35 status. You are not liable for their tax
+                classification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -555,9 +562,9 @@ const sections = [
                 <strong>Practical advice</strong> — most small electrical businesses do not need to
                 worry about IR35 in practice. If you are hiring a one-person limited company
                 electrician to work alongside you every day, using your tools, on your jobs, under
-                your direction — that is inside IR35 and they should be on PAYE (or CIS if
-                genuinely self-employed without a limited company). Reserve IR35/limited company
-                arrangements for genuinely independent specialist contractors on specific projects.
+                your direction — that is inside IR35 and they should be on PAYE (or CIS if genuinely
+                self-employed without a limited company). Reserve IR35/limited company arrangements
+                for genuinely independent specialist contractors on specific projects.
               </span>
             </li>
           </ul>
@@ -570,23 +577,39 @@ const sections = [
     heading: 'The True Cost of an Employee vs a Subcontractor',
     content: (
       <>
-        <p>
-          Many new employers budget only for the salary. The true cost is significantly higher.
-        </p>
+        <p>Many new employers budget only for the salary. The true cost is significantly higher.</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2 text-white text-sm">
             <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Employee (£35,000 salary)</h4>
               <ul className="space-y-2">
-                <li>Gross salary: <strong>£35,000</strong></li>
-                <li>Employer NI (13.8%): <strong>£3,760</strong></li>
-                <li>Pension (3% qualifying): <strong>£870</strong></li>
-                <li>Employers liability insurance: <strong>£400</strong></li>
-                <li>Tools and equipment: <strong>£1,000</strong></li>
-                <li>Van costs (share or second van): <strong>£3,000</strong></li>
-                <li>Training and CPD: <strong>£500</strong></li>
-                <li>Workwear and PPE: <strong>£300</strong></li>
-                <li>Holiday cover (28 days at cost): <strong>£3,770</strong></li>
+                <li>
+                  Gross salary: <strong>£35,000</strong>
+                </li>
+                <li>
+                  Employer NI (13.8%): <strong>£3,760</strong>
+                </li>
+                <li>
+                  Pension (3% qualifying): <strong>£870</strong>
+                </li>
+                <li>
+                  Employers liability insurance: <strong>£400</strong>
+                </li>
+                <li>
+                  Tools and equipment: <strong>£1,000</strong>
+                </li>
+                <li>
+                  Van costs (share or second van): <strong>£3,000</strong>
+                </li>
+                <li>
+                  Training and CPD: <strong>£500</strong>
+                </li>
+                <li>
+                  Workwear and PPE: <strong>£300</strong>
+                </li>
+                <li>
+                  Holiday cover (28 days at cost): <strong>£3,770</strong>
+                </li>
                 <li className="font-bold text-yellow-400 border-t border-white/20 pt-2">
                   Total: approximately £48,600/year
                 </li>
@@ -595,15 +618,33 @@ const sections = [
             <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4">
               <h4 className="font-bold text-white mb-3">Subcontractor (equivalent)</h4>
               <ul className="space-y-2">
-                <li>Day rate: £200/day x 220 days: <strong>£44,000</strong></li>
-                <li>Employer NI: <strong>£0</strong></li>
-                <li>Pension: <strong>£0</strong></li>
-                <li>Insurance: <strong>Their own</strong></li>
-                <li>Tools: <strong>Their own</strong></li>
-                <li>Van: <strong>Their own</strong></li>
-                <li>Training: <strong>Their own</strong></li>
-                <li>Holiday pay: <strong>£0</strong></li>
-                <li>CIS admin: <strong>£200</strong></li>
+                <li>
+                  Day rate: £200/day x 220 days: <strong>£44,000</strong>
+                </li>
+                <li>
+                  Employer NI: <strong>£0</strong>
+                </li>
+                <li>
+                  Pension: <strong>£0</strong>
+                </li>
+                <li>
+                  Insurance: <strong>Their own</strong>
+                </li>
+                <li>
+                  Tools: <strong>Their own</strong>
+                </li>
+                <li>
+                  Van: <strong>Their own</strong>
+                </li>
+                <li>
+                  Training: <strong>Their own</strong>
+                </li>
+                <li>
+                  Holiday pay: <strong>£0</strong>
+                </li>
+                <li>
+                  CIS admin: <strong>£200</strong>
+                </li>
                 <li className="font-bold text-yellow-400 border-t border-white/20 pt-2">
                   Total: approximately £44,200/year
                 </li>
@@ -612,10 +653,10 @@ const sections = [
           </div>
         </div>
         <p>
-          At first glance, a subcontractor appears cheaper. But there are important trade-offs:
-          you have less control over their work, they can leave at any time, they may not share
-          your standards, and you are paying a premium for their flexibility. An employee, over
-          time, becomes more productive, more loyal, and more aligned with your business.
+          At first glance, a subcontractor appears cheaper. But there are important trade-offs: you
+          have less control over their work, they can leave at any time, they may not share your
+          standards, and you are paying a premium for their flexibility. An employee, over time,
+          becomes more productive, more loyal, and more aligned with your business.
         </p>
         <p>
           The right choice depends on the nature of your work. Overflow on a single large project?
@@ -630,8 +671,8 @@ const sections = [
     content: (
       <>
         <p>
-          Hiring your first employee is a growth milestone. Having the right tools ensures your
-          team delivers the same quality and professionalism you built your reputation on.
+          Hiring your first employee is a growth milestone. Having the right tools ensures your team
+          delivers the same quality and professionalism you built your reputation on.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -643,8 +684,8 @@ const sections = [
                   Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
-                  </SEOInternalLink>
-                  {' '}to ensure every team member quotes accurately and consistently. No more
+                  </SEOInternalLink>{' '}
+                  to ensure every team member quotes accurately and consistently. No more
                   underquoting because someone forgot to include the cost of an employee.
                 </p>
               </div>
@@ -657,15 +698,12 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Team Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Your team can complete{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EICs
-                  </SEOInternalLink>
-                  {' '}and{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> and{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works
-                  </SEOInternalLink>
-                  {' '}on site with Elec-Mate. Professional certificates from every member of your
-                  team, all stored centrally.
+                  </SEOInternalLink>{' '}
+                  on site with Elec-Mate. Professional certificates from every member of your team,
+                  all stored centrally.
                 </p>
               </div>
             </div>
@@ -679,8 +717,8 @@ const sections = [
                   If you take on an apprentice, the{' '}
                   <SEOInternalLink href="/study-centre/apprentice">
                     Elec-Mate study centre
-                  </SEOInternalLink>
-                  {' '}supports their learning with structured modules covering Level 2 and Level 3
+                  </SEOInternalLink>{' '}
+                  supports their learning with structured modules covering Level 2 and Level 3
                   electrical installation. On-the-job training supported by structured study.
                 </p>
               </div>
@@ -726,7 +764,7 @@ export default function HiringFirstEmployeePage() {
       faqHeading="Frequently Asked Questions About Hiring Employees"
       relatedPages={relatedPages}
       ctaHeading="Grow Your Team with Professional Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Consistent quality across your team. 7-day free trial, cancel anytime."
     />
   );
 }

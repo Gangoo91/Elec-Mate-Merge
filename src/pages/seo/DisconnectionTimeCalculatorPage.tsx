@@ -466,7 +466,7 @@ export default function DisconnectionTimeCalculatorPage() {
         },
       ]}
       ctaHeading="Verify disconnection times in seconds"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for BS 7671 compliance checks. 7-day free trial, cancel anytime."
       toolPath="/tools/disconnection-time-calculator"
     />
   );

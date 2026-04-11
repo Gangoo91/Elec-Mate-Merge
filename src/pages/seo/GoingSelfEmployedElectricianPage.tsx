@@ -664,7 +664,7 @@ export default function GoingSelfEmployedElectricianPage() {
       faqHeading="Frequently Asked Questions About Going Self-Employed"
       relatedPages={relatedPages}
       ctaHeading="The Business App Built for Self-Employed Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to manage their business. Quotes, invoices, expenses, cash flow, certificates, and AI-powered job pricing — all from your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to manage their business. Quotes, invoices, expenses, cash flow, certificates, and AI-powered job pricing — all from your phone. 7-day free trial, cancel anytime."
     />
   );
 }

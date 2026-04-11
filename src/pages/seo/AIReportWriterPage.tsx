@@ -441,7 +441,7 @@ export default function AIReportWriterPage() {
       faqHeading="Frequently Asked Questions About AI Report Writing"
       relatedPages={relatedPages}
       ctaHeading="Stop Spending Hours on Reports"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Report Writer. Professional reports and proposals in seconds, not hours. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Report Writer. Professional reports and proposals in seconds, not hours. 7-day free trial, cancel anytime."
       toolPath="/tools/ai-report-writer"
     />
   );

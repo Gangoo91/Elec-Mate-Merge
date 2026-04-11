@@ -40,11 +40,11 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). It produces a condition assessment using C1, C2, C3 and FI observation codes.",
   'Cambridge EICR costs are above the national average, driven by high property values, strong demand, and elevated local labour rates. Expect to pay between £140 and £250 for a two-bedroom flat and £200 to £360 for a three-bedroom house.',
   'Landlords in England must obtain a valid EICR before a new tenancy and renew it every five years. South Cambridgeshire District Council and Cambridge City Council enforce these requirements with fines of up to £30,000 for non-compliance.',
   'Cambridge has a very large private rented sector driven by the University of Cambridge, Anglia Ruskin University, and the booming technology sector. HMO density is among the highest in England outside London.',
-  'Cambridge\'s housing stock includes Victorian and Edwardian terraced properties near the city centre, inter-war suburbs, and 1960s–1980s estates. Converted Victorian terraces converted into student flats are a major source of EICR demand and commonly return C2 findings.',
+  "Cambridge's housing stock includes Victorian and Edwardian terraced properties near the city centre, inter-war suburbs, and 1960s–1980s estates. Converted Victorian terraces converted into student flats are a major source of EICR demand and commonly return C2 findings.",
 ];
 
 const faqs = [
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Cambridge properties?',
     answer:
-      'Cambridge\'s Victorian terraced properties near the city centre commonly produce C2 findings for absent RCD protection on socket circuits (Regulation 411.3.3) and inadequate earthing and bonding. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Student HMOs in converted Victorian terraces frequently have wiring from multiple eras, poor circuit identification, and consumer units that are inadequate for the number of occupants. 1960s to 1980s properties on estates such as King\'s Hedges and Abbey may have ageing PVC wiring approaching the end of its serviceable life.',
+      "Cambridge's Victorian terraced properties near the city centre commonly produce C2 findings for absent RCD protection on socket circuits (Regulation 411.3.3) and inadequate earthing and bonding. Rubber-insulated cables in unmodernised properties are a C1 or C2 concern. Student HMOs in converted Victorian terraces frequently have wiring from multiple eras, poor circuit identification, and consumer units that are inadequate for the number of occupants. 1960s to 1980s properties on estates such as King's Hedges and Abbey may have ageing PVC wiring approaching the end of its serviceable life.",
   },
   {
     question: 'How long does an EICR take in Cambridge?',
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -124,7 +125,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -153,8 +155,8 @@ const sections = [
           </SEOInternalLink>{' '}
           (Section 631), which specifies that an Electrical Installation Condition Report must be
           used for periodic inspection of existing installations. It is a detailed condition
-          assessment — not a simple pass or fail — using standardised C1, C2, C3, and FI
-          observation codes.
+          assessment — not a simple pass or fail — using standardised C1, C2, C3, and FI observation
+          codes.
         </p>
         <p>
           The inspector conducts a visual inspection followed by a programme of electrical tests.
@@ -179,8 +181,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio / one-bedroom flat</strong> — £120 to £210. Very common in the
-                city centre and student areas near the colleges.
+                <strong>Studio / one-bedroom flat</strong> — £120 to £210. Very common in the city
+                centre and student areas near the colleges.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -193,8 +195,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £200 to £360. Victorian terraced houses
-                in Romsey, Coleridge, and Petersfield are common in the private rented sector.
+                <strong>Three-bedroom house</strong> — £200 to £360. Victorian terraced houses in
+                Romsey, Coleridge, and Petersfield are common in the private rented sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -207,9 +209,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO</strong> — £380 to £700+. Cambridge's extremely high HMO density
-                means strong demand. HMOs have a broader inspection scope including fire alarm
-                and emergency lighting systems.
+                <strong>HMO</strong> — £380 to £700+. Cambridge's extremely high HMO density means
+                strong demand. HMOs have a broader inspection scope including fire alarm and
+                emergency lighting systems.
               </span>
             </li>
           </ul>
@@ -237,9 +239,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a
-                new tenant moves in. This applies to all new tenancies from 1 July 2020 and all
-                existing tenancies from 1 April 2021.
+                <strong>Before a new tenancy</strong> — landlords must obtain an EICR before a new
+                tenant moves in. This applies to all new tenancies from 1 July 2020 and all existing
+                tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,9 +262,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within
-                28 days. Written confirmation must be provided to the tenant and to the council
-                if requested.
+                <strong>Remedial work</strong> — C1 or C2 observations must be remedied within 28
+                days. Written confirmation must be provided to the tenant and to the council if
+                requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -285,20 +287,20 @@ const sections = [
       <>
         <p>
           Cambridge's housing stock reflects the city's long history and rapid growth as a
-          technology hub. The private rented sector is dominated by Victorian and Edwardian
-          terraced houses converted into flats and HMOs, with newer stock on expanding suburban
-          estates to the north and south of the city:
+          technology hub. The private rented sector is dominated by Victorian and Edwardian terraced
+          houses converted into flats and HMOs, with newer stock on expanding suburban estates to
+          the north and south of the city:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection in Victorian terraces</strong> — Regulation 411.3.3
-                of BS 7671 requires RCD protection on socket circuits not exceeding 20A. This is
-                the most common C2 finding in Cambridge's large stock of Victorian terraced
-                properties, many of which still have consumer units installed before RCD
-                protection became standard.
+                <strong>Absent RCD protection in Victorian terraces</strong> — Regulation 411.3.3 of
+                BS 7671 requires RCD protection on socket circuits not exceeding 20A. This is the
+                most common C2 finding in Cambridge's large stock of Victorian terraced properties,
+                many of which still have consumer units installed before RCD protection became
+                standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,17 +317,17 @@ const sections = [
               <span>
                 <strong>Inadequate earthing in conversions</strong> — Victorian houses converted
                 into multiple flats often have shared or inadequate earthing arrangements,
-                undersized protective conductors, and absent main protective bonding to gas
-                and water services. These are common C2 findings.
+                undersized protective conductors, and absent main protective bonding to gas and
+                water services. These are common C2 findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ageing 1960s–1980s estate wiring</strong> — properties on King's Hedges,
-                Abbey, Cherry Hinton, and other estates may have PVC wiring approaching the end
-                of its serviceable life. Brittle insulation and overloaded circuits are common
-                findings in these properties.
+                Abbey, Cherry Hinton, and other estates may have PVC wiring approaching the end of
+                its serviceable life. Brittle insulation and overloaded circuits are common findings
+                in these properties.
               </span>
             </li>
           </ul>
@@ -349,9 +351,9 @@ const sections = [
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C1 — Danger Present</h3>
             <p className="text-white text-sm leading-relaxed">
-              Risk of injury exists. Immediate remedial action required. The inspector may
-              recommend disconnecting the circuit. Common in Cambridge properties with
-              crumbling rubber-insulated cables or exposed live conductors.
+              Risk of injury exists. Immediate remedial action required. The inspector may recommend
+              disconnecting the circuit. Common in Cambridge properties with crumbling
+              rubber-insulated cables or exposed live conductors.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -373,9 +375,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
-              The inspector could not fully assess a part of the installation. Common in
-              Cambridge HMOs where cables run beneath solid floors or behind fixed kitchen
-              units and bathroom fittings.
+              The inspector could not fully assess a part of the installation. Common in Cambridge
+              HMOs where cables run beneath solid floors or behind fixed kitchen units and bathroom
+              fittings.
             </p>
           </div>
         </div>
@@ -389,8 +391,8 @@ const sections = [
       <>
         <p>
           The EICR involves a visual inspection followed by a programme of testing. The inspector
-          needs access to all rooms, the consumer unit, the meter, and any outbuildings. Power
-          will be isolated during dead testing.
+          needs access to all rooms, the consumer unit, the meter, and any outbuildings. Power will
+          be isolated during dead testing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -438,8 +440,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Private rented property</strong> — at least every 5 years (legal
-                requirement under the 2020 Regulations).
+                <strong>Private rented property</strong> — at least every 5 years (legal requirement
+                under the 2020 Regulations).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -453,8 +455,8 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HMO</strong> — every 5 years minimum under Cambridge City Council HMO
-                licensing conditions. A shorter interval may be required for properties with
-                older wiring or high occupancy.
+                licensing conditions. A shorter interval may be required for properties with older
+                wiring or high occupancy.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -491,8 +493,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or
-                the 2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
+                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or the
+                2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
                 Experience with Victorian terraced properties and student HMOs is an advantage.
               </span>
             </li>
@@ -517,8 +519,8 @@ const sections = [
           Cambridge's enormous private rented sector, driven by two universities and a growing
           technology industry workforce, creates very strong and consistent demand for EICR work.
           The high proportion of Victorian terraced HMOs means that EICRs frequently identify
-          substantial remedial work, making Cambridge a commercially attractive market for
-          thorough inspectors.
+          substantial remedial work, making Cambridge a commercially attractive market for thorough
+          inspectors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -531,9 +533,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete reports on your phone while still on site. AI board scanning reads
-                  the consumer unit, voice entry records test results, and instant PDF export
-                  delivers the report before you leave.
+                  to complete reports on your phone while still on site. AI board scanning reads the
+                  consumer unit, voice entry records test results, and instant PDF export delivers
+                  the report before you leave.
                 </p>
               </div>
             </div>
@@ -544,13 +546,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Instantly</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When the EICR identifies C1 or C2 observations, quote the remedial work on
-                  the day using the{' '}
+                  When the EICR identifies C1 or C2 observations, quote the remedial work on the day
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Cambridge landlords must act within 28 days — quoting on the day of the
-                  EICR is the most effective way to win the follow-on work.
+                  . Cambridge landlords must act within 28 days — quoting on the day of the EICR is
+                  the most effective way to win the follow-on work.
                 </p>
               </div>
             </div>
@@ -558,7 +560,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -595,7 +597,7 @@ export default function EICRCambridgePage() {
       faqHeading="Frequently Asked Questions About EICRs in Cambridge"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

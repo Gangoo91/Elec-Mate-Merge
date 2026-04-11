@@ -42,7 +42,7 @@ const tocItems = [
 const keyTakeaways = [
   'Birmingham and the West Midlands receive approximately 900–980 kWh of solar irradiation per kWp per year — broadly comparable to the East Midlands and slightly below London, making solar PV a viable investment at current electricity prices.',
   'A typical 4kW residential solar PV system in Birmingham costs £5,000 to £7,500 fully installed and can generate approximately 3,200–3,800 kWh per year.',
-  'Birmingham City Council\'s large housing stock includes significant terraced and semi-detached property types that are well suited to solar PV installation.',
+  "Birmingham City Council's large housing stock includes significant terraced and semi-detached property types that are well suited to solar PV installation.",
   'MCS certification is a mandatory requirement for Smart Export Guarantee (SEG) eligibility. Ensure your installer holds a current MCS certificate before signing any contract.',
   'BS 7671 Section 712 sets out the wiring regulations for solar PV installations. All Birmingham installations must comply and the installer must issue an Electrical Installation Certificate (EIC).',
 ];
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do I need planning permission for solar panels in Birmingham?',
     answer:
-      'Most domestic solar PV installations in Birmingham are permitted development, requiring no planning application. However, Birmingham has numerous conservation areas (including Moseley, Harborne, and parts of Edgbaston) where front-elevation panels are not permitted development. Listed buildings require full planning permission. Check with Birmingham City Council\'s planning department or the relevant borough council (Solihull, Sandwell, Dudley, Walsall, Wolverhampton) before proceeding if your property has any designation.',
+      "Most domestic solar PV installations in Birmingham are permitted development, requiring no planning application. However, Birmingham has numerous conservation areas (including Moseley, Harborne, and parts of Edgbaston) where front-elevation panels are not permitted development. Listed buildings require full planning permission. Check with Birmingham City Council's planning department or the relevant borough council (Solihull, Sandwell, Dudley, Walsall, Wolverhampton) before proceeding if your property has any designation.",
   },
   {
     question: 'What is the Smart Export Guarantee and how much will I earn?',
@@ -137,25 +137,25 @@ const sections = [
           Birmingham and the wider West Midlands region sit in a solar irradiance band that makes
           rooftop solar PV a sound investment. The city receives more sun than its northern
           counterparts and comparable irradiance to much of the East Midlands and South Wales.
-          Combined with high electricity prices, a growing installer market, and access to the
-          Smart Export Guarantee, solar PV is increasingly the first choice renewable energy
-          upgrade for Birmingham homeowners.
+          Combined with high electricity prices, a growing installer market, and access to the Smart
+          Export Guarantee, solar PV is increasingly the first choice renewable energy upgrade for
+          Birmingham homeowners.
         </p>
         <p>
           Birmingham's housing stock — dominated by Victorian and Edwardian terraces, post-war
           semis, and modern new builds — is broadly well suited to rooftop solar. South and
-          south-west facing rear roofs are common on the city's terraced streets and provide
-          good solar yields. Larger detached properties in areas such as Solihull, Sutton
-          Coldfield, and Edgbaston can accommodate substantial 5kW+ systems.
+          south-west facing rear roofs are common on the city's terraced streets and provide good
+          solar yields. Larger detached properties in areas such as Solihull, Sutton Coldfield, and
+          Edgbaston can accommodate substantial 5kW+ systems.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>West Midlands irradiance:</strong> ~900–980 kWh/kWp/year. Comparable to
-                the East Midlands; slightly below London and the South East; significantly better
-                than the North West.
+                <strong>West Midlands irradiance:</strong> ~900–980 kWh/kWp/year. Comparable to the
+                East Midlands; slightly below London and the South East; significantly better than
+                the North West.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -186,9 +186,9 @@ const sections = [
       <>
         <p>
           Understanding your property's solar resource is the foundation of any installation
-          decision. The European Commission's PVGIS tool provides free irradiance data for any
-          UK postcode, and reputable MCS-certified installers will use this (or equivalent
-          software) to produce a system design report.
+          decision. The European Commission's PVGIS tool provides free irradiance data for any UK
+          postcode, and reputable MCS-certified installers will use this (or equivalent software) to
+          produce a system design report.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -204,16 +204,16 @@ const sections = [
               <span>
                 <strong>East-west arrays:</strong> Achieve around 80–85% of south-facing output
                 (approximately 750–830 kWh/kWp/year) but generate more evenly through the day.
-                Beneficial for self-consumption if the household uses electricity in the morning
-                and evening.
+                Beneficial for self-consumption if the household uses electricity in the morning and
+                evening.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shading:</strong> Tree shading from the West Midlands' suburban
-                streetscapes is worth assessing. Ask your installer to produce a shading analysis
-                as part of the design report.
+                <strong>Shading:</strong> Tree shading from the West Midlands' suburban streetscapes
+                is worth assessing. Ask your installer to produce a shading analysis as part of the
+                design report.
               </span>
             </li>
           </ul>
@@ -235,8 +235,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3kW:</strong> Suits terraced houses and smaller semis. ~8–10 panels.
-                Output: approximately 2,400–2,850 kWh/year. Cost: £4,000–£5,500.
+                <strong>3kW:</strong> Suits terraced houses and smaller semis. ~8–10 panels. Output:
+                approximately 2,400–2,850 kWh/year. Cost: £4,000–£5,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,16 +250,16 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6kW:</strong> Ideal for detached properties in Solihull, Sutton Coldfield,
-                or Wolverhampton. ~14–18 panels. Output: approximately 4,800–5,700 kWh/year.
-                Cost: £7,000–£10,000.
+                or Wolverhampton. ~14–18 panels. Output: approximately 4,800–5,700 kWh/year. Cost:
+                £7,000–£10,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>With battery:</strong> Adding a 5–10kWh battery to any size system
-                raises self-consumption from ~30% to ~70% and significantly improves financial
-                returns. Add £2,500–£5,000 to installation cost.
+                <strong>With battery:</strong> Adding a 5–10kWh battery to any size system raises
+                self-consumption from ~30% to ~70% and significantly improves financial returns. Add
+                £2,500–£5,000 to installation cost.
               </span>
             </li>
           </ul>
@@ -300,17 +300,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed
-                at the same time as solar panels.
+                <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed at
+                the same time as solar panels.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Solar panels (and batteries installed at the same time) attract 0% VAT. Labour is
-          charged at the standard VAT rate for those registered for VAT, but many smaller
-          installers in the Birmingham area are not VAT-registered — verify this when comparing
-          quotes.
+          Solar panels (and batteries installed at the same time) attract 0% VAT. Labour is charged
+          at the standard VAT rate for those registered for VAT, but many smaller installers in the
+          Birmingham area are not VAT-registered — verify this when comparing quotes.
         </p>
       </>
     ),
@@ -322,8 +321,8 @@ const sections = [
       <>
         <p>
           The Smart Export Guarantee applies across England, Scotland, and Wales. Birmingham
-          homeowners qualify on the same basis as any other UK property owner, provided the
-          MCS requirements are met.
+          homeowners qualify on the same basis as any other UK property owner, provided the MCS
+          requirements are met.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -346,8 +345,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual income estimate:</strong> A 4kW Birmingham system exporting
-                ~1,800–2,000 kWh/year at 8p/kWh earns approximately £144–£160/year in SEG
-                payments.
+                ~1,800–2,000 kWh/year at 8p/kWh earns approximately £144–£160/year in SEG payments.
               </span>
             </li>
           </ul>
@@ -370,8 +368,8 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development:</strong> No planning application required for most
-                residential solar PV. Panels must not protrude more than 200mm from the roof
-                surface and must not be on a wall or roof slope visible from a highway.
+                residential solar PV. Panels must not protrude more than 200mm from the roof surface
+                and must not be on a wall or roof slope visible from a highway.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -386,9 +384,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Listed buildings:</strong> Planning permission required. Birmingham has
-                a significant number of listed buildings — check the Historic England and
-                Birmingham City Council registers.
+                <strong>Listed buildings:</strong> Planning permission required. Birmingham has a
+                significant number of listed buildings — check the Historic England and Birmingham
+                City Council registers.
               </span>
             </li>
           </ul>
@@ -425,8 +423,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation:</strong> You must receive an MCS installation certificate
-                and an{' '}
+                <strong>Documentation:</strong> You must receive an MCS installation certificate and
+                an{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
@@ -444,18 +442,18 @@ const sections = [
     content: (
       <>
         <p>
-          Adding a battery to a Birmingham solar installation increases self-consumption from
-          the typical 25–35% (without battery) to 60–80%, substantially improving the annual
-          financial return.
+          Adding a battery to a Birmingham solar installation increases self-consumption from the
+          typical 25–35% (without battery) to 60–80%, substantially improving the annual financial
+          return.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Popular systems:</strong> GivEnergy, SolarEdge Energy Hub, Solis, and
-                Tesla Powerwall are all widely installed across the West Midlands. Capacity
-                typically ranges from 5kWh to 13.5kWh.
+                <strong>Popular systems:</strong> GivEnergy, SolarEdge Energy Hub, Solis, and Tesla
+                Powerwall are all widely installed across the West Midlands. Capacity typically
+                ranges from 5kWh to 13.5kWh.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,9 +466,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Grid charging:</strong> On low-solar days, the battery can be charged
-                from the grid on cheap overnight tariffs (Agile, Economy 7) and discharged during
-                evening peak hours — valuable for Birmingham households on time-of-use tariffs.
+                <strong>Grid charging:</strong> On low-solar days, the battery can be charged from
+                the grid on cheap overnight tariffs (Agile, Economy 7) and discharged during evening
+                peak hours — valuable for Birmingham households on time-of-use tariffs.
               </span>
             </li>
           </ul>
@@ -484,8 +482,8 @@ const sections = [
     content: (
       <>
         <p>
-          Birmingham's solid irradiance means payback periods are comparable to the UK average,
-          and significantly better than northern England.
+          Birmingham's solid irradiance means payback periods are comparable to the UK average, and
+          significantly better than northern England.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -493,8 +491,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual savings (4kW, no battery):</strong> 3,400 kWh generated × 40%
-                self-consumption × 24p/kWh = £326/year savings. SEG: 2,040 kWh exported ×
-                8p/kWh = £163/year. Total: ~£489/year.
+                self-consumption × 24p/kWh = £326/year savings. SEG: 2,040 kWh exported × 8p/kWh =
+                £163/year. Total: ~£489/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,8 +500,8 @@ const sections = [
               <span>
                 <strong>Payback period:</strong> At £6,500 installed cost and £489/year benefit:
                 approximately 13 years without battery. With battery raising self-consumption to
-                70%: annual savings rise to ~£650+, improving payback to 10–11 years (factoring
-                in battery cost).
+                70%: annual savings rise to ~£650+, improving payback to 10–11 years (factoring in
+                battery cost).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -533,15 +531,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify MCS status:</strong> Check mcscertified.com. Search by postcode
-                to find current MCS-certified installers near you.
+                <strong>Verify MCS status:</strong> Check mcscertified.com. Search by postcode to
+                find current MCS-certified installers near you.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RECC membership:</strong> Renewable Energy Consumer Code membership
-                provides consumer protection and an alternative dispute resolution process.
+                <strong>RECC membership:</strong> Renewable Energy Consumer Code membership provides
+                consumer protection and an alternative dispute resolution process.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -586,8 +584,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
-                  to complete and email the Electrical Installation Certificate for solar PV
-                  wiring before leaving the installation site. No paper, no evening admin.
+                  to complete and email the Electrical Installation Certificate for solar PV wiring
+                  before leaving the installation site. No paper, no evening admin.
                 </p>
               </div>
             </div>
@@ -612,7 +610,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site solar certificates, quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site solar certificates, quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -649,7 +647,7 @@ export default function SolarPanelInstallationBirminghamPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

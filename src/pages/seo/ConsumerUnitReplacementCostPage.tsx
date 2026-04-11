@@ -102,8 +102,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description:
-      'When and why to upgrade a consumer unit, including signs of an outdated board.',
+    description: 'When and why to upgrade a consumer unit, including signs of an outdated board.',
     icon: Settings,
     category: 'Guide',
   },
@@ -169,11 +168,11 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>
-          , Regulation 421.1.201 requires that consumer units in domestic premises be as a type-tested coordinated assembly
-          designed for use by ordinary persons, providing manual double-pole isolation on incoming
-          circuits. Since January 2016, Amendment 3 to BS 7671 mandated that all new domestic
-          consumer units must be housed in a non-combustible (metal) enclosure — a critical fire
-          safety improvement.
+          , Regulation 421.1.201 requires that consumer units in domestic premises be as a
+          type-tested coordinated assembly designed for use by ordinary persons, providing manual
+          double-pole isolation on incoming circuits. Since January 2016, Amendment 3 to BS 7671
+          mandated that all new domestic consumer units must be housed in a non-combustible (metal)
+          enclosure — a critical fire safety improvement.
         </p>
         <p>
           If your property still has an old plastic consumer unit, a rewirable fuse board, or a
@@ -194,14 +193,16 @@ const sections = [
           Here is a breakdown based on current trade prices from major UK wholesalers.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Consumer Unit Enclosure (Trade Prices)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Consumer Unit Enclosure (Trade Prices)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>6-way metal consumer unit</strong> — £90 to £120 trade (Dorman Smith LoadPro
-                6-way from £90.60, Eaton 6-way from £119.28). Suitable for small flats or
-                properties with few circuits.
+                6-way from £90.60, Eaton 6-way from £119.28). Suitable for small flats or properties
+                with few circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -258,8 +259,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sundries</strong> — cable tails, earth and neutral bars, labels, glands,
-                and fixings: approximately £20 to £50.
+                <strong>Sundries</strong> — cable tails, earth and neutral bars, labels, glands, and
+                fixings: approximately £20 to £50.
               </span>
             </li>
           </ul>
@@ -278,17 +279,18 @@ const sections = [
     content: (
       <>
         <p>
-          Labour is typically the largest single element of a consumer unit replacement cost. The job
-          involves safe isolation of the mains supply, removal of the old board, installation and
-          wiring of the new board, testing every circuit, and completing the certification paperwork.
+          Labour is typically the largest single element of a consumer unit replacement cost. The
+          job involves safe isolation of the mains supply, removal of the old board, installation
+          and wiring of the new board, testing every circuit, and completing the certification
+          paperwork.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Replacement</h3>
             <p className="text-white text-sm leading-relaxed">
               A straightforward like-for-like replacement where the existing wiring terminates
-              correctly, the earthing arrangements are adequate, and no additional circuits are being
-              added. Typical labour time: 4 to 6 hours. Labour cost: £250 to £450 depending on
+              correctly, the earthing arrangements are adequate, and no additional circuits are
+              being added. Typical labour time: 4 to 6 hours. Labour cost: £250 to £450 depending on
               region and electrician rates.
             </p>
           </div>
@@ -297,8 +299,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Where additional work is needed — upgrading meter tails, replacing the earthing
               conductor, adding new circuits, relocating the board, or upgrading from TT to TN-C-S
-              earthing. Typical labour time: 6 to 10 hours. Labour cost: £400 to £750. Some
-              complex replacements may require a return visit.
+              earthing. Typical labour time: 6 to 10 hours. Labour cost: £400 to £750. Some complex
+              replacements may require a return visit.
             </p>
           </div>
         </div>
@@ -335,17 +337,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Basic 6-way with split-load RCDs</strong> — £450 to £650 total.
-                Suitable for a small flat with 4 to 6 circuits. Materials: £150 to £250. Labour:
-                £250 to £350. Notification and certification: £50 to £80.
+                <strong>Basic 6-way with split-load RCDs</strong> — £450 to £650 total. Suitable for
+                a small flat with 4 to 6 circuits. Materials: £150 to £250. Labour: £250 to £350.
+                Notification and certification: £50 to £80.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard 10-way with RCBOs and SPD</strong> — £750 to £1,200 total.
-                The most common domestic replacement. Materials: £350 to £550. Labour: £300 to
-                £500. Notification and certification: £50 to £80.
+                <strong>Standard 10-way with RCBOs and SPD</strong> — £750 to £1,200 total. The most
+                common domestic replacement. Materials: £350 to £550. Labour: £300 to £500.
+                Notification and certification: £50 to £80.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -360,10 +362,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase consumer unit</strong> — £1,800 to £2,500+ total. Required
-                for properties with three-phase supply (large homes, workshops, commercial units).
-                Materials: £800 to £1,200. Labour: £600 to £900. Notification and certification:
-                £50 to £80.
+                <strong>Three-phase consumer unit</strong> — £1,800 to £2,500+ total. Required for
+                properties with three-phase supply (large homes, workshops, commercial units).
+                Materials: £800 to £1,200. Labour: £600 to £900. Notification and certification: £50
+                to £80.
               </span>
             </li>
           </ul>
@@ -453,8 +455,8 @@ const sections = [
     content: (
       <>
         <p>
-          Not every old consumer unit needs immediate replacement, but there are clear signs that the
-          board is no longer adequate:
+          Not every old consumer unit needs immediate replacement, but there are clear signs that
+          the board is no longer adequate:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -494,8 +496,8 @@ const sections = [
               <span>
                 <strong>EICR recommendation</strong> — if an{' '}
                 <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has
-                identified a C2 (potentially dangerous) observation at the consumer unit, replacement
-                is strongly recommended.
+                identified a C2 (potentially dangerous) observation at the consumer unit,
+                replacement is strongly recommended.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -526,22 +528,23 @@ const sections = [
           afterwards.
         </p>
         <p>
-          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate
-          (EIC) must be issued for all new installations, additions, or alterations that introduce
-          new circuits — including consumer unit replacements. The EIC documents the design,
+          Regulation 421.1.201 of BS 7671 confirms that an Electrical Installation Certificate (EIC)
+          must be issued for all new installations, additions, or alterations that introduce new
+          circuits — including consumer unit replacements. The EIC documents the design,
           construction, inspection, and testing of the installation and provides the homeowner with
           proof of compliance.
         </p>
         <p>
           A registered electrician will self-certify the work and submit notification to the local
-          authority through their scheme provider. The homeowner should receive a copy of the EIC and
-          a Building Regulations Compliance Certificate within 30 days of the work being completed.
+          authority through their scheme provider. The homeowner should receive a copy of the EIC
+          and a Building Regulations Compliance Certificate within 30 days of the work being
+          completed.
         </p>
         <p>
           In Scotland, the Building Standards system applies rather than Part P, and an approved
-          certifier of construction (electrical installations) can self-certify. In Northern Ireland,
-          Part P does not apply but the work must still comply with BS 7671 and be carried out by a
-          competent person.
+          certifier of construction (electrical installations) can self-certify. In Northern
+          Ireland, Part P does not apply but the work must still comply with BS 7671 and be carried
+          out by a competent person.
         </p>
       </>
     ),
@@ -551,9 +554,7 @@ const sections = [
     heading: 'Choosing an Electrician for a Consumer Unit Replacement',
     content: (
       <>
-        <p>
-          When selecting an electrician for a consumer unit replacement, check the following:
-        </p>
+        <p>When selecting an electrician for a consumer unit replacement, check the following:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -620,8 +621,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes with real trade pricing data. The AI cost engineer checks
-                  your material costs against current wholesaler prices and flags anything that looks
-                  too high or too low.
+                  your material costs against current wholesaler prices and flags anything that
+                  looks too high or too low.
                 </p>
               </div>
             </div>
@@ -658,7 +659,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify CU replacements faster"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for consumer unit replacements. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -695,7 +696,7 @@ export default function ConsumerUnitReplacementCostPage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Consumer Unit Replacements with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI board scanning. 7-day free trial, cancel anytime."
     />
   );
 }

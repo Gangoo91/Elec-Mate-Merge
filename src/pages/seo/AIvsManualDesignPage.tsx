@@ -282,11 +282,11 @@ export default function AIvsManualDesignPage() {
                 alternative. Professional electrical design software (such as dedicated cable sizing
                 or distribution board design packages) typically costs £200-£500 per year. Elec-Mate
                 includes the AI Circuit Designer as part of its standard subscription alongside 70+
-                calculators, 8 certificate types, and all other AI tools.
+                calculators, 16 certificate types, and all other AI tools.
               </p>
               <SEOAppBridge
                 title="AI Circuit Designer — Included in Elec-Mate"
-                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification, and earth fault loop impedance checks — all to BS 7671:2018+A3:2024. Part of the standard subscription alongside 70 calculators and 8 AI agents."
+                description="Complete consumer unit schedules with cable sizes, protective devices, voltage drop verification, and earth fault loop impedance checks — all to BS 7671:2018+A3:2024. Part of the standard subscription alongside 70+ calculators and 8 AI agents."
                 icon={CircuitBoard}
               />
             </>
@@ -537,7 +537,7 @@ export default function AIvsManualDesignPage() {
         },
       ]}
       ctaHeading="Design your next circuit in 60 seconds"
-      ctaSubheading="Join 430+ UK electricians using AI for BS 7671 compliant circuit design. Review, refine, and quote — all from one platform. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using AI for BS 7671 compliant circuit design. Review, refine, and quote — all from one platform. 7-day free trial, cancel anytime."
     />
   );
 }

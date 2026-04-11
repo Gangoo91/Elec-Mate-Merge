@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Landlord Guides', href: '/guides/eicr-for-landlords' },
-  { label: 'Landlord Electrical Safety Bristol', href: '/guides/landlord-electrical-safety-bristol' },
+  {
+    label: 'Landlord Electrical Safety Bristol',
+    href: '/guides/landlord-electrical-safety-bristol',
+  },
 ];
 
 const tocItems = [
@@ -44,7 +47,7 @@ const keyTakeaways = [
   'Bristol City Council enforces these regulations with civil penalties of up to £30,000 per breach. Bristol has an active private rented sector enforcement team and operates selective licensing schemes in several neighbourhoods.',
   'HMOs in Bristol face additional requirements — a valid EICR is a mandatory condition of both mandatory and additional HMO licensing schemes operated by Bristol City Council.',
   'If the EICR identifies C1 or C2 observations (classified under BS 7671 Section 631), landlords must complete remedial work within 28 days or sooner if specified by the inspector.',
-  'RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Many of Bristol\'s older terraced and Victorian properties lack adequate RCD protection, making this a common C2 finding.',
+  "RCD protection is required on socket-outlet circuits under Regulation 411.3.3 of BS 7671. Many of Bristol's older terraced and Victorian properties lack adequate RCD protection, making this a common C2 finding.",
 ];
 
 const faqs = [
@@ -71,12 +74,12 @@ const faqs = [
   {
     question: 'How much does a landlord EICR cost in Bristol?',
     answer:
-      'Bristol EICR costs reflect the city\'s elevated labour rates. A one-bedroom flat typically costs £140 to £240. A two-bedroom flat costs £200 to £360. A three-bedroom house runs from £280 to £480. HMOs cost £380 to £750 or more depending on circuits and systems. These prices cover inspection and report only — remedial work is quoted separately.',
+      "Bristol EICR costs reflect the city's elevated labour rates. A one-bedroom flat typically costs £140 to £240. A two-bedroom flat costs £200 to £360. A three-bedroom house runs from £280 to £480. HMOs cost £380 to £750 or more depending on circuits and systems. These prices cover inspection and report only — remedial work is quoted separately.",
   },
   {
     question: 'Can a Bristol tenant request an electrical safety check?',
     answer:
-      'Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report this to Bristol City Council\'s private rented sector team. The council can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange the work and recover costs from the landlord.',
+      "Yes. Tenants have the right to request a copy of the current EICR. If the landlord cannot provide one, the tenant can report this to Bristol City Council's private rented sector team. The council can require the landlord to arrange an inspection. If the landlord fails to comply with a remedial notice, the council can arrange the work and recover costs from the landlord.",
   },
   {
     question: 'What qualifications must an EICR inspector have in Bristol?',
@@ -94,7 +97,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,7 +132,8 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'regulations-overview',
-    heading: 'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
+    heading:
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020',
     content: (
       <>
         <p>
@@ -143,8 +148,8 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory EICR</strong> — landlords must obtain an Electrical Installation
-                Condition Report before a new tenancy begins and at least every five years. The
-                EICR is documented in accordance with{' '}
+                Condition Report before a new tenancy begins and at least every five years. The EICR
+                is documented in accordance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
@@ -156,8 +161,8 @@ const sections = [
               <span>
                 <strong>Tenant notification</strong> — a copy of the EICR must be provided to
                 existing tenants within 28 days of the inspection. New tenants must receive a copy
-                before they move in. Prospective tenants can request a copy within 28 days of
-                their request.
+                before they move in. Prospective tenants can request a copy within 28 days of their
+                request.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -170,8 +175,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualified person</strong> — the EICR must be carried out by a person who
-                is qualified and competent, in practice registered with NICEIC, NAPIT, ELECSA, or
+                <strong>Qualified person</strong> — the EICR must be carried out by a person who is
+                qualified and competent, in practice registered with NICEIC, NAPIT, ELECSA, or
                 equivalent.
               </span>
             </li>
@@ -187,8 +192,8 @@ const sections = [
       <>
         <p>
           Bristol City Council is the local housing authority responsible for enforcing the 2020
-          Regulations across the city. Bristol has a large and growing private rented sector and
-          an active enforcement approach.
+          Regulations across the city. Bristol has a large and growing private rented sector and an
+          active enforcement approach.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -196,8 +201,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Selective licensing</strong> — Bristol City Council operates selective
-                licensing in several neighbourhoods including parts of Easton, Lawrence Hill,
-                and Bedminster. Landlords in these areas must hold a property licence, and EICR
+                licensing in several neighbourhoods including parts of Easton, Lawrence Hill, and
+                Bedminster. Landlords in these areas must hold a property licence, and EICR
                 compliance is a standard licence condition. Licensing schemes expand periodically —
                 check whether your property falls within a current scheme.
               </span>
@@ -215,17 +220,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Remedial action power</strong> — if a landlord fails to comply with a
-                remedial notice, Bristol City Council can arrange for the work to be carried out
-                and recover costs from the landlord. This power exists alongside civil penalties.
+                remedial notice, Bristol City Council can arrange for the work to be carried out and
+                recover costs from the landlord. This power exists alongside civil penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section
-                21 (no-fault eviction) notice without providing the tenant with a copy of the
-                current EICR. This is a significant practical consequence for Bristol landlords
-                seeking possession.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                (no-fault eviction) notice without providing the tenant with a copy of the current
+                EICR. This is a significant practical consequence for Bristol landlords seeking
+                possession.
               </span>
             </li>
           </ul>
@@ -239,9 +244,9 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol has a large HMO sector, particularly in areas such as Clifton, Redland, Bishopston,
-          and Cotham, driven by the student population at the University of Bristol and UWE Bristol.
-          Bristol City Council operates both mandatory and additional HMO licensing.
+          Bristol has a large HMO sector, particularly in areas such as Clifton, Redland,
+          Bishopston, and Cotham, driven by the student population at the University of Bristol and
+          UWE Bristol. Bristol City Council operates both mandatory and additional HMO licensing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -257,8 +262,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Additional licensing</strong> — Bristol City Council operates additional
-                HMO licensing covering smaller HMOs. Check whether your property falls within the
+                <strong>Additional licensing</strong> — Bristol City Council operates additional HMO
+                licensing covering smaller HMOs. Check whether your property falls within the
                 additional licensing area, as EICR compliance is equally required.
               </span>
             </li>
@@ -274,8 +279,8 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Unlicensed HMO consequences</strong> — operating an unlicensed HMO in
-                Bristol is a criminal offence and can result in prosecution, an unlimited fine,
-                and civil penalties. Bristol City Council has an active HMO licensing enforcement
+                Bristol is a criminal offence and can result in prosecution, an unlimited fine, and
+                civil penalties. Bristol City Council has an active HMO licensing enforcement
                 programme.
               </span>
             </li>
@@ -298,43 +303,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing
-                to provide it to the tenant, failing to supply it to the council on request, and
-                failing to complete remedial work are each separate breaches. Multiple penalties
-                can be imposed on the same landlord for the same property.
+                <strong>Up to £30,000 per breach</strong> — failing to obtain an EICR, failing to
+                provide it to the tenant, failing to supply it to the council on request, and
+                failing to complete remedial work are each separate breaches. Multiple penalties can
+                be imposed on the same landlord for the same property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid
-                Section 21 notice without providing the tenant with a copy of the current EICR.
-                Non-compliance can prevent a landlord from regaining possession of their property.
+                <strong>Section 21 restrictions</strong> — landlords cannot serve a valid Section 21
+                notice without providing the tenant with a copy of the current EICR. Non-compliance
+                can prevent a landlord from regaining possession of their property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Licence implications</strong> — landlords operating within selective
-                licensing areas or running HMOs can lose their licence for persistent non-compliance,
-                making it unlawful to continue letting the property.
+                licensing areas or running HMOs can lose their licence for persistent
+                non-compliance, making it unlawful to continue letting the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rent repayment orders</strong> — where a landlord commits certain housing
-                offences (such as operating an unlicensed HMO), tenants can apply to the
-                First-tier Tribunal (Property Chamber) for a rent repayment order of up to 12
-                months' rent.
+                offences (such as operating an unlicensed HMO), tenants can apply to the First-tier
+                Tribunal (Property Chamber) for a rent repayment order of up to 12 months' rent.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The cost of compliance — an EICR every five years, typically £200 to £480 in Bristol
-          — is far less than the potential penalties for non-compliance. Electrical safety should
-          be treated as a non-negotiable operating cost for Bristol landlords.
+          The cost of compliance — an EICR every five years, typically £200 to £480 in Bristol — is
+          far less than the potential penalties for non-compliance. Electrical safety should be
+          treated as a non-negotiable operating cost for Bristol landlords.
         </p>
       </>
     ),
@@ -345,43 +349,41 @@ const sections = [
     content: (
       <>
         <p>
-          The 2020 Regulations give Bristol tenants specific rights regarding electrical safety
-          in their rented property.
+          The 2020 Regulations give Bristol tenants specific rights regarding electrical safety in
+          their rented property.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a
-                copy within 28 days of the inspection. New tenants must receive a copy before
-                moving in.
+                <strong>Right to a copy of the EICR</strong> — existing tenants must receive a copy
+                within 28 days of the inspection. New tenants must receive a copy before moving in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Right to report non-compliance</strong> — tenants can report to Bristol
-                City Council's environmental health or private rented sector team if the landlord
-                has not obtained an EICR or completed required remedial work.
+                <strong>Right to report non-compliance</strong> — tenants can report to Bristol City
+                Council's environmental health or private rented sector team if the landlord has not
+                obtained an EICR or completed required remedial work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Right to safe electrics</strong> — if the EICR identifies urgent safety
-                issues (C1 or C2), the landlord must arrange remedial work promptly. If the
-                landlord fails, the council can arrange the work and recover costs from the
-                landlord.
+                issues (C1 or C2), the landlord must arrange remedial work promptly. If the landlord
+                fails, the council can arrange the work and recover costs from the landlord.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Protection from retaliatory eviction</strong> — landlords cannot serve a
-                valid Section 21 notice without providing the EICR. The Deregulation Act 2015
-                also provides protection against retaliatory eviction where a tenant has raised
-                a legitimate complaint.
+                valid Section 21 notice without providing the EICR. The Deregulation Act 2015 also
+                provides protection against retaliatory eviction where a tenant has raised a
+                legitimate complaint.
               </span>
             </li>
           </ul>
@@ -413,18 +415,18 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>C1 observations — immediate action</strong> — where a C1 (danger present)
-                observation is recorded, the inspector may recommend immediate disconnection of
-                the affected circuit. Landlords should arrange emergency remedial work without
-                waiting the full 28 days.
+                observation is recorded, the inspector may recommend immediate disconnection of the
+                affected circuit. Landlords should arrange emergency remedial work without waiting
+                the full 28 days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Written confirmation required</strong> — once remedial work is complete,
-                a qualified person must confirm in writing that the work has been done
-                satisfactorily. This must be provided to the tenant and to the council within
-                28 days of the work being completed.
+                <strong>Written confirmation required</strong> — once remedial work is complete, a
+                qualified person must confirm in writing that the work has been done satisfactorily.
+                This must be provided to the tenant and to the council within 28 days of the work
+                being completed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -456,9 +458,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's
-                online register for Bristol-based inspectors. Scheme membership provides assurance
-                of qualifications, insurance, and regular assessment.
+                <strong>NICEIC, NAPIT, or ELECSA registration</strong> — search the scheme's online
+                register for Bristol-based inspectors. Scheme membership provides assurance of
+                qualifications, insurance, and regular assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -494,9 +496,7 @@ const sections = [
     heading: 'EICR Costs in Bristol (2026 Prices)',
     content: (
       <>
-        <p>
-          Bristol EICR costs reflect the city's elevated labour rates and strong trade demand.
-        </p>
+        <p>Bristol EICR costs reflect the city's elevated labour rates and strong trade demand.</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -556,9 +556,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the report on your phone while still on site. AI board scanning,
-                  voice test entry, and instant PDF export mean no evening paperwork. Send the
-                  report to the landlord before you leave.
+                  to complete the report on your phone while still on site. AI board scanning, voice
+                  test entry, and instant PDF export mean no evening paperwork. Send the report to
+                  the landlord before you leave.
                 </p>
               </div>
             </div>
@@ -574,8 +574,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Bristol landlords must act within 28 days — the electrician who quotes on
-                  the day of the EICR wins the work.
+                  . Bristol landlords must act within 28 days — the electrician who quotes on the
+                  day of the EICR wins the work.
                 </p>
               </div>
             </div>
@@ -583,7 +583,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your landlord EICR business in Bristol with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -620,7 +620,7 @@ export default function LandlordElectricalSafetyBristolPage() {
       faqHeading="Frequently Asked Questions About Landlord Electrical Safety in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

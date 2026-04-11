@@ -47,7 +47,8 @@ const keyTakeaways = [
 
 const faqs = [
   {
-    question: 'What is BS EN 60204-1 and how does it affect manufacturing plant electrical installations?',
+    question:
+      'What is BS EN 60204-1 and how does it affect manufacturing plant electrical installations?',
     answer:
       'BS EN 60204-1 (Safety of Machinery — Electrical Equipment of Machines — Part 1: General Requirements) is the key standard for the electrical equipment of industrial machines. It specifies requirements for the design, construction, and testing of the electrical equipment of machines, including incoming supply disconnects, control circuits, operator interface equipment, motor protection, emergency stop devices, and wiring practices. BS EN 60204-1 applies to the machine builder, but electricians and contractors who modify existing machines or install new electrical equipment on machines must also comply with its requirements. The Provision and Use of Work Equipment Regulations 1998 (PUWER) require that work equipment (including machines) is maintained in an efficient state and safe working order.',
   },
@@ -59,7 +60,7 @@ const faqs = [
   {
     question: 'How are VFDs wired correctly to avoid EMC and earthing problems?',
     answer:
-      'Variable Frequency Drives generate significant electromagnetic interference (EMI) through the high-frequency switching of their output transistors. Correct wiring practice is essential to prevent this EMI from interfering with other equipment. Key requirements include: using screened (shielded) cable for the VFD output to the motor with the screen earthed at both ends using EMC glands; keeping VFD output cables away from signal and control cables (minimum 300mm separation without screening); using a dedicated earth conductor run in the motor cable rather than relying on the cable armour alone; selecting a VFD with an integral EMC filter (Category C2 or C3 to BS EN 61800-3) appropriate to the supply network; and following the VFD manufacturer\'s specific wiring instructions.',
+      "Variable Frequency Drives generate significant electromagnetic interference (EMI) through the high-frequency switching of their output transistors. Correct wiring practice is essential to prevent this EMI from interfering with other equipment. Key requirements include: using screened (shielded) cable for the VFD output to the motor with the screen earthed at both ends using EMC glands; keeping VFD output cables away from signal and control cables (minimum 300mm separation without screening); using a dedicated earth conductor run in the motor cable rather than relying on the cable armour alone; selecting a VFD with an integral EMC filter (Category C2 or C3 to BS EN 61800-3) appropriate to the supply network; and following the VFD manufacturer's specific wiring instructions.",
   },
   {
     question: 'What Performance Level is required for machine safety interlock systems?',
@@ -77,7 +78,8 @@ const faqs = [
       'Control wiring in manufacturing plants uses a range of cable types depending on the signal type and environment. Digital I/O signals typically use multicore control cable (BS 6500 or equivalent), often with individual pairs screened for noise immunity. Analogue signals (4-20mA, 0-10V) use individually screened twisted pairs to minimise inductive and capacitive interference. Fieldbus and industrial Ethernet (PROFIBUS, EtherNet/IP, PROFINET) use specific structured cabling types rated for industrial environments, often with ruggedised connectors. PROFIBUS uses a distinctive violet sheathed cable. EtherNet/IP uses Cat6A or higher in industrial environments. All control cables must be segregated from power cables (minimum 300mm) and must not share conduit or trunking with power cables unless individual screening is provided.',
   },
   {
-    question: 'What are the Electricity at Work Regulations 1989 obligations for manufacturing plant operators?',
+    question:
+      'What are the Electricity at Work Regulations 1989 obligations for manufacturing plant operators?',
     answer:
       'The Electricity at Work Regulations 1989 impose duties on employers (as duty holders) to ensure their electrical systems are safe. Key obligations for manufacturing plant operators include: Regulation 4 (systems, work activities and protective equipment must be constructed, maintained and used to prevent danger); Regulation 5 (electrical equipment must be suitable for its intended use and the environment); Regulation 12 (means to cut off electrical supply and isolate equipment must be provided); Regulation 13 (precautions against inadvertent re-energisation during maintenance — lockout/tagout); Regulation 16 (persons must be competent for the work they undertake on electrical systems). Failure to comply with these regulations is a criminal offence under the Health and Safety at Work etc. Act 1974.',
   },
@@ -115,7 +117,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote manufacturing and industrial electrical projects with instant PDF proposals.',
+    description:
+      'Quote manufacturing and industrial electrical projects with instant PDF proposals.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -135,9 +138,9 @@ const sections = [
           Manufacturing plant electrical installation encompasses the full scope of electrical
           systems in production environments — from the incoming HV supply and LV distribution
           through to individual machine connections, PLC control panels, safety systems, and
-          instrumentation. The complexity and safety requirements of manufacturing plant
-          electrical work place it among the most technically demanding disciplines in the
-          UK electrical industry.
+          instrumentation. The complexity and safety requirements of manufacturing plant electrical
+          work place it among the most technically demanding disciplines in the UK electrical
+          industry.
         </p>
         <p>
           Manufacturing facilities vary enormously in their electrical requirements, from light
@@ -153,19 +156,19 @@ const sections = [
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulatory framework:</strong> BS 7671:2018+A3:2024, Electricity at Work
-                Regulations 1989, PUWER 1998, Supply of Machinery (Safety) Regulations 2008,
-                DSEAR 2002 (where hazardous areas exist), BS EN 60204-1, BS EN ISO 13849-1
-                (machinery safety), BS EN ISO 13850 (emergency stop).
+                Regulations 1989, PUWER 1998, Supply of Machinery (Safety) Regulations 2008, DSEAR
+                2002 (where hazardous areas exist), BS EN 60204-1, BS EN ISO 13849-1 (machinery
+                safety), BS EN ISO 13850 (emergency stop).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competence:</strong> Manufacturing plant electrical work requires
-                not only BS 7671 competence but also understanding of control systems, machine
-                safety standards, and safe isolation procedures for complex multi-supply systems.
-                The Electricity at Work Regulations 1989 Regulation 16 requires competence
-                for any work undertaken.
+                <strong>Competence:</strong> Manufacturing plant electrical work requires not only
+                BS 7671 competence but also understanding of control systems, machine safety
+                standards, and safe isolation procedures for complex multi-supply systems. The
+                Electricity at Work Regulations 1989 Regulation 16 requires competence for any work
+                undertaken.
               </span>
             </li>
           </ul>
@@ -191,32 +194,30 @@ const sections = [
               <span>
                 <strong>Direct on-line (DOL) starters:</strong> Suitable for small motors (up to
                 approximately 7.5 kW) where the supply can accept the starting current surge
-                (typically 6 to 8 times full-load current). DOL starters comprise a contactor
-                and overload relay. They are simple, reliable, and low cost but provide no speed
-                control and impose high mechanical stress on the motor and driven equipment
-                at start.
+                (typically 6 to 8 times full-load current). DOL starters comprise a contactor and
+                overload relay. They are simple, reliable, and low cost but provide no speed control
+                and impose high mechanical stress on the motor and driven equipment at start.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Soft starters:</strong> Electronic soft starters ramp up the voltage
-                applied to the motor during starting, reducing the starting current to typically
-                2.5 to 4 times full-load current. They reduce mechanical shock on couplings and
-                driven equipment and are suitable for constant-torque loads (conveyors, compressors).
-                They do not provide variable speed operation during running.
+                <strong>Soft starters:</strong> Electronic soft starters ramp up the voltage applied
+                to the motor during starting, reducing the starting current to typically 2.5 to 4
+                times full-load current. They reduce mechanical shock on couplings and driven
+                equipment and are suitable for constant-torque loads (conveyors, compressors). They
+                do not provide variable speed operation during running.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Variable Frequency Drives (VFDs):</strong> VFDs (also called variable
-                speed drives, inverters, or frequency converters) control motor speed by varying
-                the frequency and voltage of the supply to the motor. For variable-torque loads
-                (fans, pumps) the energy savings are cubic with speed — reducing speed by 20 per
-                cent reduces power consumption by approximately 50 per cent. Modern VFDs also
-                provide soft starting, accurate speed reference following, and motor protection
-                functions.
+                <strong>Variable Frequency Drives (VFDs):</strong> VFDs (also called variable speed
+                drives, inverters, or frequency converters) control motor speed by varying the
+                frequency and voltage of the supply to the motor. For variable-torque loads (fans,
+                pumps) the energy savings are cubic with speed — reducing speed by 20 per cent
+                reduces power consumption by approximately 50 per cent. Modern VFDs also provide
+                soft starting, accurate speed reference following, and motor protection functions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -240,21 +241,21 @@ const sections = [
     content: (
       <>
         <p>
-          Programmable Logic Controllers (PLCs) are the control brain of modern manufacturing
-          plant. Electricians installing or maintaining manufacturing plant must understand
-          PLC I/O wiring, power supply requirements, communication networks, and the interface
-          between the PLC and field devices.
+          Programmable Logic Controllers (PLCs) are the control brain of modern manufacturing plant.
+          Electricians installing or maintaining manufacturing plant must understand PLC I/O wiring,
+          power supply requirements, communication networks, and the interface between the PLC and
+          field devices.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PLC power supplies:</strong> PLCs typically operate from 24V DC supplied
-                by a dedicated switched-mode power supply (SMPS) within the control panel. The
-                SMPS is fed from the main 230V or 400V supply via a transformer and isolation.
-                The 24V DC supply rail must be protected against short-circuit and earth fault
-                using appropriately rated fuses or electronic circuit breakers.
+                <strong>PLC power supplies:</strong> PLCs typically operate from 24V DC supplied by
+                a dedicated switched-mode power supply (SMPS) within the control panel. The SMPS is
+                fed from the main 230V or 400V supply via a transformer and isolation. The 24V DC
+                supply rail must be protected against short-circuit and earth fault using
+                appropriately rated fuses or electronic circuit breakers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -262,29 +263,29 @@ const sections = [
               <span>
                 <strong>Digital I/O wiring:</strong> Digital inputs (sensors, push-buttons, limit
                 switches) and digital outputs (contactors, solenoid valves, indicator lamps) are
-                wired to the PLC I/O modules using individually fused 24V DC circuits. Each
-                output circuit should be individually fused to limit the fault current that flows
-                if an output wire is shorted to earth.
+                wired to the PLC I/O modules using individually fused 24V DC circuits. Each output
+                circuit should be individually fused to limit the fault current that flows if an
+                output wire is shorted to earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Industrial networks:</strong> Modern PLCs communicate with operator
-                interfaces (HMIs), VFDs, remote I/O, and other PLCs via industrial networks
-                such as PROFIBUS DP, EtherNet/IP, PROFINET, or Modbus TCP. Network cabling must
-                use the correct cable type for each protocol and must be correctly terminated
-                with matched impedance resistors at both ends of each bus segment.
+                interfaces (HMIs), VFDs, remote I/O, and other PLCs via industrial networks such as
+                PROFIBUS DP, EtherNet/IP, PROFINET, or Modbus TCP. Network cabling must use the
+                correct cable type for each protocol and must be correctly terminated with matched
+                impedance resistors at both ends of each bus segment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety PLCs:</strong> For complex machinery with multiple safety functions,
-                a dedicated Safety PLC (such as Siemens S7-1500F or Rockwell GuardLogix) is
-                used. Safety PLCs are designed and certified to meet the requirements of
-                BS EN ISO 13849-1 and IEC 62061, providing the hardware and software architecture
-                necessary for high Performance Level (PLd or PLe) safety functions.
+                a dedicated Safety PLC (such as Siemens S7-1500F or Rockwell GuardLogix) is used.
+                Safety PLCs are designed and certified to meet the requirements of BS EN ISO 13849-1
+                and IEC 62061, providing the hardware and software architecture necessary for high
+                Performance Level (PLd or PLe) safety functions.
               </span>
             </li>
           </ul>
@@ -299,9 +300,9 @@ const sections = [
       <>
         <p>
           Emergency stop (E-stop) systems are a fundamental safety requirement for all manufacturing
-          machinery. They provide the means for an operator to bring a dangerous machine motion
-          to a halt in an emergency. The design of E-stop systems is governed by BS EN ISO 13850
-          and must be consistent with the risk assessment of the machine.
+          machinery. They provide the means for an operator to bring a dangerous machine motion to a
+          halt in an emergency. The design of E-stop systems is governed by BS EN ISO 13850 and must
+          be consistent with the risk assessment of the machine.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -320,9 +321,9 @@ const sections = [
               <span>
                 <strong>E-stop circuit design:</strong> E-stop circuits must be designed to
                 fail-safe. This means that a broken wire, short-circuit, or loss of power to the
-                control circuit must result in the machine stopping, not continuing to run. Hardwired
-                E-stop circuits using safety relays (dual-channel, monitored) or Safety PLCs
-                provide the required fail-safe behaviour with diagnostic coverage.
+                control circuit must result in the machine stopping, not continuing to run.
+                Hardwired E-stop circuits using safety relays (dual-channel, monitored) or Safety
+                PLCs provide the required fail-safe behaviour with diagnostic coverage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -330,20 +331,20 @@ const sections = [
               <span>
                 <strong>Stop category selection:</strong> The stop category (0 or 1 per BS EN
                 60204-1) must be selected based on the risk assessment. Category 0 (immediate
-                removal of power) is simpler but may create secondary hazards if the machine
-                has large inertia or vertical axes. Category 1 (controlled stop then power
-                removal) is safer for these applications but requires the drive to remain
-                energised and functional during the stop sequence.
+                removal of power) is simpler but may create secondary hazards if the machine has
+                large inertia or vertical axes. Category 1 (controlled stop then power removal) is
+                safer for these applications but requires the drive to remain energised and
+                functional during the stop sequence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reset requirements:</strong> After an E-stop, the machine must not
-                restart automatically when the E-stop device is reset. A separate, deliberate
-                reset action by the operator (distinct from the E-stop reset) must be required
-                before power is restored to the machine actuators. This prevents unexpected
-                restart when an E-stop button is released.
+                <strong>Reset requirements:</strong> After an E-stop, the machine must not restart
+                automatically when the E-stop device is reset. A separate, deliberate reset action
+                by the operator (distinct from the E-stop reset) must be required before power is
+                restored to the machine actuators. This prevents unexpected restart when an E-stop
+                button is released.
               </span>
             </li>
           </ul>
@@ -368,31 +369,31 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Interlock switch types:</strong> Common safety interlock switches include:
-                tongue-operated interlocks (a key or tongue attached to the guard engages the
-                switch when the guard is closed); hinge-mounted interlocks (mounted on the hinge
-                of a hinged guard); non-contact (magnetic or RFID) interlocks (no moving parts,
-                suitable for dusty or washdown environments); and safety rope pull switches
-                (for guarding of long linear hazards such as conveyor sides).
+                tongue-operated interlocks (a key or tongue attached to the guard engages the switch
+                when the guard is closed); hinge-mounted interlocks (mounted on the hinge of a
+                hinged guard); non-contact (magnetic or RFID) interlocks (no moving parts, suitable
+                for dusty or washdown environments); and safety rope pull switches (for guarding of
+                long linear hazards such as conveyor sides).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Guard locking:</strong> Where the hazardous motion takes time to stop
-                after power is removed (high-inertia loads, large motors), guard locking
-                (interlocking with guard locking) prevents the guard from being opened until
-                the machine has reached a safe state. A run-down time relay or a speed monitor
-                provides the permissive signal to unlock the guard.
+                <strong>Guard locking:</strong> Where the hazardous motion takes time to stop after
+                power is removed (high-inertia loads, large motors), guard locking (interlocking
+                with guard locking) prevents the guard from being opened until the machine has
+                reached a safe state. A run-down time relay or a speed monitor provides the
+                permissive signal to unlock the guard.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Safety light curtains:</strong> Light curtains (safety light screens)
-                provide a non-physical interlocking barrier across openings. Breaking the light
-                beam causes an immediate stop of the hazardous motion. Light curtains must comply
-                with BS EN IEC 61496 (electrosensitive protective equipment) and must be integrated
-                into the machine safety system at the appropriate Performance Level.
+                provide a non-physical interlocking barrier across openings. Breaking the light beam
+                causes an immediate stop of the hazardous motion. Light curtains must comply with BS
+                EN IEC 61496 (electrosensitive protective equipment) and must be integrated into the
+                machine safety system at the appropriate Performance Level.
               </span>
             </li>
           </ul>
@@ -408,19 +409,19 @@ const sections = [
         <p>
           Manufacturing plants are both generators and victims of poor power quality. VFDs,
           switched-mode power supplies, arc welders, and induction furnaces all generate harmonic
-          currents that distort the supply voltage waveform, affecting other equipment on the
-          same installation.
+          currents that distort the supply voltage waveform, affecting other equipment on the same
+          installation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Harmonic distortion:</strong> Six-pulse VFDs (the most common type)
-                generate characteristic 5th, 7th, 11th, and 13th harmonic currents. These can
-                reach 30 to 40 per cent THD at the VFD terminals. At the point of common coupling
-                (utility metering point), the total voltage THD must not exceed 8 per cent to
-                comply with BS EN 61000-2-4 for industrial environments.
+                <strong>Harmonic distortion:</strong> Six-pulse VFDs (the most common type) generate
+                characteristic 5th, 7th, 11th, and 13th harmonic currents. These can reach 30 to 40
+                per cent THD at the VFD terminals. At the point of common coupling (utility metering
+                point), the total voltage THD must not exceed 8 per cent to comply with BS EN
+                61000-2-4 for industrial environments.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -428,19 +429,19 @@ const sections = [
               <span>
                 <strong>Harmonic mitigation:</strong> Mitigation options include: passive harmonic
                 filters (tuned LC filters connected at the MCC); active harmonic filters (inject
-                anti-phase harmonic currents to cancel distortion); 12-pulse or 18-pulse
-                transformer arrangements (phase-shifting transformers that cancel dominant harmonic
-                orders); and active front-end (AFE) drives (VFDs with a sinusoidal input current).
+                anti-phase harmonic currents to cancel distortion); 12-pulse or 18-pulse transformer
+                arrangements (phase-shifting transformers that cancel dominant harmonic orders); and
+                active front-end (AFE) drives (VFDs with a sinusoidal input current).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Voltage fluctuations:</strong> Large motor starts, spot welders, and
-                induction heaters cause rapid voltage fluctuations that can cause light flicker
-                and interfere with sensitive electronic equipment. These effects must be assessed
-                during the design stage and mitigated where necessary through supply impedance
-                reduction, soft starting, or dedicated supply transformers.
+                induction heaters cause rapid voltage fluctuations that can cause light flicker and
+                interfere with sensitive electronic equipment. These effects must be assessed during
+                the design stage and mitigated where necessary through supply impedance reduction,
+                soft starting, or dedicated supply transformers.
               </span>
             </li>
           </ul>
@@ -465,18 +466,18 @@ const sections = [
               <span>
                 <strong>Supply disconnector:</strong> Every machine must have a main supply
                 disconnector that can safely isolate all incoming power from the machine. The
-                disconnector must be lockable in the open (off) position to enable safe
-                maintenance (lockout/tagout). It must have a clearly visible indication of
-                the open and closed positions.
+                disconnector must be lockable in the open (off) position to enable safe maintenance
+                (lockout/tagout). It must have a clearly visible indication of the open and closed
+                positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Control voltage:</strong> BS EN 60204-1 recommends that control circuits
-                use a control supply voltage not exceeding 120V AC or 60V DC to limit the risk of
-                electric shock during maintenance. 24V DC (from a switched-mode power supply) is
-                the standard control voltage for modern manufacturing machinery in the UK.
+                <strong>Control voltage:</strong> BS EN 60204-1 recommends that control circuits use
+                a control supply voltage not exceeding 120V AC or 60V DC to limit the risk of
+                electric shock during maintenance. 24V DC (from a switched-mode power supply) is the
+                standard control voltage for modern manufacturing machinery in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -484,20 +485,19 @@ const sections = [
               <span>
                 <strong>Wiring identification:</strong> All conductors in a machine control panel
                 must be identified with unique ferrule numbers at both ends. BS EN 60204-1
-                recommends the IEC colour coding for conductors: blue for neutral, green-yellow
-                for protective earth, and manufacturer-defined colours for other conductors.
-                Consistent labelling practice is essential for efficient fault-finding and
-                maintenance.
+                recommends the IEC colour coding for conductors: blue for neutral, green-yellow for
+                protective earth, and manufacturer-defined colours for other conductors. Consistent
+                labelling practice is essential for efficient fault-finding and maintenance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technical documentation:</strong> BS EN 60204-1 requires that each machine
-                is supplied with complete electrical documentation including circuit diagrams,
-                PLC I/O lists, component lists with manufacturers and part numbers, test reports,
-                and an installation and maintenance manual. This documentation must be updated
-                whenever the machine electrical equipment is modified.
+                is supplied with complete electrical documentation including circuit diagrams, PLC
+                I/O lists, component lists with manufacturers and part numbers, test reports, and an
+                installation and maintenance manual. This documentation must be updated whenever the
+                machine electrical equipment is modified.
               </span>
             </li>
           </ul>
@@ -511,8 +511,8 @@ const sections = [
     content: (
       <>
         <p>
-          Earthing in manufacturing plant must balance the requirements of fault protection
-          (fast disconnection in the event of earth faults) with the sensitivity of control and
+          Earthing in manufacturing plant must balance the requirements of fault protection (fast
+          disconnection in the event of earth faults) with the sensitivity of control and
           instrumentation systems to earth potential differences and conducted interference.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -520,8 +520,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth fault loop impedance:</strong> The earth fault loop impedance must
-                be low enough to ensure that in the event of a line-to-earth fault, the overcurrent
+                <strong>Earth fault loop impedance:</strong> The earth fault loop impedance must be
+                low enough to ensure that in the event of a line-to-earth fault, the overcurrent
                 protective device operates within the time required by{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 Table 41.1
@@ -537,18 +537,18 @@ const sections = [
                 <strong>Protective conductors:</strong> All manufacturing plant and machine frames
                 must be connected to the earthing system by suitably sized protective conductors.
                 The size of the protective conductor must be calculated in accordance with
-                Regulation 543.1 of BS 7671, based on the fault current and the disconnection
-                time of the upstream protective device.
+                Regulation 543.1 of BS 7671, based on the fault current and the disconnection time
+                of the upstream protective device.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High-frequency earthing:</strong> VFDs and other switching equipment
-                generate high-frequency currents in the earthing system. At these frequencies,
-                the inductance of long, thin protective conductors is significant and they are
-                not effective. Wide flat copper earth straps (rather than round conductors) or
-                the equipment frame itself should be used as the high-frequency earth return path.
+                generate high-frequency currents in the earthing system. At these frequencies, the
+                inductance of long, thin protective conductors is significant and they are not
+                effective. Wide flat copper earth straps (rather than round conductors) or the
+                equipment frame itself should be used as the high-frequency earth return path.
               </span>
             </li>
           </ul>
@@ -575,10 +575,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Lockout/Tagout Procedures</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Manufacturing plant has multiple energy sources — electrical, pneumatic,
-                  hydraulic, and mechanical stored energy. Regulation 13 of the Electricity at
-                  Work Regulations 1989 requires precautions against inadvertent re-energisation.
-                  Always follow a complete lockout/tagout procedure covering all energy sources
-                  before carrying out maintenance work.
+                  hydraulic, and mechanical stored energy. Regulation 13 of the Electricity at Work
+                  Regulations 1989 requires precautions against inadvertent re-energisation. Always
+                  follow a complete lockout/tagout procedure covering all energy sources before
+                  carrying out maintenance work.
                 </p>
               </div>
             </div>
@@ -603,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage manufacturing plant electrical projects with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management. Complete EICs and EICRs on your phone with instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -640,7 +640,7 @@ export default function ManufacturingPlantElectricalPage() {
       faqHeading="Frequently Asked Questions — Manufacturing Plant Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Manufacturing Electrical Projects with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site certification, quoting, and project management in manufacturing environments. 7-day free trial, cancel anytime."
     />
   );
 }

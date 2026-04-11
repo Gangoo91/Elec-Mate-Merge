@@ -442,7 +442,7 @@ export default function CSCSCardCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Ready to pass your CSCS test first time?"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. 6 structured modules, unlimited mock tests, flashcards, and an AI tutor for any HS&E question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 6 structured modules, unlimited mock tests, flashcards, and an AI tutor for any HS&E question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/cscs-card"
     />

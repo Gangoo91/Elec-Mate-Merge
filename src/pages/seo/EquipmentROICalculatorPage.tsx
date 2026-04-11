@@ -365,7 +365,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's <SEOInternalLink href="/study-centre">Study Centre</SEOInternalLink> includes
-          36+ training courses covering the 18th Edition, inspection and testing, EV chargers, fire
+          46+ training courses covering the 18th Edition, inspection and testing, EV chargers, fire
           alarms, solar PV, and business skills. All accessible within your subscription.
         </p>
       </>
@@ -525,7 +525,7 @@ export default function EquipmentROICalculatorPage() {
       faqHeading="Frequently Asked Questions About Equipment ROI"
       relatedPages={relatedPages}
       ctaHeading="Make Smarter Investment Decisions"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for business calculations, job costing, and financial planning. 7-day free trial, cancel anytime."
       pagePath="/tools/equipment-roi-calculator"
     />
   );

@@ -474,8 +474,8 @@ const sections = [
               The rated short-circuit capacity of each protective device shall be not less than the
               prospective fault current at the point at which the device is installed. This is the
               fundamental requirement — every device must be able to safely interrupt the maximum
-              fault current it could face. There is an exception within Section 434 for
-              back-up protection.
+              fault current it could face. There is an exception within Section 434 for back-up
+              protection.
             </p>
           </div>
           <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
@@ -604,7 +604,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="PFC verification, built into every certificate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. PFC calculator, adiabatic verification, and automatic validation on every EICR. 7-day free trial, cancel anytime."
     />
   );
 }

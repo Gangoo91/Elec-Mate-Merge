@@ -42,9 +42,9 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented per BS 7671:2018+A3:2024 (Section 631). It assesses the installation as Satisfactory or Unsatisfactory using observation codes C1, C2, C3, and FI.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented per BS 7671:2018+A3:2024 (Section 631). It assesses the installation as Satisfactory or Unsatisfactory using observation codes C1, C2, C3, and FI.",
   'Glasgow EICR costs are competitive. Expect £110 to £190 for a two-bedroom flat, £160 to £260 for a three-bedroom house, and £220 to £360 for larger properties.',
-  'Scotland has DIFFERENT legislation from England. The Housing (Scotland) Act 2006 and the Repairing Standard require landlords to ensure electrical installations are safe and have a valid EICR. The regulations have been in effect longer than England\'s 2020 regulations.',
+  "Scotland has DIFFERENT legislation from England. The Housing (Scotland) Act 2006 and the Repairing Standard require landlords to ensure electrical installations are safe and have a valid EICR. The regulations have been in effect longer than England's 2020 regulations.",
   'Glasgow has a very high proportion of tenement flats — stone-built multi-storey buildings typically from the Victorian and Edwardian periods. These present unique EICR challenges including shared close (stairwell) supplies, aged wiring in thick stone walls, and common earthing issues.',
   'SP Energy Networks (SPEN, part of ScottishPower) is the DNO for the Glasgow area. Older tenement properties frequently have supply-side issues including deteriorated service cut-outs, aged service cables, and earthing deficiencies at the supply point.',
 ];
@@ -58,7 +58,7 @@ const faqs = [
   {
     question: 'Is an EICR legally required for landlords in Scotland?',
     answer:
-      'Yes. Under the Housing (Scotland) Act 2006 and the Repairing Standard, private landlords must ensure the electrical installation is in a reasonable state of repair and in proper working order. An EICR is the accepted method of demonstrating compliance. The Scottish Government guidance recommends an EICR at least every five years. Landlords must provide a copy to tenants. Scotland\'s requirements have been in effect since before England introduced its 2020 regulations.',
+      "Yes. Under the Housing (Scotland) Act 2006 and the Repairing Standard, private landlords must ensure the electrical installation is in a reasonable state of repair and in proper working order. An EICR is the accepted method of demonstrating compliance. The Scottish Government guidance recommends an EICR at least every five years. Landlords must provide a copy to tenants. Scotland's requirements have been in effect since before England introduced its 2020 regulations.",
   },
   {
     question: 'How is Scottish EICR law different from England?',
@@ -121,7 +121,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -147,10 +148,10 @@ const sections = [
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which specifies that an EICR must be used for periodic
-          inspection of existing installations. The inspector carries out a visual inspection and
-          programme of testing, classifying each observation using codes (C1, C2, C3, FI). The
-          overall installation is assessed as Satisfactory or Unsatisfactory.
+          (Section 631), which specifies that an EICR must be used for periodic inspection of
+          existing installations. The inspector carries out a visual inspection and programme of
+          testing, classifying each observation using codes (C1, C2, C3, FI). The overall
+          installation is assessed as Satisfactory or Unsatisfactory.
         </p>
         <p>
           BS 7671 applies across the whole of the UK, including Scotland. The technical requirements
@@ -353,9 +354,7 @@ const sections = [
       <>
         <p>
           Each defect is classified using one of four codes defined in the model forms accompanying{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
-            BS 7671
-          </SEOInternalLink>
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">BS 7671</SEOInternalLink>
           :
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
@@ -371,8 +370,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">C2 — Potentially Dangerous</h3>
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent action needed. Common C2 findings include lack of RCD
-              protection on socket circuits, absent or defective main bonding,
-              and obsolete rewirable fuse boards without appropriate protection.
+              protection on socket circuits, absent or defective main bonding, and obsolete
+              rewirable fuse boards without appropriate protection.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -483,9 +482,9 @@ const sections = [
     content: (
       <>
         <p>
-          The EICR involves a visual inspection and electrical testing. The inspector needs access to
-          every room, the consumer unit, meter position (which may be in the common close), and any
-          storage spaces. The power will be off for 30 to 60 minutes during dead testing.
+          The EICR involves a visual inspection and electrical testing. The inspector needs access
+          to every room, the consumer unit, meter position (which may be in the common close), and
+          any storage spaces. The power will be off for 30 to 60 minutes during dead testing.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -514,8 +513,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Report</strong> — EICR with Schedules of Circuit Details and Test Results
-                per Section 631, observations with codes, overall assessment, and
-                recommended next inspection date.
+                per Section 631, observations with codes, overall assessment, and recommended next
+                inspection date.
               </span>
             </li>
           </ul>
@@ -535,8 +534,8 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Section 6 requires periodic inspection at intervals suited to the property
-          type. The Scottish Government recommends:
+          BS 7671 Section 6 requires periodic inspection at intervals suited to the property type.
+          The Scottish Government recommends:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -550,8 +549,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Owner-occupied</strong> — every 10 years recommended, or 5 years for
-                older tenement properties.
+                <strong>Owner-occupied</strong> — every 10 years recommended, or 5 years for older
+                tenement properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -589,8 +588,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, SELECT (Scotland's
-                trade association for the electrical industry), and ELECSA all maintain registers of
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, SELECT (Scotland's trade
+                association for the electrical industry), and ELECSA all maintain registers of
                 qualified electricians. SELECT is particularly prominent in Scotland and many
                 Glasgow-based electricians are SELECT-registered.
               </span>
@@ -627,9 +626,9 @@ const sections = [
       <>
         <p>
           Glasgow has a massive private rented sector and thousands of tenement flats requiring
-          regular EICRs. The combination of landlord registration requirements, HMO licensing
-          (with Scotland's lower three-occupant threshold), and the Repairing Standard creates
-          consistent demand for qualified inspectors.
+          regular EICRs. The combination of landlord registration requirements, HMO licensing (with
+          Scotland's lower three-occupant threshold), and the Repairing Standard creates consistent
+          demand for qualified inspectors.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -656,8 +655,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Win Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, quote the remedial work immediately with
-                  the{' '}
+                  When C1 or C2 observations are found, quote the remedial work immediately with the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -670,7 +668,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -695,8 +693,7 @@ export default function EICRGlasgowPage() {
       badgeIcon={FileCheck2}
       heroTitle={
         <>
-          EICR Glasgow:{' '}
-          <span className="text-yellow-400">Electrical Safety Certificate 2026</span>
+          EICR Glasgow: <span className="text-yellow-400">Electrical Safety Certificate 2026</span>
         </>
       }
       heroSubtitle="Complete guide to EICRs in Glasgow — costs, Scottish landlord requirements (different from England), tenement flat challenges, observation codes, and finding a qualified inspector."
@@ -707,7 +704,7 @@ export default function EICRGlasgowPage() {
       faqHeading="Frequently Asked Questions About EICRs in Glasgow"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

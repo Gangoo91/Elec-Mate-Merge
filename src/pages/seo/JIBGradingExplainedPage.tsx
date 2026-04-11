@@ -95,7 +95,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/gold-card-requirements-electrician',
     title: 'Gold Card Requirements',
-    description: 'The qualifications needed for the ECS Gold Card — the Technician grade equivalent.',
+    description:
+      'The qualifications needed for the ECS Gold Card — the Technician grade equivalent.',
     icon: Award,
     category: 'Guide',
   },
@@ -147,9 +148,7 @@ const sections = [
         </p>
         <p>
           The JIB does several things: it manages the{' '}
-          <SEOInternalLink href="/guides/ecs-card-types-explained">
-            ECS card scheme
-          </SEOInternalLink>
+          <SEOInternalLink href="/guides/ecs-card-types-explained">ECS card scheme</SEOInternalLink>
           , sets national pay rates by grade, defines employment terms and conditions, and provides
           a welfare benefits scheme for JIB-graded electricians. For many electricians, the JIB
           grade they hold determines their career trajectory, their pay, and the projects they can
@@ -180,8 +179,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Electrical Labourer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Entry-level grade for electrical workers who are not yet qualified. Assists
-                  qualified electricians on site. No formal electrical qualifications required beyond
-                  health and safety.
+                  qualified electricians on site. No formal electrical qualifications required
+                  beyond health and safety.
                 </p>
               </div>
             </div>
@@ -190,7 +189,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <Briefcase className="w-6 h-6 text-blue-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Electrician (Installation or Maintenance)</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Electrician (Installation or Maintenance)
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   The standard qualified electrician grade. Requires NVQ Level 3, C&G 2382 (18th
                   Edition), and the AM2 assessment. Can work unsupervised on installation or
@@ -219,8 +220,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Technician</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The highest standard JIB grade. Requires all Approved Electrician qualifications
-                  plus a design qualification (C&G 2396 or equivalent). Can design, install, inspect,
-                  and test. Corresponds to the ECS Gold Card. Highest standard pay rate.
+                  plus a design qualification (C&G 2396 or equivalent). Can design, install,
+                  inspect, and test. Corresponds to the ECS Gold Card. Highest standard pay rate.
                 </p>
               </div>
             </div>
@@ -266,9 +267,9 @@ const sections = [
         </p>
         <p>
           The difference between Electrician and Technician grade is approximately 2.92 pounds per
-          hour nationally. Over a standard 37.5-hour week, that is 109.50 pounds more per week,
-          or roughly 5,694 pounds more per year. The investment in additional qualifications pays
-          for itself many times over.
+          hour nationally. Over a standard 37.5-hour week, that is 109.50 pounds more per week, or
+          roughly 5,694 pounds more per year. The investment in additional qualifications pays for
+          itself many times over.
         </p>
       </>
     ),
@@ -278,9 +279,7 @@ const sections = [
     heading: 'Progression Pathway',
     content: (
       <>
-        <p>
-          Here is the typical career progression through JIB grades:
-        </p>
+        <p>Here is the typical career progression through JIB grades:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -288,7 +287,9 @@ const sections = [
               <span>
                 <strong>Apprentice to Electrician (3 to 4 years):</strong> Complete your
                 apprenticeship, pass the NVQ Level 3, take the{' '}
-                <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">C&G 2382</SEOInternalLink>
+                <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
+                  C&G 2382
+                </SEOInternalLink>
                 , and pass the{' '}
                 <SEOInternalLink href="/guides/am2-exam-tips">AM2 assessment</SEOInternalLink>.
               </span>
@@ -304,14 +305,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ArrowUpRight className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approved Electrician to Technician (1 to 2 years):</strong> Take and pass the{' '}
+                <strong>Approved Electrician to Technician (1 to 2 years):</strong> Take and pass
+                the{' '}
                 <SEOInternalLink href="/guides/city-guilds-2396-design-course">
                   C&G 2396
                 </SEOInternalLink>{' '}
                 (Electrical Design). Gain experience in design work. Apply for regrading and the{' '}
                 <SEOInternalLink href="/guides/gold-card-requirements-electrician">
                   Gold Card
-                </SEOInternalLink>.
+                </SEOInternalLink>
+                .
               </span>
             </li>
           </ul>
@@ -369,9 +372,7 @@ const sections = [
     heading: 'Benefits of JIB Grading',
     content: (
       <>
-        <p>
-          JIB grading provides more than just a pay rate:
-        </p>
+        <p>JIB grading provides more than just a pay rate:</p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -418,10 +419,10 @@ const sections = [
     content: (
       <>
         <p>
-          If you are an electrical contractor, operating under JIB terms has several advantages:
-          it helps you recruit and retain quality electricians (who prefer JIB terms), it
-          demonstrates professionalism to clients (many specify JIB compliance in contracts), and
-          it provides a clear framework for pay and progression that reduces disputes.
+          If you are an electrical contractor, operating under JIB terms has several advantages: it
+          helps you recruit and retain quality electricians (who prefer JIB terms), it demonstrates
+          professionalism to clients (many specify JIB compliance in contracts), and it provides a
+          clear framework for pay and progression that reduces disputes.
         </p>
         <SEOAppBridge
           title="Manage your team with Elec-Mate"
@@ -462,7 +463,7 @@ export default function JIBGradingExplainedPage() {
       faqHeading="Frequently Asked Questions About JIB Grading"
       relatedPages={relatedPages}
       ctaHeading="Progress Your Electrical Career With Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for training, qualification tracking, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

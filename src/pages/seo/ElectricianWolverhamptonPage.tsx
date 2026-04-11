@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Who is the electricity Distribution Network Operator for Wolverhampton?',
     answer:
-      'National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Wolverhampton and the wider West Midlands region. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Wolverhampton are typically 4 to 8 weeks. Your electrician can advise on whether your existing supply is adequate and submit the application on your behalf.',
+      "National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Wolverhampton and the wider West Midlands region. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Wolverhampton are typically 4 to 8 weeks. Your electrician can advise on whether your existing supply is adequate and submit the application on your behalf.",
   },
 ];
 
@@ -119,7 +119,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Wolverhampton customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Wolverhampton customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -138,9 +139,9 @@ const sections = [
         <p>
           Wolverhampton, the largest city in the Black Country, has a population of around 265,000
           and sits at the heart of the West Midlands conurbation. The city's property stock is
-          diverse — from Victorian terraces in the leafy suburbs of Penn and Tettenhall to
-          large post-war council estates in Bushbury and Low Hill, and modern developments around
-          the city centre and the i54 business park corridor.
+          diverse — from Victorian terraces in the leafy suburbs of Penn and Tettenhall to large
+          post-war council estates in Bushbury and Low Hill, and modern developments around the city
+          centre and the i54 business park corridor.
         </p>
         <p>
           The Wolverhampton electrical market is well served by local firms, many of which also
@@ -156,22 +157,21 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
-          signed off by local authority building control. The most recognised competent person schemes
-          are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          signed off by local authority building control. The most recognised competent person
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
-          Before hiring any electrician in Wolverhampton, verify their credentials. This protects you
-          legally, financially, and physically. Here is what to check:
+          Before hiring any electrician in Wolverhampton, verify their credentials. This protects
+          you legally, financially, and physically. Here is what to check:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -225,8 +225,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed terraced house)</strong> — £4,200 to £6,500 including
-                new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
+                <strong>Full rewire (3-bed terraced house)</strong> — £4,200 to £6,500 including new
+                consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
                 certification.
               </span>
             </li>
@@ -290,9 +290,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Areas like Penn, Whitmore Reans, and parts of Tettenhall have substantial Victorian
               and Edwardian housing. These properties typically have solid brick walls, high
-              ceilings, and often retain original features. Multiple partial rewires over the decades
-              are common, and a full rewire is frequently the most practical and cost-effective
-              approach.
+              ceilings, and often retain original features. Multiple partial rewires over the
+              decades are common, and a full rewire is frequently the most practical and
+              cost-effective approach.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -310,9 +310,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Wolverhampton has several high-rise blocks, particularly in Heath Town. Electrical
               work in these blocks requires coordination with the housing association or council,
-              and may involve communal systems including emergency lighting, fire alarms, and
-              door entry systems. Access to risers and communal cupboards must be arranged in
-              advance.
+              and may involve communal systems including emergency lighting, fire alarms, and door
+              entry systems. Access to risers and communal cupboards must be arranged in advance.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -343,9 +342,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New connections and supply upgrades</strong> — apply to NGED for new supplies
-                or upgrades from single-phase to three-phase. Wolverhampton lead times are typically
-                4 to 8 weeks.
+                <strong>New connections and supply upgrades</strong> — apply to NGED for new
+                supplies or upgrades from single-phase to three-phase. Wolverhampton lead times are
+                typically 4 to 8 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -366,8 +365,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Wolverhampton is overseen by City of
           Wolverhampton Council building control or an approved inspector.
         </p>
@@ -398,9 +396,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Residential conversions</strong> — former industrial and commercial buildings
-                being converted to residential use require complete new electrical installations
-                designed from scratch, with careful attention to fire safety in converted buildings.
+                <strong>Residential conversions</strong> — former industrial and commercial
+                buildings being converted to residential use require complete new electrical
+                installations designed from scratch, with careful attention to fire safety in
+                converted buildings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -450,8 +449,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Landlords, letting agents, and property managers expect professional certificates.
-                  An{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
+                  An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF on site sets you apart from competitors still using
                   handwritten forms.
@@ -462,7 +460,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Wolverhampton electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -499,7 +497,7 @@ export default function ElectricianWolverhamptonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Wolverhampton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Wolverhampton and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Wolverhampton and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

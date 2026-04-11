@@ -681,7 +681,7 @@ export default function ElectricalQualificationsPathwayPage() {
       faqHeading="Frequently Asked Questions About Electrical Qualifications"
       relatedPages={relatedPages}
       ctaHeading="Every qualification, one platform"
-      ctaSubheading="Join 430+ UK electricians and apprentices using Elec-Mate for training, exam preparation, and CPD tracking. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians and apprentices using Elec-Mate for training, exam preparation, and CPD tracking. 7-day free trial, cancel anytime."
     />
   );
 }

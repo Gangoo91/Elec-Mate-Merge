@@ -216,17 +216,17 @@ const sections = [
     content: (
       <>
         <p>
-          Regulation 722.531.3.101 requires appropriate RCD protection for EV charging circuits.
-          The type of RCD depends on the charger design:
+          Regulation 722.531.3.101 requires appropriate RCD protection for EV charging circuits. The
+          type of RCD depends on the charger design:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Charger WITH DC Detection</h3>
             <p className="text-white text-sm leading-relaxed">
               If the EV charger has built-in DC fault current detection (to 6mA), a Type A RCD
-              (30mA) is sufficient. Most modern Mode 3 smart chargers include this feature. Check the
-              manufacturer data sheet for confirmation. This is the most common and cost-effective
-              arrangement.
+              (30mA) is sufficient. Most modern Mode 3 smart chargers include this feature. Check
+              the manufacturer data sheet for confirmation. This is the most common and
+              cost-effective arrangement.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
@@ -260,10 +260,10 @@ const sections = [
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">The PME Problem</h3>
           <p className="text-white text-sm leading-relaxed mb-4">
-            Most UK domestic supplies are TN-C-S (PME). The combined PEN conductor in the DNO
-            supply cable serves as both neutral and earth. If the PEN conductor breaks (open PEN
-            fault), all metalwork connected to the PME earth rises to a dangerous voltage relative to
-            true earth. Inside the building, the main bonding creates an equipotential zone — so the
+            Most UK domestic supplies are TN-C-S (PME). The combined PEN conductor in the DNO supply
+            cable serves as both neutral and earth. If the PEN conductor breaks (open PEN fault),
+            all metalwork connected to the PME earth rises to a dangerous voltage relative to true
+            earth. Inside the building, the main bonding creates an equipotential zone — so the
             person touching a radiator and a metal socket faceplate is protected because both are at
             the same potential.
           </p>
@@ -300,8 +300,8 @@ const sections = [
               <span>
                 <strong>Earth electrode (TT for EV circuit)</strong>: install a local earth rod and
                 connect it to the EV charger circuit protective conductor. The charger circuit
-                operates as TT, protected by a 30mA RCD. The main installation remains TN-C-S.
-                This is the most common solution.
+                operates as TT, protected by a 30mA RCD. The main installation remains TN-C-S. This
+                is the most common solution.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -357,8 +357,8 @@ const sections = [
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Maximum demand assessment</strong>: before installing an EV charger, assess
-                the maximum demand of the existing installation (using diversity per the IET
-                On-Site Guide) and verify that the supply can support the additional load.
+                the maximum demand of the existing installation (using diversity per the IET On-Site
+                Guide) and verify that the supply can support the additional load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -373,8 +373,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dynamic load management</strong>: a CT clamp on the meter tails monitors
-                the total installation demand in real time. The charger reduces its charge rate when
+                <strong>Dynamic load management</strong>: a CT clamp on the meter tails monitors the
+                total installation demand in real time. The charger reduces its charge rate when
                 other loads are high and increases it when demand drops. This avoids exceeding the
                 supply fuse rating.
               </span>
@@ -419,8 +419,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage drop</strong>: BS 7671 limits voltage drop to 5% for lighting and
-                5% for other uses (from the origin of the installation). For a 32A circuit, voltage
+                <strong>Voltage drop</strong>: BS 7671 limits voltage drop to 5% for lighting and 5%
+                for other uses (from the origin of the installation). For a 32A circuit, voltage
                 drop must be checked carefully on longer runs. Use the{' '}
                 <SEOInternalLink href="/tools/voltage-drop-calculator">
                   voltage drop calculator
@@ -468,8 +468,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable burial depth</strong>: underground SWA cable must be buried at a
-                minimum depth of 500mm (600mm under roads) and protected by cable tiles or
-                ducting. Route markers should be installed.
+                minimum depth of 500mm (600mm under roads) and protected by cable tiles or ducting.
+                Route markers should be installed.
               </span>
             </li>
           </ul>
@@ -509,7 +509,9 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Earth fault loop impedance (Zs) — note the maximum Zs for TT with 30mA RCD</span>
+              <span>
+                Earth fault loop impedance (Zs) — note the maximum Zs for TT with 30mA RCD
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -517,13 +519,14 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Functional test — verify the charger communicates with the vehicle and charges</span>
+              <span>
+                Functional test — verify the charger communicates with the vehicle and charges
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> must be issued.
+          An <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> must be issued.
           The certificate should note the earthing arrangement used for the EV circuit (particularly
           if a local earth electrode is installed on a PME supply), the RCD type, and the earth
           electrode resistance. Many installers also complete a specific{' '}
@@ -579,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify EV charger installations"
-          description="Join 430+ UK electricians using Elec-Mate for EV charger cable sizing, professional quoting, and on-site certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for EV charger cable sizing, professional quoting, and on-site certification. 7-day free trial."
           icon={Car}
         />
       </>
@@ -616,7 +619,7 @@ export default function Section722EVChargingGuidePage() {
       faqHeading="Frequently Asked Questions About Section 722 EV Charging"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify EV Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger cable sizing, quoting, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

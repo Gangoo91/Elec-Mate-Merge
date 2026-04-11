@@ -118,7 +118,7 @@ const features = [
   },
   {
     icon: Briefcase,
-    title: 'Part of 8 Certificate Types',
+    title: 'Part of 16 Certificate Types',
     description:
       'PAT testing is one of eight certificate types in Elec-Mate, alongside EIC, EICR, Minor Works, Emergency Lighting, Fire Alarm, EV Charger, and Solar PV certificates.',
   },
@@ -130,7 +130,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 8 certificate types.',
+    'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 16 certificate types.',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -140,7 +140,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -174,7 +174,7 @@ export default function PATTestingPage() {
   useSEO({
     title: 'PAT Testing App | Portable Appliance Testing',
     description:
-      'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 8 certificate types.',
+      'Digital PAT testing records on your phone. Visual inspection, earth continuity, insulation resistance, and lead polarity. IET Code of Practice compliant. Part of 16 certificate types.',
   });
 
   return (
@@ -197,7 +197,7 @@ export default function PATTestingPage() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-sm font-medium mb-6">
             <Plug className="w-4 h-4" />
-            Part of 8 Certificate Types
+            Part of 16 Certificate Types
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-5">
             PAT Testing App
@@ -769,8 +769,7 @@ export default function PATTestingPage() {
               results, and identify any items that need particular attention. This makes repeat
               visits faster, more efficient, and more valuable to the client. For fixed installation
               testing, see the{' '}
-              <SEOInternalLink href="/guides/eicr-guide">EICR guide</SEOInternalLink>
-              {' '}and{' '}
+              <SEOInternalLink href="/guides/eicr-guide">EICR guide</SEOInternalLink> and{' '}
               <SEOInternalLink href="/tools/prospective-fault-current-calculator">
                 prospective fault current calculator
               </SEOInternalLink>
@@ -825,7 +824,7 @@ export default function PATTestingPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Start PAT Testing Digitally"
-        subheading="Join 430+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for professional testing and certification. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

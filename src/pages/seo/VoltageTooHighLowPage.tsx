@@ -638,7 +638,7 @@ export default function VoltageTooHighLowPage() {
       faqHeading="Frequently Asked Questions About Supply Voltage"
       relatedPages={relatedPages}
       ctaHeading="Every BS 7671 Calculator on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for voltage drop calculations, cable sizing, AI fault diagnosis, and digital certificates. 7-day free trial, cancel anytime."
     />
   );
 }

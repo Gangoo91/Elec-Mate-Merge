@@ -89,8 +89,9 @@ const faqs = [
 const relatedPages: RelatedPage[] = [
   {
     href: '/guides/tripped-mcb-wont-reset',
-    title: 'Tripped MCB Won\'t Reset',
-    description: 'What to do when your circuit breaker trips and refuses to reset — causes and solutions.',
+    title: "Tripped MCB Won't Reset",
+    description:
+      'What to do when your circuit breaker trips and refuses to reset — causes and solutions.',
     icon: Zap,
     category: 'Guide',
   },
@@ -154,8 +155,8 @@ const sections = [
         </p>
         <p>
           This guide covers why fuses blow, the most common causes, what you can safely check
-          yourself, and when you need to call a qualified electrician. If you are an electrician, the
-          later sections cover systematic{' '}
+          yourself, and when you need to call a qualified electrician. If you are an electrician,
+          the later sections cover systematic{' '}
           <SEOInternalLink href="/guides/electrical-fault-finding">
             fault finding approaches
           </SEOInternalLink>{' '}
@@ -178,34 +179,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plug fuses (BS 1362)</strong> — the small cylindrical cartridge fuse inside a
-                UK plug. Available in 3A and 13A ratings (other ratings exist but are less common).
-                The fuse element melts when current exceeds the rating for a sustained period.
+                <strong>Plug fuses (BS 1362)</strong> — the small cylindrical cartridge fuse inside
+                a UK plug. Available in 3A and 13A ratings (other ratings exist but are less
+                common). The fuse element melts when current exceeds the rating for a sustained
+                period.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rewireable fuses (BS 3036)</strong> — older consumer unit fuses with a thin
-                wire stretched between two terminals. When current exceeds the rating, the wire melts
-                and must be replaced with the correct gauge of fuse wire. These have a lower fusing
-                factor than cartridge fuses, meaning they are less precise.
+                wire stretched between two terminals. When current exceeds the rating, the wire
+                melts and must be replaced with the correct gauge of fuse wire. These have a lower
+                fusing factor than cartridge fuses, meaning they are less precise.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cartridge fuses (BS 88 / BS 1361)</strong> — used in older consumer units and
-                some fused connection units. More precise than rewireable fuses but still sacrificial
-                — they must be replaced after blowing.
+                <strong>Cartridge fuses (BS 88 / BS 1361)</strong> — used in older consumer units
+                and some fused connection units. More precise than rewireable fuses but still
+                sacrificial — they must be replaced after blowing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCBs (miniature circuit breakers)</strong> — the modern replacement for fuses
-                in consumer units. They trip (disconnect) on overcurrent and can be reset. MCBs do
-                not blow — they trip. If your consumer unit has MCBs, see our{' '}
+                <strong>MCBs (miniature circuit breakers)</strong> — the modern replacement for
+                fuses in consumer units. They trip (disconnect) on overcurrent and can be reset.
+                MCBs do not blow — they trip. If your consumer unit has MCBs, see our{' '}
                 <SEOInternalLink href="/guides/tripped-mcb-wont-reset">
                   tripped MCB guide
                 </SEOInternalLink>{' '}
@@ -238,10 +240,10 @@ const sections = [
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h4 className="font-bold text-white mb-2">2. Short circuit</h4>
             <p className="text-white text-sm leading-relaxed">
-              A live conductor touches the neutral or earth conductor, creating a very low resistance
-              path. The current spikes to hundreds or thousands of amps and the fuse blows almost
-              instantly. Short circuits can occur inside appliances, in damaged cables, or at faulty
-              connections.
+              A live conductor touches the neutral or earth conductor, creating a very low
+              resistance path. The current spikes to hundreds or thousands of amps and the fuse
+              blows almost instantly. Short circuits can occur inside appliances, in damaged cables,
+              or at faulty connections.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -300,8 +302,8 @@ const sections = [
         </div>
         <p>
           Running a kettle, iron, and microwave simultaneously on the same circuit draws 30A — right
-          at the limit. Add a TV and a lamp and the fuse blows. The solution is to spread
-          high-power appliances across different circuits, or have additional circuits installed.
+          at the limit. Add a TV and a lamp and the fuse blows. The solution is to spread high-power
+          appliances across different circuits, or have additional circuits installed.
         </p>
         <p>
           For plug fuses, the arithmetic is simpler. A single socket with a 13A fuse can power
@@ -317,20 +319,18 @@ const sections = [
     content: (
       <>
         <p>
-          A short circuit causes a sudden, massive spike in current. The fuse blows almost
-          instantly — often with a visible flash or a popping sound. Short circuits are more
-          dangerous than overloads because the fault current can be extremely high.
+          A short circuit causes a sudden, massive spike in current. The fuse blows almost instantly
+          — often with a visible flash or a popping sound. Short circuits are more dangerous than
+          overloads because the fault current can be extremely high.
         </p>
-        <p>
-          Common causes of short circuits include:
-        </p>
+        <p>Common causes of short circuits include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Damaged cable insulation</strong> — a nail or screw driven through a cable in
-                the wall bridges the live and neutral conductors. This can happen years after the
+                <strong>Damaged cable insulation</strong> — a nail or screw driven through a cable
+                in the wall bridges the live and neutral conductors. This can happen years after the
                 cable was installed if someone drills or fixes something to the wall.
               </span>
             </li>
@@ -353,9 +353,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Water ingress</strong> — water is a conductor. If water enters a junction box,
-                socket, or light fitting, it can bridge live and neutral or live and earth, causing a
-                short circuit or earth fault.
+                <strong>Water ingress</strong> — water is a conductor. If water enters a junction
+                box, socket, or light fitting, it can bridge live and neutral or live and earth,
+                causing a short circuit or earth fault.
               </span>
             </li>
           </ul>
@@ -378,9 +378,7 @@ const sections = [
           diagnosis is straightforward: if the fuse only blows when a specific appliance is plugged
           in and switched on, that appliance is the problem.
         </p>
-        <p>
-          Common appliance faults that blow fuses include:
-        </p>
+        <p>Common appliance faults that blow fuses include:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -394,16 +392,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heating element failure</strong> — kettles, irons, and immersion heaters have
-                elements that can short-circuit to the casing when the insulation deteriorates.
+                <strong>Heating element failure</strong> — kettles, irons, and immersion heaters
+                have elements that can short-circuit to the casing when the insulation deteriorates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Damaged flex</strong> — the flexible cable between the plug and the appliance
-                can be damaged by kinking, crushing, or wear. Internal conductor damage can cause
-                intermittent short circuits.
+                <strong>Damaged flex</strong> — the flexible cable between the plug and the
+                appliance can be damaged by kinking, crushing, or wear. Internal conductor damage
+                can cause intermittent short circuits.
               </span>
             </li>
           </ul>
@@ -421,19 +419,20 @@ const sections = [
     heading: 'What to Do When a Fuse Blows',
     content: (
       <>
-        <p>
-          When a fuse blows, follow this systematic process to identify the cause safely:
-        </p>
+        <p>When a fuse blows, follow this systematic process to identify the cause safely:</p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h4 className="font-bold text-white mb-2">Step 1: Switch off and unplug</h4>
             <p className="text-white text-sm leading-relaxed">
-              Turn off the main switch at the consumer unit if the fuse is a circuit fuse. Unplug all
-              appliances from the affected circuit. If it is a plug fuse, simply unplug the appliance.
+              Turn off the main switch at the consumer unit if the fuse is a circuit fuse. Unplug
+              all appliances from the affected circuit. If it is a plug fuse, simply unplug the
+              appliance.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 2: Replace the fuse with the correct rating</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 2: Replace the fuse with the correct rating
+            </h4>
             <p className="text-white text-sm leading-relaxed">
               Replace the blown fuse with one of exactly the same rating. Never use a higher-rated
               fuse. For rewireable fuses, use the correct gauge of fuse wire. For cartridge fuses,
@@ -449,11 +448,13 @@ const sections = [
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">Step 4: Reconnect appliances one at a time</h4>
+            <h4 className="font-bold text-white mb-2">
+              Step 4: Reconnect appliances one at a time
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              Plug in and switch on each appliance individually, waiting a minute between each. If the
-              fuse blows when a specific appliance is connected, that appliance is faulty. If it blows
-              only when several are running simultaneously, the circuit is overloaded.
+              Plug in and switch on each appliance individually, waiting a minute between each. If
+              the fuse blows when a specific appliance is connected, that appliance is faulty. If it
+              blows only when several are running simultaneously, the circuit is overloaded.
             </p>
           </div>
         </div>
@@ -476,14 +477,16 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fuse blows with nothing plugged in</strong> — this indicates a fault in the
-                fixed wiring. Do not keep replacing fuses. Isolate the circuit and call an electrician.
+                fixed wiring. Do not keep replacing fuses. Isolate the circuit and call an
+                electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Burning smell or scorch marks</strong> — signs of overheating at a connection
-                point. This is a fire risk. Isolate the circuit and call an electrician as an emergency.
+                <strong>Burning smell or scorch marks</strong> — signs of overheating at a
+                connection point. This is a fire risk. Isolate the circuit and call an electrician
+                as an emergency.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -497,9 +500,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multiple circuits affected</strong> — if fuses blow on more than one circuit,
-                the problem may be at the consumer unit or the supply. This needs professional
-                diagnosis.
+                <strong>Multiple circuits affected</strong> — if fuses blow on more than one
+                circuit, the problem may be at the consumer unit or the supply. This needs
+                professional diagnosis.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -519,8 +522,8 @@ const sections = [
           An electrician investigating repeated fuse failures will carry out insulation resistance
           tests, check for short circuits, measure circuit loads, and inspect all accessible
           connections. They may recommend a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
-          if the installation has not been inspected recently.
+          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> if the
+          installation has not been inspected recently.
         </p>
       </>
     ),
@@ -531,7 +534,8 @@ const sections = [
     content: (
       <>
         <p>
-          When a customer reports a fuse that keeps blowing, use this systematic diagnostic approach:
+          When a customer reports a fuse that keeps blowing, use this systematic diagnostic
+          approach:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -540,9 +544,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">1. History and Context</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Establish when the fuse blows (time of day, which appliances running), how often, and
-                  whether anything changed recently (new appliance, building work, water leak). This
-                  narrows the diagnosis significantly before you open a single cover.
+                  Establish when the fuse blows (time of day, which appliances running), how often,
+                  and whether anything changed recently (new appliance, building work, water leak).
+                  This narrows the diagnosis significantly before you open a single cover.
                 </p>
               </div>
             </div>
@@ -553,8 +557,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Insulation Resistance Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  With the circuit isolated and all loads disconnected, test IR at 500V DC: L-E, N-E,
-                  L-N. Minimum acceptable value is 1 megohm per BS 7671 Table 6.3. Low readings
+                  With the circuit isolated and all loads disconnected, test IR at 500V DC: L-E,
+                  N-E, L-N. Minimum acceptable value is 1 megohm per BS 7671 Table 6.3. Low readings
                   indicate insulation breakdown — then subdivide the circuit to locate the fault.
                 </p>
               </div>
@@ -580,9 +584,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Remediate and Document</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Fix the root cause — replace damaged cable, repair or replace the faulty appliance,
-                  redistribute loads, or add circuits as needed. Consider recommending a consumer unit
-                  upgrade if the customer still has rewireable fuses. Issue a{' '}
+                  Fix the root cause — replace damaged cable, repair or replace the faulty
+                  appliance, redistribute loads, or add circuits as needed. Consider recommending a
+                  consumer unit upgrade if the customer still has rewireable fuses. Issue a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -594,7 +598,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document fault finding with professional certificates"
-          description="Elec-Mate's certificate apps let you complete Minor Works Certificates and EICRs on your phone with test results, observation codes, and instant PDF export. Join 430+ UK electricians."
+          description="Elec-Mate's certificate apps let you complete Minor Works Certificates and EICRs on your phone with test results, observation codes, and instant PDF export. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -619,8 +623,7 @@ export default function FuseKeepsBlowingPage() {
       badgeIcon={Zap}
       heroTitle={
         <>
-          Fuse Keeps Blowing:{' '}
-          <span className="text-yellow-400">Causes and What to Do</span>
+          Fuse Keeps Blowing: <span className="text-yellow-400">Causes and What to Do</span>
         </>
       }
       heroSubtitle="A fuse that keeps blowing is a warning sign. This guide explains the three main causes — overloaded circuits, short circuits, and faulty appliances — tells you what to check safely, and explains when to call an electrician."
@@ -631,7 +634,7 @@ export default function FuseKeepsBlowingPage() {
       faqHeading="Frequently Asked Questions About Blown Fuses"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Electrical Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance recording, and professional certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, insulation resistance recording, and professional certificates. 7-day free trial, cancel anytime."
     />
   );
 }

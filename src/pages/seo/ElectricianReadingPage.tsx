@@ -40,9 +40,9 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
-  'SSEN (Scottish and Southern Electricity Networks, operating as Southern Electric) is Reading\'s DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with SSEN.',
-  'Reading\'s position on the M4 corridor and as a Thames Valley tech hub means strong demand for both commercial fit-outs (data centres, office parks) and domestic work, with rates 10% to 15% above the national average.',
-  'Victorian terraces in Caversham, Tilehurst, and the town centre are a significant part of Reading\'s housing stock and present the usual challenges of solid walls, high ceilings, and multiple previous partial rewires.',
+  "SSEN (Scottish and Southern Electricity Networks, operating as Southern Electric) is Reading's DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with SSEN.",
+  "Reading's position on the M4 corridor and as a Thames Valley tech hub means strong demand for both commercial fit-outs (data centres, office parks) and domestic work, with rates 10% to 15% above the national average.",
+  "Victorian terraces in Caversham, Tilehurst, and the town centre are a significant part of Reading's housing stock and present the usual challenges of solid walls, high ceilings, and multiple previous partial rewires.",
   'The University of Reading drives a steady student rental market requiring EICR compliance, fire alarm installations, and electrical upgrades in HMOs across the Whitley, Earley, and Woodley areas.',
 ];
 
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How much does an electrician cost in Reading?',
     answer:
-      'Reading electrician day rates typically range from £280 to £380 per day for a qualified electrician. Hourly rates are usually £45 to £65 per hour, with emergency call-out rates of £75 to £110 per hour. Reading rates are 10% to 15% above the national average, reflecting the town\'s proximity to London, the strong demand from the tech sector, and higher operating costs in the Thames Valley. Commercial rates for office and data centre work are higher still. Always get a fixed quote for defined work rather than agreeing to day rates where possible.',
+      "Reading electrician day rates typically range from £280 to £380 per day for a qualified electrician. Hourly rates are usually £45 to £65 per hour, with emergency call-out rates of £75 to £110 per hour. Reading rates are 10% to 15% above the national average, reflecting the town's proximity to London, the strong demand from the tech sector, and higher operating costs in the Thames Valley. Commercial rates for office and data centre work are higher still. Always get a fixed quote for defined work rather than agreeing to day rates where possible.",
   },
   {
     question: 'How do I check if a Reading electrician is properly qualified?',
@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'How long does a full rewire take in a Reading Victorian terrace?',
     answer:
-      'A full rewire of a typical 3-bedroom Victorian terraced house in areas like Caversham, West Reading, or Tilehurst takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Reading\'s Victorian properties have the usual challenges — solid brick or flint walls, lath-and-plaster ceilings, high ceilings, and often multiple previous partial rewires. Properties in Caversham Heights, which tend to be larger detached Victorian and Edwardian houses, will take longer. Allow additional time if the property has a loft conversion or extension that needs integrating into the new installation.',
+      "A full rewire of a typical 3-bedroom Victorian terraced house in areas like Caversham, West Reading, or Tilehurst takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Reading's Victorian properties have the usual challenges — solid brick or flint walls, lath-and-plaster ceilings, high ceilings, and often multiple previous partial rewires. Properties in Caversham Heights, which tend to be larger detached Victorian and Edwardian houses, will take longer. Allow additional time if the property has a loft conversion or extension that needs integrating into the new installation.",
   },
   {
     question: 'Do I need building control approval for electrical work in Reading?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Who is the electricity supplier for Reading and how do I get a new connection?',
     answer:
-      'SSEN (Scottish and Southern Electricity Networks), operating locally as Southern Electric, is the Distribution Network Operator for Reading and the wider Thames Valley. To request a new supply, upgraded supply, or meter relocation, you apply through SSEN\'s website (ssen.co.uk). Lead times for new connections in Reading are typically 4 to 10 weeks, though complex commercial connections in the town centre or on business parks can take longer. Costs vary — a simple meter relocation might be £450 to £1,300, while a new three-phase supply can cost £2,500 to £8,000. The growing demand from EV chargers and heat pumps is putting pressure on local network capacity in some Reading suburbs.',
+      "SSEN (Scottish and Southern Electricity Networks), operating locally as Southern Electric, is the Distribution Network Operator for Reading and the wider Thames Valley. To request a new supply, upgraded supply, or meter relocation, you apply through SSEN's website (ssen.co.uk). Lead times for new connections in Reading are typically 4 to 10 weeks, though complex commercial connections in the town centre or on business parks can take longer. Costs vary — a simple meter relocation might be £450 to £1,300, while a new three-phase supply can cost £2,500 to £8,000. The growing demand from EV chargers and heat pumps is putting pressure on local network capacity in some Reading suburbs.",
   },
   {
     question: 'Is there high demand for electricians in Reading?',
@@ -149,12 +149,12 @@ const sections = [
         </p>
         <p>
           The Reading electrical market divides broadly into commercial and domestic sectors. The
-          commercial sector is driven by the tech corridor (Green Park, Thames Valley Park, Arlington
-          Business Park, and the town centre office developments), which requires specialist
-          commercial electricians for office fit-outs, server rooms, UPS systems, and structured
-          cabling. The domestic sector is driven by a mix of Victorian and Edwardian properties
-          needing upgrades, new-build estates on the town fringes, and a large rental market
-          including university HMOs.
+          commercial sector is driven by the tech corridor (Green Park, Thames Valley Park,
+          Arlington Business Park, and the town centre office developments), which requires
+          specialist commercial electricians for office fit-outs, server rooms, UPS systems, and
+          structured cabling. The domestic sector is driven by a mix of Victorian and Edwardian
+          properties needing upgrades, new-build estates on the town fringes, and a large rental
+          market including university HMOs.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -173,7 +173,7 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -294,8 +294,8 @@ const sections = [
         </div>
         <p>
           These prices are indicative for 2026 and vary across Reading. South Reading and Whitley
-          tend to be at the lower end; Caversham, Sonning, and the Henley-on-Thames fringe are at the
-          higher end. Always get at least three written quotes for any significant work.
+          tend to be at the lower end; Caversham, Sonning, and the Henley-on-Thames fringe are at
+          the higher end. Always get at least three written quotes for any significant work.
         </p>
       </>
     ),
@@ -306,8 +306,8 @@ const sections = [
     content: (
       <>
         <p>
-          Reading's property stock spans several centuries and styles, from Victorian terraces in the
-          town centre and Caversham to modern new-build estates on the town's expanding fringes.
+          Reading's property stock spans several centuries and styles, from Victorian terraces in
+          the town centre and Caversham to modern new-build estates on the town's expanding fringes.
           Understanding these property types helps you know what to expect when hiring an
           electrician.
         </p>
@@ -340,8 +340,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The University of Reading's Whiteknights campus is surrounded by residential areas
               (Earley, Woodley, parts of Whitley) with a high concentration of student HMOs. These
-              properties must meet additional electrical requirements under Reading Borough Council's
-              HMO licensing conditions, including mains-powered interlinked smoke and heat
+              properties must meet additional electrical requirements under Reading Borough
+              Council's HMO licensing conditions, including mains-powered interlinked smoke and heat
               detection, emergency lighting, and RCD protection on all circuits. Annual gas safety
               checks and 5-yearly EICRs are mandatory.
             </p>
@@ -349,8 +349,8 @@ const sections = [
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">New-Build Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Reading is expanding with new-build developments in Shinfield, south of the M4, and
-              in the Green Park area. While new-build electrical installations are to current
+              Reading is expanding with new-build developments in Shinfield, south of the M4, and in
+              the Green Park area. While new-build electrical installations are to current
               standards, snagging issues (poor connections, missing bonding, untested circuits) are
               not uncommon. New homeowners should request a copy of the electrical installation
               certificate (EIC) and consider an independent EICR within the first year.
@@ -406,8 +406,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Reading is overseen by Reading Borough Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf.
@@ -432,18 +431,18 @@ const sections = [
               <span>
                 <strong>Office fit-outs</strong> — Green Park, Thames Valley Park, and the town
                 centre office developments require regular electrical fit-outs as tenants change.
-                Work includes power distribution, structured cabling, emergency lighting,
-                fire alarm modifications, and increasingly, EV charging infrastructure in car parks.
-                These contracts typically require 18th Edition qualified electricians with
-                commercial experience and CSCS/ECS cards.
+                Work includes power distribution, structured cabling, emergency lighting, fire alarm
+                modifications, and increasingly, EV charging infrastructure in car parks. These
+                contracts typically require 18th Edition qualified electricians with commercial
+                experience and CSCS/ECS cards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data centre work</strong> — the Thames Valley hosts a significant cluster
-                of data centres (Slough being the primary hub, but with facilities across the
-                M4 corridor). Electrical work on data centres is highly specialised — UPS systems,
+                <strong>Data centre work</strong> — the Thames Valley hosts a significant cluster of
+                data centres (Slough being the primary hub, but with facilities across the M4
+                corridor). Electrical work on data centres is highly specialised — UPS systems,
                 redundant power feeds, PDUs, busbar systems, and standby generation. This work
                 commands premium rates but requires specialist qualifications and clearances.
               </span>
@@ -550,8 +549,8 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site sets you apart from
-                  competitors still posting handwritten certificates. For commercial work on business
-                  parks, digital certificates and test results are increasingly a contract
+                  competitors still posting handwritten certificates. For commercial work on
+                  business parks, digital certificates and test results are increasingly a contract
                   requirement.
                 </p>
               </div>
@@ -560,7 +559,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Reading electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -597,7 +596,7 @@ export default function ElectricianReadingPage() {
       faqHeading="Frequently Asked Questions About Electricians in Reading"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Reading and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Reading and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

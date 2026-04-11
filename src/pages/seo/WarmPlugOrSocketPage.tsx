@@ -91,21 +91,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/burning-smell-from-socket',
     title: 'Burning Smell From Socket',
-    description: 'What to do if you smell burning from an electrical socket — causes and immediate actions.',
+    description:
+      'What to do if you smell burning from an electrical socket — causes and immediate actions.',
     icon: Flame,
     category: 'Guide',
   },
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic fault finding approach for electricians investigating overheating sockets.',
+    description:
+      'Systematic fault finding approach for electricians investigating overheating sockets.',
     icon: Search,
     category: 'Guide',
   },
   {
     href: '/guides/ring-circuit-fault-finding',
     title: 'Ring Circuit Fault Finding',
-    description: 'How to diagnose faults on ring final circuits including overloaded and broken rings.',
+    description:
+      'How to diagnose faults on ring final circuits including overloaded and broken rings.',
     icon: Cable,
     category: 'Guide',
   },
@@ -119,14 +122,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-certificate',
     title: 'EICR Guide',
-    description: 'What an EICR involves and how it detects overheating connections and overloaded circuits.',
+    description:
+      'What an EICR involves and how it detects overheating connections and overloaded circuits.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
-    description: 'How Arc Fault Detection Devices protect against fires caused by loose connections.',
+    description:
+      'How Arc Fault Detection Devices protect against fires caused by loose connections.',
     icon: Zap,
     category: 'Guide',
   },
@@ -143,22 +148,23 @@ const sections = [
     content: (
       <>
         <p>
-          You pull a plug out of the wall socket and notice the pins are warm. Or you touch the socket
-          faceplate and it feels warmer than the surrounding wall. This is not something to ignore.
+          You pull a plug out of the wall socket and notice the pins are warm. Or you touch the
+          socket faceplate and it feels warmer than the surrounding wall. This is not something to
+          ignore.
         </p>
         <p>
-          A warm plug or socket means that electrical energy is being converted to heat at a connection
-          point. In a perfect electrical connection, all the energy flows through to the appliance with
-          no loss. In reality, every connection has some resistance, and that resistance converts a
-          tiny fraction of the energy to heat. In a healthy installation with good connections, this
-          heat is so small it is undetectable. When a plug or socket is noticeably warm, the
-          resistance is abnormally high — and that means something is wrong.
+          A warm plug or socket means that electrical energy is being converted to heat at a
+          connection point. In a perfect electrical connection, all the energy flows through to the
+          appliance with no loss. In reality, every connection has some resistance, and that
+          resistance converts a tiny fraction of the energy to heat. In a healthy installation with
+          good connections, this heat is so small it is undetectable. When a plug or socket is
+          noticeably warm, the resistance is abnormally high — and that means something is wrong.
         </p>
         <p>
           This is a safety-critical issue. Overheating electrical connections are one of the leading
           causes of house fires in the UK. This guide covers the causes, the immediate actions you
-          should take, the fire risk, and when to call an electrician. If you are an electrician, the
-          later sections cover thermal imaging techniques and the relevant{' '}
+          should take, the fire risk, and when to call an electrician. If you are an electrician,
+          the later sections cover thermal imaging techniques and the relevant{' '}
           <SEOInternalLink href="/guides/consumer-unit-regulations">
             BS 7671 regulations
           </SEOInternalLink>{' '}
@@ -178,36 +184,42 @@ const sections = [
         </p>
         <div className="space-y-3 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">If the plug is slightly warm after prolonged use with a high-power appliance:</h4>
+            <h4 className="font-bold text-white mb-2">
+              If the plug is slightly warm after prolonged use with a high-power appliance:
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              Unplug the appliance and let it cool. Check that the plug pins are clean and the fuse is
-              the correct rating. Reinsert the plug firmly, ensuring it is fully seated. Monitor the
-              temperature on next use. If it continues to be warm, arrange an inspection.
+              Unplug the appliance and let it cool. Check that the plug pins are clean and the fuse
+              is the correct rating. Reinsert the plug firmly, ensuring it is fully seated. Monitor
+              the temperature on next use. If it continues to be warm, arrange an inspection.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">If the socket faceplate is warm or the plug is uncomfortably warm:</h4>
+            <h4 className="font-bold text-white mb-2">
+              If the socket faceplate is warm or the plug is uncomfortably warm:
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              Unplug all appliances from the socket. Do not use the socket. Check whether other sockets
-              on the same circuit are also warm — if so, the issue may be the circuit, not just one
-              socket. Arrange for a qualified electrician to inspect the socket, the connections behind
-              it, and the circuit.
+              Unplug all appliances from the socket. Do not use the socket. Check whether other
+              sockets on the same circuit are also warm — if so, the issue may be the circuit, not
+              just one socket. Arrange for a qualified electrician to inspect the socket, the
+              connections behind it, and the circuit.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
-            <h4 className="font-bold text-white mb-2">If the socket is hot, discoloured, or smells of burning:</h4>
+            <h4 className="font-bold text-white mb-2">
+              If the socket is hot, discoloured, or smells of burning:
+            </h4>
             <p className="text-white text-sm leading-relaxed">
-              <strong>This is an emergency.</strong> Unplug appliances carefully (the plug may be very
-              hot — use a dry cloth if needed). Turn off the circuit at the consumer unit. Do not use
-              the socket or the circuit. Call an electrician for an emergency visit. If you see smoke or
-              flames, leave the property and call 999.
+              <strong>This is an emergency.</strong> Unplug appliances carefully (the plug may be
+              very hot — use a dry cloth if needed). Turn off the circuit at the consumer unit. Do
+              not use the socket or the circuit. Call an electrician for an emergency visit. If you
+              see smoke or flames, leave the property and call 999.
             </p>
           </div>
         </div>
         <p>
-          The key principle is: the hotter it is, the more urgent the action. A slightly warm plug on
-          a fan heater may not be an emergency, but any socket that is hot to the touch, discoloured,
-          or emitting a smell needs immediate isolation and professional inspection.
+          The key principle is: the hotter it is, the more urgent the action. A slightly warm plug
+          on a fan heater may not be an emergency, but any socket that is hot to the touch,
+          discoloured, or emitting a smell needs immediate isolation and professional inspection.
         </p>
       </>
     ),
@@ -226,10 +238,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loose plug terminal screws</strong> — inside the plug, the live, neutral, and
-                earth wires are secured by terminal screws. If these are loose, the reduced contact
-                area increases resistance and generates heat. This is easy to check and fix by opening
-                the plug and tightening the screws.
+                <strong>Loose plug terminal screws</strong> — inside the plug, the live, neutral,
+                and earth wires are secured by terminal screws. If these are loose, the reduced
+                contact area increases resistance and generates heat. This is easy to check and fix
+                by opening the plug and tightening the screws.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -237,42 +249,43 @@ const sections = [
               <span>
                 <strong>Loose socket terminal screws</strong> — behind the socket faceplate, the
                 circuit cables are secured by terminal screws. Loose terminals here create the same
-                problem but are more dangerous because they carry the full circuit load. This requires
-                an electrician to inspect and retorque.
+                problem but are more dangerous because they carry the full circuit load. This
+                requires an electrician to inspect and retorque.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Worn socket contacts</strong> — the spring contacts inside the socket that grip
-                the plug pins wear over thousands of insertion cycles. Worn contacts have a smaller
-                contact area, higher resistance, and generate more heat.
+                <strong>Worn socket contacts</strong> — the spring contacts inside the socket that
+                grip the plug pins wear over thousands of insertion cycles. Worn contacts have a
+                smaller contact area, higher resistance, and generate more heat.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overloaded socket</strong> — plugging too many appliances into a single socket
-                via extension leads or adaptors draws more current than the socket was designed for.
-                At 13A, a fully loaded socket is working at its maximum continuous rating.
+                <strong>Overloaded socket</strong> — plugging too many appliances into a single
+                socket via extension leads or adaptors draws more current than the socket was
+                designed for. At 13A, a fully loaded socket is working at its maximum continuous
+                rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Damaged cable</strong> — if the cable inside the wall is damaged (nicked by a
-                screw, crushed, or degraded by heat), the conductor cross-section is reduced at that
-                point. The reduced cross-section has higher resistance and generates heat. This is
-                hidden inside the wall and requires professional investigation.
+                <strong>Damaged cable</strong> — if the cable inside the wall is damaged (nicked by
+                a screw, crushed, or degraded by heat), the conductor cross-section is reduced at
+                that point. The reduced cross-section has higher resistance and generates heat. This
+                is hidden inside the wall and requires professional investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Wrong fuse in the plug</strong> — a 13A fuse in a plug powering a 3A appliance
-                will not blow until the current exceeds 13A. If the cable or appliance develops a
-                partial fault drawing 5-6A, the 13A fuse will not disconnect. Always use the correct
-                fuse rating for the appliance.
+                <strong>Wrong fuse in the plug</strong> — a 13A fuse in a plug powering a 3A
+                appliance will not blow until the current exceeds 13A. If the cable or appliance
+                develops a partial fault drawing 5-6A, the 13A fuse will not disconnect. Always use
+                the correct fuse rating for the appliance.
               </span>
             </li>
           </ul>
@@ -286,20 +299,21 @@ const sections = [
     content: (
       <>
         <p>
-          Loose electrical connections are the single most dangerous cause of warm sockets and plugs.
-          The physics is straightforward but the consequences are severe.
+          Loose electrical connections are the single most dangerous cause of warm sockets and
+          plugs. The physics is straightforward but the consequences are severe.
         </p>
         <p>
-          When a connection is tight, the full cross-sectional area of the conductor is in contact with
-          the terminal. The resistance is low, and the heat generated is negligible. When a connection
-          loosens, the contact area shrinks. The same current flowing through a smaller contact area
-          produces a higher current density, higher resistance, and significantly more heat.
+          When a connection is tight, the full cross-sectional area of the conductor is in contact
+          with the terminal. The resistance is low, and the heat generated is negligible. When a
+          connection loosens, the contact area shrinks. The same current flowing through a smaller
+          contact area produces a higher current density, higher resistance, and significantly more
+          heat.
         </p>
         <p>
           The temperature at a loose connection under load can be extraordinary. At the micro-level,
-          where the last few strands of copper are making contact with the terminal, temperatures can
-          reach hundreds of degrees Celsius. If the connection is loose enough to intermittently make
-          and break contact (arcing), temperatures at the arc point exceed 3,000°C.
+          where the last few strands of copper are making contact with the terminal, temperatures
+          can reach hundreds of degrees Celsius. If the connection is loose enough to intermittently
+          make and break contact (arcing), temperatures at the arc point exceed 3,000°C.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-3">Why Loose Connections Get Worse</h3>
@@ -309,7 +323,9 @@ const sections = [
           <ul className="space-y-3 text-white text-sm">
             <li className="flex items-start gap-3">
               <span className="text-red-400 font-bold shrink-0">1.</span>
-              <span>Connection loosens slightly (vibration, thermal cycling, poor initial tightening)</span>
+              <span>
+                Connection loosens slightly (vibration, thermal cycling, poor initial tightening)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-red-400 font-bold shrink-0">2.</span>
@@ -321,7 +337,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <span className="text-red-400 font-bold shrink-0">4.</span>
-              <span>Oxidation forms on the copper surface (accelerated by heat), further increasing resistance</span>
+              <span>
+                Oxidation forms on the copper surface (accelerated by heat), further increasing
+                resistance
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-red-400 font-bold shrink-0">5.</span>
@@ -336,8 +355,8 @@ const sections = [
         <p>
           This is why early detection matters. A connection that is slightly warm today may be
           dangerously hot in a few months. BS 7671 Section 543 requires the circuit protective
-          conductor to connect exposed conductive parts to the main earthing terminal,
-          ensuring fault currents flow safely. When connections deteriorate, this protective path is
+          conductor to connect exposed conductive parts to the main earthing terminal, ensuring
+          fault currents flow safely. When connections deteriorate, this protective path is
           compromised.
         </p>
       </>
@@ -390,17 +409,17 @@ const sections = [
         </div>
         <p>
           Plugging a four-way extension lead into a single socket and running a toaster (9A) and a
-          microwave (6A) simultaneously draws 15A through that one socket — 2A over its rated capacity.
-          The socket will get warm, the plug will get warm, and the extension lead cable may also
-          overheat.
+          microwave (6A) simultaneously draws 15A through that one socket — 2A over its rated
+          capacity. The socket will get warm, the plug will get warm, and the extension lead cable
+          may also overheat.
         </p>
         <p>
           The danger increases when extension leads are daisy-chained (one plugged into another),
-          because the total current flows through the first extension lead's cable and plug — which may
-          be rated at only 10A or even lower. Regulation 826.1.4 of BS 7671 requires that overload
-          protection is specified for the correct maximum current at every point in the installation.
-          Extension leads bypass this protection by concentrating multiple loads through a single
-          outlet.
+          because the total current flows through the first extension lead's cable and plug — which
+          may be rated at only 10A or even lower. Regulation 826.1.4 of BS 7671 requires that
+          overload protection is specified for the correct maximum current at every point in the
+          installation. Extension leads bypass this protection by concentrating multiple loads
+          through a single outlet.
         </p>
         <SEOAppBridge
           title="Check circuit loads with AI"
@@ -421,24 +440,23 @@ const sections = [
           every year. Overheating connections are a leading specific cause.
         </p>
         <p>
-          BS 7671 addresses fire protection through several regulations. Regulation 424.1 specifically
-          addresses fire protection measures, noting that where preferred measures are impracticable,
-          improved fire protection may be achieved through reactive systems. More broadly, Regulation
-          Section 421 establishes fundamental protection objectives including preventing electric shock and
-          limiting thermal effects through appropriate protective devices.
+          BS 7671 addresses fire protection through several regulations. Regulation 424.1
+          specifically addresses fire protection measures, noting that where preferred measures are
+          impracticable, improved fire protection may be achieved through reactive systems. More
+          broadly, Regulation Section 421 establishes fundamental protection objectives including
+          preventing electric shock and limiting thermal effects through appropriate protective
+          devices.
         </p>
-        <p>
-          For the homeowner, the practical implications are:
-        </p>
+        <p>For the homeowner, the practical implications are:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Metal consumer units</strong> — since Amendment 3 to BS 7671 (January 2016),
-                new consumer units in domestic premises must be enclosed in a non-combustible material
-                (metal). This provides fire containment at the consumer unit. If your consumer unit is
-                still plastic, a{' '}
+                new consumer units in domestic premises must be enclosed in a non-combustible
+                material (metal). This provides fire containment at the consumer unit. If your
+                consumer unit is still plastic, a{' '}
                 <SEOInternalLink href="/guides/consumer-unit-upgrade">
                   consumer unit upgrade
                 </SEOInternalLink>{' '}
@@ -448,10 +466,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AFDDs (Arc Fault Detection Devices)</strong> — these devices detect dangerous
-                arcing on a circuit (which is what happens at a loose connection under load) and
-                disconnect before a fire can start. AFDDs provide the most effective protection against
-                the specific type of fault that causes warm sockets. See our{' '}
+                <strong>AFDDs (Arc Fault Detection Devices)</strong> — these devices detect
+                dangerous arcing on a circuit (which is what happens at a loose connection under
+                load) and disconnect before a fire can start. AFDDs provide the most effective
+                protection against the specific type of fault that causes warm sockets. See our{' '}
                 <SEOInternalLink href="/guides/afdd-arc-fault-detection">
                   AFDD guide
                 </SEOInternalLink>{' '}
@@ -488,17 +506,17 @@ const sections = [
           background.
         </p>
         <p>
-          For electricians, thermal imaging offers significant advantages over traditional inspection
-          methods:
+          For electricians, thermal imaging offers significant advantages over traditional
+          inspection methods:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-invasive</strong> — you can scan a socket faceplate, consumer unit cover,
-                or distribution board without removing covers or isolating circuits. Hot spots behind
-                covers are visible through the thermal image.
+                <strong>Non-invasive</strong> — you can scan a socket faceplate, consumer unit
+                cover, or distribution board without removing covers or isolating circuits. Hot
+                spots behind covers are visible through the thermal image.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -514,19 +532,18 @@ const sections = [
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Hidden faults</strong> — a loose connection inside a wall-mounted back box
-                may not be visible during a standard visual inspection but will show as a hot spot on
-                a thermal image. Similarly, overheating cables behind plasterboard can be detected.
+                may not be visible during a standard visual inspection but will show as a hot spot
+                on a thermal image. Similarly, overheating cables behind plasterboard can be
+                detected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Eye className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation</strong> — thermal images provide objective, visual evidence of
-                a fault and its severity. They are excellent for including in{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">
-                  EICR reports
-                </SEOInternalLink>{' '}
-                to show customers exactly what the problem is and why remedial work is necessary.
+                <strong>Documentation</strong> — thermal images provide objective, visual evidence
+                of a fault and its severity. They are excellent for including in{' '}
+                <SEOInternalLink href="/guides/eicr-certificate">EICR reports</SEOInternalLink> to
+                show customers exactly what the problem is and why remedial work is necessary.
               </span>
             </li>
           </ul>
@@ -545,9 +562,7 @@ const sections = [
     heading: 'When to Call an Electrician',
     content: (
       <>
-        <p>
-          A warm plug or socket should always be investigated. Here is the urgency scale:
-        </p>
+        <p>A warm plug or socket should always be investigated. Here is the urgency scale:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -561,9 +576,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Urgent (within 24-48 hours)</strong> — the socket or plug is uncomfortably warm
-                to hold, or the warmth is present on a low-power appliance (lamp, phone charger). Do
-                not use the socket until it has been inspected.
+                <strong>Urgent (within 24-48 hours)</strong> — the socket or plug is uncomfortably
+                warm to hold, or the warmth is present on a low-power appliance (lamp, phone
+                charger). Do not use the socket until it has been inspected.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -592,7 +607,8 @@ const sections = [
     content: (
       <>
         <p>
-          When investigating a customer report of warm plugs or sockets, use this systematic approach:
+          When investigating a customer report of warm plugs or sockets, use this systematic
+          approach:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -615,11 +631,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">2. Isolate and Inspect</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Isolate the circuit and remove the socket faceplate. Inspect all terminals for signs
-                  of overheating: discolouration, pitting, melted insulation, carbon deposits, or loose
-                  wires. Check the back box condition. Retorque all terminals to manufacturer
-                  specification. If the socket is on a ring circuit, check that the ring is continuous
-                  at this point — a broken ring concentrates the current through one leg.
+                  Isolate the circuit and remove the socket faceplate. Inspect all terminals for
+                  signs of overheating: discolouration, pitting, melted insulation, carbon deposits,
+                  or loose wires. Check the back box condition. Retorque all terminals to
+                  manufacturer specification. If the socket is on a ring circuit, check that the
+                  ring is continuous at this point — a broken ring concentrates the current through
+                  one leg.
                 </p>
               </div>
             </div>
@@ -632,9 +649,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Perform insulation resistance testing at 500V DC (L-E, N-E, L-N) — acceptance
                   minimum 1 megohm. Measure earth fault loop impedance (Zs) and compare with maximum
-                  permissible values for the protective device. For ring circuits, carry out the full
-                  ring continuity test to verify the ring is complete. Measure actual load current with
-                  a clamp meter under normal operating conditions.
+                  permissible values for the protective device. For ring circuits, carry out the
+                  full ring continuity test to verify the ring is complete. Measure actual load
+                  current with a clamp meter under normal operating conditions.
                 </p>
               </div>
             </div>
@@ -645,10 +662,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">4. Remediate and Document</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Replace the socket if contacts are worn or the faceplate is damaged. Replace any cable
-                  with damaged insulation. If the circuit is overloaded, advise on redistributing loads
-                  or adding circuits. Consider recommending AFDD installation for additional fire
-                  protection. Issue a{' '}
+                  Replace the socket if contacts are worn or the faceplate is damaged. Replace any
+                  cable with damaged insulation. If the circuit is overloaded, advise on
+                  redistributing loads or adding circuits. Consider recommending AFDD installation
+                  for additional fire protection. Issue a{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
@@ -660,7 +677,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Document socket faults with professional certificates"
-          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates on your phone with thermal image attachments, observation codes, and instant PDF export. Join 430+ UK electricians."
+          description="Elec-Mate's certificate apps let you complete EICRs and Minor Works Certificates on your phone with thermal image attachments, observation codes, and instant PDF export. Join 1,000+ UK electricians."
           icon={FileCheck2}
         />
       </>
@@ -685,8 +702,7 @@ export default function WarmPlugOrSocketPage() {
       badgeIcon={Flame}
       heroTitle={
         <>
-          Warm Plug or Socket:{' '}
-          <span className="text-yellow-400">Causes and What to Do</span>
+          Warm Plug or Socket: <span className="text-yellow-400">Causes and What to Do</span>
         </>
       }
       heroSubtitle="A warm plug or socket is a warning sign. This guide explains the causes — from loose connections to overloaded sockets — covers the real fire risk, tells you what to do right now, and explains when to call an electrician."
@@ -697,7 +713,7 @@ export default function WarmPlugOrSocketPage() {
       faqHeading="Frequently Asked Questions About Warm Plugs and Sockets"
       relatedPages={relatedPages}
       ctaHeading="Identify and Document Overheating Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, thermal imaging documentation, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

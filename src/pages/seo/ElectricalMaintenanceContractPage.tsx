@@ -77,7 +77,8 @@ const faqs = [
       'A comprehensive electrical maintenance contract should include: scope of works (which systems are covered and which are excluded), scheduled visit frequency and what is done on each visit, documentation requirements (test results, certificates, defect reports), reactive callout provision (response times, hourly rates for callouts, emergency rates), materials provision (who supplies materials and at what cost), price adjustment mechanism (annual RPI increase, etc.), termination provisions, and liability limitations. Contracts should also specify which BS/IEC standards the work will be conducted to, including BS 7671 for fixed electrical installations, BS 5266 for emergency lighting, and BS 5839 for fire alarm systems.',
   },
   {
-    question: 'Can one electrical contractor manage all compliance testing for a commercial building?',
+    question:
+      'Can one electrical contractor manage all compliance testing for a commercial building?',
     answer:
       'Yes — a competent electrical contractor registered with NICEIC or NAPIT can carry out fixed wire testing (EICR), portable appliance testing (PAT), and emergency lighting testing under a single contract. Fire alarm testing requires a specialist fire alarm company registered with the National Security Inspectorate (NSI) or BAFE for Category I systems. For smaller fire alarm systems (Category M, manual only), a competent electrical contractor may carry out testing, but for automatic detection systems (Category L or P), a specialist is strongly recommended. Combining all compliance testing under one contractor simplifies administration and provides a single point of contact for the client.',
   },
@@ -92,28 +93,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/emergency-lighting-cost',
     title: 'Emergency Lighting Installation Cost',
-    description: 'Costs for emergency lighting installation, testing, and certification in commercial premises.',
+    description:
+      'Costs for emergency lighting installation, testing, and certification in commercial premises.',
     icon: Zap,
     category: 'Cost Guide',
   },
   {
     href: '/electrician-hourly-rate',
     title: 'Electrician Hourly Rate Guide 2026',
-    description: 'Regional rates, callout charges, emergency premiums, and how to price electrical jobs.',
+    description:
+      'Regional rates, callout charges, emergency premiums, and how to price electrical jobs.',
     icon: PoundSterling,
     category: 'Business Guide',
   },
   {
     href: '/electrical-contractor-insurance',
     title: 'Electrical Contractor Insurance',
-    description: "Public liability, employer's liability, professional indemnity, and tool insurance for contractors.",
+    description:
+      "Public liability, employer's liability, professional indemnity, and tool insurance for contractors.",
     icon: ShieldCheck,
     category: 'Business Guide',
   },
@@ -137,44 +142,42 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical maintenance for commercial properties falls into two categories:
-          planned preventative maintenance (PPM) and reactive maintenance. Understanding
-          the difference is essential for designing a maintenance contract that meets
-          the client&apos;s operational needs and legal obligations.
+          Electrical maintenance for commercial properties falls into two categories: planned
+          preventative maintenance (PPM) and reactive maintenance. Understanding the difference is
+          essential for designing a maintenance contract that meets the client&apos;s operational
+          needs and legal obligations.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Calendar className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Planned preventative maintenance (PPM)</strong> — scheduled visits
-                at fixed intervals to inspect, test, and service electrical systems before
-                faults develop. Includes fixed wire testing (EICR), portable appliance
-                testing (PAT), emergency lighting tests, fire alarm tests, and general
-                inspection of switchgear, distribution boards, and earthing. PPM reduces
-                unplanned downtime and maintains legal compliance.
+                <strong>Planned preventative maintenance (PPM)</strong> — scheduled visits at fixed
+                intervals to inspect, test, and service electrical systems before faults develop.
+                Includes fixed wire testing (EICR), portable appliance testing (PAT), emergency
+                lighting tests, fire alarm tests, and general inspection of switchgear, distribution
+                boards, and earthing. PPM reduces unplanned downtime and maintains legal compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calendar className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reactive maintenance</strong> — responding to reported faults,
-                circuit failures, equipment failures, and electrical emergencies. Reactive
-                works cannot always be predicted or prevented by PPM alone. A maintenance
-                contract should define the response times for different levels of urgency:
-                emergency (e.g., loss of power to critical systems — 2-hour response),
-                urgent (e.g., circuit failure — next working day), and routine (e.g.,
-                a faulty socket — within 5 working days).
+                <strong>Reactive maintenance</strong> — responding to reported faults, circuit
+                failures, equipment failures, and electrical emergencies. Reactive works cannot
+                always be predicted or prevented by PPM alone. A maintenance contract should define
+                the response times for different levels of urgency: emergency (e.g., loss of power
+                to critical systems — 2-hour response), urgent (e.g., circuit failure — next working
+                day), and routine (e.g., a faulty socket — within 5 working days).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calendar className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Combined contracts</strong> — most commercial clients benefit from a
-                contract that includes both PPM and reactive provision. PPM is typically priced
-                as a fixed annual fee; reactive callouts are charged at an agreed labour rate
-                (typically the contractor&apos;s standard or discounted rate for contract clients)
-                plus materials.
+                contract that includes both PPM and reactive provision. PPM is typically priced as a
+                fixed annual fee; reactive callouts are charged at an agreed labour rate (typically
+                the contractor&apos;s standard or discounted rate for contract clients) plus
+                materials.
               </span>
             </li>
           </ul>
@@ -188,54 +191,52 @@ const sections = [
     content: (
       <>
         <p>
-          A comprehensive PPM schedule for a typical commercial property includes multiple
-          types of inspection and testing, each with its own frequency. The following
-          schedule reflects best practice for a medium-sized commercial building.
+          A comprehensive PPM schedule for a typical commercial property includes multiple types of
+          inspection and testing, each with its own frequency. The following schedule reflects best
+          practice for a medium-sized commercial building.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Weekly</strong> — fire alarm call point test (rotate through call
-                points one per week); visual check of emergency exit signs and luminaires.
-                These are typically carried out by the building&apos;s own staff, not the
-                maintenance contractor.
+                <strong>Weekly</strong> — fire alarm call point test (rotate through call points one
+                per week); visual check of emergency exit signs and luminaires. These are typically
+                carried out by the building&apos;s own staff, not the maintenance contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly</strong> — emergency lighting functional test (brief
-                duration, all luminaires); fire alarm monthly test and inspection; visual
-                inspection of distribution boards (door seals, cable entry, labelling,
-                no evidence of overheating).
+                <strong>Monthly</strong> — emergency lighting functional test (brief duration, all
+                luminaires); fire alarm monthly test and inspection; visual inspection of
+                distribution boards (door seals, cable entry, labelling, no evidence of
+                overheating).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Six-monthly</strong> — emergency lighting one-hour discharge test;
-                fire alarm six-monthly inspection (all detectors tested in rotation, panel
-                inspection, battery check); portable appliance testing for high-risk
-                equipment (construction, catering, portable power tools).
+                <strong>Six-monthly</strong> — emergency lighting one-hour discharge test; fire
+                alarm six-monthly inspection (all detectors tested in rotation, panel inspection,
+                battery check); portable appliance testing for high-risk equipment (construction,
+                catering, portable power tools).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annually</strong> — emergency lighting full rated duration test
-                (three hours for most systems under BS 5266); fire alarm annual inspection
-                and test; portable appliance testing for standard office equipment;
-                general electrical installation inspection; RCD testing.
+                <strong>Annually</strong> — emergency lighting full rated duration test (three hours
+                for most systems under BS 5266); fire alarm annual inspection and test; portable
+                appliance testing for standard office equipment; general electrical installation
+                inspection; RCD testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Every 3–5 years</strong> — full EICR (fixed wire test) of the
-                electrical installation. Frequency depends on occupancy type and previous
-                EICR findings.
+                <strong>Every 3–5 years</strong> — full EICR (fixed wire test) of the electrical
+                installation. Frequency depends on occupancy type and previous EICR findings.
               </span>
             </li>
           </ul>
@@ -249,21 +250,21 @@ const sections = [
     content: (
       <>
         <p>
-          The Electrical Installation Condition Report (EICR) is the formal document recording
-          the findings of a periodic inspection and test of the fixed electrical installation.
-          It is the cornerstone of any commercial electrical maintenance programme.
+          The Electrical Installation Condition Report (EICR) is the formal document recording the
+          findings of a periodic inspection and test of the fixed electrical installation. It is the
+          cornerstone of any commercial electrical maintenance programme.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What is included in a commercial EICR</strong> — inspection of the
-                main earthing and bonding, consumer units and distribution boards, wiring
-                systems (condition, containment, fixings), electrical accessories and
-                fittings, switchgear and controls, and testing of earth fault loop impedance,
-                insulation resistance, RCD operation, polarity, and continuity. A schedule
-                of test results is completed for every circuit.
+                <strong>What is included in a commercial EICR</strong> — inspection of the main
+                earthing and bonding, consumer units and distribution boards, wiring systems
+                (condition, containment, fixings), electrical accessories and fittings, switchgear
+                and controls, and testing of earth fault loop impedance, insulation resistance, RCD
+                operation, polarity, and continuity. A schedule of test results is completed for
+                every circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -271,22 +272,20 @@ const sections = [
               <span>
                 <strong>Recommended frequency</strong> — offices: every five years; industrial:
                 every three years; educational: every five years; catering: every one to three
-                years; licensed premises: every five years; medical locations: every one to
-                five years depending on location type. Higher-risk or older installations
-                should be inspected more frequently.
+                years; licensed premises: every five years; medical locations: every one to five
+                years depending on location type. Higher-risk or older installations should be
+                inspected more frequently.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outcome: Satisfactory or Unsatisfactory</strong> — an EICR is
-                classified as Satisfactory or Unsatisfactory. C1 (immediate danger) and
-                C2 (potentially dangerous) observations result in an Unsatisfactory report.
-                C3 (improvement recommended) observations result in a Satisfactory report
-                but indicate remedial works that should be considered. Use the{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">
-                  Elec-Mate EICR app
-                </SEOInternalLink>{' '}
+                <strong>Outcome: Satisfactory or Unsatisfactory</strong> — an EICR is classified as
+                Satisfactory or Unsatisfactory. C1 (immediate danger) and C2 (potentially dangerous)
+                observations result in an Unsatisfactory report. C3 (improvement recommended)
+                observations result in a Satisfactory report but indicate remedial works that should
+                be considered. Use the{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate EICR app</SEOInternalLink>{' '}
                 to complete and issue commercial EICRs on site.
               </span>
             </li>
@@ -301,39 +300,38 @@ const sections = [
     content: (
       <>
         <p>
-          PAT testing verifies that portable electrical appliances are safe for use.
-          It is a key component of any commercial electrical maintenance programme
-          and is required to demonstrate compliance with the Electricity at Work
-          Regulations 1989.
+          PAT testing verifies that portable electrical appliances are safe for use. It is a key
+          component of any commercial electrical maintenance programme and is required to
+          demonstrate compliance with the Electricity at Work Regulations 1989.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What PAT testing involves</strong> — visual inspection of the
-                appliance, plug, and cable; earth continuity test (class I appliances);
-                insulation resistance test; and sometimes a substitute leakage test.
-                Results are recorded on labels applied to the appliance and in a test register.
+                <strong>What PAT testing involves</strong> — visual inspection of the appliance,
+                plug, and cable; earth continuity test (class I appliances); insulation resistance
+                test; and sometimes a substitute leakage test. Results are recorded on labels
+                applied to the appliance and in a test register.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test frequency by environment</strong> — construction sites and
-                catering: every 3 months; industrial: annually; offices (portable appliances):
-                every 2 to 4 years; offices (IT equipment, low use): every 4 years or less.
-                The IET Code of Practice for In-Service Inspection and Testing of Electrical
-                Equipment provides recommended intervals for each equipment type and environment.
+                <strong>Test frequency by environment</strong> — construction sites and catering:
+                every 3 months; industrial: annually; offices (portable appliances): every 2 to 4
+                years; offices (IT equipment, low use): every 4 years or less. The IET Code of
+                Practice for In-Service Inspection and Testing of Electrical Equipment provides
+                recommended intervals for each equipment type and environment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation</strong> — a PAT test register recording each appliance,
-                its test results, the date of test, and the retest date. Failed appliances
-                must be removed from service immediately and either repaired and retested or
-                destroyed. The register must be maintained and available for inspection.
+                <strong>Documentation</strong> — a PAT test register recording each appliance, its
+                test results, the date of test, and the retest date. Failed appliances must be
+                removed from service immediately and either repaired and retested or destroyed. The
+                register must be maintained and available for inspection.
               </span>
             </li>
           </ul>
@@ -347,56 +345,54 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting is a life-safety system. Its maintenance is governed by
-          BS 5266-1, which specifies a clear hierarchy of tests that must be carried out
-          and recorded. These tests are a standard component of any commercial electrical
-          maintenance contract.
+          Emergency lighting is a life-safety system. Its maintenance is governed by BS 5266-1,
+          which specifies a clear hierarchy of tests that must be carried out and recorded. These
+          tests are a standard component of any commercial electrical maintenance contract.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly functional test</strong> — simulate failure of the normal
-                supply and verify each emergency luminaire and exit sign illuminates.
-                Duration is the brief period recommended by the manufacturer (typically
-                30 seconds to 1 minute). Record which luminaires were tested and any failures.
-                Restore normal supply and check luminaires recharge.
+                <strong>Monthly functional test</strong> — simulate failure of the normal supply and
+                verify each emergency luminaire and exit sign illuminates. Duration is the brief
+                period recommended by the manufacturer (typically 30 seconds to 1 minute). Record
+                which luminaires were tested and any failures. Restore normal supply and check
+                luminaires recharge.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Six-monthly one-hour discharge test</strong> — simulate failure of
-                normal supply and maintain discharge for one hour. Verify all luminaires
-                maintain output throughout. Record results. Allow full battery recharge
-                before restoring normal operation.
+                <strong>Six-monthly one-hour discharge test</strong> — simulate failure of normal
+                supply and maintain discharge for one hour. Verify all luminaires maintain output
+                throughout. Record results. Allow full battery recharge before restoring normal
+                operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual full rated duration test</strong> — simulate failure and
-                maintain for the full rated duration of the luminaires (typically three hours
-                for maintained systems). All luminaires must maintain required light output
-                throughout. Any failing luminaires must be replaced before the installation
-                is returned to service.
+                <strong>Annual full rated duration test</strong> — simulate failure and maintain for
+                the full rated duration of the luminaires (typically three hours for maintained
+                systems). All luminaires must maintain required light output throughout. Any failing
+                luminaires must be replaced before the installation is returned to service.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Log book requirement</strong> — BS 5266-1 requires a log book recording
-                all tests, any luminaire failures, remedial works, and the date of each test.
-                The log book must be kept on site and presented to the responsible person
-                (building owner or manager) and inspectors on request.
+                <strong>Log book requirement</strong> — BS 5266-1 requires a log book recording all
+                tests, any luminaire failures, remedial works, and the date of each test. The log
+                book must be kept on site and presented to the responsible person (building owner or
+                manager) and inspectors on request.
               </span>
             </li>
           </ul>
         </div>
         <SEOAppBridge
           title="Record emergency lighting tests with Elec-Mate"
-          description="Use Elec-Mate to record emergency lighting test results, generate compliant certificates, and maintain a digital log for each commercial property. Join 430+ UK electrical contractors."
+          description="Use Elec-Mate to record emergency lighting test results, generate compliant certificates, and maintain a digital log for each commercial property. Join 1,000+ UK electrical contractors."
           icon={Zap}
         />
       </>
@@ -408,45 +404,45 @@ const sections = [
     content: (
       <>
         <p>
-          Fire alarm system testing is governed by BS 5839-1 (fire detection and fire alarm
-          systems in buildings). Electrical contractors who include fire alarm testing in their
-          maintenance contracts must understand the requirements of this standard.
+          Fire alarm system testing is governed by BS 5839-1 (fire detection and fire alarm systems
+          in buildings). Electrical contractors who include fire alarm testing in their maintenance
+          contracts must understand the requirements of this standard.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Weekly call point test</strong> — test one manual call point per
-                week, rotating through all call points over the cycle. The alarm signal
-                must be generated at the control panel. This is typically carried out by
-                building staff and recorded in the fire alarm log book.
+                <strong>Weekly call point test</strong> — test one manual call point per week,
+                rotating through all call points over the cycle. The alarm signal must be generated
+                at the control panel. This is typically carried out by building staff and recorded
+                in the fire alarm log book.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Monthly inspection</strong> — a more thorough check of the control
-                panel, battery levels, and system indicators. Testing of remaining call
-                points not tested in weekly rotation.
+                <strong>Monthly inspection</strong> — a more thorough check of the control panel,
+                battery levels, and system indicators. Testing of remaining call points not tested
+                in weekly rotation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Six-monthly inspection</strong> — inspection and test by a competent
-                person: all detectors tested, all call points tested, sounders checked,
-                panel inspection, standby battery test, and check of all linked systems
-                (door holders, ventilation shutdown, etc.). Record all findings.
+                <strong>Six-monthly inspection</strong> — inspection and test by a competent person:
+                all detectors tested, all call points tested, sounders checked, panel inspection,
+                standby battery test, and check of all linked systems (door holders, ventilation
+                shutdown, etc.). Record all findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Annual inspection</strong> — comprehensive inspection by a specialist.
-                For Category L (automatic detection) systems, this should be carried out by
-                a firm registered with NSI or BAFE. Includes detector sensitivity testing,
-                full system function test, and a detailed inspection report.
+                <strong>Annual inspection</strong> — comprehensive inspection by a specialist. For
+                Category L (automatic detection) systems, this should be carried out by a firm
+                registered with NSI or BAFE. Includes detector sensitivity testing, full system
+                function test, and a detailed inspection report.
               </span>
             </li>
           </ul>
@@ -460,61 +456,60 @@ const sections = [
     content: (
       <>
         <p>
-          A well-drafted maintenance contract protects both the contractor and the client.
-          It defines expectations, prevents disputes, and ensures legal compliance is
-          maintained throughout the contract term.
+          A well-drafted maintenance contract protects both the contractor and the client. It
+          defines expectations, prevents disputes, and ensures legal compliance is maintained
+          throughout the contract term.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scope of works</strong> — a precise description of which systems,
-                areas, and equipment are covered. Explicitly state any exclusions (e.g.,
-                specialist equipment, tenant areas, roof plant). Ambiguity in scope is the
-                most common source of contract disputes.
+                <strong>Scope of works</strong> — a precise description of which systems, areas, and
+                equipment are covered. Explicitly state any exclusions (e.g., specialist equipment,
+                tenant areas, roof plant). Ambiguity in scope is the most common source of contract
+                disputes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visit schedule</strong> — dates or frequency of scheduled PPM visits,
-                what is carried out on each visit, and who the contractor will liaise with
-                on site. Include provisions for rescheduling and notice periods for access.
+                <strong>Visit schedule</strong> — dates or frequency of scheduled PPM visits, what
+                is carried out on each visit, and who the contractor will liaise with on site.
+                Include provisions for rescheduling and notice periods for access.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Documentation requirements</strong> — what reports, certificates,
-                and records will be provided after each visit. Specify formats (PDF, original
-                paper certificates), timescales for delivery (e.g., within 5 working days),
-                and who retains originals.
+                <strong>Documentation requirements</strong> — what reports, certificates, and
+                records will be provided after each visit. Specify formats (PDF, original paper
+                certificates), timescales for delivery (e.g., within 5 working days), and who
+                retains originals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Reactive callout provision</strong> — response time tiers (emergency,
-                urgent, routine), hours of cover (standard hours only, or 24/7), hourly
-                rate for reactive callouts, call-out charge, and materials charging
-                mechanism.
+                urgent, routine), hours of cover (standard hours only, or 24/7), hourly rate for
+                reactive callouts, call-out charge, and materials charging mechanism.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Price and payment terms</strong> — annual PPM fee, payment schedule
-                (monthly, quarterly, or annual in advance), price review mechanism
-                (e.g., annual RPI increase capped at 5%), and invoicing terms for reactive works.
+                (monthly, quarterly, or annual in advance), price review mechanism (e.g., annual RPI
+                increase capped at 5%), and invoicing terms for reactive works.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Termination provisions</strong> — notice period (typically 3 months),
-                termination for cause, and what happens to outstanding scheduled visits or
-                active reactive works at termination.
+                termination for cause, and what happens to outstanding scheduled visits or active
+                reactive works at termination.
               </span>
             </li>
           </ul>
@@ -528,46 +523,44 @@ const sections = [
     content: (
       <>
         <p>
-          Pricing an electrical maintenance contract requires understanding both the direct
-          costs of the work and the overhead and margin required for the contract to be
-          commercially viable. The following ranges are indicative for 2026.
+          Pricing an electrical maintenance contract requires understanding both the direct costs of
+          the work and the overhead and margin required for the contract to be commercially viable.
+          The following ranges are indicative for 2026.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Small office or retail unit (up to 500m²)</strong> — £500 to £1,500
-                per year. Annual EICR (every 5 years, amortised), annual PAT, monthly
-                emergency lighting test, and quarterly fire alarm test. Reactive callout
-                rate typically £65 to £85/hr.
+                <strong>Small office or retail unit (up to 500m²)</strong> — £500 to £1,500 per
+                year. Annual EICR (every 5 years, amortised), annual PAT, monthly emergency lighting
+                test, and quarterly fire alarm test. Reactive callout rate typically £65 to £85/hr.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium commercial building (500m² to 2,000m²)</strong> — £1,500 to
-                £3,500 per year. Multiple distribution boards, larger emergency lighting
-                installation, fire alarm system, more extensive PAT requirements, and
-                more frequent EICR cycle.
+                <strong>Medium commercial building (500m² to 2,000m²)</strong> — £1,500 to £3,500
+                per year. Multiple distribution boards, larger emergency lighting installation, fire
+                alarm system, more extensive PAT requirements, and more frequent EICR cycle.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large commercial premises (2,000m²+)</strong> — £3,500 to £5,000+
-                per year. Complex HV/LV distribution, generator systems, UPS, large
-                emergency lighting and fire alarm installations, and more frequent
-                inspection requirements. Some large premises justify higher annual costs.
+                <strong>Large commercial premises (2,000m²+)</strong> — £3,500 to £5,000+ per year.
+                Complex HV/LV distribution, generator systems, UPS, large emergency lighting and
+                fire alarm installations, and more frequent inspection requirements. Some large
+                premises justify higher annual costs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reactive callout charges</strong> — typically charged separately.
-                Contract clients often receive a discounted rate (10 to 20 per cent below
-                standard) as an incentive for the contract. Emergency callouts outside
-                standard hours are charged at the agreed out-of-hours rate.
+                <strong>Reactive callout charges</strong> — typically charged separately. Contract
+                clients often receive a discounted rate (10 to 20 per cent below standard) as an
+                incentive for the contract. Emergency callouts outside standard hours are charged at
+                the agreed out-of-hours rate.
               </span>
             </li>
           </ul>
@@ -582,8 +575,8 @@ const sections = [
       <>
         <p>
           Maintenance contracts are a reliable source of recurring revenue for electrical
-          businesses. Managing them efficiently — with good documentation, scheduled
-          reminders, and professional certificates — protects both the business and the client.
+          businesses. Managing them efficiently — with good documentation, scheduled reminders, and
+          professional certificates — protects both the business and the client.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -592,14 +585,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Certify Every Maintenance Visit</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Every maintenance visit should produce a certificate or inspection report.
-                  EICRs, minor works certificates, and PAT test registers are all evidence
-                  of compliance. Use the{' '}
+                  Every maintenance visit should produce a certificate or inspection report. EICRs,
+                  minor works certificates, and PAT test registers are all evidence of compliance.
+                  Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete and issue certificates on the day of the visit. Never leave a
-                  site without documentation.
+                  to complete and issue certificates on the day of the visit. Never leave a site
+                  without documentation.
                 </p>
               </div>
             </div>
@@ -608,15 +601,17 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Invoice Contracts and Reactive Works Clearly</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Invoice Contracts and Reactive Works Clearly
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Maintenance contracts often involve separate invoices for the annual fee
-                  and for reactive callout works. Use the{' '}
+                  Maintenance contracts often involve separate invoices for the annual fee and for
+                  reactive callout works. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting and invoicing app
                   </SEOInternalLink>{' '}
-                  to issue professional invoices for both elements, with clear itemisation
-                  that satisfies commercial clients&apos; accounts payable requirements.
+                  to issue professional invoices for both elements, with clear itemisation that
+                  satisfies commercial clients&apos; accounts payable requirements.
                 </p>
               </div>
             </div>
@@ -624,7 +619,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage maintenance contracts with Elec-Mate"
-          description="Join 430+ UK electrical contractors using Elec-Mate for EICR certificates, quoting, invoicing, and job management. Streamline your maintenance contract workflow. 7-day free trial."
+          description="Join 1,000+ UK electrical contractors using Elec-Mate for EICR certificates, quoting, invoicing, and job management. Streamline your maintenance contract workflow. 7-day free trial."
           icon={Zap}
         />
       </>
@@ -661,7 +656,7 @@ export default function ElectricalMaintenanceContractPage() {
       faqHeading="Frequently Asked Questions About Electrical Maintenance Contracts"
       relatedPages={relatedPages}
       ctaHeading="Manage Your Maintenance Contracts with Elec-Mate"
-      ctaSubheading="Join 430+ UK electrical contractors using Elec-Mate for EICR certificates, PAT records, professional invoicing, and job management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electrical contractors using Elec-Mate for EICR certificates, PAT records, professional invoicing, and job management. 7-day free trial."
     />
   );
 }

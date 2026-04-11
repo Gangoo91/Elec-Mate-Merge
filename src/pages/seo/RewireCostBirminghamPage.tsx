@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Birmingham costs between £2,800 and £12,000+ in 2026, broadly in line with the Midlands average. Electrician day rates in Birmingham typically run from £280 to £380 per day.',
-  'Birmingham\'s housing stock includes large numbers of 1930s and 1950s semi-detached houses — particularly across Bournville, Stirchley, Kings Heath, and Erdington — where original VIR wiring is still encountered.',
+  "Birmingham's housing stock includes large numbers of 1930s and 1950s semi-detached houses — particularly across Bournville, Stirchley, Kings Heath, and Erdington — where original VIR wiring is still encountered.",
   'Victorian back-to-back terraces in the inner ring — Handsworth, Saltley, Sparkbrook, and Digbeth — present the same challenges as any Victorian property: lath-and-plaster walls, limited void access, and ad-hoc wiring additions over the decades.',
   'Birmingham rewires are notifiable under Part P of the Building Regulations. Use a registered electrician (NICEIC, NAPIT, or ELECSA) to self-certify and avoid costly building control inspection fees.',
   'An Electrical Installation Certificate (EIC) is mandatory on completion, documenting design, construction, inspection, and testing to BS 7671:2018+A3:2024.',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Are there any grants for rewiring a house in Birmingham?',
     answer:
-      'Birmingham City Council has in the past operated Disabled Facilities Grants and home improvement loans through its private sector housing team, which can sometimes cover electrical upgrading work where it is needed for safety or disability access reasons. The national ECO4 scheme may fund some electrical work if linked to energy efficiency improvements. Birmingham Metropolitan Housing Trust and other registered social landlords in the city also have upgrade programmes for their tenants. Contact Birmingham City Council\'s housing team to check current availability.',
+      "Birmingham City Council has in the past operated Disabled Facilities Grants and home improvement loans through its private sector housing team, which can sometimes cover electrical upgrading work where it is needed for safety or disability access reasons. The national ECO4 scheme may fund some electrical work if linked to energy efficiency improvements. Birmingham Metropolitan Housing Trust and other registered social landlords in the city also have upgrade programmes for their tenants. Contact Birmingham City Council's housing team to check current availability.",
   },
   {
     question: 'What is included in a Birmingham rewire quote?',
@@ -183,8 +183,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          These prices include all materials, labour, a new consumer unit with RCBOs and SPD, initial
-          verification testing, the{' '}
+          These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
+          initial verification testing, the{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
@@ -217,8 +217,8 @@ const sections = [
               <span>
                 <strong>Victorian back-to-backs and terraces (1860s–1900s):</strong> Found in
                 Handsworth, Saltley, Sparkbrook, Bordesley, and Digbeth. Many have had ad-hoc
-                electrical additions over the decades without proper circuit design. Lath-and-plaster
-                walls and solid floors make rewiring time-consuming.
+                electrical additions over the decades without proper circuit design.
+                Lath-and-plaster walls and solid floors make rewiring time-consuming.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,18 +226,18 @@ const sections = [
               <span>
                 <strong>1930s–1950s semis:</strong> Dominant across Kings Heath, Bournville,
                 Stirchley, Erdington, and Moseley. Many still have original VIR (vulcanised india
-                rubber) wiring. While easier to rewire than Victorian properties, the wiring is
-                well past its safe service life and lacks modern protective devices.
+                rubber) wiring. While easier to rewire than Victorian properties, the wiring is well
+                past its safe service life and lacks modern protective devices.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>1960s–1980s council and private estates:</strong> Found extensively across
-                outer Birmingham — Northfield, Great Barr, Quinton, Sheldon. PVC-insulated wiring
-                in these properties may still be original. Consumer units often have BS 3036
-                rewirable fuses. Rewiring is relatively straightforward due to plasterboard walls
-                and accessible lofts.
+                outer Birmingham — Northfield, Great Barr, Quinton, Sheldon. PVC-insulated wiring in
+                these properties may still be original. Consumer units often have BS 3036 rewirable
+                fuses. Rewiring is relatively straightforward due to plasterboard walls and
+                accessible lofts.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,17 +260,17 @@ const sections = [
     content: (
       <>
         <p>
-          Book an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a qualified
-          electrician for a definitive assessment. These warning signs suggest urgent action:
+          Book an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a
+          qualified electrician for a definitive assessment. These warning signs suggest urgent
+          action:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Round-pin sockets or fabric-sheathed wiring</strong> — pre-1960s wiring
-                that is almost certainly beyond its safe service life.
+                <strong>Round-pin sockets or fabric-sheathed wiring</strong> — pre-1960s wiring that
+                is almost certainly beyond its safe service life.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,8 +345,8 @@ const sections = [
         <p>
           Additional time may be needed where asbestos is present (common in Birmingham properties
           from the 1950s–1970s, particularly artex ceilings and floor tiles), or where the supply
-          fuse needs upgrading by Western Power Distribution (National Grid Electricity Distribution).
-          Supply upgrades can take 2–6 weeks to schedule.
+          fuse needs upgrading by Western Power Distribution (National Grid Electricity
+          Distribution). Supply upgrades can take 2–6 weeks to schedule.
         </p>
       </>
     ),
@@ -366,9 +366,9 @@ const sections = [
         </p>
         <p>
           Using a registered electrician is strongly recommended. They will self-certify the work,
-          submit notification to Birmingham City Council, and you will receive a Building Regulations
-          Compliance Certificate within 30 days. Unregistered electricians require a building control
-          inspection (£200–£350 in Birmingham) and cause delays to the project.
+          submit notification to Birmingham City Council, and you will receive a Building
+          Regulations Compliance Certificate within 30 days. Unregistered electricians require a
+          building control inspection (£200–£350 in Birmingham) and cause delays to the project.
         </p>
         <p>
           Under BS 7671:2018+A3:2024, Regulation 411.3.3 requires RCD protection for all socket
@@ -508,8 +508,7 @@ export default function RewireCostBirminghamPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Birmingham:{' '}
-          <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Birmingham: <span className="text-yellow-400">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Birmingham rewire costs in 2026 across all property types — from Victorian back-to-backs in the inner ring to 1930s semis across Kings Heath and Bournville. Real prices, Part P guidance, and what to look for in a Birmingham electrician."
@@ -520,7 +519,7 @@ export default function RewireCostBirminghamPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Birmingham"
       relatedPages={relatedPages}
       ctaHeading="Quote Birmingham Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

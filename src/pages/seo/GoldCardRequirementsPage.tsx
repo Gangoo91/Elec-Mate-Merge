@@ -96,7 +96,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/jib-grading-explained',
     title: 'JIB Grading Explained',
-    description: 'Understand JIB grades, pay rates, and how the Gold Card fits into the grade structure.',
+    description:
+      'Understand JIB grades, pay rates, and how the Gold Card fits into the grade structure.',
     icon: TrendingUp,
     category: 'Guide',
   },
@@ -150,10 +151,8 @@ const sections = [
         </p>
         <p>
           In{' '}
-          <SEOInternalLink href="/guides/jib-grading-explained">
-            JIB grading terms
-          </SEOInternalLink>
-          , the Gold Card corresponds to the Technician grade — the highest standard grade with the
+          <SEOInternalLink href="/guides/jib-grading-explained">JIB grading terms</SEOInternalLink>,
+          the Gold Card corresponds to the Technician grade — the highest standard grade with the
           highest minimum pay rate. It is the card that employers, clients, and site managers
           associate with the most experienced and qualified electricians.
         </p>
@@ -170,9 +169,7 @@ const sections = [
     heading: 'Qualifications Needed for the Gold Card',
     content: (
       <>
-        <p>
-          Here is the full list of qualifications required:
-        </p>
+        <p>Here is the full list of qualifications required:</p>
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -190,8 +187,8 @@ const sections = [
                     C&G 2382
                   </SEOInternalLink>
                 </strong>{' '}
-                — 18th Edition Wiring Regulations (current version: 2382-22, covering
-                BS 7671:2018+A3:2024).
+                — 18th Edition Wiring Regulations (current version: 2382-22, covering BS
+                7671:2018+A3:2024).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,8 +242,8 @@ const sections = [
         <p>
           The assessment covers consumer unit installation, wiring circuits (ring final, radial,
           lighting), safe isolation, testing, and fault finding. You must demonstrate competence in
-          all areas to pass. If you have already passed the AM2 for your blue card, you do not
-          need to take it again for the Gold Card.
+          all areas to pass. If you have already passed the AM2 for your blue card, you do not need
+          to take it again for the Gold Card.
         </p>
         <p>
           For detailed preparation advice, see the{' '}
@@ -263,14 +260,14 @@ const sections = [
         <p>
           While the JIB does not specify a minimum number of years of experience for the Gold Card,
           the qualification requirements naturally imply significant experience. You cannot
-          realistically hold an NVQ Level 3, C&G 2382, AM2, C&G 2391, and C&G 2396 without
-          several years of training and work experience.
+          realistically hold an NVQ Level 3, C&G 2382, AM2, C&G 2391, and C&G 2396 without several
+          years of training and work experience.
         </p>
         <p>
           Most Gold Card holders have at least 5 to 7 years of experience by the time they apply.
-          The typical path is: 3 to 4 years apprenticeship, 1 to 2 years as a qualified
-          electrician, then 1 to 2 years gaining additional qualifications (2391 and 2396). Some
-          achieve it faster by studying alongside their day job.
+          The typical path is: 3 to 4 years apprenticeship, 1 to 2 years as a qualified electrician,
+          then 1 to 2 years gaining additional qualifications (2391 and 2396). Some achieve it
+          faster by studying alongside their day job.
         </p>
       </>
     ),
@@ -280,9 +277,7 @@ const sections = [
     heading: 'How to Apply for the Gold Card',
     content: (
       <>
-        <p>
-          The application process is the same as for any ECS card:
-        </p>
+        <p>The application process is the same as for any ECS card:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -345,8 +340,8 @@ const sections = [
               <Star className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Professional credibility</strong> — the Gold Card is instantly recognised
-                across the industry. It signals to clients and main contractors that you are at
-                the top of your trade.
+                across the industry. It signals to clients and main contractors that you are at the
+                top of your trade.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -373,24 +368,22 @@ const sections = [
     heading: 'Common Pitfalls When Applying',
     content: (
       <>
-        <p>
-          A few things that trip up Gold Card applicants:
-        </p>
+        <p>A few things that trip up Gold Card applicants:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdated 2382:</strong> If your 2382 was based on the 17th Edition or earlier,
-                you need the current version (2382-22) before applying.
+                <strong>Outdated 2382:</strong> If your 2382 was based on the 17th Edition or
+                earlier, you need the current version (2382-22) before applying.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Missing health and safety test:</strong> The ECS Health, Safety and
-                Environmental Assessment is required even if you hold SSSTS or SMSTS. Check with
-                the JIB whether your existing safety qualification is accepted.
+                Environmental Assessment is required even if you hold SSSTS or SMSTS. Check with the
+                JIB whether your existing safety qualification is accepted.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -414,8 +407,8 @@ const sections = [
         <p>
           The Gold Card is achievable for any electrician who is willing to invest in their
           professional development. The additional qualifications (2391 and 2396) are challenging
-          but manageable alongside full-time work. The financial and career benefits make it one
-          of the best investments you can make in your electrical career.
+          but manageable alongside full-time work. The financial and career benefits make it one of
+          the best investments you can make in your electrical career.
         </p>
         <SEOAppBridge
           title="Track your progress to Gold Card"
@@ -456,7 +449,7 @@ export default function GoldCardRequirementsPage() {
       faqHeading="Frequently Asked Questions About the ECS Gold Card"
       relatedPages={relatedPages}
       ctaHeading="Start Your Path to Gold Card"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for training, exam preparation, and career development. 7-day free trial, cancel anytime."
     />
   );
 }

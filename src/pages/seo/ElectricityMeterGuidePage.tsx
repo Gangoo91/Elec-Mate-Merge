@@ -125,9 +125,9 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding what type of electricity meter you have helps you manage your energy
-          use effectively and ensure your bills are accurate. There are three main types of
-          domestic electricity meter in use in the UK.
+          Understanding what type of electricity meter you have helps you manage your energy use
+          effectively and ensure your bills are accurate. There are three main types of domestic
+          electricity meter in use in the UK.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
@@ -137,9 +137,9 @@ const sections = [
                 <strong>Single-rate (standard) meter</strong>
                 <p className="mt-1">
                   The most common type. Records all electricity consumption at a single rate
-                  regardless of time of day. Displays one reading register. Compatible with
-                  all standard single-rate tariffs. Available in analogue (older rotating
-                  dial meters) and digital display versions.
+                  regardless of time of day. Displays one reading register. Compatible with all
+                  standard single-rate tariffs. Available in analogue (older rotating dial meters)
+                  and digital display versions.
                 </p>
               </div>
             </li>
@@ -148,11 +148,11 @@ const sections = [
               <div>
                 <strong>Economy 7 dual-rate meter</strong>
                 <p className="mt-1">
-                  Records electricity usage at two different rates — a cheaper overnight
-                  rate and a more expensive daytime rate. Displays two register readings,
-                  often labelled "Night" and "Day" or "Rate 1" and "Rate 2". Designed for
-                  use with storage heaters and other overnight loads. The exact hours of the
-                  cheap rate vary by supplier and region.
+                  Records electricity usage at two different rates — a cheaper overnight rate and a
+                  more expensive daytime rate. Displays two register readings, often labelled
+                  "Night" and "Day" or "Rate 1" and "Rate 2". Designed for use with storage heaters
+                  and other overnight loads. The exact hours of the cheap rate vary by supplier and
+                  region.
                 </p>
               </div>
             </li>
@@ -161,12 +161,11 @@ const sections = [
               <div>
                 <strong>Smart meter (SMETS2)</strong>
                 <p className="mt-1">
-                  Records electricity consumption in half-hourly intervals and transmits the
-                  data automatically to your supplier via the national Smart Metering Wide
-                  Area Network (WAN). No manual meter readings required. Compatible with
-                  time-of-use tariffs. Includes an In-Home Display (IHD) that shows your
-                  real-time energy usage and estimated cost. All new installations since
-                  around 2018 are SMETS2.
+                  Records electricity consumption in half-hourly intervals and transmits the data
+                  automatically to your supplier via the national Smart Metering Wide Area Network
+                  (WAN). No manual meter readings required. Compatible with time-of-use tariffs.
+                  Includes an In-Home Display (IHD) that shows your real-time energy usage and
+                  estimated cost. All new installations since around 2018 are SMETS2.
                 </p>
               </div>
             </li>
@@ -181,50 +180,47 @@ const sections = [
     content: (
       <>
         <p>
-          The UK government's smart meter rollout aims to replace all traditional meters
-          with smart meters. As of 2026, approximately 60% of domestic meters in Great
-          Britain are smart meters. All new smart meter installations use SMETS2
-          technology.
+          The UK government's smart meter rollout aims to replace all traditional meters with smart
+          meters. As of 2026, approximately 60% of domestic meters in Great Britain are smart
+          meters. All new smart meter installations use SMETS2 technology.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How SMETS2 works</strong> — SMETS2 meters communicate via the
-                national Smart Metering Wide Area Network, managed by the Data
-                Communications Company (DCC). Because the meter communicates with a
-                central national infrastructure rather than directly with your supplier,
-                it continues to function as a smart meter even if you switch energy
-                suppliers.
+                <strong>How SMETS2 works</strong> — SMETS2 meters communicate via the national Smart
+                Metering Wide Area Network, managed by the Data Communications Company (DCC).
+                Because the meter communicates with a central national infrastructure rather than
+                directly with your supplier, it continues to function as a smart meter even if you
+                switch energy suppliers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Half-hourly data</strong> — SMETS2 meters record your energy
-                consumption in 30-minute intervals. This granular data is what makes
-                time-of-use tariffs possible — your supplier can see exactly how much
-                electricity you used at each time of day and bill accordingly.
+                <strong>Half-hourly data</strong> — SMETS2 meters record your energy consumption in
+                30-minute intervals. This granular data is what makes time-of-use tariffs possible —
+                your supplier can see exactly how much electricity you used at each time of day and
+                bill accordingly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>In-Home Display (IHD)</strong> — your smart meter installation
-                should include an IHD — a small wireless display unit that shows your
-                current electricity usage in watts, your daily and weekly costs, and
-                your meter readings. Keeping the IHD visible in your kitchen or living
-                room helps raise awareness of energy use.
+                <strong>In-Home Display (IHD)</strong> — your smart meter installation should
+                include an IHD — a small wireless display unit that shows your current electricity
+                usage in watts, your daily and weekly costs, and your meter readings. Keeping the
+                IHD visible in your kitchen or living room helps raise awareness of energy use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Privacy</strong> — you can choose how often your smart meter
-                shares data with your supplier: every 30 minutes, daily, or monthly.
-                You can change this preference by contacting your supplier. More frequent
-                data sharing is required to access time-of-use tariffs.
+                <strong>Privacy</strong> — you can choose how often your smart meter shares data
+                with your supplier: every 30 minutes, daily, or monthly. You can change this
+                preference by contacting your supplier. More frequent data sharing is required to
+                access time-of-use tariffs.
               </span>
             </li>
           </ul>
@@ -238,51 +234,49 @@ const sections = [
     content: (
       <>
         <p>
-          Time-of-use (TOU) tariffs charge different prices for electricity at different
-          times of day. They require a SMETS2 smart meter to function. They can offer
-          significant savings for households with flexible loads — particularly EV owners
-          and those with heat pumps or battery storage.
+          Time-of-use (TOU) tariffs charge different prices for electricity at different times of
+          day. They require a SMETS2 smart meter to function. They can offer significant savings for
+          households with flexible loads — particularly EV owners and those with heat pumps or
+          battery storage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Octopus Agile</strong> — arguably the most well-known UK TOU
-                tariff, Agile prices electricity in half-hourly slots based on the
-                wholesale market price. Prices vary from very cheap (or occasionally
-                negative — you are paid to use electricity) during low-demand periods
-                such as windy nights, to higher during peak demand. An IHD or smart
-                home system is helpful for managing your usage to take advantage of
-                cheap periods.
+                <strong>Octopus Agile</strong> — arguably the most well-known UK TOU tariff, Agile
+                prices electricity in half-hourly slots based on the wholesale market price. Prices
+                vary from very cheap (or occasionally negative — you are paid to use electricity)
+                during low-demand periods such as windy nights, to higher during peak demand. An IHD
+                or smart home system is helpful for managing your usage to take advantage of cheap
+                periods.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overnight EV charging</strong> — most TOU tariffs offer a
-                significantly cheaper overnight rate, typically midnight to 6am or 7am.
-                For an EV owner charging from a low overnight rate, the savings compared
-                to a flat-rate tariff can be substantial — effectively reducing the
-                per-mile fuel cost to 2p to 4p per mile in many cases.
+                <strong>Overnight EV charging</strong> — most TOU tariffs offer a significantly
+                cheaper overnight rate, typically midnight to 6am or 7am. For an EV owner charging
+                from a low overnight rate, the savings compared to a flat-rate tariff can be
+                substantial — effectively reducing the per-mile fuel cost to 2p to 4p per mile in
+                many cases.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat pump synergy</strong> — heat pumps can be paired with a
-                thermal store and programmed to heat the store overnight using cheap
-                electricity, then use the stored heat during the day. TOU tariffs make
-                this significantly more economical.
+                <strong>Heat pump synergy</strong> — heat pumps can be paired with a thermal store
+                and programmed to heat the store overnight using cheap electricity, then use the
+                stored heat during the day. TOU tariffs make this significantly more economical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TOU tariffs require behaviour change</strong> — to benefit from
-                a TOU tariff you need to shift discretionary loads (dishwasher, washing
-                machine, EV charging) away from peak evening hours. Households that cannot
-                or will not shift loads may pay more on a TOU tariff than on a flat rate.
+                <strong>TOU tariffs require behaviour change</strong> — to benefit from a TOU tariff
+                you need to shift discretionary loads (dishwasher, washing machine, EV charging)
+                away from peak evening hours. Households that cannot or will not shift loads may pay
+                more on a TOU tariff than on a flat rate.
               </span>
             </li>
           </ul>
@@ -296,40 +290,37 @@ const sections = [
     content: (
       <>
         <p>
-          Providing regular meter readings to your supplier ensures your bills are based on
-          actual consumption rather than estimates. Here is how to read the most common
-          meter types.
+          Providing regular meter readings to your supplier ensures your bills are based on actual
+          consumption rather than estimates. Here is how to read the most common meter types.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Digital display meter</strong> — read the digits shown on the
-                display from left to right. Ignore any numbers shown in red or after a
-                decimal point. For Economy 7 meters, the display will cycle through
-                two readings labelled R1 (or Day) and R2 (or Night) — record both.
+                <strong>Digital display meter</strong> — read the digits shown on the display from
+                left to right. Ignore any numbers shown in red or after a decimal point. For Economy
+                7 meters, the display will cycle through two readings labelled R1 (or Day) and R2
+                (or Night) — record both.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Analogue dial meter</strong> — read the dials left to right.
-                For each dial, note the number the pointer has just passed (i.e., the
-                lower number). If the pointer appears exactly on a number, write it down
-                and put a question mark next to it — check the next dial to the right to
-                confirm. Ignore the final dial (usually marked 1/10). Ignore any red
-                dials.
+                <strong>Analogue dial meter</strong> — read the dials left to right. For each dial,
+                note the number the pointer has just passed (i.e., the lower number). If the pointer
+                appears exactly on a number, write it down and put a question mark next to it —
+                check the next dial to the right to confirm. Ignore the final dial (usually marked
+                1/10). Ignore any red dials.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart meter</strong> — your SMETS2 meter automatically transmits
-                readings to your supplier. If you need to read it manually (for a supplier
-                switch or a complaint), press the button on the meter face to cycle through
-                the display. Look for the reading labelled IMP (import — electricity you
-                have consumed) in kWh.
+                <strong>Smart meter</strong> — your SMETS2 meter automatically transmits readings to
+                your supplier. If you need to read it manually (for a supplier switch or a
+                complaint), press the button on the meter face to cycle through the display. Look
+                for the reading labelled IMP (import — electricity you have consumed) in kWh.
               </span>
             </li>
           </ul>
@@ -343,37 +334,36 @@ const sections = [
     content: (
       <>
         <p>
-          If you do not have a smart meter and do not submit regular readings, your supplier
-          will estimate your consumption based on historical usage data. Estimated bills can
-          lead to overpaying or underpaying — resulting in a large catch-up bill later.
+          If you do not have a smart meter and do not submit regular readings, your supplier will
+          estimate your consumption based on historical usage data. Estimated bills can lead to
+          overpaying or underpaying — resulting in a large catch-up bill later.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Submit readings at least quarterly</strong> — most suppliers
-                accept online meter readings and will issue an accurate bill immediately.
-                Quarterly readings are the minimum; monthly is better if your usage
-                varies seasonally.
+                <strong>Submit readings at least quarterly</strong> — most suppliers accept online
+                meter readings and will issue an accurate bill immediately. Quarterly readings are
+                the minimum; monthly is better if your usage varies seasonally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Back-billing limit</strong> — UK energy suppliers cannot back-bill
-                for energy used more than 12 months before the bill date if the error was
-                not the customer's fault. This provides protection against very large
-                catch-up bills from long periods of underestimation.
+                <strong>Back-billing limit</strong> — UK energy suppliers cannot back-bill for
+                energy used more than 12 months before the bill date if the error was not the
+                customer's fault. This provides protection against very large catch-up bills from
+                long periods of underestimation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Read your meter when you move</strong> — always take a meter
-                reading on the day you move in or out of a property and photograph the
-                meter display. This prevents you being billed for the previous occupant's
-                usage or losing energy credit on departure.
+                <strong>Read your meter when you move</strong> — always take a meter reading on the
+                day you move in or out of a property and photograph the meter display. This prevents
+                you being billed for the previous occupant's usage or losing energy credit on
+                departure.
               </span>
             </li>
           </ul>
@@ -389,38 +379,36 @@ const sections = [
         <p>
           Electricity meters are generally very reliable and rarely fault — but it does happen.
           Signs of a potentially faulty meter include bills that are significantly higher than
-          expected with no obvious change in usage, or a meter display that appears blank,
-          flashing, or showing an error code.
+          expected with no obvious change in usage, or a meter display that appears blank, flashing,
+          or showing an error code.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Contact your energy supplier first</strong> — your supplier is
-                responsible for the meter and will arrange a meter accuracy test if you
-                request one. Do not attempt to open or adjust the meter yourself.
+                <strong>Contact your energy supplier first</strong> — your supplier is responsible
+                for the meter and will arrange a meter accuracy test if you request one. Do not
+                attempt to open or adjust the meter yourself.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Meter accuracy test</strong> — the supplier will arrange for the
-                meter to be tested. If it is found to be outside the permitted ±2%
-                accuracy tolerance, they must replace it and may refund overbilled amounts
-                for up to 12 months.
+                <strong>Meter accuracy test</strong> — the supplier will arrange for the meter to be
+                tested. If it is found to be outside the permitted ±2% accuracy tolerance, they must
+                replace it and may refund overbilled amounts for up to 12 months.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Contact your DNO for outages</strong> — if you have lost power and
-                suspect it is a network fault rather than a problem with your consumer unit
-                or meter, contact your Distribution Network Operator (DNO) — not your
-                energy supplier. The DNO is responsible for the network up to and including
-                the meter. The DNO's 24-hour fault number can be found on your electricity
-                bill or via the{' '}
-                <strong>105</strong> emergency number (free, works from any phone).
+                <strong>Contact your DNO for outages</strong> — if you have lost power and suspect
+                it is a network fault rather than a problem with your consumer unit or meter,
+                contact your Distribution Network Operator (DNO) — not your energy supplier. The DNO
+                is responsible for the network up to and including the meter. The DNO's 24-hour
+                fault number can be found on your electricity bill or via the <strong>105</strong>{' '}
+                emergency number (free, works from any phone).
               </span>
             </li>
           </ul>
@@ -434,48 +422,44 @@ const sections = [
     content: (
       <>
         <p>
-          Meter tampering — bypassing, interfering with, or deliberately damaging an
-          electricity meter to avoid paying for energy — is a criminal offence in the UK.
-          It is also extremely dangerous.
+          Meter tampering — bypassing, interfering with, or deliberately damaging an electricity
+          meter to avoid paying for energy — is a criminal offence in the UK. It is also extremely
+          dangerous.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Criminal offences</strong> — meter tampering is an offence under
-                the Theft Act 1968 (abstracting electricity) and the Electricity Act 1989.
-                Conviction can result in up to five years' imprisonment and an unlimited
-                fine.
+                <strong>Criminal offences</strong> — meter tampering is an offence under the Theft
+                Act 1968 (abstracting electricity) and the Electricity Act 1989. Conviction can
+                result in up to five years' imprisonment and an unlimited fine.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Back-billing</strong> — energy suppliers use smart meter data,
-                physical inspections, and network loss data to detect tampering. When
-                tampering is discovered, the supplier can back-bill estimated stolen energy
-                — often running to tens of thousands of pounds — using industry standard
-                calculations.
+                <strong>Back-billing</strong> — energy suppliers use smart meter data, physical
+                inspections, and network loss data to detect tampering. When tampering is
+                discovered, the supplier can back-bill estimated stolen energy — often running to
+                tens of thousands of pounds — using industry standard calculations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Serious fire risk</strong> — bypassing a meter typically involves
-                making unprotected connections in the live meter tails. These connections
-                are upstream of any protection in the consumer unit, meaning any fault is
-                unprotected and can cause a catastrophic fire. Deaths have resulted from
-                tampered meters.
+                <strong>Serious fire risk</strong> — bypassing a meter typically involves making
+                unprotected connections in the live meter tails. These connections are upstream of
+                any protection in the consumer unit, meaning any fault is unprotected and can cause
+                a catastrophic fire. Deaths have resulted from tampered meters.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insurance invalidation</strong> — home insurance policies are
-                invalidated if illegal electrical work is discovered. A fire caused by a
-                tampered meter may leave the occupant with no insurance cover for the
-                resulting damage.
+                <strong>Insurance invalidation</strong> — home insurance policies are invalidated if
+                illegal electrical work is discovered. A fire caused by a tampered meter may leave
+                the occupant with no insurance cover for the resulting damage.
               </span>
             </li>
           </ul>
@@ -489,47 +473,45 @@ const sections = [
     content: (
       <>
         <p>
-          The electricity meter and the meter tails (the cables connecting the meter to
-          the consumer unit main switch) are the property and responsibility of the
-          energy supplier or Distribution Network Operator. Electricians must not work
-          on these without DNO authorisation.
+          The electricity meter and the meter tails (the cables connecting the meter to the consumer
+          unit main switch) are the property and responsibility of the energy supplier or
+          Distribution Network Operator. Electricians must not work on these without DNO
+          authorisation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What electricians can do</strong> — electricians can work on the
-                consumer unit (from the main switch downwards) without DNO involvement.
-                Replacing a consumer unit, adding circuits, and all downstream work does
-                not require DNO permission.
+                <strong>What electricians can do</strong> — electricians can work on the consumer
+                unit (from the main switch downwards) without DNO involvement. Replacing a consumer
+                unit, adding circuits, and all downstream work does not require DNO permission.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What requires DNO involvement</strong> — extending or relocating
-                meter tails, moving the meter position, upgrading from single-phase to
-                three-phase supply, increasing the supply fuse size, and any work on the
-                cutout (the sealed fuse before the meter) all require DNO authorisation.
-                Contact the DNO in advance — this process can take several weeks.
+                <strong>What requires DNO involvement</strong> — extending or relocating meter
+                tails, moving the meter position, upgrading from single-phase to three-phase supply,
+                increasing the supply fuse size, and any work on the cutout (the sealed fuse before
+                the meter) all require DNO authorisation. Contact the DNO in advance — this process
+                can take several weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation for consumer unit work</strong> — when replacing a
-                consumer unit, the electrician needs the meter tails de-energised. The
-                DNO can provide temporary isolation at the service cutout, or some
-                suppliers have remote isolation capability for smart meters. Arrange this
-                in advance.
+                <strong>Isolation for consumer unit work</strong> — when replacing a consumer unit,
+                the electrician needs the meter tails de-energised. The DNO can provide temporary
+                isolation at the service cutout, or some suppliers have remote isolation capability
+                for smart meters. Arrange this in advance.
               </span>
             </li>
           </ul>
         </div>
         <SEOAppBridge
           title="Are you an electrician? Manage all your certification with Elec-Mate"
-          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 430+ UK electricians. 7-day free trial, cancel anytime."
+          description="Complete EICs, EICRs, and minor works certificates on your phone. Join 1,000+ UK electricians. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -566,7 +548,7 @@ export default function ElectricityMeterGuidePage() {
       faqHeading="Frequently Asked Questions About Electricity Meters"
       relatedPages={relatedPages}
       ctaHeading="Are You an Electrician? Try Elec-Mate Free"
-      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Complete all your electrical certificates on your phone, including EICs for consumer unit work. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

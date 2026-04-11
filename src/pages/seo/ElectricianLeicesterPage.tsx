@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Who is the electricity Distribution Network Operator for Leicester?',
     answer:
-      'National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Leicester and the wider East Midlands region. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Your electrician can advise on whether your existing supply is adequate and submit the application on your behalf. Lead times for new connections in Leicester are typically 4 to 8 weeks.',
+      "National Grid Electricity Distribution (NGED), formerly Western Power Distribution (WPD), is the DNO for Leicester and the wider East Midlands region. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Your electrician can advise on whether your existing supply is adequate and submit the application on your behalf. Lead times for new connections in Leicester are typically 4 to 8 weeks.",
   },
 ];
 
@@ -149,11 +149,11 @@ const sections = [
         </p>
         <p>
           The Leicester electrical market is served by a mix of established local firms and sole
-          traders. Many Leicester electricians serve both the city and the surrounding Leicestershire
-          towns — Loughborough, Hinckley, Market Harborough, and Melton Mowbray are all within a
-          30-minute drive. The university sector (University of Leicester and De Montfort University)
-          generates significant demand for HMO electrical work, particularly in the Clarendon Park,
-          Aylestone, and West End areas.
+          traders. Many Leicester electricians serve both the city and the surrounding
+          Leicestershire towns — Loughborough, Hinckley, Market Harborough, and Melton Mowbray are
+          all within a 30-minute drive. The university sector (University of Leicester and De
+          Montfort University) generates significant demand for HMO electrical work, particularly in
+          the Clarendon Park, Aylestone, and West End areas.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -162,17 +162,16 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
-          signed off by local authority building control. The most recognised competent person schemes
-          are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          signed off by local authority building control. The most recognised competent person
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -204,17 +203,17 @@ const sections = [
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. Ask for a copy of the certificate. This is
-                particularly important for work in older Leicester properties where unforeseen damage
-                to lath-and-plaster or period features can occur.
+                particularly important for work in older Leicester properties where unforeseen
+                damage to lath-and-plaster or period features can occur.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Recent references and reviews</strong> — ask for contact details of 2 to 3
-                recent Leicester customers, or check verified reviews on platforms like
-                Checkatrade, Trustpilot, or Google Business. Look for reviews that mention
-                similar work to what you need.
+                recent Leicester customers, or check verified reviews on platforms like Checkatrade,
+                Trustpilot, or Google Business. Look for reviews that mention similar work to what
+                you need.
               </span>
             </li>
           </ul>
@@ -244,8 +243,8 @@ const sections = [
               <span>
                 <strong>Full rewire (3-bed Victorian terrace)</strong> — £4,500 to £7,000 including
                 new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
-                certification. Properties with lath-and-plaster walls in Clarendon Park or Stoneygate
-                are at the upper end.
+                certification. Properties with lath-and-plaster walls in Clarendon Park or
+                Stoneygate are at the upper end.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,7 +267,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional socket (from existing circuit)</strong> — £90 to £160 per single
-                socket, depending on cable run length and the ease of access to the existing circuit.
+                socket, depending on cable run length and the ease of access to the existing
+                circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -312,19 +312,19 @@ const sections = [
               Leicester has extensive areas of Victorian terraced housing, particularly in Clarendon
               Park, Stoneygate, Highfields, and the West End. These 1880s to 1910 properties
               typically have solid brick walls, lath-and-plaster ceilings, and high ceilings. Many
-              have had multiple partial rewires over the decades, leaving a mix of old rubber-sheathed
-              cable and newer PVC alongside each other. A full rewire is often the most practical
-              approach for these properties.
+              have had multiple partial rewires over the decades, leaving a mix of old
+              rubber-sheathed cable and newer PVC alongside each other. A full rewire is often the
+              most practical approach for these properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Inter-War Semi-Detached</h3>
             <p className="text-white text-sm leading-relaxed">
-              The 1930s suburbs of Leicester — Oadby, Wigston, Knighton, and Evington — are dominated
-              by semi-detached houses. These properties often have cavity walls (making cable routing
-              easier) but may still have original VIR (vulcanised india rubber) wiring that is well
-              past its expected life. The consumer unit is typically under the stairs, and the original
-              installation was often just two circuits (lighting and power).
+              The 1930s suburbs of Leicester — Oadby, Wigston, Knighton, and Evington — are
+              dominated by semi-detached houses. These properties often have cavity walls (making
+              cable routing easier) but may still have original VIR (vulcanised india rubber) wiring
+              that is well past its expected life. The consumer unit is typically under the stairs,
+              and the original installation was often just two circuits (lighting and power).
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -333,8 +333,9 @@ const sections = [
               The areas around both universities have a high concentration of Houses in Multiple
               Occupation, many converted from family homes. These properties often have complex
               metering arrangements, additional fire detection systems, emergency lighting, and
-              consumer units that have been extended multiple times. Electrical work in HMOs requires
-              an electrician familiar with the additional fire safety and licensing requirements.
+              consumer units that have been extended multiple times. Electrical work in HMOs
+              requires an electrician familiar with the additional fire safety and licensing
+              requirements.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -392,8 +393,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Leicester is overseen by Leicester City Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf.
@@ -418,8 +418,8 @@ const sections = [
               <span>
                 <strong>EICR requirement</strong> — since April 2021, all rented properties in
                 England must have a valid EICR carried out at least every 5 years. The report must
-                be provided to new tenants before they move in and to existing tenants within 28 days
-                of the inspection. Failure to comply can result in fines of up to £30,000.
+                be provided to new tenants before they move in and to existing tenants within 28
+                days of the inspection. Failure to comply can result in fines of up to £30,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -435,8 +435,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire safety in HMOs</strong> — the fire detection system grade depends on the
-                HMO category. A Grade D LD2 system (interlinked mains-powered smoke and heat
+                <strong>Fire safety in HMOs</strong> — the fire detection system grade depends on
+                the HMO category. A Grade D LD2 system (interlinked mains-powered smoke and heat
                 detectors) is typical for smaller HMOs. Larger HMOs may require a Grade A system
                 with a control panel. Your electrician should be experienced in both the electrical
                 installation and the fire detection requirements.
@@ -468,9 +468,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   City centre parking can be £8 to £15 per day, and permit parking zones cover much
                   of the inner city. Van insurance and fuel costs are moderate compared to London.
-                  Leicester's compact geography means travel times between jobs are manageable — most
-                  of the city is within a 20-minute drive. Factor in the cost of materials from local
-                  wholesalers (CEF, Edmundson, City Electrical Factors all have Leicester branches).
+                  Leicester's compact geography means travel times between jobs are manageable —
+                  most of the city is within a 20-minute drive. Factor in the cost of materials from
+                  local wholesalers (CEF, Edmundson, City Electrical Factors all have Leicester
+                  branches).
                 </p>
               </div>
             </div>
@@ -493,7 +494,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Leicester electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -530,7 +531,7 @@ export default function ElectricianLeicesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Leicester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Leicester and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Leicester and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

@@ -150,11 +150,11 @@ const sections = [
         </p>
         <p>
           The Manchester property market has been booming, with major regeneration in areas like
-          Salford Quays, Ancoats, the Northern Quarter, and Trafford Wharf driving demand for
-          both new-build electrical installations and refurbishment of older stock. At the same
-          time, the large stock of Victorian and Edwardian terraced houses across South Manchester,
-          Chorlton, Levenshulme, and the surrounding boroughs generates consistent demand for
-          rewires, consumer unit upgrades, and landlord compliance work.
+          Salford Quays, Ancoats, the Northern Quarter, and Trafford Wharf driving demand for both
+          new-build electrical installations and refurbishment of older stock. At the same time, the
+          large stock of Victorian and Edwardian terraced houses across South Manchester, Chorlton,
+          Levenshulme, and the surrounding boroughs generates consistent demand for rewires,
+          consumer unit upgrades, and landlord compliance work.
         </p>
         <p>
           Whether you need a simple socket addition or a full rewire, the same rules apply: hire a
@@ -163,16 +163,16 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>
           . The main schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          and ELECSA. NAPIT is particularly well-represented in the Manchester area, as its head
-          office is in Nottingham and it has a strong presence across the North of England.
+          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT, and
+          ELECSA. NAPIT is particularly well-represented in the Manchester area, as its head office
+          is in Nottingham and it has a strong presence across the North of England.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -187,8 +187,8 @@ const sections = [
               <span>
                 <strong>Competent person scheme registration</strong> — ask for their NICEIC, NAPIT,
                 or ELECSA registration number. Verify it online on the scheme provider's website.
-                This confirms they can self-certify notifiable electrical work under Part P and
-                that their work is regularly assessed by the scheme.
+                This confirms they can self-certify notifiable electrical work under Part P and that
+                their work is regularly assessed by the scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -230,16 +230,16 @@ const sections = [
       <>
         <p>
           Manchester electrical prices are broadly in line with the national average — more
-          affordable than London and the South East, but higher than rural areas. Here are
-          realistic prices for common domestic electrical work in Greater Manchester in 2026:
+          affordable than London and the South East, but higher than rural areas. Here are realistic
+          prices for common domestic electrical work in Greater Manchester in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire (3-bed terraced house)</strong> — £4,500 to £7,500 including
-                new consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
+                <strong>Full rewire (3-bed terraced house)</strong> — £4,500 to £7,500 including new
+                consumer unit, all circuits, sockets, switches, lighting, testing, and Part P
                 certification. Older terraces with solid walls and no cavity are at the upper end.
               </span>
             </li>
@@ -272,17 +272,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £650 to £1,200 for a 7kW home charger
-                including supply, installation, earthing, and Part P certification. Terraced
-                houses without off-street parking may not be suitable — check with the electrician
-                and the charger manufacturer.
+                including supply, installation, earthing, and Part P certification. Terraced houses
+                without off-street parking may not be suitable — check with the electrician and the
+                charger manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Emergency call-out</strong> — £100 to £180 for the first hour including
-                travel, plus £40 to £65 per additional hour. Evening and weekend rates are
-                typically 30% to 50% higher.
+                travel, plus £40 to £65 per additional hour. Evening and weekend rates are typically
+                30% to 50% higher.
               </span>
             </li>
           </ul>
@@ -323,8 +323,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">City Centre Apartments</h3>
             <p className="text-white text-sm leading-relaxed">
               Manchester's city centre has seen massive apartment development since the early 2000s,
-              with large complexes in Deansgate, Castlefield, the Northern Quarter, Ancoats, and
-              New Islington. These modern builds typically have well-documented electrical
+              with large complexes in Deansgate, Castlefield, the Northern Quarter, Ancoats, and New
+              Islington. These modern builds typically have well-documented electrical
               installations, but access can be challenging — ceiling voids may be shared with
               neighbouring flats, and fire-stopping must be maintained when running new cables.
               Building management may restrict working hours and require permits for noisy work.
@@ -390,18 +390,17 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Power cut reporting</strong> — ENW handles all power cuts in the Greater
-                Manchester area. Report via 105 (the national power cut number) or ENW's website.
-                In older parts of Manchester, the underground cable network can be prone to faults,
+                Manchester area. Report via 105 (the national power cut number) or ENW's website. In
+                older parts of Manchester, the underground cable network can be prone to faults,
                 particularly during extreme weather.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          compliance, notifiable electrical work in Manchester is overseen by Manchester City Council
-          building control (or the relevant borough council for areas outside the City of
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          compliance, notifiable electrical work in Manchester is overseen by Manchester City
+          Council building control (or the relevant borough council for areas outside the City of
           Manchester). If your electrician is registered with a competent person scheme, they
           self-certify and notify the council directly.
         </p>
@@ -434,11 +433,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire detection</strong> — licensable HMOs must have mains-wired,
-                interlinked smoke detection to at least LD2 standard (BS 5839-6). This means heat
-                detectors in the kitchen, smoke detectors in all hallways, landings, and living
-                rooms, all interlinked and with battery backup. This is electrical work that must be
-                carried out by a competent electrician.
+                <strong>Fire detection</strong> — licensable HMOs must have mains-wired, interlinked
+                smoke detection to at least LD2 standard (BS 5839-6). This means heat detectors in
+                the kitchen, smoke detectors in all hallways, landings, and living rooms, all
+                interlinked and with battery backup. This is electrical work that must be carried
+                out by a competent electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,10 +467,10 @@ const sections = [
     content: (
       <>
         <p>
-          Manchester's commercial property market is one of the most active outside London. The
-          city centre, Salford MediaCity, Trafford Park (one of Europe's largest industrial
-          estates), and Manchester Airport Enterprise Zone all generate significant demand for
-          commercial electrical contractors.
+          Manchester's commercial property market is one of the most active outside London. The city
+          centre, Salford MediaCity, Trafford Park (one of Europe's largest industrial estates), and
+          Manchester Airport Enterprise Zone all generate significant demand for commercial
+          electrical contractors.
         </p>
         <p>
           Commercial electrical work in Manchester includes office fit-outs and refurbishments,
@@ -484,8 +483,8 @@ const sections = [
           Commercial work requires additional qualifications and experience beyond domestic
           competence. Electricians working on commercial projects typically hold C&G 2391
           (Inspection and Testing), may need CSCS cards for construction sites, and must understand
-          commercial fire alarm systems, emergency lighting to BS 5266, and three-phase
-          distribution systems.
+          commercial fire alarm systems, emergency lighting to BS 5266, and three-phase distribution
+          systems.
         </p>
         <SEOAppBridge
           title="Manage commercial and domestic jobs from one app"
@@ -541,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your Manchester electrical business"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Complete EICRs and EICs on site, send instant PDFs to letting agents and landlords. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -578,7 +577,7 @@ export default function ElectricianManchesterPage() {
       faqHeading="Frequently Asked Questions About Electricians in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Manchester landlords and letting agents. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site and send instant PDFs to Manchester landlords and letting agents. 7-day free trial."
     />
   );
 }

@@ -39,7 +39,7 @@ const keyTakeaways = [
   'Preston is the county town of Lancashire, England. Part P of the Building Regulations applies — notifiable electrical work must be self-certified by a registered competent person (NICEIC, NAPIT, or ELECSA) or notified to Preston City Council Building Control.',
   'Electricity North West (ENW) is the DNO for Preston and the surrounding area. All new connections, supply upgrades, and G98/G99 generation notifications go through ENW.',
   'Preston has a large and diverse housing stock ranging from Victorian terraces in areas like Deepdale and Ribbleton to large post-war estates in Ingol and Lea and modern new-build developments around the city.',
-  'The University of Central Lancashire (UCLan) creates significant student HMO demand, making EICRs and HMO compliance a key part of the local electrician\'s workload.',
+  "The University of Central Lancashire (UCLan) creates significant student HMO demand, making EICRs and HMO compliance a key part of the local electrician's workload.",
   'Labour rates in Preston are mid-range for Lancashire — typically £40 to £58 per hour for a qualified, registered electrician in 2026.',
 ];
 
@@ -62,7 +62,7 @@ const faqs = [
   {
     question: 'How much does an EICR cost in Preston?',
     answer:
-      'An EICR in Preston typically costs £150 to £260 for a standard residential property. HMO EICRs cost more due to the larger number of circuits. Preston rates are broadly in line with other Lancashire towns — slightly higher than Blackpool, similar to Burnley and Accrington, and lower than Manchester city centre. The competitive local market keeps prices reasonable. Landlords should budget for remedial work costs on top of the EICR fee, particularly in Preston\'s older Victorian and post-war housing stock.',
+      "An EICR in Preston typically costs £150 to £260 for a standard residential property. HMO EICRs cost more due to the larger number of circuits. Preston rates are broadly in line with other Lancashire towns — slightly higher than Blackpool, similar to Burnley and Accrington, and lower than Manchester city centre. The competitive local market keeps prices reasonable. Landlords should budget for remedial work costs on top of the EICR fee, particularly in Preston's older Victorian and post-war housing stock.",
   },
   {
     question: 'What is the typical cost of a consumer unit replacement in Preston?',
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'What qualifications do I need to work as an electrician in Preston?',
     answer:
-      'The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P without notifying Building Control on every job, you must be registered with NICEIC, NAPIT, or ELECSA. Electricians working in Preston\'s HMO and student rental market should also consider qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266).',
+      "The requirements are standard for England. You need City & Guilds 2365 Level 2 and 3 (or NVQ Level 3 in Electrical Installation), plus the 18th Edition (BS 7671:2018+A3:2024) certificate. For self-certification under Part P without notifying Building Control on every job, you must be registered with NICEIC, NAPIT, or ELECSA. Electricians working in Preston's HMO and student rental market should also consider qualifications in fire alarm systems (BS 5839) and emergency lighting (BS 5266).",
   },
   {
     question: 'Is there good demand for electricians in Preston?',
     answer:
-      'Yes. Preston has a strong and varied electrical market. The city\'s significant rental sector (driven by UCLan students, the public sector workforce, and general private renters) generates consistent EICR demand. The older housing stock produces a steady flow of rewiring and consumer unit upgrade work. Preston is also a Lancashire hub with good access to surrounding towns, and many electricians based in Preston serve a wide area including Leyland, Chorley, Longridge, and the Ribble Valley. The city\'s location on the M6 and M55 motorways gives good access to the wider region.',
+      "Yes. Preston has a strong and varied electrical market. The city's significant rental sector (driven by UCLan students, the public sector workforce, and general private renters) generates consistent EICR demand. The older housing stock produces a steady flow of rewiring and consumer unit upgrade work. Preston is also a Lancashire hub with good access to surrounding towns, and many electricians based in Preston serve a wide area including Leyland, Chorley, Longridge, and the Ribble Valley. The city's location on the M6 and M55 motorways gives good access to the wider region.",
   },
 ];
 
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
-      'Size cables for rewires, new circuits, and EV charger installations across Preston\'s housing stock.',
+      "Size cables for rewires, new circuits, and EV charger installations across Preston's housing stock.",
     icon: Calculator,
     category: 'Tool',
   },
@@ -145,17 +145,17 @@ const sections = [
         <p>
           Preston is Lancashire's county town and a city with a diverse economy spanning higher
           education, public sector employment, manufacturing, and retail. The University of Central
-          Lancashire (UCLan) is one of the UK's largest universities, with a large student population
-          that creates significant HMO and student rental demand. For electricians, this translates
-          into a strong and consistent market for EICR work, HMO compliance, consumer unit upgrades,
-          and residential rewires.
+          Lancashire (UCLan) is one of the UK's largest universities, with a large student
+          population that creates significant HMO and student rental demand. For electricians, this
+          translates into a strong and consistent market for EICR work, HMO compliance, consumer
+          unit upgrades, and residential rewires.
         </p>
         <p>
-          Preston's housing stock is varied: Victorian and Edwardian terraces in areas like Deepdale,
-          Ribbleton, and Ashton-on-Ribble; large post-war estates in Ingol, Lea, and Brookfield;
-          inter-war semis in Fulwood and Penwortham; and modern new-build development around the
-          city's edges. Each era of housing has its own electrical characteristics and compliance
-          challenges.
+          Preston's housing stock is varied: Victorian and Edwardian terraces in areas like
+          Deepdale, Ribbleton, and Ashton-on-Ribble; large post-war estates in Ingol, Lea, and
+          Brookfield; inter-war semis in Fulwood and Penwortham; and modern new-build development
+          around the city's edges. Each era of housing has its own electrical characteristics and
+          compliance challenges.
         </p>
         <p>
           This guide covers the regulatory framework, DNO contacts, local property types, typical
@@ -202,10 +202,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Landlord EICR requirements</strong> — Preston's large private rental
-                sector is subject to The Electrical Safety Standards in the Private Rented Sector
-                (England) Regulations 2020. Landlords must have a valid EICR every five years,
-                with C1/C2 defects remedied within 28 days.
+                <strong>Landlord EICR requirements</strong> — Preston's large private rental sector
+                is subject to The Electrical Safety Standards in the Private Rented Sector (England)
+                Regulations 2020. Landlords must have a valid EICR every five years, with C1/C2
+                defects remedied within 28 days.
               </span>
             </li>
           </ul>
@@ -218,9 +218,7 @@ const sections = [
     heading: 'Preston Property Types and Electrical Characteristics',
     content: (
       <>
-        <p>
-          Preston's housing stock spans several eras with distinct electrical profiles:
-        </p>
+        <p>Preston's housing stock spans several eras with distinct electrical profiles:</p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Victorian and Edwardian Terraces</h3>
@@ -236,26 +234,26 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Large estates in Ingol, Lea, Brookfield, and Larches were built in the 1950s through
               1970s. Wiring from this era includes ageing PVC and early rubber-insulated cables.
-              Consumer units are often inadequate. EICRs regularly generate C2 observations requiring
-              remedial work or full rewires.
+              Consumer units are often inadequate. EICRs regularly generate C2 observations
+              requiring remedial work or full rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Inter-War and Modern Suburbs</h3>
             <p className="text-white text-sm leading-relaxed">
-              Fulwood, Penwortham, and Longton have inter-war semis and modern private
-              development. Wiring is generally better than in the older stock, but consumer
-              unit upgrades and EV charger installations are the primary job types. New-build
-              estates around the city's edges require smart home and EV charger work.
+              Fulwood, Penwortham, and Longton have inter-war semis and modern private development.
+              Wiring is generally better than in the older stock, but consumer unit upgrades and EV
+              charger installations are the primary job types. New-build estates around the city's
+              edges require smart home and EV charger work.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Student and HMO Properties</h3>
             <p className="text-white text-sm leading-relaxed">
               UCLan's large student population concentrates in areas around the university campus
-              and city centre. HMO properties here require regular EICRs, fire alarm systems,
-              and adequate electrical provision per room. Preston City Council's HMO licensing
-              team actively enforces compliance.
+              and city centre. HMO properties here require regular EICRs, fire alarm systems, and
+              adequate electrical provision per room. Preston City Council's HMO licensing team
+              actively enforces compliance.
             </p>
           </div>
         </div>
@@ -267,9 +265,7 @@ const sections = [
     heading: 'Common Electrical Jobs in Preston',
     content: (
       <>
-        <p>
-          The most in-demand electrical services in Preston in 2026:
-        </p>
+        <p>The most in-demand electrical services in Preston in 2026:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -283,26 +279,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacements</strong> — Preston's older housing stock has
-                a high proportion of inadequate consumer units. Consumer unit upgrades are one
-                of the most common jobs across all areas of the city.
+                <strong>Consumer unit replacements</strong> — Preston's older housing stock has a
+                high proportion of inadequate consumer units. Consumer unit upgrades are one of the
+                most common jobs across all areas of the city.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installations</strong> — demand is growing across Preston's
-                modern estates and commercial sector. ENW G98 notification is required for
-                home EV charger circuits. Commercial EV charger work in car parks and
-                business premises is an expanding market.
+                modern estates and commercial sector. ENW G98 notification is required for home EV
+                charger circuits. Commercial EV charger work in car parks and business premises is
+                an expanding market.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rewires and partial rewires</strong> — Preston's Victorian terraces and
-                post-war estates generate consistent rewiring work. Partial rewires following
-                EICR C2 observations are among the most frequently undertaken jobs.
+                post-war estates generate consistent rewiring work. Partial rewires following EICR
+                C2 observations are among the most frequently undertaken jobs.
               </span>
             </li>
           </ul>
@@ -316,8 +312,8 @@ const sections = [
     content: (
       <>
         <p>
-          In Preston, as across England, NICEIC or NAPIT registration is the key indicator of
-          a qualified and compliant electrician:
+          In Preston, as across England, NICEIC or NAPIT registration is the key indicator of a
+          qualified and compliant electrician:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -332,18 +328,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct documentation</strong> — for notifiable work, you should receive
-                a Part P Building Regulations compliance certificate and a BS 7671 EIC. For an
-                EICR, you should receive the full condition report with all observations and an
-                overall satisfactory or unsatisfactory result.
+                <strong>Correct documentation</strong> — for notifiable work, you should receive a
+                Part P Building Regulations compliance certificate and a BS 7671 EIC. For an EICR,
+                you should receive the full condition report with all observations and an overall
+                satisfactory or unsatisfactory result.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Written quotation</strong> — always get a detailed written quote before
-                committing to any work. Reputable Preston electricians will survey and provide
-                a full cost breakdown before starting.
+                committing to any work. Reputable Preston electricians will survey and provide a
+                full cost breakdown before starting.
               </span>
             </li>
           </ul>
@@ -419,8 +415,8 @@ const sections = [
     content: (
       <>
         <p>
-          Preston is a strong market for electricians who can serve the rental sector, work across
-          a variety of housing types, and offer a full range of compliance documentation. The city's
+          Preston is a strong market for electricians who can serve the rental sector, work across a
+          variety of housing types, and offer a full range of compliance documentation. The city's
           position as Lancashire's county town gives good access to surrounding areas.
         </p>
         <div className="space-y-4 my-4">
@@ -434,12 +430,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site. Same-day documentation impresses Preston landlords and helps win
-                  repeat business.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site. Same-day documentation impresses Preston landlords and helps win repeat
+                  business.
                 </p>
               </div>
             </div>
@@ -454,8 +447,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
-                  to send professional quotes to Preston homeowners and landlords. Clear quotes
-                  with itemised costs stand out in a competitive local market.
+                  to send professional quotes to Preston homeowners and landlords. Clear quotes with
+                  itemised costs stand out in a competitive local market.
                 </p>
               </div>
             </div>
@@ -463,7 +456,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Preston electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the rental and residential market in Preston. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Part P compliance and the rental and residential market in Preston. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -488,8 +481,7 @@ export default function ElectricianPrestonPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Preston:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Preston: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Preston's large student population, Victorian terrace stock, and growing EV charger demand creates consistent work for qualified electricians with expertise in Part P compliance, HMO electrical standards, and EICR documentation."
@@ -500,7 +492,7 @@ export default function ElectricianPrestonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Preston"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Preston Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the rental, HMO, and residential market in Preston. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for the rental, HMO, and residential market in Preston. 7-day free trial."
     />
   );
 }

@@ -102,7 +102,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on circuits running from house consumer unit to the converted garage.',
+    description:
+      'Check voltage drop on circuits running from house consumer unit to the converted garage.',
     icon: Zap,
     category: 'Tool',
   },
@@ -117,8 +118,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
-    description:
-      'Price garage conversion electrical packages with itemised materials and labour.',
+    description: 'Price garage conversion electrical packages with itemised materials and labour.',
     icon: Wrench,
     category: 'Tool',
   },
@@ -152,10 +152,11 @@ const sections = [
       <>
         <p>
           Garage conversions are one of the most popular home improvement projects in the UK. They
-          add liveable space without extending the footprint of the property, and the electrical work
-          is a significant part of the project. Whether the customer is converting to a bedroom, home
-          office, gym, playroom, or even a kitchen, the electrical design must meet the requirements
-          for a habitable room — which is a substantial step up from a typical garage installation.
+          add liveable space without extending the footprint of the property, and the electrical
+          work is a significant part of the project. Whether the customer is converting to a
+          bedroom, home office, gym, playroom, or even a kitchen, the electrical design must meet
+          the requirements for a habitable room — which is a substantial step up from a typical
+          garage installation.
         </p>
         <p>
           This guide covers the electrical requirements for garage conversions, including Building
@@ -277,8 +278,8 @@ const sections = [
         <p>
           Garage conversions often have limited natural light — particularly if the garage door has
           been bricked up and replaced with a solid wall or a window smaller than the original
-          opening. The lighting design is critical to making the space feel like a proper room rather
-          than a converted garage.
+          opening. The lighting design is critical to making the space feel like a proper room
+          rather than a converted garage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -293,17 +294,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Task lighting</strong> — for home offices, provide additional lighting at desk
-                positions (wall lights or under-cabinet strips). For kitchens, under-cabinet LED
-                strips on the worktop circuits.
+                <strong>Task lighting</strong> — for home offices, provide additional lighting at
+                desk positions (wall lights or under-cabinet strips). For kitchens, under-cabinet
+                LED strips on the worktop circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switching</strong> — switch at the entrance door. For bedrooms, provide
-                two-way switching (door and bedside). For larger spaces, consider a dimmer circuit for
-                comfort and energy saving.
+                two-way switching (door and bedside). For larger spaces, consider a dimmer circuit
+                for comfort and energy saving.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -341,8 +342,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Home Office</h3>
             <p className="text-white text-sm leading-relaxed">
               Minimum 6 double socket outlets. Cluster sockets at the desk position — at least 2
-              doubles at desk height (700mm) for monitor, computer, printer, and peripherals. Include
-              a dedicated data point (Cat6) at the desk if wired networking is required.
+              doubles at desk height (700mm) for monitor, computer, printer, and peripherals.
+              Include a dedicated data point (Cat6) at the desk if wired networking is required.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -400,7 +401,8 @@ const sections = [
               <span>
                 <strong>Air source heat pump feed</strong> — if the conversion is substantial, a
                 small air source heat pump may be specified by the M&E designer. The electrician
-                provides the dedicated supply circuit (typically 20A to 32A) and the controls wiring.
+                provides the dedicated supply circuit (typically 20A to 32A) and the controls
+                wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -408,7 +410,8 @@ const sections = [
               <span>
                 <strong>Mechanical extract ventilation</strong> — if the room has limited natural
                 ventilation, a continuous or intermittent extract fan is needed. Wire from a fused
-                spur (3A). For bathrooms or kitchens, link to the light switch with an overrun timer.
+                spur (3A). For bathrooms or kitchens, link to the light switch with an overrun
+                timer.
               </span>
             </li>
           </ul>
@@ -422,7 +425,8 @@ const sections = [
     content: (
       <>
         <p>
-          Fire safety in a garage conversion has direct implications for the electrical installation:
+          Fire safety in a garage conversion has direct implications for the electrical
+          installation:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -516,8 +520,8 @@ const sections = [
         </div>
         <p>
           The EIC is submitted to Building Control (via the competent person scheme) as part of the
-          overall Building Regulations sign-off. The homeowner receives a copy for their records, and
-          it becomes part of the property file for future sale.
+          overall Building Regulations sign-off. The homeowner receives a copy for their records,
+          and it becomes part of the property file for future sale.
         </p>
       </>
     ),
@@ -538,13 +542,13 @@ const sections = [
               consumer unit approach, design the circuit layout, and produce a quote.
             </li>
             <li>
-              <strong>First fix</strong> — run cables in walls, floor, and ceiling before plasterboard
-              goes up. Install back boxes, cable routes for lighting, and any conduit for future
-              services. Coordinate with the plasterer and insulation contractor.
+              <strong>First fix</strong> — run cables in walls, floor, and ceiling before
+              plasterboard goes up. Install back boxes, cable routes for lighting, and any conduit
+              for future services. Coordinate with the plasterer and insulation contractor.
             </li>
             <li>
-              <strong>Fire stopping</strong> — seal all cable penetrations through the fire-rated wall
-              with intumescent sealant before plasterboard covers the openings.
+              <strong>Fire stopping</strong> — seal all cable penetrations through the fire-rated
+              wall with intumescent sealant before plasterboard covers the openings.
             </li>
             <li>
               <strong>Consumer unit work</strong> — install or modify the consumer unit. Connect the
@@ -616,9 +620,7 @@ const sections = [
     heading: 'Typical Costs (2026 UK Pricing)',
     content: (
       <>
-        <p>
-          Garage conversion electrical costs depend on the room use and specification:
-        </p>
+        <p>Garage conversion electrical costs depend on the room use and specification:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -631,8 +633,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Home office</strong> — enhanced lighting, 6-8 sockets, data cabling, heating,
-                dedicated circuits: £2,000 to £3,000.
+                <strong>Home office</strong> — enhanced lighting, 6-8 sockets, data cabling,
+                heating, dedicated circuits: £2,000 to £3,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -698,7 +700,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify garage conversion electrics"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
           icon={Warehouse}
         />
       </>
@@ -735,7 +737,7 @@ export default function GarageConversionElectricsPage() {
       faqHeading="Frequently Asked Questions About Garage Conversion Electrics"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Garage Conversions on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certificates. 7-day free trial, cancel anytime."
     />
   );
 }

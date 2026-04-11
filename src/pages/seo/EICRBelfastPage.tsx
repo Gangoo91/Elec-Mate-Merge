@@ -41,7 +41,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). Belfast electricians use the same technical standard as the rest of the UK.',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, carried out in accordance with BS 7671:2018+A3:2024 (Section 631). Belfast electricians use the same technical standard as the rest of the UK.",
   'Belfast EICR costs are among the most affordable in the UK. Expect to pay between £90 and £180 for a two-bedroom flat and £140 to £260 for a three-bedroom house.',
   'Northern Ireland has its own legislative framework. EICR requirements for private landlords in Northern Ireland are enforced under the Housing (Amendment) Act (Northern Ireland) 2022, which introduced mandatory electrical safety checks similar to those in England.',
   'Belfast has a significant proportion of Victorian and inter-war terraced housing, as well as 1960s and 1970s social housing that has been privatised or transferred to housing associations. Both housing types commonly produce C2 EICR findings.',
@@ -67,7 +67,7 @@ const faqs = [
   {
     question: 'What are the most common EICR findings in Belfast properties?',
     answer:
-      'Common findings in Belfast reflect the city\'s Victorian, inter-war, and post-war housing stock. Absent RCD protection on socket circuits is a very common C2 finding under BS 7671. Older wiring types (rubber-insulated cables, aluminium wiring in some 1960s and 1970s properties) are frequently identified. Inadequate earthing and bonding, overloaded circuits, and deteriorated cable insulation are also common. Properties in the Markets, Lower Falls, and East Belfast areas with original 1950s or 1960s wiring frequently require rewiring following an EICR.',
+      "Common findings in Belfast reflect the city's Victorian, inter-war, and post-war housing stock. Absent RCD protection on socket circuits is a very common C2 finding under BS 7671. Older wiring types (rubber-insulated cables, aluminium wiring in some 1960s and 1970s properties) are frequently identified. Inadequate earthing and bonding, overloaded circuits, and deteriorated cable insulation are also common. Properties in the Markets, Lower Falls, and East Belfast areas with original 1950s or 1960s wiring frequently require rewiring following an EICR.",
   },
   {
     question: 'How long does an EICR take in Belfast?',
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -125,7 +126,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -172,23 +174,23 @@ const sections = [
       <>
         <p>
           Belfast EICR prices are among the most competitive in the UK, reflecting lower labour
-          rates and operating costs compared to major English cities. Below are typical 2026
-          prices for Belfast EICRs:
+          rates and operating costs compared to major English cities. Below are typical 2026 prices
+          for Belfast EICRs:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Studio / one-bedroom flat</strong> — £80 to £160. Common in the city
-                centre, Titanic Quarter, and student areas near Queen's University.
+                <strong>Studio / one-bedroom flat</strong> — £80 to £160. Common in the city centre,
+                Titanic Quarter, and student areas near Queen's University.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom flat</strong> — £90 to £180. Purpose-built flats and
-                converted Victorian terraces both common in South and East Belfast.
+                <strong>Two-bedroom flat</strong> — £90 to £180. Purpose-built flats and converted
+                Victorian terraces both common in South and East Belfast.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -209,9 +211,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO</strong> — £280 to £550+. The student HMO market near Queen's
-                University and Ulster University's Belfast campus is significant. HMOs have
-                a broader inspection scope.
+                <strong>HMO</strong> — £280 to £550+. The student HMO market near Queen's University
+                and Ulster University's Belfast campus is significant. HMOs have a broader
+                inspection scope.
               </span>
             </li>
           </ul>
@@ -233,8 +235,8 @@ const sections = [
           Northern Ireland has its own devolved housing legislation that sets out electrical safety
           requirements for private landlords. The key legislation is the Housing (Amendment) Act
           (Northern Ireland) 2022 and the Private Tenancies Act (Northern Ireland) 2022, which
-          together introduced mandatory electrical safety requirements broadly similar to those
-          in England:
+          together introduced mandatory electrical safety requirements broadly similar to those in
+          England:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -242,34 +244,34 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical safety obligation</strong> — private landlords in Northern
-                Ireland must ensure that the electrical installation in the rented property is
-                in a reasonable state of repair and in proper working order. The Housing
-                (Amendment) Act (Northern Ireland) 2022 strengthened these requirements.
+                Ireland must ensure that the electrical installation in the rented property is in a
+                reasonable state of repair and in proper working order. The Housing (Amendment) Act
+                (Northern Ireland) 2022 strengthened these requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR requirement</strong> — landlords must obtain an EICR from a
-                qualified person and must provide a copy to tenants. The recommended maximum
-                interval for periodic inspection of rented properties is five years, aligned
-                with BS 7671 Regulation 134.2 guidance.
+                <strong>EICR requirement</strong> — landlords must obtain an EICR from a qualified
+                person and must provide a copy to tenants. The recommended maximum interval for
+                periodic inspection of rented properties is five years, aligned with BS 7671
+                Regulation 134.2 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Enforcement bodies</strong> — Belfast City Council and the Northern
-                Ireland Housing Executive (NIHE) share responsibility for enforcing landlord
-                compliance in Belfast. The NIHE also administers the private tenancy registration
-                scheme which landlords must use.
+                <strong>Enforcement bodies</strong> — Belfast City Council and the Northern Ireland
+                Housing Executive (NIHE) share responsibility for enforcing landlord compliance in
+                Belfast. The NIHE also administers the private tenancy registration scheme which
+                landlords must use.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial work</strong> — where an EICR identifies C1 or C2 observations,
-                the landlord must arrange for remedial work to be completed promptly and retain
+                <strong>Remedial work</strong> — where an EICR identifies C1 or C2 observations, the
+                landlord must arrange for remedial work to be completed promptly and retain
                 documentary evidence that the work has been done.
               </span>
             </li>
@@ -299,8 +301,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — BS 7671 requires 30 mA RCD protection
-                on socket circuits and concealed cables. This is the most common C2 finding in
+                <strong>Absent RCD protection</strong> — BS 7671 requires 30 mA RCD protection on
+                socket circuits and concealed cables. This is the most common C2 finding in
                 Belfast's older housing stock. Many properties still have consumer units installed
                 in the 1980s or early 1990s without RCD protection.
               </span>
@@ -317,8 +319,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rubber-insulated cables</strong> — Victorian and inter-war properties
-                with original wiring may still have rubber-insulated cables. The rubber insulation
+                <strong>Rubber-insulated cables</strong> — Victorian and inter-war properties with
+                original wiring may still have rubber-insulated cables. The rubber insulation
                 degrades over decades and may crumble when disturbed, creating a C1 or C2 hazard.
               </span>
             </li>
@@ -373,17 +375,17 @@ const sections = [
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">C3 — Improvement Recommended</h3>
             <p className="text-white text-sm leading-relaxed">
-              Not immediately dangerous. C3 observations do not make the EICR Unsatisfactory.
-              Common examples include older but functional socket outlets and outdated consumer
-              units that are still operating correctly.
+              Not immediately dangerous. C3 observations do not make the EICR Unsatisfactory. Common
+              examples include older but functional socket outlets and outdated consumer units that
+              are still operating correctly.
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">FI — Further Investigation</h3>
             <p className="text-white text-sm leading-relaxed">
               The inspector could not fully assess a part of the installation. Common in Belfast
-              properties where cables run beneath solid concrete floors or behind fixed kitchen
-              and bathroom fittings.
+              properties where cables run beneath solid concrete floors or behind fixed kitchen and
+              bathroom fittings.
             </p>
           </div>
         </div>
@@ -449,8 +451,8 @@ const sections = [
               <span>
                 <strong>Private rented property (Northern Ireland)</strong> — the Housing
                 (Amendment) Act (Northern Ireland) 2022 requires landlords to ensure the
-                installation is safe. A maximum five-year interval for EICRs aligns with
-                BS 7671 Regulation 134.2 guidance.
+                installation is safe. A maximum five-year interval for EICRs aligns with BS 7671
+                Regulation 134.2 guidance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -487,8 +489,8 @@ const sections = [
       <>
         <p>
           For landlord compliance, the EICR must be carried out by a qualified and competent person.
-          In Belfast, as in the rest of the UK, using an inspector registered with a competent person
-          scheme is the most straightforward way to demonstrate qualification.
+          In Belfast, as in the rest of the UK, using an inspector registered with a competent
+          person scheme is the most straightforward way to demonstrate qualification.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -497,15 +499,15 @@ const sections = [
               <span>
                 <strong>Competent person schemes</strong> — NICEIC, NAPIT, and ELECSA operate
                 registers covering Northern Ireland. NICEIC also has a dedicated Northern Ireland
-                register. Search for Belfast-based inspectors accepted by the NIHE and Belfast
-                City Council.
+                register. Search for Belfast-based inspectors accepted by the NIHE and Belfast City
+                Council.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or
-                the 2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
+                <strong>Qualifications</strong> — City & Guilds 2391 (Inspection and Testing) or the
+                2394/2395 combination, plus a current 18th Edition (C&G 2382) qualification.
                 Experience with Belfast's older housing stock is an advantage.
               </span>
             </li>
@@ -528,8 +530,8 @@ const sections = [
       <>
         <p>
           Belfast's growing private rented sector, expanding student population, and significant
-          proportion of older housing create consistent demand for EICR work. The high proportion
-          of properties with ageing wiring means that EICRs frequently lead to remedial work
+          proportion of older housing create consistent demand for EICR work. The high proportion of
+          properties with ageing wiring means that EICRs frequently lead to remedial work
           opportunities.
         </p>
         <div className="space-y-4 my-4">
@@ -543,9 +545,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete reports on your phone while still on site. AI board scanning reads
-                  the consumer unit, voice entry records test results hands-free, and instant PDF
-                  export delivers the report to landlords before you leave.
+                  to complete reports on your phone while still on site. AI board scanning reads the
+                  consumer unit, voice entry records test results hands-free, and instant PDF export
+                  delivers the report to landlords before you leave.
                 </p>
               </div>
             </div>
@@ -561,8 +563,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Belfast landlords need to act promptly — the electrician who delivers the
-                  quote on the day of the EICR is most likely to win the follow-on work.
+                  . Belfast landlords need to act promptly — the electrician who delivers the quote
+                  on the day of the EICR is most likely to win the follow-on work.
                 </p>
               </div>
             </div>
@@ -570,7 +572,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -607,7 +609,7 @@ export default function EICRBelfastPage() {
       faqHeading="Frequently Asked Questions About EICRs in Belfast"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

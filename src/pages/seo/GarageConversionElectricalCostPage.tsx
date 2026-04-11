@@ -87,42 +87,48 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for garage conversion circuits including long runs to remote consumer units.',
+    description:
+      'Size cables for garage conversion circuits including long runs to remote consumer units.',
     icon: Calculator,
     category: 'Tool',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for garage conversion circuits on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for garage conversion circuits on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Price garage conversion electrical packages with labour, materials, and Part P notification.',
+    description:
+      'Price garage conversion electrical packages with labour, materials, and Part P notification.',
     icon: Wrench,
     category: 'Tool',
   },
   {
     href: '/guides/house-extension-electrical-cost',
     title: 'House Extension Electrical Cost',
-    description: 'Similar guide covering first and second fix electrical work for house extensions.',
+    description:
+      'Similar guide covering first and second fix electrical work for house extensions.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/electric-underfloor-heating-cost',
     title: 'Electric Underfloor Heating Cost',
-    description: 'Detailed guide to underfloor heating circuits, installation costs, and running costs.',
+    description:
+      'Detailed guide to underfloor heating circuits, installation costs, and running costs.',
     icon: Thermometer,
     category: 'Guide',
   },
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Check voltage drop on long cable runs from house consumer unit to converted garage.',
+    description:
+      'Check voltage drop on long cable runs from house consumer unit to converted garage.',
     icon: Zap,
     category: 'Tool',
   },
@@ -139,25 +145,26 @@ const sections = [
     content: (
       <>
         <p>
-          Converting a garage to a habitable room — home office, bedroom, gym, or playroom — is one of
-          the most popular home improvement projects in the UK. The electrical work is a significant
-          part of the conversion: a bare garage with a single light and perhaps one socket must become
-          a properly wired, heated, and lit habitable room that complies with Building Regulations.
+          Converting a garage to a habitable room — home office, bedroom, gym, or playroom — is one
+          of the most popular home improvement projects in the UK. The electrical work is a
+          significant part of the conversion: a bare garage with a single light and perhaps one
+          socket must become a properly wired, heated, and lit habitable room that complies with
+          Building Regulations.
         </p>
         <p>
-          The electrical package for a garage conversion typically includes new circuits for lighting,
-          sockets, and heating; cable installation through the new walls and floor; a consumer unit
-          check and possible upgrade; smoke detector installation; and Part P notification. Testing and
-          certification under{' '}
+          The electrical package for a garage conversion typically includes new circuits for
+          lighting, sockets, and heating; cable installation through the new walls and floor; a
+          consumer unit check and possible upgrade; smoke detector installation; and Part P
+          notification. Testing and certification under{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           is required for all new circuits.
         </p>
         <p>
-          This guide covers typical costs, the circuits required, heating load calculations, Building
-          Regulations requirements, and how to quote and certify garage conversion electrical work
-          efficiently.
+          This guide covers typical costs, the circuits required, heating load calculations,
+          Building Regulations requirements, and how to quote and certify garage conversion
+          electrical work efficiently.
         </p>
       </>
     ),
@@ -176,9 +183,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Basic package (adjacent garage, no consumer unit upgrade)</strong> — £1,500 to
-                £2,200. New lighting and socket circuits from an existing consumer unit with spare
-                capacity, basic heating spur, smoke detector, testing, and Part P notification.
+                <strong>Basic package (adjacent garage, no consumer unit upgrade)</strong> — £1,500
+                to £2,200. New lighting and socket circuits from an existing consumer unit with
+                spare capacity, basic heating spur, smoke detector, testing, and Part P
+                notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -193,17 +201,17 @@ const sections = [
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Full package (detached garage or complex installation)</strong> — £3,500 to
-                £4,500+. Long cable run from house (armoured cable or separate sub-main), new consumer
-                unit in garage, full complement of circuits, RCD protection, outdoor lighting,
-                and EV charger preparatory works.
+                £4,500+. Long cable run from house (armoured cable or separate sub-main), new
+                consumer unit in garage, full complement of circuits, RCD protection, outdoor
+                lighting, and EV charger preparatory works.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These figures are for labour and materials combined. The main cost drivers are the distance
-          between the garage and the house consumer unit, whether the consumer unit needs upgrading,
-          the type and area of heating, and the number of circuits required.
+          These figures are for labour and materials combined. The main cost drivers are the
+          distance between the garage and the house consumer unit, whether the consumer unit needs
+          upgrading, the type and area of heating, and the number of circuits required.
         </p>
         <SEOAppBridge
           title="Price your garage conversion electrical package"
@@ -227,9 +235,9 @@ const sections = [
             <Lightbulb className="w-6 h-6 text-yellow-400 mb-3" />
             <h3 className="font-bold text-white text-base mb-2">Lighting Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
-              A dedicated lighting circuit or extension of the house lighting circuit. LED downlights
-              or surface fittings. Consider PIR switching or a 2-way switch arrangement for
-              convenience. Minimum 1 lighting point per 10m².
+              A dedicated lighting circuit or extension of the house lighting circuit. LED
+              downlights or surface fittings. Consider PIR switching or a 2-way switch arrangement
+              for convenience. Minimum 1 lighting point per 10m².
             </p>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -237,8 +245,8 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Socket Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
               Ring final or radial socket circuit with at least 4 double sockets. For a home office,
-              consider a second socket circuit for data and IT equipment. USB-A/C combination sockets
-              add value.
+              consider a second socket circuit for data and IT equipment. USB-A/C combination
+              sockets add value.
             </p>
           </div>
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -246,16 +254,16 @@ const sections = [
             <h3 className="font-bold text-white text-base mb-2">Heating Circuit</h3>
             <p className="text-white text-sm leading-relaxed">
               Dedicated circuit for underfloor heating mat or electric radiators. Size the cable and
-              MCB for the total heating load plus 20% margin. Include a programmer or smart thermostat
-              on a switched fused spur.
+              MCB for the total heating load plus 20% margin. Include a programmer or smart
+              thermostat on a switched fused spur.
             </p>
           </div>
         </div>
         <p>
           In addition to circuits, the following are required under Building Regulations: an
-          interlinked smoke alarm in the converted room (Grade D, LD2 as a minimum to BS 5839-6), and
-          adequate ventilation provision (which may require an extractor fan circuit if the garage is
-          used as a habitable bedroom).
+          interlinked smoke alarm in the converted room (Grade D, LD2 as a minimum to BS 5839-6),
+          and adequate ventilation provision (which may require an extractor fan circuit if the
+          garage is used as a habitable bedroom).
         </p>
       </>
     ),
@@ -291,25 +299,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Regulations Part L compliant (100mm PIR floor, cavity wall or
-                100mm wall insulation)</strong> — heat loss 40 to 60W per m². A 20m² garage
-                requires 800W to 1,200W. A 2kW UFH mat is sufficient.
+                <strong>
+                  Building Regulations Part L compliant (100mm PIR floor, cavity wall or 100mm wall
+                  insulation)
+                </strong>{' '}
+                — heat loss 40 to 60W per m². A 20m² garage requires 800W to 1,200W. A 2kW UFH mat
+                is sufficient.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Advise the homeowner that investing in proper insulation to Part L standard before installing
-          the electrical heating reduces running costs substantially. Undersized heating (because the
-          builder insulated well) is easy to correct; an oversized circuit installed before insulation
-          decisions are made may be wasteful.
+          Advise the homeowner that investing in proper insulation to Part L standard before
+          installing the electrical heating reduces running costs substantially. Undersized heating
+          (because the builder insulated well) is easy to correct; an oversized circuit installed
+          before insulation decisions are made may be wasteful.
         </p>
         <p>
           The{' '}
           <SEOInternalLink href="/tools/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
-          allows the correct cable size and MCB rating to be confirmed once the heating load is known.
+          allows the correct cable size and MCB rating to be confirmed once the heating load is
+          known.
         </p>
       </>
     ),
@@ -321,8 +333,8 @@ const sections = [
       <>
         <p>
           A garage conversion requires Building Regulations approval in two areas relevant to
-          electricians: Part P (electrical safety in dwellings) and the broader structural and thermal
-          performance requirements that affect how the room is built.
+          electricians: Part P (electrical safety in dwellings) and the broader structural and
+          thermal performance requirements that affect how the room is built.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -338,8 +350,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smoke detection</strong> — Part B of the Building Regulations requires that a
-                converted garage includes interlinked smoke detection. The Grade D LD2 system
+                <strong>Smoke detection</strong> — Part B of the Building Regulations requires that
+                a converted garage includes interlinked smoke detection. The Grade D LD2 system
                 specified in BS 5839-6 requires smoke alarms in rooms that form part of the escape
                 route. A mains-powered, battery-backup alarm in the converted room, interlinked with
                 the existing house smoke alarms, is the standard solution.
@@ -369,16 +381,14 @@ const sections = [
     heading: 'Consumer Unit and Supply Capacity',
     content: (
       <>
-        <p>
-          Before quoting, assess the existing consumer unit for spare capacity and compliance:
-        </p>
+        <p>Before quoting, assess the existing consumer unit for spare capacity and compliance:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Spare ways</strong> — the new circuits (lighting, sockets, heating) require 2
-                to 3 spare ways. If the existing board is full, an upgrade or a small sub-consumer
+                <strong>Spare ways</strong> — the new circuits (lighting, sockets, heating) require
+                2 to 3 spare ways. If the existing board is full, an upgrade or a small sub-consumer
                 unit in the garage is required.
               </span>
             </li>
@@ -393,9 +403,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main fuse/supply capacity</strong> — a 20m² garage with 3kW heating, lighting,
-                and sockets adds approximately 15A to 20A to the peak demand. Verify the DNO main fuse
-                rating (typically 60A, 80A, or 100A) allows for the additional load.
+                <strong>Main fuse/supply capacity</strong> — a 20m² garage with 3kW heating,
+                lighting, and sockets adds approximately 15A to 20A to the peak demand. Verify the
+                DNO main fuse rating (typically 60A, 80A, or 100A) allows for the additional load.
               </span>
             </li>
           </ul>
@@ -409,9 +419,9 @@ const sections = [
     content: (
       <>
         <p>
-          Garage conversions are excellent recurring work — they come in clusters (neighbours talk) and
-          the homeowner is usually committed to spending. A professional quote with clear scope and
-          itemised costs wins the job. Key points for quoting:
+          Garage conversions are excellent recurring work — they come in clusters (neighbours talk)
+          and the homeowner is usually committed to spending. A professional quote with clear scope
+          and itemised costs wins the job. Key points for quoting:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -433,9 +443,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Include Part P in Your Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always include the Part P notification fee (typically £40 to £80 via your competent
-                  person scheme) as a line item. Homeowners appreciate seeing it explicitly — it
-                  demonstrates that compliance is handled as part of the package.
+                  Always include the Part P notification fee (typically £40 to £80 via your
+                  competent person scheme) as a line item. Homeowners appreciate seeing it
+                  explicitly — it demonstrates that compliance is handled as part of the package.
                 </p>
               </div>
             </div>
@@ -460,7 +470,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify garage conversion electrical work on your phone"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. Everything you need for garage conversion electrical packages. 7-day free trial."
           icon={Home}
         />
       </>

@@ -84,7 +84,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrician-salary-london',
     title: 'Electrician Salary in London',
-    description: 'How London compares — employed rates £38,000–£65,000, self-employed £55,000–£90,000.',
+    description:
+      'How London compares — employed rates £38,000–£65,000, self-employed £55,000–£90,000.',
     icon: MapPin,
     category: 'Guide',
   },
@@ -98,7 +99,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrician-career-ladder-uk',
     title: 'Electrician Career Ladder UK',
-    description: 'From apprentice to electrical director — timelines, salaries, and qualifications.',
+    description:
+      'From apprentice to electrical director — timelines, salaries, and qualifications.',
     icon: TrendingUp,
     category: 'Guide',
   },
@@ -139,8 +141,8 @@ const sections = [
           Manchester and Greater Manchester represent one of the UK's most active regional
           construction and electrical markets outside London. A combination of major urban
           regeneration projects, sustained commercial development, a large stock of older housing
-          requiring rewires and upgrades, and growing industrial demand along the M62 corridor
-          means that skilled electricians in the area are consistently in demand.
+          requiring rewires and upgrades, and growing industrial demand along the M62 corridor means
+          that skilled electricians in the area are consistently in demand.
         </p>
         <p>
           Salaries and day rates in Manchester are broadly in line with the North West average and
@@ -179,16 +181,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Experienced electrician (3–7 years)</strong> — £36,000 to £46,000. On
-                larger commercial or mixed-use projects. JIB approved electrician or electrician
-                technician grade.
+                <strong>Experienced electrician (3–7 years)</strong> — £36,000 to £46,000. On larger
+                commercial or mixed-use projects. JIB approved electrician or electrician technician
+                grade.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Senior electrician / working foreman</strong> — £46,000 to £52,000.
-                Leading a small team. Often SSSTS or SMSTS qualified.
+                <strong>Senior electrician / working foreman</strong> — £46,000 to £52,000. Leading
+                a small team. Often SSSTS or SMSTS qualified.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -201,8 +203,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          Many Manchester M&amp;E contractors offer travel allowances, van (or van allowance),
-          tool allowance, and employer pension contributions on top of the headline salary. For
+          Many Manchester M&amp;E contractors offer travel allowances, van (or van allowance), tool
+          allowance, and employer pension contributions on top of the headline salary. For
           site-based roles on major city-centre projects, subsistence allowances may also apply.
         </p>
       </>
@@ -215,24 +217,24 @@ const sections = [
       <>
         <p>
           Self-employed and limited company electricians typically earn more than their employed
-          equivalents in Manchester, though they absorb all business costs. Typical earnings by
-          work type:
+          equivalents in Manchester, though they absorb all business costs. Typical earnings by work
+          type:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Domestic</h3>
             <p className="text-white text-sm leading-relaxed">
               Rewires, CU upgrades, EICRs, EV charger installs. Manchester domestic electricians
-              typically charge £280 to £380 per day. A well-booked sole trader can generate
-              turnover of £70,000 to £100,000, netting £45,000 to £65,000 after costs.
+              typically charge £280 to £380 per day. A well-booked sole trader can generate turnover
+              of £70,000 to £100,000, netting £45,000 to £65,000 after costs.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Commercial / Industrial</h3>
             <p className="text-white text-sm leading-relaxed">
               Labour-only on commercial sites: £200 to £280 per day. Full package small commercial
-              contractor: £300 to £450 per day equivalent. Established small contractors with
-              2–4 operatives can achieve turnover of £200,000 to £350,000+.
+              contractor: £300 to £450 per day equivalent. Established small contractors with 2–4
+              operatives can achieve turnover of £200,000 to £350,000+.
             </p>
           </div>
         </div>
@@ -249,9 +251,7 @@ const sections = [
     heading: 'Top-Paying Sectors for Manchester Electricians',
     content: (
       <>
-        <p>
-          Certain sectors in the Greater Manchester area consistently pay above average rates:
-        </p>
+        <p>Certain sectors in the Greater Manchester area consistently pay above average rates:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -265,8 +265,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Major M&amp;E construction (city centre)</strong> — large schemes such as
-                St Michael's, Noma, and NHS capital projects sustain demand for experienced site
+                <strong>Major M&amp;E construction (city centre)</strong> — large schemes such as St
+                Michael's, Noma, and NHS capital projects sustain demand for experienced site
                 electricians and foremen at premium rates.
               </span>
             </li>
@@ -281,10 +281,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Higher education and NHS</strong> — the universities (Manchester,
-                Manchester Metropolitan, Salford) and NHS trusts are consistent clients for
-                electrical maintenance and capital works, often with framework agreements providing
-                regular, stable income.
+                <strong>Higher education and NHS</strong> — the universities (Manchester, Manchester
+                Metropolitan, Salford) and NHS trusts are consistent clients for electrical
+                maintenance and capital works, often with framework agreements providing regular,
+                stable income.
               </span>
             </li>
           </ul>
@@ -357,8 +357,8 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">EICR and landlord testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Manchester has a very large private rented sector. Mandatory EICR regulations
-                  mean ongoing demand for inspection and testing work. An electrician with a 2391
+                  Manchester has a very large private rented sector. Mandatory EICR regulations mean
+                  ongoing demand for inspection and testing work. An electrician with a 2391
                   qualification and a good letting agent relationship can fill their diary with EICR
                   work at £150 to £250 per certificate.
                 </p>
@@ -419,7 +419,7 @@ export default function ElectricianSalaryManchesterPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Run Your Manchester Electrical Business on Your Phone"
-      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+      ctaSubheading="Professional quoting, on-site certificates, and business management — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
     />
   );
 }

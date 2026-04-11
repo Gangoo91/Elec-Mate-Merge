@@ -68,7 +68,7 @@ const faqs = [
   {
     question: 'Can I measure current directly with a multimeter?',
     answer:
-      'Yes, but with important limitations. A multimeter measuring current must be connected in series with the circuit — the circuit must be broken and the meter inserted between the break. The meter is set to the amps (A) range. The current input socket on a multimeter is fused, but the fuse rating is typically 10A maximum for most professional meters. Never attempt to measure currents above the meter\'s rated input — this will blow the meter fuse and may damage the meter or cause an arc. For measuring load currents above 10A, or for non-intrusive measurements (without breaking the circuit), use a clamp meter instead. The clamp meter places the jaws around the conductor and measures current by induction — no circuit break required.',
+      "Yes, but with important limitations. A multimeter measuring current must be connected in series with the circuit — the circuit must be broken and the meter inserted between the break. The meter is set to the amps (A) range. The current input socket on a multimeter is fused, but the fuse rating is typically 10A maximum for most professional meters. Never attempt to measure currents above the meter's rated input — this will blow the meter fuse and may damage the meter or cause an arc. For measuring load currents above 10A, or for non-intrusive measurements (without breaking the circuit), use a clamp meter instead. The clamp meter places the jaws around the conductor and measures current by induction — no circuit break required.",
   },
   {
     question: 'What is the diode test function and when do I use it?',
@@ -147,7 +147,8 @@ const sections = [
           Choosing the right multimeter for professional electrical work is not simply about price.
           The CAT safety rating, True RMS capability, accuracy specification, and build quality all
           matter. An under-rated or average-sensing meter used in the wrong environment can give
-          dangerously incorrect readings or fail catastrophically under a transient overvoltage event.
+          dangerously incorrect readings or fail catastrophically under a transient overvoltage
+          event.
         </p>
         <p>
           This guide covers the key technical differences between analogue and digital meters, CAT
@@ -223,7 +224,9 @@ const sections = [
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">+</span>
-                <span>High CAT ratings (CAT III 600V / CAT IV 300V standard on quality meters)</span>
+                <span>
+                  High CAT ratings (CAT III 600V / CAT IV 300V standard on quality meters)
+                </span>
               </li>
             </ul>
           </div>
@@ -232,7 +235,8 @@ const sections = [
           For professional UK electrical installation and maintenance work in 2026, a digital
           multimeter with True RMS, auto-ranging, and a minimum CAT III 600V rating is the correct
           choice for the vast majority of work. Analogue meters retain a niche in radio frequency
-          work and situations where a live trend indication is more useful than an accurate snapshot.
+          work and situations where a live trend indication is more useful than an accurate
+          snapshot.
         </p>
       </>
     ),
@@ -245,8 +249,8 @@ const sections = [
         <p>
           The CAT rating system (defined in IEC 61010-1) is one of the most misunderstood aspects of
           test instrument safety. CAT stands for Category — it describes the transient overvoltage
-          environment where the meter can be safely used. Higher CAT numbers indicate a higher energy
-          environment, with more severe transients.
+          environment where the meter can be safely used. Higher CAT numbers indicate a higher
+          energy environment, with more severe transients.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -279,21 +283,22 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CAT IV 300V / 600V</strong> — Origin of the installation. Meter tails,
-                service head and cut-out, supply cables from the street, outdoor conductors. Required
-                for measurements at the incoming supply, energy meter, or main switch ahead of the
-                consumer unit.
+                service head and cut-out, supply cables from the street, outdoor conductors.
+                Required for measurements at the incoming supply, energy meter, or main switch ahead
+                of the consumer unit.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          A critical point: CAT ratings are not about the voltage being measured — they are about the
-          transient overvoltage the meter can safely withstand. A transient overvoltage (caused by
-          lightning, switching of large inductive loads, or fault events on the network) can be many
-          times higher than the nominal supply voltage and lasts only microseconds. A meter tested to
-          CAT III 600V must withstand a 6,000V transient. A CAT II 600V meter must only withstand
-          2,500V. Use a CAT II meter at a distribution board and a severe transient could cause the
-          meter to arc internally — potentially causing an explosion and serious injury to the user.
+          A critical point: CAT ratings are not about the voltage being measured — they are about
+          the transient overvoltage the meter can safely withstand. A transient overvoltage (caused
+          by lightning, switching of large inductive loads, or fault events on the network) can be
+          many times higher than the nominal supply voltage and lasts only microseconds. A meter
+          tested to CAT III 600V must withstand a 6,000V transient. A CAT II 600V meter must only
+          withstand 2,500V. Use a CAT II meter at a distribution board and a severe transient could
+          cause the meter to arc internally — potentially causing an explosion and serious injury to
+          the user.
         </p>
         <p>
           Always buy meters from reputable manufacturers that include IEC 61010 test certification.
@@ -311,24 +316,28 @@ const sections = [
         <p>
           RMS (Root Mean Square) is the mathematically correct way to express the effective value of
           an AC waveform — it represents the equivalent DC voltage that would deliver the same power
-          to a resistive load. For a pure sine wave, the RMS value is 0.7071 × the peak value.
-          UK mains supply (230V RMS) has a peak voltage of 325V.
+          to a resistive load. For a pure sine wave, the RMS value is 0.7071 × the peak value. UK
+          mains supply (230V RMS) has a peak voltage of 325V.
         </p>
         <p>
           Average-sensing meters measure the average (rectified mean) of the waveform and multiply
-          by a fixed form factor of 1.1107 to derive the displayed RMS reading. This is only accurate
-          for a perfect sine wave. Modern electrical installations contain many non-linear loads that
-          draw non-sinusoidal current:
+          by a fixed form factor of 1.1107 to derive the displayed RMS reading. This is only
+          accurate for a perfect sine wave. Modern electrical installations contain many non-linear
+          loads that draw non-sinusoidal current:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Variable speed drives (VSDs) on motors — highly distorted current waveform</span>
+              <span>
+                Variable speed drives (VSDs) on motors — highly distorted current waveform
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>LED drivers and electronic lighting ballasts — spiky, non-sinusoidal current</span>
+              <span>
+                LED drivers and electronic lighting ballasts — spiky, non-sinusoidal current
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -362,8 +371,8 @@ const sections = [
     content: (
       <>
         <p>
-          The four primary measurement functions on a professional multimeter cover the vast majority
-          of electrical installation and fault-finding tasks:
+          The four primary measurement functions on a professional multimeter cover the vast
+          majority of electrical installation and fault-finding tasks:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4 space-y-5">
           <div>
@@ -374,9 +383,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Measure supply voltage at sockets, distribution boards, and consumer units. Verify
               phase-to-neutral (230V nominal), phase-to-earth, and neutral-to-earth voltages. Check
-              voltage at load terminals under load conditions to assess voltage regulation. UK nominal
-              supply is 230V ±10% (207–253V). Voltages persistently outside this range warrant
-              investigation.
+              voltage at load terminals under load conditions to assess voltage regulation. UK
+              nominal supply is 230V ±10% (207–253V). Voltages persistently outside this range
+              warrant investigation.
             </p>
           </div>
           <div>
@@ -399,11 +408,11 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Resistance measurement (Ω) verifies circuit continuity, checks switch contacts,
               measures bonding conductor resistance, and identifies high-resistance joints. The
-              continuity function adds an audible tone when resistance is below a threshold (typically
-              30–50Ω). Always isolate circuits before measuring resistance — measuring resistance on
-              a live circuit will give incorrect readings and may damage the meter. For accurate
-              bonding measurements, use the 4-wire (Kelvin) resistance function on meters that
-              support it, or use a dedicated low-resistance ohmmeter.
+              continuity function adds an audible tone when resistance is below a threshold
+              (typically 30–50Ω). Always isolate circuits before measuring resistance — measuring
+              resistance on a live circuit will give incorrect readings and may damage the meter.
+              For accurate bonding measurements, use the 4-wire (Kelvin) resistance function on
+              meters that support it, or use a dedicated low-resistance ohmmeter.
             </p>
           </div>
           <div>
@@ -445,8 +454,8 @@ const sections = [
               Best All-Round Professional Meter — ~£175
             </p>
             <p className="text-white text-sm leading-relaxed">
-              CAT III 600V / CAT IV 300V. True RMS. Auto-ranging. 6,000 count display. 0.5% basic
-              DC voltage accuracy. Compact and robust. Suitable for residential and light commercial
+              CAT III 600V / CAT IV 300V. True RMS. Auto-ranging. 6,000 count display. 0.5% basic DC
+              voltage accuracy. Compact and robust. Suitable for residential and light commercial
               work. The industry benchmark for daily-use professional meters. Five-year manufacturer
               warranty from Fluke.
             </p>
@@ -494,8 +503,8 @@ const sections = [
         <p>
           Whichever meter you choose, register it with the manufacturer for warranty purposes and
           have it calibrated annually or per the manufacturer recommendation. A calibration
-          certificate is required if your test results are to be used as legal evidence (for example,
-          in an insurance or legal dispute about an installation).
+          certificate is required if your test results are to be used as legal evidence (for
+          example, in an insurance or legal dispute about an installation).
         </p>
       </>
     ),
@@ -558,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Record test results, certify installations, find faults"
-          description="Join 430+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to record multimeter readings, complete EIC and EICR certificates, and get AI fault-finding support on site. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -595,7 +604,7 @@ export default function MultimeterGuideElectriciansPage() {
       faqHeading="Frequently Asked Questions About Multimeters for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Record Multimeter Readings and Certify Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site test result entry, EIC and EICR certification, and AI fault-finding support. 7-day free trial, cancel anytime."
     />
   );
 }

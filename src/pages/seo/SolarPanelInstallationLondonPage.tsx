@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-panel-installation-manchester',
     title: 'Solar Panel Installation Manchester',
-    description: 'Solar PV costs, irradiance data, and finding MCS-certified installers in Manchester.',
+    description:
+      'Solar PV costs, irradiance data, and finding MCS-certified installers in Manchester.',
     icon: Sun,
     category: 'Guide',
   },
@@ -159,8 +160,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical system:</strong> 4kW (10–14 panels) for a 3-bedroom house.
-                Output: 3,400–4,000 kWh/year. Covers 50–80% of average household electricity use.
+                <strong>Typical system:</strong> 4kW (10–14 panels) for a 3-bedroom house. Output:
+                3,400–4,000 kWh/year. Covers 50–80% of average household electricity use.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -228,9 +229,9 @@ const sections = [
         </div>
         <p>
           Modern monocrystalline panels typically offer 400–450W per panel, meaning a 4kW system
-          requires as few as 9–10 panels on a standard London roof. High-efficiency panels (Sunpower,
-          REC Alpha, Panasonic) can achieve more output in constrained roof spaces, which is
-          particularly relevant for London's many terraced properties.
+          requires as few as 9–10 panels on a standard London roof. High-efficiency panels
+          (Sunpower, REC Alpha, Panasonic) can achieve more output in constrained roof spaces, which
+          is particularly relevant for London's many terraced properties.
         </p>
       </>
     ),
@@ -241,11 +242,11 @@ const sections = [
     content: (
       <>
         <p>
-          London solar installation costs are slightly above the national average, primarily due
-          to higher labour rates, scaffolding costs for terraced properties, and parking and
-          congestion zone charges. The following prices are for fully installed systems including
-          panels, inverter, mounting hardware, DC wiring, AC connection to the consumer unit,
-          Generation Meter, and commissioning.
+          London solar installation costs are slightly above the national average, primarily due to
+          higher labour rates, scaffolding costs for terraced properties, and parking and congestion
+          zone charges. The following prices are for fully installed systems including panels,
+          inverter, mounting hardware, DC wiring, AC connection to the consumer unit, Generation
+          Meter, and commissioning.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -266,16 +267,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>6kW system:</strong> £7,500–£11,000 installed. Larger properties, those
-                with EV chargers, or high electricity consumers.
+                <strong>6kW system:</strong> £7,500–£11,000 installed. Larger properties, those with
+                EV chargers, or high electricity consumers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Battery storage addition:</strong> £2,500–£5,000 for a 5–10kWh battery
-                (e.g., GivEnergy, SolarEdge, Tesla Powerwall). Increases self-consumption from
-                ~30% to ~70–80%.
+                (e.g., GivEnergy, SolarEdge, Tesla Powerwall). Increases self-consumption from ~30%
+                to ~70–80%.
               </span>
             </li>
           </ul>
@@ -313,9 +314,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart meter required</strong> — your energy supplier will need to install
-                or verify a smart meter capable of measuring export. Most London homes already have
-                or can easily get a smart meter.
+                <strong>Smart meter required</strong> — your energy supplier will need to install or
+                verify a smart meter capable of measuring export. Most London homes already have or
+                can easily get a smart meter.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -355,16 +356,16 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development conditions:</strong> Panels must not protrude more
-                than 200mm from the roof surface, must not be on a wall or roof slope that faces
-                a highway, and must be removed when no longer needed.
+                than 200mm from the roof surface, must not be on a wall or roof slope that faces a
+                highway, and must be removed when no longer needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings:</strong> Planning permission and (for Grade I and II*
-                buildings) Listed Building Consent are required. Many central London properties
-                are listed — check the Historic England register before proceeding.
+                buildings) Listed Building Consent are required. Many central London properties are
+                listed — check the Historic England register before proceeding.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,8 +380,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Article 4 directions:</strong> Some London boroughs have Article 4
-                directions removing permitted development rights in specific streets or areas.
-                Check with your borough council's planning department.
+                directions removing permitted development rights in specific streets or areas. Check
+                with your borough council's planning department.
               </span>
             </li>
           </ul>
@@ -401,8 +402,8 @@ const sections = [
       <>
         <p>
           The Microgeneration Certification Scheme (MCS) is the industry quality standard for
-          small-scale renewable energy installations in the UK. MCS certification is not optional
-          if you want to claim SEG payments or access any government-backed incentives.
+          small-scale renewable energy installations in the UK. MCS certification is not optional if
+          you want to claim SEG payments or access any government-backed incentives.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -419,16 +420,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCS-certified products:</strong> Panels and inverters must also be
-                MCS-certified. Reputable manufacturers' products are almost all MCS-listed.
-                Check the MCS product database before accepting any equipment substitution.
+                MCS-certified. Reputable manufacturers' products are almost all MCS-listed. Check
+                the MCS product database before accepting any equipment substitution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>MCS installation certificate:</strong> You should receive an MCS
-                installation certificate upon completion. This is your proof of eligibility for
-                SEG and is required by energy suppliers when you register for an export tariff.
+                installation certificate upon completion. This is your proof of eligibility for SEG
+                and is required by energy suppliers when you register for an export tariff.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -455,8 +456,8 @@ const sections = [
         <p>
           Adding a battery storage system to your London solar PV installation significantly
           increases the proportion of solar electricity you actually use. Without a battery, most
-          solar energy generated during peak midday hours is exported to the grid when occupants
-          are at work. A battery stores that surplus energy for use in the evening.
+          solar energy generated during peak midday hours is exported to the grid when occupants are
+          at work. A battery stores that surplus energy for use in the evening.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -480,7 +481,8 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cost:</strong> Battery systems add £2,500–£5,000 to the total installation
-                cost. Batteries are VAT-exempt when installed alongside solar panels on the same job.
+                cost. Batteries are VAT-exempt when installed alongside solar panels on the same
+                job.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -511,10 +513,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical saving:</strong> A 4kW London system generating 3,600 kWh/year,
-                with 40% self-consumption (1,440 kWh) at 24p/kWh, saves approximately £346/year
-                on electricity bills. SEG income at 8p/kWh on 2,160 kWh exported adds ~£173/year.
-                Total annual benefit: ~£519/year.
+                <strong>Typical saving:</strong> A 4kW London system generating 3,600 kWh/year, with
+                40% self-consumption (1,440 kWh) at 24p/kWh, saves approximately £346/year on
+                electricity bills. SEG income at 8p/kWh on 2,160 kWh exported adds ~£173/year. Total
+                annual benefit: ~£519/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -531,7 +533,8 @@ const sections = [
               <span>
                 <strong>System lifetime:</strong> Quality solar panels carry 25–30 year performance
                 warranties. Once payback is achieved, a further 15–20 years of near-free electricity
-                follows. Modern inverters typically last 10–15 years before replacement (£500–£1,500).
+                follows. Modern inverters typically last 10–15 years before replacement
+                (£500–£1,500).
               </span>
             </li>
           </ul>
@@ -582,9 +585,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check reviews and references:</strong> Ask for references from recent
-                London installations. Check Trustpilot, Google Reviews, and Which? Trusted Traders.
-                The Solar Trade Association (STA) and RECC (Renewable Energy Consumer Code) membership
+                <strong>Check reviews and references:</strong> Ask for references from recent London
+                installations. Check Trustpilot, Google Reviews, and Which? Trusted Traders. The
+                Solar Trade Association (STA) and RECC (Renewable Energy Consumer Code) membership
                 provides additional consumer protection.
               </span>
             </li>
@@ -628,8 +631,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Battery Storage Add-Ons</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When completing a solar installation, quote battery storage immediately using
-                  the{' '}
+                  When completing a solar installation, quote battery storage immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
@@ -642,7 +644,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site certification, instant quoting, and business management. Complete solar EICs on your phone. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -679,7 +681,7 @@ export default function SolarPanelInstallationLondonPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in London"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -43,7 +43,7 @@ const keyTakeaways = [
   'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is the Distribution Network Operator for Northampton. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
   'Northampton has a mix of Victorian terraces in the town centre, post-war council estates, and large new-build developments on the fringes. Each property type presents different electrical challenges and costs.',
   'Properties in flood risk areas along the River Nene (Far Cotton, Billing, South Bridge) need careful consideration of consumer unit height, IP ratings for ground-level accessories, and flood-resilient installation practices.',
-  'The town\'s extensive warehouse and logistics sector (Brackmills, Moulton Park, Swan Valley) provides strong demand for commercial electrical contractors.',
+  "The town's extensive warehouse and logistics sector (Brackmills, Moulton Park, Swan Valley) provides strong demand for commercial electrical contractors.",
 ];
 
 const faqs = [
@@ -119,7 +119,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Create professional quotes for Northampton customers with accurate local pricing.',
+    description:
+      'Create professional quotes for Northampton customers with accurate local pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
@@ -158,16 +159,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by local authority building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -244,8 +244,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR</strong> — £170 to £280 for a 2 to 3 bedroom property, £260 to £420
-                for a 4 to 5 bedroom house. Required every 5 years for rented properties.
+                <strong>EICR</strong> — £170 to £280 for a 2 to 3 bedroom property, £260 to £420 for
+                a 4 to 5 bedroom house. Required every 5 years for rented properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -364,12 +364,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
-          compliance, notifiable electrical work in Northampton is overseen by West
-          Northamptonshire Council building control or by an approved inspector. If your electrician
-          is registered with a competent person scheme, they self-certify and notify the council on
-          your behalf.
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          compliance, notifiable electrical work in Northampton is overseen by West Northamptonshire
+          Council building control or by an approved inspector. If your electrician is registered
+          with a competent person scheme, they self-certify and notify the council on your behalf.
         </p>
       </>
     ),
@@ -453,9 +451,9 @@ const sections = [
               <Droplets className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Post-flood inspection</strong> — any electrical installation that has been
-                submerged in flood water must be fully inspected and tested before being re-energised.
-                Flood water damages insulation, corrodes connections, and can compromise earthing
-                arrangements.
+                submerged in flood water must be fully inspected and tested before being
+                re-energised. Flood water damages insulation, corrodes connections, and can
+                compromise earthing arrangements.
               </span>
             </li>
           </ul>
@@ -469,11 +467,11 @@ const sections = [
     content: (
       <>
         <p>
-          Northampton offers a well-balanced market for electricians, with a healthy mix of
-          domestic and commercial work. The town's central location on the M1 corridor between
-          London and Birmingham provides easy access to neighbouring markets in Milton Keynes,
-          Wellingborough, Kettering, and Daventry. Operating costs are moderate with good parking
-          availability and manageable travel times.
+          Northampton offers a well-balanced market for electricians, with a healthy mix of domestic
+          and commercial work. The town's central location on the M1 corridor between London and
+          Birmingham provides easy access to neighbouring markets in Milton Keynes, Wellingborough,
+          Kettering, and Daventry. Operating costs are moderate with good parking availability and
+          manageable travel times.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -509,7 +507,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Northampton electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -546,7 +544,7 @@ export default function ElectricianNorthamptonPage() {
       faqHeading="Frequently Asked Questions About Electricians in Northampton"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Northampton and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Northampton and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

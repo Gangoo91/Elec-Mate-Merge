@@ -131,14 +131,14 @@ const sections = [
         <p>
           Rewiring a listed building is one of the most demanding jobs an electrician can undertake.
           The building's historic fabric — original plasterwork, timber framing, lime renders,
-          decorative features — must be preserved whilst bringing the electrical installation up
-          to modern safety standards.
+          decorative features — must be preserved whilst bringing the electrical installation up to
+          modern safety standards.
         </p>
         <p>
           There are approximately 500,000 listed buildings in England and Wales, graded I, II*, or
           II depending on their significance. Grade II buildings (92% of all listings) have the
-          least restrictive requirements, whilst Grade I buildings require the highest level of
-          care and often the most expensive installation methods.
+          least restrictive requirements, whilst Grade I buildings require the highest level of care
+          and often the most expensive installation methods.
         </p>
         <p>
           The cost premium for rewiring a listed building over a standard domestic rewire is
@@ -165,8 +165,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Grade II 2-bed cottage</strong> — £8,000 to £12,000. Surface-mount wiring
-                with period clips, basic heritage accessories, standard consumer unit with RCBOs
-                and SPD, lime plaster making good to disturbed areas.
+                with period clips, basic heritage accessories, standard consumer unit with RCBOs and
+                SPD, lime plaster making good to disturbed areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -183,8 +183,8 @@ const sections = [
               <span>
                 <strong>Grade I / II* large property</strong> — £20,000 to £25,000+. Extensive
                 conservation requirements, bespoke heritage accessories, MICC cable in sensitive
-                areas, specialist lime plaster restoration, archaeologist or conservation
-                specialist attendance, extended programme.
+                areas, specialist lime plaster restoration, archaeologist or conservation specialist
+                attendance, extended programme.
               </span>
             </li>
           </ul>
@@ -209,13 +209,15 @@ const sections = [
           includes most rewiring work.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">What Requires Listed Building Consent</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            What Requires Listed Building Consent
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                Chasing walls for cable routes — even minor chasing can damage historic plaster
-                and is almost always controlled.
+                Chasing walls for cable routes — even minor chasing can damage historic plaster and
+                is almost always controlled.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,8 +266,8 @@ const sections = [
       <>
         <p>
           The wiring method is the single biggest factor in the cost and complexity of a listed
-          building rewire. The conservation officer will typically specify or approve the method
-          for each area of the building.
+          building rewire. The conservation officer will typically specify or approve the method for
+          each area of the building.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -273,16 +275,16 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surface-mount on period clips</strong> — Round PVC or lead-sheathed cable
-                fixed with brass or black japanned clips. The cheapest method at £8 to £15 per
-                metre but the most visible. Acceptable in utility areas and less significant rooms.
+                fixed with brass or black japanned clips. The cheapest method at £8 to £15 per metre
+                but the most visible. Acceptable in utility areas and less significant rooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mini trunking painted to match</strong> — Small-section PVC trunking (16mm
-                x 16mm or similar) fixed to the surface and painted to match the wall colour. £12
-                to £20 per metre installed. A practical compromise between visibility and access.
+                <strong>Mini trunking painted to match</strong> — Small-section PVC trunking (16mm x
+                16mm or similar) fixed to the surface and painted to match the wall colour. £12 to
+                £20 per metre installed. A practical compromise between visibility and access.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,9 +300,9 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Concealed through existing voids</strong> — Routing cables through floor
-                voids, above ceilings, behind skirting boards and architraves, and through
-                existing conduit runs. The least visually intrusive but the most labour-intensive.
-                Costs vary significantly depending on access.
+                voids, above ceilings, behind skirting boards and architraves, and through existing
+                conduit runs. The least visually intrusive but the most labour-intensive. Costs vary
+                significantly depending on access.
               </span>
             </li>
           </ul>
@@ -322,9 +324,9 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Switches and Dimmers</h3>
             <p className="text-white text-sm leading-relaxed">
-              Period toggle switches (£30 to £60 each), dolly switches (£40 to £70), rotary
-              dimmers in brass or bronze (£50 to £80). Manufacturers: Forbes and Lomax, Hamilton
-              Litestat, Jim Lawrence. Lead times of 2 to 6 weeks for non-stock items.
+              Period toggle switches (£30 to £60 each), dolly switches (£40 to £70), rotary dimmers
+              in brass or bronze (£50 to £80). Manufacturers: Forbes and Lomax, Hamilton Litestat,
+              Jim Lawrence. Lead times of 2 to 6 weeks for non-stock items.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -337,9 +339,9 @@ const sections = [
           </div>
         </div>
         <p>
-          Heritage accessories for a typical 3-bedroom listed property add £1,500 to £3,500 to
-          the rewire cost — but attempting to use standard white accessories will almost certainly
-          be rejected by the conservation officer, causing costly delays and rework.
+          Heritage accessories for a typical 3-bedroom listed property add £1,500 to £3,500 to the
+          rewire cost — but attempting to use standard white accessories will almost certainly be
+          rejected by the conservation officer, causing costly delays and rework.
         </p>
       </>
     ),
@@ -359,9 +361,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Paintbrush className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lime plaster repairs</strong> — £40 to £80 per square metre for a
-                specialist plasterer using lime putty or hydraulic lime. Multiple coats with
-                drying time between each. Budget 2 to 4 weeks drying time before decoration.
+                <strong>Lime plaster repairs</strong> — £40 to £80 per square metre for a specialist
+                plasterer using lime putty or hydraulic lime. Multiple coats with drying time
+                between each. Budget 2 to 4 weeks drying time before decoration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -376,8 +378,8 @@ const sections = [
               <Paintbrush className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Decorative plasterwork</strong> — Cornices, ceiling roses, and mouldings
-                damaged during cable routing may require specialist repair at £80 to £200 per
-                linear metre depending on complexity.
+                damaged during cable routing may require specialist repair at £80 to £200 per linear
+                metre depending on complexity.
               </span>
             </li>
           </ul>
@@ -405,14 +407,14 @@ const sections = [
           no exemption from electrical safety standards for listed buildings.
         </p>
         <p>
-          The work is notifiable under Part P of the Building Regulations (it is a full rewire in
-          a domestic dwelling). The electrician must be registered with a competent person scheme
-          or the work must be inspected by Building Control.
+          The work is notifiable under Part P of the Building Regulations (it is a full rewire in a
+          domestic dwelling). The electrician must be registered with a competent person scheme or
+          the work must be inspected by Building Control.
         </p>
         <p>
           An Electrical Installation Certificate (EIC) must be issued on completion. RCD protection
-          is required per Regulation 411.3.3 of BS 7671 — the listed status of the building does
-          not provide an exemption from RCD requirements.
+          is required per Regulation 411.3.3 of BS 7671 — the listed status of the building does not
+          provide an exemption from RCD requirements.
         </p>
         <p>
           Where the conservation officer's requirements conflict with BS 7671 recommendations (not
@@ -440,8 +442,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Survey with the Conservation Officer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Before quoting, attend a joint survey with the conservation officer and the
-                  client. Agree the wiring method for each area of the building in writing.
-                  This prevents costly changes after work has started.
+                  client. Agree the wiring method for each area of the building in writing. This
+                  prevents costly changes after work has started.
                 </p>
               </div>
             </div>
@@ -454,8 +456,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Listed buildings always have surprises — hidden voids that do not go where
                   expected, original wiring that cannot be extracted without damage, plasterwork
-                  that crumbles when disturbed. Add 15% to 20% contingency over your standard
-                  rates and explain this to the client upfront.
+                  that crumbles when disturbed. Add 15% to 20% contingency over your standard rates
+                  and explain this to the client upfront.
                 </p>
               </div>
             </div>
@@ -469,8 +471,8 @@ const sections = [
                   Photograph every stage of the work — before, during, and after. The conservation
                   officer may request evidence that the work was carried out in accordance with the
                   agreed method. Use Elec-Mate to attach site photos to your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> and
-                  generate a visual record of the installation.
+                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> and generate
+                  a visual record of the installation.
                 </p>
               </div>
             </div>
@@ -515,7 +517,7 @@ export default function ListedBuildingRewireCostPage() {
       faqHeading="Frequently Asked Questions About Listed Building Rewire Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Heritage Electrical Work with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for specialist quoting, on-site EIC certificates, and photographic records of heritage installations. 7-day free trial."
     />
   );
 }

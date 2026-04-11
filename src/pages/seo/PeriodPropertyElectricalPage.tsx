@@ -85,7 +85,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/victorian-house-rewire',
     title: 'Victorian House Rewire Guide',
-    description: 'Rubber wiring, knob-and-tube, cast iron consumer units, and solid wall rewiring challenges.',
+    description:
+      'Rubber wiring, knob-and-tube, cast iron consumer units, and solid wall rewiring challenges.',
     icon: Home,
     category: 'Guide',
   },
@@ -99,21 +100,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/interwar-property-electrical',
     title: '1920s/1930s Property Electrical Guide',
-    description: 'Interwar rubber wiring degradation, round pin sockets, and WWII-era property issues.',
+    description:
+      'Interwar rubber wiring degradation, round pin sockets, and WWII-era property issues.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/post-war-property-electrical',
     title: '1940s/1950s Property Electrical Guide',
-    description: 'Early PVC wiring, rewirable fuse boxes, and earthing issues in post-war properties.',
+    description:
+      'Early PVC wiring, rewirable fuse boxes, and earthing issues in post-war properties.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/listed-building-electrical',
     title: 'Listed Building Electrical Guide',
-    description: 'Listed building consent, conservation officers, and sympathetic installation methods.',
+    description:
+      'Listed building consent, conservation officers, and sympathetic installation methods.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -137,11 +141,11 @@ const sections = [
     content: (
       <>
         <p>
-          The term "period property" covers a broad range of building ages and types, from
-          Georgian townhouses to interwar semis. For electrical safety purposes, the most
-          meaningful threshold is 1966 — the year the IEE Wiring Regulations first required
-          a protective earth conductor in all new circuits. Properties built before this date
-          may lack earthing on some or all of their circuits.
+          The term "period property" covers a broad range of building ages and types, from Georgian
+          townhouses to interwar semis. For electrical safety purposes, the most meaningful
+          threshold is 1966 — the year the IEE Wiring Regulations first required a protective earth
+          conductor in all new circuits. Properties built before this date may lack earthing on some
+          or all of their circuits.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -149,21 +153,20 @@ const sections = [
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Pre-1901 (Victorian and earlier)</strong> — rubber insulation, lead
-                sheathing, knob-and-tube systems, cast iron or Bakelite fuse boards. No
-                earthing as standard. Round pin sockets. Highest risk category.
-                See our{' '}
+                sheathing, knob-and-tube systems, cast iron or Bakelite fuse boards. No earthing as
+                standard. Round pin sockets. Highest risk category. See our{' '}
                 <SEOInternalLink href="/victorian-house-rewire">
                   Victorian house rewire guide
-                </SEOInternalLink>
-                {' '}for full details.
+                </SEOInternalLink>{' '}
+                for full details.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1901–1918 (Edwardian and WWI-era)</strong> — VIR (Vulcanised India
-                Rubber) cables, early radial circuits, wooden or Bakelite switchboards. Some
-                properties had earthing via metal conduit; many had none. See our{' '}
+                <strong>1901–1918 (Edwardian and WWI-era)</strong> — VIR (Vulcanised India Rubber)
+                cables, early radial circuits, wooden or Bakelite switchboards. Some properties had
+                earthing via metal conduit; many had none. See our{' '}
                 <SEOInternalLink href="/edwardian-house-electrical">
                   Edwardian house electrical guide
                 </SEOInternalLink>
@@ -173,9 +176,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1918–1939 (Interwar)</strong> — rubber-insulated radial circuits,
-                5-amp round pin sockets, rewirable fuse boards. The National Grid era.
-                See our{' '}
+                <strong>1918–1939 (Interwar)</strong> — rubber-insulated radial circuits, 5-amp
+                round pin sockets, rewirable fuse boards. The National Grid era. See our{' '}
                 <SEOInternalLink href="/interwar-property-electrical">
                   interwar property electrical guide
                 </SEOInternalLink>
@@ -185,9 +187,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1945–1966 (Early post-war)</strong> — introduction of the ring main
-                (1947) and 13-amp sockets. Early PVC insulation. Rewirable fuse boards.
-                Better than earlier periods but still significantly out of date. See our{' '}
+                <strong>1945–1966 (Early post-war)</strong> — introduction of the ring main (1947)
+                and 13-amp sockets. Early PVC insulation. Rewirable fuse boards. Better than earlier
+                periods but still significantly out of date. See our{' '}
                 <SEOInternalLink href="/post-war-property-electrical">
                   post-war property electrical guide
                 </SEOInternalLink>
@@ -197,9 +199,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Properties built after 1966 are not "period properties" in the electrical sense,
-          though those built before 1985 will have wiring that predates the widespread adoption
-          of RCD protection and may still benefit from an EICR and consumer unit upgrade.
+          Properties built after 1966 are not "period properties" in the electrical sense, though
+          those built before 1985 will have wiring that predates the widespread adoption of RCD
+          protection and may still benefit from an EICR and consumer unit upgrade.
         </p>
       </>
     ),
@@ -210,57 +212,54 @@ const sections = [
     content: (
       <>
         <p>
-          When viewing a period property with a view to purchase, there are several things
-          you can look for before commissioning a formal EICR. These visible indicators do
-          not replace a professional inspection but can help you assess the likely scale of
-          any electrical issues.
+          When viewing a period property with a view to purchase, there are several things you can
+          look for before commissioning a formal EICR. These visible indicators do not replace a
+          professional inspection but can help you assess the likely scale of any electrical issues.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit type</strong> — locate the fuse board (usually under
-                the stairs, in the hallway, or in a utility room). A cast iron box, a Bakelite
-                unit, or a unit with rewirable fuses rather than MCBs indicates a significant
-                upgrade is needed. A modern metal consumer unit with MCBs and RCDs is a
-                positive indicator.
+                <strong>Consumer unit type</strong> — locate the fuse board (usually under the
+                stairs, in the hallway, or in a utility room). A cast iron box, a Bakelite unit, or
+                a unit with rewirable fuses rather than MCBs indicates a significant upgrade is
+                needed. A modern metal consumer unit with MCBs and RCDs is a positive indicator.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket types</strong> — are the sockets modern 13-amp square pin
-                (BS 1363) type? The presence of round pin sockets (5A or 15A) indicates
-                unmodernised wiring. Sockets with discolouration or scorch marks indicate
-                a fault history.
+                <strong>Socket types</strong> — are the sockets modern 13-amp square pin (BS 1363)
+                type? The presence of round pin sockets (5A or 15A) indicates unmodernised wiring.
+                Sockets with discolouration or scorch marks indicate a fault history.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable types in loft</strong> — if you can access the loft, look at
-                the cables. Cables with woven cotton or jute braid covering, or rubber
-                insulation that crumbles when touched, are pre-1960s. PVC cables in good
-                condition are from the 1950s onwards. Modern twin-and-earth cable has
-                grey PVC sheathing with brown and blue conductors.
+                <strong>Cable types in loft</strong> — if you can access the loft, look at the
+                cables. Cables with woven cotton or jute braid covering, or rubber insulation that
+                crumbles when touched, are pre-1960s. PVC cables in good condition are from the
+                1950s onwards. Modern twin-and-earth cable has grey PVC sheathing with brown and
+                blue conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Number of sockets</strong> — count the sockets in each room. Fewer
-                than 4 double sockets in a living room or kitchen is an indicator of
-                original or little-modernised wiring.
+                <strong>Number of sockets</strong> — count the sockets in each room. Fewer than 4
+                double sockets in a living room or kitchen is an indicator of original or
+                little-modernised wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Age of last EICR</strong> — ask the vendor when the last EICR was
-                carried out and whether there are outstanding observations. A satisfactory
-                EICR less than 5 years old is a positive indicator; no EICR on record
-                should prompt you to commission one before exchange.
+                <strong>Age of last EICR</strong> — ask the vendor when the last EICR was carried
+                out and whether there are outstanding observations. A satisfactory EICR less than 5
+                years old is a positive indicator; no EICR on record should prompt you to commission
+                one before exchange.
               </span>
             </li>
           </ul>
@@ -275,37 +274,36 @@ const sections = [
       <>
         <p>
           The following hazards are commonly identified in period properties during EICR
-          inspections. They are not exclusive to any single era — a property that is partly
-          original and partly modernised may exhibit hazards from multiple periods.
+          inspections. They are not exclusive to any single era — a property that is partly original
+          and partly modernised may exhibit hazards from multiple periods.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Deteriorated cable insulation</strong> — rubber and early PVC
-                insulation degrades over time. Cracked, brittle, or carbonised insulation
-                allows tracking currents between conductors or to earthed metalwork, creating
-                shock and fire risks.
+                <strong>Deteriorated cable insulation</strong> — rubber and early PVC insulation
+                degrades over time. Cracked, brittle, or carbonised insulation allows tracking
+                currents between conductors or to earthed metalwork, creating shock and fire risks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent earth conductors</strong> — circuits without a protective
-                earth cannot provide adequate fault protection. Without an earth, a fault
-                in an appliance can put the appliance case at mains voltage. Touching the
-                case while in contact with earth (a wet floor, a metal pipe) can be fatal.
+                <strong>Absent earth conductors</strong> — circuits without a protective earth
+                cannot provide adequate fault protection. Without an earth, a fault in an appliance
+                can put the appliance case at mains voltage. Touching the case while in contact with
+                earth (a wet floor, a metal pipe) can be fatal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — RCD protection at 30mA significantly
-                reduces the risk of fatal electric shock by interrupting the circuit within
-                40 milliseconds of a fault current of 30mA or more. Without RCD protection,
-                the overcurrent device (fuse or MCB) is the only protection — and fuses
-                do not operate quickly enough to prevent a fatal shock.
+                <strong>No RCD protection</strong> — RCD protection at 30mA significantly reduces
+                the risk of fatal electric shock by interrupting the circuit within 40 milliseconds
+                of a fault current of 30mA or more. Without RCD protection, the overcurrent device
+                (fuse or MCB) is the only protection — and fuses do not operate quickly enough to
+                prevent a fatal shock.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,18 +311,18 @@ const sections = [
               <span>
                 <strong>Inadequate bonding</strong> — equipotential bonding to gas and water
                 pipework ensures that all metalwork in the property is at the same electrical
-                potential. Without bonding, a fault on a gas appliance could put the gas
-                pipework at mains voltage — potentially fatal for anyone touching a pipe
-                while also in contact with earth.
+                potential. Without bonding, a fault on a gas appliance could put the gas pipework at
+                mains voltage — potentially fatal for anyone touching a pipe while also in contact
+                with earth.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DIY additions</strong> — decades of unskilled electrical work by
-                previous occupants create unpredictable hazards. Non-standard connections,
-                incorrect cable types, absent earth conductors on added circuits, and
-                overloaded ring mains are all commonly found in period properties.
+                <strong>DIY additions</strong> — decades of unskilled electrical work by previous
+                occupants create unpredictable hazards. Non-standard connections, incorrect cable
+                types, absent earth conductors on added circuits, and overloaded ring mains are all
+                commonly found in period properties.
               </span>
             </li>
           </ul>
@@ -343,8 +341,8 @@ const sections = [
             Electrical Installation Condition Report (EICR)
           </SEOInternalLink>{' '}
           is the only way to properly assess the safety of a period property's electrical
-          installation. Visual inspection alone is not sufficient — many serious hazards are
-          hidden inside walls, under floors, or within the consumer unit.
+          installation. Visual inspection alone is not sufficient — many serious hazards are hidden
+          inside walls, under floors, or within the consumer unit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -352,35 +350,35 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insulation resistance testing</strong> — the EICR includes insulation
-                resistance tests (1000V DC for circuits rated up to 500V) that reveal
-                deterioration in cable insulation not visible to the naked eye. A reading
-                below 1MΩ indicates insulation failure.
+                resistance tests (1000V DC for circuits rated up to 500V) that reveal deterioration
+                in cable insulation not visible to the naked eye. A reading below 1MΩ indicates
+                insulation failure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth continuity and loop impedance</strong> — the inspector measures
-                the continuity of protective earth conductors and the earth fault loop impedance.
-                High loop impedance (indicating a poor earth path) means that fault protection
-                devices may not operate quickly enough in the event of an earth fault.
+                <strong>Earth continuity and loop impedance</strong> — the inspector measures the
+                continuity of protective earth conductors and the earth fault loop impedance. High
+                loop impedance (indicating a poor earth path) means that fault protection devices
+                may not operate quickly enough in the event of an earth fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD testing</strong> — where RCDs are present, the inspector tests
-                their operating time using a calibrated RCD tester. An RCD that takes more
-                than 40 milliseconds to operate at 30mA is defective and should be replaced.
+                <strong>RCD testing</strong> — where RCDs are present, the inspector tests their
+                operating time using a calibrated RCD tester. An RCD that takes more than 40
+                milliseconds to operate at 30mA is defective and should be replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Visual inspection</strong> — the inspector opens a representative
-                sample of accessories (sockets, switches, light fittings) to inspect the
-                condition of cables, connections, and earthing arrangements. Evidence of
-                arcing, overheating, or DIY modifications is documented.
+                <strong>Visual inspection</strong> — the inspector opens a representative sample of
+                accessories (sockets, switches, light fittings) to inspect the condition of cables,
+                connections, and earthing arrangements. Evidence of arcing, overheating, or DIY
+                modifications is documented.
               </span>
             </li>
           </ul>
@@ -400,59 +398,58 @@ const sections = [
     content: (
       <>
         <p>
-          The following observations are the most frequently recorded in EICR inspections
-          of period properties. C2 observations make the EICR Unsatisfactory and require
-          remedial action. C3 observations are recommendations that do not affect the
-          overall EICR outcome.
+          The following observations are the most frequently recorded in EICR inspections of period
+          properties. C2 observations make the EICR Unsatisfactory and require remedial action. C3
+          observations are recommendations that do not affect the overall EICR outcome.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Absence of RCD protection (Regulation 411.3.3)</strong> — by
-                far the most common C2 in period homes. Remedied by fitting a new consumer
-                unit with RCD or RCBO protection on all socket circuits.
+                <strong>C2 — Absence of RCD protection (Regulation 411.3.3)</strong> — by far the
+                most common C2 in period homes. Remedied by fitting a new consumer unit with RCD or
+                RCBO protection on all socket circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — No protective earth conductor on circuits</strong> — missing
-                earth wires on lighting and/or socket circuits. Remedied by rewiring affected
-                circuits in modern twin-and-earth cable.
+                <strong>C2 — No protective earth conductor on circuits</strong> — missing earth
+                wires on lighting and/or socket circuits. Remedied by rewiring affected circuits in
+                modern twin-and-earth cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Inadequate main equipotential bonding</strong> — missing or
-                undersized bonding conductors to gas and water services. Relatively
-                inexpensive to rectify (typically £80 to £200).
+                <strong>C2 — Inadequate main equipotential bonding</strong> — missing or undersized
+                bonding conductors to gas and water services. Relatively inexpensive to rectify
+                (typically £80 to £200).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C2 — Deteriorated cable insulation</strong> — insulation resistance
-                below 1MΩ, or visible cracking and deterioration at inspection points.
-                Requires rewiring of affected circuits.
+                <strong>C2 — Deteriorated cable insulation</strong> — insulation resistance below
+                1MΩ, or visible cracking and deterioration at inspection points. Requires rewiring
+                of affected circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Insufficient socket outlets</strong> — recommendation to
-                increase socket provision. Does not make the EICR Unsatisfactory but
-                is associated with the hazard of extension lead overuse.
+                <strong>C3 — Insufficient socket outlets</strong> — recommendation to increase
+                socket provision. Does not make the EICR Unsatisfactory but is associated with the
+                hazard of extension lead overuse.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Old wiring colours without labels</strong> — pre-harmonisation
-                wiring colours (red/black) should be labelled where new work in brown/blue
-                colours has been added. A C3 recommendation to add warning labels.
+                <strong>C3 — Old wiring colours without labels</strong> — pre-harmonisation wiring
+                colours (red/black) should be labelled where new work in brown/blue colours has been
+                added. A C3 recommendation to add warning labels.
               </span>
             </li>
           </ul>
@@ -466,47 +463,47 @@ const sections = [
     content: (
       <>
         <p>
-          Purchasing a period property without understanding the electrical installation
-          is a common and costly mistake. A few hundred pounds spent on a pre-purchase EICR
-          can save thousands in unexpected remedial work after completion.
+          Purchasing a period property without understanding the electrical installation is a common
+          and costly mistake. A few hundred pounds spent on a pre-purchase EICR can save thousands
+          in unexpected remedial work after completion.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commission your own EICR</strong> — do not rely on an EICR
-                commissioned by the vendor. Commission your own EICR from a NICEIC-
-                or NAPIT-registered electrician before exchange of contracts. The cost
-                (£150 to £450) is trivial relative to the purchase price. The electrician
-                reports to you and has no commercial interest in the transaction.
+                <strong>Commission your own EICR</strong> — do not rely on an EICR commissioned by
+                the vendor. Commission your own EICR from a NICEIC- or NAPIT-registered electrician
+                before exchange of contracts. The cost (£150 to £450) is trivial relative to the
+                purchase price. The electrician reports to you and has no commercial interest in the
+                transaction.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use the EICR to negotiate</strong> — if the EICR identifies
-                significant remedial work, obtain quotes for the work and use this to
-                negotiate a reduction in the purchase price. A full rewire costing £5,000
-                is a legitimate basis for a price reduction.
+                <strong>Use the EICR to negotiate</strong> — if the EICR identifies significant
+                remedial work, obtain quotes for the work and use this to negotiate a reduction in
+                the purchase price. A full rewire costing £5,000 is a legitimate basis for a price
+                reduction.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Plan the work before completion</strong> — if you know a rewire
-                is needed, get quotes and book an electrician before you complete on the
-                purchase. Good electricians are often booked weeks in advance, and having
-                the work booked reduces the temptation to move in and delay.
+                <strong>Plan the work before completion</strong> — if you know a rewire is needed,
+                get quotes and book an electrician before you complete on the purchase. Good
+                electricians are often booked weeks in advance, and having the work booked reduces
+                the temptation to move in and delay.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inform your insurer</strong> — disclose the electrical condition
-                to your buildings insurer before completion. Insurers need accurate
-                information about the property at inception of cover. Failure to disclose
-                a known hazard could affect a future claim.
+                <strong>Inform your insurer</strong> — disclose the electrical condition to your
+                buildings insurer before completion. Insurers need accurate information about the
+                property at inception of cover. Failure to disclose a known hazard could affect a
+                future claim.
               </span>
             </li>
           </ul>
@@ -520,46 +517,45 @@ const sections = [
     content: (
       <>
         <p>
-          The appropriate electrical upgrade for a period property depends on the EICR findings.
-          The options range from targeted remedial work through to a full rewire. The following
-          gives typical cost ranges for each approach.
+          The appropriate electrical upgrade for a period property depends on the EICR findings. The
+          options range from targeted remedial work through to a full rewire. The following gives
+          typical cost ranges for each approach.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Targeted remedials only</strong> — £200 to £800. Install missing
-                bonding, label old-colour wiring, fit missing earth sleeving. Does not
-                address the absence of RCD protection or deteriorated insulation.
+                <strong>Targeted remedials only</strong> — £200 to £800. Install missing bonding,
+                label old-colour wiring, fit missing earth sleeving. Does not address the absence of
+                RCD protection or deteriorated insulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement</strong> — £450 to £1,000. Modern
-                metal-clad consumer unit with RCD or RCBO protection. Addresses the
-                absence of RCD protection. Appropriate where the existing wiring has been
-                assessed as adequate.
+                <strong>Consumer unit replacement</strong> — £450 to £1,000. Modern metal-clad
+                consumer unit with RCD or RCBO protection. Addresses the absence of RCD protection.
+                Appropriate where the existing wiring has been assessed as adequate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Partial rewire</strong> — £1,000 to £3,500. Rewire the most
-                problematic circuits (typically those with deteriorated insulation or
-                absent earthing) while leaving the remainder. Requires the existing circuits
-                to be adequate for connection to a new consumer unit.
+                <strong>Partial rewire</strong> — £1,000 to £3,500. Rewire the most problematic
+                circuits (typically those with deteriorated insulation or absent earthing) while
+                leaving the remainder. Requires the existing circuits to be adequate for connection
+                to a new consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Full rewire</strong> — £2,500 to £12,000+ depending on property
-                size and type. Replaces all wiring, consumer unit, accessories. The definitive
-                solution for a period property with widespread original wiring. Cost varies
-                significantly by property type — see our specific guides for Victorian,
-                Edwardian, interwar, and post-war properties.
+                <strong>Full rewire</strong> — £2,500 to £12,000+ depending on property size and
+                type. Replaces all wiring, consumer unit, accessories. The definitive solution for a
+                period property with widespread original wiring. Cost varies significantly by
+                property type — see our specific guides for Victorian, Edwardian, interwar, and
+                post-war properties.
               </span>
             </li>
           </ul>
@@ -573,26 +569,28 @@ const sections = [
     content: (
       <>
         <p>
-          Period property EICRs are among the most technically demanding domestic inspections.
-          Allow more time than for modern properties — typically 50 to 100 per cent more time
-          per circuit. Document everything thoroughly, as findings in period properties are
-          often complex and require clear explanation to the client.
+          Period property EICRs are among the most technically demanding domestic inspections. Allow
+          more time than for modern properties — typically 50 to 100 per cent more time per circuit.
+          Document everything thoroughly, as findings in period properties are often complex and
+          require clear explanation to the client.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Complete EICRs On Site with Photographs</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Complete EICRs On Site with Photographs
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
                   to complete the full report on site. Photograph all significant findings —
-                  deteriorated insulation, absent bonding, round pin sockets, and original
-                  consumer units. Clients and insurers benefit from photographic evidence,
-                  and it protects you if findings are later questioned.
+                  deteriorated insulation, absent bonding, round pin sockets, and original consumer
+                  units. Clients and insurers benefit from photographic evidence, and it protects
+                  you if findings are later questioned.
                 </p>
               </div>
             </div>
@@ -603,15 +601,14 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Convert Inspections to Upgrade Work</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Period property EICRs almost always identify significant work. Quote the
-                  consumer unit replacement, bonding, and any rewire work on the day using
-                  the{' '}
+                  Period property EICRs almost always identify significant work. Quote the consumer
+                  unit replacement, bonding, and any rewire work on the day using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . Clients who have just received a detailed EICR showing the hazards in
-                  their property are motivated to act — the moment to present the quote
-                  is now, not in a follow-up email.
+                  . Clients who have just received a detailed EICR showing the hazards in their
+                  property are motivated to act — the moment to present the quote is now, not in a
+                  follow-up email.
                 </p>
               </div>
             </div>
@@ -619,7 +616,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete period property EICRs professionally with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, photographic documentation, and professional quoting. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -656,7 +653,7 @@ export default function PeriodPropertyElectricalPage() {
       faqHeading="Frequently Asked Questions About Period Property Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Complete Period Property EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

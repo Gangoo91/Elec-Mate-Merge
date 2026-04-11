@@ -687,7 +687,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start doing landlord EICRs the fast way"
-          description="Join 430+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting, and instant delivery. 7-day free trial."
+          description="Join 1,000+ UK electricians completing EICR certificates on their phones. Board scanner, voice entry, AI defect coding, remedial quoting, and instant delivery. 7-day free trial."
           icon={Camera}
         />
       </>
@@ -724,7 +724,7 @@ export default function EICRForLandlordsPage() {
       faqHeading="Frequently Asked Questions About EICR for Landlords"
       relatedPages={relatedPages}
       ctaHeading="Complete Landlord EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians creating professional EICR certificates with AI board scanning, voice test entry, and instant delivery to landlords. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians creating professional EICR certificates with AI board scanning, voice test entry, and instant delivery to landlords. 7-day free trial, cancel anytime."
     />
   );
 }

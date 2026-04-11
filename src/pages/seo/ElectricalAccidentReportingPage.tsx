@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'How do I report a RIDDOR incident as a self-employed electrician?',
     answer:
-      'As a self-employed electrician, you are required to report incidents under RIDDOR when your work activities cause a death or specified injury to yourself or any other person, or when a dangerous occurrence arises from your work. Reports are made online at riddor.hse.gov.uk. For fatalities and specified injuries, you can also call 0345 300 9923. If you are working on a client\'s premises, the client (as the person in control of the premises) may also have reporting duties — but this does not remove your own obligations. Keep records of any RIDDOR reports you make for at least three years.',
+      "As a self-employed electrician, you are required to report incidents under RIDDOR when your work activities cause a death or specified injury to yourself or any other person, or when a dangerous occurrence arises from your work. Reports are made online at riddor.hse.gov.uk. For fatalities and specified injuries, you can also call 0345 300 9923. If you are working on a client's premises, the client (as the person in control of the premises) may also have reporting duties — but this does not remove your own obligations. Keep records of any RIDDOR reports you make for at least three years.",
   },
   {
     question: 'What should I include in an accident book entry?',
@@ -131,10 +131,10 @@ const sections = [
     content: (
       <>
         <p>
-          The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
-          (RIDDOR 2013) came into force on 1 October 2013, replacing earlier reporting
-          regulations. They are made under the Health and Safety at Work etc. Act 1974 and are
-          enforced by the HSE and local authorities.
+          The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR
+          2013) came into force on 1 October 2013, replacing earlier reporting regulations. They are
+          made under the Health and Safety at Work etc. Act 1974 and are enforced by the HSE and
+          local authorities.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -142,40 +142,40 @@ const sections = [
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Who has a duty to report</strong> — the duty rests primarily on the
-                "responsible person": the employer (where the injured person is an employee),
-                the self-employed person (for their own injuries and injuries to others arising
-                from their work), and the person in control of the premises (where the injured
-                person is not an employee of the responsible person, e.g., a member of the public
-                or a contractor injured on a client's site).
+                "responsible person": the employer (where the injured person is an employee), the
+                self-employed person (for their own injuries and injuries to others arising from
+                their work), and the person in control of the premises (where the injured person is
+                not an employee of the responsible person, e.g., a member of the public or a
+                contractor injured on a client's site).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Criminal offence</strong> — failure to report a RIDDOR-reportable incident
-                is a criminal offence under the Health and Safety at Work etc. Act 1974. The HSE
-                can prosecute, and convictions can result in fines. Beyond the legal obligation,
-                failure to report denies the HSE data needed to identify industry hazards and
-                target enforcement activity.
+                is a criminal offence under the Health and Safety at Work etc. Act 1974. The HSE can
+                prosecute, and convictions can result in fines. Beyond the legal obligation, failure
+                to report denies the HSE data needed to identify industry hazards and target
+                enforcement activity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping</strong> — all RIDDOR-reportable incidents must be recorded
-                and the records must be kept for three years. The record must include the date
-                and method of reporting, the date, time, and place of the event, personal details
-                of those involved, a brief description of the nature of the event.
+                and the records must be kept for three years. The record must include the date and
+                method of reporting, the date, time, and place of the event, personal details of
+                those involved, a brief description of the nature of the event.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Accident book</strong> — employers with 10 or more employees must keep
-                an accident book (BI 510 or equivalent) under the Social Security (Claims and
-                Payments) Regulations 1979. The accident book is separate from RIDDOR reporting
-                but complements it. All incidents should be entered in the accident book regardless
-                of whether they are RIDDOR reportable.
+                <strong>Accident book</strong> — employers with 10 or more employees must keep an
+                accident book (BI 510 or equivalent) under the Social Security (Claims and Payments)
+                Regulations 1979. The accident book is separate from RIDDOR reporting but
+                complements it. All incidents should be entered in the accident book regardless of
+                whether they are RIDDOR reportable.
               </span>
             </li>
           </ul>
@@ -189,8 +189,8 @@ const sections = [
     content: (
       <>
         <p>
-          RIDDOR 2013 specifies several categories of event that must be reported to the HSE.
-          For electrical contractors, the most relevant categories are specified injuries and
+          RIDDOR 2013 specifies several categories of event that must be reported to the HSE. For
+          electrical contractors, the most relevant categories are specified injuries and
           over-seven-day injuries to workers, and dangerous occurrences.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -208,11 +208,11 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Specified injuries to workers</strong> — RIDDOR Schedule 1 lists specified
-                injuries including: fractures (excluding fingers, thumbs, and toes); amputation;
-                any injury leading to loss of sight; crush injuries causing internal organ damage;
+                injuries including: fractures (excluding fingers, thumbs, and toes); amputation; any
+                injury leading to loss of sight; crush injuries causing internal organ damage;
                 serious burns covering more than 10% of the body or causing damage to the eyes,
-                lungs, or other organs; loss of consciousness caused by asphyxia or by exposure
-                to harmful substance (including electric shock). All must be reported without delay.
+                lungs, or other organs; loss of consciousness caused by asphyxia or by exposure to
+                harmful substance (including electric shock). All must be reported without delay.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -245,9 +245,9 @@ const sections = [
     content: (
       <>
         <p>
-          RIDDOR Schedule 2 lists specific dangerous occurrences — events that are near misses
-          or incidents with the potential to cause death or serious injury — that must be
-          reported even if no injury occurs. Several are directly relevant to electrical work.
+          RIDDOR Schedule 2 lists specific dangerous occurrences — events that are near misses or
+          incidents with the potential to cause death or serious injury — that must be reported even
+          if no injury occurs. Several are directly relevant to electrical work.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -255,11 +255,11 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical short circuit or overload with fire or explosion</strong> —
-                paragraph 14 of Schedule 2: "The unintended collapse or failure of any closed
-                vessel or associated pipework which forms part of a pressure system" and the
-                specified electrical incident — an electrical short circuit or overload accompanied
-                by fire or explosion which results in the stoppage of the plant for more than 24
-                hours or which has the potential to cause death.
+                paragraph 14 of Schedule 2: "The unintended collapse or failure of any closed vessel
+                or associated pipework which forms part of a pressure system" and the specified
+                electrical incident — an electrical short circuit or overload accompanied by fire or
+                explosion which results in the stoppage of the plant for more than 24 hours or which
+                has the potential to cause death.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,9 +267,9 @@ const sections = [
               <span>
                 <strong>Arc flash incidents</strong> — an arc flash event in a switchboard, motor
                 control centre, or distribution panel that results in an explosion, fire, or
-                stoppage of plant for more than 24 hours is a reportable dangerous occurrence.
-                Arc flash incidents have the potential to cause death and are taken very seriously
-                by the HSE.
+                stoppage of plant for more than 24 hours is a reportable dangerous occurrence. Arc
+                flash incidents have the potential to cause death and are taken very seriously by
+                the HSE.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -283,10 +283,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          When in doubt about whether an incident is RIDDOR reportable, report it. The HSE
-          would rather receive an unnecessary report than not receive a required one. An
-          unreported RIDDOR event discovered later during HSE investigation significantly
-          aggravates any enforcement action.
+          When in doubt about whether an incident is RIDDOR reportable, report it. The HSE would
+          rather receive an unnecessary report than not receive a required one. An unreported RIDDOR
+          event discovered later during HSE investigation significantly aggravates any enforcement
+          action.
         </p>
       </>
     ),
@@ -297,19 +297,19 @@ const sections = [
     content: (
       <>
         <p>
-          All RIDDOR reports for electrical contractors in Great Britain are made to the HSE.
-          The HSE provides an online reporting service and a telephone service for urgent reports.
+          All RIDDOR reports for electrical contractors in Great Britain are made to the HSE. The
+          HSE provides an online reporting service and a telephone service for urgent reports.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Online reporting — riddor.hse.gov.uk</strong> — the primary method for
-                all RIDDOR reports. The online form requires: the nature of the event, details
-                of the injured person or the dangerous occurrence, the location and date, a
-                description of what happened, and your contact details. Save a copy of the
-                completed report for your records.
+                <strong>Online reporting — riddor.hse.gov.uk</strong> — the primary method for all
+                RIDDOR reports. The online form requires: the nature of the event, details of the
+                injured person or the dangerous occurrence, the location and date, a description of
+                what happened, and your contact details. Save a copy of the completed report for
+                your records.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -325,21 +325,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What information to prepare</strong> — before reporting, gather: the
-                date, time, and precise location of the incident; the full name and contact
-                details of the injured person; their employer; a clear description of what
-                happened and how; the nature and extent of any injuries; details of any
-                witnesses; and details of any plant or equipment involved.
+                <strong>What information to prepare</strong> — before reporting, gather: the date,
+                time, and precise location of the incident; the full name and contact details of the
+                injured person; their employer; a clear description of what happened and how; the
+                nature and extent of any injuries; details of any witnesses; and details of any
+                plant or equipment involved.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Preserve the scene</strong> — where possible, preserve the scene of
-                a serious electrical accident until the HSE has been notified and had the
-                opportunity to inspect. Do not move or remove equipment, tools, or materials
-                that may be evidence unless necessary for ongoing safety or medical treatment.
-                Photograph the scene before anything is disturbed.
+                <strong>Preserve the scene</strong> — where possible, preserve the scene of a
+                serious electrical accident until the HSE has been notified and had the opportunity
+                to inspect. Do not move or remove equipment, tools, or materials that may be
+                evidence unless necessary for ongoing safety or medical treatment. Photograph the
+                scene before anything is disturbed.
               </span>
             </li>
           </ul>
@@ -370,26 +370,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specified injuries — immediately (without delay)</strong> — report as
-                soon as practicable. Where the injury requires hospitalisation, report while
-                the person is receiving treatment — do not wait until they are discharged.
+                <strong>Specified injuries — immediately (without delay)</strong> — report as soon
+                as practicable. Where the injury requires hospitalisation, report while the person
+                is receiving treatment — do not wait until they are discharged.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Over-seven-day injuries — within 15 days</strong> — the 15-day clock
-                starts from the day of the accident (not the day the seventh day of absence is
-                reached). If an injury that initially appeared minor results in absence exceeding
-                seven days, report it as soon as this becomes apparent.
+                <strong>Over-seven-day injuries — within 15 days</strong> — the 15-day clock starts
+                from the day of the accident (not the day the seventh day of absence is reached). If
+                an injury that initially appeared minor results in absence exceeding seven days,
+                report it as soon as this becomes apparent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dangerous occurrences — immediately (without delay)</strong> — report
-                as soon as practicable. Even if there is uncertainty about whether the event
-                qualifies as a dangerous occurrence, err on the side of reporting.
+                <strong>Dangerous occurrences — immediately (without delay)</strong> — report as
+                soon as practicable. Even if there is uncertainty about whether the event qualifies
+                as a dangerous occurrence, err on the side of reporting.
               </span>
             </li>
           </ul>
@@ -403,10 +403,10 @@ const sections = [
     content: (
       <>
         <p>
-          Near misses (sometimes called "close calls") are events that had the potential to
-          cause injury or damage but did not. In electrical work, near misses often precede
-          serious accidents. Reporting and investigating them is one of the most effective
-          ways to prevent future injuries.
+          Near misses (sometimes called "close calls") are events that had the potential to cause
+          injury or damage but did not. In electrical work, near misses often precede serious
+          accidents. Reporting and investigating them is one of the most effective ways to prevent
+          future injuries.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -415,15 +415,15 @@ const sections = [
               <span>
                 <strong>Electrical near misses to report internally</strong> — isolation failures
                 discovered before contact; live conductors found exposed in accessible locations;
-                tools or equipment contacting live conductors without injury; incorrect isolation
-                of the wrong circuit discovered before work began; lockout tagout breaches.
+                tools or equipment contacting live conductors without injury; incorrect isolation of
+                the wrong circuit discovered before work began; lockout tagout breaches.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No blame culture</strong> — near miss reporting only works if workers
-                can report without fear of punishment for honest mistakes. Establish a no-blame
+                <strong>No blame culture</strong> — near miss reporting only works if workers can
+                report without fear of punishment for honest mistakes. Establish a no-blame
                 reporting culture where near misses are investigated constructively to identify
                 systemic improvements, not to assign individual blame.
               </span>
@@ -431,10 +431,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heinrich's triangle</strong> — for every fatal accident, research
-                suggests there are approximately 29 serious injuries, 300 minor injuries, and
-                3,000 near misses. Reducing near misses reduces serious accidents. Each near
-                miss is a free lesson about what could go wrong.
+                <strong>Heinrich's triangle</strong> — for every fatal accident, research suggests
+                there are approximately 29 serious injuries, 300 minor injuries, and 3,000 near
+                misses. Reducing near misses reduces serious accidents. Each near miss is a free
+                lesson about what could go wrong.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -442,8 +442,8 @@ const sections = [
               <span>
                 <strong>RIDDOR-reportable near misses</strong> — some near misses are RIDDOR
                 dangerous occurrences (see above). These must be formally reported to the HSE.
-                Internal near miss reporting does not substitute for RIDDOR reporting where it
-                is required.
+                Internal near miss reporting does not substitute for RIDDOR reporting where it is
+                required.
               </span>
             </li>
           </ul>
@@ -458,8 +458,8 @@ const sections = [
       <>
         <p>
           Following any significant electrical accident or near miss, an internal investigation
-          should be carried out to understand what happened and why, and to implement measures
-          to prevent recurrence. This is required by the Management of Health and Safety at Work
+          should be carried out to understand what happened and why, and to implement measures to
+          prevent recurrence. This is required by the Management of Health and Safety at Work
           Regulations 1999.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -467,8 +467,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Immediate actions</strong> — make the site safe, provide first aid,
-                call emergency services if needed, preserve the scene, notify the HSE if RIDDOR
+                <strong>Immediate actions</strong> — make the site safe, provide first aid, call
+                emergency services if needed, preserve the scene, notify the HSE if RIDDOR
                 reportable, and notify the employer and next of kin if a worker is seriously
                 injured.
               </span>
@@ -478,25 +478,25 @@ const sections = [
               <span>
                 <strong>Investigation team</strong> — assign a competent person to lead the
                 investigation. For serious accidents, this may include a senior manager, a health
-                and safety advisor, and an elected employee representative. The investigation
-                should be independent of those directly involved.
+                and safety advisor, and an elected employee representative. The investigation should
+                be independent of those directly involved.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Root cause analysis</strong> — identify not just the immediate cause
-                (e.g., worker touched a live conductor) but the underlying causes (e.g., safe
-                isolation procedure was not followed; isolation procedure was not adequately
-                communicated; supervision was insufficient). Use the "5 Whys" method to trace
-                causes to their root.
+                <strong>Root cause analysis</strong> — identify not just the immediate cause (e.g.,
+                worker touched a live conductor) but the underlying causes (e.g., safe isolation
+                procedure was not followed; isolation procedure was not adequately communicated;
+                supervision was insufficient). Use the "5 Whys" method to trace causes to their
+                root.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Corrective actions</strong> — document and implement corrective actions
-                with specific owners and deadlines. Review and update risk assessments and method
+                <strong>Corrective actions</strong> — document and implement corrective actions with
+                specific owners and deadlines. Review and update risk assessments and method
                 statements. Brief all affected workers on the findings and actions. Record the
                 investigation and actions taken.
               </span>
@@ -512,9 +512,9 @@ const sections = [
     content: (
       <>
         <p>
-          Self-employed electricians have RIDDOR reporting duties that differ slightly from
-          those of employers. Understanding your obligations as a sole trader or director
-          of a small company is essential.
+          Self-employed electricians have RIDDOR reporting duties that differ slightly from those of
+          employers. Understanding your obligations as a sole trader or director of a small company
+          is essential.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -530,11 +530,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Injuries to others from your work</strong> — if your work activities
-                cause a specified injury, over-seven-day injury, or death to another person
-                (including a client, a member of the public, or a co-worker), you must report
-                it under RIDDOR. The client (as person in control of the premises) may also
-                have a reporting duty — but their duty does not remove yours.
+                <strong>Injuries to others from your work</strong> — if your work activities cause a
+                specified injury, over-seven-day injury, or death to another person (including a
+                client, a member of the public, or a co-worker), you must report it under RIDDOR.
+                The client (as person in control of the premises) may also have a reporting duty —
+                but their duty does not remove yours.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -542,8 +542,8 @@ const sections = [
               <span>
                 <strong>Dangerous occurrences from your work</strong> — dangerous occurrences
                 arising from your work activity must be reported regardless of whether you are
-                employed or self-employed. An arc flash or electrical explosion resulting from
-                your work must be reported to the HSE.
+                employed or self-employed. An arc flash or electrical explosion resulting from your
+                work must be reported to the HSE.
               </span>
             </li>
           </ul>
@@ -557,32 +557,32 @@ const sections = [
     content: (
       <>
         <p>
-          The best RIDDOR report is the one you never have to make. Comprehensive risk
-          assessment and safe working procedures — including safe isolation, LOTO, and
-          RAMS — are the most effective way to prevent reportable accidents.
+          The best RIDDOR report is the one you never have to make. Comprehensive risk assessment
+          and safe working procedures — including safe isolation, LOTO, and RAMS — are the most
+          effective way to prevent reportable accidents.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5 my-4">
           <div className="flex items-start gap-4">
             <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
             <div>
-              <h4 className="font-bold text-white mb-1">Generate Site RAMS to Prevent Reportable Accidents</h4>
+              <h4 className="font-bold text-white mb-1">
+                Generate Site RAMS to Prevent Reportable Accidents
+              </h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">
-                  Elec-Mate RAMS generator
-                </SEOInternalLink>{' '}
-                to create site-specific risk assessments and method statements for electrical
-                work. Including safe isolation procedures, electrical hazard identification,
-                PPE requirements, and emergency procedures — the documentation required by law
-                and demonstrated to clients. Reduce accident risk and protect yourself legally
-                if an incident does occur.
+                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                create site-specific risk assessments and method statements for electrical work.
+                Including safe isolation procedures, electrical hazard identification, PPE
+                requirements, and emergency procedures — the documentation required by law and
+                demonstrated to clients. Reduce accident risk and protect yourself legally if an
+                incident does occur.
               </p>
             </div>
           </div>
         </div>
         <SEOAppBridge
           title="Professional H&S documentation for UK electricians"
-          description="Join 430+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation. AI-generated, site-specific, and compliant with UK regulations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for RAMS generation, risk assessment, and health and safety documentation. AI-generated, site-specific, and compliant with UK regulations. 7-day free trial."
           icon={HardHat}
         />
       </>

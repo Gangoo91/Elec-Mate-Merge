@@ -22,7 +22,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Underfloor Heating Electrical Cost', href: '/guides/underfloor-heating-electrical-cost' },
+  {
+    label: 'Underfloor Heating Electrical Cost',
+    href: '/guides/underfloor-heating-electrical-cost',
+  },
 ];
 
 const tocItems = [
@@ -71,7 +74,7 @@ const faqs = [
   {
     question: 'Can I install electric underfloor heating under any floor type?',
     answer:
-      'Electric underfloor heating can be installed under most floor types including ceramic and porcelain tiles, natural stone, vinyl, laminate, and engineered wood. Tiles and stone are the best conductors and provide the most efficient heat transfer. Thick carpet and underlay act as insulators and significantly reduce efficiency — electric UFH is generally not recommended under carpet thicker than 1.5 tog. Always check the UFH manufacturer\'s guidance for maximum floor covering thermal resistance.',
+      "Electric underfloor heating can be installed under most floor types including ceramic and porcelain tiles, natural stone, vinyl, laminate, and engineered wood. Tiles and stone are the best conductors and provide the most efficient heat transfer. Thick carpet and underlay act as insulators and significantly reduce efficiency — electric UFH is generally not recommended under carpet thicker than 1.5 tog. Always check the UFH manufacturer's guidance for maximum floor covering thermal resistance.",
   },
   {
     question: 'Is electric underfloor heating notifiable under Part P?',
@@ -84,32 +87,28 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost',
-    description:
-      'If a new circuit is needed, you may need spare ways — see consumer unit pricing.',
+    description: 'If a new circuit is needed, you may need spare ways — see consumer unit pricing.',
     icon: PoundSterling,
     category: 'Guide',
   },
   {
     href: '/guides/rewire-cost-uk',
     title: 'Rewire Cost UK 2026',
-    description:
-      'Full house rewire costs — UFH circuits are often added during a rewire project.',
+    description: 'Full house rewire costs — UFH circuits are often added during a rewire project.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description:
-      'Issue Electrical Installation Certificates for new UFH circuits on your phone.',
+    description: 'Issue Electrical Installation Certificates for new UFH circuits on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description:
-      'Quote underfloor heating installations with itemised materials and labour costs.',
+    description: 'Quote underfloor heating installations with itemised materials and labour costs.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -124,8 +123,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/solar-panel-installation-electrical-cost',
     title: 'Solar Panel Electrical Cost',
-    description:
-      'Solar PV can offset the running costs of electric underfloor heating systems.',
+    description: 'Solar PV can offset the running costs of electric underfloor heating systems.',
     icon: Zap,
     category: 'Guide',
   },
@@ -144,8 +142,8 @@ const sections = [
         <p>
           Electric underfloor heating (UFH) is one of the fastest-growing segments of domestic
           electrical work in the UK. It provides comfortable, even heat distribution across the
-          floor surface, eliminates the need for radiators, and is particularly popular in bathrooms,
-          kitchens, and extensions where warm floors are highly valued.
+          floor surface, eliminates the need for radiators, and is particularly popular in
+          bathrooms, kitchens, and extensions where warm floors are highly valued.
         </p>
         <p>
           For electricians, UFH work combines product supply, electrical installation, and often
@@ -171,15 +169,17 @@ const sections = [
           types: pre-formed heating mats and loose heating cable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Heating Element Costs (Trade Prices)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Heating Element Costs (Trade Prices)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Standard heating mat (150W/m²)</strong> — £30 to £45 per square metre trade.
-                Pre-spaced cable on fibreglass mesh for quick installation in regularly shaped rooms.
-                Available in standard sizes from 1 m² to 20 m². The most common choice for bathrooms,
-                en-suites, and kitchens.
+                Pre-spaced cable on fibreglass mesh for quick installation in regularly shaped
+                rooms. Available in standard sizes from 1 m² to 20 m². The most common choice for
+                bathrooms, en-suites, and kitchens.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -187,15 +187,17 @@ const sections = [
               <span>
                 <strong>High-output heating mat (200W/m²)</strong> — £40 to £55 per square metre
                 trade. Higher wattage for rooms with greater heat loss, such as conservatories,
-                ground-floor extensions over uninsulated concrete, and rooms with large glazed areas.
+                ground-floor extensions over uninsulated concrete, and rooms with large glazed
+                areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Loose heating cable</strong> — £25 to £40 per square metre trade (cable only,
-                plus £10 to £15 for fixing strips). More versatile for irregular room shapes and
-                varying heat density. Requires more installation time but offers greater flexibility.
+                <strong>Loose heating cable</strong> — £25 to £40 per square metre trade (cable
+                only, plus £10 to £15 for fixing strips). More versatile for irregular room shapes
+                and varying heat density. Requires more installation time but offers greater
+                flexibility.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -249,9 +251,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Thermometer className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart WiFi thermostat</strong> — £150 to £200. App-controlled with geofencing,
-                learning algorithms, and integration with smart home systems (Alexa, Google Home).
-                Offers the best energy efficiency through adaptive scheduling and remote control.
+                <strong>Smart WiFi thermostat</strong> — £150 to £200. App-controlled with
+                geofencing, learning algorithms, and integration with smart home systems (Alexa,
+                Google Home). Offers the best energy efficiency through adaptive scheduling and
+                remote control.
               </span>
             </li>
           </ul>
@@ -270,9 +273,9 @@ const sections = [
     content: (
       <>
         <p>
-          Electric underfloor heating must be supplied by a dedicated radial circuit from the consumer
-          unit. This is an essential part of the electrical installation and represents a significant
-          portion of the electrician's work and cost.
+          Electric underfloor heating must be supplied by a dedicated radial circuit from the
+          consumer unit. This is an essential part of the electrical installation and represents a
+          significant portion of the electrician's work and cost.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -280,9 +283,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit sizing</strong> — size the circuit for the total heating load. A
-                bathroom mat (4 m² at 150W/m² = 600W, 2.6A) needs a 6A or 10A circuit. A kitchen
-                (12 m² at 150W/m² = 1,800W, 7.8A) needs a 10A or 16A circuit. A large living room
-                (20 m² at 200W/m² = 4,000W, 17.4A) needs a 20A circuit.
+                bathroom mat (4 m² at 150W/m² = 600W, 2.6A) needs a 6A or 10A circuit. A kitchen (12
+                m² at 150W/m² = 1,800W, 7.8A) needs a 10A or 16A circuit. A large living room (20 m²
+                at 200W/m² = 4,000W, 17.4A) needs a 20A circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,7 +314,8 @@ const sections = [
                 no spare ways, a board upgrade may be needed — see our{' '}
                 <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
                   consumer unit replacement cost guide
-                </SEOInternalLink>.
+                </SEOInternalLink>
+                .
               </span>
             </li>
           </ul>
@@ -339,19 +343,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <SquareStack className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Insulation boards</strong> — £8 to £15 per square metre. Typically 6mm to 10mm
-                thick XPS (extruded polystyrene) or similar rigid insulation. Tile backer boards with
-                built-in insulation serve a dual purpose and cost £10 to £20 per square metre.
+                <strong>Insulation boards</strong> — £8 to £15 per square metre. Typically 6mm to
+                10mm thick XPS (extruded polystyrene) or similar rigid insulation. Tile backer
+                boards with built-in insulation serve a dual purpose and cost £10 to £20 per square
+                metre.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <SquareStack className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Screed vs direct-to-tile</strong> — heating mats can be installed directly
-                in tile adhesive (direct-to-tile method) for minimal floor build-up (3 to 5mm total).
-                Alternatively, a self-levelling compound or screed (15 to 30mm) encapsulates the
-                heating element and provides better heat distribution and thermal mass, but raises the
-                floor level more. Screed costs £10 to £20 per square metre.
+                in tile adhesive (direct-to-tile method) for minimal floor build-up (3 to 5mm
+                total). Alternatively, a self-levelling compound or screed (15 to 30mm) encapsulates
+                the heating element and provides better heat distribution and thermal mass, but
+                raises the floor level more. Screed costs £10 to £20 per square metre.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,23 +384,25 @@ const sections = [
           control, costs can be kept reasonable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="font-bold text-white text-lg mb-4">Estimated Running Costs (2026 Electricity Rates)</h3>
+          <h3 className="font-bold text-white text-lg mb-4">
+            Estimated Running Costs (2026 Electricity Rates)
+          </h3>
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bathroom (4 m² heated area, 150W/m²)</strong> — 600W load. Cost per hour at
-                full output: approximately £0.17. With thermostat cycling (typically 30% to 50%
-                duty cycle once warm): £0.05 to £0.09 per hour. Monthly cost (4 hours per day):
-                £6 to £11.
+                full output: approximately £0.17. With thermostat cycling (typically 30% to 50% duty
+                cycle once warm): £0.05 to £0.09 per hour. Monthly cost (4 hours per day): £6 to
+                £11.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen (10 m² heated area, 150W/m²)</strong> — 1,500W load. Cost per hour at
-                full output: approximately £0.42. With thermostat cycling: £0.13 to £0.21 per hour.
-                Monthly cost (6 hours per day): £24 to £38.
+                <strong>Kitchen (10 m² heated area, 150W/m²)</strong> — 1,500W load. Cost per hour
+                at full output: approximately £0.42. With thermostat cycling: £0.13 to £0.21 per
+                hour. Monthly cost (6 hours per day): £24 to £38.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,8 +420,8 @@ const sections = [
           depend on room insulation, desired temperature, external temperature, floor covering
           thermal resistance, and thermostat programming. Electric UFH is most cost-effective in
           small, well-insulated rooms (bathrooms, en-suites) used for short periods. For larger
-          rooms used as primary heating, a wet UFH system connected to a heat pump is typically
-          more economical to run.
+          rooms used as primary heating, a wet UFH system connected to a heat pump is typically more
+          economical to run.
         </p>
       </>
     ),
@@ -456,9 +463,10 @@ const sections = [
           </div>
         </div>
         <p>
-          For electricians, electric UFH is the more accessible market — it does not require plumbing
-          skills or coordination with other trades. Focus on bathrooms, kitchens, conservatories,
-          and extensions where electric UFH is the most practical and cost-effective solution.
+          For electricians, electric UFH is the more accessible market — it does not require
+          plumbing skills or coordination with other trades. Focus on bathrooms, kitchens,
+          conservatories, and extensions where electric UFH is the most practical and cost-effective
+          solution.
         </p>
       </>
     ),
@@ -477,9 +485,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bathroom (4 m² heated area)</strong> — £500 to £900 total. Heating mat:
-                £120 to £180. Insulation: £35 to £60. Thermostat: £80 to £150. Dedicated circuit:
-                £150 to £250. Labour: £150 to £300.
+                <strong>Bathroom (4 m² heated area)</strong> — £500 to £900 total. Heating mat: £120
+                to £180. Insulation: £35 to £60. Thermostat: £80 to £150. Dedicated circuit: £150 to
+                £250. Labour: £150 to £300.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -487,24 +495,25 @@ const sections = [
               <span>
                 <strong>Kitchen (10 m² heated area)</strong> — £1,100 to £1,800 total. Heating mat:
                 £300 to £450. Insulation: £80 to £150. Thermostat: £80 to £150. Dedicated circuit:
-                £150 to £300. Labour: £250 to £400. Self-levelling compound (optional): £100 to £200.
+                £150 to £300. Labour: £250 to £400. Self-levelling compound (optional): £100 to
+                £200.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Living room (18 m² heated area)</strong> — £1,800 to £3,000 total. Heating
-                element (cable or mat): £540 to £1,080. Insulation: £145 to £270. Thermostat: £100 to
-                £200. Dedicated circuit: £200 to £300. Labour: £350 to £500. Self-levelling compound:
-                £180 to £360.
+                element (cable or mat): £540 to £1,080. Insulation: £145 to £270. Thermostat: £100
+                to £200. Dedicated circuit: £200 to £300. Labour: £350 to £500. Self-levelling
+                compound: £180 to £360.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Conservatory or extension (15 m² heated area)</strong> — £1,500 to £2,500
-                total. High-output mat (200W/m²): £600 to £825. Insulation: £120 to £225. Thermostat:
-                £100 to £200. Dedicated circuit: £200 to £300. Labour: £300 to £450.
+                total. High-output mat (200W/m²): £600 to £825. Insulation: £120 to £225.
+                Thermostat: £100 to £200. Dedicated circuit: £200 to £300. Labour: £300 to £450.
               </span>
             </li>
           </ul>
@@ -534,9 +543,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Supply and Install Packages</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Offer complete supply-and-install packages rather than just the electrical
-                  connection. Source the heating mats, thermostat, and insulation at trade prices and
-                  mark them up. This increases the job value significantly and gives the customer a
-                  single point of contact for the entire installation.
+                  connection. Source the heating mats, thermostat, and insulation at trade prices
+                  and mark them up. This increases the job value significantly and gives the
+                  customer a single point of contact for the entire installation.
                 </p>
               </div>
             </div>
@@ -547,10 +556,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Insulation Resistance Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Always test the heating mat or cable insulation resistance before, during, and after
-                  installation. Test before laying (to confirm it arrived undamaged), after laying but
-                  before tiling (to catch any damage during installation), and after tiling (final
-                  test). Record all readings on the{' '}
+                  Always test the heating mat or cable insulation resistance before, during, and
+                  after installation. Test before laying (to confirm it arrived undamaged), after
+                  laying but before tiling (to catch any damage during installation), and after
+                  tiling (final test). Record all readings on the{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. A damaged
                   heating element discovered after tiling means the entire floor must be lifted.
                 </p>
@@ -575,7 +584,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify UFH installations faster"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, cable sizing, and on-site EIC certification. Everything you need for underfloor heating work. 7-day free trial."
           icon={Wrench}
         />
       </>
@@ -612,7 +621,7 @@ export default function UnderfloorHeatingElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Underfloor Heating with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting with live trade prices, on-site EIC certificates, and AI-powered cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -256,8 +256,7 @@ export default function EPAPreparationPage() {
               <SEOInternalLink href="/training/city-guilds-2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>
-              ), a
-              comprehensive portfolio of evidence, and agreement from both your employer and
+              ), a comprehensive portfolio of evidence, and agreement from both your employer and
               training provider that you are ready. Elec-Mate tracks all of these gateway
               requirements so you know exactly where you stand at every point in your
               apprenticeship.
@@ -579,7 +578,7 @@ export default function EPAPreparationPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Ace your End Point Assessment"
-        subheading="Join 430+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians and apprentices preparing for assessments and qualifications. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

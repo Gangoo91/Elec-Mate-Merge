@@ -675,7 +675,7 @@ export default function DistributionBoardWiringPage() {
       faqHeading="Frequently Asked Questions About Distribution Board Wiring"
       relatedPages={relatedPages}
       ctaHeading="Design and Certify Board Changes on Your Phone"
-      ctaSubheading="Elec-Mate's AI circuit designer generates board layouts, the cable sizing calculator verifies every circuit, and the EIC app certifies the finished work. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI circuit designer generates board layouts, the cable sizing calculator verifies every circuit, and the EIC app certifies the finished work. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

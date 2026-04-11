@@ -570,7 +570,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete UFH installations faster with Elec-Mate"
-          description="Cable sizing, circuit design, EIC certification, quoting, and invoicing — all on your phone. Join 430+ UK electricians already using the app. 7-day free trial."
+          description="Cable sizing, circuit design, EIC certification, quoting, and invoicing — all on your phone. Join 1,000+ UK electricians already using the app. 7-day free trial."
           icon={Thermometer}
         />
       </>
@@ -607,7 +607,7 @@ export default function UnderfloorHeatingElectricalPage() {
       faqHeading="Frequently Asked Questions About Underfloor Heating Electrical"
       relatedPages={relatedPages}
       ctaHeading="Size UFH Circuits and Certify on Your Phone"
-      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Cable sizing calculators, EIC certificates, quoting, and invoicing — all in one app. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

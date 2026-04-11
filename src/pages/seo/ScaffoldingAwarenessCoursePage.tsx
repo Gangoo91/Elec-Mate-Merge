@@ -605,7 +605,7 @@ export default function ScaffoldingAwarenessCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Complete your scaffolding awareness training today"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any site safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. Structured modules, interactive quizzes, video content, and an AI tutor for any site safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/scaffolding-awareness"
     />

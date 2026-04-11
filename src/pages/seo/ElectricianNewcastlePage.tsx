@@ -145,15 +145,15 @@ const sections = [
           Newcastle upon Tyne is the North East's largest city and a major centre for electrical
           work. The city's distinctive property stock — including Tyneside flats found almost
           nowhere else in the UK — combined with a large student population, active quayside
-          regeneration, and growing demand for low-carbon installations creates a strong and
-          varied market for electricians.
+          regeneration, and growing demand for low-carbon installations creates a strong and varied
+          market for electricians.
         </p>
         <p>
-          Newcastle electricians benefit from lower operating costs than their southern
-          counterparts (cheaper premises, lower parking costs, shorter travel times across the
-          city) while maintaining strong demand across domestic, commercial, and landlord
-          compliance sectors. The city's two universities drive one of the UK's largest student
-          HMO markets, creating predictable, recurring work.
+          Newcastle electricians benefit from lower operating costs than their southern counterparts
+          (cheaper premises, lower parking costs, shorter travel times across the city) while
+          maintaining strong demand across domestic, commercial, and landlord compliance sectors.
+          The city's two universities drive one of the UK's largest student HMO markets, creating
+          predictable, recurring work.
         </p>
         <p>
           This guide covers the DNO details, Tyneside flat challenges, quayside regeneration
@@ -170,8 +170,8 @@ const sections = [
       <>
         <p>
           <strong>Northern Powergrid</strong> is the DNO for Newcastle and the wider North East
-          region, covering an area from the Scottish border to North Yorkshire and from the coast
-          to the Pennines.
+          region, covering an area from the Scottish border to North Yorkshire and from the coast to
+          the Pennines.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -198,19 +198,19 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing arrangements</strong> — Newcastle properties are predominantly
-                TN-C-S (PME) in newer areas and TN-S in older areas. Some Victorian properties
-                still rely on lead water pipe earthing — always verify. Northern Powergrid can
-                confirm the earthing arrangement at the supply point.
+                TN-C-S (PME) in newer areas and TN-S in older areas. Some Victorian properties still
+                rely on lead water pipe earthing — always verify. Northern Powergrid can confirm the
+                earthing arrangement at the supply point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tyneside flat supplies</strong> — Tyneside flats typically have two
-                separate SPEN supplies in what appears to be a single terraced house. Each flat has
-                its own meter and cut-out. When working on Tyneside flats, confirm which supply
-                serves which flat — mislabelling is common, particularly in properties that have
-                been modified over the years.
+                <strong>Tyneside flat supplies</strong> — Tyneside flats typically have two separate
+                SPEN supplies in what appears to be a single terraced house. Each flat has its own
+                meter and cut-out. When working on Tyneside flats, confirm which supply serves which
+                flat — mislabelling is common, particularly in properties that have been modified
+                over the years.
               </span>
             </li>
           </ul>
@@ -224,10 +224,10 @@ const sections = [
     content: (
       <>
         <p>
-          Tyneside flats are a property type almost unique to Newcastle and the surrounding
-          Tyneside area (Gateshead, North Shields, South Shields, Wallsend). Built between 1860
-          and 1930, they represent a significant proportion of the housing stock in Jesmond,
-          Heaton, Sandyford, Fenham, Benwell, and Byker.
+          Tyneside flats are a property type almost unique to Newcastle and the surrounding Tyneside
+          area (Gateshead, North Shields, South Shields, Wallsend). Built between 1860 and 1930,
+          they represent a significant proportion of the housing stock in Jesmond, Heaton,
+          Sandyford, Fenham, Benwell, and Byker.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -258,8 +258,8 @@ const sections = [
                 <strong>Consumer unit location</strong> — in ground floor flats, the consumer unit
                 is typically near the front door in the hallway. Upper floor flats may have the
                 consumer unit on the landing or in a hallway cupboard. Access to the consumer unit
-                from outside is important for emergency isolation — ensure the tenant knows where
-                it is.
+                from outside is important for emergency isolation — ensure the tenant knows where it
+                is.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -267,16 +267,16 @@ const sections = [
               <span>
                 <strong>Pricing</strong> — a Tyneside flat rewire typically costs less than a full
                 house rewire because there is only one floor, but the restricted cable routes and
-                access difficulties mean it takes longer per square metre than an equivalent area
-                in a standard house. Budget £2,800 to £4,500 for a 2-bedroom Tyneside flat rewire.
+                access difficulties mean it takes longer per square metre than an equivalent area in
+                a standard house. Budget £2,800 to £4,500 for a 2-bedroom Tyneside flat rewire.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Understanding Tyneside flats is essential for any electrician working in Newcastle. If
-          you are new to the area, spend time familiarising yourself with the typical layouts and
-          cable route options before quoting your first Tyneside flat rewire.
+          Understanding Tyneside flats is essential for any electrician working in Newcastle. If you
+          are new to the area, spend time familiarising yourself with the typical layouts and cable
+          route options before quoting your first Tyneside flat rewire.
         </p>
       </>
     ),
@@ -287,19 +287,19 @@ const sections = [
     content: (
       <>
         <p>
-          Newcastle's Quayside and the adjacent Ouseburn Valley have been transformed over the
-          past two decades from industrial dockland into a vibrant mixed-use area. The
-          regeneration continues with new developments and conversions:
+          Newcastle's Quayside and the adjacent Ouseburn Valley have been transformed over the past
+          two decades from industrial dockland into a vibrant mixed-use area. The regeneration
+          continues with new developments and conversions:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Quayside Apartments</h3>
             <p className="text-white text-sm leading-relaxed">
               High-specification riverside apartments in developments along the Quayside. Electrical
-              work includes smart home installations, underfloor heating controls, high-end
-              lighting design, and EV charging in basement car parks. The customer demographic
-              expects premium finishes and professional service. Typical apartment fit-out value:
-              £3,000 to £8,000 for the electrical package.
+              work includes smart home installations, underfloor heating controls, high-end lighting
+              design, and EV charging in basement car parks. The customer demographic expects
+              premium finishes and professional service. Typical apartment fit-out value: £3,000 to
+              £8,000 for the electrical package.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -315,10 +315,10 @@ const sections = [
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Stephenson Quarter</h3>
             <p className="text-white text-sm leading-relaxed">
-              The area around the Central Station and Stephenson Quarter has seen significant
-              hotel, office, and residential development. Commercial electrical work in this area
-              includes office fit-outs, hotel installations, and retail units. Three-phase
-              commercial installations with modern building management systems.
+              The area around the Central Station and Stephenson Quarter has seen significant hotel,
+              office, and residential development. Commercial electrical work in this area includes
+              office fit-outs, hotel installations, and retail units. Three-phase commercial
+              installations with modern building management systems.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
@@ -341,8 +341,7 @@ const sections = [
       <>
         <p>
           Newcastle's climate is noticeably colder than southern England, with more frost days,
-          lower average temperatures, and occasional heavy snow. This has practical implications
-          for{' '}
+          lower average temperatures, and occasional heavy snow. This has practical implications for{' '}
           <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger installations
           </SEOInternalLink>
@@ -355,9 +354,9 @@ const sections = [
               <span>
                 <strong>Charger location</strong> — position the charger to minimise exposure to
                 standing water and ice. Avoid locations where meltwater from roofs or drainpipes
-                pools around the unit. A sheltered wall-mounted position under eaves or a carport
-                is ideal. Ensure the charging cable does not create a trip hazard when laid across
-                icy or wet surfaces.
+                pools around the unit. A sheltered wall-mounted position under eaves or a carport is
+                ideal. Ensure the charging cable does not create a trip hazard when laid across icy
+                or wet surfaces.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -394,8 +393,8 @@ const sections = [
           </ul>
         </div>
         <p>
-          The temperature correction factors in BS 7671 (Table 4B1) actually work in your favour
-          in colder climates — lower ambient temperatures improve cable current-carrying capacity.
+          The temperature correction factors in BS 7671 (Table 4B1) actually work in your favour in
+          colder climates — lower ambient temperatures improve cable current-carrying capacity.
           However, the practical challenges of working outdoors in North East winters (shorter
           daylight hours, cold hands, frozen ground for cable burial) should be factored into
           programming and pricing.
@@ -421,8 +420,8 @@ const sections = [
               <span>
                 <strong>HMO licensing</strong> — Newcastle City Council operates mandatory HMO
                 licensing for properties with 5+ occupants from 2+ households. The Jesmond and
-                Sandyford areas have some of the highest HMO densities in England. The council
-                has a dedicated HMO enforcement team.
+                Sandyford areas have some of the highest HMO densities in England. The council has a
+                dedicated HMO enforcement team.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -457,9 +456,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          The Jesmond and Heaton letting agent community is tight-knit. Building relationships
-          with key agents creates a reliable pipeline of annual EICR, fire alarm testing, and
-          remedial work that forms a solid foundation for a Newcastle electrical business.
+          The Jesmond and Heaton letting agent community is tight-knit. Building relationships with
+          key agents creates a reliable pipeline of annual EICR, fire alarm testing, and remedial
+          work that forms a solid foundation for a Newcastle electrical business.
         </p>
       </>
     ),
@@ -471,9 +470,9 @@ const sections = [
       <>
         <p>
           Newcastle electrician rates are competitive, reflecting the lower cost of living in the
-          North East compared to southern England. However, the strong demand from the student
-          HMO market, quayside regeneration, and growing renewable energy sector supports healthy
-          rates. Typical rates in 2026:
+          North East compared to southern England. However, the strong demand from the student HMO
+          market, quayside regeneration, and growing renewable energy sector supports healthy rates.
+          Typical rates in 2026:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="grid gap-4 sm:grid-cols-2">
@@ -531,9 +530,9 @@ const sections = [
         </div>
         <p>
           Quayside commercial and high-specification residential work commands higher rates — day
-          rates of £380 to £500 are achievable for quality commercial work. Volume HMO EICR work
-          can be priced at £140 to £200 per unit when servicing a landlord portfolio, with the
-          volume making up for the lower per-unit rate.
+          rates of £380 to £500 are achievable for quality commercial work. Volume HMO EICR work can
+          be priced at £140 to £200 per unit when servicing a landlord portfolio, with the volume
+          making up for the lower per-unit rate.
         </p>
       </>
     ),
@@ -546,8 +545,8 @@ const sections = [
         <p>
           Newcastle is a rewarding city for electricians. The lower operating costs, strong HMO
           market, quayside regeneration, and unique Tyneside flat work create a diverse and
-          profitable practice. Electricians who master Tyneside flat rewires and build HMO
-          landlord relationships have a reliable income foundation.
+          profitable practice. Electricians who master Tyneside flat rewires and build HMO landlord
+          relationships have a reliable income foundation.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -560,13 +559,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning. Batch Tyneside flat and HMO inspections
-                  efficiently — complete the EICR on your phone and email to the landlord from
-                  site.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning. Batch Tyneside flat and HMO inspections
+                  efficiently — complete the EICR on your phone and email to the landlord from site.
                 </p>
               </div>
             </div>
@@ -599,8 +594,8 @@ const sections = [
                     quoting app
                   </SEOInternalLink>
                   . From Tyneside flat rewires to quayside commercial fit-outs, itemise materials,
-                  labour, testing, and certification. Professional PDF quotes build confidence
-                  with landlords and commercial clients.
+                  labour, testing, and certification. Professional PDF quotes build confidence with
+                  landlords and commercial clients.
                 </p>
               </div>
             </div>
@@ -608,7 +603,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Newcastle electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East working conditions. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East working conditions. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -633,8 +628,7 @@ export default function ElectricianNewcastlePage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Newcastle:{' '}
-          <span className="text-yellow-400">Local Electricians 2026</span>
+          Electrician in Newcastle: <span className="text-yellow-400">Local Electricians 2026</span>
         </>
       }
       heroSubtitle="Newcastle's unique Tyneside flats, thriving quayside regeneration, massive student HMO market, and cold climate challenges make it a distinctive and rewarding city for electricians who know the local landscape."
@@ -645,7 +639,7 @@ export default function ElectricianNewcastlePage() {
       faqHeading="Frequently Asked Questions About Electricians in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Newcastle Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Tyneside flats, HMO compliance, and North East conditions. 7-day free trial."
     />
   );
 }

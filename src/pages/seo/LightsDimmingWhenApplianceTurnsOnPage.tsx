@@ -43,7 +43,7 @@ const tocItems = [
 const keyTakeaways = [
   'A brief, slight dim when a large appliance starts is usually normal and caused by the inrush current drawing voltage down momentarily on the shared supply.',
   'Persistent, severe, or worsening dimming is not normal and may indicate loose connections, undersized cables, overloaded circuits, or a supply problem that needs professional investigation.',
-  'Voltage drop is governed by Ohm\'s law: when a high-current appliance starts, the voltage at other points on the same circuit or supply drops temporarily because of the impedance of the cables and connections.',
+  "Voltage drop is governed by Ohm's law: when a high-current appliance starts, the voltage at other points on the same circuit or supply drops temporarily because of the impedance of the cables and connections.",
   'BS 7671 Regulation 133.2 requires conductors to be sized so that voltage drop remains within permissible limits under normal load conditions.',
   'Loose connections are a serious fire risk. If dimming is accompanied by flickering, buzzing, warm sockets, or a burning smell, isolate the circuit and call an electrician immediately.',
 ];
@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
-    description: 'Calculate voltage drop on cable runs to check if cables are correctly sized for the load.',
+    description:
+      'Calculate voltage drop on cable runs to check if cables are correctly sized for the load.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -104,14 +105,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/electrical-fault-finding',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic approach to diagnosing electrical faults including voltage drop issues.',
+    description:
+      'Systematic approach to diagnosing electrical faults including voltage drop issues.',
     icon: Search,
     category: 'Guide',
   },
   {
     href: '/guides/consumer-unit-upgrade',
     title: 'Consumer Unit Upgrade Guide',
-    description: 'When and why to upgrade a consumer unit, including addressing undersized supplies.',
+    description:
+      'When and why to upgrade a consumer unit, including addressing undersized supplies.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -142,24 +145,23 @@ const sections = [
     content: (
       <>
         <p>
-          You switch on the washing machine and the kitchen lights dip for a moment. The kettle clicks
-          on and the living room lamp dims briefly. It is one of the most common electrical concerns in
-          UK homes, and it is natural to wonder whether something is wrong.
+          You switch on the washing machine and the kitchen lights dip for a moment. The kettle
+          clicks on and the living room lamp dims briefly. It is one of the most common electrical
+          concerns in UK homes, and it is natural to wonder whether something is wrong.
         </p>
         <p>
-          The short answer is: a brief, barely noticeable dim when a large appliance starts is usually
-          harmless. But persistent, severe, or worsening dimming is a warning sign that should not be
-          ignored. The difference between the two comes down to what is causing the voltage to drop —
-          and whether the cause is a normal electrical characteristic or a developing fault.
+          The short answer is: a brief, barely noticeable dim when a large appliance starts is
+          usually harmless. But persistent, severe, or worsening dimming is a warning sign that
+          should not be ignored. The difference between the two comes down to what is causing the
+          voltage to drop — and whether the cause is a normal electrical characteristic or a
+          developing fault.
         </p>
         <p>
           This guide explains the electrical science behind dimming lights in plain language, covers
-          the most common causes, helps you tell the difference between normal and dangerous, and tells
-          you exactly when to call an electrician. If you are an electrician, the later sections cover
-          the diagnostic approach and relevant{' '}
-          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
-            BS 7671
-          </SEOInternalLink>{' '}
+          the most common causes, helps you tell the difference between normal and dangerous, and
+          tells you exactly when to call an electrician. If you are an electrician, the later
+          sections cover the diagnostic approach and relevant{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           regulations.
         </p>
       </>
@@ -171,30 +173,30 @@ const sections = [
     content: (
       <>
         <p>
-          Every cable in your home has resistance. It is tiny — fractions of an ohm per metre — but it
-          is always there. When current flows through a cable, some of the voltage is "used up"
+          Every cable in your home has resistance. It is tiny — fractions of an ohm per metre — but
+          it is always there. When current flows through a cable, some of the voltage is "used up"
           overcoming that resistance. This is voltage drop, and it is an unavoidable consequence of
           Ohm's law: voltage drop equals current multiplied by resistance (V = I x R).
         </p>
         <p>
-          Under normal conditions, the voltage drop across your home's cables is small enough that you
-          never notice it. Your lights receive close to the full 230V supply and shine at their normal
-          brightness. But when a large appliance switches on and suddenly draws a high current, the
-          voltage drop across the shared supply cables increases proportionally. The voltage available
-          to your lights temporarily decreases, and they dim.
+          Under normal conditions, the voltage drop across your home's cables is small enough that
+          you never notice it. Your lights receive close to the full 230V supply and shine at their
+          normal brightness. But when a large appliance switches on and suddenly draws a high
+          current, the voltage drop across the shared supply cables increases proportionally. The
+          voltage available to your lights temporarily decreases, and they dim.
         </p>
         <p>
-          Think of it like water pressure in a house. If someone turns on the garden hose full blast,
-          the shower pressure drops momentarily because the pipes are shared. The same principle applies
-          to electricity — the supply cables are shared, and a sudden large current draw reduces the
-          voltage available to everything else on that supply.
+          Think of it like water pressure in a house. If someone turns on the garden hose full
+          blast, the shower pressure drops momentarily because the pipes are shared. The same
+          principle applies to electricity — the supply cables are shared, and a sudden large
+          current draw reduces the voltage available to everything else on that supply.
         </p>
         <p>
-          BS 7671 Regulation 133.2 addresses this directly. It requires that conductor cross-sectional
-          area is selected to limit voltage drop to permissible levels, ensuring that connected
-          equipment receives adequate voltage under normal load conditions. For lighting circuits, the
-          maximum permissible voltage drop is typically 3% of the nominal supply voltage — approximately
-          6.9V on a 230V supply.
+          BS 7671 Regulation 133.2 addresses this directly. It requires that conductor
+          cross-sectional area is selected to limit voltage drop to permissible levels, ensuring
+          that connected equipment receives adequate voltage under normal load conditions. For
+          lighting circuits, the maximum permissible voltage drop is typically 3% of the nominal
+          supply voltage — approximately 6.9V on a 230V supply.
         </p>
       </>
     ),
@@ -205,8 +207,8 @@ const sections = [
     content: (
       <>
         <p>
-          Not all dimming has the same cause, and not all causes carry the same risk. Here are the most
-          common reasons your lights might dim when an appliance switches on:
+          Not all dimming has the same cause, and not all causes carry the same risk. Here are the
+          most common reasons your lights might dim when an appliance switches on:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -223,9 +225,9 @@ const sections = [
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Undersized meter tails or supply cables</strong> — older properties may have
-                4mm or 6mm meter tails that were adequate for the original load but are now undersized
-                for modern demand. Every amp of current through an undersized cable produces a larger
-                voltage drop.
+                4mm or 6mm meter tails that were adequate for the original load but are now
+                undersized for modern demand. Every amp of current through an undersized cable
+                produces a larger voltage drop.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -233,32 +235,32 @@ const sections = [
               <span>
                 <strong>Loose connections</strong> — this is the dangerous one. A loose terminal
                 anywhere in the circuit increases resistance at that point. Under load, the extra
-                resistance causes voltage drop and generates heat. Loose connections are a leading cause
-                of electrical fires.
+                resistance causes voltage drop and generates heat. Loose connections are a leading
+                cause of electrical fires.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overloaded circuits</strong> — if a circuit is carrying close to its maximum
-                rated current, any additional load pushes the voltage drop higher. This is common where
-                multiple high-power appliances share a ring final circuit.
+                rated current, any additional load pushes the voltage drop higher. This is common
+                where multiple high-power appliances share a ring final circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long cable runs</strong> — the longer the cable, the higher the resistance, the
-                greater the voltage drop. Properties with long runs from the meter to the consumer unit,
-                or from the consumer unit to distant rooms, are more susceptible.
+                <strong>Long cable runs</strong> — the longer the cable, the higher the resistance,
+                the greater the voltage drop. Properties with long runs from the meter to the
+                consumer unit, or from the consumer unit to distant rooms, are more susceptible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Low incoming supply voltage</strong> — if the DNO supply is already at the lower
-                end of the permitted range (230V -6% = 216.2V), any additional voltage drop within the
-                installation becomes more noticeable.
+                <strong>Low incoming supply voltage</strong> — if the DNO supply is already at the
+                lower end of the permitted range (230V -6% = 216.2V), any additional voltage drop
+                within the installation becomes more noticeable.
               </span>
             </li>
           </ul>
@@ -272,15 +274,17 @@ const sections = [
     content: (
       <>
         <p>
-          This is the critical question. Here is how to distinguish between harmless dimming and a sign
-          of a developing fault:
+          This is the critical question. Here is how to distinguish between harmless dimming and a
+          sign of a developing fault:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Probably Normal</h3>
             <ul className="space-y-2 text-white text-sm leading-relaxed">
               <li>Slight dim lasting less than one second</li>
-              <li>Only happens when a large motor starts (washing machine, fridge, tumble dryer)</li>
+              <li>
+                Only happens when a large motor starts (washing machine, fridge, tumble dryer)
+              </li>
               <li>Lights return to full brightness immediately</li>
               <li>Has always happened at roughly the same level since you moved in</li>
               <li>No flickering, buzzing, or warmth at switches or sockets</li>
@@ -302,9 +306,9 @@ const sections = [
         </div>
         <p>
           If you recognise any of the items in the "potentially dangerous" column, do not wait. The
-          combination of loose connections and high current is exactly how electrical fires start. The
-          connection heats up under load, the heat loosens it further, the resistance increases, it
-          gets hotter — it is a vicious cycle that can end in a fire.
+          combination of loose connections and high current is exactly how electrical fires start.
+          The connection heats up under load, the heat loosens it further, the resistance increases,
+          it gets hotter — it is a vicious cycle that can end in a fire.
         </p>
       </>
     ),
@@ -315,9 +319,9 @@ const sections = [
     content: (
       <>
         <p>
-          Certain appliances are well-known for causing momentary dimming because of their high startup
-          current. Understanding which appliances are the usual culprits helps you determine whether the
-          dimming is expected behaviour or something to worry about.
+          Certain appliances are well-known for causing momentary dimming because of their high
+          startup current. Understanding which appliances are the usual culprits helps you determine
+          whether the dimming is expected behaviour or something to worry about.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -333,23 +337,24 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fridge and freezer compressors</strong> — compressor motors have significant
-                locked-rotor current. Older fridges without soft-start circuits are particularly prone
-                to causing a noticeable dip.
+                locked-rotor current. Older fridges without soft-start circuits are particularly
+                prone to causing a noticeable dip.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Vacuum cleaners</strong> — universal motors in vacuum cleaners draw high inrush
-                current. A 2kW vacuum can draw 20A+ at startup.
+                <strong>Vacuum cleaners</strong> — universal motors in vacuum cleaners draw high
+                inrush current. A 2kW vacuum can draw 20A+ at startup.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric showers</strong> — while showers do not have motors, a 10.5kW shower
-                draws approximately 45A continuously. The sudden switch-on of that load can cause a
-                noticeable voltage dip, especially on properties with undersized supply cables.
+                <strong>Electric showers</strong> — while showers do not have motors, a 10.5kW
+                shower draws approximately 45A continuously. The sudden switch-on of that load can
+                cause a noticeable voltage dip, especially on properties with undersized supply
+                cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,9 +368,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          Modern appliances increasingly use soft-start circuits, inverter-driven motors, and electronic
-          controls that reduce the inrush current significantly. If you have recently replaced an old
-          appliance with a new one and the dimming has stopped, the soft-start technology is the reason.
+          Modern appliances increasingly use soft-start circuits, inverter-driven motors, and
+          electronic controls that reduce the inrush current significantly. If you have recently
+          replaced an old appliance with a new one and the dimming has stopped, the soft-start
+          technology is the reason.
         </p>
         <SEOAppBridge
           title="Diagnose electrical issues with AI fault finding"
@@ -383,15 +389,15 @@ const sections = [
         <p>
           One of the most common underlying causes of dimming lights is the supply infrastructure
           within the property. The meter tails — the cables connecting the electricity meter to the
-          consumer unit — carry the total load for the entire house. If these cables are undersized, the
-          voltage drop across them increases with every additional amp of load.
+          consumer unit — carry the total load for the entire house. If these cables are undersized,
+          the voltage drop across them increases with every additional amp of load.
         </p>
         <p>
           In older UK properties (pre-1990s), it was common to install 6mm or even 4mm meter tails.
-          These were adequate for the electrical loads of the time — a few lights, a cooker, and perhaps
-          an immersion heater. Today, with electric showers, multiple high-power kitchen appliances, EV
-          chargers, and heat pumps, the same meter tails may be carrying far more current than they were
-          designed for.
+          These were adequate for the electrical loads of the time — a few lights, a cooker, and
+          perhaps an immersion heater. Today, with electric showers, multiple high-power kitchen
+          appliances, EV chargers, and heat pumps, the same meter tails may be carrying far more
+          current than they were designed for.
         </p>
         <p>
           BS 7671 Regulation 528.3 requires that voltage drop is calculated and limited to ensure
@@ -399,15 +405,15 @@ const sections = [
           <SEOInternalLink href="/tools/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
-          can help determine whether the existing cables are adequate for the current load. If they are
-          not, the solution is straightforward: upgrade the meter tails and, if necessary, the supply
-          cable.
+          can help determine whether the existing cables are adequate for the current load. If they
+          are not, the solution is straightforward: upgrade the meter tails and, if necessary, the
+          supply cable.
         </p>
         <p>
           Within the installation itself, shared circuits can also contribute to dimming. If the
-          lighting circuit and a high-power socket circuit share a distribution board with inadequate
-          busbar connections or undersized main switch, the voltage drop under load will be higher than
-          necessary. A{' '}
+          lighting circuit and a high-power socket circuit share a distribution board with
+          inadequate busbar connections or undersized main switch, the voltage drop under load will
+          be higher than necessary. A{' '}
           <SEOInternalLink href="/guides/consumer-unit-upgrade">
             consumer unit upgrade
           </SEOInternalLink>{' '}
@@ -430,28 +436,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Low supply voltage</strong> — the statutory voltage in the UK is 230V +10%/-6%,
-                giving a range of 216.2V to 253V. If your supply is at the lower end, any voltage drop
-                within the installation is more noticeable. Your electrician can measure this at the
-                meter position.
+                <strong>Low supply voltage</strong> — the statutory voltage in the UK is 230V
+                +10%/-6%, giving a range of 216.2V to 253V. If your supply is at the lower end, any
+                voltage drop within the installation is more noticeable. Your electrician can
+                measure this at the meter position.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Long or undersized service cable</strong> — the cable from the street to your
-                property (the service cable) belongs to the DNO. If it is long, undersized, or has
-                corroded joints, the voltage drop on this cable under load will be significant. This is
-                particularly common in rural properties with overhead supplies.
+                <strong>Long or undersized service cable</strong> — the cable from the street to
+                your property (the service cable) belongs to the DNO. If it is long, undersized, or
+                has corroded joints, the voltage drop on this cable under load will be significant.
+                This is particularly common in rural properties with overhead supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Cable className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Shared supply transformer</strong> — in some areas, multiple properties share
-                a supply transformer. If a neighbour's high-power load (for example, an EV charger)
-                causes the transformer voltage to dip, your lights may dim too. This is a DNO network
-                issue.
+                <strong>Shared supply transformer</strong> — in some areas, multiple properties
+                share a supply transformer. If a neighbour's high-power load (for example, an EV
+                charger) causes the transformer voltage to dip, your lights may dim too. This is a
+                DNO network issue.
               </span>
             </li>
           </ul>
@@ -471,16 +477,16 @@ const sections = [
     content: (
       <>
         <p>
-          Not every instance of dimming lights requires a professional visit. But certain signs demand
-          immediate action. Call a qualified electrician if:
+          Not every instance of dimming lights requires a professional visit. But certain signs
+          demand immediate action. Call a qualified electrician if:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The dimming is getting worse over time</strong> — this suggests a connection is
-                deteriorating, which means it is heating up more and more each time. This is the
+                <strong>The dimming is getting worse over time</strong> — this suggests a connection
+                is deteriorating, which means it is heating up more and more each time. This is the
                 pattern that leads to fires.
               </span>
             </li>
@@ -488,25 +494,25 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>You can smell burning near any electrical fitting</strong> — this is an
-                emergency. Isolate the circuit at the consumer unit immediately and call an electrician.
-                Do not use the circuit until it has been inspected.
+                emergency. Isolate the circuit at the consumer unit immediately and call an
+                electrician. Do not use the circuit until it has been inspected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sockets or switches feel warm or are discoloured</strong> — warmth or brown
-                marks on a socket faceplate indicate overheating at the terminals. Stop using the socket
-                and get it inspected.
+                marks on a socket faceplate indicate overheating at the terminals. Stop using the
+                socket and get it inspected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lights flicker rather than dim smoothly</strong> — flickering suggests an
-                intermittent connection (one that makes and breaks contact) rather than a simple voltage
-                drop. This is more dangerous because the arcing at the loose point generates extreme
-                heat.
+                intermittent connection (one that makes and breaks contact) rather than a simple
+                voltage drop. This is more dangerous because the arcing at the loose point generates
+                extreme heat.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -523,11 +529,9 @@ const sections = [
           A qualified electrician will carry out a systematic investigation, typically starting with
           visual inspection and tightness checks at the consumer unit, then measuring supply voltage
           under load, earth fault loop impedance, and insulation resistance on affected circuits. An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
-            EICR
-          </SEOInternalLink>{' '}
-          is the most thorough approach and will identify all defects in the installation, not just
-          the one causing the dimming.
+          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the most
+          thorough approach and will identify all defects in the installation, not just the one
+          causing the dimming.
         </p>
       </>
     ),
@@ -538,8 +542,8 @@ const sections = [
     content: (
       <>
         <p>
-          When a customer reports dimming lights, the diagnostic approach should be systematic. Start
-          with the supply and work inward:
+          When a customer reports dimming lights, the diagnostic approach should be systematic.
+          Start with the supply and work inward:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -550,9 +554,9 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Measure the supply voltage at the meter position under no-load and under load
                   (switch on a known high-power appliance). If the voltage drops below 216.2V under
-                  load, the issue may be supply-side — refer to the DNO. Record the Ze (external earth
-                  fault loop impedance) at the same time, as a high Ze can indicate supply cable
-                  issues.
+                  load, the issue may be supply-side — refer to the DNO. Record the Ze (external
+                  earth fault loop impedance) at the same time, as a high Ze can indicate supply
+                  cable issues.
                 </p>
               </div>
             </div>
@@ -565,10 +569,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Isolate the supply and carry out a tightness check on all terminations in the
                   consumer unit, including the main switch, busbars, and all outgoing ways. Look for
-                  signs of overheating — discolouration, melted insulation, or burnt smell. Check the
-                  meter tails and the supply fuse connections. Regulation 543.1.1 requires the circuit
-                  protective conductor to connect exposed conductive parts to the main earthing terminal
-                  for fault currents to flow safely.
+                  signs of overheating — discolouration, melted insulation, or burnt smell. Check
+                  the meter tails and the supply fuse connections. Regulation 543.1.1 requires the
+                  circuit protective conductor to connect exposed conductive parts to the main
+                  earthing terminal for fault currents to flow safely.
                 </p>
               </div>
             </div>
@@ -584,10 +588,10 @@ const sections = [
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to check that existing cable sizes meet the BS 7671 voltage drop limits for the
-                  actual load. Pay particular attention to meter tails — if they are 6mm or smaller and
-                  the maximum demand exceeds 60A, they are almost certainly undersized. Regulation
-                  Appendix 4 provides tabulated mV/A/m values for calculating voltage drop on
-                  single-phase runs.
+                  actual load. Pay particular attention to meter tails — if they are 6mm or smaller
+                  and the maximum demand exceeds 60A, they are almost certainly undersized.
+                  Regulation Appendix 4 provides tabulated mV/A/m values for calculating voltage
+                  drop on single-phase runs.
                 </p>
               </div>
             </div>
@@ -595,7 +599,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICR certificates on your phone"
-          description="Found a fault? Document it professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes, and instant PDF export. Join 430+ UK electricians. 7-day free trial."
+          description="Found a fault? Document it professionally with Elec-Mate's EICR certificate app. AI board scanning, observation codes, and instant PDF export. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -632,7 +636,7 @@ export default function LightsDimmingWhenApplianceTurnsOnPage() {
       faqHeading="Frequently Asked Questions About Dimming Lights"
       relatedPages={relatedPages}
       ctaHeading="Diagnose and Document Electrical Faults on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI fault diagnosis, voltage drop calculations, and professional EICR certificates. 7-day free trial, cancel anytime."
     />
   );
 }

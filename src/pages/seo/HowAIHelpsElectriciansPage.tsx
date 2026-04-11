@@ -595,7 +595,7 @@ export default function HowAIHelpsElectriciansPage() {
       faqHeading="Frequently Asked Questions About AI for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Work Smarter with AI Built for Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's 8 AI agents. Circuit design, fault diagnosis, cost estimation, and compliance — all trained on BS 7671. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's 8 AI agents. Circuit design, fault diagnosis, cost estimation, and compliance — all trained on BS 7671. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -42,7 +42,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Bristol and the South West enjoy some of the best solar irradiance in England — approximately 1,050–1,150 kWh/kWp/year, making it one of the most favourable locations in the UK for solar PV.',
-  'A typical 4kW residential solar PV system in Bristol costs £5,000 to £7,500 fully installed and generates approximately 3,700–4,400 kWh per year — enough to cover most of the average household\'s annual electricity demand.',
+  "A typical 4kW residential solar PV system in Bristol costs £5,000 to £7,500 fully installed and generates approximately 3,700–4,400 kWh per year — enough to cover most of the average household's annual electricity demand.",
   'Bristol has one of the strongest solar installation markets in England, with numerous MCS-certified installers competing for work. This drives competitive pricing and high installation quality.',
   'The Smart Export Guarantee (SEG) requires MCS certification — ensure your installer holds a current MCS certificate. Bristol homeowners can access the same SEG rates as the rest of England.',
   'BS 7671 Section 712 covers solar PV wiring requirements. All installations must comply and the installer must issue an Electrical Installation Certificate (EIC) for the PV installation wiring.',
@@ -72,12 +72,12 @@ const faqs = [
   {
     question: 'What is the payback period for solar panels in Bristol?',
     answer:
-      'Bristol\'s excellent irradiance means payback periods are among the shortest in England. A 4kW system generating 4,000 kWh/year with 40% self-consumption at 24p/kWh saves approximately £384/year on electricity. Add SEG income of approximately £175/year (2,400 kWh exported at 8p/kWh). Total annual benefit: ~£559/year. At £6,500 installed, payback is approximately 11–12 years. Adding a battery that raises self-consumption to 70% can reduce effective payback to 9–10 years.',
+      "Bristol's excellent irradiance means payback periods are among the shortest in England. A 4kW system generating 4,000 kWh/year with 40% self-consumption at 24p/kWh saves approximately £384/year on electricity. Add SEG income of approximately £175/year (2,400 kWh exported at 8p/kWh). Total annual benefit: ~£559/year. At £6,500 installed, payback is approximately 11–12 years. Adding a battery that raises self-consumption to 70% can reduce effective payback to 9–10 years.",
   },
   {
     question: 'Does Bristol have any solar grants or incentives in 2025?',
     answer:
-      'There are no dedicated Bristol-specific solar grants in 2025. However, the UK Government\'s ECO4 scheme and the Great British Insulation Scheme may fund solar panels for low-income households as part of broader energy efficiency packages — eligibility depends on household income and property EPC rating. The Smart Export Guarantee (SEG) is the main ongoing financial incentive, available to all eligible installations regardless of income. Bristol City Council has historically supported community energy initiatives — check with the council for any current local schemes.',
+      "There are no dedicated Bristol-specific solar grants in 2025. However, the UK Government's ECO4 scheme and the Great British Insulation Scheme may fund solar panels for low-income households as part of broader energy efficiency packages — eligibility depends on household income and property EPC rating. The Smart Export Guarantee (SEG) is the main ongoing financial incentive, available to all eligible installations regardless of income. Bristol City Council has historically supported community energy initiatives — check with the council for any current local schemes.",
   },
   {
     question: 'Which wiring regulations apply to solar PV in Bristol?',
@@ -137,8 +137,8 @@ const sections = [
         <p>
           Bristol and the wider South West region consistently rank among the top UK locations for
           solar PV investment. The combination of high irradiance, a large and competitive installer
-          market, progressive homeowners keen on renewable energy, and rising electricity prices
-          has made Bristol one of England's most active solar installation cities.
+          market, progressive homeowners keen on renewable energy, and rising electricity prices has
+          made Bristol one of England's most active solar installation cities.
         </p>
         <p>
           The South West receives approximately 1,050–1,150 kWh/kWp/year of solar irradiation —
@@ -152,9 +152,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>South West irradiance advantage:</strong> ~1,050–1,150 kWh/kWp/year.
-                Among the highest irradiance figures in England, comparable to parts of the South
-                East coast.
+                <strong>South West irradiance advantage:</strong> ~1,050–1,150 kWh/kWp/year. Among
+                the highest irradiance figures in England, comparable to parts of the South East
+                coast.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -184,9 +184,9 @@ const sections = [
     content: (
       <>
         <p>
-          Solar irradiance in the South West is shaped by the region's southerly latitude, prevailing
-          Atlantic weather, and relatively low urban shading compared to London. The PVGIS tool
-          provides detailed irradiance data for any Bristol or South West postcode.
+          Solar irradiance in the South West is shaped by the region's southerly latitude,
+          prevailing Atlantic weather, and relatively low urban shading compared to London. The
+          PVGIS tool provides detailed irradiance data for any Bristol or South West postcode.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,8 +194,8 @@ const sections = [
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bristol optimum:</strong> South-facing roof at 35 degrees achieves
-                approximately 1,050–1,100 kWh/kWp/year. The coastal and rural parts of Somerset
-                and Devon can exceed 1,150 kWh/kWp/year.
+                approximately 1,050–1,100 kWh/kWp/year. The coastal and rural parts of Somerset and
+                Devon can exceed 1,150 kWh/kWp/year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,8 +226,8 @@ const sections = [
       <>
         <p>
           Bristol's housing stock ranges from Georgian and Victorian terraces in Clifton and
-          Totterdown, to Edwardian semis in Horfield and Fishponds, to modern new builds in
-          Bradley Stoke and Emersons Green. Each property type has different solar potential.
+          Totterdown, to Edwardian semis in Horfield and Fishponds, to modern new builds in Bradley
+          Stoke and Emersons Green. Each property type has different solar potential.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -242,8 +242,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>4kW system:</strong> Most popular. ~10–14 panels. Output: approximately
-                3,700–4,400 kWh/year. Can cover 100%+ of average household electricity demand.
-                Cost: £5,000–£7,500.
+                3,700–4,400 kWh/year. Can cover 100%+ of average household electricity demand. Cost:
+                £5,000–£7,500.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -288,8 +288,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4kW:</strong> £5,000–£7,500 installed. The best-value system size for
-                most Bristol homeowners.
+                <strong>4kW:</strong> £5,000–£7,500 installed. The best-value system size for most
+                Bristol homeowners.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,8 +301,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed
-                at the same time as solar panels.
+                <strong>Battery storage:</strong> £2,500–£5,000 additional. 0% VAT when installed at
+                the same time as solar panels.
               </span>
             </li>
           </ul>
@@ -322,8 +322,8 @@ const sections = [
       <>
         <p>
           The Smart Export Guarantee is available to all eligible Bristol homeowners on the same
-          terms as the rest of England. Bristol's higher generation means more electricity
-          available to export, increasing annual SEG income.
+          terms as the rest of England. Bristol's higher generation means more electricity available
+          to export, increasing annual SEG income.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -338,17 +338,17 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bristol export estimate:</strong> A 4kW system generating 4,000 kWh/year
-                with 40% self-consumption exports approximately 2,400 kWh/year. At 8p/kWh SEG
-                rate, that is ~£192/year — higher than equivalent London or Manchester systems
-                due to Bristol's greater output.
+                with 40% self-consumption exports approximately 2,400 kWh/year. At 8p/kWh SEG rate,
+                that is ~£192/year — higher than equivalent London or Manchester systems due to
+                Bristol's greater output.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rate comparison:</strong> Current SEG rates (2025): 3p–20p/kWh. Compare
-                at the Ofgem SEG register before registering with a supplier. Review rates annually
-                as you can switch SEG provider without penalty.
+                <strong>Rate comparison:</strong> Current SEG rates (2025): 3p–20p/kWh. Compare at
+                the Ofgem SEG register before registering with a supplier. Review rates annually as
+                you can switch SEG provider without penalty.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -370,9 +370,9 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol presents some specific planning considerations due to its significant
-          conservation area coverage and listed building stock. However, the majority of domestic
-          solar PV installations remain permitted development.
+          Bristol presents some specific planning considerations due to its significant conservation
+          area coverage and listed building stock. However, the majority of domestic solar PV
+          installations remain permitted development.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -380,8 +380,8 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted development:</strong> Applies to most residential rooftop solar
-                where panels do not protrude more than 200mm from the roof surface and are not on
-                a front elevation facing a highway.
+                where panels do not protrude more than 200mm from the roof surface and are not on a
+                front elevation facing a highway.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -421,32 +421,32 @@ const sections = [
     content: (
       <>
         <p>
-          MCS certification requirements apply uniformly across England. Bristol's large pool
-          of MCS-certified installers means finding a qualified contractor is straightforward.
+          MCS certification requirements apply uniformly across England. Bristol's large pool of
+          MCS-certified installers means finding a qualified contractor is straightforward.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify at mcscertified.com:</strong> Check your installer's current
-                MCS certificate before signing any contract. Lapsed certificates mean your
-                installation will not qualify for SEG.
+                <strong>Verify at mcscertified.com:</strong> Check your installer's current MCS
+                certificate before signing any contract. Lapsed certificates mean your installation
+                will not qualify for SEG.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS installation certificate:</strong> Issued on completion. Required
-                for SEG registration. Important for property sales — buyers' solicitors
-                increasingly check for MCS documentation.
+                <strong>MCS installation certificate:</strong> Issued on completion. Required for
+                SEG registration. Important for property sales — buyers' solicitors increasingly
+                check for MCS documentation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Installation Certificate:</strong> The installer must issue
-                an EIC for the solar PV wiring in compliance with{' '}
+                <strong>Electrical Installation Certificate:</strong> The installer must issue an
+                EIC for the solar PV wiring in compliance with{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 Section 712
                 </SEOInternalLink>
@@ -466,8 +466,8 @@ const sections = [
         <p>
           Bristol's high solar generation makes battery storage particularly attractive. Without a
           battery, a typical Bristol household exports a large proportion of its solar generation
-          during peak midday hours when the household is unoccupied. A battery captures this
-          surplus for evening use.
+          during peak midday hours when the household is unoccupied. A battery captures this surplus
+          for evening use.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -475,8 +475,8 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption without battery:</strong> A working household in Bristol
-                typically self-consumes only 25–35% of solar generation midday peaks. The rest
-                is exported at SEG rates (3p–20p/kWh) rather than displacing imported electricity
+                typically self-consumes only 25–35% of solar generation midday peaks. The rest is
+                exported at SEG rates (3p–20p/kWh) rather than displacing imported electricity
                 (24p+/kWh).
               </span>
             </li>
@@ -491,10 +491,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Bristol solar + battery economics:</strong> Higher generation means a
-                larger battery capacity is justified in Bristol than in lower-irradiance locations.
-                A 10kWh battery paired with a 4–6kW system gives the best overall performance.
-                Cost: £3,000–£5,000 additional.
+                <strong>Bristol solar + battery economics:</strong> Higher generation means a larger
+                battery capacity is justified in Bristol than in lower-irradiance locations. A 10kWh
+                battery paired with a 4–6kW system gives the best overall performance. Cost:
+                £3,000–£5,000 additional.
               </span>
             </li>
           </ul>
@@ -508,8 +508,8 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol's irradiance advantage gives it some of the shortest solar payback periods
-          in England outside of the far South East.
+          Bristol's irradiance advantage gives it some of the shortest solar payback periods in
+          England outside of the far South East.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -533,9 +533,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bristol irradiance premium:</strong> A Bristol system generates
-                approximately 10–30% more electricity than the same system in northern England.
-                Over a 25-year system life, that additional generation is worth thousands of
-                pounds in avoided electricity purchases.
+                approximately 10–30% more electricity than the same system in northern England. Over
+                a 25-year system life, that additional generation is worth thousands of pounds in
+                avoided electricity purchases.
               </span>
             </li>
           </ul>
@@ -549,41 +549,40 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol has one of the highest concentrations of MCS-certified solar installers per
-          capita in England. Use the following criteria to identify a reputable contractor.
+          Bristol has one of the highest concentrations of MCS-certified solar installers per capita
+          in England. Use the following criteria to identify a reputable contractor.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS register:</strong> Verify current certification at mcscertified.com.
-                The South West has a large number of certified installers — you should be able
-                to get at least three local quotes.
+                <strong>MCS register:</strong> Verify current certification at mcscertified.com. The
+                South West has a large number of certified installers — you should be able to get at
+                least three local quotes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar Trade Association (STA):</strong> STA member installers commit to
-                a code of conduct and are a useful additional quality check for Bristol homeowners.
+                <strong>Solar Trade Association (STA):</strong> STA member installers commit to a
+                code of conduct and are a useful additional quality check for Bristol homeowners.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Local references:</strong> Bristol's established solar market means
-                experienced installers will have many references in the city. Ask for case
-                studies from similar property types (Victorian terrace, Georgian flat, modern
-                new build).
+                experienced installers will have many references in the city. Ask for case studies
+                from similar property types (Victorian terrace, Georgian flat, modern new build).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PVGIS design report:</strong> Require a written system design document
-                with modelled annual generation for your specific roof. Reputable Bristol
-                installers provide this as standard.
+                <strong>PVGIS design report:</strong> Require a written system design document with
+                modelled annual generation for your specific roof. Reputable Bristol installers
+                provide this as standard.
               </span>
             </li>
           </ul>
@@ -598,9 +597,9 @@ const sections = [
       <>
         <p>
           Bristol and the South West are among the busiest solar installation markets in England.
-          MCS-certified electricians with the City and Guilds 2399 or equivalent qualification
-          are in sustained demand. The region's high irradiance also drives a strong battery
-          storage retrofit market for existing solar installations.
+          MCS-certified electricians with the City and Guilds 2399 or equivalent qualification are
+          in sustained demand. The region's high irradiance also drives a strong battery storage
+          retrofit market for existing solar installations.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -613,9 +612,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate certificate app
                   </SEOInternalLink>{' '}
-                  to complete the Electrical Installation Certificate for your solar PV wiring
-                  on site. Send the PDF to the client before leaving — no evening paperwork
-                  in the South West's busy installer market.
+                  to complete the Electrical Installation Certificate for your solar PV wiring on
+                  site. Send the PDF to the client before leaving — no evening paperwork in the
+                  South West's busy installer market.
                 </p>
               </div>
             </div>
@@ -626,10 +625,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Battery Retrofit Opportunity</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Bristol has thousands of solar installations from the FiT era (2010–2019) that
-                  do not have battery storage. Battery retrofit work is a high-margin, growing
-                  revenue stream. Quote battery storage immediately on any new installation or
-                  service visit using the{' '}
+                  Bristol has thousands of solar installations from the FiT era (2010–2019) that do
+                  not have battery storage. Battery retrofit work is a high-margin, growing revenue
+                  stream. Quote battery storage immediately on any new installation or service visit
+                  using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
@@ -641,7 +640,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your solar PV business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site solar certificates, instant quoting, and business management. 7-day free trial, cancel anytime."
           icon={FileCheck2}
         />
       </>
@@ -678,7 +677,7 @@ export default function SolarPanelInstallationBristolPage() {
       faqHeading="Frequently Asked Questions About Solar Panel Installation in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Complete Solar PV Certificates On Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site solar EICs, quoting, and business management. 7-day free trial, cancel anytime."
     />
   );
 }

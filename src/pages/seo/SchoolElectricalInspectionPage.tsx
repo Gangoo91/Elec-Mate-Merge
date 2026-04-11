@@ -624,7 +624,7 @@ export default function SchoolElectricalInspectionPage() {
       faqHeading="Frequently Asked Questions About School Electrical Inspections"
       relatedPages={relatedPages}
       ctaHeading="Professional School Inspection Tools"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for digital EICR certificates, test records, and professional documentation. Perfect for school maintenance contracts. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for digital EICR certificates, test records, and professional documentation. Perfect for school maintenance contracts. 7-day free trial, cancel anytime."
     />
   );
 }

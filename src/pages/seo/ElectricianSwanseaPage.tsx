@@ -41,7 +41,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
-  'NGED (National Grid Electricity Distribution) is Swansea\'s DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
+  "NGED (National Grid Electricity Distribution) is Swansea's DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.",
   'Wales has its own Building Regulations, administered by the Welsh Government. Approved Document P (electrical safety) applies in Wales just as in England, but is issued by the Welsh Government rather than DLUHC. The practical requirements are the same.',
   'The SA1 Swansea Waterfront regeneration is one of the largest urban regeneration projects in Wales, creating significant commercial and residential electrical work opportunities.',
   'Victorian terraces in Sketty, Uplands, and Brynmill — many converted into student HMOs for Swansea University — often have outdated wiring and require specialist rewiring approaches combined with HMO fire safety compliance.',
@@ -76,7 +76,7 @@ const faqs = [
   {
     question: 'Who is the electricity supplier for Swansea and how do I get a new connection?',
     answer:
-      'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is the Distribution Network Operator for Swansea and South Wales. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Swansea are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,500 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.',
+      "NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is the Distribution Network Operator for Swansea and South Wales. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Swansea are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,500 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.",
   },
   {
     question: 'Do I need planning permission for an EV charger in Swansea?',
@@ -152,9 +152,9 @@ const sections = [
           The Swansea electrical market is shaped by the university sector (Swansea University and
           the University of Wales Trinity Saint David both generate steady HMO compliance work), the
           SA1 Swansea Waterfront regeneration programme, and a legacy of industrial buildings being
-          repurposed across the Lower Swansea Valley. Domestic work dominates — particularly rewires,
-          consumer unit upgrades, and EICRs in the Victorian and Edwardian terraces of Uplands,
-          Brynmill, Sketty, and Mount Pleasant.
+          repurposed across the Lower Swansea Valley. Domestic work dominates — particularly
+          rewires, consumer unit upgrades, and EICRs in the Victorian and Edwardian terraces of
+          Uplands, Brynmill, Sketty, and Mount Pleasant.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -164,16 +164,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by Swansea Council building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA. These schemes operate identically in Wales as in England.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA. These schemes operate identically in Wales as in England.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -205,8 +204,8 @@ const sections = [
               <span>
                 <strong>Public liability insurance</strong> — ensure your electrician carries at
                 least £2 million public liability cover. Ask for a copy of the certificate. For
-                commercial work on the SA1 development or industrial sites, higher cover is often
-                a contract requirement.
+                commercial work on the SA1 development or industrial sites, higher cover is often a
+                contract requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,25 +310,27 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces (Uplands, Sketty, Brynmill)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian Terraces (Uplands, Sketty, Brynmill)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The residential areas climbing the hillside above the city centre — Uplands, Brynmill,
-              Sketty, and parts of Mount Pleasant — are dominated by Victorian and Edwardian terraced
-              housing. These properties have solid stone walls, high ceilings, and often multiple
-              previous partial rewires. Many have been converted into student HMOs, requiring
-              additional fire alarm circuits, emergency lighting, and more complex consumer unit
-              arrangements to meet HMO licensing requirements.
+              Sketty, and parts of Mount Pleasant — are dominated by Victorian and Edwardian
+              terraced housing. These properties have solid stone walls, high ceilings, and often
+              multiple previous partial rewires. Many have been converted into student HMOs,
+              requiring additional fire alarm circuits, emergency lighting, and more complex
+              consumer unit arrangements to meet HMO licensing requirements.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Swansea, like Plymouth, suffered significant wartime damage and was rebuilt extensively
-              in the 1940s and 1950s. Estates in Townhill, Penlan, Blaenymaes, and Clase have
-              properties that often retain original wiring — rubber-insulated cables and outdated
-              fuse boxes. Cavity wall construction makes rewiring more straightforward than in the
-              Victorian terraces, but many of these properties have never had a proper electrical
-              upgrade and are overdue for consumer unit replacement and full rewires.
+              Swansea, like Plymouth, suffered significant wartime damage and was rebuilt
+              extensively in the 1940s and 1950s. Estates in Townhill, Penlan, Blaenymaes, and Clase
+              have properties that often retain original wiring — rubber-insulated cables and
+              outdated fuse boxes. Cavity wall construction makes rewiring more straightforward than
+              in the Victorian terraces, but many of these properties have never had a proper
+              electrical upgrade and are overdue for consumer unit replacement and full rewires.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -374,9 +375,9 @@ const sections = [
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase, you apply to NGED.
-                Swansea lead times are typically 4 to 8 weeks. The SA1 development area and
-                Swansea Bay campus have dedicated NGED infrastructure, but residential areas may
-                have older network capacity that requires upgrading.
+                Swansea lead times are typically 4 to 8 weeks. The SA1 development area and Swansea
+                Bay campus have dedicated NGED infrastructure, but residential areas may have older
+                network capacity that requires upgrading.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -465,8 +466,8 @@ const sections = [
     content: (
       <>
         <p>
-          Swansea's industrial heritage — copper smelting, tinplate works, and docklands — has left a
-          stock of former industrial buildings that are being repurposed across the Lower Swansea
+          Swansea's industrial heritage — copper smelting, tinplate works, and docklands — has left
+          a stock of former industrial buildings that are being repurposed across the Lower Swansea
           Valley and the docklands area. Electrical work in these buildings presents specific
           challenges:
         </p>
@@ -555,7 +556,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Swansea electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -592,7 +593,7 @@ export default function ElectricianSwanseaPage() {
       faqHeading="Frequently Asked Questions About Electricians in Swansea"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Swansea and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Swansea and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

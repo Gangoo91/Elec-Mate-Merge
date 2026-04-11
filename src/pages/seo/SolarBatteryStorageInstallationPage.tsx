@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'What is the difference between AC-coupled and DC-coupled battery storage?',
     answer:
-      'In an AC-coupled system, the battery has its own inverter/charger and connects to the property\'s AC circuit. Solar energy from the existing inverter is converted from DC to AC, then reconverted to DC to charge the battery, then back to AC for use — three conversion steps mean slightly higher losses (typically 5–10%). AC-coupled systems can be retrofitted to any existing solar installation. In a DC-coupled system, the solar panels, battery, and hybrid inverter share a single conversion stage. Energy flows from panels directly to the battery (or loads) via the MPPT without an intermediate AC conversion, giving slightly better efficiency. DC-coupled systems must be planned at the outset and require a compatible hybrid inverter.',
+      "In an AC-coupled system, the battery has its own inverter/charger and connects to the property's AC circuit. Solar energy from the existing inverter is converted from DC to AC, then reconverted to DC to charge the battery, then back to AC for use — three conversion steps mean slightly higher losses (typically 5–10%). AC-coupled systems can be retrofitted to any existing solar installation. In a DC-coupled system, the solar panels, battery, and hybrid inverter share a single conversion stage. Energy flows from panels directly to the battery (or loads) via the MPPT without an intermediate AC conversion, giving slightly better efficiency. DC-coupled systems must be planned at the outset and require a compatible hybrid inverter.",
   },
   {
     question: 'How much battery storage do I need for a typical UK home?',
@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'What electrical regulations apply to battery storage installations?',
     answer:
-      'Battery storage installations must comply with BS 7671:2018+A3:2024, including Section 712 (for DC-coupled systems connected to a PV array) and relevant sections covering energy storage systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer\'s requirements — including ventilation, temperature ranges, and separation distances. Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.',
+      "Battery storage installations must comply with BS 7671:2018+A3:2024, including Section 712 (for DC-coupled systems connected to a PV array) and relevant sections covering energy storage systems. The installation must be notified under the building regulations (Part P in England) via a competent person scheme such as NICEIC or NAPIT. Batteries must be installed in accordance with the manufacturer's requirements — including ventilation, temperature ranges, and separation distances. Large battery systems in commercial settings may require a fire risk assessment under BS EN 62619.",
   },
 ];
 
@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-pv-system-design',
     title: 'Solar PV System Design',
-    description: 'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
+    description:
+      'System sizing, string design, inverter types, DC cable sizing, and G99/G98 notification.',
     icon: Sun,
     category: 'Guide',
   },
   {
     href: '/solar-pv-maintenance',
     title: 'Solar Panel Maintenance',
-    description: 'Annual inspection checklist, cleaning, inverter replacement, and output monitoring.',
+    description:
+      'Annual inspection checklist, cleaning, inverter replacement, and output monitoring.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -141,12 +143,12 @@ const sections = [
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>AC-coupled storage:</strong> The battery has its own bidirectional
-                inverter/charger and connects to the property's AC circuit. It can charge from
-                solar generation (via the existing solar inverter), from the grid (during cheap
-                off-peak periods), or from both. AC-coupled systems are compatible with any existing
-                solar installation and are the most flexible retrofit option. Slight additional
-                conversion losses (typically 5–10%) compared to DC-coupled systems. Suitable for
-                most UK retrofit projects.
+                inverter/charger and connects to the property's AC circuit. It can charge from solar
+                generation (via the existing solar inverter), from the grid (during cheap off-peak
+                periods), or from both. AC-coupled systems are compatible with any existing solar
+                installation and are the most flexible retrofit option. Slight additional conversion
+                losses (typically 5–10%) compared to DC-coupled systems. Suitable for most UK
+                retrofit projects.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,8 +158,8 @@ const sections = [
                 system, between the panels and the inverter. A hybrid inverter manages both solar
                 MPPT charging and battery charging/discharging in a single unit. Slightly more
                 efficient as solar energy flows to the battery without an intermediate AC
-                conversion. Must be specified at design stage — retrofitting DC-coupled storage
-                to an existing system requires replacing the inverter. Best choice for new
+                conversion. Must be specified at design stage — retrofitting DC-coupled storage to
+                an existing system requires replacing the inverter. Best choice for new
                 installations where battery storage is planned from the outset.
               </span>
             </li>
@@ -177,8 +179,8 @@ const sections = [
     content: (
       <>
         <p>
-          The UK home battery storage market has grown rapidly since 2022. Several manufacturers
-          now offer well-supported, MCS-listed products suited to UK residential installations.
+          The UK home battery storage market has grown rapidly since 2022. Several manufacturers now
+          offer well-supported, MCS-listed products suited to UK residential installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -188,8 +190,8 @@ const sections = [
                 <strong>Tesla Powerwall 3 (13.5 kWh usable):</strong> The market-leading premium
                 product. Includes an integrated solar inverter, simplifying new installations.
                 10-year warranty with 70% capacity guarantee. AC-coupled for retrofit, but the
-                Powerwall 3 also includes an integrated solar MPPT for new installations. Supply
-                and installation typically £8,000–£10,000. Requires Tesla-certified installer.
+                Powerwall 3 also includes an integrated solar MPPT for new installations. Supply and
+                installation typically £8,000–£10,000. Requires Tesla-certified installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -214,9 +216,9 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Growatt ARK (5.84–11.68 kWh, modular):</strong> A cost-effective modular
-                battery system used with Growatt hybrid inverters. Popular with installers for
-                its competitive pricing and flexibility. Available in multiple configurations.
-                Typical supply cost £2,000–£3,500 depending on capacity.
+                battery system used with Growatt hybrid inverters. Popular with installers for its
+                competitive pricing and flexibility. Available in multiple configurations. Typical
+                supply cost £2,000–£3,500 depending on capacity.
               </span>
             </li>
           </ul>
@@ -235,9 +237,9 @@ const sections = [
     content: (
       <>
         <p>
-          Choosing the right battery capacity is critical to the return on investment. An
-          undersized battery will not capture all available solar generation; an oversized battery
-          will take longer to pay back and may never fully cycle.
+          Choosing the right battery capacity is critical to the return on investment. An undersized
+          battery will not capture all available solar generation; an oversized battery will take
+          longer to pay back and may never fully cycle.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,8 +247,8 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>5 kWh usable:</strong> Appropriate for a 1–2 bedroom home with 2,000–2,500
-                kWh/year consumption. Covers most summer evenings but will not provide a full night's
-                power in winter. Good entry-level choice for cost-conscious customers.
+                kWh/year consumption. Covers most summer evenings but will not provide a full
+                night's power in winter. Good entry-level choice for cost-conscious customers.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -262,17 +264,17 @@ const sections = [
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>13–15 kWh usable:</strong> Suitable for larger homes, EV charging
-                optimisation, or customers who want near-total energy independence in summer.
-                Also appropriate where the customer is on a time-of-use tariff with significant
-                peak vs off-peak price differentials (e.g., Octopus Agile).
+                optimisation, or customers who want near-total energy independence in summer. Also
+                appropriate where the customer is on a time-of-use tariff with significant peak vs
+                off-peak price differentials (e.g., Octopus Agile).
               </span>
             </li>
           </ul>
         </div>
         <p>
           Battery manufacturers quote both nominal (total) capacity and usable capacity. Always
-          specify usable capacity when comparing products — most lithium batteries reserve 5–20%
-          of nominal capacity to protect battery health.
+          specify usable capacity when comparing products — most lithium batteries reserve 5–20% of
+          nominal capacity to protect battery health.
         </p>
       </>
     ),
@@ -298,8 +300,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>10 kWh AC-coupled retrofit:</strong> £3,500–£5,500 fully installed.
-                Battery only: £2,800–£4,000.
+                <strong>10 kWh AC-coupled retrofit:</strong> £3,500–£5,500 fully installed. Battery
+                only: £2,800–£4,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,17 +315,17 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>DC-coupled with hybrid inverter (new installation):</strong> Add £1,000–
-                £2,000 for the hybrid inverter compared to a standard string inverter.
-                Hybrid inverter + 10 kWh battery typically costs £4,500–£6,500 supply only.
+                £2,000 for the hybrid inverter compared to a standard string inverter. Hybrid
+                inverter + 10 kWh battery typically costs £4,500–£6,500 supply only.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These prices attract 0% VAT when installed alongside a qualifying MCS solar PV
-          installation. Standalone battery installations (without solar) attract 20% VAT as of
-          2025. Battery costs are expected to continue falling by 10–15% annually as manufacturing
-          scale increases.
+          installation. Standalone battery installations (without solar) attract 20% VAT as of 2025.
+          Battery costs are expected to continue falling by 10–15% annually as manufacturing scale
+          increases.
         </p>
       </>
     ),
@@ -343,8 +345,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS required for 0% VAT:</strong> Battery storage qualifies for 0% VAT
-                only when installed alongside or as part of an MCS-certified solar PV installation.
+                <strong>MCS required for 0% VAT:</strong> Battery storage qualifies for 0% VAT only
+                when installed alongside or as part of an MCS-certified solar PV installation.
                 Standalone battery storage (without solar) is subject to 20% VAT regardless of MCS
                 status.
               </span>
@@ -377,36 +379,36 @@ const sections = [
       <>
         <p>
           Round-trip efficiency (RTE) is the ratio of energy retrieved from the battery to energy
-          put into it. For every 100 kWh stored, a battery with 95% RTE returns 95 kWh for use —
-          the remaining 5 kWh is lost as heat during charging and discharging.
+          put into it. For every 100 kWh stored, a battery with 95% RTE returns 95 kWh for use — the
+          remaining 5 kWh is lost as heat during charging and discharging.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lithium iron phosphate (LFP):</strong> 92–97% round-trip efficiency.
-                The dominant chemistry in current UK home storage systems (Givenergy, Growatt,
-                Tesla Powerwall 3). LFP is inherently safer (lower thermal runaway risk), longer
-                life, and performs better in the UK's variable temperature climate.
+                <strong>Lithium iron phosphate (LFP):</strong> 92–97% round-trip efficiency. The
+                dominant chemistry in current UK home storage systems (Givenergy, Growatt, Tesla
+                Powerwall 3). LFP is inherently safer (lower thermal runaway risk), longer life, and
+                performs better in the UK's variable temperature climate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lithium NMC:</strong> 90–95% round-trip efficiency. Used in some premium
-                products. Higher energy density allows smaller form factor but may degrade faster
-                at sustained high temperatures.
+                products. Higher energy density allows smaller form factor but may degrade faster at
+                sustained high temperatures.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>AC-coupling efficiency penalty:</strong> In AC-coupled systems, add the
-                losses from the two additional conversion stages (solar inverter AC output →
-                battery inverter DC charging → battery inverter AC output). Typical additional
-                loss: 5–8% on the solar-to-battery-to-load cycle, though solar-to-load (without
-                battery) is unaffected.
+                losses from the two additional conversion stages (solar inverter AC output → battery
+                inverter DC charging → battery inverter AC output). Typical additional loss: 5–8% on
+                the solar-to-battery-to-load cycle, though solar-to-load (without battery) is
+                unaffected.
               </span>
             </li>
           </ul>
@@ -434,18 +436,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Location:</strong> Most lithium batteries are rated for indoor installation
-                at 0–40°C. Garages can be acceptable but avoid external south-facing walls in
-                summer (risk of overheating) and unheated spaces below −10°C. Batteries must not
-                be installed in roof spaces or under stairs adjacent to escape routes.
+                at 0–40°C. Garages can be acceptable but avoid external south-facing walls in summer
+                (risk of overheating) and unheated spaces below −10°C. Batteries must not be
+                installed in roof spaces or under stairs adjacent to escape routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Structural support:</strong> Batteries are heavy — a 10 kWh system
-                typically weighs 80–150 kg. Wall-mounted installations must be secured to
-                load-bearing walls or masonry with appropriate fixings. Floor-standing systems
-                require a level, load-bearing floor surface.
+                <strong>Structural support:</strong> Batteries are heavy — a 10 kWh system typically
+                weighs 80–150 kg. Wall-mounted installations must be secured to load-bearing walls
+                or masonry with appropriate fixings. Floor-standing systems require a level,
+                load-bearing floor surface.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -460,10 +462,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building regulations notification:</strong> Battery storage falls under
-                the building regulations (Part P in England). Installation must be notified via
-                a competent person scheme (NICEIC, NAPIT, or equivalent). An Electrical
-                Installation Certificate must be issued on completion.
+                <strong>Building regulations notification:</strong> Battery storage falls under the
+                building regulations (Part P in England). Installation must be notified via a
+                competent person scheme (NICEIC, NAPIT, or equivalent). An Electrical Installation
+                Certificate must be issued on completion.
               </span>
             </li>
           </ul>
@@ -477,14 +479,14 @@ const sections = [
     content: (
       <>
         <p>
-          Battery storage retrofits represent one of the fastest-growing segments of the UK
-          domestic electrical market. Electricians who hold MCS certification for both solar PV
-          and battery storage (scopes MCS 001 and MCS 030) can offer complete solar-plus-storage
-          packages with attractive margins.
+          Battery storage retrofits represent one of the fastest-growing segments of the UK domestic
+          electrical market. Electricians who hold MCS certification for both solar PV and battery
+          storage (scopes MCS 001 and MCS 030) can offer complete solar-plus-storage packages with
+          attractive margins.
         </p>
         <SEOAppBridge
           title="Manage solar battery storage jobs with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs, and Electrical Installation Certificates on your phone. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, job management, and certification. Issue MCS installation certificates, EICs, and Electrical Installation Certificates on your phone. 7-day free trial."
           icon={Battery}
         />
       </>
@@ -521,7 +523,7 @@ export default function SolarBatteryStorageInstallationPage() {
       faqHeading="Frequently Asked Questions About Solar Battery Storage"
       relatedPages={relatedPages}
       ctaHeading="Quote and Manage Battery Storage Installations"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Issue MCS installation certificates on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

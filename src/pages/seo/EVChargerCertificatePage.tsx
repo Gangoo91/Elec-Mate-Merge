@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Is a specific grant available to help with the cost of EV charger installation?',
     answer:
-      'The UK government\'s EV chargepoint grant (administered by Ozev, formerly OLEV) provides funding towards the cost of installing an EV charger at residential properties. As of 2025, the grant covers 75% of the installation cost, up to a maximum of £350 per installation, for eligible properties including flats, rental properties, and homes without off-street parking in specific schemes. The grant must be applied for by an Ozev-authorised installer before installation begins — it cannot be claimed retrospectively. Landlords of residential properties can also access the Ozev residential landlord scheme. As an electrician, being Ozev-registered opens an additional revenue stream and is increasingly sought by clients. The EV charger certificate and commissioning documentation required for grant claims are built into Elec-Mate\'s EV charger certificate workflow.',
+      "The UK government's EV chargepoint grant (administered by Ozev, formerly OLEV) provides funding towards the cost of installing an EV charger at residential properties. As of 2025, the grant covers 75% of the installation cost, up to a maximum of £350 per installation, for eligible properties including flats, rental properties, and homes without off-street parking in specific schemes. The grant must be applied for by an Ozev-authorised installer before installation begins — it cannot be claimed retrospectively. Landlords of residential properties can also access the Ozev residential landlord scheme. As an electrician, being Ozev-registered opens an additional revenue stream and is increasingly sought by clients. The EV charger certificate and commissioning documentation required for grant claims are built into Elec-Mate's EV charger certificate workflow.",
   },
 ];
 
@@ -712,7 +712,7 @@ export default function EVChargerCertificatePage() {
       {/* CTA */}
       <SEOCTASection
         heading="Stop struggling with EV charger paperwork"
-        subheading="Join 430+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians creating professional Section 722 compliant certificates. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

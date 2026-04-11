@@ -133,7 +133,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -270,8 +270,8 @@ export default function ConduitFillCalculatorPage() {
               design. They should be performed before any conduit is installed, and the results
               documented as part of the design records. Guessing conduit sizes based on experience
               alone often leads to under-sized conduit that causes problems during cable pulling, or
-              over-sized conduit that wastes material and installation time. Pair conduit fill checks
-              with the{' '}
+              over-sized conduit that wastes material and installation time. Pair conduit fill
+              checks with the{' '}
               <SEOInternalLink href="/tools/cable-derating-calculator">
                 cable derating calculator
               </SEOInternalLink>{' '}
@@ -728,7 +728,7 @@ export default function ConduitFillCalculatorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Size Conduit Correctly Every Time"
-        subheading="Join 430+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for on-site calculations. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

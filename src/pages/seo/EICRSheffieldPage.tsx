@@ -42,7 +42,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'An EICR (Electrical Installation Condition Report) is a formal inspection of a property\'s fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).',
+  "An EICR (Electrical Installation Condition Report) is a formal inspection of a property's fixed electrical installation, documented in accordance with BS 7671:2018+A3:2024 (Section 631). It records the condition of wiring, consumer units, earthing, bonding and protective devices using observation codes (C1, C2, C3, FI).",
   'Sheffield EICR costs are below the national average. Expect to pay between £150 and £280 for a two-bedroom terraced house and £250 to £400 for a three-bedroom semi-detached property.',
   'Since 1 April 2021, landlords in England must obtain an EICR before a new tenancy begins and at least every five years. Sheffield City Council enforces the regulations and can impose fines of up to £30,000 per breach.',
   'Sheffield has a large stock of Victorian and Edwardian terraced housing, particularly in areas such as Sharrow, Walkley, Crookes and Heeley. These properties frequently present aged wiring, absent earthing and lack of RCD protection.',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -121,7 +122,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/training/inspection-and-testing',
     title: 'Inspection and Testing Course',
-    description: 'Study for C&G 2391 with structured training modules covering periodic inspection.',
+    description:
+      'Study for C&G 2391 with structured training modules covering periodic inspection.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -139,18 +141,18 @@ const sections = [
       <>
         <p>
           An EICR (Electrical Installation Condition Report) is a formal inspection and test of a
-          property's fixed electrical installation. It assesses the condition of the wiring, consumer
-          unit, protective devices, earthing and bonding, sockets, switches, and all fixed electrical
-          equipment.
+          property's fixed electrical installation. It assesses the condition of the wiring,
+          consumer unit, protective devices, earthing and bonding, sockets, switches, and all fixed
+          electrical equipment.
         </p>
         <p>
           The EICR is documented in accordance with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
-          (Section 631), which requires that an Electrical Installation Condition Report
-          is used for periodic inspection and testing of existing installations — not an Electrical
-          Installation Certificate, which is for new work only.
+          (Section 631), which requires that an Electrical Installation Condition Report is used for
+          periodic inspection and testing of existing installations — not an Electrical Installation
+          Certificate, which is for new work only.
         </p>
         <p>
           The inspector carries out a detailed visual inspection followed by a programme of testing
@@ -161,8 +163,8 @@ const sections = [
         </p>
         <p>
           The overall condition of the installation is assessed as either Satisfactory or
-          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1
-          (danger present) or C2 (potentially dangerous) observations that require remedial work.
+          Unsatisfactory. An Unsatisfactory result means the installation has one or more C1 (danger
+          present) or C2 (potentially dangerous) observations that require remedial work.
         </p>
       </>
     ),
@@ -174,8 +176,8 @@ const sections = [
       <>
         <p>
           Sheffield EICR costs are generally lower than the national average, reflecting lower
-          electrician labour rates and easier access and parking compared to larger cities. Below are
-          typical 2026 prices for Sheffield EICRs:
+          electrician labour rates and easier access and parking compared to larger cities. Below
+          are typical 2026 prices for Sheffield EICRs:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -242,8 +244,8 @@ const sections = [
               <span>
                 <strong>Before a new tenancy</strong> — the landlord must ensure the electrical
                 installation is inspected and tested by a qualified person, and obtain an EICR,
-                before a new tenant moves in. This applies to all new tenancies from 1 July 2020
-                and all existing tenancies from 1 April 2021.
+                before a new tenant moves in. This applies to all new tenancies from 1 July 2020 and
+                all existing tenancies from 1 April 2021.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -317,8 +319,8 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Could become dangerous. Urgent remedial action is required. Common C2 findings in
               Sheffield include absent or inadequate earthing, lack of RCD protection on socket
-              circuits, overloaded circuits, and deteriorated cable insulation
-              in older terraced properties.
+              circuits, overloaded circuits, and deteriorated cable insulation in older terraced
+              properties.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -364,8 +366,8 @@ const sections = [
               <span>
                 <strong>Victorian terraces (Sharrow, Walkley, Crookes)</strong> — many of these
                 properties still have original or early-replacement wiring. Rubber-insulated cables,
-                absent CPCs (circuit protective conductors), and rewirable fuses are common findings.
-                Earthing may rely on water pipes, which is no longer acceptable.
+                absent CPCs (circuit protective conductors), and rewirable fuses are common
+                findings. Earthing may rely on water pipes, which is no longer acceptable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -522,9 +524,9 @@ const sections = [
     content: (
       <>
         <p>
-          The required frequency of EICRs depends on the property type and use. BS 7671
-          Section 621 establishes that installations must be periodically inspected at intervals
-          suited to the property type:
+          The required frequency of EICRs depends on the property type and use. BS 7671 Section 621
+          establishes that installations must be periodically inspected at intervals suited to the
+          property type:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -562,9 +564,9 @@ const sections = [
         </div>
         <p>
           The inspector may recommend a shorter interval than the standard maximum if the
-          installation is in poor condition. For example, a Victorian Sheffield terrace with multiple
-          C3 observations may have a recommended next inspection of 3 years rather than the standard
-          5 years.
+          installation is in poor condition. For example, a Victorian Sheffield terrace with
+          multiple C3 observations may have a recommended next inspection of 3 years rather than the
+          standard 5 years.
         </p>
       </>
     ),
@@ -584,10 +586,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and
-                other approved bodies maintain registers of qualified electricians. NAPIT is
-                headquartered near Sheffield (in Mansfield), and many Sheffield electricians are
-                NAPIT-registered.
+                <strong>Competent person schemes</strong> — NICEIC, NAPIT, ELECSA, STROMA, and other
+                approved bodies maintain registers of qualified electricians. NAPIT is headquartered
+                near Sheffield (in Mansfield), and many Sheffield electricians are NAPIT-registered.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -624,9 +625,9 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield offers strong demand for EICR work, driven by a large private rented sector,
-          two major universities generating student HMO demand, and a high proportion of older
-          housing stock requiring regular inspection.
+          Sheffield offers strong demand for EICR work, driven by a large private rented sector, two
+          major universities generating student HMO demand, and a high proportion of older housing
+          stock requiring regular inspection.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -667,7 +668,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Complete EICRs faster with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more EICRs per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -704,7 +705,7 @@ export default function EICRSheffieldPage() {
       faqHeading="Frequently Asked Questions About EICRs in Sheffield"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Faster Than Paper"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

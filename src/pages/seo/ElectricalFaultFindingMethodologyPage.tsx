@@ -20,7 +20,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Electrical Fault Finding Methodology', href: '/guides/electrical-fault-finding-methodology' },
+  {
+    label: 'Electrical Fault Finding Methodology',
+    href: '/guides/electrical-fault-finding-methodology',
+  },
 ];
 
 const tocItems = [
@@ -155,8 +158,8 @@ const sections = [
         </p>
         <p>
           This guide covers the five-step systematic approach, the three main fault finding methods
-          (half-split, elimination, and experience-based), and the safe isolation requirements of
-          BS 7671 Appendix 2 and the Electricity at Work Regulations 1989.
+          (half-split, elimination, and experience-based), and the safe isolation requirements of BS
+          7671 Appendix 2 and the Electricity at Work Regulations 1989.
         </p>
       </>
     ),
@@ -303,8 +306,8 @@ const sections = [
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Overheating / Burning Smell</h3>
             <p className="text-white text-sm leading-relaxed">
-              Load current with clamp meter (overloading?). Thermal imaging to locate hot spots
-              (see separate thermal imaging guide). Continuity and resistance measurements at suspect
+              Load current with clamp meter (overloading?). Thermal imaging to locate hot spots (see
+              separate thermal imaging guide). Continuity and resistance measurements at suspect
               connections to identify high-resistance joints.
             </p>
           </div>
@@ -323,17 +326,15 @@ const sections = [
           findings point to a single explanation? If not, which explanation is most consistent with
           the majority of the evidence?
         </p>
-        <p>
-          Common diagnostic errors to avoid:
-        </p>
+        <p>Common diagnostic errors to avoid:</p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fixing the first thing you find</strong> — the visible damage may be a
-                consequence of the fault, not the cause. A burnt terminal in a junction box may
-                have been caused by a loose connection elsewhere that generated excess current.
+                consequence of the fault, not the cause. A burnt terminal in a junction box may have
+                been caused by a loose connection elsewhere that generated excess current.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -348,8 +349,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Not re-reading test results</strong> — confirm your interpretation of the
-                test data before acting on it. A misread ohmmeter (0.5Ω vs 5Ω) can lead to
-                incorrect conclusions.
+                test data before acting on it. A misread ohmmeter (0.5Ω vs 5Ω) can lead to incorrect
+                conclusions.
               </span>
             </li>
           </ul>
@@ -374,12 +375,9 @@ const sections = [
             Minor Works Certificate
           </SEOInternalLink>{' '}
           for simple repairs or replacements, or an updated{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            EICR
-          </SEOInternalLink>{' '}
-          schedule if significant work was required to bring the installation to a satisfactory
-          standard. Always record what was found, what was done, and the results of verification
-          testing.
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> schedule if
+          significant work was required to bring the installation to a satisfactory standard. Always
+          record what was found, what was done, and the results of verification testing.
         </p>
       </>
     ),
@@ -389,9 +387,7 @@ const sections = [
     heading: 'Half-Split, Elimination, and Experience-Based Methods',
     content: (
       <>
-        <p>
-          The three main fault finding methods each have their optimal application:
-        </p>
+        <p>The three main fault finding methods each have their optimal application:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-6 text-white">
             <li>
@@ -447,8 +443,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolate</strong> — switch off at the correct MCB, fuse, or isolator. Apply
-                a lock and warning notice.
+                <strong>Isolate</strong> — switch off at the correct MCB, fuse, or isolator. Apply a
+                lock and warning notice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -477,8 +473,8 @@ const sections = [
     content: (
       <>
         <p>
-          Fault finding is a skill that improves with deliberate practice. Here is how to develop
-          it systematically:
+          Fault finding is a skill that improves with deliberate practice. Here is how to develop it
+          systematically:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -490,7 +486,8 @@ const sections = [
                   Keep a record of every fault you diagnose — what the symptom was, what tests you
                   did, what you found, and what you did to fix it. After a year, you will have a
                   personal database of failure patterns that is worth more than any training course.
-                  The Elec-Mate app makes it easy to capture this information as part of job records.
+                  The Elec-Mate app makes it easy to capture this information as part of job
+                  records.
                 </p>
               </div>
             </div>
@@ -503,8 +500,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   After every repair, run through a verification sequence before re-energising. This
                   catches secondary faults that were hidden by the primary fault, and gives you
-                  confidence that the installation is safe. It also protects you legally — a verified
-                  repair with a certificate is defensible; an unverified repair is not.
+                  confidence that the installation is safe. It also protects you legally — a
+                  verified repair with a certificate is defensible; an unverified repair is not.
                 </p>
               </div>
             </div>
@@ -544,7 +541,7 @@ export default function ElectricalFaultFindingMethodologyPage() {
       faqHeading="Frequently Asked Questions About Electrical Fault Finding"
       relatedPages={relatedPages}
       ctaHeading="Document Fault Investigations and Certify Repairs on Your Phone"
-      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's AI fault diagnosis and certification tools help you record findings, attach photos, and issue professional reports and certificates on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

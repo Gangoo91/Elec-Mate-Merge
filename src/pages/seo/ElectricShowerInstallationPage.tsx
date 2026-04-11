@@ -627,7 +627,7 @@ export default function ElectricShowerInstallationPage() {
       faqHeading="Frequently Asked Questions About Electric Shower Installation"
       relatedPages={relatedPages}
       ctaHeading="Design Shower Circuits with Elec-Mate"
-      ctaSubheading="Cable sizing calculator, voltage drop checker, and digital EIC certificates on your phone. Join 430+ UK electricians designing and certifying shower installations on site. 7-day free trial."
+      ctaSubheading="Cable sizing calculator, voltage drop checker, and digital EIC certificates on your phone. Join 1,000+ UK electricians designing and certifying shower installations on site. 7-day free trial."
     />
   );
 }

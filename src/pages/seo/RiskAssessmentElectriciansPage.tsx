@@ -685,7 +685,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Create RAMS in minutes, not hours"
-          description="Elec-Mate's AI Health and Safety agent generates complete RAMS packages — risk assessment and method statement — tailored to your specific job. Describe the work, and get a professional document covering all hazards, control measures, and safe systems of work. Used by 430+ UK electricians."
+          description="Elec-Mate's AI Health and Safety agent generates complete RAMS packages — risk assessment and method statement — tailored to your specific job. Describe the work, and get a professional document covering all hazards, control measures, and safe systems of work. Used by 1,000+ UK electricians."
           icon={Brain}
         />
       </>
@@ -722,7 +722,7 @@ export default function RiskAssessmentElectriciansPage() {
       faqHeading="Frequently Asked Questions About Risk Assessments for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Risk Assessments in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Health and Safety agent to create site-specific risk assessments and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety agent to create site-specific risk assessments and RAMS packages. Describe the job, get a complete document. 7-day free trial, cancel anytime."
     />
   );
 }

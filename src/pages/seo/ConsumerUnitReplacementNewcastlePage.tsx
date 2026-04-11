@@ -77,7 +77,8 @@ const faqs = [
       'BS 7671 Regulation 411.3.3 requires RCD protection with a rated residual operating current not exceeding 30mA for all socket-outlet circuits rated up to 32A in domestic premises, all circuits in locations containing a bath or shower (Regulation 701), and in practice most other circuits in a modern domestic installation. The current standard approach is to use a dual RCD consumer unit (protecting circuits in two groups) or — preferably — individual RCBOs (Residual Current Circuit Breakers with Overcurrent protection) for each circuit. RCBOs provide superior protection because a fault on one circuit does not trip others, maintaining power to the rest of the property.',
   },
   {
-    question: 'Will I need to notify Tyne and Wear building control for a consumer unit replacement?',
+    question:
+      'Will I need to notify Tyne and Wear building control for a consumer unit replacement?',
     answer:
       'If you use a registered competent person (NICEIC, NAPIT, ELECSA, or equivalent scheme member) to carry out the replacement, they will notify building control on your behalf as part of the self-certification process. You do not need to contact building control separately. The electrician will issue you a Building Regulations Compliance Certificate within 30 days of completion. If for any reason you use a non-registered electrician, you or they must notify building control (Newcastle City Council or the relevant authority) before the work begins, and an approved inspector must certify the work on completion.',
   },
@@ -87,28 +88,32 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
+    description:
+      'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
-    description: 'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
+    description:
+      'The IET Wiring Regulations explained — key requirements, amendments, and compliance.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-newcastle',
     title: 'EICR Newcastle',
-    description: 'Electrical Installation Condition Reports in Newcastle — costs, requirements, and finding inspectors.',
+    description:
+      'Electrical Installation Condition Reports in Newcastle — costs, requirements, and finding inspectors.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'Notifiable electrical work in England — what requires notification and how the process works.',
+    description:
+      'Notifiable electrical work in England — what requires notification and how the process works.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -135,18 +140,19 @@ const sections = [
           A consumer unit — commonly called a fuse box — is the main distribution board in a
           domestic property. It receives the incoming electricity supply from the meter, distributes
           it to individual circuits via circuit breakers or fuses, and provides the primary
-          overcurrent and fault protection for the installation. In modern installations the consumer
-          unit also provides RCD (Residual Current Device) protection against electric shock.
+          overcurrent and fault protection for the installation. In modern installations the
+          consumer unit also provides RCD (Residual Current Device) protection against electric
+          shock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Age</strong> — consumer units in Newcastle properties built before the
-                1990s may contain rewirable fuse wire holders rather than modern circuit breakers.
-                These offer significantly less protection and do not meet the requirements of the
-                current edition of{' '}
+                <strong>Age</strong> — consumer units in Newcastle properties built before the 1990s
+                may contain rewirable fuse wire holders rather than modern circuit breakers. These
+                offer significantly less protection and do not meet the requirements of the current
+                edition of{' '}
                 <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>
@@ -158,32 +164,32 @@ const sections = [
               <span>
                 <strong>Plastic enclosure</strong> — if the existing consumer unit has a white or
                 grey plastic enclosure, it does not meet the current requirement for non-combustible
-                enclosures introduced by the 2016 Amendment to BS 7671. Replacement with a
-                compliant metal unit is required when the unit is replaced.
+                enclosures introduced by the 2016 Amendment to BS 7671. Replacement with a compliant
+                metal unit is required when the unit is replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>No RCD protection</strong> — older consumer units may have no RCD protection
-                at all, or only partial protection. This is frequently identified as a C2 observation
-                (potentially dangerous) on an EICR, requiring remedial action.
+                at all, or only partial protection. This is frequently identified as a C2
+                observation (potentially dangerous) on an EICR, requiring remedial action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Insufficient capacity</strong> — adding an electric vehicle charger, heat
-                pump, or additional circuits may require a larger consumer unit with more ways
-                than the existing installation can provide.
+                pump, or additional circuits may require a larger consumer unit with more ways than
+                the existing installation can provide.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Consumer unit replacement is one of the most common electrical jobs carried out in
-          Newcastle. Properties in areas such as Jesmond, Gosforth, and Gateshead with Victorian
-          or Edwardian housing stock frequently have outdated consumer units that benefit from
+          Newcastle. Properties in areas such as Jesmond, Gosforth, and Gateshead with Victorian or
+          Edwardian housing stock frequently have outdated consumer units that benefit from
           replacement.
         </p>
       </>
@@ -206,8 +212,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Why metal?</strong> — arc flash events inside a consumer unit during a
-                short circuit can reach temperatures of several thousand degrees Celsius. A plastic
+                <strong>Why metal?</strong> — arc flash events inside a consumer unit during a short
+                circuit can reach temperatures of several thousand degrees Celsius. A plastic
                 enclosure can melt and ignite, spreading fire into the surrounding structure. A
                 metal enclosure contains the arc and the resulting heat, dramatically reducing the
                 risk of fire propagation.
@@ -216,8 +222,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Applies on replacement</strong> — if an existing property in Newcastle has
-                a plastic consumer unit, there is no mandatory requirement to replace it immediately.
+                <strong>Applies on replacement</strong> — if an existing property in Newcastle has a
+                plastic consumer unit, there is no mandatory requirement to replace it immediately.
                 However, the moment a replacement is carried out — for any reason — the new unit
                 must comply with Regulation 421.1.201, meaning a metal enclosure is required.
               </span>
@@ -225,9 +231,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not retrofit</strong> — fitting a metal fascia to an existing plastic consumer
-                unit does not achieve compliance. The entire enclosure must be non-combustible. Only
-                a full replacement with a compliant metal consumer unit satisfies the regulation.
+                <strong>Not retrofit</strong> — fitting a metal fascia to an existing plastic
+                consumer unit does not achieve compliance. The entire enclosure must be
+                non-combustible. Only a full replacement with a compliant metal consumer unit
+                satisfies the regulation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -263,9 +270,9 @@ const sections = [
               <span>
                 <strong>Registered competent person route</strong> — the simplest and most common
                 route to compliance. An electrician registered with a government-approved competent
-                person scheme (NICEIC, NAPIT, ELECSA, or equivalent) can self-certify the work.
-                They notify building control on your behalf and issue a compliance certificate.
-                There is no need to contact Newcastle City Council building control separately.
+                person scheme (NICEIC, NAPIT, ELECSA, or equivalent) can self-certify the work. They
+                notify building control on your behalf and issue a compliance certificate. There is
+                no need to contact Newcastle City Council building control separately.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -281,8 +288,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification documentation</strong> — upon completion, the electrician
-                must issue an{' '}
+                <strong>Certification documentation</strong> — upon completion, the electrician must
+                issue an{' '}
                 <SEOInternalLink href="/tools/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
@@ -324,9 +331,9 @@ const sections = [
               <span>
                 <strong>Design verification</strong> — BS EN 61439-3 requires that the consumer unit
                 manufacturer demonstrates through testing or calculation that the assembly meets its
-                rated values for voltage, current, and prospective short-circuit current (PSCC).
-                The PSCC rating is particularly important: the consumer unit must be rated to handle
-                the fault level at the point of installation.
+                rated values for voltage, current, and prospective short-circuit current (PSCC). The
+                PSCC rating is particularly important: the consumer unit must be rated to handle the
+                fault level at the point of installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -334,27 +341,26 @@ const sections = [
               <span>
                 <strong>Routine verification</strong> — each consumer unit must be inspected and
                 tested during manufacture to verify wiring, markings, and protective conductor
-                continuity before despatch. This factory testing provides the baseline for
-                site installation testing under BS 7671 Part 6.
+                continuity before despatch. This factory testing provides the baseline for site
+                installation testing under BS 7671 Part 6.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UKCA marking</strong> — since January 2022, consumer units placed on the
-                UK market must carry the UKCA (UK Conformity Assessed) mark rather than the
-                EU CE mark. Reputable manufacturers such as Hager, Schneider Electric, Wylex, and
-                Contactum supply fully compliant UKCA-marked metal consumer units for the UK
-                domestic market.
+                <strong>UKCA marking</strong> — since January 2022, consumer units placed on the UK
+                market must carry the UKCA (UK Conformity Assessed) mark rather than the EU CE mark.
+                Reputable manufacturers such as Hager, Schneider Electric, Wylex, and Contactum
+                supply fully compliant UKCA-marked metal consumer units for the UK domestic market.
               </span>
             </li>
           </ul>
         </div>
         <p>
           When specifying a consumer unit for a Newcastle installation, your electrician should
-          select a unit with an appropriate number of ways for the circuits required, adequate
-          PSCC rating for the supply at that address, and the necessary RCD or RCBO protection
-          layout to meet BS 7671 requirements.
+          select a unit with an appropriate number of ways for the circuits required, adequate PSCC
+          rating for the supply at that address, and the necessary RCD or RCBO protection layout to
+          meet BS 7671 requirements.
         </p>
       </>
     ),
@@ -392,9 +398,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — if there are no RCD or RCBO devices visible
-                in the consumer unit, the installation lacks the shock protection required by BS
-                7671 Regulation 411.3.3. This is commonly found in properties built or last rewired
+                <strong>No RCD protection</strong> — if there are no RCD or RCBO devices visible in
+                the consumer unit, the installation lacks the shock protection required by BS 7671
+                Regulation 411.3.3. This is commonly found in properties built or last rewired
                 before the mid-1990s.
               </span>
             </li>
@@ -435,41 +441,40 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £350 to £500. Typically 6 to 8 circuits.
-                A straightforward replacement with a metal dual-RCD or RCBO consumer unit.
+                <strong>One-bedroom flat</strong> — £350 to £500. Typically 6 to 8 circuits. A
+                straightforward replacement with a metal dual-RCD or RCBO consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two to three-bedroom house</strong> — £450 to £650. The most common job
-                type in Newcastle. Usually 8 to 12 circuits. Includes full testing and
-                certification.
+                <strong>Two to three-bedroom house</strong> — £450 to £650. The most common job type
+                in Newcastle. Usually 8 to 12 circuits. Includes full testing and certification.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Four-bedroom or larger house</strong> — £600 to £900. More circuits,
-                potentially a larger consumer unit with additional ways. Some older properties
-                in Jesmond and Gosforth may have split consumer units requiring more time.
+                potentially a larger consumer unit with additional ways. Some older properties in
+                Jesmond and Gosforth may have split consumer units requiring more time.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Additional work</strong> — earthing upgrades (TT systems requiring earth
-                electrode testing, or TN-C-S systems with defective PME earthing) can add
-                £100 to £300. Supply tails replacement or meter tails upgrade where required
-                adds a further £150 to £400 depending on the length involved.
+                electrode testing, or TN-C-S systems with defective PME earthing) can add £100 to
+                £300. Supply tails replacement or meter tails upgrade where required adds a further
+                £150 to £400 depending on the length involved.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices include removal and responsible disposal of the old consumer unit, supply
-          and installation of the new compliant metal consumer unit, all necessary circuit testing,
-          and issue of the Electrical Installation Certificate and Building Regulations compliance
+          These prices include removal and responsible disposal of the old consumer unit, supply and
+          installation of the new compliant metal consumer unit, all necessary circuit testing, and
+          issue of the Electrical Installation Certificate and Building Regulations compliance
           documentation. Always obtain at least two or three written quotes from NICEIC or NAPIT
           registered electricians in Newcastle before proceeding.
         </p>
@@ -491,8 +496,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NICEIC or NAPIT registration</strong> — search the NICEIC online register
-                or NAPIT register for approved contractors based in Newcastle or the wider Tyne and
+                <strong>NICEIC or NAPIT registration</strong> — search the NICEIC online register or
+                NAPIT register for approved contractors based in Newcastle or the wider Tyne and
                 Wear area. Registration requires annual assessment of competence, insurance, and
                 quality of work.
               </span>
@@ -500,10 +505,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>City and Guilds 2382</strong> — the electrician should hold a current
-                18th Edition (BS 7671:2018) qualification (City and Guilds 2382-18) and be familiar
-                with Amendment 3 (2024) requirements. The metal enclosure and RCD requirements
-                are examined in this qualification.
+                <strong>City and Guilds 2382</strong> — the electrician should hold a current 18th
+                Edition (BS 7671:2018) qualification (City and Guilds 2382-18) and be familiar with
+                Amendment 3 (2024) requirements. The metal enclosure and RCD requirements are
+                examined in this qualification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -519,8 +524,8 @@ const sections = [
               <span>
                 <strong>Written quote</strong> — always obtain a written, itemised quote that
                 clearly states the scope of work, the make and model of consumer unit to be
-                installed, and confirmation that all testing and certification is included in
-                the price.
+                installed, and confirmation that all testing and certification is included in the
+                price.
               </span>
             </li>
           </ul>
@@ -534,10 +539,10 @@ const sections = [
     content: (
       <>
         <p>
-          Consumer unit replacement is a bread-and-butter job for electricians across Newcastle
-          and Tyne and Wear. With older housing stock throughout the city, demand is consistent
-          year-round. Using the right tools to complete certification quickly and accurately
-          helps you turn over more jobs per day and win follow-on work.
+          Consumer unit replacement is a bread-and-butter job for electricians across Newcastle and
+          Tyne and Wear. With older housing stock throughout the city, demand is consistent
+          year-round. Using the right tools to complete certification quickly and accurately helps
+          you turn over more jobs per day and win follow-on work.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -547,9 +552,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate and Schedule of Test Results
                   on your phone while still on site. Record all circuit test values directly,
                   generate the PDF, and send it to the client before you leave. No evening
@@ -569,8 +572,8 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>
-                  . Customers are most likely to approve additional work while you are on site
-                  and they can see the issue firsthand.
+                  . Customers are most likely to approve additional work while you are on site and
+                  they can see the issue firsthand.
                 </p>
               </div>
             </div>
@@ -578,7 +581,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your consumer unit replacement business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Complete more jobs per day and eliminate paperwork. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, instant PDF export, and professional quoting. Complete more jobs per day and eliminate paperwork. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -615,7 +618,7 @@ export default function ConsumerUnitReplacementNewcastlePage() {
       faqHeading="Frequently Asked Questions About Consumer Unit Replacement in Newcastle"
       relatedPages={relatedPages}
       ctaHeading="Complete Consumer Unit Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and built-in schedule of test results. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion with instant PDF export and built-in schedule of test results. 7-day free trial, cancel anytime."
     />
   );
 }

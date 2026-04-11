@@ -41,8 +41,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins. You can verify registration numbers online on the scheme provider websites.',
-  'NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Derby\'s DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.',
-  'Derby\'s Rolls-Royce campus and rail industry (Alstom/Hitachi) generate significant commercial and industrial electrical work, often requiring specialist clearances and qualifications beyond standard domestic competence.',
+  "NGED (National Grid Electricity Distribution, formerly Western Power Distribution) is Derby's DNO. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with NGED.",
+  "Derby's Rolls-Royce campus and rail industry (Alstom/Hitachi) generate significant commercial and industrial electrical work, often requiring specialist clearances and qualifications beyond standard domestic competence.",
   'Properties in flood risk areas along the River Derwent (Darley Abbey, Little Chester, Alvaston) need careful consideration of consumer unit height, IP ratings for ground-level accessories, and flood-resilient installation practices.',
   'The Cathedral Quarter and Darley Abbey Mills (UNESCO World Heritage buffer zone) are conservation areas requiring Listed Building Consent and planning permission for external electrical alterations.',
 ];
@@ -61,7 +61,7 @@ const faqs = [
   {
     question: 'How long does a full rewire take in a Derby Victorian terrace?',
     answer:
-      'A full rewire of a typical 3-bedroom Victorian terraced house in areas like Normanton, Pear Tree, or Rose Hill takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Derby\'s Victorian properties have solid brick walls, high ceilings (typically 2.7 to 3 metres), and often multiple previous partial rewires. Properties that have been converted into student flats or bedsits may take longer due to additional circuits and fire alarm requirements. The larger Victorian and Edwardian detached houses in Littleover and Mickleover will take proportionally longer.',
+      "A full rewire of a typical 3-bedroom Victorian terraced house in areas like Normanton, Pear Tree, or Rose Hill takes 6 to 9 working days with a team of two electricians, plus 1 to 2 days for testing and certification. Derby's Victorian properties have solid brick walls, high ceilings (typically 2.7 to 3 metres), and often multiple previous partial rewires. Properties that have been converted into student flats or bedsits may take longer due to additional circuits and fire alarm requirements. The larger Victorian and Edwardian detached houses in Littleover and Mickleover will take proportionally longer.",
   },
   {
     question: 'Do I need building control approval for electrical work in Derby?',
@@ -76,10 +76,11 @@ const faqs = [
   {
     question: 'Who is the electricity supplier for Derby and how do I get a new connection?',
     answer:
-      'NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Derby and the East Midlands. To request a new supply, upgraded supply, or meter relocation, you apply through NGED\'s website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Derby are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,500 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.',
+      "NGED (National Grid Electricity Distribution, formerly Western Power Distribution or WPD) is the Distribution Network Operator for Derby and the East Midlands. To request a new supply, upgraded supply, or meter relocation, you apply through NGED's website (nationalgrid.co.uk/electricity-distribution). Lead times for new connections in Derby are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,500 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the NGED application on your behalf.",
   },
   {
-    question: 'My Derby property is in a flood risk area. What should I consider for electrical work?',
+    question:
+      'My Derby property is in a flood risk area. What should I consider for electrical work?',
     answer:
       'Properties along the River Derwent (Darley Abbey, Little Chester, parts of Alvaston, Derby city centre) are in flood risk zones. For these properties, consider relocating the consumer unit above the maximum recorded flood level (or at least 1.5 metres above floor level), installing flood-resilient wiring (circuits below flood level should be radial, not ring, so they can be individually isolated), using IP67 or higher rated accessories at ground level, and ensuring the main earthing terminal and bonding connections are accessible and above flood level. BS 7671 Regulation 421.1 covers protection against the effects of water, and the BEAMA guide on flood-resilient electrical installations provides practical guidance.',
   },
@@ -163,16 +164,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by Derby City Council building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT
-          (headquartered in Derby), ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT (headquartered in Derby), ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -260,8 +260,8 @@ const sections = [
               <span>
                 <strong>EICR (Electrical Installation Condition Report)</strong> — £170 to £280 for
                 a flat, £240 to £380 for a house. Required every 5 years for rented properties.
-                Larger detached properties in Allestree, Darley Abbey, and Littleover command
-                higher EICR costs due to the size of the installation.
+                Larger detached properties in Allestree, Darley Abbey, and Littleover command higher
+                EICR costs due to the size of the installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -275,9 +275,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EV charger installation</strong> — £650 to £1,200 for a 7kW home charger
-                including supply, installation, earthing, and Part P certification. Derby's
-                suburban layout means most properties have driveways, making EV charger
-                installations more straightforward than in inner-city terraced streets.
+                including supply, installation, earthing, and Part P certification. Derby's suburban
+                layout means most properties have driveways, making EV charger installations more
+                straightforward than in inner-city terraced streets.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -292,8 +292,8 @@ const sections = [
         </div>
         <p>
           These prices are indicative for 2026 and vary across Derby. Inner-city areas and older
-          properties tend to cost more due to complexity; newer suburbs are generally less expensive.
-          Always get at least three written quotes for any significant work.
+          properties tend to cost more due to complexity; newer suburbs are generally less
+          expensive. Always get at least three written quotes for any significant work.
         </p>
       </>
     ),
@@ -313,10 +313,10 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces</h3>
             <p className="text-white text-sm leading-relaxed">
               Normanton, Pear Tree, Rose Hill, and parts of the city centre have large stocks of
-              Victorian terraced housing built for factory workers. These properties have solid brick
-              walls, high ceilings, and often multiple previous partial rewires. Many have been
-              converted into student accommodation or HMOs for the University of Derby, adding fire
-              alarm and emergency lighting requirements. The typical 2-up-2-down layout means
+              Victorian terraced housing built for factory workers. These properties have solid
+              brick walls, high ceilings, and often multiple previous partial rewires. Many have
+              been converted into student accommodation or HMOs for the University of Derby, adding
+              fire alarm and emergency lighting requirements. The typical 2-up-2-down layout means
               relatively compact rewires, but the solid wall construction adds time and cost.
             </p>
           </div>
@@ -326,10 +326,10 @@ const sections = [
               Chaddesden, Spondon, Mackworth, and Oakwood have extensive 1930s to 1960s housing
               estates. These semi-detached and terraced houses are generally easier to rewire than
               Victorian properties (cavity walls, lower ceilings), but many retain original or
-              partially upgraded wiring. Common EICR findings include outdated consumer units, absence
-              of RCD protection, and deteriorated rubber-insulated cables. The Mackworth estate,
-              one of the largest in Derby, has many properties approaching or past the recommended
-              25-year rewire interval.
+              partially upgraded wiring. Common EICR findings include outdated consumer units,
+              absence of RCD protection, and deteriorated rubber-insulated cables. The Mackworth
+              estate, one of the largest in Derby, has many properties approaching or past the
+              recommended 25-year rewire interval.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -348,10 +348,10 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The University of Derby (Kedleston Road campus and city centre campus) drives demand
               for student HMO compliance work in surrounding areas — Kedleston Road, Stockbrook
-              Street, and parts of Normanton. HMOs must meet Derby City Council licensing
-              conditions including mains-powered interlinked smoke and heat detection, emergency
-              lighting on escape routes, and RCD protection on all circuits. Purpose-built student
-              accommodation blocks also require periodic testing and fire alarm maintenance.
+              Street, and parts of Normanton. HMOs must meet Derby City Council licensing conditions
+              including mains-powered interlinked smoke and heat detection, emergency lighting on
+              escape routes, and RCD protection on all circuits. Purpose-built student accommodation
+              blocks also require periodic testing and fire alarm maintenance.
             </p>
           </div>
         </div>
@@ -400,8 +400,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Derby is overseen by Derby City Council building
           control or by an approved inspector. If your electrician is registered with a competent
           person scheme, they self-certify and notify the council on your behalf. Derby City Council
@@ -452,7 +451,8 @@ const sections = [
                 <strong>Pride Park and commercial developments</strong> — Pride Park business area
                 and the wider A52 corridor house commercial and industrial units requiring periodic
                 testing, fit-outs, and electrical maintenance. The Royal Derby Hospital (one of the
-                largest NHS trusts in the country) also generates specialist medical electrical work.
+                largest NHS trusts in the country) also generates specialist medical electrical
+                work.
               </span>
             </li>
           </ul>
@@ -487,20 +487,20 @@ const sections = [
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Circuit design for flood resilience</strong> — circuits serving ground floor
-                sockets and appliances in flood risk properties should be designed as radial circuits
-                (not ring finals) so they can be individually isolated without affecting the entire
-                installation. First floor and above circuits can remain on separate MCBs/RCBOs,
-                allowing the property to retain power upstairs during a flood event.
+                sockets and appliances in flood risk properties should be designed as radial
+                circuits (not ring finals) so they can be individually isolated without affecting
+                the entire installation. First floor and above circuits can remain on separate
+                MCBs/RCBOs, allowing the property to retain power upstairs during a flood event.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Droplets className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Post-flood EICR</strong> — after any flood event, the electrical
-                installation must be inspected and tested before being re-energised. Water damage
-                to cables, accessories, and the consumer unit can create hidden faults. An EICR
-                should be carried out by a qualified electrician before the supply is restored.
-                Insurance companies typically require this before settling flood damage claims.
+                installation must be inspected and tested before being re-energised. Water damage to
+                cables, accessories, and the consumer unit can create hidden faults. An EICR should
+                be carried out by a qualified electrician before the supply is restored. Insurance
+                companies typically require this before settling flood damage claims.
               </span>
             </li>
           </ul>
@@ -529,14 +529,16 @@ const sections = [
             <div className="flex items-start gap-4">
               <Factory className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Industrial and Commercial Opportunities</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Industrial and Commercial Opportunities
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Derby's Rolls-Royce campus, rail manufacturing, and Pride Park business area offer
                   commercial electrical work that is well above domestic rates. Getting on approved
-                  contractor lists for these facilities requires JIB grading, security clearance, and
-                  compliance with site-specific safety requirements, but the work is consistent and
-                  well-paid. Building relationships with tier-1 contractors like Babcock and ISG is
-                  the route into this market.
+                  contractor lists for these facilities requires JIB grading, security clearance,
+                  and compliance with site-specific safety requirements, but the work is consistent
+                  and well-paid. Building relationships with tier-1 contractors like Babcock and ISG
+                  is the route into this market.
                 </p>
               </div>
             </div>
@@ -560,7 +562,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Derby electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -597,7 +599,7 @@ export default function ElectricianDerbyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Derby"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Derby and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Derby and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

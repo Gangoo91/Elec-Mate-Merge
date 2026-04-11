@@ -91,8 +91,7 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/commercial-eicr',
     title: 'Commercial EICR Guide',
-    description:
-      'Full guide to commercial EICRs — frequency, scope, and reporting requirements.',
+    description: 'Full guide to commercial EICRs — frequency, scope, and reporting requirements.',
     icon: FileCheck2,
     category: 'Guide',
   },
@@ -153,8 +152,8 @@ const sections = [
         </p>
         <p>
           The typical cost range for a shop electrical fit-out is{' '}
-          <strong>£3,000 to £15,000+</strong> depending on the size of the unit, the complexity
-          of the installation, and whether a supply upgrade is required. Small retail units at the
+          <strong>£3,000 to £15,000+</strong> depending on the size of the unit, the complexity of
+          the installation, and whether a supply upgrade is required. Small retail units at the
           lower end, large or specialist units at the higher end.
         </p>
         <p>
@@ -170,57 +169,71 @@ const sections = [
     content: (
       <>
         <p>
-          The following table shows typical costs for the electrical elements of a commercial
-          shop fit-out. Prices include materials and labour.
+          The following table shows typical costs for the electrical elements of a commercial shop
+          fit-out. Prices include materials and labour.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <div className="space-y-4">
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Small shop (50–100m²)</p>
-                <p className="text-white text-sm">Basic lighting, power, emergency lighting, simple fire alarm</p>
+                <p className="text-white text-sm">
+                  Basic lighting, power, emergency lighting, simple fire alarm
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£3,000 – £6,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Medium shop (100–250m²)</p>
-                <p className="text-white text-sm">Designed lighting, multiple circuits, fire alarm, data cabling</p>
+                <p className="text-white text-sm">
+                  Designed lighting, multiple circuits, fire alarm, data cabling
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£6,000 – £10,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Large shop (250m²+)</p>
-                <p className="text-white text-sm">3-phase distribution, extensive lighting, full fire alarm, structured cabling</p>
+                <p className="text-white text-sm">
+                  3-phase distribution, extensive lighting, full fire alarm, structured cabling
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£10,000 – £15,000+</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">3-phase supply upgrade (DNO application)</p>
-                <p className="text-white text-sm">Application, survey, installation by DNO, new main switchgear</p>
+                <p className="text-white text-sm">
+                  Application, survey, installation by DNO, new main switchgear
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£1,000 – £3,000+</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Emergency lighting system</p>
-                <p className="text-white text-sm">Maintained/non-maintained luminaires, exit signs, testing system</p>
+                <p className="text-white text-sm">
+                  Maintained/non-maintained luminaires, exit signs, testing system
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£500 – £2,000</p>
             </div>
             <div className="flex justify-between items-start border-b border-white/10 pb-3">
               <div>
                 <p className="font-bold text-white">Fire alarm system (Category L3)</p>
-                <p className="text-white text-sm">Detection in escape routes, manual call points, sounders, panel</p>
+                <p className="text-white text-sm">
+                  Detection in escape routes, manual call points, sounders, panel
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £1,500</p>
             </div>
             <div className="flex justify-between items-start">
               <div>
                 <p className="font-bold text-white">Data cabling (Cat6 infrastructure)</p>
-                <p className="text-white text-sm">EPOS points, back-office, WiFi APs, CCTV preparation, patch panel</p>
+                <p className="text-white text-sm">
+                  EPOS points, back-office, WiFi APs, CCTV preparation, patch panel
+                </p>
               </div>
               <p className="font-bold text-yellow-400 whitespace-nowrap ml-4">£800 – £2,500</p>
             </div>
@@ -244,20 +257,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single-phase supply (up to 100A)</strong> — suitable for small retail
-                units with LED lighting, EPOS systems, a small amount of heating or cooling, and
-                standard socket outlets. A single-phase 100A supply provides approximately 23kW
-                of available power. Most units under 100m² can operate on single-phase.
+                <strong>Single-phase supply (up to 100A)</strong> — suitable for small retail units
+                with LED lighting, EPOS systems, a small amount of heating or cooling, and standard
+                socket outlets. A single-phase 100A supply provides approximately 23kW of available
+                power. Most units under 100m² can operate on single-phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>3-phase supply</strong> — required for larger units, premises with
-                commercial catering equipment, multiple air conditioning units, or heavy
-                machinery. A 3-phase supply provides three times the power capacity. The
-                distribution board must be designed to balance the load across all three phases.
-                3-phase distribution boards cost £300 to £800 at trade price.
+                commercial catering equipment, multiple air conditioning units, or heavy machinery.
+                A 3-phase supply provides three times the power capacity. The distribution board
+                must be designed to balance the load across all three phases. 3-phase distribution
+                boards cost £300 to £800 at trade price.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -272,10 +285,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          If a new or upgraded supply is needed, the electrician submits an application to the
-          DNO (Distribution Network Operator). The DNO will survey the site, issue a quotation,
-          and schedule the connection works. This process typically takes 6 to 12 weeks and must
-          be factored into the project programme.
+          If a new or upgraded supply is needed, the electrician submits an application to the DNO
+          (Distribution Network Operator). The DNO will survey the site, issue a quotation, and
+          schedule the connection works. This process typically takes 6 to 12 weeks and must be
+          factored into the project programme.
         </p>
       </>
     ),
@@ -297,27 +310,27 @@ const sections = [
               <span>
                 <strong>LED panels and downlights</strong> — the workhorse of retail lighting.
                 Recessed LED panels (600mm x 600mm for suspended ceilings) provide uniform ambient
-                light. LED downlights provide focused lighting for specific areas. Trade price:
-                LED panels from £20 to £50, downlights from £5 to £15 each.
+                light. LED downlights provide focused lighting for specific areas. Trade price: LED
+                panels from £20 to £50, downlights from £5 to £15 each.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Track lighting</strong> — adjustable spotlights on a track system, ideal
-                for product displays and window displays. Track lighting can be repositioned as
-                the shop layout changes. Track and spotlights from £100 to £300 per 2-metre
-                section with 4 to 6 spotlights.
+                <strong>Track lighting</strong> — adjustable spotlights on a track system, ideal for
+                product displays and window displays. Track lighting can be repositioned as the shop
+                layout changes. Track and spotlights from £100 to £300 per 2-metre section with 4 to
+                6 spotlights.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting control</strong> — dimming, zoning, and scheduling systems allow
-                different lighting scenes for trading hours, cleaning, and displays. DALI
-                (Digital Addressable Lighting Interface) systems provide individual luminaire
-                control and are standard in modern retail. Basic DALI control adds £500 to £1,500
-                to the lighting package.
+                different lighting scenes for trading hours, cleaning, and displays. DALI (Digital
+                Addressable Lighting Interface) systems provide individual luminaire control and are
+                standard in modern retail. Basic DALI control adds £500 to £1,500 to the lighting
+                package.
               </span>
             </li>
           </ul>
@@ -342,10 +355,8 @@ const sections = [
           Emergency lighting is a legal requirement in all commercial premises. It must provide
           sufficient illumination for safe evacuation when the normal lighting fails. The system
           must comply with{' '}
-          <SEOInternalLink href="/guides/bs-5266-emergency-lighting">
-            BS 5266-1
-          </SEOInternalLink>{' '}
-          and be specified based on the fire risk assessment:
+          <SEOInternalLink href="/guides/bs-5266-emergency-lighting">BS 5266-1</SEOInternalLink> and
+          be specified based on the fire risk assessment:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -372,9 +383,9 @@ const sections = [
               <span>
                 <strong>Duration</strong> — most commercial premises require a 3-hour rated
                 emergency lighting system. This means the battery backup in each luminaire must
-                maintain illumination for a minimum of 3 hours after a mains failure. The
-                luminaires must be tested monthly (function test) and annually (full duration
-                test), with records maintained in a logbook.
+                maintain illumination for a minimum of 3 hours after a mains failure. The luminaires
+                must be tested monthly (function test) and annually (full duration test), with
+                records maintained in a logbook.
               </span>
             </li>
           </ul>
@@ -389,21 +400,18 @@ const sections = [
       <>
         <p>
           A fire alarm system is required in all commercial premises under the Regulatory Reform
-          (Fire Safety) Order 2005. The system category depends on the fire risk assessment and
-          is specified under{' '}
-          <SEOInternalLink href="/guides/bs-5839-fire-alarm">
-            BS 5839-1
-          </SEOInternalLink>
-          :
+          (Fire Safety) Order 2005. The system category depends on the fire risk assessment and is
+          specified under{' '}
+          <SEOInternalLink href="/guides/bs-5839-fire-alarm">BS 5839-1</SEOInternalLink>:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Category L3</h3>
             <p className="text-white text-sm leading-relaxed">
               Detection and warning in escape routes only. Manual call points at exits. Sounders
-              audible throughout the premises. This is the minimum category for most small to
-              medium retail shops with straightforward layouts and no sleeping risk. Typical cost:
-              £800 to £1,500 installed.
+              audible throughout the premises. This is the minimum category for most small to medium
+              retail shops with straightforward layouts and no sleeping risk. Typical cost: £800 to
+              £1,500 installed.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -416,10 +424,10 @@ const sections = [
           </div>
         </div>
         <p>
-          The fire alarm system must be designed, installed, and commissioned by a competent
-          person. The system must be maintained in accordance with BS 5839-1, with weekly tests,
-          quarterly inspections, and annual servicing. The maintenance contract is a recurring
-          revenue opportunity for electricians qualified in fire alarm work.
+          The fire alarm system must be designed, installed, and commissioned by a competent person.
+          The system must be maintained in accordance with BS 5839-1, with weekly tests, quarterly
+          inspections, and annual servicing. The maintenance contract is a recurring revenue
+          opportunity for electricians qualified in fire alarm work.
         </p>
       </>
     ),
@@ -440,17 +448,17 @@ const sections = [
               <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cat6 cabling</strong> — the standard for commercial data cabling. Cat6
-                supports 1Gbps over 100 metres. Each EPOS position, back-office workstation,
-                WiFi access point location, and CCTV camera position should have at least one
-                Cat6 run to the central patch panel. Cat6 RJ45 data modules cost approximately
-                £10.50 each at trade price. Cable costs £0.30 to £0.50 per metre.
+                supports 1Gbps over 100 metres. Each EPOS position, back-office workstation, WiFi
+                access point location, and CCTV camera position should have at least one Cat6 run to
+                the central patch panel. Cat6 RJ45 data modules cost approximately £10.50 each at
+                trade price. Cable costs £0.30 to £0.50 per metre.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EPOS positions</strong> — each till position needs power (double socket
-                plus data), Cat6 for the EPOS terminal, and possibly a separate Cat6 for the card
+                <strong>EPOS positions</strong> — each till position needs power (double socket plus
+                data), Cat6 for the EPOS terminal, and possibly a separate Cat6 for the card
                 machine. Some EPOS systems use WiFi, but a wired connection is more reliable in a
                 busy retail environment.
               </span>
@@ -458,20 +466,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Network className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>WiFi access points</strong> — ceiling-mounted access points provide
-                customer WiFi and staff device connectivity. Commercial access points (Ubiquiti
-                UniFi, Cisco Meraki, TP-Link Omada) are powered via PoE from the network switch.
-                One access point per 100 to 150m² of open retail space is typical. Cost: £80 to
-                £200 per access point plus Cat6 run and installation.
+                <strong>WiFi access points</strong> — ceiling-mounted access points provide customer
+                WiFi and staff device connectivity. Commercial access points (Ubiquiti UniFi, Cisco
+                Meraki, TP-Link Omada) are powered via PoE from the network switch. One access point
+                per 100 to 150m² of open retail space is typical. Cost: £80 to £200 per access point
+                plus Cat6 run and installation.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Data cabling should be installed during the first-fix stage alongside the electrical
-          cabling. This avoids costly retrospective work once ceilings and walls are finished.
-          A typical data cabling package for a small to medium shop (4 to 8 EPOS points, 2 WiFi
-          APs, 4 CCTV runs, back-office connectivity) costs £800 to £2,500.
+          cabling. This avoids costly retrospective work once ceilings and walls are finished. A
+          typical data cabling package for a small to medium shop (4 to 8 EPOS points, 2 WiFi APs, 4
+          CCTV runs, back-office connectivity) costs £800 to £2,500.
         </p>
       </>
     ),
@@ -491,24 +499,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671</strong> — the wiring regulations apply to all electrical
-                installations in commercial premises. The installation must be designed,
-                installed, inspected, and tested in accordance with the current edition.
+                installations in commercial premises. The installation must be designed, installed,
+                inspected, and tested in accordance with the current edition.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electricity at Work Regulations 1989</strong> — the employer or premises
-                controller has a duty to ensure the electrical installation is maintained in a
-                safe condition. An EICR demonstrates compliance. Commercial EICRs are typically
-                carried out every 5 years.
+                controller has a duty to ensure the electrical installation is maintained in a safe
+                condition. An EICR demonstrates compliance. Commercial EICRs are typically carried
+                out every 5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — the responsible
-                person must carry out a fire risk assessment and ensure appropriate fire detection,
+                <strong>Regulatory Reform (Fire Safety) Order 2005</strong> — the responsible person
+                must carry out a fire risk assessment and ensure appropriate fire detection,
                 warning, and emergency lighting systems are installed and maintained.
               </span>
             </li>
@@ -524,10 +532,10 @@ const sections = [
         </div>
         <p>
           An Electrical Installation Certificate (EIC) must be issued for all new commercial
-          installations. The certificate confirms compliance with BS 7671 and should be retained
-          in the premises fire safety file. An EICR should be carried out at handover and
-          subsequently at intervals specified in the IET Guidance Note 3 (typically every 5 years
-          for commercial premises).
+          installations. The certificate confirms compliance with BS 7671 and should be retained in
+          the premises fire safety file. An EICR should be carried out at handover and subsequently
+          at intervals specified in the IET Guidance Note 3 (typically every 5 years for commercial
+          premises).
         </p>
       </>
     ),
@@ -539,9 +547,9 @@ const sections = [
       <>
         <p>
           Commercial shop fit-outs are among the highest-value projects available to electrical
-          contractors. A single fit-out can be worth £3,000 to £15,000+ for the electrical
-          package, with ongoing maintenance contracts for emergency lighting testing, fire alarm
-          servicing, and periodic EICR inspections.
+          contractors. A single fit-out can be worth £3,000 to £15,000+ for the electrical package,
+          with ongoing maintenance contracts for emergency lighting testing, fire alarm servicing,
+          and periodic EICR inspections.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -569,9 +577,9 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Lighting, power, emergency lighting, fire alarm, data cabling — all broken
-                  down with materials, labour, and your margins. Present a professional quotation
-                  to the main contractor or tenant.
+                  . Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
+                  with materials, labour, and your margins. Present a professional quotation to the
+                  main contractor or tenant.
                 </p>
               </div>
             </div>
@@ -593,7 +601,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote and certify commercial fit-outs"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. Price shop fit-outs accurately with itemised professional documentation. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. Price shop fit-outs accurately with itemised professional documentation. 7-day free trial."
           icon={Building2}
         />
       </>
@@ -630,7 +638,7 @@ export default function ShopFitOutElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Shop Fit-Out Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Commercial Fit-Outs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, commercial quoting, and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

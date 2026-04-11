@@ -625,7 +625,7 @@ export default function PolarityTestingGuidePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Never Miss a Polarity Check Again"
-      ctaSubheading="Elec-Mate captures polarity verification on every circuit, auto-validates test results against BS 7671, and flags incomplete testing. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate captures polarity verification on every circuit, auto-validates test results against BS 7671, and flags incomplete testing. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

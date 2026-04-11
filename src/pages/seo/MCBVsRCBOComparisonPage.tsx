@@ -103,7 +103,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Complete Electrical Installation Certificates for consumer unit upgrades on your phone.',
+    description:
+      'Complete Electrical Installation Certificates for consumer unit upgrades on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -163,8 +164,8 @@ const sections = [
         <p>
           An MCB does <strong>not</strong> detect earth leakage. If a live conductor touches an
           earthed metal part (an earth fault), the MCB will only trip if the fault current is high
-          enough to exceed its rating. Low-level earth faults — which are often the most dangerous to
-          people — will not trip an MCB.
+          enough to exceed its rating. Low-level earth faults — which are often the most dangerous
+          to people — will not trip an MCB.
         </p>
       </>
     ),
@@ -177,25 +178,32 @@ const sections = [
         <p>
           An RCBO combines the overcurrent and short-circuit protection of an MCB with the earth
           leakage detection of an RCD in a single device. It monitors the balance of current between
-          the line and neutral conductors. If there is an imbalance (indicating current is leaking to
-          earth), the RCBO trips — even if the leakage is as small as 30mA.
+          the line and neutral conductors. If there is an imbalance (indicating current is leaking
+          to earth), the RCBO trips — even if the leakage is as small as 30mA.
         </p>
-        <p>
-          This means an RCBO provides three types of protection:
-        </p>
+        <p>This means an RCBO provides three types of protection:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span><strong>Overcurrent protection</strong> — trips if the circuit current exceeds the rated value (same as an MCB)</span>
+              <span>
+                <strong>Overcurrent protection</strong> — trips if the circuit current exceeds the
+                rated value (same as an MCB)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span><strong>Short-circuit protection</strong> — trips on high fault currents (same as an MCB)</span>
+              <span>
+                <strong>Short-circuit protection</strong> — trips on high fault currents (same as an
+                MCB)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span><strong>Earth leakage protection</strong> — trips on current imbalance above 30mA (same as an RCD)</span>
+              <span>
+                <strong>Earth leakage protection</strong> — trips on current imbalance above 30mA
+                (same as an RCD)
+              </span>
             </li>
           </ul>
         </div>
@@ -231,7 +239,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Two RCDs provide partial discrimination — a fault on one group does not affect the other</span>
+              <span>
+                Two RCDs provide partial discrimination — a fault on one group does not affect the
+                other
+              </span>
             </li>
           </ul>
         </div>
@@ -240,11 +251,15 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>A single earth fault trips all circuits behind that RCD — half the house goes off</span>
+              <span>
+                A single earth fault trips all circuits behind that RCD — half the house goes off
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>Cumulative standing leakage from multiple circuits can cause nuisance tripping</span>
+              <span>
+                Cumulative standing leakage from multiple circuits can cause nuisance tripping
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
@@ -270,11 +285,17 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>An earth fault on one circuit trips only that circuit — the rest of the house stays on</span>
+              <span>
+                An earth fault on one circuit trips only that circuit — the rest of the house stays
+                on
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Immediate fault identification — the tripped RCBO tells you exactly which circuit has the problem</span>
+              <span>
+                Immediate fault identification — the tripped RCBO tells you exactly which circuit
+                has the problem
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
@@ -282,7 +303,10 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
-              <span>Fewer callbacks — the homeowner can identify and isolate the faulty circuit themselves</span>
+              <span>
+                Fewer callbacks — the homeowner can identify and isolate the faulty circuit
+                themselves
+              </span>
             </li>
           </ul>
         </div>
@@ -304,19 +328,39 @@ const sections = [
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              <tr><td className="py-3 pr-4">Consumer unit (12-way)</td><td className="py-3 pr-4">£40 to £80</td><td className="py-3">£60 to £120</td></tr>
-              <tr><td className="py-3 pr-4">2x RCD (63A, 30mA)</td><td className="py-3 pr-4">£30 to £60</td><td className="py-3">Not needed</td></tr>
-              <tr><td className="py-3 pr-4">10x protective devices</td><td className="py-3 pr-4">£30 to £80 (MCBs)</td><td className="py-3">£150 to £300 (RCBOs)</td></tr>
-              <tr className="font-bold"><td className="py-3 pr-4">Typical total</td><td className="py-3 pr-4">£100 to £220</td><td className="py-3">£210 to £420</td></tr>
-              <tr><td className="py-3 pr-4">Extra cost per board</td><td className="py-3 pr-4">Baseline</td><td className="py-3">£110 to £200 more</td></tr>
+              <tr>
+                <td className="py-3 pr-4">Consumer unit (12-way)</td>
+                <td className="py-3 pr-4">£40 to £80</td>
+                <td className="py-3">£60 to £120</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">2x RCD (63A, 30mA)</td>
+                <td className="py-3 pr-4">£30 to £60</td>
+                <td className="py-3">Not needed</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">10x protective devices</td>
+                <td className="py-3 pr-4">£30 to £80 (MCBs)</td>
+                <td className="py-3">£150 to £300 (RCBOs)</td>
+              </tr>
+              <tr className="font-bold">
+                <td className="py-3 pr-4">Typical total</td>
+                <td className="py-3 pr-4">£100 to £220</td>
+                <td className="py-3">£210 to £420</td>
+              </tr>
+              <tr>
+                <td className="py-3 pr-4">Extra cost per board</td>
+                <td className="py-3 pr-4">Baseline</td>
+                <td className="py-3">£110 to £200 more</td>
+              </tr>
             </tbody>
           </table>
         </div>
         <p>
           The extra material cost is typically £110 to £200 per installation. A single callback for
-          nuisance tripping — including travel time, fault-finding, and the homeowner inconvenience —
-          easily exceeds this difference. Most electricians now build the RCBO cost into the standard
-          quote and position it as a premium, professional installation.
+          nuisance tripping — including travel time, fault-finding, and the homeowner inconvenience
+          — easily exceeds this difference. Most electricians now build the RCBO cost into the
+          standard quote and position it as a premium, professional installation.
         </p>
       </>
     ),
@@ -336,15 +380,23 @@ const sections = [
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>LED downlighters with capacitive filters (1 to 3mA each — 10 downlighters = 10 to 30mA)</span>
+              <span>
+                LED downlighters with capacitive filters (1 to 3mA each — 10 downlighters = 10 to
+                30mA)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>IT equipment with EMC filters (computers, printers, routers — 1 to 5mA each)</span>
+              <span>
+                IT equipment with EMC filters (computers, printers, routers — 1 to 5mA each)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>White goods with suppression capacitors (washing machines, dishwashers — 1 to 3mA each)</span>
+              <span>
+                White goods with suppression capacitors (washing machines, dishwashers — 1 to 3mA
+                each)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -370,8 +422,8 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 does not mandate either MCBs or RCBOs specifically. It sets performance requirements
-          that can be met by either arrangement:
+          BS 7671 does not mandate either MCBs or RCBOs specifically. It sets performance
+          requirements that can be met by either arrangement:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -380,17 +432,17 @@ const sections = [
               <span>
                 <strong>Regulation 411.3.3</strong> — additional protection by an RCD with a rated
                 residual operating current not exceeding 30mA shall be provided for socket outlets
-                with a rated current not exceeding 32A, and for mobile equipment with a rated current
-                not exceeding 32A for use outdoors.
+                with a rated current not exceeding 32A, and for mobile equipment with a rated
+                current not exceeding 32A for use outdoors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 314.1</strong> — every installation shall be divided into circuits
-                as necessary to avoid danger and minimise inconvenience in the event of a fault. This
-                regulation supports the use of individual RCBOs, as it reduces the impact of a fault
-                to a single circuit.
+                <strong>Regulation 314.1</strong> — every installation shall be divided into
+                circuits as necessary to avoid danger and minimise inconvenience in the event of a
+                fault. This regulation supports the use of individual RCBOs, as it reduces the
+                impact of a fault to a single circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -451,7 +503,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify consumer unit upgrades"
-          description="Join 430+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for professional quoting, cable sizing, and on-site EIC certification. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -476,8 +528,7 @@ export default function MCBVsRCBOComparisonPage() {
       badgeIcon={ShieldCheck}
       heroTitle={
         <>
-          MCB vs RCBO:{' '}
-          <span className="text-yellow-400">When to Use Each</span>
+          MCB vs RCBO: <span className="text-yellow-400">When to Use Each</span>
         </>
       }
       heroSubtitle="MCBs are cheaper but require a shared RCD for earth leakage protection. RCBOs cost more but give each circuit independent protection. This guide covers the cost difference, nuisance tripping, BS 7671 requirements, and the honest pros and cons of split-load vs RCBO boards."
@@ -488,7 +539,7 @@ export default function MCBVsRCBOComparisonPage() {
       faqHeading="Frequently Asked Questions About MCBs and RCBOs"
       relatedPages={relatedPages}
       ctaHeading="Quote and Certify Consumer Unit Upgrades on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting and on-site EIC certification. 7-day free trial, cancel anytime."
     />
   );
 }

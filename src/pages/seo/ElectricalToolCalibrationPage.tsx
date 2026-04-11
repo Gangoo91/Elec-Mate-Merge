@@ -684,7 +684,7 @@ export default function ElectricalToolCalibrationPage() {
       faqHeading="Frequently Asked Questions About Electrical Tool Calibration"
       relatedPages={relatedPages}
       ctaHeading="Never Miss a Calibration Date"
-      ctaSubheading="Automatic calibration reminders, digital certificate storage, and certificate validation. Join 430+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
+      ctaSubheading="Automatic calibration reminders, digital certificate storage, and certificate validation. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial, cancel anytime."
     />
   );
 }

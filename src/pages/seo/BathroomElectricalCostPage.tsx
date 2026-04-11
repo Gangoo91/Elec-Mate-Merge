@@ -139,9 +139,9 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
           Section 701. The combination of water, steam, and exposed skin makes them one of the
-          highest-risk environments for electric shock. Every piece of electrical work in a
-          bathroom — from replacing a light fitting to installing underfloor heating — must comply
-          with strict zoning rules, IP rating requirements, and RCD protection standards.
+          highest-risk environments for electric shock. Every piece of electrical work in a bathroom
+          — from replacing a light fitting to installing underfloor heating — must comply with
+          strict zoning rules, IP rating requirements, and RCD protection standards.
         </p>
         <p>
           Whether you are a homeowner planning a bathroom renovation or an electrician quoting
@@ -196,24 +196,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heated towel rail connection</strong> — £80 to £200. A fused connection
-                unit (FCU) and wiring from a nearby circuit. The towel rail itself is a separate
-                plumbing or purchase cost.
+                <strong>Heated towel rail connection</strong> — £80 to £200. A fused connection unit
+                (FCU) and wiring from a nearby circuit. The towel rail itself is a separate plumbing
+                or purchase cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric underfloor heating connection</strong> — £300 to £600. Heating
-                mat, thermostat, dedicated circuit from the consumer unit, and RCD protection.
+                <strong>Electric underfloor heating connection</strong> — £300 to £600. Heating mat,
+                thermostat, dedicated circuit from the consumer unit, and RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric shower installation</strong> — £300 to £600. Requires a dedicated
-                circuit from the consumer unit with appropriately rated cable (typically 10mm²
-                for a 9.5kW shower), 45A MCB/RCBO, and pull-cord isolator switch.
+                circuit from the consumer unit with appropriately rated cable (typically 10mm² for a
+                9.5kW shower), 45A MCB/RCBO, and pull-cord isolator switch.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -244,33 +244,33 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Zone 0</h3>
             <p className="text-white text-sm leading-relaxed">
               Inside the bath tub or shower basin itself. Only SELV (Separated Extra-Low Voltage)
-              equipment rated at a maximum of 12V AC or 30V DC is permitted. Minimum IP rating:
-              IPX7 (protection against temporary immersion). No switches, no socket outlets, no
+              equipment rated at a maximum of 12V AC or 30V DC is permitted. Minimum IP rating: IPX7
+              (protection against temporary immersion). No switches, no socket outlets, no
               connection boxes.
             </p>
           </div>
           <div className="rounded-2xl bg-orange-500/10 border border-orange-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 1</h3>
             <p className="text-white text-sm leading-relaxed">
-              Above the bath or shower to a height of 2.25m from the finished floor level.
-              Equipment must be rated IPX4 minimum. Only fixed current-using equipment suitable
-              for use in this zone is permitted — such as electric showers, IP-rated light
-              fittings, and instantaneous water heaters. No socket outlets.
+              Above the bath or shower to a height of 2.25m from the finished floor level. Equipment
+              must be rated IPX4 minimum. Only fixed current-using equipment suitable for use in
+              this zone is permitted — such as electric showers, IP-rated light fittings, and
+              instantaneous water heaters. No socket outlets.
             </p>
           </div>
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Zone 2</h3>
             <p className="text-white text-sm leading-relaxed">
               Extends 0.6m horizontally beyond Zone 1 and to 2.25m height. Equipment must be rated
-              IPX4 minimum. Luminaires, fans, heaters, and shaver supply units (BS EN 61558-2-5)
-              are permitted in this zone.
+              IPX4 minimum. Luminaires, fans, heaters, and shaver supply units (BS EN 61558-2-5) are
+              permitted in this zone.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Outside Zones</h3>
             <p className="text-white text-sm leading-relaxed">
-              Any area beyond Zone 2. Standard accessories and fittings may be used, provided
-              they are not exposed to direct water spray. Standard plate switches are still not
+              Any area beyond Zone 2. Standard accessories and fittings may be used, provided they
+              are not exposed to direct water spray. Standard plate switches are still not
               recommended — use pull-cord switches or locate plate switches outside the bathroom.
             </p>
           </div>
@@ -300,8 +300,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Simple bathroom job (fan or light swap)</strong> — 1 to 3 hours labour.
-                Most electricians will quote a fixed price of £100 to £200 plus materials.
+                <strong>Simple bathroom job (fan or light swap)</strong> — 1 to 3 hours labour. Most
+                electricians will quote a fixed price of £100 to £200 plus materials.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -328,9 +328,7 @@ const sections = [
     heading: 'Factors Affecting Price',
     content: (
       <>
-        <p>
-          Several factors can push the cost of bathroom electrical work up or down:
-        </p>
+        <p>Several factors can push the cost of bathroom electrical work up or down:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
@@ -369,8 +367,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Coordination with other trades</strong> — bathroom renovations usually
-                involve plumbers, tilers, and carpenters. If the electrician needs to make
-                multiple visits (first fix and second fix), this adds to the labour cost.
+                involve plumbers, tilers, and carpenters. If the electrician needs to make multiple
+                visits (first fix and second fix), this adds to the labour cost.
               </span>
             </li>
           </ul>
@@ -415,8 +413,8 @@ const sections = [
               <span>
                 <strong>Supplementary bonding (Regulation 701.415.2)</strong> — supplementary
                 equipotential bonding may be required connecting all simultaneously accessible
-                exposed and extraneous conductive parts, unless all circuits are RCD-protected
-                and the main bonding is satisfactory.
+                exposed and extraneous conductive parts, unless all circuits are RCD-protected and
+                the main bonding is satisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -453,8 +451,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Experience with bathroom installations</strong> — ask whether they
-                regularly carry out bathroom work and understand the zone requirements.
+                <strong>Experience with bathroom installations</strong> — ask whether they regularly
+                carry out bathroom work and understand the zone requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -511,9 +509,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Always include Part P notification and the EIC or MEIWC in your quote. Complete
                   the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    EIC on your phone
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">EIC on your phone</SEOInternalLink>{' '}
                   on site and email it to the customer before you leave.
                 </p>
               </div>
@@ -547,8 +543,7 @@ export default function BathroomElectricalCostPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Bathroom Electrical Cost:{' '}
-          <span className="text-yellow-400">UK Price Guide 2026</span>
+          Bathroom Electrical Cost: <span className="text-yellow-400">UK Price Guide 2026</span>
         </>
       }
       heroSubtitle="How much does bathroom electrical work really cost? From extractor fans and downlights to electric showers and underfloor heating — this guide covers every common bathroom electrical job with realistic 2026 pricing, zone requirements, and regulation compliance."
@@ -559,7 +554,7 @@ export default function BathroomElectricalCostPage() {
       faqHeading="Frequently Asked Questions About Bathroom Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Bathroom Electrical Work with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for itemised quoting, on-site certification, and AI cost engineering. 7-day free trial, cancel anytime."
     />
   );
 }

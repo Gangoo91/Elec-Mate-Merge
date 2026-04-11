@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'What does electrician tool insurance cover?',
     answer:
-      'Electrician tool insurance typically covers theft and accidental damage to your tools and equipment in the following locations: (1) In a locked van — covers tools stolen from a locked van, usually subject to forced entry evidence and overnight parking restrictions. (2) On site — covers tools while in use or temporarily left at a customer\'s premises. (3) At home — covers tools stored at your home address, either in a locked garage, outbuilding, or within the house. Some policies also cover tools in transit and tools temporarily at a training venue or other location. The scope varies significantly between policies, so read the policy wording carefully.',
+      "Electrician tool insurance typically covers theft and accidental damage to your tools and equipment in the following locations: (1) In a locked van — covers tools stolen from a locked van, usually subject to forced entry evidence and overnight parking restrictions. (2) On site — covers tools while in use or temporarily left at a customer's premises. (3) At home — covers tools stored at your home address, either in a locked garage, outbuilding, or within the house. Some policies also cover tools in transit and tools temporarily at a training venue or other location. The scope varies significantly between policies, so read the policy wording carefully.",
   },
   {
     question: 'Will insurance pay if tools are stolen from my van overnight?',
@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Does my public liability insurance cover my tools?',
     answer:
-      'Public liability (PL) insurance covers your legal liability to third parties for injury or property damage caused by your business activities — it does not cover your own tools or equipment. You need a separate tool and equipment insurance policy (sometimes called plant and equipment insurance or contractors\' all risks) to protect your own property. Some combined trade insurance packages (e.g., a tradesperson\'s policy) may include basic tool cover alongside PL, but the limits are typically low (£2,500 to £5,000) and the conditions may be more restrictive than a dedicated tool policy.',
+      "Public liability (PL) insurance covers your legal liability to third parties for injury or property damage caused by your business activities — it does not cover your own tools or equipment. You need a separate tool and equipment insurance policy (sometimes called plant and equipment insurance or contractors' all risks) to protect your own property. Some combined trade insurance packages (e.g., a tradesperson's policy) may include basic tool cover alongside PL, but the limits are typically low (£2,500 to £5,000) and the conditions may be more restrictive than a dedicated tool policy.",
   },
   {
     question: 'What happens if I do not have receipts for my tools?',
@@ -132,9 +132,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tools in a locked van</strong> — the most commonly claimed scenario.
-                Cover applies when tools are in a locked van and are stolen following a break-in.
-                Most policies require evidence of forced entry and may impose overnight parking
+                <strong>Tools in a locked van</strong> — the most commonly claimed scenario. Cover
+                applies when tools are in a locked van and are stolen following a break-in. Most
+                policies require evidence of forced entry and may impose overnight parking
                 conditions (e.g., the van must be parked in a secure location or within sight of
                 CCTV). Conditions vary significantly between insurers.
               </span>
@@ -143,36 +143,34 @@ const sections = [
               <Wrench className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tools on site</strong> — covers tools while in use at a customer's property
-                or while temporarily stored at an active work site. Some policies require that
-                tools left on site overnight are locked in a secure container or within a locked
-                building.
+                or while temporarily stored at an active work site. Some policies require that tools
+                left on site overnight are locked in a secure container or within a locked building.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Tools at home</strong> — covers tools stored at your home address. Some
-                policies require tools to be in a locked outbuilding or garage rather than left in
-                a vehicle on the driveway overnight. Check the overnight storage conditions
-                carefully.
+                policies require tools to be in a locked outbuilding or garage rather than left in a
+                vehicle on the driveway overnight. Check the overnight storage conditions carefully.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Accidental damage</strong> — covers accidental damage to tools while in
-                use, in transit, or in storage. Dropped test instruments, cracked multimeter
-                screens, and damaged power tool bodies are common accidental damage claims. Check
-                whether there is a per-item limit for accidental damage claims.
+                <strong>Accidental damage</strong> — covers accidental damage to tools while in use,
+                in transit, or in storage. Dropped test instruments, cracked multimeter screens, and
+                damaged power tool bodies are common accidental damage claims. Check whether there
+                is a per-item limit for accidental damage claims.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Test equipment</strong> — multifunction testers, earth loop impedance
-                testers, RCD testers, and insulation resistance testers are expensive and
-                essential. Confirm that test equipment is covered under your policy, as some
-                insurers treat it separately from general hand and power tools.
+                testers, RCD testers, and insulation resistance testers are expensive and essential.
+                Confirm that test equipment is covered under your policy, as some insurers treat it
+                separately from general hand and power tools.
               </span>
             </li>
           </ul>
@@ -187,8 +185,8 @@ const sections = [
       <>
         <p>
           Many electricians discover the limitations of their tool insurance only when making a
-          claim. Understanding the common exclusions before you buy helps you choose a policy
-          that actually protects you.
+          claim. Understanding the common exclusions before you buy helps you choose a policy that
+          actually protects you.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -205,28 +203,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Overnight parking restrictions</strong> — some policies exclude claims
-                for tools stolen from a van parked overnight in a public road or unattended car
-                park. The policy may require the van to be garaged, in a locked compound, or
-                visible from CCTV overnight.
+                <strong>Overnight parking restrictions</strong> — some policies exclude claims for
+                tools stolen from a van parked overnight in a public road or unattended car park.
+                The policy may require the van to be garaged, in a locked compound, or visible from
+                CCTV overnight.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unattended site</strong> — tools left on site overnight (outside of a
-                locked secure container) may not be covered. Read the definition of "attended"
-                in your policy — leaving tools at a site at the end of the day may be excluded
-                unless specifically covered.
+                <strong>Unattended site</strong> — tools left on site overnight (outside of a locked
+                secure container) may not be covered. Read the definition of "attended" in your
+                policy — leaving tools at a site at the end of the day may be excluded unless
+                specifically covered.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wear and tear and mechanical breakdown</strong> — tool insurance covers
-                theft and accidental damage, not gradual deterioration, mechanical failure, or
-                tools that simply stop working. A cordless drill battery that reaches end of life
-                or a power tool that burns out through overuse is not covered.
+                theft and accidental damage, not gradual deterioration, mechanical failure, or tools
+                that simply stop working. A cordless drill battery that reaches end of life or a
+                power tool that burns out through overuse is not covered.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -259,9 +257,9 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — Report to police</strong> — report the theft to the police
-                immediately and get a crime reference number. This is almost universally required
-                by insurers as proof that a crime has occurred. Without a crime reference number,
-                most theft claims will be refused.
+                immediately and get a crime reference number. This is almost universally required by
+                insurers as proof that a crime has occurred. Without a crime reference number, most
+                theft claims will be refused.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -277,8 +275,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — Notify your insurer promptly</strong> — most policies require
-                notification within a specified period (often 24 to 72 hours). Late notification
-                can give the insurer grounds to refuse or reduce the claim. Call the claims line
+                notification within a specified period (often 24 to 72 hours). Late notification can
+                give the insurer grounds to refuse or reduce the claim. Call the claims line
                 immediately and follow up in writing.
               </span>
             </li>
@@ -294,10 +292,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 5 — Loss adjuster visit</strong> — for larger claims (typically
-                above £2,500 to £5,000), the insurer may appoint a loss adjuster to inspect
-                the scene and verify the claim. Co-operate fully and provide all documentation
-                requested.
+                <strong>Step 5 — Loss adjuster visit</strong> — for larger claims (typically above
+                £2,500 to £5,000), the insurer may appoint a loss adjuster to inspect the scene and
+                verify the claim. Co-operate fully and provide all documentation requested.
               </span>
             </li>
           </ul>
@@ -311,9 +308,9 @@ const sections = [
     content: (
       <>
         <p>
-          The excess is the amount you pay towards a claim before the insurer pays the balance.
-          It directly affects both your premium and the minimum claim size at which making a claim
-          is worthwhile.
+          The excess is the amount you pay towards a claim before the insurer pays the balance. It
+          directly affects both your premium and the minimum claim size at which making a claim is
+          worthwhile.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -322,9 +319,8 @@ const sections = [
               <span>
                 <strong>Standard excess range</strong> — £100 to £500 per claim is typical for
                 electrician tool insurance. A £100 excess gives you more claims flexibility but
-                costs more in premium. A £500 excess gives you lower premiums but means small
-                claims (e.g., a stolen £400 screwdriver set) are effectively uninsured after
-                the excess.
+                costs more in premium. A £500 excess gives you lower premiums but means small claims
+                (e.g., a stolen £400 screwdriver set) are effectively uninsured after the excess.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -332,17 +328,17 @@ const sections = [
               <span>
                 <strong>Voluntary excess</strong> — some insurers allow you to choose a higher
                 voluntary excess in exchange for a lower premium. If you would not realistically
-                claim for losses below £500 (to protect your no-claims record), opting for a
-                higher voluntary excess can give meaningful premium savings.
+                claim for losses below £500 (to protect your no-claims record), opting for a higher
+                voluntary excess can give meaningful premium savings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No-claims discount</strong> — unlike motor insurance, tool insurance no-claims
-                discounts are less standardised. Some policies offer a discount for claim-free years;
-                others do not. Ask the insurer about their no-claims discount structure before
-                choosing an excess level.
+                <strong>No-claims discount</strong> — unlike motor insurance, tool insurance
+                no-claims discounts are less standardised. Some policies offer a discount for
+                claim-free years; others do not. Ask the insurer about their no-claims discount
+                structure before choosing an excess level.
               </span>
             </li>
           </ul>
@@ -369,8 +365,8 @@ const sections = [
                 policies are designed around how electricians work. They typically have more
                 realistic van theft conditions (some do not require forced entry evidence), cover
                 test equipment as standard, and may include public liability as part of a combined
-                package. Rates are often competitive and claims handling tends to be familiar
-                with the realities of electrical contracting.
+                package. Rates are often competitive and claims handling tends to be familiar with
+                the realities of electrical contracting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -379,18 +375,17 @@ const sections = [
                 <strong>Specialist trade insurers</strong> — brokers such as Tradesman Saver,
                 Kingsbridge, Simply Business, and the Federation of Master Builders offer
                 trade-specific policies. Premiums are often lower than scheme insurance but
-                conditions may be stricter. Always read the policy wording, not just the
-                summary.
+                conditions may be stricter. Always read the policy wording, not just the summary.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>General household or van insurance</strong> — some home and van insurance
-                policies claim to include tool cover, but limits are typically very low (£500
-                to £1,000) and conditions are usually designed for private rather than commercial
-                use. These are rarely adequate for a working electrician's tool inventory. Do not
-                rely on them as your primary tool cover.
+                policies claim to include tool cover, but limits are typically very low (£500 to
+                £1,000) and conditions are usually designed for private rather than commercial use.
+                These are rarely adequate for a working electrician's tool inventory. Do not rely on
+                them as your primary tool cover.
               </span>
             </li>
           </ul>
@@ -414,33 +409,33 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>£2,500 of tools</strong> — approximately £100 to £180 per year (£8 to £15
-                per month). Suitable for a newly qualified electrician with a basic tool kit.
-                Excess typically £150 to £250.
+                per month). Suitable for a newly qualified electrician with a basic tool kit. Excess
+                typically £150 to £250.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>£5,000 of tools</strong> — approximately £180 to £480 per year (£15 to £40
-                per month). The most common cover level for a qualified electrician including
-                power tools, hand tools, and test equipment. Excess typically £200 to £500.
+                per month). The most common cover level for a qualified electrician including power
+                tools, hand tools, and test equipment. Excess typically £200 to £500.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>£10,000 of tools</strong> — approximately £350 to £700 per year (£29 to
-                £58 per month). For electricians with a full kit including specialist test
-                equipment, cable drums, and specialist hand tools. Excess typically £250 to £500.
+                <strong>£10,000 of tools</strong> — approximately £350 to £700 per year (£29 to £58
+                per month). For electricians with a full kit including specialist test equipment,
+                cable drums, and specialist hand tools. Excess typically £250 to £500.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>London premium</strong> — electricians based in London typically pay 15
-                to 25% more than equivalent cover outside London, reflecting the higher frequency
-                of van break-ins in urban areas. Overnight garage storage conditions may be
-                required in some inner London postcodes.
+                <strong>London premium</strong> — electricians based in London typically pay 15 to
+                25% more than equivalent cover outside London, reflecting the higher frequency of
+                van break-ins in urban areas. Overnight garage storage conditions may be required in
+                some inner London postcodes.
               </span>
             </li>
           </ul>
@@ -464,23 +459,23 @@ const sections = [
               <span>
                 <strong>Check van theft conditions</strong> — does the policy require forced entry
                 evidence? What are the overnight parking requirements? This single question
-                eliminates many otherwise cheap policies for electricians who keep tools in
-                their van overnight.
+                eliminates many otherwise cheap policies for electricians who keep tools in their
+                van overnight.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check test equipment cover</strong> — confirm that your multifunction tester,
-                loop tester, and RCD tester are included and that the per-item limit is sufficient
-                to replace them at current market prices.
+                <strong>Check test equipment cover</strong> — confirm that your multifunction
+                tester, loop tester, and RCD tester are included and that the per-item limit is
+                sufficient to replace them at current market prices.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New-for-old or indemnity basis?</strong> — new-for-old replaces stolen
-                or damaged tools with equivalent new items. Indemnity basis deducts depreciation,
+                <strong>New-for-old or indemnity basis?</strong> — new-for-old replaces stolen or
+                damaged tools with equivalent new items. Indemnity basis deducts depreciation,
                 meaning a five-year-old tool is only replaced at its current second-hand value.
                 New-for-old is far better value for electricians with a mixed-age tool inventory.
               </span>
@@ -518,9 +513,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Build Your Tool Register in Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Keep a running list of your tools, serial numbers, and photos within Elec-Mate
-                  job notes or the asset register. When you do need to make an insurance claim,
-                  your evidence is already organised and accessible from your phone.
+                  Keep a running list of your tools, serial numbers, and photos within Elec-Mate job
+                  notes or the asset register. When you do need to make an insurance claim, your
+                  evidence is already organised and accessible from your phone.
                 </p>
               </div>
             </div>
@@ -532,11 +527,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue Certificates That Protect You</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every certificate issued through{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    Elec-Mate
-                  </SEOInternalLink>{' '}
-                  is stored in the cloud with the test results that support it. If a client or
-                  insurer ever questions your work, you have complete documentary evidence on hand.
+                  <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate</SEOInternalLink> is
+                  stored in the cloud with the test results that support it. If a client or insurer
+                  ever questions your work, you have complete documentary evidence on hand.
                 </p>
               </div>
             </div>
@@ -544,7 +537,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run a protected electrical business with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. Build the paper trail that protects your business. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. Build the paper trail that protects your business. 7-day free trial."
           icon={ShieldCheck}
         />
       </>
@@ -581,7 +574,7 @@ export default function ElectricalToolInsurancePage2025Page() {
       faqHeading="Frequently Asked Questions About Electrician Tool Insurance"
       relatedPages={relatedPages}
       ctaHeading="Protect your electrical business with the right tools and systems"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for electrical certificates, job scheduling, quoting, and invoicing. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -564,7 +564,7 @@ export default function InsulationResistanceMinValuesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Auto-Validate Every IR Reading"
-      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 61 minimum values in real time. Readings below minimum are flagged instantly. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate compares every insulation resistance reading against BS 7671 Table 61 minimum values in real time. Readings below minimum are flagged instantly. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

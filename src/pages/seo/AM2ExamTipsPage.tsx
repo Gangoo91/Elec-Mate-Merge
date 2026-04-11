@@ -515,7 +515,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Practise the AM2 Before the Real Thing"
-          description="Timed exercises, AI feedback, safe isolation simulations, and full mock assessments — all replicating the real AM2 format. Join 430+ UK apprentices preparing with Elec-Mate. 7-day free trial."
+          description="Timed exercises, AI feedback, safe isolation simulations, and full mock assessments — all replicating the real AM2 format. Join 1,000+ UK apprentices preparing with Elec-Mate. 7-day free trial."
           icon={Target}
         />
       </>
@@ -548,7 +548,7 @@ export default function AM2ExamTipsPage() {
       faqHeading="Frequently Asked Questions About the AM2 Assessment"
       relatedPages={relatedPages}
       ctaHeading="Pass the AM2 first time"
-      ctaSubheading="Join 430+ UK apprentices and electricians preparing for the AM2 with timed mock exercises and AI feedback. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK apprentices and electricians preparing for the AM2 with timed mock exercises and AI feedback. 7-day free trial, cancel anytime."
     />
   );
 }

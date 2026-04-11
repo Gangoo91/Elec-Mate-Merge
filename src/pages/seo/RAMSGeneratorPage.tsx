@@ -116,7 +116,7 @@ const softwareAppSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.8',
-    ratingCount: '430',
+    ratingCount: '1000',
     bestRating: '5',
   },
 };
@@ -329,9 +329,7 @@ export default function RAMSGeneratorPage() {
                 manual handling training
               </SEOInternalLink>{' '}
               and{' '}
-              <SEOInternalLink href="/training/pasma-training">
-                PASMA certification
-              </SEOInternalLink>{' '}
+              <SEOInternalLink href="/training/pasma-training">PASMA certification</SEOInternalLink>{' '}
               for a complete health and safety package.
             </p>
           </div>
@@ -616,7 +614,7 @@ export default function RAMSGeneratorPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Purpose-built for UK electricians. Generate professional, site-specific RAMS in seconds
-            instead of hours. Part of 70 calculators, 8 AI agents, and 12 AI tools.
+            instead of hours. Part of 70+ calculators, 8 AI agents, and 12 AI tools.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
         </div>
@@ -667,7 +665,7 @@ export default function RAMSGeneratorPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Generate Professional RAMS in Seconds"
-        subheading="Join 430+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
+        subheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered risk assessments. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom padding for mobile sticky CTA */}

@@ -545,7 +545,7 @@ export default function WorkplaceSafetyCoursePage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Make safety second nature"
-      ctaSubheading="Join 430+ UK electricians studying smarter with Elec-Mate. Comprehensive safety modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. Comprehensive safety modules, AI RAMS generator, and an AI tutor for any health and safety question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
       coursePath="/training/workplace-safety-course"
     />

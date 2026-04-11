@@ -601,7 +601,7 @@ export default function CableColourCodesPage() {
       faqs={faqs}
       relatedPages={relatedPages}
       ctaHeading="Identify Cable Colours with AI Board Scanner"
-      ctaSubheading="Elec-Mate's board scanner identifies cable colours from consumer unit photographs, flags missing sleeving, and auto-populates circuit data. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate's board scanner identifies cable colours from consumer unit photographs, flags missing sleeving, and auto-populates circuit data. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

@@ -38,7 +38,7 @@ const tocItems = [
 const keyTakeaways = [
   'Tenants in private rented properties in England have the legal right to receive a copy of the EICR within 28 days of the inspection, or before they move in if they are a new tenant.',
   'Tenants can request a copy of the EICR in writing from their landlord or letting agent at any time. The landlord must provide it within 28 days of a written request.',
-  'If a landlord fails to provide a valid EICR, tenants should report this to the local authority\'s private rented sector or environmental health team — the council has enforcement powers including civil penalties of up to £30,000.',
+  "If a landlord fails to provide a valid EICR, tenants should report this to the local authority's private rented sector or environmental health team — the council has enforcement powers including civil penalties of up to £30,000.",
   'Withholding rent is not an appropriate response to an absent or unsatisfactory EICR and can put tenants at legal risk. There are correct channels — use them.',
   'Landlords who have not provided the EICR cannot serve a valid Section 21 (no-fault eviction) notice, giving tenants meaningful protection whilst the compliance issue is resolved.',
   'The Deregulation Act 2015 provides additional protection from retaliatory eviction where a tenant has raised a legitimate complaint about the condition of the property.',
@@ -53,22 +53,22 @@ const faqs = [
   {
     question: 'What if my landlord says they do not have an EICR?',
     answer:
-      'If your landlord cannot provide a current, in-date EICR, they may be in breach of the Electrical Safety Standards Regulations 2020. Put your request in writing (email is fine) so you have a record. If the landlord still cannot or will not provide a valid EICR, report the matter to your local council\'s private rented sector or environmental health team. The council can require the landlord to commission an EICR and can impose a civil penalty of up to £30,000 for non-compliance.',
+      "If your landlord cannot provide a current, in-date EICR, they may be in breach of the Electrical Safety Standards Regulations 2020. Put your request in writing (email is fine) so you have a record. If the landlord still cannot or will not provide a valid EICR, report the matter to your local council's private rented sector or environmental health team. The council can require the landlord to commission an EICR and can impose a civil penalty of up to £30,000 for non-compliance.",
   },
   {
     question: 'Can I report my landlord to the council about EICR non-compliance?',
     answer:
-      'Yes. Each local authority in England is responsible for enforcing the Electrical Safety Standards Regulations 2020 in their area. You can report your landlord\'s non-compliance to the council\'s environmental health team or private rented sector team. Many councils have online reporting forms. Provide any written correspondence you have (your request and the landlord\'s response), the address of the property, and your contact details. The council may investigate and take enforcement action.',
+      "Yes. Each local authority in England is responsible for enforcing the Electrical Safety Standards Regulations 2020 in their area. You can report your landlord's non-compliance to the council's environmental health team or private rented sector team. Many councils have online reporting forms. Provide any written correspondence you have (your request and the landlord's response), the address of the property, and your contact details. The council may investigate and take enforcement action.",
   },
   {
     question: 'Can I withhold rent because my landlord has not provided an EICR?',
     answer:
-      'No. Withholding rent is not a legally recognised response to a landlord\'s failure to provide an EICR, and it can put you at serious legal risk. You could be placed in rent arrears, which could be used as grounds for possession proceedings. The correct course of action is to report the non-compliance to the local authority. If you are concerned about your safety, contact your local council and, if necessary, seek independent legal advice from Citizens Advice, Shelter, or a housing solicitor.',
+      "No. Withholding rent is not a legally recognised response to a landlord's failure to provide an EICR, and it can put you at serious legal risk. You could be placed in rent arrears, which could be used as grounds for possession proceedings. The correct course of action is to report the non-compliance to the local authority. If you are concerned about your safety, contact your local council and, if necessary, seek independent legal advice from Citizens Advice, Shelter, or a housing solicitor.",
   },
   {
     question: 'Can my landlord evict me for complaining about electrical safety?',
     answer:
-      'Your landlord cannot serve a valid Section 21 notice (no-fault eviction) if they have not provided you with a copy of the current EICR. Additionally, the Deregulation Act 2015 provides protection from retaliatory eviction: if you have made a written complaint about the condition of the property and the landlord has not responded adequately, and you have then reported the issue to the council, the landlord cannot serve a valid Section 21 notice for six months from the date of the council\'s relevant notice.',
+      "Your landlord cannot serve a valid Section 21 notice (no-fault eviction) if they have not provided you with a copy of the current EICR. Additionally, the Deregulation Act 2015 provides protection from retaliatory eviction: if you have made a written complaint about the condition of the property and the landlord has not responded adequately, and you have then reported the issue to the council, the landlord cannot serve a valid Section 21 notice for six months from the date of the council's relevant notice.",
   },
   {
     question: 'What if the EICR shows that my home is unsafe?',
@@ -86,7 +86,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -127,7 +128,7 @@ const relatedPages: RelatedPage[] = [
 const sections = [
   {
     id: 'right-to-copy',
-    heading: 'Tenants\' Right to a Copy of the EICR',
+    heading: "Tenants' Right to a Copy of the EICR",
     content: (
       <>
         <p>
@@ -142,8 +143,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New tenants</strong> — you must receive a copy of the current EICR before
-                you move in. If the landlord cannot provide one (because no valid EICR exists),
-                they are in breach of the regulations before your tenancy has even started.
+                you move in. If the landlord cannot provide one (because no valid EICR exists), they
+                are in breach of the regulations before your tenancy has even started.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -156,17 +157,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>On request</strong> — you can request a copy of the current EICR in
-                writing at any time during your tenancy. The landlord must provide it within
-                28 days of your written request. Keep your request in writing (email is acceptable)
-                so you have a record of the date.
+                <strong>On request</strong> — you can request a copy of the current EICR in writing
+                at any time during your tenancy. The landlord must provide it within 28 days of your
+                written request. Keep your request in writing (email is acceptable) so you have a
+                record of the date.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prospective tenants</strong> — even before signing a tenancy agreement,
-                a prospective tenant can request a copy of the EICR from the landlord or letting
+                <strong>Prospective tenants</strong> — even before signing a tenancy agreement, a
+                prospective tenant can request a copy of the EICR from the landlord or letting
                 agent. The landlord must provide it within 28 days. You should ask to see a copy
                 before committing to the tenancy.
               </span>
@@ -196,38 +197,38 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 1 — put your request in writing</strong> — send a written request
-                (email is fine) to your landlord or letting agent asking for a copy of the
-                current EICR. State clearly that you are making the request under the Electrical
-                Safety Standards in the Private Rented Sector (England) Regulations 2020. Keep
-                a copy of the email.
+                (email is fine) to your landlord or letting agent asking for a copy of the current
+                EICR. State clearly that you are making the request under the Electrical Safety
+                Standards in the Private Rented Sector (England) Regulations 2020. Keep a copy of
+                the email.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — wait 28 days</strong> — the landlord has 28 days from your
-                written request to provide the EICR. If they provide it and it is satisfactory,
-                the matter is resolved. If they do not respond, or respond saying no EICR exists,
-                proceed to step 3.
+                <strong>Step 2 — wait 28 days</strong> — the landlord has 28 days from your written
+                request to provide the EICR. If they provide it and it is satisfactory, the matter
+                is resolved. If they do not respond, or respond saying no EICR exists, proceed to
+                step 3.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 3 — report to the local authority</strong> — contact your local
-                council's environmental health or private rented sector team. Provide the
-                property address, the date of your written request, and any response from the
-                landlord. Attach your email correspondence. The council has enforcement powers
-                and can investigate.
+                council's environmental health or private rented sector team. Provide the property
+                address, the date of your written request, and any response from the landlord.
+                Attach your email correspondence. The council has enforcement powers and can
+                investigate.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — seek independent advice if needed</strong> — if you are
-                concerned about your safety or about your landlord's response, contact Citizens
-                Advice, Shelter, or a housing solicitor. These organisations can provide free
-                or low-cost advice on your rights and options.
+                <strong>Step 4 — seek independent advice if needed</strong> — if you are concerned
+                about your safety or about your landlord's response, contact Citizens Advice,
+                Shelter, or a housing solicitor. These organisations can provide free or low-cost
+                advice on your rights and options.
               </span>
             </li>
           </ul>
@@ -241,31 +242,31 @@ const sections = [
     content: (
       <>
         <p>
-          The local authority — your borough council, district council, or unitary authority —
-          is the enforcement body for the Electrical Safety Standards Regulations 2020. Reporting
-          your landlord's non-compliance to the council is the correct and legally supported
-          course of action.
+          The local authority — your borough council, district council, or unitary authority — is
+          the enforcement body for the Electrical Safety Standards Regulations 2020. Reporting your
+          landlord's non-compliance to the council is the correct and legally supported course of
+          action.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Where to report</strong> — contact the environmental health team or
-                private rented sector team at your local council. Most councils have an online
-                form for private rented sector complaints. Search for "[your council name]
-                private rented sector complaint" or "[your council name] environmental health
-                housing" to find the right department.
+                <strong>Where to report</strong> — contact the environmental health team or private
+                rented sector team at your local council. Most councils have an online form for
+                private rented sector complaints. Search for "[your council name] private rented
+                sector complaint" or "[your council name] environmental health housing" to find the
+                right department.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What to provide</strong> — the property address, your contact details,
-                a description of the complaint (no EICR provided, EICR is out of date, remedial
-                work not completed), the date of your written request to the landlord, and any
-                written responses from the landlord. The more evidence you can provide, the more
-                effectively the council can act.
+                <strong>What to provide</strong> — the property address, your contact details, a
+                description of the complaint (no EICR provided, EICR is out of date, remedial work
+                not completed), the date of your written request to the landlord, and any written
+                responses from the landlord. The more evidence you can provide, the more effectively
+                the council can act.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,17 +274,17 @@ const sections = [
               <span>
                 <strong>What happens next</strong> — the council will review your complaint and
                 decide whether to investigate. If they find a breach, they can issue a remedial
-                notice requiring the landlord to commission an EICR or complete remedial work.
-                If the landlord fails to comply with the notice, the council can impose a civil
-                penalty of up to £30,000, or arrange for the work to be done and recover costs
-                from the landlord.
+                notice requiring the landlord to commission an EICR or complete remedial work. If
+                the landlord fails to comply with the notice, the council can impose a civil penalty
+                of up to £30,000, or arrange for the work to be done and recover costs from the
+                landlord.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Your identity can generally be kept confidential during the investigation process.
-          Ask the council about their confidentiality policy when you make the report.
+          Your identity can generally be kept confidential during the investigation process. Ask the
+          council about their confidentiality policy when you make the report.
         </p>
       </>
     ),
@@ -303,10 +304,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial notices</strong> — the council can serve a remedial notice
-                on the landlord requiring them to take specific action (commission an EICR,
-                complete remedial work) within a set timeframe. Failure to comply with a
-                remedial notice is itself a breach attracting additional penalties.
+                <strong>Remedial notices</strong> — the council can serve a remedial notice on the
+                landlord requiring them to take specific action (commission an EICR, complete
+                remedial work) within a set timeframe. Failure to comply with a remedial notice is
+                itself a breach attracting additional penalties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -315,27 +316,27 @@ const sections = [
                 <strong>Civil penalties up to £30,000</strong> — each breach of the regulations
                 (failure to obtain an EICR, failure to provide it, failure to complete remedial
                 work) can attract a separate civil penalty of up to £30,000. The council has
-                discretion in setting the penalty amount, taking account of the seriousness of
-                the breach and whether it is a repeat offence.
+                discretion in setting the penalty amount, taking account of the seriousness of the
+                breach and whether it is a repeat offence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Work in default</strong> — if the landlord fails to carry out required
-                remedial work after a remedial notice, the council can arrange for the work
-                to be done by a qualified electrician and recover the cost from the landlord.
-                The tenant is not charged for this work.
+                remedial work after a remedial notice, the council can arrange for the work to be
+                done by a qualified electrician and recover the cost from the landlord. The tenant
+                is not charged for this work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HHSRS powers</strong> — separately from the Electrical Safety Standards
-                Regulations, councils can use Housing Health and Safety Rating System (HHSRS)
-                powers where the electrical installation poses a health and safety hazard.
-                HHSRS Category 1 hazards (including electrical hazards) can lead to
-                Improvement Notices or Emergency Prohibition Orders.
+                Regulations, councils can use Housing Health and Safety Rating System (HHSRS) powers
+                where the electrical installation poses a health and safety hazard. HHSRS Category 1
+                hazards (including electrical hazards) can lead to Improvement Notices or Emergency
+                Prohibition Orders.
               </span>
             </li>
           </ul>
@@ -350,46 +351,45 @@ const sections = [
       <>
         <p>
           It is tempting for tenants in a difficult situation with a non-compliant landlord to
-          consider withholding rent as leverage. This is strongly advised against. Withholding
-          rent is not a recognised remedy under the Electrical Safety Standards Regulations 2020
-          or general housing law, and it carries serious legal risks for the tenant.
+          consider withholding rent as leverage. This is strongly advised against. Withholding rent
+          is not a recognised remedy under the Electrical Safety Standards Regulations 2020 or
+          general housing law, and it carries serious legal risks for the tenant.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rent arrears</strong> — if you withhold rent, you are in arrears. Once
-                you owe more than two months' rent, your landlord can serve a Section 8 notice
-                using Ground 8 (mandatory possession ground). This means a court must grant
-                possession even if the landlord is also in breach of their obligations. The
-                fact that you withheld rent because of an EICR issue is not an automatic defence.
+                <strong>Rent arrears</strong> — if you withhold rent, you are in arrears. Once you
+                owe more than two months' rent, your landlord can serve a Section 8 notice using
+                Ground 8 (mandatory possession ground). This means a court must grant possession
+                even if the landlord is also in breach of their obligations. The fact that you
+                withheld rent because of an EICR issue is not an automatic defence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Credit impact</strong> — possession proceedings and county court
-                judgments (CCJs) for rent arrears can damage your credit rating for six years
-                and make it difficult to rent privately in future.
+                <strong>Credit impact</strong> — possession proceedings and county court judgments
+                (CCJs) for rent arrears can damage your credit rating for six years and make it
+                difficult to rent privately in future.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Use the correct channels instead</strong> — report non-compliance to
-                the local authority. Seek advice from Citizens Advice or Shelter. These
-                organisations can help you exercise your rights without putting your tenancy
-                at risk.
+                <strong>Use the correct channels instead</strong> — report non-compliance to the
+                local authority. Seek advice from Citizens Advice or Shelter. These organisations
+                can help you exercise your rights without putting your tenancy at risk.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          If you are in an emergency situation where you believe your electrical installation
-          poses an immediate danger (C1 level), contact the council's emergency housing line
-          and, if necessary, the emergency services. Do not use electrical appliances or
-          installations you believe to be unsafe.
+          If you are in an emergency situation where you believe your electrical installation poses
+          an immediate danger (C1 level), contact the council's emergency housing line and, if
+          necessary, the emergency services. Do not use electrical appliances or installations you
+          believe to be unsafe.
         </p>
       </>
     ),
@@ -408,22 +408,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 21 invalidity — EICR not provided</strong> — a landlord cannot
-                serve a valid Section 21 notice if they have not provided the tenant with a copy
-                of the current EICR. If you receive a Section 21 notice but have never been
-                given the EICR, the notice is invalid and you do not have to leave. Seek legal
-                advice before taking any action.
+                <strong>Section 21 invalidity — EICR not provided</strong> — a landlord cannot serve
+                a valid Section 21 notice if they have not provided the tenant with a copy of the
+                current EICR. If you receive a Section 21 notice but have never been given the EICR,
+                the notice is invalid and you do not have to leave. Seek legal advice before taking
+                any action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Deregulation Act 2015 — retaliatory eviction protection</strong> — if
-                you have made a written complaint to your landlord about the condition of the
-                property (including electrical safety), the landlord has not responded adequately,
-                and you have reported the matter to the council, which has then issued a relevant
-                notice, your landlord cannot serve a valid Section 21 notice for six months from
-                the date of that notice.
+                <strong>Deregulation Act 2015 — retaliatory eviction protection</strong> — if you
+                have made a written complaint to your landlord about the condition of the property
+                (including electrical safety), the landlord has not responded adequately, and you
+                have reported the matter to the council, which has then issued a relevant notice,
+                your landlord cannot serve a valid Section 21 notice for six months from the date of
+                that notice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,8 +441,8 @@ const sections = [
         <p>
           If you receive an eviction notice after raising electrical safety concerns, seek urgent
           legal advice. Citizens Advice, Shelter, and local law centres provide free and low-cost
-          housing advice. Do not ignore an eviction notice — even if you believe it is invalid,
-          you must respond correctly to protect your position.
+          housing advice. Do not ignore an eviction notice — even if you believe it is invalid, you
+          must respond correctly to protect your position.
         </p>
       </>
     ),
@@ -453,26 +453,28 @@ const sections = [
     content: (
       <>
         <p>
-          Electricians play a key role in the system that protects tenants' electrical safety.
-          A thorough, accurately documented EICR is the foundation of the entire framework. When
-          an EICR is well-produced and clearly communicated to both landlord and tenant, the
-          regulatory system works as intended.
+          Electricians play a key role in the system that protects tenants' electrical safety. A
+          thorough, accurately documented EICR is the foundation of the entire framework. When an
+          EICR is well-produced and clearly communicated to both landlord and tenant, the regulatory
+          system works as intended.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Produce Compliant EICRs with Elec-Mate</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Produce Compliant EICRs with Elec-Mate
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to produce fully compliant, clearly documented EICRs on site. Each
-                  observation is clearly classified (C1, C2, C3, FI), the overall assessment
-                  is clearly stated, and the recommended reinspection date is included. Landlords
-                  can forward the PDF directly to tenants to meet their 28-day obligation.
+                  to produce fully compliant, clearly documented EICRs on site. Each observation is
+                  clearly classified (C1, C2, C3, FI), the overall assessment is clearly stated, and
+                  the recommended reinspection date is included. Landlords can forward the PDF
+                  directly to tenants to meet their 28-day obligation.
                 </p>
               </div>
             </div>
@@ -480,7 +482,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Produce compliant EICRs that protect landlords and tenants"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion. Clear C1/C2/C3/FI classification, instant PDF export, and landlord portal upload. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -517,7 +519,7 @@ export default function EICRTenantRightsPage() {
       faqHeading="Frequently Asked Questions: Tenant EICR Rights"
       relatedPages={relatedPages}
       ctaHeading="For Electricians: Complete Compliant EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to produce clearly documented, fully compliant EICRs on site. Help landlords meet their obligations and protect their tenants. 7-day free trial."
     />
   );
 }

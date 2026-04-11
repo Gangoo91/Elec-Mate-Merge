@@ -555,7 +555,7 @@ const sections = [
             <div className="flex items-start gap-4">
               <ClipboardCheck className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">8 Certificate Types</h4>
+                <h4 className="font-bold text-white mb-1">16 Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   EICR, EIC, Minor Works, PAT Testing, EV Charger, Emergency Lighting, Fire Alarm,
                   and Solar PV. All digitally signed with PDF export and instant delivery by email
@@ -614,7 +614,7 @@ export default function ElectricalTestingCostUKPage() {
       faqHeading="Frequently Asked Questions About Electrical Testing Costs"
       relatedPages={relatedPages}
       ctaHeading="Earn more from every testing job"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to complete certificates on site, generate remedial quotes, and eliminate post-site paperwork. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to complete certificates on site, generate remedial quotes, and eliminate post-site paperwork. 7-day free trial, cancel anytime."
     />
   );
 }

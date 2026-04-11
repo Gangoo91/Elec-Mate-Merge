@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What are the most common EICR failures in Cheltenham?',
     answer:
-      'In Cheltenham\'s period property stock the most common C2 findings are: absent RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate or missing main protective bonding (Regulation 544.1), degraded or fabric-covered wiring in converted Regency properties, and non-compliant consumer unit enclosures. Converted flats in large Regency terraces often have complex shared consumer unit arrangements that require careful inspection.',
+      "In Cheltenham's period property stock the most common C2 findings are: absent RCD protection on socket-outlet circuits (Regulation 411.3.3 of BS 7671), inadequate or missing main protective bonding (Regulation 544.1), degraded or fabric-covered wiring in converted Regency properties, and non-compliant consumer unit enclosures. Converted flats in large Regency terraces often have complex shared consumer unit arrangements that require careful inspection.",
   },
   {
     question: 'How long does an EICR take in Cheltenham?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: Home,
     category: 'Guide',
   },
@@ -128,8 +129,9 @@ const sections = [
         <p>
           An Electrical Installation Condition Report (EICR) is a formal document produced by a
           qualified electrician following a thorough inspection and test of a property's fixed
-          electrical installation. The inspection assesses wiring, consumer units, earthing, bonding,
-          sockets, light fittings, and all fixed electrical equipment against the requirements of{' '}
+          electrical installation. The inspection assesses wiring, consumer units, earthing,
+          bonding, sockets, light fittings, and all fixed electrical equipment against the
+          requirements of{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>{' '}
@@ -150,19 +152,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory</strong> — C1 (danger present) or C2 (potentially
-                dangerous) observations have been found. The landlord must arrange all remedial
-                work within 28 days. The property cannot be let under a new tenancy without
-                evidence that remedial work is underway or complete.
+                <strong>Unsatisfactory</strong> — C1 (danger present) or C2 (potentially dangerous)
+                observations have been found. The landlord must arrange all remedial work within 28
+                days. The property cannot be let under a new tenancy without evidence that remedial
+                work is underway or complete.
               </span>
             </li>
           </ul>
         </div>
         <p>
           The EICR replaced the older Periodic Inspection Report (PIR) format and follows the
-          requirements set out in BS 7671 Section 631. It is the document required by both the
-          2020 private rented sector regulations and by HMO licensing schemes operated by
-          Cheltenham Borough Council.
+          requirements set out in BS 7671 Section 631. It is the document required by both the 2020
+          private rented sector regulations and by HMO licensing schemes operated by Cheltenham
+          Borough Council.
         </p>
       </>
     ),
@@ -193,8 +195,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inspection frequency</strong> — before each new tenancy and at least every
-                five years. The inspector may recommend a shorter re-inspection interval on the
-                EICR itself, particularly for older period property installations.
+                five years. The inspector may recommend a shorter re-inspection interval on the EICR
+                itself, particularly for older period property installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -208,9 +210,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Civil penalties</strong> — Cheltenham Borough Council can impose fines of
-                up to £30,000 per breach. Each individual failure to comply is a separate breach
-                and can attract its own penalty.
+                <strong>Civil penalties</strong> — Cheltenham Borough Council can impose fines of up
+                to £30,000 per breach. Each individual failure to comply is a separate breach and
+                can attract its own penalty.
               </span>
             </li>
           </ul>
@@ -242,24 +244,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Distribute the EICR</strong> — to existing tenants within 28 days of the
-                inspection, to new tenants before they occupy the property, and to Cheltenham Borough
-                Council within seven days if requested.
+                inspection, to new tenants before they occupy the property, and to Cheltenham
+                Borough Council within seven days if requested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Complete all remedial work within 28 days</strong> where the EICR is
-                Unsatisfactory. C1 (danger present) findings require urgent action. All work must
-                be carried out by a competent electrician.
+                Unsatisfactory. C1 (danger present) findings require urgent action. All work must be
+                carried out by a competent electrician.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Provide written confirmation of completion</strong> — once remedial work is
-                done, obtain written confirmation and distribute to the tenant and council within
-                28 days of completion.
+                done, obtain written confirmation and distribute to the tenant and council within 28
+                days of completion.
               </span>
             </li>
           </ul>
@@ -288,10 +290,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires
-                30mA RCD protection on all socket-outlet circuits up to 32A. Consumer units
-                replaced without RCD-protected ways are common in properties across St Paul's,
-                Springbank, and Hesters Way. This is typically coded C2.
+                <strong>Absent RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA
+                RCD protection on all socket-outlet circuits up to 32A. Consumer units replaced
+                without RCD-protected ways are common in properties across St Paul's, Springbank,
+                and Hesters Way. This is typically coded C2.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -332,9 +334,9 @@ const sections = [
       <>
         <p>
           Cheltenham is nationally recognised for its concentration of Regency and Georgian
-          architecture, particularly in the Montpellier, Pittville, and Lansdown areas. These
-          grand period properties — many now subdivided into flats or converted to HMOs — present
-          specific electrical inspection challenges not found in more modern housing stock.
+          architecture, particularly in the Montpellier, Pittville, and Lansdown areas. These grand
+          period properties — many now subdivided into flats or converted to HMOs — present specific
+          electrical inspection challenges not found in more modern housing stock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -353,9 +355,9 @@ const sections = [
               <span>
                 <strong>Shared electrical infrastructure</strong> — many converted Cheltenham
                 properties have shared consumer units, shared supply intake arrangements, or shared
-                metering. Establishing what forms part of each dwelling's fixed installation —
-                and therefore what the landlord must include in the EICR — requires inspector
-                experience and judgement.
+                metering. Establishing what forms part of each dwelling's fixed installation — and
+                therefore what the landlord must include in the EICR — requires inspector experience
+                and judgement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -363,8 +365,8 @@ const sections = [
               <span>
                 <strong>Conservation area restrictions</strong> — properties in Cheltenham's
                 conservation areas may have restrictions on visible external cable runs or
-                alteration of original fabric. Electricians should factor this into remedial
-                work planning and discuss any constraints with the landlord and the local authority
+                alteration of original fabric. Electricians should factor this into remedial work
+                planning and discuss any constraints with the landlord and the local authority
                 before proceeding.
               </span>
             </li>
@@ -374,7 +376,8 @@ const sections = [
                 <strong>Higher inspection time and cost</strong> — the additional complexity of
                 period property inspections means that EICRs for Cheltenham Regency properties
                 typically take longer and cost more than equivalent modern properties. Landlords
-                should budget accordingly and avoid choosing inspectors based purely on lowest price.
+                should budget accordingly and avoid choosing inspectors based purely on lowest
+                price.
               </span>
             </li>
           </ul>
@@ -389,23 +392,24 @@ const sections = [
       <>
         <p>
           Cheltenham EICR prices reflect Gloucestershire and South West labour rates, which are
-          broadly moderate — higher than the Midlands and North, but significantly lower than London.
-          Period and converted properties command a premium due to increased inspection complexity.
+          broadly moderate — higher than the Midlands and North, but significantly lower than
+          London. Period and converted properties command a premium due to increased inspection
+          complexity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat (modern)</strong> — £110 to £180. Typically 3 to 5
-                circuits with a single consumer unit.
+                <strong>One-bedroom flat (modern)</strong> — £110 to £180. Typically 3 to 5 circuits
+                with a single consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £130 to £220. The most common property
-                type in Cheltenham's private rented sector.
+                <strong>Two-bedroom property</strong> — £130 to £220. The most common property type
+                in Cheltenham's private rented sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -419,9 +423,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regency / converted / HMO property</strong> — £300 to £600 or more.
-                Multiple consumer units, shared installation boundaries, fire alarm systems, and
-                emergency lighting all increase inspection scope and cost.
+                <strong>Regency / converted / HMO property</strong> — £300 to £600 or more. Multiple
+                consumer units, shared installation boundaries, fire alarm systems, and emergency
+                lighting all increase inspection scope and cost.
               </span>
             </li>
           </ul>
@@ -450,10 +454,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Search official registers</strong> — use the NICEIC, NAPIT, or ELECSA
-                online registers to find registered electricians in Cheltenham and the Cotswolds
-                area. Registration confirms qualifications, insurance, and regular quality
-                assessment.
+                <strong>Search official registers</strong> — use the NICEIC, NAPIT, or ELECSA online
+                registers to find registered electricians in Cheltenham and the Cotswolds area.
+                Registration confirms qualifications, insurance, and regular quality assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,9 +471,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Calibrated test equipment</strong> — insulation resistance, earth fault
-                loop impedance, and RCD testing require calibrated multifunction testers. Ask when
-                the electrician's instruments were last calibrated.
+                <strong>Calibrated test equipment</strong> — insulation resistance, earth fault loop
+                impedance, and RCD testing require calibrated multifunction testers. Ask when the
+                electrician's instruments were last calibrated.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -496,7 +499,8 @@ const sections = [
           Cheltenham's buoyant private rented sector — driven by GCHQ employment, the annual
           festival economy, and the University of Gloucestershire — creates consistent demand for
           landlord EICRs. Electricians who develop expertise in period property inspections can
-          command premium rates and build a loyal client base among Cheltenham's portfolio landlords.
+          command premium rates and build a loyal client base among Cheltenham's portfolio
+          landlords.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -523,13 +527,12 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When C1 or C2 observations are found, raise a remedial quote on the day using
-                  the{' '}
+                  When C1 or C2 observations are found, raise a remedial quote on the day using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Cheltenham landlords must complete remedial work within 28 days — quoting on
-                  the inspection day gives you the best chance of winning the contract.
+                  . Cheltenham landlords must complete remedial work within 28 days — quoting on the
+                  inspection day gives you the best chance of winning the contract.
                 </p>
               </div>
             </div>
@@ -537,7 +540,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more EICR work across Cheltenham with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, AI board scanning, and instant PDF export. Complete more inspections per day and convert findings to remedial quotes on the spot. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -574,7 +577,7 @@ export default function EICRCheltenhamPage() {
       faqHeading="Frequently Asked Questions About EICRs in Cheltenham"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs On Your Phone — Any Location in Cheltenham"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

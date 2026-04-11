@@ -160,7 +160,9 @@ const sections = [
         </div>
         <p>
           These prices include materials, labour, a new{' '}
-          <SEOInternalLink href="/guides/consumer-unit-replacement-cost">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
+            consumer unit
+          </SEOInternalLink>{' '}
           with RCBOs and SPD, testing, the EIC, and Part P notification. Making good (plastering and
           decoration) is typically quoted separately.
         </p>
@@ -174,8 +176,8 @@ const sections = [
       <>
         <p>
           Greater Manchester has one of the largest concentrations of Victorian and Edwardian
-          terraced housing outside London. The region also has significant 1930s suburban development
-          and a growing stock of converted warehouse apartments in the city centre.
+          terraced housing outside London. The region also has significant 1930s suburban
+          development and a growing stock of converted warehouse apartments in the city centre.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -193,17 +195,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian semis (1900s–1930s):</strong> Found in Didsbury, Chorlton,
-                Withington, Prestwich, and Sale. Larger than Victorian terraces, with bay windows and
-                more spacious layouts. Many have had extensions and conversions that added circuits
-                without upgrading the main installation.
+                Withington, Prestwich, and Sale. Larger than Victorian terraces, with bay windows
+                and more spacious layouts. Many have had extensions and conversions that added
+                circuits without upgrading the main installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>1930s–1950s council and private estates:</strong> Extensive across Wythenshawe,
-                Gorton, Moston, and parts of Stockport and Tameside. Many still have original PVC
-                wiring from the 1950s–1960s, approaching or exceeding its design life.
+                <strong>1930s–1950s council and private estates:</strong> Extensive across
+                Wythenshawe, Gorton, Moston, and parts of Stockport and Tameside. Many still have
+                original PVC wiring from the 1950s–1960s, approaching or exceeding its design life.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,10 +228,9 @@ const sections = [
     content: (
       <>
         <p>
-          Book an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a qualified
-          electrician to get a definitive assessment. However, these signs indicate you should
-          arrange an inspection promptly:
+          Book an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a
+          qualified electrician to get a definitive assessment. However, these signs indicate you
+          should arrange an inspection promptly:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -243,8 +244,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — wooden-backed boards with wire fuses offer no
-                RCD protection and are a fire risk.
+                <strong>Rewirable fuse board</strong> — wooden-backed boards with wire fuses offer
+                no RCD protection and are a fire risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,21 +343,21 @@ const sections = [
         <p>
           If the electrician is not registered with a competent person scheme, you must notify
           Manchester City Council Building Control before starting the work and pay for their
-          inspection (typically £250–£350). This is slower and more expensive than using a registered
-          electrician.
+          inspection (typically £250–£350). This is slower and more expensive than using a
+          registered electrician.
         </p>
       </>
     ),
   },
   {
     id: 'whats-included',
-    heading: "What Is Included in a Manchester Rewire Quote",
+    heading: 'What Is Included in a Manchester Rewire Quote',
     content: (
       <>
         <p>
-          A proper rewire quote should itemise every element. Watch out for single-figure quotes that
-          bundle everything with no breakdown — they make comparison impossible and often exclude
-          essential items.
+          A proper rewire quote should itemise every element. Watch out for single-figure quotes
+          that bundle everything with no breakdown — they make comparison impossible and often
+          exclude essential items.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -434,9 +435,9 @@ const sections = [
           that affects the building fabric.
         </p>
         <p>
-          The DNO for Greater Manchester is Electricity North West (ENW). Supply upgrades through ENW
-          typically take 2-6 weeks to schedule. If your rewire requires a supply upgrade (common in
-          older properties with undersized service fuses), plan this early to avoid delays.
+          The DNO for Greater Manchester is Electricity North West (ENW). Supply upgrades through
+          ENW typically take 2-6 weeks to schedule. If your rewire requires a supply upgrade (common
+          in older properties with undersized service fuses), plan this early to avoid delays.
         </p>
       </>
     ),
@@ -507,8 +508,7 @@ export default function RewireCostManchesterPage() {
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Rewire Cost Manchester:{' '}
-          <span className="text-yellow-400">2026 Price Guide</span>
+          Rewire Cost Manchester: <span className="text-yellow-400">2026 Price Guide</span>
         </>
       }
       heroSubtitle="Manchester rewire costs are broadly in line with the national average — significantly lower than London. This guide covers realistic pricing for Manchester's Victorian terraces, Edwardian semis, city centre apartments, and suburban estates."
@@ -519,7 +519,7 @@ export default function RewireCostManchesterPage() {
       faqHeading="Frequently Asked Questions About Rewire Costs in Manchester"
       relatedPages={relatedPages}
       ctaHeading="Quote Manchester Rewires with Real Trade Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for AI-powered rewire quoting, on-site EIC certificates, and project management. 7-day free trial."
     />
   );
 }

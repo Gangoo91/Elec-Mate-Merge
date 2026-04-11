@@ -85,21 +85,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/loft-conversion-electrical-cost',
     title: 'Loft Conversion Electrical Cost',
-    description: 'Typical costs for loft conversion electrical installations, consumer unit considerations, and Part P requirements.',
+    description:
+      'Typical costs for loft conversion electrical installations, consumer unit considerations, and Part P requirements.',
     icon: Home,
     category: 'Cost Guide',
   },
   {
     href: '/garage-electrical-cost',
     title: 'Garage Electrical Installation Cost',
-    description: 'Detached and integral garage wiring costs, armoured cable, and EV charger add-ons.',
+    description:
+      'Detached and integral garage wiring costs, armoured cable, and EV charger add-ons.',
     icon: Building2,
     category: 'Cost Guide',
   },
   {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost',
-    description: 'Full breakdown of consumer unit upgrade costs, fuseboard types, and what is included.',
+    description:
+      'Full breakdown of consumer unit upgrade costs, fuseboard types, and what is included.',
     icon: Zap,
     category: 'Cost Guide',
   },
@@ -124,10 +127,10 @@ const sections = [
       <>
         <p>
           Adding an extension to your home is one of the most significant investments a homeowner
-          can make. Electrical installation is a critical part of the build and must be planned
-          from the start — not bolted on as an afterthought. The cost varies considerably depending
-          on the size of the extension, the number of circuits required, and whether work is needed
-          to the existing installation.
+          can make. Electrical installation is a critical part of the build and must be planned from
+          the start — not bolted on as an afterthought. The cost varies considerably depending on
+          the size of the extension, the number of circuits required, and whether work is needed to
+          the existing installation.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -161,9 +164,9 @@ const sections = [
         </div>
         <p>
           All electrical work in a house extension is notifiable under Part P of the Building
-          Regulations. Using a registered competent person scheme electrician means they self-certify
-          the work — you receive a compliance certificate without a separate building control
-          application.
+          Regulations. Using a registered competent person scheme electrician means they
+          self-certify the work — you receive a compliance certificate without a separate building
+          control application.
         </p>
       </>
     ),
@@ -228,9 +231,9 @@ const sections = [
       <>
         <p>
           A double-storey extension adds a ground floor room and a first floor room — most commonly
-          a kitchen or living room below and a bedroom or bathroom above. The electrical installation
-          is proportionally more complex, with circuits serving both floors and bathroom requirements
-          adding to the scope.
+          a kitchen or living room below and a bedroom or bathroom above. The electrical
+          installation is proportionally more complex, with circuits serving both floors and
+          bathroom requirements adding to the scope.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -245,9 +248,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>With en-suite bathroom</strong> — £2,000 to £3,200. En-suite requires
-                shaver socket (IP44 rated), bathroom extraction fan with overrun timer, and
-                electric towel rail connection.
+                <strong>With en-suite bathroom</strong> — £2,000 to £3,200. En-suite requires shaver
+                socket (IP44 rated), bathroom extraction fan with overrun timer, and electric towel
+                rail connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -261,9 +264,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Bathroom zones under BS 7671 Regulation 701 require careful planning. Zone 1 (inside
-          the bath or shower tray) and Zone 2 (within 0.6 metres of the bath or shower) restrict
-          what electrical equipment can be installed and require appropriate IP ratings.
+          Bathroom zones under BS 7671 Regulation 701 require careful planning. Zone 1 (inside the
+          bath or shower tray) and Zone 2 (within 0.6 metres of the bath or shower) restrict what
+          electrical equipment can be installed and require appropriate IP ratings.
         </p>
       </>
     ),
@@ -299,18 +302,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA
-                RCD protection on all socket circuits rated up to 32A. Older boards without RCDs
-                will require either RCBO protection on each circuit or a full upgrade.
+                <strong>No RCD protection</strong> — Regulation 411.3.3 of BS 7671 requires 30mA RCD
+                protection on all socket circuits rated up to 32A. Older boards without RCDs will
+                require either RCBO protection on each circuit or a full upgrade.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Steel enclosure requirement</strong> — since Amendment 3 to BS 7671
-                (January 2019), new and replacement consumer units in domestic premises must have
-                a non-combustible (steel) enclosure. Plastic consumer units installed before this
-                date remain legal but cannot be replaced like-for-like with plastic.
+                <strong>Steel enclosure requirement</strong> — since Amendment 3 to BS 7671 (January
+                2019), new and replacement consumer units in domestic premises must have a
+                non-combustible (steel) enclosure. Plastic consumer units installed before this date
+                remain legal but cannot be replaced like-for-like with plastic.
               </span>
             </li>
           </ul>
@@ -325,8 +328,8 @@ const sections = [
       <>
         <p>
           Part P of the Building Regulations (England and Wales) covers the design, installation,
-          inspection, testing, and certification of electrical installations in dwellings. All
-          work on a house extension falls within the scope of Part P and is notifiable.
+          inspection, testing, and certification of electrical installations in dwellings. All work
+          on a house extension falls within the scope of Part P and is notifiable.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -334,8 +337,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Competent person self-certification</strong> — electricians registered with
-                NICEIC, NAPIT, ELECSA, or another government-approved scheme can self-certify
-                their work under Part P. They notify building control, and you receive a Building
+                NICEIC, NAPIT, ELECSA, or another government-approved scheme can self-certify their
+                work under Part P. They notify building control, and you receive a Building
                 Regulations Compliance Certificate within 30 days. No extra fee to you.
               </span>
             </li>
@@ -347,17 +350,17 @@ const sections = [
                 <SEOInternalLink href="/tools/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
-                documenting the design, construction, and test results of the new installation.
-                Keep this document — it will be requested by solicitors when you sell the property.
+                documenting the design, construction, and test results of the new installation. Keep
+                this document — it will be requested by solicitors when you sell the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building control route</strong> — if the electrician is not Part P
-                registered, you can apply to building control directly. A building control
-                inspector will visit to check the work. This route is slower and more expensive
-                and is rarely necessary if you hire a registered electrician.
+                registered, you can apply to building control directly. A building control inspector
+                will visit to check the work. This route is slower and more expensive and is rarely
+                necessary if you hire a registered electrician.
               </span>
             </li>
           </ul>
@@ -386,8 +389,8 @@ const sections = [
               <span>
                 <strong>Number of circuits</strong> — each new circuit (lighting, sockets, oven,
                 hob, underfloor heating, EV charger) adds to the cost. A simple kitchen extension
-                may need three circuits; a large open-plan extension with home cinema might need
-                ten or more.
+                may need three circuits; a large open-plan extension with home cinema might need ten
+                or more.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -401,9 +404,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specification level</strong> — basic white plastic sockets and switches
-                cost far less than flat plate brushed steel or smart home controls. Wiring for
-                smart home systems (Lutron, KNX, Loxone) adds significant cost.
+                <strong>Specification level</strong> — basic white plastic sockets and switches cost
+                far less than flat plate brushed steel or smart home controls. Wiring for smart home
+                systems (Lutron, KNX, Loxone) adds significant cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -447,9 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete and issue the Electrical Installation Certificate while still on site.
                   The customer gets their document immediately, and you avoid evening paperwork.
                 </p>
@@ -475,7 +476,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Win more extension electrical work with Elec-Mate"
-          description="Create professional extension electrical quotes, issue EICs on site, and track multi-stage jobs across first fix, second fix, and testing. Join 430+ UK electricians. 7-day free trial."
+          description="Create professional extension electrical quotes, issue EICs on site, and track multi-stage jobs across first fix, second fix, and testing. Join 1,000+ UK electricians. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -512,7 +513,7 @@ export default function HouseExtensionElectricalCostPage() {
       faqHeading="Frequently Asked Questions About House Extension Electrical Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Your Extension Electrical Work in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to create professional electrical quotes, issue EICs on site, and manage multi-stage extension jobs. 7-day free trial, cancel anytime."
     />
   );
 }

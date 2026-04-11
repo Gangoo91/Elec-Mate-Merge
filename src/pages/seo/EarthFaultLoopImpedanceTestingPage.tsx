@@ -20,7 +20,10 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Earth Fault Loop Impedance Testing', href: '/guides/earth-fault-loop-impedance-testing' },
+  {
+    label: 'Earth Fault Loop Impedance Testing',
+    href: '/guides/earth-fault-loop-impedance-testing',
+  },
 ];
 
 const tocItems = [
@@ -47,7 +50,7 @@ const faqs = [
   {
     question: 'What is the difference between Ze and Zs?',
     answer:
-      'Ze (external earth fault loop impedance) is the impedance of the fault current path that is external to the installation — from the supply transformer, through the line conductor of the incoming supply, and back via the distributor\'s earthing system. It is measured at the origin of the installation with all internal circuits disconnected. Zs (total earth fault loop impedance) is the total impedance from a point in the installation back to the supply transformer, including both the external part (Ze) and the internal part (R1 + R2). Zs must be measured or calculated at each point in the installation where compliance with disconnection time requirements needs to be verified — typically at the furthest point of each circuit.',
+      "Ze (external earth fault loop impedance) is the impedance of the fault current path that is external to the installation — from the supply transformer, through the line conductor of the incoming supply, and back via the distributor's earthing system. It is measured at the origin of the installation with all internal circuits disconnected. Zs (total earth fault loop impedance) is the total impedance from a point in the installation back to the supply transformer, including both the external part (Ze) and the internal part (R1 + R2). Zs must be measured or calculated at each point in the installation where compliance with disconnection time requirements needs to be verified — typically at the furthest point of each circuit.",
   },
   {
     question: 'What Zs values are acceptable under BS 7671?',
@@ -60,7 +63,8 @@ const faqs = [
       'Switch on the circuit and connect the loop tester to the line, neutral, and earth terminals at the furthest accessible point on the circuit — typically the last socket outlet or lighting point. The tester injects a test current through the fault loop (line → through the supply transformer → back via the earth path) and measures the resulting voltage drop, calculating Zs = V/I. Always ensure that the supply is live before testing — a loop tester cannot measure Zs on a dead circuit. Use a tester with a high-current or low-current mode as appropriate for the sensitivity required. High-current mode (typically 20A to 25A) is more accurate but may cause nuisance tripping of sensitive RCDs — use a loop tester with a no-trip or low-current mode where an RCD is in circuit.',
   },
   {
-    question: 'Why does my Zs reading exceed the table maximum even though the installation seems fine?',
+    question:
+      'Why does my Zs reading exceed the table maximum even though the installation seems fine?',
     answer:
       'There are two common causes. First, the conductor temperature effect: BS 7671 Appendix 3 tables assume conductors operating at their maximum permissible temperature (70°C for thermoplastic cables). If you are testing at ambient temperature (say 20°C), the conductor resistance is approximately 80% of its value at 70°C, so the measured Zs will be lower than the operating value. However, the tables give maximum Zs at operating temperature — for compliance, the measured value at ambient temperature must not exceed (tabulated Zs ÷ 1.24). If the measured value exceeds this corrected limit, the installation does not comply. Second, a genuinely high Zs may be caused by a poor earth connection, corroded terminals, undersized CPC, or an excessively long circuit.',
   },
@@ -139,24 +143,24 @@ const sections = [
         <p>
           Earth fault loop impedance (EFLI) is the total impedance of the complete circuit that
           earth fault current must travel through if a line-to-earth fault occurs at any point in an
-          electrical installation. Understanding and correctly measuring this impedance is fundamental
-          to verifying that protective devices will disconnect within the required time under fault
-          conditions — which is the primary mechanism by which BS 7671 protects against electric
-          shock from indirect contact.
+          electrical installation. Understanding and correctly measuring this impedance is
+          fundamental to verifying that protective devices will disconnect within the required time
+          under fault conditions — which is the primary mechanism by which BS 7671 protects against
+          electric shock from indirect contact.
         </p>
         <p>
           The earth fault current loop consists of: the line conductor from the point of fault back
           to the supply transformer; the transformer winding itself; and the return path from the
-          transformer neutral (star point) via the earthing system and the protective conductor (CPC)
-          back to the point of fault. The lower the impedance of this loop, the higher the fault
-          current and the faster the protective device operates.
+          transformer neutral (star point) via the earthing system and the protective conductor
+          (CPC) back to the point of fault. The lower the impedance of this loop, the higher the
+          fault current and the faster the protective device operates.
         </p>
         <p>
-          BS 7671:2018+A3:2024 requires that the earth fault loop impedance Zs
-          must not exceed the value corresponding to the required disconnection time for the circuit
-          concerned. The required disconnection times are 0.4 seconds for final circuits up to 32A
-          supplying socket outlets or equipment accessible to the public, and 5 seconds for
-          distribution circuits and final circuits supplying fixed equipment (with some exceptions).
+          BS 7671:2018+A3:2024 requires that the earth fault loop impedance Zs must not exceed the
+          value corresponding to the required disconnection time for the circuit concerned. The
+          required disconnection times are 0.4 seconds for final circuits up to 32A supplying socket
+          outlets or equipment accessible to the public, and 5 seconds for distribution circuits and
+          final circuits supplying fixed equipment (with some exceptions).
         </p>
       </>
     ),
@@ -175,11 +179,11 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">Ze — External Impedance</h3>
             <p className="text-white text-sm leading-relaxed">
               Ze is the external earth fault loop impedance — the portion of the fault loop that is
-              external to the installation. It is measured at the origin of the installation with all
-              internal circuits disconnected, and includes the supply transformer winding, the line
-              conductor from transformer to the installation origin, and the distributor's earthing
-              system (PME, TNS, or TT electrode). Ze is provided by the distributor or measured by
-              the electrician at the intake position.
+              external to the installation. It is measured at the origin of the installation with
+              all internal circuits disconnected, and includes the supply transformer winding, the
+              line conductor from transformer to the installation origin, and the distributor's
+              earthing system (PME, TNS, or TT electrode). Ze is provided by the distributor or
+              measured by the electrician at the intake position.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -215,15 +219,19 @@ const sections = [
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ol className="space-y-4 text-white list-none">
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">1</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                1
+              </span>
               <span>
-                <strong>Safe isolation check</strong> — confirm the circuit is energised and that
-                it is safe to proceed with live testing. Warn others in the vicinity that a live
-                test is in progress.
+                <strong>Safe isolation check</strong> — confirm the circuit is energised and that it
+                is safe to proceed with live testing. Warn others in the vicinity that a live test
+                is in progress.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">2</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                2
+              </span>
               <span>
                 <strong>Select the correct test mode</strong> — if an RCD is in the circuit, use
                 your loop tester's no-trip or low-current mode to avoid tripping the RCD during the
@@ -231,7 +239,9 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">3</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                3
+              </span>
               <span>
                 <strong>Connect the test leads</strong> — at the furthest accessible point (last
                 socket outlet, last lighting point), connect line to line terminal (L), neutral to
@@ -239,21 +249,27 @@ const sections = [
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">4</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                4
+              </span>
               <span>
                 <strong>Initiate the test</strong> — press the test button and allow the instrument
                 to complete its measurement cycle. The display shows the Zs value in ohms.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">5</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                5
+              </span>
               <span>
                 <strong>Record the result</strong> — record the measured Zs, the circuit
                 designation, and the test point location on the schedule of test results.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">6</span>
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-yellow-400 text-black font-bold text-sm flex items-center justify-center">
+                6
+              </span>
               <span>
                 <strong>Compare with the table maximum</strong> — divide the Appendix 3 table
                 maximum Zs by 1.24 to get the ambient-temperature limit. Compare your reading
@@ -284,8 +300,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Table 41.3</strong> — maximum Zs for BS 88-2 and BS 88-3 fuses
-                (industrial cartridge fuses). Values at 0.4s and 5s disconnection times.
+                <strong>Table 41.3</strong> — maximum Zs for BS 88-2 and BS 88-3 fuses (industrial
+                cartridge fuses). Values at 0.4s and 5s disconnection times.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -298,8 +314,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Table 41.5</strong> — maximum Zs for Type C MCBs. Values are lower than
-                Type B because Type C devices require a higher fault current to operate in the
+                <strong>Table 41.5</strong> — maximum Zs for Type C MCBs. Values are lower than Type
+                B because Type C devices require a higher fault current to operate in the
                 instantaneous region. At 32A, maximum Zs is 0.72Ω (0.4s).
               </span>
             </li>
@@ -307,8 +323,8 @@ const sections = [
               <Gauge className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Table 41.6</strong> — maximum Zs for Type D MCBs. At 32A, maximum Zs is
-                0.36Ω (0.4s). Type D devices are used for high-inrush loads and require very low
-                Zs to achieve fast disconnection.
+                0.36Ω (0.4s). Type D devices are used for high-inrush loads and require very low Zs
+                to achieve fast disconnection.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,8 +332,8 @@ const sections = [
               <span>
                 <strong>Ambient temperature correction</strong> — all table values assume conductors
                 at maximum operating temperature. For measurements at ambient temperature (~20°C),
-                divide the tabulated maximum by 1.24 (copper thermoplastic conductors) to obtain
-                the maximum permissible measured value.
+                divide the tabulated maximum by 1.24 (copper thermoplastic conductors) to obtain the
+                maximum permissible measured value.
               </span>
             </li>
           </ul>
@@ -327,12 +343,8 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
-          or{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            EICR
-          </SEOInternalLink>
-          . The measured Zs and the design Zs (maximum permitted) must both be recorded for each
-          circuit.
+          or <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. The measured Zs
+          and the design Zs (maximum permitted) must both be recorded for each circuit.
         </p>
       </>
     ),
@@ -368,8 +380,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Borderline</strong> — if the measured value is close to (but below) the
-                corrected limit, consider whether measurement uncertainty in the instrument (typically
-                ±5% to ±10%) could put the true value above the limit. Document any assumptions.
+                corrected limit, consider whether measurement uncertainty in the instrument
+                (typically ±5% to ±10%) could put the true value above the limit. Document any
+                assumptions.
               </span>
             </li>
           </ul>
@@ -389,8 +402,8 @@ const sections = [
     content: (
       <>
         <p>
-          When Zs readings exceed the permissible maximum, a systematic investigation is needed.
-          The most common causes are:
+          When Zs readings exceed the permissible maximum, a systematic investigation is needed. The
+          most common causes are:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -488,8 +501,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Calculate Zs from Continuity Results</h4>
                 <p className="text-white text-sm leading-relaxed">
                   For new installations, calculate Zs from the measured R1 + R2 continuity values
-                  plus the measured Ze, rather than measuring Zs live on each circuit. This is faster
-                  and avoids the risk of nuisance RCD tripping during construction.
+                  plus the measured Ze, rather than measuring Zs live on each circuit. This is
+                  faster and avoids the risk of nuisance RCD tripping during construction.
                 </p>
               </div>
             </div>
@@ -529,7 +542,7 @@ export default function EarthFaultLoopImpedanceTestingPage() {
       faqHeading="Frequently Asked Questions About Earth Fault Loop Impedance Testing"
       relatedPages={relatedPages}
       ctaHeading="Record Zs Test Results and Complete EICs on Your Phone"
-      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 430+ UK electricians. 7-day free trial."
+      ctaSubheading="Elec-Mate automatically checks Zs readings against BS 7671 Appendix 3 tables and generates professional test schedules on site. Join 1,000+ UK electricians. 7-day free trial."
     />
   );
 }

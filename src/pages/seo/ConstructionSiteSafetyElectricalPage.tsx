@@ -680,7 +680,7 @@ export default function ConstructionSiteSafetyElectricalPage() {
       faqHeading="Frequently Asked Questions About Construction Site Electrical Safety"
       relatedPages={relatedPages}
       ctaHeading="Generate Site Safety Documentation in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for RAMS, certificates, and safety documentation on construction sites. AI-powered, mobile-first, and CDM-compliant. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for RAMS, certificates, and safety documentation on construction sites. AI-powered, mobile-first, and CDM-compliant. 7-day free trial, cancel anytime."
     />
   );
 }

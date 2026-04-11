@@ -641,7 +641,7 @@ export default function IETCodeOfPracticeEVPage() {
       faqHeading="Frequently Asked Questions About the IET EV Code of Practice"
       relatedPages={relatedPages}
       ctaHeading="Install EV Chargers with Confidence"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, O-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EV charger installations. Cable sizing, IET CoP checklist, O-PEN verification, and instant certificates. 7-day free trial, cancel anytime."
     />
   );
 }

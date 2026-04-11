@@ -96,7 +96,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/pub-licensed-premises-eicr',
     title: 'EICR for Pubs & Licensed Premises',
-    description: 'Licensing Act 2003 requirements, licence conditions, cellar equipment, and gaming machine circuits.',
+    description:
+      'Licensing Act 2003 requirements, licence conditions, cellar equipment, and gaming machine circuits.',
     icon: Building2,
     category: 'Guide',
   },
@@ -141,45 +142,43 @@ const sections = [
     content: (
       <>
         <p>
-          The Regulatory Reform (Fire Safety) Order 2005 (RRO) is the primary legislation
-          governing fire safety in non-domestic premises in England and Wales. Hotels, guest
-          houses, bed and breakfasts, and all other commercial accommodation providers are
-          subject to its requirements. The electrical installation is a central element of
-          fire safety in any hotel.
+          The Regulatory Reform (Fire Safety) Order 2005 (RRO) is the primary legislation governing
+          fire safety in non-domestic premises in England and Wales. Hotels, guest houses, bed and
+          breakfasts, and all other commercial accommodation providers are subject to its
+          requirements. The electrical installation is a central element of fire safety in any
+          hotel.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Responsible person obligations</strong> — the responsible person
-                (typically the hotel operator or employer) must carry out or commission a
-                suitable and sufficient fire risk assessment. The assessment must identify
-                fire hazards — including electrical hazards — and implement appropriate
-                precautions to reduce the risk to guests and staff.
+                <strong>Responsible person obligations</strong> — the responsible person (typically
+                the hotel operator or employer) must carry out or commission a suitable and
+                sufficient fire risk assessment. The assessment must identify fire hazards —
+                including electrical hazards — and implement appropriate precautions to reduce the
+                risk to guests and staff.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical installation as a fire risk</strong> — the fire risk
-                assessment must consider the condition of the fixed electrical installation,
-                the presence of adequate fire detection, and the adequacy of emergency
-                lighting. A current{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is
-                the recognised evidence that the fixed electrical installation has been
-                assessed and is satisfactory.
+                <strong>Electrical installation as a fire risk</strong> — the fire risk assessment
+                must consider the condition of the fixed electrical installation, the presence of
+                adequate fire detection, and the adequacy of emergency lighting. A current{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is the
+                recognised evidence that the fixed electrical installation has been assessed and is
+                satisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire authority enforcement</strong> — the fire authority (local
-                fire and rescue service) has powers to inspect hotels, issue enforcement
-                notices, and in serious cases issue prohibition notices preventing use
-                of part or all of the premises. Electrical defects identified during a
-                fire authority inspection that are not reflected in a current EICR can
-                result in enforcement action.
+                <strong>Fire authority enforcement</strong> — the fire authority (local fire and
+                rescue service) has powers to inspect hotels, issue enforcement notices, and in
+                serious cases issue prohibition notices preventing use of part or all of the
+                premises. Electrical defects identified during a fire authority inspection that are
+                not reflected in a current EICR can result in enforcement action.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -187,8 +186,8 @@ const sections = [
               <span>
                 <strong>Health and Safety at Work etc. Act 1974</strong> — hotels also have
                 obligations to staff under the Health and Safety at Work etc. Act 1974 and the
-                Electricity at Work Regulations 1989. The electrical installation must be
-                maintained in a safe condition for employees as well as guests.
+                Electricity at Work Regulations 1989. The electrical installation must be maintained
+                in a safe condition for employees as well as guests.
               </span>
             </li>
           </ul>
@@ -202,49 +201,48 @@ const sections = [
     content: (
       <>
         <p>
-          The standard recommendation for hotels is a five-yearly EICR cycle. However, the
-          intensity and continuity of use in a commercial hotel — particularly in kitchens,
-          laundry rooms, and plant rooms — makes it prudent for larger or higher-use properties
-          to shorten the interval.
+          The standard recommendation for hotels is a five-yearly EICR cycle. However, the intensity
+          and continuity of use in a commercial hotel — particularly in kitchens, laundry rooms, and
+          plant rooms — makes it prudent for larger or higher-use properties to shorten the
+          interval.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Five years — standard recommended interval</strong> — appropriate
-                for well-maintained hotels with modern wiring, post-2000 consumer units or
-                distribution boards, and no significant history of electrical defects. The
-                fire risk assessment should reference the EICR and both should be renewed
-                on the same cycle.
+                <strong>Five years — standard recommended interval</strong> — appropriate for
+                well-maintained hotels with modern wiring, post-2000 consumer units or distribution
+                boards, and no significant history of electrical defects. The fire risk assessment
+                should reference the EICR and both should be renewed on the same cycle.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three years — higher-use or older hotels</strong> — recommended
-                for large hotels with commercial kitchens and laundry rooms in continuous
-                use, properties with wiring installed before 1990, hotels that have expanded
-                or significantly altered their electrical installation, and hotels in
-                locations with higher moisture levels (coastal or basement areas).
+                <strong>Three years — higher-use or older hotels</strong> — recommended for large
+                hotels with commercial kitchens and laundry rooms in continuous use, properties with
+                wiring installed before 1990, hotels that have expanded or significantly altered
+                their electrical installation, and hotels in locations with higher moisture levels
+                (coastal or basement areas).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>On change of ownership or operator</strong> — when a hotel changes
-                hands, the new operator should commission a fresh EICR before accepting
-                liability for the installation. An EICR commissioned by the previous
-                operator may not reflect changes made since that inspection.
+                <strong>On change of ownership or operator</strong> — when a hotel changes hands,
+                the new operator should commission a fresh EICR before accepting liability for the
+                installation. An EICR commissioned by the previous operator may not reflect changes
+                made since that inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After refurbishment</strong> — a bedroom block refurbishment, new
-                kitchen installation, extension, or significant alterations must be followed
-                by an EIC from the contractor for notifiable works and an EICR update to
-                confirm the whole installation remains satisfactory.
+                <strong>After refurbishment</strong> — a bedroom block refurbishment, new kitchen
+                installation, extension, or significant alterations must be followed by an EIC from
+                the contractor for notifiable works and an EICR update to confirm the whole
+                installation remains satisfactory.
               </span>
             </li>
           </ul>
@@ -258,48 +256,47 @@ const sections = [
     content: (
       <>
         <p>
-          Guest bedrooms are the heart of a hotel's electrical liability. Guests sleep in
-          these rooms and are particularly vulnerable to electrical hazards at night, when they
-          may not notice early signs of a fault before a fire develops.
+          Guest bedrooms are the heart of a hotel's electrical liability. Guests sleep in these
+          rooms and are particularly vulnerable to electrical hazards at night, when they may not
+          notice early signs of a fault before a fire develops.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sufficient socket outlets</strong> — hotel bedrooms should have
-                adequate socket outlets on both sides of the bed (minimum two per side),
-                near the desk or work area, and adjacent to the television point. Insufficient
-                sockets encourage guests to use their own extension leads or adaptors,
-                creating overloading risks.
+                <strong>Sufficient socket outlets</strong> — hotel bedrooms should have adequate
+                socket outlets on both sides of the bed (minimum two per side), near the desk or
+                work area, and adjacent to the television point. Insufficient sockets encourage
+                guests to use their own extension leads or adaptors, creating overloading risks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>USB charging points</strong> — modern hotel bedrooms commonly include
-                socket outlets with integrated USB-A and USB-C charging ports. These reduce
-                the need for guests to use plug-top USB adaptors, reducing the risk of
-                counterfeit or unsafe chargers being plugged in.
+                <strong>USB charging points</strong> — modern hotel bedrooms commonly include socket
+                outlets with integrated USB-A and USB-C charging ports. These reduce the need for
+                guests to use plug-top USB adaptors, reducing the risk of counterfeit or unsafe
+                chargers being plugged in.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD protection — Regulation 411.3.3</strong> — all socket-outlet
-                circuits in guest bedrooms must be protected by 30mA RCD in accordance with
-                Regulation 411.3.3 of BS 7671:2018. Absence of RCD protection is a common
-                C2 finding in older hotels with pre-2000 wiring.
+                <strong>RCD protection — Regulation 411.3.3</strong> — all socket-outlet circuits in
+                guest bedrooms must be protected by 30mA RCD in accordance with Regulation 411.3.3
+                of BS 7671:2018. Absence of RCD protection is a common C2 finding in older hotels
+                with pre-2000 wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Trailing socket leads — observation risk</strong> — bedside lamp
-                sockets, touch-sensitive lamp controllers, and trailing socket leads used
-                for bedside lighting are frequently found during EICR inspections. Where these
-                are not part of a properly wired installation, they are recorded as C2 or C3
-                observations. Fixed bedside switched socket spurs are the correct solution.
+                <strong>Trailing socket leads — observation risk</strong> — bedside lamp sockets,
+                touch-sensitive lamp controllers, and trailing socket leads used for bedside
+                lighting are frequently found during EICR inspections. Where these are not part of a
+                properly wired installation, they are recorded as C2 or C3 observations. Fixed
+                bedside switched socket spurs are the correct solution.
               </span>
             </li>
           </ul>
@@ -313,50 +310,47 @@ const sections = [
     content: (
       <>
         <p>
-          Commercial hotel kitchens and laundry rooms contain some of the highest electrical
-          loads in any building. These circuits require particularly careful assessment during
-          the EICR and are frequently found to have deficiencies in older hotel installations.
+          Commercial hotel kitchens and laundry rooms contain some of the highest electrical loads
+          in any building. These circuits require particularly careful assessment during the EICR
+          and are frequently found to have deficiencies in older hotel installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-phase distribution — common in hotel kitchens</strong> — large
-                hotel kitchens typically use three-phase electricity to distribute high loads
-                across all three phases. The inspector will verify correct phase balancing,
-                appropriate MCB sizing on each phase, and the condition of all three-phase
-                distribution equipment.
+                <strong>Three-phase distribution — common in hotel kitchens</strong> — large hotel
+                kitchens typically use three-phase electricity to distribute high loads across all
+                three phases. The inspector will verify correct phase balancing, appropriate MCB
+                sizing on each phase, and the condition of all three-phase distribution equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extraction interlock systems</strong> — commercial kitchen
-                extraction fans are interlocked with cooking equipment so that if the
-                extraction fan fails, the cooking appliances are automatically shut down.
-                This safety-critical interlock must be tested and verified as functional
-                during the EICR inspection.
+                <strong>Extraction interlock systems</strong> — commercial kitchen extraction fans
+                are interlocked with cooking equipment so that if the extraction fan fails, the
+                cooking appliances are automatically shut down. This safety-critical interlock must
+                be tested and verified as functional during the EICR inspection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Commercial laundry circuits</strong> — industrial washing machines and
-                tumble dryers draw high continuous currents. Dedicated circuits sized for the
-                full running current (with no diversity applied) are required. Cable derating
-                for cables in conduit or bundled with other cables must be applied when sizing
-                laundry circuits.
+                tumble dryers draw high continuous currents. Dedicated circuits sized for the full
+                running current (with no diversity applied) are required. Cable derating for cables
+                in conduit or bundled with other cables must be applied when sizing laundry
+                circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing and bonding of metalwork</strong> — all metal structural
-                parts, pipework, and equipment in commercial kitchens must be earth-bonded.
-                The inspector will check main bonding conductors and supplementary bonding
-                where required. Missing or undersized bonding conductors are a frequent C2
-                finding in older hotel kitchens.
+                <strong>Earthing and bonding of metalwork</strong> — all metal structural parts,
+                pipework, and equipment in commercial kitchens must be earth-bonded. The inspector
+                will check main bonding conductors and supplementary bonding where required. Missing
+                or undersized bonding conductors are a frequent C2 finding in older hotel kitchens.
               </span>
             </li>
           </ul>
@@ -370,51 +364,50 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting in hotels is critical to life safety. Guests sleeping in bedrooms
-          may be unfamiliar with the building layout and unable to find their way to an exit
-          in darkness during a fire. BS 5266-1:2016 sets out the requirements for hotel
-          emergency lighting installations.
+          Emergency lighting in hotels is critical to life safety. Guests sleeping in bedrooms may
+          be unfamiliar with the building layout and unable to find their way to an exit in darkness
+          during a fire. BS 5266-1:2016 sets out the requirements for hotel emergency lighting
+          installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Coverage — all means of escape</strong> — all guest bedroom corridors,
-                all stairwells, all public areas (reception, restaurant, bar, function rooms,
-                lounges), all toilet areas without natural light, and all final exit doors
-                must have emergency lighting. Exit signs must be illuminated by the emergency
-                lighting system.
+                <strong>Coverage — all means of escape</strong> — all guest bedroom corridors, all
+                stairwells, all public areas (reception, restaurant, bar, function rooms, lounges),
+                all toilet areas without natural light, and all final exit doors must have emergency
+                lighting. Exit signs must be illuminated by the emergency lighting system.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Duration — three hours for hotels</strong> — BS 5266-1 requires
-                three-hour emergency lighting duration for premises where people sleep (hotels,
-                guest houses, residential care homes). This is because sleeping guests take
-                longer to evacuate than fully alert people in a working environment. One-hour
-                duration luminaires are not appropriate for hotel sleeping areas.
+                <strong>Duration — three hours for hotels</strong> — BS 5266-1 requires three-hour
+                emergency lighting duration for premises where people sleep (hotels, guest houses,
+                residential care homes). This is because sleeping guests take longer to evacuate
+                than fully alert people in a working environment. One-hour duration luminaires are
+                not appropriate for hotel sleeping areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Maintained luminaires in public areas</strong> — maintained emergency
-                luminaires (those that are also the normal lighting) are appropriate for
-                hotel public areas, bars, and restaurants where the lighting is on throughout
-                the evening. Non-maintained luminaires (that only illuminate on power failure)
-                are appropriate for back-of-house areas, corridors, and stairwells.
+                luminaires (those that are also the normal lighting) are appropriate for hotel
+                public areas, bars, and restaurants where the lighting is on throughout the evening.
+                Non-maintained luminaires (that only illuminate on power failure) are appropriate
+                for back-of-house areas, corridors, and stairwells.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing and logbook</strong> — monthly 30-second function tests and
-                annual three-hour full-duration tests must be carried out and recorded in a
-                logbook. The logbook must be available for inspection by the fire authority
-                and the EICR inspector. Inadequate testing records are a common finding
-                in hotel EICR inspections.
+                <strong>Testing and logbook</strong> — monthly 30-second function tests and annual
+                three-hour full-duration tests must be carried out and recorded in a logbook. The
+                logbook must be available for inspection by the fire authority and the EICR
+                inspector. Inadequate testing records are a common finding in hotel EICR
+                inspections.
               </span>
             </li>
           </ul>
@@ -437,41 +430,40 @@ const sections = [
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>L1 system — typically required for hotels</strong> — automatic detection
-                in all areas, including all guest bedrooms, all corridors, all public areas,
-                the kitchen, and all storage areas. L1 coverage is required because sleeping
-                guests cannot respond to visual signs of fire — automatic early detection is
-                essential to give sufficient time for evacuation.
+                <strong>L1 system — typically required for hotels</strong> — automatic detection in
+                all areas, including all guest bedrooms, all corridors, all public areas, the
+                kitchen, and all storage areas. L1 coverage is required because sleeping guests
+                cannot respond to visual signs of fire — automatic early detection is essential to
+                give sufficient time for evacuation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Addressable systems — best practice for larger hotels</strong> — an
-                addressable fire alarm system identifies which specific detector or call point
-                has activated, allowing the fire alarm panel operator to identify the location
-                of the fire immediately. This is essential in large hotels with multiple floors
-                and many rooms. Conventional (zone-based) systems are acceptable only for
-                smaller properties.
+                addressable fire alarm system identifies which specific detector or call point has
+                activated, allowing the fire alarm panel operator to identify the location of the
+                fire immediately. This is essential in large hotels with multiple floors and many
+                rooms. Conventional (zone-based) systems are acceptable only for smaller properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-stage alarm — common in hotels</strong> — a two-stage alarm
-                allows the management to investigate before causing a full evacuation. Stage
-                one is an alert (staff pagers or internal alert tone), giving time to
-                investigate. Stage two is full evacuation. This reduces nuisance evacuations
-                from false alarms without compromising safety.
+                <strong>Two-stage alarm — common in hotels</strong> — a two-stage alarm allows the
+                management to investigate before causing a full evacuation. Stage one is an alert
+                (staff pagers or internal alert tone), giving time to investigate. Stage two is full
+                evacuation. This reduces nuisance evacuations from false alarms without compromising
+                safety.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <BellRing className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm wiring within EICR scope</strong> — the fire alarm system
-                wiring forms part of the fixed electrical installation. The EICR inspector
-                will check the panel supply, all alarm circuit wiring, and battery back-up.
-                Faults in the fire alarm wiring will be recorded as EICR observations.
+                <strong>Fire alarm wiring within EICR scope</strong> — the fire alarm system wiring
+                forms part of the fixed electrical installation. The EICR inspector will check the
+                panel supply, all alarm circuit wiring, and battery back-up. Faults in the fire
+                alarm wiring will be recorded as EICR observations.
               </span>
             </li>
           </ul>
@@ -486,47 +478,47 @@ const sections = [
       <>
         <p>
           En-suite bathrooms and shower rooms in hotels are special locations under BS 7671:2018
-          Part 7, Section 701. The zone requirements protect guests from the particularly high
-          risk of electric shock that exists in wet environments. Every en-suite in a hotel must
-          comply with these requirements.
+          Part 7, Section 701. The zone requirements protect guests from the particularly high risk
+          of electric shock that exists in wet environments. Every en-suite in a hotel must comply
+          with these requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone definitions</strong> — Zone 0 is the inside of the bath or shower
-                tray. Zone 1 is directly above the bath or shower, up to 2.25m. Zone 2 extends
-                0.6m beyond Zone 1 horizontally. Equipment in each zone must meet specified
-                IP protection ratings appropriate to the zone.
+                <strong>Zone definitions</strong> — Zone 0 is the inside of the bath or shower tray.
+                Zone 1 is directly above the bath or shower, up to 2.25m. Zone 2 extends 0.6m beyond
+                Zone 1 horizontally. Equipment in each zone must meet specified IP protection
+                ratings appropriate to the zone.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Socket outlets — 3 metre exclusion zone</strong> — no standard socket
-                outlet (other than a BS 3535 shaver supply unit) may be installed within
-                3 metres of a bath or shower. In compact hotel en-suites, the positioning
-                of shaver sockets requires careful planning. Shaver supply units must provide
-                isolation between input and output.
+                <strong>Socket outlets — 3 metre exclusion zone</strong> — no standard socket outlet
+                (other than a BS 3535 shaver supply unit) may be installed within 3 metres of a bath
+                or shower. In compact hotel en-suites, the positioning of shaver sockets requires
+                careful planning. Shaver supply units must provide isolation between input and
+                output.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Supplementary equipotential bonding</strong> — in hotel en-suites,
-                all exposed metalwork (towel rails, pipework, drainage grates) must be
-                connected by supplementary bonding conductors to prevent dangerous potential
-                differences between simultaneously touchable metal parts. Missing supplementary
-                bonding is a common C2 finding in older hotel bathrooms.
+                <strong>Supplementary equipotential bonding</strong> — in hotel en-suites, all
+                exposed metalwork (towel rails, pipework, drainage grates) must be connected by
+                supplementary bonding conductors to prevent dangerous potential differences between
+                simultaneously touchable metal parts. Missing supplementary bonding is a common C2
+                finding in older hotel bathrooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection — all bathroom circuits</strong> — Regulation 701.411.3.3
-                requires 30mA RCD protection on all circuits serving bathroom zones, regardless
-                of whether those circuits supply socket outlets. This includes lighting circuits
+                requires 30mA RCD protection on all circuits serving bathroom zones, regardless of
+                whether those circuits supply socket outlets. This includes lighting circuits
                 serving en-suite bathrooms and shower rooms.
               </span>
             </li>
@@ -534,8 +526,8 @@ const sections = [
         </div>
         <p>
           Hotel en-suite bathrooms are inspected particularly carefully during EICRs. The
-          combination of moisture, high guest turnover, and the consequences of electric shock
-          in wet environments makes bathroom zone compliance a priority.
+          combination of moisture, high guest turnover, and the consequences of electric shock in
+          wet environments makes bathroom zone compliance a priority.
         </p>
       </>
     ),
@@ -555,46 +547,44 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main incoming supply and metering</strong> — condition of the main
-                switch, metering equipment, and incoming supply cables. Verification of
-                earthing arrangement (TN-S, TN-C-S, or TT) and measurement of earth fault
-                loop impedance at the origin.
+                <strong>Main incoming supply and metering</strong> — condition of the main switch,
+                metering equipment, and incoming supply cables. Verification of earthing arrangement
+                (TN-S, TN-C-S, or TT) and measurement of earth fault loop impedance at the origin.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Distribution boards and sub-distribution</strong> — condition, labelling,
-                accessibility, MCB and RCD protection, and insulation resistance testing on
-                all circuits. Hotels with multiple floors typically have a main distribution
-                board and floor distribution boards serving each floor.
+                accessibility, MCB and RCD protection, and insulation resistance testing on all
+                circuits. Hotels with multiple floors typically have a main distribution board and
+                floor distribution boards serving each floor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Guest bedroom circuits</strong> — socket outlet circuits, lighting
-                circuits, and any en-suite circuits in a sample of bedrooms. The scope and
-                sampling frequency should be agreed with the hotel operator and specified in
-                the EICR.
+                <strong>Guest bedroom circuits</strong> — socket outlet circuits, lighting circuits,
+                and any en-suite circuits in a sample of bedrooms. The scope and sampling frequency
+                should be agreed with the hotel operator and specified in the EICR.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Plant rooms, lift motor rooms, and service areas</strong> — electrical
-                installations in plant rooms, lift machinery rooms, and back-of-house service
-                areas are part of the EICR scope. Lift supplies must be checked but the lift
-                itself requires separate periodic maintenance by a lift engineer.
+                installations in plant rooms, lift machinery rooms, and back-of-house service areas
+                are part of the EICR scope. Lift supplies must be checked but the lift itself
+                requires separate periodic maintenance by a lift engineer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting and fire alarm systems</strong> — both systems
-                form part of the fixed electrical installation and must be included in the
-                EICR scope. The inspector will verify correct wiring, circuit protection, and
-                operational testing records.
+                <strong>Emergency lighting and fire alarm systems</strong> — both systems form part
+                of the fixed electrical installation and must be included in the EICR scope. The
+                inspector will verify correct wiring, circuit protection, and operational testing
+                records.
               </span>
             </li>
           </ul>
@@ -608,27 +598,27 @@ const sections = [
     content: (
       <>
         <p>
-          Hotel electrical compliance costs vary significantly with the size, age, and condition
-          of the property. The following figures are indicative for a 30-bedroom hotel with
-          a commercial kitchen, bar, restaurant, and function room.
+          Hotel electrical compliance costs vary significantly with the size, age, and condition of
+          the property. The following figures are indicative for a 30-bedroom hotel with a
+          commercial kitchen, bar, restaurant, and function room.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR — 30-bedroom hotel</strong> — £2,000 to £5,000. The large number
-                of circuits, multiple distribution boards, bathroom zone inspections, and
-                emergency lighting and fire alarm wiring all add to the scope and the
-                inspection time required.
+                <strong>EICR — 30-bedroom hotel</strong> — £2,000 to £5,000. The large number of
+                circuits, multiple distribution boards, bathroom zone inspections, and emergency
+                lighting and fire alarm wiring all add to the scope and the inspection time
+                required.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Distribution board replacement</strong> — £2,000 to £5,000 per board
-                for a commercial-grade RCBO distribution board. A 30-bedroom hotel may have
-                a main distribution board plus six to eight floor boards.
+                <strong>Distribution board replacement</strong> — £2,000 to £5,000 per board for a
+                commercial-grade RCBO distribution board. A 30-bedroom hotel may have a main
+                distribution board plus six to eight floor boards.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -636,17 +626,16 @@ const sections = [
               <span>
                 <strong>Emergency lighting upgrade — three-hour duration</strong> — £5,000 to
                 £20,000 depending on the number of luminaires required and whether the existing
-                wiring can be reused. Three-hour battery packs and maintained luminaires for
-                public areas are more expensive than standard one-hour non-maintained units.
+                wiring can be reused. Three-hour battery packs and maintained luminaires for public
+                areas are more expensive than standard one-hour non-maintained units.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Addressable fire alarm system</strong> — £15,000 to £50,000 for a
-                fully addressable L1 system in a 30-bedroom hotel. Annual maintenance
-                contracts for BS 5839-1 compliant systems typically cost £1,500 to £4,000
-                per year.
+                <strong>Addressable fire alarm system</strong> — £15,000 to £50,000 for a fully
+                addressable L1 system in a 30-bedroom hotel. Annual maintenance contracts for BS
+                5839-1 compliant systems typically cost £1,500 to £4,000 per year.
               </span>
             </li>
           </ul>
@@ -662,8 +651,8 @@ const sections = [
         <p>
           Hotel EICRs are among the highest-value inspection contracts available to commercial
           electricians. A thorough inspector with knowledge of BS 7671 Section 701 bathroom zone
-          requirements, BS 5266-1 emergency lighting, and BS 5839-1 fire alarm systems commands
-          a premium rate and builds long-term relationships with hotel operators and facilities
+          requirements, BS 5266-1 emergency lighting, and BS 5839-1 fire alarm systems commands a
+          premium rate and builds long-term relationships with hotel operators and facilities
           managers.
         </p>
         <div className="space-y-4 my-4">
@@ -677,10 +666,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to document complex hotel installations on your phone. Circuit-by-circuit
-                  test result entry, AI board scanning for distribution boards, and photo
-                  attachment for bathroom zone observations mean you can produce a complete
-                  professional EICR on site for even the largest hotel installation.
+                  to document complex hotel installations on your phone. Circuit-by-circuit test
+                  result entry, AI board scanning for distribution boards, and photo attachment for
+                  bathroom zone observations mean you can produce a complete professional EICR on
+                  site for even the largest hotel installation.
                 </p>
               </div>
             </div>
@@ -689,7 +678,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Win High-Value Remedial and Maintenance Contracts</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Win High-Value Remedial and Maintenance Contracts
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Distribution board replacements, emergency lighting upgrades, and fire alarm
                   remediation in hotels are high-value contracts. Quote on site with the{' '}
@@ -730,7 +721,9 @@ export default function HotelEICRPage() {
       heroTitle={
         <>
           Hotel EICR UK:{' '}
-          <span className="text-yellow-400">Electrical Inspection for Hotels & Guest Houses 2026</span>
+          <span className="text-yellow-400">
+            Electrical Inspection for Hotels & Guest Houses 2026
+          </span>
         </>
       }
       heroSubtitle="Hotels and guest houses are subject to the Regulatory Reform (Fire Safety) Order 2005 and must maintain their electrical installation to a standard that protects sleeping guests. This guide covers EICR frequency, bedroom electrical safety, kitchen and laundry circuits, emergency lighting to BS 5266-1, fire alarms to BS 5839-1, en-suite bathroom zone requirements under BS 7671 Section 701, and 2026 compliance costs."
@@ -741,7 +734,7 @@ export default function HotelEICRPage() {
       faqHeading="Frequently Asked Questions About Hotel EICR"
       relatedPages={relatedPages}
       ctaHeading="Complete Hotel EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

@@ -35,18 +35,18 @@ const tocItems = [
 
 const keyTakeaways = [
   'Always check your electrician is registered with NICEIC, NAPIT, ELECSA, or another Part P competent person scheme before any work begins.',
-  'Crawley electrician rates are broadly in line with the South East average — expect day rates of £250 to £380 depending on the complexity of work and the electrician\'s experience.',
+  "Crawley electrician rates are broadly in line with the South East average — expect day rates of £250 to £380 depending on the complexity of work and the electrician's experience.",
   'Crawley has a large proportion of post-war new town housing (1950s to 1970s estates) with aluminium wiring, lead-sheathed cables, and rewirable fuses that need upgrading to modern standards.',
   'UKPN (UK Power Networks) is the Distribution Network Operator for Crawley. Any work affecting the incoming supply, meter position, or requiring a new connection must be coordinated with UKPN.',
   'Under BS 7671, all socket outlets rated up to 32 A in domestic premises must be protected by a 30 mA RCD. This is a key requirement when upgrading consumer units in older Crawley properties.',
-  'Gatwick Airport\'s proximity means Crawley has a significant commercial and hotel sector, creating steady demand for both domestic and commercial electricians.',
+  "Gatwick Airport's proximity means Crawley has a significant commercial and hotel sector, creating steady demand for both domestic and commercial electricians.",
 ];
 
 const faqs = [
   {
     question: 'How much does an electrician cost in Crawley?',
     answer:
-      'Crawley electrician day rates typically range from £250 to £380 per day for a qualified electrician. Hourly rates are usually £40 to £60 per hour, with emergency call-out rates of £70 to £100 per hour. These rates reflect Crawley\'s position as a South East commuter town with good access to the M23 and Gatwick Airport. For fixed-price work, a consumer unit replacement typically costs £450 to £750, a full rewire of a 3-bedroom house £4,500 to £7,500, and an EICR £180 to £320. Always get at least three written quotes for any significant work.',
+      "Crawley electrician day rates typically range from £250 to £380 per day for a qualified electrician. Hourly rates are usually £40 to £60 per hour, with emergency call-out rates of £70 to £100 per hour. These rates reflect Crawley's position as a South East commuter town with good access to the M23 and Gatwick Airport. For fixed-price work, a consumer unit replacement typically costs £450 to £750, a full rewire of a 3-bedroom house £4,500 to £7,500, and an EICR £180 to £320. Always get at least three written quotes for any significant work.",
   },
   {
     question: 'How do I check if a Crawley electrician is properly qualified?',
@@ -71,7 +71,7 @@ const faqs = [
   {
     question: 'How do I get a new electricity connection or supply upgrade in Crawley?',
     answer:
-      'UKPN (UK Power Networks) is the DNO for Crawley and the wider West Sussex area. To request a new supply, upgraded supply (for example, from single-phase to three-phase for an EV charger or heat pump), or meter relocation, apply through UKPN\'s website (ukpowernetworks.co.uk). Lead times for new connections are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the UKPN application on your behalf.',
+      "UKPN (UK Power Networks) is the DNO for Crawley and the wider West Sussex area. To request a new supply, upgraded supply (for example, from single-phase to three-phase for an EV charger or heat pump), or meter relocation, apply through UKPN's website (ukpowernetworks.co.uk). Lead times for new connections are typically 4 to 8 weeks. Costs vary — a simple meter relocation might be £400 to £1,200, while a new three-phase supply can cost £2,000 to £6,000 depending on the distance from the existing network. Your electrician can advise on whether your existing supply is adequate and submit the UKPN application on your behalf.",
   },
 ];
 
@@ -135,15 +135,15 @@ const sections = [
           Crawley is one of the largest towns in West Sussex, with a population of around 115,000
           and a diverse mix of residential, commercial, and industrial properties. Originally
           designated as a new town in 1947, Crawley expanded rapidly through the 1950s, 1960s, and
-          1970s with distinct residential neighbourhoods including Langley Green, Ifield, Pound Hill,
-          Maidenbower, and Broadfield.
+          1970s with distinct residential neighbourhoods including Langley Green, Ifield, Pound
+          Hill, Maidenbower, and Broadfield.
         </p>
         <p>
           The electrical work market in Crawley is driven by a combination of ageing new town
-          housing stock that needs upgrading, a steady flow of new developments (particularly
-          around Forge Wood and Kilnwood Vale), and the commercial and hospitality sectors
-          supporting Gatwick Airport. Finding an electrician in Crawley is straightforward — the
-          key is verifying they are properly qualified and registered.
+          housing stock that needs upgrading, a steady flow of new developments (particularly around
+          Forge Wood and Kilnwood Vale), and the commercial and hospitality sectors supporting
+          Gatwick Airport. Finding an electrician in Crawley is straightforward — the key is
+          verifying they are properly qualified and registered.
         </p>
         <p>
           Every electrician carrying out notifiable work under{' '}
@@ -228,9 +228,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Consumer unit replacement</strong> — £450 to £750 including supply
-                isolation, new 18th Edition compliant unit with RCBOs or RCDs (as required by
-                BS 7671 for socket outlets), testing, and Part P
-                notification.
+                isolation, new 18th Edition compliant unit with RCBOs or RCDs (as required by BS
+                7671 for socket outlets), testing, and Part P notification.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -295,9 +294,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Broadfield, Bewbush, and Furnace Green were built during the 1960s and 1970s
               expansion. These properties may have PVC-insulated wiring that is still serviceable
-              but often lack modern RCD protection required by BS 7671. Consumer unit
-              upgrades to provide RCD coverage for all socket outlets up to 32 A are the most
-              common electrical job in these areas.
+              but often lack modern RCD protection required by BS 7671. Consumer unit upgrades to
+              provide RCD coverage for all socket outlets up to 32 A are the most common electrical
+              job in these areas.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -315,8 +314,8 @@ const sections = [
               Crawley has a mix of low-rise purpose-built flats from the new town era and modern
               apartment blocks near the town centre. Electrical work in flats requires coordination
               with the freeholder or managing agent, particularly for work affecting communal areas
-              or the incoming supply. Shared consumer units in older blocks can complicate
-              isolation and testing procedures.
+              or the incoming supply. Shared consumer units in older blocks can complicate isolation
+              and testing procedures.
             </p>
           </div>
         </div>
@@ -340,8 +339,8 @@ const sections = [
               <span>
                 <strong>New connections and supply upgrades</strong> — if you need a new electricity
                 supply or want to upgrade from single-phase to three-phase (for EV chargers, heat
-                pumps, or commercial equipment), you apply to UKPN. Crawley lead times are
-                typically 4 to 8 weeks.
+                pumps, or commercial equipment), you apply to UKPN. Crawley lead times are typically
+                4 to 8 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -357,15 +356,14 @@ const sections = [
               <span>
                 <strong>G98/G99 notification for solar and battery storage</strong> — if you are
                 installing solar PV or battery storage, the electrician must notify UKPN under
-                Engineering Recommendation G98 (for systems up to 16A per phase) or G99 (for
-                larger systems).
+                Engineering Recommendation G98 (for systems up to 16A per phase) or G99 (for larger
+                systems).
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Crawley is overseen by Crawley Borough Council
           building control or by an approved inspector. If your electrician is registered with a
           competent person scheme, they self-certify and notify the council on your behalf.
@@ -381,9 +379,9 @@ const sections = [
         <p>
           Crawley offers a strong and consistent market for electricians. The combination of ageing
           new town housing stock requiring upgrades, new residential developments, and the
-          commercial sector around Gatwick Airport creates year-round demand. The town's location
-          on the M23 corridor also provides easy access to Brighton, Horsham, East Grinstead, and
-          the wider Sussex market.
+          commercial sector around Gatwick Airport creates year-round demand. The town's location on
+          the M23 corridor also provides easy access to Brighton, Horsham, East Grinstead, and the
+          wider Sussex market.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -395,8 +393,8 @@ const sections = [
                   Landlord EICR compliance (particularly for the large private rental sector near
                   Gatwick), consumer unit upgrades in 1950s to 1970s housing, EV charger
                   installations in newer developments, and commercial maintenance contracts for
-                  airport-area businesses. The Forge Wood and Kilnwood Vale developments also
-                  create new-build snagging and home improvement work.
+                  airport-area businesses. The Forge Wood and Kilnwood Vale developments also create
+                  new-build snagging and home improvement work.
                 </p>
               </div>
             </div>
@@ -420,7 +418,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Crawley electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -457,7 +455,7 @@ export default function ElectricianCrawleyPage() {
       faqHeading="Frequently Asked Questions About Electricians in Crawley"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Crawley and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Crawley and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

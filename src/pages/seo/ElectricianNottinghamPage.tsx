@@ -110,7 +110,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
-    description: 'Size cables for long runs in Lace Market warehouse conversions with automatic derating.',
+    description:
+      'Size cables for long runs in Lace Market warehouse conversions with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
@@ -142,12 +143,11 @@ const sections = [
         </p>
         <p>
           The electrical contracting market in Nottingham benefits from two major universities
-          (University of Nottingham and Nottingham Trent University) driving HMO demand, a busy
-          city centre with ongoing commercial development, the tram corridor creating new
-          commercial opportunities along its route, and a large stock of Victorian terraces
-          requiring rewiring. NAPIT — one of the UK's largest competent person schemes — is
-          headquartered in Nottingham, which means there is a particularly strong local network of
-          registered electricians.
+          (University of Nottingham and Nottingham Trent University) driving HMO demand, a busy city
+          centre with ongoing commercial development, the tram corridor creating new commercial
+          opportunities along its route, and a large stock of Victorian terraces requiring rewiring.
+          NAPIT — one of the UK's largest competent person schemes — is headquartered in Nottingham,
+          which means there is a particularly strong local network of registered electricians.
         </p>
         <p>
           Whatever the size of the firm, the qualifications and registration requirements are the
@@ -157,16 +157,15 @@ const sections = [
           </SEOInternalLink>{' '}
           must either be registered with a competent person scheme or have the work inspected and
           signed off by local authority building control. The most recognised competent person
-          schemes are{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>, NAPIT,
-          ELECSA, and STROMA.
+          schemes are <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,
+          NAPIT, ELECSA, and STROMA.
         </p>
       </>
     ),
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications',
+    heading: "How to Verify an Electrician's Qualifications",
     content: (
       <>
         <p>
@@ -283,9 +282,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          These prices are indicative for 2026. City centre and Lace Market work tends to be 10%
-          to 15% higher due to parking and access challenges. Always get at least three written
-          quotes for any significant work.
+          These prices are indicative for 2026. City centre and Lace Market work tends to be 10% to
+          15% higher due to parking and access challenges. Always get at least three written quotes
+          for any significant work.
         </p>
       </>
     ),
@@ -302,14 +301,16 @@ const sections = [
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
-            <h3 className="font-bold text-white text-lg mb-3">Victorian Terraces (Sherwood/Mapperley)</h3>
+            <h3 className="font-bold text-white text-lg mb-3">
+              Victorian Terraces (Sherwood/Mapperley)
+            </h3>
             <p className="text-white text-sm leading-relaxed">
               The Sherwood, Mapperley, Carrington, and Forest Fields areas have dense rows of
               late-Victorian and Edwardian bay-fronted terraces. Many still have original or
               1960s-era wiring with a mix of lead-sheathed and rubber-insulated cables. The
-              lath-and-plaster walls crumble when chased, and cellars often contain a tangle of
-              old wiring, gas pipes, and lead water pipes. A full rewire is typically the most
-              practical approach for these properties.
+              lath-and-plaster walls crumble when chased, and cellars often contain a tangle of old
+              wiring, gas pipes, and lead water pipes. A full rewire is typically the most practical
+              approach for these properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -317,9 +318,9 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               The Nottingham Express Transit (NET) tram system has driven commercial development
               along its routes through Beeston, Hyson Green, and Hucknall. New retail units,
-              offices, and mixed-use developments along the tram stops require commercial
-              electrical installations, three-phase supplies, and separate metering arrangements.
-              This is a growing market for electricians with commercial experience.
+              offices, and mixed-use developments along the tram stops require commercial electrical
+              installations, three-phase supplies, and separate metering arrangements. This is a
+              growing market for electricians with commercial experience.
             </p>
           </div>
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
@@ -327,19 +328,19 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Lenton, Dunkirk, Beeston, and Radford are dominated by student HMOs serving the
               University of Nottingham and Nottingham Trent University. These properties require
-              enhanced fire detection (LD2 to BS 5839-6), emergency lighting on escape routes,
-              and 30mA RCD protection on all circuits per Regulation 411.3.3. Landlords must hold
-              a valid EICR, creating steady inspection demand.
+              enhanced fire detection (LD2 to BS 5839-6), emergency lighting on escape routes, and
+              30mA RCD protection on all circuits per Regulation 411.3.3. Landlords must hold a
+              valid EICR, creating steady inspection demand.
             </p>
           </div>
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Post-War Estates</h3>
             <p className="text-white text-sm leading-relaxed">
-              Large council-built estates in Clifton, Bestwood, and Bulwell from the 1950s and
-              1960s often have original radial circuits, rewirable fuses, and no RCD protection.
-              Consumer unit upgrades to 18th Edition standards are the most common electrical job
-              in these areas. Many properties in these wards also fall under the selective
-              licensing scheme, requiring a valid EICR.
+              Large council-built estates in Clifton, Bestwood, and Bulwell from the 1950s and 1960s
+              often have original radial circuits, rewirable fuses, and no RCD protection. Consumer
+              unit upgrades to 18th Edition standards are the most common electrical job in these
+              areas. Many properties in these wards also fall under the selective licensing scheme,
+              requiring a valid EICR.
             </p>
           </div>
         </div>
@@ -388,8 +389,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          For{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
+          For <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>{' '}
           compliance, notifiable electrical work in Nottingham is overseen by Nottingham City
           Council Building Control or an approved inspector. If your electrician is registered with
           a competent person scheme, they self-certify and notify the council on your behalf.
@@ -423,9 +423,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Home className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO fire detection</strong> — HMOs in Nottingham require a Grade A1 LD2
-                fire detection system to BS 5839-6. This means interlinked mains-powered detectors
-                with battery backup in all escape routes, kitchens (heat detectors), and principal
+                <strong>HMO fire detection</strong> — HMOs in Nottingham require a Grade A1 LD2 fire
+                detection system to BS 5839-6. This means interlinked mains-powered detectors with
+                battery backup in all escape routes, kitchens (heat detectors), and principal
                 habitable rooms. The council inspects actively in Lenton and Radford.
               </span>
             </li>
@@ -448,9 +448,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          HMO and selective licensing work is a reliable revenue stream for Nottingham
-          electricians. Building relationships with student letting agents like Unipol, Studentpad,
-          and local agencies in Lenton and Beeston provides consistent year-round work.
+          HMO and selective licensing work is a reliable revenue stream for Nottingham electricians.
+          Building relationships with student letting agents like Unipol, Studentpad, and local
+          agencies in Lenton and Beeston provides consistent year-round work.
         </p>
       </>
     ),
@@ -481,9 +481,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Warehouse className="w-5 h-5 text-amber-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thick masonry walls</strong> — warehouse buildings have 450mm to 600mm
-                solid brick walls. Core drilling for cable penetrations requires specialist
-                equipment. Plan routes to minimise penetrations and use existing openings. The{' '}
+                <strong>Thick masonry walls</strong> — warehouse buildings have 450mm to 600mm solid
+                brick walls. Core drilling for cable penetrations requires specialist equipment.
+                Plan routes to minimise penetrations and use existing openings. The{' '}
                 <SEOInternalLink href="/tools/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
@@ -513,9 +513,9 @@ const sections = [
         </div>
         <p>
           Lace Market conversion projects are high-value work. A complete electrical package for a
-          multi-unit residential conversion can be worth £30,000 to £70,000 depending on the
-          number of units and specification. Experience with listed buildings and heritage
-          properties is a significant advantage when tendering for this work.
+          multi-unit residential conversion can be worth £30,000 to £70,000 depending on the number
+          of units and specification. Experience with listed buildings and heritage properties is a
+          significant advantage when tendering for this work.
         </p>
       </>
     ),
@@ -553,8 +553,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Nottingham landlords and managing agents expect prompt, professional certificates.
-                  An{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
+                  An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
                   <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
@@ -565,7 +564,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Run your Nottingham electrical business from your phone"
-          description="Join 430+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for quoting, certification, and job management. Professional EICRs, EICs, and Minor Works certificates completed on site. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -602,7 +601,7 @@ export default function ElectricianNottinghamPage() {
       faqHeading="Frequently Asked Questions About Electricians in Nottingham"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Certificates on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Nottingham and send instant PDFs to your customers. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for EICRs, EICs, and quoting. Complete certificates on site in Nottingham and send instant PDFs to your customers. 7-day free trial."
     />
   );
 }

@@ -622,7 +622,7 @@ export default function RAMSTemplateGuidePage() {
       faqHeading="Frequently Asked Questions About RAMS for Electricians"
       relatedPages={relatedPages}
       ctaHeading="Generate Professional RAMS in Minutes"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate's AI Health and Safety Agent to create site-specific RAMS, digital certificates, and professional documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate's AI Health and Safety Agent to create site-specific RAMS, digital certificates, and professional documentation. 7-day free trial, cancel anytime."
     />
   );
 }

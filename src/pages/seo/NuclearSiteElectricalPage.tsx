@@ -63,7 +63,8 @@ const faqs = [
       'The Nuclear Baseline is the overarching Quality Assurance framework applied to safety-related work on UK nuclear licensed sites. It requires that all work affecting nuclear safety be carried out to documented procedures, inspected by qualified personnel, and fully traceable through records. Every task has a work instruction or procedure, every test result is formally recorded, and every non-conformance is formally raised and managed through a corrective action programme. This is significantly more rigorous than industrial QA and represents one of the biggest cultural adjustments for electricians moving from commercial or industrial backgrounds.',
   },
   {
-    question: 'What is the difference between nuclear island and conventional island electrical work?',
+    question:
+      'What is the difference between nuclear island and conventional island electrical work?',
     answer:
       'The nuclear island comprises the reactor and its directly associated safety systems — the reactor pressure vessel, primary circuit, emergency core cooling systems, and nuclear safety-classified electrical systems. Work here is subject to the full Nuclear Baseline QA regime and is classified by nuclear safety importance. The conventional island is the balance-of-plant — turbines, generators, transformers, switchgear, and auxiliary systems that are not directly involved in nuclear safety. Conventional island work more closely resembles heavy industrial electrical work, though site security and general nuclear awareness requirements still apply.',
   },
@@ -88,14 +89,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/offshore-electrical',
     title: 'Offshore Electrical Engineering',
-    description: 'ATEX hazardous area electrical work on oil and gas platforms — BOSIET, day rates, and rotation patterns.',
+    description:
+      'ATEX hazardous area electrical work on oil and gas platforms — BOSIET, day rates, and rotation patterns.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/petrochemical-electrical',
     title: 'Petrochemical Electrical Installation',
-    description: 'ATEX zone classification, DSEAR compliance, CompEx qualification, and Ex equipment inspection.',
+    description:
+      'ATEX zone classification, DSEAR compliance, CompEx qualification, and Ex equipment inspection.',
     icon: AlertTriangle,
     category: 'Guide',
   },
@@ -134,10 +137,10 @@ const sections = [
       <>
         <p>
           Nuclear site electrical engineering is among the most demanding and rewarding specialisms
-          in the UK electrical industry. The combination of safety-critical systems, rigorous Quality
-          Assurance regimes, mandatory security vetting, and specialist training requirements
-          creates a significant barrier to entry — and correspondingly premium pay rates for those
-          who qualify.
+          in the UK electrical industry. The combination of safety-critical systems, rigorous
+          Quality Assurance regimes, mandatory security vetting, and specialist training
+          requirements creates a significant barrier to entry — and correspondingly premium pay
+          rates for those who qualify.
         </p>
         <p>
           The UK civil nuclear sector is managed under a licensing regime administered by the Office
@@ -158,10 +161,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NDA portfolio</strong> — the Nuclear Decommissioning Authority (NDA)
-                owns and manages 17 nuclear sites across the UK, including Sellafield, Dounreay,
-                and the Magnox stations. Many sites are in long-term decommissioning, providing
-                sustained contractor demand.
+                <strong>NDA portfolio</strong> — the Nuclear Decommissioning Authority (NDA) owns
+                and manages 17 nuclear sites across the UK, including Sellafield, Dounreay, and the
+                Magnox stations. Many sites are in long-term decommissioning, providing sustained
+                contractor demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -169,8 +172,8 @@ const sections = [
               <span>
                 <strong>New build opportunity</strong> — Hinkley Point C in Somerset is the UK's
                 first new nuclear power station in a generation. The project employs thousands of
-                electrical workers and is expected to be in peak electrical construction through
-                the late 2020s.
+                electrical workers and is expected to be in peak electrical construction through the
+                late 2020s.
               </span>
             </li>
           </ul>
@@ -184,9 +187,9 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the distinction between nuclear island and conventional island is fundamental
-          to nuclear site electrical work. The two areas have different QA requirements, different
-          documentation burdens, and often different pay rates.
+          Understanding the distinction between nuclear island and conventional island is
+          fundamental to nuclear site electrical work. The two areas have different QA requirements,
+          different documentation burdens, and often different pay rates.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -206,12 +209,12 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Conventional island</strong> — the balance-of-plant: turbine hall,
-                generator transformers, main switchgear, station auxiliary transformers, cooling
-                water systems, and other non-safety plant. Conventional island electrical work
-                is closer in character to heavy industrial electrical work. While site security
-                and nuclear awareness requirements still apply, the QA burden is lower and the
-                work environment more familiar to experienced industrial electricians.
+                <strong>Conventional island</strong> — the balance-of-plant: turbine hall, generator
+                transformers, main switchgear, station auxiliary transformers, cooling water
+                systems, and other non-safety plant. Conventional island electrical work is closer
+                in character to heavy industrial electrical work. While site security and nuclear
+                awareness requirements still apply, the QA burden is lower and the work environment
+                more familiar to experienced industrial electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -246,20 +249,19 @@ const sections = [
               <span>
                 <strong>Hinkley Point C, Somerset</strong> — EDF Energy's new-build project, the
                 first new nuclear power station in the UK for over 30 years. Two EPR reactors under
-                construction. Employs thousands of electrical contractors and is the largest
-                current source of nuclear electrical work in the UK. The project is expected to
-                sustain significant electrical contractor demand through the late 2020s.
+                construction. Employs thousands of electrical contractors and is the largest current
+                source of nuclear electrical work in the UK. The project is expected to sustain
+                significant electrical contractor demand through the late 2020s.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sellafield, Cumbria</strong> — the UK's most complex nuclear site,
-                operated by Sellafield Ltd on behalf of the NDA. Processing, storage, and
-                decommissioning operations across hundreds of facilities. Sustained long-term
-                electrical contractor demand — the decommissioning programme is expected to
-                continue well into the second half of this century. Access requires security
-                clearance and site-specific vetting.
+                <strong>Sellafield, Cumbria</strong> — the UK's most complex nuclear site, operated
+                by Sellafield Ltd on behalf of the NDA. Processing, storage, and decommissioning
+                operations across hundreds of facilities. Sustained long-term electrical contractor
+                demand — the decommissioning programme is expected to continue well into the second
+                half of this century. Access requires security clearance and site-specific vetting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -268,18 +270,18 @@ const sections = [
                 <strong>Sizewell B, Suffolk</strong> — the UK's only currently operating pressurised
                 water reactor, operated by EDF Energy. Requires ongoing maintenance electrical
                 contractor support. Planning permission for Sizewell C (two additional EPR units)
-                was granted, which would create a major new source of electrical construction
-                demand in the future.
+                was granted, which would create a major new source of electrical construction demand
+                in the future.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NDA estate</strong> — the wider NDA portfolio includes Dounreay in
-                Caithness, Capenhurst in Cheshire, Winfrith in Dorset, and the Magnox stations
-                at Berkeley, Bradwell, Dungeness, Hinkley Point A, Hunterston, Oldbury,
-                Trawsfynydd, and Wylfa. All are in various stages of decommissioning and require
-                ongoing electrical contractor support.
+                Caithness, Capenhurst in Cheshire, Winfrith in Dorset, and the Magnox stations at
+                Berkeley, Bradwell, Dungeness, Hinkley Point A, Hunterston, Oldbury, Trawsfynydd,
+                and Wylfa. All are in various stages of decommissioning and require ongoing
+                electrical contractor support.
               </span>
             </li>
           </ul>
@@ -303,17 +305,17 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Work to procedure</strong> — every task is governed by a formal work
-                instruction or procedure. Deviations from the procedure must be formally
-                authorised. Workers are expected to stop and raise a query if they cannot
-                follow the procedure as written, rather than improvise.
+                instruction or procedure. Deviations from the procedure must be formally authorised.
+                Workers are expected to stop and raise a query if they cannot follow the procedure
+                as written, rather than improvise.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Independent verification</strong> — safety-classified electrical
-                connections, terminations, and installations are independently verified (checked
-                by a second qualified person who was not involved in the original work). This is
+                connections, terminations, and installations are independently verified (checked by
+                a second qualified person who was not involved in the original work). This is
                 mandatory for nuclear safety-classified systems and is formally documented.
               </span>
             </li>
@@ -323,18 +325,18 @@ const sections = [
                 <strong>Formal non-conformance management</strong> — if a defect or deviation from
                 specification is discovered, it must be formally raised as a non-conformance report
                 (NCR) or equivalent. The non-conformance is then investigated, dispositioned (by
-                authorised engineers), and formally closed. Covering up a defect or correcting
-                it without raising a formal non-conformance is a serious disciplinary matter.
+                authorised engineers), and formally closed. Covering up a defect or correcting it
+                without raising a formal non-conformance is a serious disciplinary matter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Traceability</strong> — all materials and components used on
-                nuclear safety-classified systems must be traceable to their origin. Cable
-                drum numbers, equipment batch numbers, and calibration certificates for test
-                equipment are all formally recorded. This traceability supports the site's
-                ability to investigate any future issues and demonstrate compliance to the ONR.
+                <strong>Traceability</strong> — all materials and components used on nuclear
+                safety-classified systems must be traceable to their origin. Cable drum numbers,
+                equipment batch numbers, and calibration certificates for test equipment are all
+                formally recorded. This traceability supports the site's ability to investigate any
+                future issues and demonstrate compliance to the ONR.
               </span>
             </li>
           </ul>
@@ -354,29 +356,29 @@ const sections = [
     content: (
       <>
         <p>
-          All contractors working on UK nuclear licensed sites require security clearance. The
-          level required depends on the site, the area of work, and the specific role.
+          All contractors working on UK nuclear licensed sites require security clearance. The level
+          required depends on the site, the area of work, and the specific role.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BPSS (Baseline Personnel Security Standard)</strong> — the minimum
-                clearance level required for all contractors on nuclear licensed sites. Covers
-                identity verification, three-year employment history check, basic criminal
-                records check, and nationality/immigration status. Typically takes two to four
-                weeks. Sponsored by the principal contractor or site operator.
+                <strong>BPSS (Baseline Personnel Security Standard)</strong> — the minimum clearance
+                level required for all contractors on nuclear licensed sites. Covers identity
+                verification, three-year employment history check, basic criminal records check, and
+                nationality/immigration status. Typically takes two to four weeks. Sponsored by the
+                principal contractor or site operator.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SC (Security Check)</strong> — required for many roles on nuclear sites,
-                particularly those with access to sensitive areas or information. SC involves a
-                more thorough background investigation including financial checks and interviews.
-                Takes three to six months and requires sponsorship. SC clearance is recognised
-                across government and is portable between sponsors within its validity period.
+                particularly those with access to sensitive areas or information. SC involves a more
+                thorough background investigation including financial checks and interviews. Takes
+                three to six months and requires sponsorship. SC clearance is recognised across
+                government and is portable between sponsors within its validity period.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -385,18 +387,18 @@ const sections = [
                 <strong>CNI (Civil Nuclear Industry) vetting</strong> — some roles at nuclear
                 licensed sites, particularly those involving sensitive nuclear material or
                 information, may require Civil Nuclear Industry vetting in addition to BPSS or SC.
-                This is administered by the Civil Nuclear Constabulary (CNC) and the site
-                licence holder.
+                This is administered by the Civil Nuclear Constabulary (CNC) and the site licence
+                holder.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Lock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Planning ahead</strong> — security clearance takes time and cannot be
-                rushed. Electricians intending to move into nuclear work should begin the BPSS
-                or SC process as early as possible — ideally before their first nuclear contract
-                is in place. Some principal contractors and nuclear labour agencies can sponsor
-                clearance in advance of a specific placement.
+                rushed. Electricians intending to move into nuclear work should begin the BPSS or SC
+                process as early as possible — ideally before their first nuclear contract is in
+                place. Some principal contractors and nuclear labour agencies can sponsor clearance
+                in advance of a specific placement.
               </span>
             </li>
           </ul>
@@ -422,9 +424,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ionising Radiations Regulations 2017 (IRR17)</strong> — the primary UK
-                legislation governing radiation protection at work. Sets dose limits: 20mSv/year
-                for classified workers (averaged over five years, with 50mSv in any single year)
-                and 1mSv/year for members of the public. Most nuclear site electrical contractors
+                legislation governing radiation protection at work. Sets dose limits: 20mSv/year for
+                classified workers (averaged over five years, with 50mSv in any single year) and
+                1mSv/year for members of the public. Most nuclear site electrical contractors
                 receive doses well below these limits.
               </span>
             </li>
@@ -432,18 +434,18 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ALARP principle</strong> — doses must be kept As Low As Reasonably
-                Practicable. This means work planning takes account of dose implications, time
-                in radiation areas is minimised, shielding is used where appropriate, and
-                alternatives to working in higher-dose areas are considered.
+                Practicable. This means work planning takes account of dose implications, time in
+                radiation areas is minimised, shielding is used where appropriate, and alternatives
+                to working in higher-dose areas are considered.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dosimetry</strong> — when working in designated areas, contractors
-                wear personal dosimeters. Thermoluminescent dosimeters (TLDs) measure cumulative
-                dose over time. Electronic Personal Dosimeters (EPDs) provide real-time dose
-                rate monitoring. Doses are recorded and retained by the site licence holder.
+                <strong>Dosimetry</strong> — when working in designated areas, contractors wear
+                personal dosimeters. Thermoluminescent dosimeters (TLDs) measure cumulative dose
+                over time. Electronic Personal Dosimeters (EPDs) provide real-time dose rate
+                monitoring. Doses are recorded and retained by the site licence holder.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -451,8 +453,8 @@ const sections = [
               <span>
                 <strong>RPA training content</strong> — basics of ionising radiation, types of
                 radiation and their penetrating power, dose units (Sievert, Gray), dose limits,
-                ALARP, controlled and supervised area rules, dosimetry use, contamination
-                control, emergency procedures, and the role of the Radiation Protection Adviser.
+                ALARP, controlled and supervised area rules, dosimetry use, contamination control,
+                emergency procedures, and the role of the Radiation Protection Adviser.
               </span>
             </li>
           </ul>
@@ -475,19 +477,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECS Nuclear Electrical Operative card</strong> — requires a recognised
-                trade qualification (NVQ Level 3 / SVQ Level 3 or equivalent), current 18th
-                Edition (BS 7671) certification, and completion of nuclear-specific training.
-                The card demonstrates both electrical competence and nuclear awareness to
-                site operators and principal contractors.
+                <strong>ECS Nuclear Electrical Operative card</strong> — requires a recognised trade
+                qualification (NVQ Level 3 / SVQ Level 3 or equivalent), current 18th Edition (BS
+                7671) certification, and completion of nuclear-specific training. The card
+                demonstrates both electrical competence and nuclear awareness to site operators and
+                principal contractors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Nuclear Safety Awareness training</strong> — typically a one to two day
-                course covering the nuclear licensing regime, nuclear safety principles, the
-                Nuclear Baseline, radiation protection awareness, and site-specific requirements.
+                course covering the nuclear licensing regime, nuclear safety principles, the Nuclear
+                Baseline, radiation protection awareness, and site-specific requirements.
                 Certificates are typically valid for three to five years and must be renewed.
               </span>
             </li>
@@ -495,18 +497,18 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>City & Guilds 2391 / 2394/2395</strong> — inspection and testing
-                qualifications are valued on nuclear sites where periodic testing of safety
-                systems and emergency equipment is part of the maintenance programme. The
-                ability to carry out formal inspection and testing to BS 7671 Section 631
-                is an asset for nuclear site electricians.
+                qualifications are valued on nuclear sites where periodic testing of safety systems
+                and emergency equipment is part of the maintenance programme. The ability to carry
+                out formal inspection and testing to BS 7671 Section 631 is an asset for nuclear
+                site electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CompEx</strong> — some areas of nuclear sites, particularly fuel
-                handling areas and chemical storage areas, may be classified as hazardous
-                areas under ATEX/DSEAR. The{' '}
+                <strong>CompEx</strong> — some areas of nuclear sites, particularly fuel handling
+                areas and chemical storage areas, may be classified as hazardous areas under
+                ATEX/DSEAR. The{' '}
                 <SEOInternalLink href="/petrochemical-electrical">
                   CompEx qualification
                 </SEOInternalLink>{' '}
@@ -535,8 +537,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Employed nuclear electrician</strong> — £45,000 to £70,000 per year
-                depending on experience, site, and specific role. Senior positions such as
-                lead electrical engineer or commissioning engineer command £65,000 to £90,000+.
+                depending on experience, site, and specific role. Senior positions such as lead
+                electrical engineer or commissioning engineer command £65,000 to £90,000+.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -552,18 +554,18 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Overtime and shift premiums</strong> — nuclear sites frequently operate
-                shift patterns and overtime, with shift allowances and overtime premiums on top
-                of basic rates. A 10-hour day rate plus shift premium can effectively increase
-                the equivalent hourly rate significantly.
+                shift patterns and overtime, with shift allowances and overtime premiums on top of
+                basic rates. A 10-hour day rate plus shift premium can effectively increase the
+                equivalent hourly rate significantly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Accommodation and travel</strong> — many UK nuclear sites are in remote
-                locations (Sellafield in west Cumbria, Hinkley Point on the Somerset coast,
-                Dounreay in Caithness). Principal contractors typically pay accommodation
-                allowances or provide site accommodation, in addition to travel allowances.
+                locations (Sellafield in west Cumbria, Hinkley Point on the Somerset coast, Dounreay
+                in Caithness). Principal contractors typically pay accommodation allowances or
+                provide site accommodation, in addition to travel allowances.
               </span>
             </li>
           </ul>
@@ -571,9 +573,9 @@ const sections = [
         <p>
           The investment in security clearance, specialist training, and the time required to
           develop familiarity with nuclear QA culture is significant. However, for experienced
-          electricians willing to make that investment, nuclear site work offers some of the
-          most financially rewarding and professionally interesting opportunities in the UK
-          electrical sector.
+          electricians willing to make that investment, nuclear site work offers some of the most
+          financially rewarding and professionally interesting opportunities in the UK electrical
+          sector.
         </p>
       </>
     ),
@@ -585,8 +587,8 @@ const sections = [
       <>
         <p>
           Moving into nuclear site electrical work requires planning and patience. The security
-          clearance process, specialist training, and QA culture adjustment all take time —
-          but the rewards are substantial for those who commit to it.
+          clearance process, specialist training, and QA culture adjustment all take time — but the
+          rewards are substantial for those who commit to it.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -611,10 +613,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Keep Your Certifications Current</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Nuclear sites require evidence of current qualifications at all times. Use{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    Elec-Mate
-                  </SEOInternalLink>{' '}
-                  to keep all your certificates, test records, and qualifications organised and
+                  <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate</SEOInternalLink> to
+                  keep all your certificates, test records, and qualifications organised and
                   accessible — site access can be refused if you cannot demonstrate current
                   certification when required.
                 </p>
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Manage your nuclear site qualifications with Elec-Mate"
-          description="Keep your ECS card, 18th Edition certification, nuclear awareness certificates, and test records organised in one place. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Keep your ECS card, 18th Edition certification, nuclear awareness certificates, and test records organised in one place. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={ShieldCheck}
         />
       </>

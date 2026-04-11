@@ -22,7 +22,7 @@ export default function ElectricianAppForiPhonePage() {
   return (
     <ToolTemplate
       title="Best Electrician App for iPhone 2026 | Elec-Mate iOS"
-      description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 8 certificate types, AI board scanner, 70+ BS 7671 calculators, 46+ training courses, full offline mode, and professional business tools. Built for UK electricians and apprentices."
+      description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 16 certificate types, AI board scanner, 70+ BS 7671 calculators, 46+ training courses, full offline mode, and professional business tools. Built for UK electricians and apprentices."
       datePublished="2026-01-12"
       dateModified="2026-02-13"
       breadcrumbs={[
@@ -48,17 +48,17 @@ export default function ElectricianAppForiPhonePage() {
           Best <span className="text-yellow-400">Electrician App for iPhone</span> 2026
         </>
       }
-      heroSubtitle="Elec-Mate on iPhone gives you the full toolkit — 8 certificate types with AI board scanner and voice test entry, 70+ BS 7671 calculators, 46+ training courses, offline mode, and professional business tools. Native iOS experience with Face ID, haptic feedback, and smooth animations. Built for UK electricians who work from their phone."
+      heroSubtitle="Elec-Mate on iPhone gives you the full toolkit — 16 certificate types with AI board scanner and voice test entry, 70+ BS 7671 calculators, 46+ training courses, offline mode, and professional business tools. Native iOS experience with Face ID, haptic feedback, and smooth animations. Built for UK electricians who work from their phone."
       heroFeaturePills={[
         { icon: Smartphone, label: 'Native iOS' },
         { icon: Fingerprint, label: 'Face ID' },
-        { icon: FileCheck2, label: '8 Certificate Types' },
+        { icon: FileCheck2, label: '16 Certificate Types' },
         { icon: WifiOff, label: 'Full Offline Mode' },
       ]}
       readingTime={10}
       keyTakeaways={[
         'Elec-Mate runs natively on iPhone with Face ID authentication, haptic feedback, smooth animations, and the polish expected from a premium iOS app.',
-        'All 8 certificate types work on iPhone — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT — with AI board scanner and voice test entry.',
+        'All 16 certificate types work on iPhone — EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT — with AI board scanner and voice test entry.',
         'The full suite of 70+ BS 7671 calculators runs locally on your iPhone with no network dependency — cable sizing, voltage drop, max demand, and more.',
         'Full offline mode with auto-save every 10 seconds and cloud sync when connectivity returns. Complete certificates in basements and plant rooms with no signal.',
         'The Study Centre delivers 46+ training courses on iPhone with downloadable content for offline study, progress tracking, and interactive quizzes.',
@@ -97,7 +97,7 @@ export default function ElectricianAppForiPhonePage() {
           appBridge: {
             title: 'Download Elec-Mate for iPhone',
             description:
-              'Native iOS app with Face ID, 8 certificate types, 70+ calculators, 46+ courses, and full offline mode. 7-day free trial, no card required to start.',
+              'Native iOS app with Face ID, 16 certificate types, 70+ calculators, 46+ courses, and full offline mode. 7-day free trial, no card required to start.',
             icon: Download,
           },
         },
@@ -148,7 +148,7 @@ export default function ElectricianAppForiPhonePage() {
           content: (
             <>
               <p>
-                All 8 certificate types are fully functional on iPhone. The{' '}
+                All 16 certificate types are fully functional on iPhone. The{' '}
                 <SEOInternalLink href="/tools/digital-certificates-app">
                   digital certificates app
                 </SEOInternalLink>{' '}
@@ -315,7 +315,7 @@ export default function ElectricianAppForiPhonePage() {
         },
         {
           icon: FileCheck2,
-          title: '8 Certificate Types',
+          title: '16 Certificate Types',
           description:
             'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. All optimised for iPhone.',
         },
@@ -388,7 +388,7 @@ export default function ElectricianAppForiPhonePage() {
           href: '/tools/digital-certificates-app',
           title: 'Digital Certificates App',
           description:
-            'All 8 certificate types with AI features, digital signatures, and professional PDF output.',
+            'All 16 certificate types with AI features, digital signatures, and professional PDF output.',
           icon: FileCheck2,
           category: 'Certificates',
         },
@@ -434,7 +434,7 @@ export default function ElectricianAppForiPhonePage() {
         },
       ]}
       ctaHeading="Download Elec-Mate for iPhone — free for 7 days"
-      ctaSubheading="8 certificate types, 70+ calculators, 46+ courses, AI tools, and full offline mode. Native iOS experience with Face ID. No card required to start your trial."
+      ctaSubheading="16 certificate types, 70+ calculators, 46+ courses, AI tools, and full offline mode. Native iOS experience with Face ID. No card required to start your trial."
       toolPath="/tools/electrician-app-iphone"
     />
   );

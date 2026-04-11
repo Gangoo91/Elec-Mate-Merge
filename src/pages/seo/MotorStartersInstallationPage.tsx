@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/industrial-earthing-systems',
     title: 'Industrial Earthing Systems',
-    description: 'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
+    description:
+      'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
     icon: Shield,
     category: 'Guide',
   },
@@ -101,14 +102,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/power-factor-correction',
     title: 'Power Factor Correction',
-    description: 'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
+    description:
+      'Capacitor banks, harmonic detuning, and payback calculation for industrial users.',
     icon: Activity,
     category: 'Guide',
   },
   {
     href: '/tools/electrical-installation-certificate',
     title: 'Electrical Installation Certificate',
-    description: 'Complete EICs on your phone and export PDF instantly for motor circuit installations.',
+    description:
+      'Complete EICs on your phone and export PDF instantly for motor circuit installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -211,8 +214,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Control circuit</strong> — typically 24 VDC from a PELV power supply, or
-                110 VAC SELV from a control transformer. Start/stop pushbuttons, pilot lamps, and
+                <strong>Control circuit</strong> — typically 24 VDC from a PELV power supply, or 110
+                VAC SELV from a control transformer. Start/stop pushbuttons, pilot lamps, and
                 auxiliary contacts for interlocking wired in the control circuit.
               </span>
             </li>
@@ -254,10 +257,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Transition current spike</strong> — the open-circuit transition from star
-                to delta causes a current transient that can exceed DOL starting current. Closed
-                transition star-delta (with a resistor bank during switching) eliminates this but
-                is more complex and expensive.
+                <strong>Transition current spike</strong> — the open-circuit transition from star to
+                delta causes a current transient that can exceed DOL starting current. Closed
+                transition star-delta (with a resistor bank during switching) eliminates this but is
+                more complex and expensive.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -273,9 +276,9 @@ const sections = [
         </div>
         <p>
           Star-delta starters are not suitable for loads that require significant torque during
-          starting (e.g., loaded conveyors, positive displacement pumps) because starting torque
-          is reduced to one-third of DOL torque. For high-inertia or high-torque starting
-          requirements, specify a VFD or soft starter.
+          starting (e.g., loaded conveyors, positive displacement pumps) because starting torque is
+          reduced to one-third of DOL torque. For high-inertia or high-torque starting requirements,
+          specify a VFD or soft starter.
         </p>
       </>
     ),
@@ -332,10 +335,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing the VFD</strong> — the VFD screen (EMC gland) must be bonded to
-                the panel earth bar at both ends. The motor cable screen must be bonded at the VFD
-                and at the motor terminal box. This is essential for EMC compliance and for
-                protection against bearing currents in larger motors.
+                <strong>Earthing the VFD</strong> — the VFD screen (EMC gland) must be bonded to the
+                panel earth bar at both ends. The motor cable screen must be bonded at the VFD and
+                at the motor terminal box. This is essential for EMC compliance and for protection
+                against bearing currents in larger motors.
               </span>
             </li>
           </ul>
@@ -360,9 +363,9 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Power and control segregation</strong> — run power conductors (400 V, motor
-                leads) and control conductors (24 VDC or 110 VAC) in separate cable trays or
-                conduit runs, physically separated by at least 50 mm or a metallic barrier. This
-                prevents induced noise on control circuits.
+                leads) and control conductors (24 VDC or 110 VAC) in separate cable trays or conduit
+                runs, physically separated by at least 50 mm or a metallic barrier. This prevents
+                induced noise on control circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -389,8 +392,8 @@ const sections = [
               <span>
                 <strong>Terminal blocks</strong> — use DIN rail-mounted terminal blocks for all
                 external connections. Label terminal blocks with the circuit diagram reference.
-                Provide separate terminal blocks for power (PE, L1, L2, L3, N) and control
-                (common, start, stop, run indication, fault indication).
+                Provide separate terminal blocks for power (PE, L1, L2, L3, N) and control (common,
+                start, stop, run indication, fault indication).
               </span>
             </li>
           </ul>
@@ -417,8 +420,8 @@ const sections = [
               <span>
                 <strong>Bi-metallic overload relays</strong> — the standard solution for DOL and
                 star-delta starters. Current through bi-metallic strips heats and deflects them,
-                tripping the relay after a time that depends on the degree of overload. Set dial
-                to motor nameplate FLC. Always test operation during commissioning.
+                tripping the relay after a time that depends on the degree of overload. Set dial to
+                motor nameplate FLC. Always test operation during commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -427,17 +430,17 @@ const sections = [
                 <strong>Electronic motor protection relays</strong> — microprocessor-based relays
                 that measure true RMS current on all three phases. Provide phase loss detection
                 (single phasing protection), phase imbalance alarm, motor thermistor input (PTC),
-                stall detection, and ground fault detection. Essential for pumps and compressors
-                in unmanned locations.
+                stall detection, and ground fault detection. Essential for pumps and compressors in
+                unmanned locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Thermistor protection</strong> — motors in arduous duty (high ambient
-                temperature, frequent starting) should be fitted with PTC thermistors in the
-                stator windings. Connect the thermistor output to the motor protection relay for
-                direct winding temperature monitoring independent of current measurement.
+                temperature, frequent starting) should be fitted with PTC thermistors in the stator
+                windings. Connect the thermistor output to the motor protection relay for direct
+                winding temperature monitoring independent of current measurement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -461,10 +464,10 @@ const sections = [
       <>
         <p>
           Many industrial applications require motors to run in both directions — lathes, hoists,
-          conveyors, and valve actuators being common examples. Forward/reverse control requires
-          two contactors wired to swap two of the three supply phases (swapping any two phases
-          reverses a three-phase induction motor). The critical safety requirement is that both
-          contactors must never be energised simultaneously.
+          conveyors, and valve actuators being common examples. Forward/reverse control requires two
+          contactors wired to swap two of the three supply phases (swapping any two phases reverses
+          a three-phase induction motor). The critical safety requirement is that both contactors
+          must never be energised simultaneously.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -480,28 +483,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical interlock</strong> — auxiliary normally-closed (NC) contacts
-                from each contactor wired in series with the opposing contactor coil circuit.
-                If the forward contactor is energised, its NC auxiliary contact opens the reverse
-                contactor circuit, providing a second layer of protection.
+                <strong>Electrical interlock</strong> — auxiliary normally-closed (NC) contacts from
+                each contactor wired in series with the opposing contactor coil circuit. If the
+                forward contactor is energised, its NC auxiliary contact opens the reverse contactor
+                circuit, providing a second layer of protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stop before direction change</strong> — the control logic should require
-                the motor to be stopped (and ideally allow time to decelerate) before selecting
-                the opposite direction. Plugging (reversing a running motor) causes very high
-                current and mechanical stress and should be avoided unless specifically designed for.
+                <strong>Stop before direction change</strong> — the control logic should require the
+                motor to be stopped (and ideally allow time to decelerate) before selecting the
+                opposite direction. Plugging (reversing a running motor) causes very high current
+                and mechanical stress and should be avoided unless specifically designed for.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Limit switches</strong> — travel limit switches (position limit switches)
-                should be wired to de-energise the relevant contactor when the mechanical limit
-                of travel is reached, preventing damage to machinery. Use NC contacts wired in
-                series with the contactor coil.
+                should be wired to de-energise the relevant contactor when the mechanical limit of
+                travel is reached, preventing damage to machinery. Use NC contacts wired in series
+                with the contactor coil.
               </span>
             </li>
           </ul>
@@ -516,8 +519,8 @@ const sections = [
       <>
         <p>
           Correct starter selection depends not only on motor size but also on the load
-          characteristics, duty cycle, and whether speed control or soft starting is required.
-          The following guidance covers the most common UK industrial applications.
+          characteristics, duty cycle, and whether speed control or soft starting is required. The
+          following guidance covers the most common UK industrial applications.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -532,9 +535,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Star-delta starters</strong> — medium air compressors (7.5–45 kW),
-                large fans started unloaded, centrifugal pumps started against a closed valve,
-                machine tools with large spindle motors, and industrial refrigeration compressors.
+                <strong>Star-delta starters</strong> — medium air compressors (7.5–45 kW), large
+                fans started unloaded, centrifugal pumps started against a closed valve, machine
+                tools with large spindle motors, and industrial refrigeration compressors.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -548,8 +551,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Soft starters</strong> — loaded conveyor belts where VFD speed control
-                is not required, large air compressors on fixed-speed systems, applications where
+                <strong>Soft starters</strong> — loaded conveyor belts where VFD speed control is
+                not required, large air compressors on fixed-speed systems, applications where
                 smooth torque ramp is needed but speed variation is not required, and situations
                 where VFD harmonics are a concern on isolated generators.
               </span>
@@ -600,13 +603,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote VFD Upgrades on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When servicing star-delta or DOL starters, calculate the energy savings from a
-                  VFD upgrade and quote immediately using the{' '}
+                  When servicing star-delta or DOL starters, calculate the energy savings from a VFD
+                  upgrade and quote immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . A VFD upgrade on a 15 kW pump running at 80% speed typically pays back in
-                  under two years — an easy sell to a facilities manager.
+                  . A VFD upgrade on a 15 kW pump running at 80% speed typically pays back in under
+                  two years — an easy sell to a facilities manager.
                 </p>
               </div>
             </div>
@@ -614,7 +617,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Motor circuit certification and quoting with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export. Quote VFD upgrades on the day. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, motor circuit test recording, and instant PDF export. Quote VFD upgrades on the day. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -651,7 +654,7 @@ export default function MotorStartersInstallationPage() {
       faqHeading="Frequently Asked Questions About Motor Starter Installation"
       relatedPages={relatedPages}
       ctaHeading="Complete Motor Circuit EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, test result recording, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

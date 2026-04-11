@@ -88,21 +88,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties across England.',
     icon: Home,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-observation-codes-explained',
     title: 'EICR Observation Codes Explained',
-    description: 'Understand C1, C2, C3 and FI codes — what they mean and what action landlords must take.',
+    description:
+      'Understand C1, C2, C3 and FI codes — what they mean and what action landlords must take.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
     href: '/guides/eicr-fail-rented-property',
     title: 'EICR Fail — Rented Property',
-    description: 'What to do when a rented property receives an unsatisfactory EICR and how to meet the 28-day deadline.',
+    description:
+      'What to do when a rented property receives an unsatisfactory EICR and how to meet the 28-day deadline.',
     icon: AlertTriangle,
     category: 'Guide',
   },
@@ -160,24 +163,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>C3 — Improvement recommended:</strong> Not classified as dangerous but
-                does not meet current standards. No mandatory action, but prudent to address.
+                <strong>C3 — Improvement recommended:</strong> Not classified as dangerous but does
+                not meet current standards. No mandatory action, but prudent to address.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>FI — Further investigation required:</strong> An issue has been identified
-                but cannot be fully assessed without further investigation. Landlords should
-                arrange the additional investigation promptly.
+                but cannot be fully assessed without further investigation. Landlords should arrange
+                the additional investigation promptly.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          An EICR is classified as Satisfactory if it contains no C1 or C2 observations.
-          An Unsatisfactory EICR must be followed by remedial work before the landlord is
-          compliant with the 2020 Regulations.
+          An EICR is classified as Satisfactory if it contains no C1 or C2 observations. An
+          Unsatisfactory EICR must be followed by remedial work before the landlord is compliant
+          with the 2020 Regulations.
         </p>
       </>
     ),
@@ -212,15 +215,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Council requests:</strong> If Hull City Council requests a copy of the
-                EICR, the landlord must supply it within seven days.
+                <strong>Council requests:</strong> If Hull City Council requests a copy of the EICR,
+                the landlord must supply it within seven days.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Prospective tenants:</strong> Anyone who requests a copy of the EICR
-                before taking on a tenancy must receive it within 28 days of their request.
+                <strong>Prospective tenants:</strong> Anyone who requests a copy of the EICR before
+                taking on a tenancy must receive it within 28 days of their request.
               </span>
             </li>
           </ul>
@@ -258,26 +261,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Remedial notices:</strong> Where a landlord fails to comply, the council
-                can serve a remedial notice requiring the work to be done. If the landlord ignores
-                the notice, the council can arrange for work to be carried out and recover the
-                costs from the landlord.
+                <strong>Remedial notices:</strong> Where a landlord fails to comply, the council can
+                serve a remedial notice requiring the work to be done. If the landlord ignores the
+                notice, the council can arrange for work to be carried out and recover the costs
+                from the landlord.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMO licensing:</strong> Hull operates HMO licensing for properties with
-                five or more occupants. A valid EICR is a mandatory licence condition. Operating
-                an unlicensed HMO is a criminal offence.
+                <strong>HMO licensing:</strong> Hull operates HMO licensing for properties with five
+                or more occupants. A valid EICR is a mandatory licence condition. Operating an
+                unlicensed HMO is a criminal offence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Section 21 restriction:</strong> Landlords cannot serve a valid Section 21
-                notice without having provided the tenant with a copy of the current EICR. This
-                is a critical practical consequence for Hull landlords seeking possession.
+                notice without having provided the tenant with a copy of the current EICR. This is a
+                critical practical consequence for Hull landlords seeking possession.
               </span>
             </li>
           </ul>
@@ -306,38 +309,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One-bedroom flat</strong> — £150 to £200. Typically 3 to 5 circuits
-                with a modern consumer unit.
+                <strong>One-bedroom flat</strong> — £150 to £200. Typically 3 to 5 circuits with a
+                modern consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom property</strong> — £180 to £260. The most common rental
-                type in Hull. Victorian terraced houses in areas like Newland or Anlaby Road
-                may be towards the higher end.
+                <strong>Two-bedroom property</strong> — £180 to £260. The most common rental type in
+                Hull. Victorian terraced houses in areas like Newland or Anlaby Road may be towards
+                the higher end.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom house</strong> — £220 to £300. Older properties in
-                east Hull or Hessle Road areas with original wiring may take longer to inspect.
+                <strong>Three-bedroom house</strong> — £220 to £300. Older properties in east Hull
+                or Hessle Road areas with original wiring may take longer to inspect.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom or HMO</strong> — £300 to £500+. Multiple consumer
-                units, fire alarm circuits, and additional circuits increase inspection time.
+                <strong>Four-bedroom or HMO</strong> — £300 to £500+. Multiple consumer units, fire
+                alarm circuits, and additional circuits increase inspection time.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          These prices cover the inspection and the EICR report. Any remedial work identified
-          during the inspection is quoted and charged separately. It is worth noting that the
-          cost of compliance is small compared to the maximum £30,000 penalty for non-compliance.
+          These prices cover the inspection and the EICR report. Any remedial work identified during
+          the inspection is quoted and charged separately. It is worth noting that the cost of
+          compliance is small compared to the maximum £30,000 penalty for non-compliance.
         </p>
       </>
     ),
@@ -356,33 +359,33 @@ const sections = [
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Private rental properties</strong> — at least every five years under the
-                2020 Regulations, or at the start of a new tenancy if the existing report is
-                more than five years old.
+                2020 Regulations, or at the start of a new tenancy if the existing report is more
+                than five years old.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HMOs</strong> — Hull City Council HMO licence conditions typically
-                require inspection every five years, but landlords should check their specific
-                licence conditions as some older licences stipulate three years.
+                <strong>HMOs</strong> — Hull City Council HMO licence conditions typically require
+                inspection every five years, but landlords should check their specific licence
+                conditions as some older licences stipulate three years.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Owner-occupied homes</strong> — no legal requirement, but the IET
-                recommends inspection every ten years. Always recommended before purchasing
-                an older property or after flood damage (Hull has experienced significant
-                flooding and flood-damaged wiring can be hazardous).
+                <strong>Owner-occupied homes</strong> — no legal requirement, but the IET recommends
+                inspection every ten years. Always recommended before purchasing an older property
+                or after flood damage (Hull has experienced significant flooding and flood-damaged
+                wiring can be hazardous).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>After major works:</strong> If significant electrical work has been
-                carried out on the property, a new EICR or an Electrical Installation Certificate
-                (EIC) should be obtained to confirm the installation is safe and compliant.
+                <strong>After major works:</strong> If significant electrical work has been carried
+                out on the property, a new EICR or an Electrical Installation Certificate (EIC)
+                should be obtained to confirm the installation is safe and compliant.
               </span>
             </li>
           </ul>
@@ -406,27 +409,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Absence of RCD protection:</strong> Older consumer units in Hull
-                properties often lack RCD protection on socket circuits, which is required under
-                BS 7671 18th Edition. This is a very common C2 finding requiring consumer unit
-                replacement.
+                <strong>Absence of RCD protection:</strong> Older consumer units in Hull properties
+                often lack RCD protection on socket circuits, which is required under BS 7671 18th
+                Edition. This is a very common C2 finding requiring consumer unit replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Old wiring systems:</strong> Properties with rubber-insulated wiring
-                (pre-1960s), aluminium wiring (1960s–1970s), or unsheathed fabric-insulated
-                cables are frequently found in older Hull housing stock and typically attract
-                C2 or even C1 classifications.
+                (pre-1960s), aluminium wiring (1960s–1970s), or unsheathed fabric-insulated cables
+                are frequently found in older Hull housing stock and typically attract C2 or even C1
+                classifications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inadequate earthing and bonding:</strong> Missing or undersized main
-                protective bonding conductors to gas and water pipes are a common finding in
-                older terraced properties throughout Hull.
+                protective bonding conductors to gas and water pipes are a common finding in older
+                terraced properties throughout Hull.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -449,9 +451,9 @@ const sections = [
     content: (
       <>
         <p>
-          Hull has a healthy market of qualified electricians capable of carrying out EICRs.
-          When commissioning an EICR, always verify the electrician's qualifications and
-          scheme registration before booking.
+          Hull has a healthy market of qualified electricians capable of carrying out EICRs. When
+          commissioning an EICR, always verify the electrician's qualifications and scheme
+          registration before booking.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -459,8 +461,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Use the online registers:</strong> Search the NICEIC, NAPIT, or ELECSA
-                registers by postcode to find Hull-based approved contractors. Registration
-                provides assurance of qualifications, insurance, and regular assessment.
+                registers by postcode to find Hull-based approved contractors. Registration provides
+                assurance of qualifications, insurance, and regular assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -474,18 +476,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Get multiple quotes:</strong> Obtain two or three quotes for any EICR
-                work. Be cautious of prices significantly below the range above — a thorough
-                EICR on a Hull terrace takes at least two hours and requires calibrated test
-                equipment.
+                <strong>Get multiple quotes:</strong> Obtain two or three quotes for any EICR work.
+                Be cautious of prices significantly below the range above — a thorough EICR on a
+                Hull terrace takes at least two hours and requires calibrated test equipment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check insurance:</strong> Professional indemnity insurance is a
-                requirement of competent person scheme membership and protects both parties
-                if an error is made on the report.
+                <strong>Check insurance:</strong> Professional indemnity insurance is a requirement
+                of competent person scheme membership and protects both parties if an error is made
+                on the report.
               </span>
             </li>
           </ul>
@@ -501,8 +502,8 @@ const sections = [
         <p>
           Hull's large private rented sector and significant stock of older housing creates
           consistent demand for EICR work. Electricians who build expertise in inspection and
-          testing can develop a reliable income stream from landlord EICR contracts, HMO
-          inspection work, and associated remedial upgrades.
+          testing can develop a reliable income stream from landlord EICR contracts, HMO inspection
+          work, and associated remedial upgrades.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -515,9 +516,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete the full report on your phone while still on site. AI board
-                  scanning, voice test entry, and instant PDF export mean you can hand the
-                  report to the landlord before leaving the property.
+                  to complete the full report on your phone while still on site. AI board scanning,
+                  voice test entry, and instant PDF export mean you can hand the report to the
+                  landlord before leaving the property.
                 </p>
               </div>
             </div>
@@ -528,13 +529,13 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When you find C1 or C2 observations — common in Hull's older housing stock
-                  — quote the remedial work on site using the{' '}
+                  When you find C1 or C2 observations — common in Hull's older housing stock — quote
+                  the remedial work on site using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
-                  . Landlords facing the 28-day deadline almost always accept the quote from
-                  the electrician who did the EICR.
+                  . Landlords facing the 28-day deadline almost always accept the quote from the
+                  electrician who did the EICR.
                 </p>
               </div>
             </div>
@@ -542,7 +543,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Grow your EICR business in Hull with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate to complete EICRs on site, scan boards with AI, and export instant PDFs. Complete more inspections per day and win the remedial work. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -579,7 +580,7 @@ export default function EICRHullPage() {
       faqHeading="Frequently Asked Questions About EICR in Hull"
       relatedPages={relatedPages}
       ctaHeading="Complete EICRs on Your Phone — Anywhere in Hull"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion with AI board scanning, voice test entry, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

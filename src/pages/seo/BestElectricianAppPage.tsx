@@ -32,7 +32,7 @@ const faqs = [
   {
     question: 'What is the best app for electricians in the UK?',
     answer:
-      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 8 certificate types, 70 calculators, 8 Elec-AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £5.99 per month with a 7-day free trial.',
+      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 16 certificate types, 70+ calculators, 8 Elec-AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £5.99 per month with a 7-day free trial.',
   },
   {
     question: 'Is there an app for EICR certificates?',
@@ -64,7 +64,7 @@ const faqs = [
 const features = [
   {
     icon: FileCheck2,
-    title: '8 Certificate Types',
+    title: '16 Certificate Types',
     description:
       'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing. Every form you need, digitally signed and exported as PDF.',
   },
@@ -145,7 +145,7 @@ const itemListSchema = {
       position: 1,
       name: 'Elec-Mate',
       description:
-        'All-in-one platform: 8 certificates, 70 calculators, 8 Elec-AI tools, training courses, business management.',
+        'All-in-one platform: 8 certificates, 70+ calculators, 8 Elec-AI tools, training courses, business management.',
       url: 'https://elec-mate.com',
     },
     {
@@ -303,7 +303,7 @@ export default function BestElectricianAppPage() {
             </p>
             <p>
               <strong>Elec-Mate</strong> is the newest and most comprehensive platform, designed as
-              an all-in-one tool for UK electricians. It combines 8 certificate types, over 70 BS
+              an all-in-one tool for UK electricians. It combines 16 certificate types, over 70 BS
               7671 calculators, 8 Elec-AI specialist tools (Circuit Designer, Cost Engineer,
               Installation Guide, Commissioning Specialist, Maintenance Agent, Health & Safety,
               Fault Finder, Regulation Lookup), full training courses (18th Edition, Level 2, Level
@@ -625,10 +625,10 @@ export default function BestElectricianAppPage() {
             <p>
               <strong>Flat monthly pricing with unlimited usage</strong> is the model Elec-Mate
               uses. Starting from £5.99 per month, every feature is included: all 8 certificate
-              types, all 70 calculators, all 8 Elec-AI tools, all training courses, and all business
-              management features. There is no per-certificate charge, no feature gating, and no
-              surprise costs. The 7-day free trial gives you full access to everything so you can
-              evaluate the platform properly before committing.
+              types, all 70+ calculators, all 8 Elec-AI tools, all training courses, and all
+              business management features. There is no per-certificate charge, no feature gating,
+              and no surprise costs. The 7-day free trial gives you full access to everything so you
+              can evaluate the platform properly before committing.
             </p>
             <p>
               For a sole trader producing 10 to 15 certificates per month and using calculators
@@ -723,7 +723,7 @@ export default function BestElectricianAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="The Complete UK Electrician App — Free for 7 Days"
-            description="EICR, EIC, and 6 more certificate types. 70 calculators. 8 AI specialists. 36+ training courses. Xero and QuickBooks integration. Everything a UK electrician needs in one mobile-first platform."
+            description="EICR, EIC, and 6 more certificate types. 70+ calculators. 8 AI specialists. 46+ training courses. Xero and QuickBooks integration. Everything a UK electrician needs in one mobile-first platform."
             icon={Award}
           />
           <p className="text-white mt-4 text-sm">
@@ -739,7 +739,7 @@ export default function BestElectricianAppPage() {
       {/* CTA */}
       <SEOCTASection
         heading="Try the most complete electrician app in the UK"
-        subheading="8 certificates, 70 calculators, 8 Elec-AI tools, full training courses, and business management. 7-day free trial, cancel anytime."
+        subheading="8 certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management. 7-day free trial, cancel anytime."
       />
 
       {/* Bottom spacer for mobile sticky CTA */}

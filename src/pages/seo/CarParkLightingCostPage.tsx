@@ -132,15 +132,15 @@ const sections = [
         <p>
           Car park lighting serves two critical purposes: safety and security. Adequate lighting
           allows drivers and pedestrians to navigate safely, whilst deterring crime and enabling
-          effective CCTV surveillance. For electricians, car park lighting projects combine
-          external column lighting, bollard installation, controls, and often CCTV integration
-          into a single package.
+          effective CCTV surveillance. For electricians, car park lighting projects combine external
+          column lighting, bollard installation, controls, and often CCTV integration into a single
+          package.
         </p>
         <p>
           Whether you are a property developer planning a new car park, a facilities manager
           upgrading existing lighting, or an electrical contractor pricing a car park lighting
-          project, this guide provides realistic per-column costs and practical guidance based
-          on current UK market rates.
+          project, this guide provides realistic per-column costs and practical guidance based on
+          current UK market rates.
         </p>
       </>
     ),
@@ -152,8 +152,8 @@ const sections = [
       <>
         <p>
           Lighting columns are the backbone of car park illumination. The cost per column varies
-          significantly depending on height, luminaire specification, foundation requirements,
-          and cable run length.
+          significantly depending on height, luminaire specification, foundation requirements, and
+          cable run length.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Column Costs by Height (2026)</h3>
@@ -161,8 +161,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4-metre column</strong> — Column: £150 to £250. LED lantern (30 to 50W):
-                £80 to £150. Foundation: £200 to £350. Cable and connection: £150 to £300. Total
+                <strong>4-metre column</strong> — Column: £150 to £250. LED lantern (30 to 50W): £80
+                to £150. Foundation: £200 to £350. Cable and connection: £150 to £300. Total
                 installed: £500 to £900 per column.
               </span>
             </li>
@@ -206,19 +206,19 @@ const sections = [
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Standard Bollards</h3>
             <p className="text-white text-sm leading-relaxed">
-              Stainless steel or aluminium LED bollards (600 to 1,000mm height) cost £80 to £200
-              per bollard supply price. Installation including foundation and cable connection:
-              £120 to £300 per bollard. Total installed: £200 to £500 per bollard. Typical
-              spacing: 4 to 6 metres on pedestrian routes.
+              Stainless steel or aluminium LED bollards (600 to 1,000mm height) cost £80 to £200 per
+              bollard supply price. Installation including foundation and cable connection: £120 to
+              £300 per bollard. Total installed: £200 to £500 per bollard. Typical spacing: 4 to 6
+              metres on pedestrian routes.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Recessed Ground Lights</h3>
             <p className="text-white text-sm leading-relaxed">
-              Recessed LED ground lights (also called uplighters or drive-over lights) cost £60
-              to £150 each supply price. Installation in existing paving: £80 to £150 per unit.
-              These provide subtle pathway marking and are drive-over rated (minimum 1 tonne)
-              for car park use.
+              Recessed LED ground lights (also called uplighters or drive-over lights) cost £60 to
+              £150 each supply price. Installation in existing paving: £80 to £150 per unit. These
+              provide subtle pathway marking and are drive-over rated (minimum 1 tonne) for car park
+              use.
             </p>
           </div>
         </div>
@@ -239,18 +239,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Column-mounted cameras</strong> — Camera bracket and mounting hardware:
-                £50 to £100. IP camera: £150 to £500 depending on specification. Cat6 data cable
-                to recording location: £2 to £5 per metre. PoE switch port: £20 to £40. Total
-                per camera position: £300 to £800.
+                <strong>Column-mounted cameras</strong> — Camera bracket and mounting hardware: £50
+                to £100. IP camera: £150 to £500 depending on specification. Cat6 data cable to
+                recording location: £2 to £5 per metre. PoE switch port: £20 to £40. Total per
+                camera position: £300 to £800.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Camera className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shared trenching savings</strong> — Running CCTV data cable in the same
-                trench as the lighting SWA cable saves £15 to £25 per metre of trench. On a car
-                park with 200 metres of trenching, the saving is £3,000 to £5,000.
+                trench as the lighting SWA cable saves £15 to £25 per metre of trench. On a car park
+                with 200 metres of trenching, the saving is £3,000 to £5,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -264,9 +264,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          A combined car park lighting and CCTV installation saves 15% to 25% compared to
-          procuring and installing the two systems separately. Offer this as a combined package
-          to maximise the value of the contract.
+          A combined car park lighting and CCTV installation saves 15% to 25% compared to procuring
+          and installing the two systems separately. Offer this as a combined package to maximise
+          the value of the contract.
         </p>
       </>
     ),
@@ -325,9 +325,7 @@ const sections = [
     heading: 'Total Cost Per Column — Summary',
     content: (
       <>
-        <p>
-          Here are realistic total costs per lighting column installed, including all elements:
-        </p>
+        <p>Here are realistic total costs per lighting column installed, including all elements:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-5 text-white">
             <li className="flex items-start gap-3">
@@ -341,19 +339,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mid-range: £1,000 to £1,500/column</strong> — 6-metre column,
-                high-output LED lantern with asymmetric optics, new foundation, 15 to 20-metre
-                cable run, photocell and time clock control. The most common specification for
-                commercial car parks.
+                <strong>Mid-range: £1,000 to £1,500/column</strong> — 6-metre column, high-output
+                LED lantern with asymmetric optics, new foundation, 15 to 20-metre cable run,
+                photocell and time clock control. The most common specification for commercial car
+                parks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Premium: £1,500 to £2,000/column</strong> — 8 to 10-metre column,
-                premium LED lantern with DALI dimming and CMS, substantial foundation, CCTV
-                camera bracket provision, BMS integration. For large commercial developments
-                and public car parks.
+                <strong>Premium: £1,500 to £2,000/column</strong> — 8 to 10-metre column, premium
+                LED lantern with DALI dimming and CMS, substantial foundation, CCTV camera bracket
+                provision, BMS integration. For large commercial developments and public car parks.
               </span>
             </li>
           </ul>
@@ -380,32 +377,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS 5489-1:2020</strong> — Design of road lighting. Applies to external
-                car parks and access roads. Defines lighting classes based on risk assessment.
+                <strong>BS 5489-1:2020</strong> — Design of road lighting. Applies to external car
+                parks and access roads. Defines lighting classes based on risk assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>BS EN 12464-2:2014</strong> — Lighting of outdoor work places. Applies
-                to areas where outdoor work activities take place, including loading areas.
+                <strong>BS EN 12464-2:2014</strong> — Lighting of outdoor work places. Applies to
+                areas where outdoor work activities take place, including loading areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>BS 7671:2018+A3:2024</strong> — The wiring regulations. External
-                installations must comply with Section 708 (caravan and camping parks have
-                specific requirements) and general requirements for buried cables and external
-                equipment. RCD protection per Regulation 411.3.3 applies to external circuits.
+                installations must comply with Section 708 (caravan and camping parks have specific
+                requirements) and general requirements for buried cables and external equipment. RCD
+                protection per Regulation 411.3.3 applies to external circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ILP (Institution of Lighting Professionals) guidance</strong> —
-                Professional guidance notes for car park lighting design, including GN01 for
-                obtrusive light and TR12 for lighting in the vicinity of aerodromes.
+                <strong>ILP (Institution of Lighting Professionals) guidance</strong> — Professional
+                guidance notes for car park lighting design, including GN01 for obtrusive light and
+                TR12 for lighting in the vicinity of aerodromes.
               </span>
             </li>
           </ul>
@@ -424,8 +421,8 @@ const sections = [
     content: (
       <>
         <p>
-          Car park lighting projects combine electrical, civil, and often security disciplines.
-          Here are practical tips for quoting these projects:
+          Car park lighting projects combine electrical, civil, and often security disciplines. Here
+          are practical tips for quoting these projects:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -436,8 +433,8 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Before quoting trenching costs, check for existing underground services — water,
                   gas, telecoms, and drainage. A CAT (cable avoidance tool) scan and service
-                  drawings are essential. Hitting a service during trenching can cost thousands
-                  in repairs and delays.
+                  drawings are essential. Hitting a service during trenching can cost thousands in
+                  repairs and delays.
                 </p>
               </div>
             </div>
@@ -449,8 +446,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Offer Combined Packages</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Car park clients often need lighting, CCTV, EV charging, and access control.
-                  Offering a combined package with shared infrastructure reduces the client's
-                  total cost and increases your contract value.
+                  Offering a combined package with shared infrastructure reduces the client's total
+                  cost and increases your contract value.
                 </p>
               </div>
             </div>
@@ -461,9 +458,9 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Lighting Design Evidence</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Provide a lighting design calculation with your quote showing compliance with
-                  BS 5489-1. This demonstrates competence and helps the client compare quotes on
-                  a like-for-like basis. Most luminaire manufacturers provide free lighting design
+                  Provide a lighting design calculation with your quote showing compliance with BS
+                  5489-1. This demonstrates competence and helps the client compare quotes on a
+                  like-for-like basis. Most luminaire manufacturers provide free lighting design
                   services.
                 </p>
               </div>
@@ -509,7 +506,7 @@ export default function CarParkLightingCostPage() {
       faqHeading="Frequently Asked Questions About Car Park Lighting Costs"
       relatedPages={relatedPages}
       ctaHeading="Quote Car Park Lighting with Per-Column Pricing"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for external lighting quotes with per-column pricing, CCTV integration, and professional PDF output. 7-day free trial."
     />
   );
 }

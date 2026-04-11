@@ -91,16 +91,14 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/regulation-418-supplementary-protection',
     title: 'Regulation 418 — Supplementary Protection',
-    description:
-      'RCD additional protection and coordination with SPD backup devices.',
+    description: 'RCD additional protection and coordination with SPD backup devices.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/guides/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
-    description:
-      'Consumer unit selection, SPD accommodation, and protective device coordination.',
+    description: 'Consumer unit selection, SPD accommodation, and protective device coordination.',
     icon: CircuitBoard,
     category: 'Guide',
   },
@@ -143,11 +141,11 @@ const sections = [
         </p>
         <p>
           Transient overvoltages are brief but intense voltage spikes that can reach thousands of
-          volts. They damage or destroy electronic equipment, degrade cable insulation, and can cause
-          arcing that leads to fires. Modern installations are more vulnerable than ever because they
-          contain far more electronic equipment — LED drivers, smart home controllers, broadband
-          routers, heat pump controllers, EV charger electronics — all of which are sensitive to
-          voltage spikes.
+          volts. They damage or destroy electronic equipment, degrade cable insulation, and can
+          cause arcing that leads to fires. Modern installations are more vulnerable than ever
+          because they contain far more electronic equipment — LED drivers, smart home controllers,
+          broadband routers, heat pump controllers, EV charger electronics — all of which are
+          sensitive to voltage spikes.
         </p>
         <p>
           Amendment 2 to BS 7671 (2022) significantly strengthened the overvoltage protection
@@ -164,18 +162,16 @@ const sections = [
     heading: 'Regulation 443 — When SPDs Are Required',
     content: (
       <>
-        <p>
-          Regulation 443.4 sets out the circumstances under which SPDs must be provided:
-        </p>
+        <p>Regulation 443.4 sets out the circumstances under which SPDs must be provided:</p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mandatory — risk to life:</strong> SPDs shall be provided where an overvoltage
-                could result in serious injury or loss of human life. This includes medical locations,
-                safety services (fire alarms, emergency lighting), and installations where equipment
-                failure could endanger people.
+                <strong>Mandatory — risk to life:</strong> SPDs shall be provided where an
+                overvoltage could result in serious injury or loss of human life. This includes
+                medical locations, safety services (fire alarms, emergency lighting), and
+                installations where equipment failure could endanger people.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -189,10 +185,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CloudLightning className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Risk assessment — all other installations:</strong> For all other installations
-                (including standard domestic and commercial), a risk assessment shall be carried out.
-                If the risk assessment determines that the cost of damage from an overvoltage event
-                exceeds the cost of providing SPDs, then SPDs shall be installed.
+                <strong>Risk assessment — all other installations:</strong> For all other
+                installations (including standard domestic and commercial), a risk assessment shall
+                be carried out. If the risk assessment determines that the cost of damage from an
+                overvoltage event exceeds the cost of providing SPDs, then SPDs shall be installed.
               </span>
             </li>
           </ul>
@@ -222,16 +218,16 @@ const sections = [
               <span>
                 <strong>Lightning density</strong> — the number of lightning flashes per square
                 kilometre per year in the area. The UK average is approximately 0.5 to 1 flash per
-                square kilometre per year, but this varies by region (higher in the south and east of
-                England, lower in Scotland).
+                square kilometre per year, but this varies by region (higher in the south and east
+                of England, lower in Scotland).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Supply type</strong> — overhead supply lines are more exposed to
-                lightning-induced surges than underground cables. Rural properties with overhead lines
-                are at higher risk.
+                lightning-induced surges than underground cables. Rural properties with overhead
+                lines are at higher risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -282,8 +278,8 @@ const sections = [
     content: (
       <>
         <p>
-          SPDs are classified by their test class, which determines the energy level they can
-          handle and their intended position in the installation:
+          SPDs are classified by their test class, which determines the energy level they can handle
+          and their intended position in the installation:
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-5">
@@ -332,10 +328,10 @@ const sections = [
           </div>
         </div>
         <p>
-          For combined protection, the SPDs must be coordinated. A Type 2 device at the consumer unit
-          handles the bulk of the surge energy, and a Type 3 device at the equipment provides fine
-          clamping. The cable distance between Type 2 and Type 3 must be at least 5 metres (or an
-          inductance decoupling device must be used) to ensure correct energy sharing.
+          For combined protection, the SPDs must be coordinated. A Type 2 device at the consumer
+          unit handles the bulk of the surge energy, and a Type 3 device at the equipment provides
+          fine clamping. The cable distance between Type 2 and Type 3 must be at least 5 metres (or
+          an inductance decoupling device must be used) to ensure correct energy sharing.
         </p>
       </>
     ),
@@ -354,10 +350,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable length</strong> — the total cable length from the SPD to the line busbar
-                and from the SPD to the earth bar must be as short as possible — ideally less than
-                500mm combined. Long cable runs add inductance, which reduces the SPD's ability to
-                clamp fast transients. Route cables directly; do not coil excess cable.
+                <strong>Cable length</strong> — the total cable length from the SPD to the line
+                busbar and from the SPD to the earth bar must be as short as possible — ideally less
+                than 500mm combined. Long cable runs add inductance, which reduces the SPD's ability
+                to clamp fast transients. Route cables directly; do not coil excess cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -375,17 +371,17 @@ const sections = [
               <span>
                 <strong>Backup protection</strong> — a dedicated MCB or fuse (typically 32A or as
                 specified by the SPD manufacturer) is installed in series with the SPD. If the SPD
-                fails end-of-life, the backup device disconnects it. The backup device must not exceed
-                the maximum rating specified by the SPD manufacturer.
+                fails end-of-life, the backup device disconnects it. The backup device must not
+                exceed the maximum rating specified by the SPD manufacturer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth connection</strong> — the SPD diverts surge current to earth. The earth
-                connection must be low impedance. Connect to the main earthing terminal (MET) with the
-                shortest possible cable run. In TT installations, the earth electrode resistance must
-                be low enough for the SPD to operate effectively.
+                <strong>Earth connection</strong> — the SPD diverts surge current to earth. The
+                earth connection must be low impedance. Connect to the main earthing terminal (MET)
+                with the shortest possible cable run. In TT installations, the earth electrode
+                resistance must be low enough for the SPD to operate effectively.
               </span>
             </li>
           </ul>
@@ -417,9 +413,9 @@ const sections = [
               <span>
                 <strong>Backup device rating</strong> — the SPD manufacturer specifies the maximum
                 backup fuse or MCB rating. Using a backup device with a higher rating than specified
-                means the SPD may not be disconnected quickly enough if it fails. Using a lower rating
-                means the backup device may operate during a surge, disconnecting the SPD when it is
-                needed most.
+                means the SPD may not be disconnected quickly enough if it fails. Using a lower
+                rating means the backup device may operate during a surge, disconnecting the SPD
+                when it is needed most.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -435,9 +431,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Supply fuse coordination</strong> — in the event of an SPD short-circuit
-                failure, the backup MCB must operate before the supply fuse. This is normally achieved
-                automatically because the backup MCB (32A) is rated lower than the supply fuse
-                (typically 60A to 100A), but it should be verified for each installation.
+                failure, the backup MCB must operate before the supply fuse. This is normally
+                achieved automatically because the backup MCB (32A) is rated lower than the supply
+                fuse (typically 60A to 100A), but it should be verified for each installation.
               </span>
             </li>
           </ul>
@@ -451,9 +447,9 @@ const sections = [
     content: (
       <>
         <p>
-          From a business perspective, SPDs represent an opportunity for electricians. The regulation
-          now effectively mandates SPDs for most new installations, which means every consumer unit
-          change, rewire, and new installation should include SPD provision.
+          From a business perspective, SPDs represent an opportunity for electricians. The
+          regulation now effectively mandates SPDs for most new installations, which means every
+          consumer unit change, rewire, and new installation should include SPD provision.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -463,7 +459,9 @@ const sections = [
               <p>Backup MCB (32A): 5 to 10 pounds</p>
               <p>Cable and sundries: 5 to 10 pounds</p>
               <p>Installation time: 30 to 60 minutes</p>
-              <p><strong>Total installed cost: 100 to 250 pounds</strong></p>
+              <p>
+                <strong>Total installed cost: 100 to 250 pounds</strong>
+              </p>
             </div>
           </div>
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -473,15 +471,17 @@ const sections = [
               <p>Reduced risk of data loss</p>
               <p>Protection of smart home investment</p>
               <p>Potential insurance benefit (documented protection)</p>
-              <p><strong>Clear cost/benefit in customer's favour</strong></p>
+              <p>
+                <strong>Clear cost/benefit in customer's favour</strong>
+              </p>
             </div>
           </div>
         </div>
         <p>
           When quoting for a consumer unit change or rewire, include the SPD as a line item with a
           brief explanation of the regulation requirement and the protection it provides. Most
-          customers will accept the additional cost without question when they understand it protects
-          their expensive electronics.
+          customers will accept the additional cost without question when they understand it
+          protects their expensive electronics.
         </p>
         <SEOAppBridge
           title="Include SPDs in your quotes automatically"
@@ -508,27 +508,27 @@ const sections = [
               <span>
                 <strong>Claims evidence</strong> — if a surge event damages equipment and the
                 homeowner makes an insurance claim, the insurer may ask whether the installation
-                complied with current regulations. If the installation was new or recently modified and
-                did not include SPDs (contrary to the BS 7671 requirement), this could complicate the
-                claim.
+                complied with current regulations. If the installation was new or recently modified
+                and did not include SPDs (contrary to the BS 7671 requirement), this could
+                complicate the claim.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>High-value homes</strong> — insurers of high-value properties (those with
-                specialist home insurance policies) may specifically inquire about surge protection as
-                part of the risk assessment for the policy. Documented SPD installation strengthens the
-                property's risk profile.
+                specialist home insurance policies) may specifically inquire about surge protection
+                as part of the risk assessment for the policy. Documented SPD installation
+                strengthens the property's risk profile.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Commercial premises</strong> — business insurance policies, particularly those
-                covering IT equipment and business interruption, may offer premium reductions or more
-                favourable terms where surge protection is documented. This is particularly relevant
-                for businesses with significant IT infrastructure.
+                <strong>Commercial premises</strong> — business insurance policies, particularly
+                those covering IT equipment and business interruption, may offer premium reductions
+                or more favourable terms where surge protection is documented. This is particularly
+                relevant for businesses with significant IT infrastructure.
               </span>
             </li>
           </ul>
@@ -561,8 +561,7 @@ export default function Chapter44OvervoltageProtectionPage() {
       badgeIcon={BookOpen}
       heroTitle={
         <>
-          Chapter 44:{' '}
-          <span className="text-yellow-400">Overvoltage and SPD Requirements</span>
+          Chapter 44: <span className="text-yellow-400">Overvoltage and SPD Requirements</span>
         </>
       }
       heroSubtitle="SPDs are now required for most new installations following the Amendment 2 risk assessment. This guide explains when SPDs are needed, the three types, how to install and coordinate them, and the cost/benefit case for your customers."
@@ -573,7 +572,7 @@ export default function Chapter44OvervoltageProtectionPage() {
       faqHeading="Frequently Asked Questions About SPDs and Overvoltage Protection"
       relatedPages={relatedPages}
       ctaHeading="Quote SPDs and Document Risk Assessments on Site"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for professional quoting, on-site EIC certificates, and overvoltage risk assessment documentation. 7-day free trial, cancel anytime."
     />
   );
 }

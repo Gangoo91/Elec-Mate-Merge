@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'How do I calculate the right system size (kWp) for a UK home?',
     answer:
-      'Start with the household\'s annual electricity consumption (typically 3,500 kWh/year for a three-bedroom home). Divide by the expected annual yield per kWp in the UK (approximately 850–950 kWh/kWp in southern England, 750–850 kWh/kWp further north). A 3.5 kWp system in London yields roughly 3,150 kWh/year, meeting around 90% of daytime demand. You must also check available roof area — a 400 Wp panel is approximately 1.7 m², so a 3.5 kWp system requires around 15 m² of unshaded, south-facing roof.',
+      "Start with the household's annual electricity consumption (typically 3,500 kWh/year for a three-bedroom home). Divide by the expected annual yield per kWp in the UK (approximately 850–950 kWh/kWp in southern England, 750–850 kWh/kWp further north). A 3.5 kWp system in London yields roughly 3,150 kWh/year, meeting around 90% of daytime demand. You must also check available roof area — a 400 Wp panel is approximately 1.7 m², so a 3.5 kWp system requires around 15 m² of unshaded, south-facing roof.",
   },
   {
     question: 'What is the difference between G98 and G99 DNO notification?',
@@ -63,7 +63,7 @@ const faqs = [
   {
     question: 'How many panels can I put on one string?',
     answer:
-      'The number of panels per string is determined by the inverter\'s MPPT input voltage window. Multiply the panel\'s Voc (open circuit voltage) by 1.15 (UK temperature correction factor for cold weather) and ensure this does not exceed the inverter\'s maximum DC input voltage. Multiply Vmp (voltage at maximum power) by the number of panels and ensure it falls within the inverter\'s MPPT voltage range at the expected operating temperature. Most residential string inverters accept 1–2 strings; use optimisers or microinverters where shading affects individual panels.',
+      "The number of panels per string is determined by the inverter's MPPT input voltage window. Multiply the panel's Voc (open circuit voltage) by 1.15 (UK temperature correction factor for cold weather) and ensure this does not exceed the inverter's maximum DC input voltage. Multiply Vmp (voltage at maximum power) by the number of panels and ensure it falls within the inverter's MPPT voltage range at the expected operating temperature. Most residential string inverters accept 1–2 strings; use optimisers or microinverters where shading affects individual panels.",
   },
   {
     question: 'What cable type must be used for DC wiring on a solar PV system?',
@@ -86,14 +86,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/solar-battery-storage-installation',
     title: 'Solar Battery Storage Installation',
-    description: 'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
+    description:
+      'AC-coupled vs DC-coupled storage, popular batteries, costs, and MCS requirements.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/solar-pv-maintenance',
     title: 'Solar Panel Maintenance',
-    description: 'Annual inspection checklist, cleaning, inverter replacement, and output monitoring.',
+    description:
+      'Annual inspection checklist, cleaning, inverter replacement, and output monitoring.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
@@ -131,9 +133,9 @@ const sections = [
     content: (
       <>
         <p>
-          The first step in any solar PV design is determining the appropriate system size, expressed
-          in kilowatt-peak (kWp). This is the rated output of the array under Standard Test
-          Conditions (STC: 1,000 W/m² irradiance, 25°C cell temperature, AM1.5 spectrum).
+          The first step in any solar PV design is determining the appropriate system size,
+          expressed in kilowatt-peak (kWp). This is the rated output of the array under Standard
+          Test Conditions (STC: 1,000 W/m² irradiance, 25°C cell temperature, AM1.5 spectrum).
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -158,27 +160,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — Check roof area:</strong> A 400 Wp panel is approximately 1.7 m².
-                A 4 kWp system requires 10 panels and approximately 17 m² of usable roof area.
-                Exclude areas affected by shading, vents, skylights, and the required 300 mm
-                perimeter clearance under most MCS guidelines.
+                <strong>Step 3 — Check roof area:</strong> A 400 Wp panel is approximately 1.7 m². A
+                4 kWp system requires 10 panels and approximately 17 m² of usable roof area. Exclude
+                areas affected by shading, vents, skylights, and the required 300 mm perimeter
+                clearance under most MCS guidelines.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Calculator className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Consider self-consumption:</strong> Larger systems export more
-                and self-consume proportionally less. For a home without battery storage, a system
-                sized to meet 80–100% of annual consumption is typically optimal. Adding battery
-                storage improves self-consumption and justifies a larger array.
+                <strong>Step 4 — Consider self-consumption:</strong> Larger systems export more and
+                self-consume proportionally less. For a home without battery storage, a system sized
+                to meet 80–100% of annual consumption is typically optimal. Adding battery storage
+                improves self-consumption and justifies a larger array.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Current panel technology offers 400–430 Wp per panel for standard 60/66-cell modules,
-          with premium panels reaching 450–500 Wp. Higher wattage panels reduce the number required
-          and are increasingly cost-effective for UK installations.
+          Current panel technology offers 400–430 Wp per panel for standard 60/66-cell modules, with
+          premium panels reaching 450–500 Wp. Higher wattage panels reduce the number required and
+          are increasingly cost-effective for UK installations.
         </p>
       </>
     ),
@@ -247,8 +249,8 @@ const sections = [
       <>
         <p>
           The inverter converts DC power from the array into AC power for the property and grid.
-          Three main topologies are used in UK residential and small commercial installations,
-          each with distinct design implications.
+          Three main topologies are used in UK residential and small commercial installations, each
+          with distinct design implications.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -274,20 +276,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hybrid inverters</strong> — combines a solar inverter with a battery
-                charge controller. Required for DC-coupled battery storage (e.g., Givenergy, Solis,
-                Growatt SPF). If battery storage is planned now or in the future, specifying a
-                hybrid inverter avoids the cost of replacing the inverter when storage is added.
-                Most hybrid inverters also include backup power functionality.
+                <strong>Hybrid inverters</strong> — combines a solar inverter with a battery charge
+                controller. Required for DC-coupled battery storage (e.g., Givenergy, Solis, Growatt
+                SPF). If battery storage is planned now or in the future, specifying a hybrid
+                inverter avoids the cost of replacing the inverter when storage is added. Most
+                hybrid inverters also include backup power functionality.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For UK residential installations, a 3.6 kW single-phase inverter is the most common
-          choice for systems up to 4 kWp. Systems above 3.68 kW (16 A) require G99 notification
-          to the DNO. Three-phase inverters are used where the property has a three-phase supply,
-          balancing load across phases.
+          For UK residential installations, a 3.6 kW single-phase inverter is the most common choice
+          for systems up to 4 kWp. Systems above 3.68 kW (16 A) require G99 notification to the DNO.
+          Three-phase inverters are used where the property has a three-phase supply, balancing load
+          across phases.
         </p>
       </>
     ),
@@ -299,8 +301,8 @@ const sections = [
       <>
         <p>
           DC wiring between the PV array and the inverter operates under continuous load conditions
-          and must be sized in accordance with BS 7671:2018+A3:2024 Section 712, using specialist
-          PV cable rated for outdoor and UV-exposed environments.
+          and must be sized in accordance with BS 7671:2018+A3:2024 Section 712, using specialist PV
+          cable rated for outdoor and UV-exposed environments.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -309,8 +311,8 @@ const sections = [
               <span>
                 <strong>Cable type:</strong> Use EN 50618 (H1Z2Z2-K) double-insulated, halogen-free,
                 UV-resistant solar DC cable. Standard twin-and-earth is not suitable. Minimum
-                cross-section is typically 4 mm² for residential strings; 6 mm² for longer runs
-                or higher current strings.
+                cross-section is typically 4 mm² for residential strings; 6 mm² for longer runs or
+                higher current strings.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -352,9 +354,9 @@ const sections = [
       <>
         <p>
           The AC output of the inverter must be connected to the property's consumer unit via a
-          dedicated AC isolator and appropriately sized AC cable. The connection point and protection
-          arrangements must comply with BS 7671 Section 712 and the inverter manufacturer's
-          installation requirements.
+          dedicated AC isolator and appropriately sized AC cable. The connection point and
+          protection arrangements must comply with BS 7671 Section 712 and the inverter
+          manufacturer's installation requirements.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -380,18 +382,18 @@ const sections = [
               <span>
                 <strong>Consumer unit connection:</strong> The inverter AC output connects to a
                 spare way in the existing consumer unit (or a new sub-board). The circuit must be
-                protected by an appropriately rated MCB. RCD protection is provided by the inverter's
-                built-in RCD function (most modern inverters include Type B RCD detection) and the
-                consumer unit's existing RCD.
+                protected by an appropriately rated MCB. RCD protection is provided by the
+                inverter's built-in RCD function (most modern inverters include Type B RCD
+                detection) and the consumer unit's existing RCD.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Export limiting:</strong> Where the DNO requires export limiting (common
-                for G99 connections or where the local network is constrained), the inverter must
-                be configured with a CT clamp or smart meter connection to limit export to the
-                agreed level.
+                <strong>Export limiting:</strong> Where the DNO requires export limiting (common for
+                G99 connections or where the local network is constrained), the inverter must be
+                configured with a CT clamp or smart meter connection to limit export to the agreed
+                level.
               </span>
             </li>
           </ul>
@@ -405,8 +407,8 @@ const sections = [
     content: (
       <>
         <p>
-          All grid-connected solar PV systems must be notified to the Distribution Network
-          Operator (DNO) before or after commissioning, depending on the system size. The relevant
+          All grid-connected solar PV systems must be notified to the Distribution Network Operator
+          (DNO) before or after commissioning, depending on the system size. The relevant
           Engineering Recommendations are G98 (small systems) and G99 (larger systems).
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
@@ -415,9 +417,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98 — systems up to 16 A per phase (≤ 3.68 kW single-phase):</strong> The
-                installer self-certifies and notifies the DNO within 28 days of commissioning.
-                No prior approval is required. The DNO may inspect or request information but
-                cannot normally object. The vast majority of UK residential systems fall under G98.
+                installer self-certifies and notifies the DNO within 28 days of commissioning. No
+                prior approval is required. The DNO may inspect or request information but cannot
+                normally object. The vast majority of UK residential systems fall under G98.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -433,10 +435,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart Export Guarantee (SEG) metering:</strong> Following DNO approval,
-                the customer must apply to an SEG licensee (energy supplier) for an export tariff.
-                A smart meter or export meter is required. DNO notification numbers should be
-                included in the SEG application.
+                <strong>Smart Export Guarantee (SEG) metering:</strong> Following DNO approval, the
+                customer must apply to an SEG licensee (energy supplier) for an export tariff. A
+                smart meter or export meter is required. DNO notification numbers should be included
+                in the SEG application.
               </span>
             </li>
           </ul>
@@ -475,26 +477,26 @@ const sections = [
               <span>
                 <strong>Shading analysis:</strong> Horizon shading, near shading (chimneys, dormer
                 windows, trees), and self-shading must all be assessed. Where shading losses exceed
-                acceptable thresholds, the design must use optimisers or microinverters to
-                mitigate the impact on yield.
+                acceptable thresholds, the design must use optimisers or microinverters to mitigate
+                the impact on yield.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS Product Directory:</strong> All panels, inverters, and batteries must
-                be listed on the MCS Product Directory to be used in an MCS-certified installation.
-                Check the directory before specifying products — not all panels available in the
-                UK are listed.
+                <strong>MCS Product Directory:</strong> All panels, inverters, and batteries must be
+                listed on the MCS Product Directory to be used in an MCS-certified installation.
+                Check the directory before specifying products — not all panels available in the UK
+                are listed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Installation certificate:</strong> On completion, the installer must issue
-                an MCS Installation Certificate (MIC) and Handover Pack to the customer. The MIC
-                is the document the customer needs for SEG applications, insurance, and property
-                sales. It is registered on the MCS database.
+                an MCS Installation Certificate (MIC) and Handover Pack to the customer. The MIC is
+                the document the customer needs for SEG applications, insurance, and property sales.
+                It is registered on the MCS database.
               </span>
             </li>
           </ul>
@@ -514,7 +516,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Certificate solar PV installations with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs, and Electrical Installation Certificates on your phone with instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for electrical certification. Complete MCS installation certificates, EICRs, and Electrical Installation Certificates on your phone with instant PDF export. 7-day free trial."
           icon={Sun}
         />
       </>
@@ -539,8 +541,7 @@ export default function SolarPVSystemDesignPage() {
       badgeIcon={Sun}
       heroTitle={
         <>
-          Solar PV System Design UK:{' '}
-          <span className="text-yellow-400">Complete Design Guide</span>
+          Solar PV System Design UK: <span className="text-yellow-400">Complete Design Guide</span>
         </>
       }
       heroSubtitle="Everything you need to design a solar PV system in the UK — from kWp sizing and string design to inverter selection, DC cable sizing, G99/G98 DNO notification, and MCS 001 compliance."
@@ -551,7 +552,7 @@ export default function SolarPVSystemDesignPage() {
       faqHeading="Frequently Asked Questions About Solar PV System Design"
       relatedPages={relatedPages}
       ctaHeading="Manage Solar PV Installations with Elec-Mate"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for certification, quoting, and job management. Complete MCS documentation on your phone. 7-day free trial, cancel anytime."
     />
   );
 }

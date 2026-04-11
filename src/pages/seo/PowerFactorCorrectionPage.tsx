@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'How do DNOs charge for poor power factor in the UK?',
     answer:
-      'UK DNO charges for poor power factor vary by tariff structure, but the most common mechanisms are: (1) kVA maximum demand charge — the monthly peak kVA demand is charged at a fixed rate per kVA; since kVA = kW ÷ power factor, a lower PF means higher kVA for the same kW demand; (2) kVArh reactive energy charge — a separate charge per kVArh consumed above a threshold (typically the amount of reactive energy equivalent to a PF below 0.95); (3) in some cases, an excess reactive power penalty. Larger industrial customers on half-hourly metering typically face kVArh charges. Medium commercial customers on NHH metering may face kVA maximum demand charges. Check the site\'s electricity supply contract and meter data to understand which mechanism applies.',
+      "UK DNO charges for poor power factor vary by tariff structure, but the most common mechanisms are: (1) kVA maximum demand charge — the monthly peak kVA demand is charged at a fixed rate per kVA; since kVA = kW ÷ power factor, a lower PF means higher kVA for the same kW demand; (2) kVArh reactive energy charge — a separate charge per kVArh consumed above a threshold (typically the amount of reactive energy equivalent to a PF below 0.95); (3) in some cases, an excess reactive power penalty. Larger industrial customers on half-hourly metering typically face kVArh charges. Medium commercial customers on NHH metering may face kVA maximum demand charges. Check the site's electricity supply contract and meter data to understand which mechanism applies.",
   },
   {
     question: 'What power factor should I correct to?',
@@ -87,21 +87,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/motor-starters-installation',
     title: 'Motor Starter Installation',
-    description: 'DOL, star-delta, and VFD starters — wiring, overload protection, and control circuits.',
+    description:
+      'DOL, star-delta, and VFD starters — wiring, overload protection, and control circuits.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/industrial-earthing-systems',
     title: 'Industrial Earthing Systems',
-    description: 'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
+    description:
+      'TN-S, TN-C-S, and TT earthing for industrial premises, EMC earthing, and testing.',
     icon: Shield,
     category: 'Guide',
   },
   {
     href: '/transformer-installation-guide',
     title: 'Transformer Installation Guide',
-    description: 'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
+    description:
+      'Oil-filled vs dry-type transformers, DNO notification, commissioning, and maintenance.',
     icon: Activity,
     category: 'Guide',
   },
@@ -136,20 +139,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Real power (kW)</strong> — the power that does actual useful work:
-                driving motors, producing heat, lighting. This is what the kWh meter records.
-                Also called active power. Measured in watts (W) or kilowatts (kW).
+                <strong>Real power (kW)</strong> — the power that does actual useful work: driving
+                motors, producing heat, lighting. This is what the kWh meter records. Also called
+                active power. Measured in watts (W) or kilowatts (kW).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reactive power (kVAr)</strong> — the power that flows between inductive
-                or capacitive loads and the supply. Inductive loads (motors, transformers)
-                absorb reactive power (lagging); capacitive loads supply reactive power (leading).
-                Reactive power does no useful work but must be supplied by the generator and
-                carried by the cables and switchgear. Measured in reactive volt-amperes (VAr)
-                or kilovolt-amperes reactive (kVAr).
+                <strong>Reactive power (kVAr)</strong> — the power that flows between inductive or
+                capacitive loads and the supply. Inductive loads (motors, transformers) absorb
+                reactive power (lagging); capacitive loads supply reactive power (leading). Reactive
+                power does no useful work but must be supplied by the generator and carried by the
+                cables and switchgear. Measured in reactive volt-amperes (VAr) or kilovolt-amperes
+                reactive (kVAr).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -164,21 +167,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power factor formula</strong> — PF = kW ÷ kVA = cos(φ), where φ is the
-                phase angle between voltage and current. PF ranges from 0 (purely reactive load)
-                to 1.0 (purely resistive load). A typical industrial site without PFC has a
-                power factor of 0.7–0.85 lagging. The target with PFC is 0.95 or better.
+                <strong>Power factor formula</strong> — PF = kW ÷ kVA = cos(φ), where φ is the phase
+                angle between voltage and current. PF ranges from 0 (purely reactive load) to 1.0
+                (purely resistive load). A typical industrial site without PFC has a power factor of
+                0.7–0.85 lagging. The target with PFC is 0.95 or better.
               </span>
             </li>
           </ul>
         </div>
         <p>
           Consider a practical example: a factory with 500 kW of real load at 0.75 power factor
-          draws 500 ÷ 0.75 = 667 kVA of apparent power. The cables, switchgear, and transformer
-          must all be rated for 667 kVA, even though only 500 kW of useful work is done.
-          Improving power factor to 0.95 reduces apparent power to 500 ÷ 0.95 = 526 kVA —
-          freeing up 141 kVA of supply capacity for additional real load without any infrastructure
-          upgrade.
+          draws 500 ÷ 0.75 = 667 kVA of apparent power. The cables, switchgear, and transformer must
+          all be rated for 667 kVA, even though only 500 kW of useful work is done. Improving power
+          factor to 0.95 reduces apparent power to 500 ÷ 0.95 = 526 kVA — freeing up 141 kVA of
+          supply capacity for additional real load without any infrastructure upgrade.
         </p>
       </>
     ),
@@ -201,41 +203,39 @@ const sections = [
               <span>
                 <strong>kVArh reactive energy charge</strong> — applied to half-hourly metered
                 customers. The charge applies to reactive energy consumed when the power factor
-                falls below a threshold (typically 0.95 lagging). The kVArh charge rate varies
-                by DNO and tariff — typically £0.005–0.020 per kVArh. A site consuming 500 kW
-                at 0.80 PF for 4,000 hours per year incurs approximately 375,000 kVArh of
-                reactive energy — a cost of £1,875–£7,500 per year at typical rates.
+                falls below a threshold (typically 0.95 lagging). The kVArh charge rate varies by
+                DNO and tariff — typically £0.005–0.020 per kVArh. A site consuming 500 kW at 0.80
+                PF for 4,000 hours per year incurs approximately 375,000 kVArh of reactive energy —
+                a cost of £1,875–£7,500 per year at typical rates.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>kVA maximum demand charge</strong> — some tariffs charge for the
-                monthly peak kVA demand rather than (or in addition to) kW maximum demand.
-                Since kVA = kW ÷ PF, improving PF from 0.80 to 0.95 reduces kVA demand by
-                (kW × (1/0.80 − 1/0.95)) = kW × 0.197, reducing the monthly maximum demand
-                charge accordingly.
+                <strong>kVA maximum demand charge</strong> — some tariffs charge for the monthly
+                peak kVA demand rather than (or in addition to) kW maximum demand. Since kVA = kW ÷
+                PF, improving PF from 0.80 to 0.95 reduces kVA demand by (kW × (1/0.80 − 1/0.95)) =
+                kW × 0.197, reducing the monthly maximum demand charge accordingly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Agreed supply capacity</strong> — the connection agreement between the
-                customer and DNO specifies an agreed supply capacity in kVA (or kW with a
-                stated PF). Where the customer's apparent power demand exceeds the agreed
-                capacity, excess capacity charges apply. Improving power factor reduces apparent
-                power demand and may allow additional real load to be connected within the
-                existing agreed capacity.
+                customer and DNO specifies an agreed supply capacity in kVA (or kW with a stated
+                PF). Where the customer's apparent power demand exceeds the agreed capacity, excess
+                capacity charges apply. Improving power factor reduces apparent power demand and may
+                allow additional real load to be connected within the existing agreed capacity.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Identifying charges on the bill</strong> — reactive power charges appear
-                on the electricity invoice under various descriptions: "reactive energy charge",
-                "kVArh charge", "excess reactive power", "availability charge (kVA)", or "maximum
-                demand charge (kVA)". Request a copy of the supply contract and meter data
-                (half-hourly kW and kVArh data) to quantify the current reactive power cost.
+                <strong>Identifying charges on the bill</strong> — reactive power charges appear on
+                the electricity invoice under various descriptions: "reactive energy charge", "kVArh
+                charge", "excess reactive power", "availability charge (kVA)", or "maximum demand
+                charge (kVA)". Request a copy of the supply contract and meter data (half-hourly kW
+                and kVArh data) to quantify the current reactive power cost.
               </span>
             </li>
           </ul>
@@ -261,28 +261,28 @@ const sections = [
               <span>
                 <strong>PFC controller</strong> — samples voltage and current from a current
                 transformer (CT) on the supply incomer. Calculates power factor in real time
-                (typically 100 ms sampling interval) and switches capacitor steps via contactors
-                to maintain the target PF. Modern controllers display kW, kVAr, kVA, PF,
-                voltage, current, harmonics (THD), temperature, and step status.
+                (typically 100 ms sampling interval) and switches capacitor steps via contactors to
+                maintain the target PF. Modern controllers display kW, kVAr, kVA, PF, voltage,
+                current, harmonics (THD), temperature, and step status.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Capacitor step sizing</strong> — equal steps (e.g., 5 × 20 kVAr = 100
-                kVAr total) provide 5 levels of correction. The step size should not be larger
-                than approximately 15% of the transformer rated kVA to avoid voltage steps on
-                switching. Smaller steps provide smoother correction; more steps add cost. Most
-                APFC banks have 6–12 steps.
+                <strong>Capacitor step sizing</strong> — equal steps (e.g., 5 × 20 kVAr = 100 kVAr
+                total) provide 5 levels of correction. The step size should not be larger than
+                approximately 15% of the transformer rated kVA to avoid voltage steps on switching.
+                Smaller steps provide smoother correction; more steps add cost. Most APFC banks have
+                6–12 steps.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Contactor switching</strong> — each capacitor step is switched by a
-                dedicated AC capacitor duty contactor with peak voltage suppression resistors
-                (to limit switching transients). Contactors must be rated for capacitor switching
-                duty (utilisation category AC-6b). Step switching is controlled with a minimum
+                dedicated AC capacitor duty contactor with peak voltage suppression resistors (to
+                limit switching transients). Contactors must be rated for capacitor switching duty
+                (utilisation category AC-6b). Step switching is controlled with a minimum
                 reconnection delay (typically 60–180 seconds) to allow the capacitor to discharge
                 before re-energisation.
               </span>
@@ -290,11 +290,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Location</strong> — APFC banks are most effective when connected at the
-                main distribution board (correcting the overall site power factor before the
-                metering point). Individual motor correction (fixed capacitors connected directly
-                at each motor terminal box) is also effective and reduces cable loading, but
-                requires more individual components and maintenance access.
+                <strong>Location</strong> — APFC banks are most effective when connected at the main
+                distribution board (correcting the overall site power factor before the metering
+                point). Individual motor correction (fixed capacitors connected directly at each
+                motor terminal box) is also effective and reduces cable loading, but requires more
+                individual components and maintenance access.
               </span>
             </li>
           </ul>
@@ -309,9 +309,9 @@ const sections = [
       <>
         <p>
           Fixed capacitor banks provide a constant kVAr output regardless of the load. They are
-          simpler and lower cost than APFC banks but are only appropriate for applications where
-          the reactive load is relatively constant. Incorrect application of fixed capacitors can
-          lead to over-correction at light load, which is as undesirable as under-correction.
+          simpler and lower cost than APFC banks but are only appropriate for applications where the
+          reactive load is relatively constant. Incorrect application of fixed capacitors can lead
+          to over-correction at light load, which is as undesirable as under-correction.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -321,29 +321,29 @@ const sections = [
                 <strong>Suitable applications</strong> — fixed capacitor banks are suitable for
                 individual large motors running continuously at full load (e.g., large compressors,
                 fans), transformer magnetising current correction, and industrial processes with
-                constant 24/7 loading. The capacitor is sized to correct the specific reactive
-                load of the equipment it is connected to.
+                constant 24/7 loading. The capacitor is sized to correct the specific reactive load
+                of the equipment it is connected to.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Over-correction risk</strong> — if a fixed capacitor bank is sized for
-                peak reactive load and the load reduces (night, weekends), the capacitors continue
-                to supply reactive power to the system. The system power factor becomes leading
-                (capacitive), which can cause voltage rise on the supply, increased kVAr charges
-                on some tariffs, and potential instability in generator installations.
+                <strong>Over-correction risk</strong> — if a fixed capacitor bank is sized for peak
+                reactive load and the load reduces (night, weekends), the capacitors continue to
+                supply reactive power to the system. The system power factor becomes leading
+                (capacitive), which can cause voltage rise on the supply, increased kVAr charges on
+                some tariffs, and potential instability in generator installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Motor-specific correction</strong> — connecting a fixed capacitor
-                directly at a motor terminal box corrects the reactive current that flows
-                between the motor and the distribution board. The capacitor kVAr rating should
-                not exceed 90% of the motor no-load reactive current (to prevent self-excitation
-                and runaway voltage on loss of supply). The motor nameplate and manufacturer's
-                data provide the recommended capacitor kVAr.
+                <strong>Motor-specific correction</strong> — connecting a fixed capacitor directly
+                at a motor terminal box corrects the reactive current that flows between the motor
+                and the distribution board. The capacitor kVAr rating should not exceed 90% of the
+                motor no-load reactive current (to prevent self-excitation and runaway voltage on
+                loss of supply). The motor nameplate and manufacturer's data provide the recommended
+                capacitor kVAr.
               </span>
             </li>
           </ul>
@@ -361,28 +361,28 @@ const sections = [
           variable frequency drives, UPS systems, electronic motor starters, switched-mode power
           supplies, and electronic lighting all generate harmonic currents. These harmonic currents
           interact with capacitor banks in ways that can cause equipment damage and make the
-          electrical system worse rather than better. Harmonic assessment is a prerequisite
-          for capacitor bank specification on any site with non-linear loading.
+          electrical system worse rather than better. Harmonic assessment is a prerequisite for
+          capacitor bank specification on any site with non-linear loading.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Parallel resonance</strong> — the capacitor bank (capacitive impedance)
-                and the supply system inductance (inductive impedance) form a parallel resonant
-                circuit at a frequency fr = 50 Hz × √(Ssc/Q), where Ssc is the short-circuit
-                power of the supply and Q is the capacitor bank kVAr. If fr coincides with a
-                harmonic frequency present in the system (250 Hz for 5th harmonic, 350 Hz for
-                7th harmonic), the harmonic current is amplified dramatically.
+                <strong>Parallel resonance</strong> — the capacitor bank (capacitive impedance) and
+                the supply system inductance (inductive impedance) form a parallel resonant circuit
+                at a frequency fr = 50 Hz × √(Ssc/Q), where Ssc is the short-circuit power of the
+                supply and Q is the capacitor bank kVAr. If fr coincides with a harmonic frequency
+                present in the system (250 Hz for 5th harmonic, 350 Hz for 7th harmonic), the
+                harmonic current is amplified dramatically.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Effects of resonance</strong> — harmonic resonance causes overheating
-                of capacitors (capacitor current increases with frequency — I = V × 2πfC), which
-                leads to premature capacitor failure. It also overloads cables, switchgear, and
+                <strong>Effects of resonance</strong> — harmonic resonance causes overheating of
+                capacitors (capacitor current increases with frequency — I = V × 2πfC), which leads
+                to premature capacitor failure. It also overloads cables, switchgear, and
                 transformer windings; causes nuisance tripping of protective devices; interferes
                 with electronic equipment and communications; and can cause voltage waveform
                 distortion that affects the accuracy of metering equipment.
@@ -392,12 +392,12 @@ const sections = [
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Harmonic survey before specification</strong> — before specifying any
-                capacitor bank, measure the existing harmonic voltage and current distortion using
-                a power quality analyser. BS EN 61000-3-6 and ER G5/5 (Engineering Recommendation
+                capacitor bank, measure the existing harmonic voltage and current distortion using a
+                power quality analyser. BS EN 61000-3-6 and ER G5/5 (Engineering Recommendation
                 G5/5, Planning Levels for Harmonic Voltage Distortion and the Connection of
                 Non-Linear Equipment to Transmission Systems and Public Distribution Networks)
-                provide the framework for harmonic assessment. If THDi exceeds approximately
-                25%, standard capacitors are not suitable — detuned banks must be specified.
+                provide the framework for harmonic assessment. If THDi exceeds approximately 25%,
+                standard capacitors are not suitable — detuned banks must be specified.
               </span>
             </li>
           </ul>
@@ -412,10 +412,10 @@ const sections = [
       <>
         <p>
           Detuned capacitor banks incorporate a series reactor (inductor) in series with each
-          capacitor step. The reactor shifts the parallel resonant frequency of the LC circuit
-          below the lowest significant harmonic frequency (the 5th harmonic at 250 Hz), ensuring
-          that no resonance occurs at a harmonic that is actually present in the system. Detuned
-          banks are the standard solution for sites with significant harmonic distortion.
+          capacitor step. The reactor shifts the parallel resonant frequency of the LC circuit below
+          the lowest significant harmonic frequency (the 5th harmonic at 250 Hz), ensuring that no
+          resonance occurs at a harmonic that is actually present in the system. Detuned banks are
+          the standard solution for sites with significant harmonic distortion.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -423,10 +423,10 @@ const sections = [
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Detuning factor (p)</strong> — the reactor is specified by its detuning
-                factor p = (fr/f1)². Standard detuning factors are p = 0.07 (7%), giving a
-                resonant frequency of fr = 50 Hz ÷ √0.07 ≈ 189 Hz (between 3rd and 5th harmonics);
-                or p = 0.14 (14%), giving fr ≈ 134 Hz (between fundamental and 3rd harmonic).
-                The 7% detuning factor is the most common choice for general industrial use.
+                factor p = (fr/f1)². Standard detuning factors are p = 0.07 (7%), giving a resonant
+                frequency of fr = 50 Hz ÷ √0.07 ≈ 189 Hz (between 3rd and 5th harmonics); or p =
+                0.14 (14%), giving fr ≈ 134 Hz (between fundamental and 3rd harmonic). The 7%
+                detuning factor is the most common choice for general industrial use.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -434,8 +434,8 @@ const sections = [
               <span>
                 <strong>Capacitor and reactor rating</strong> — because the reactor adds inductive
                 voltage, the capacitor must be rated for a higher voltage than the system voltage.
-                With 7% detuning on a 400 V system, the capacitor is typically rated at 440 V.
-                The reactor must be rated for the fundamental frequency and all harmonic currents
+                With 7% detuning on a 400 V system, the capacitor is typically rated at 440 V. The
+                reactor must be rated for the fundamental frequency and all harmonic currents
                 flowing through the capacitor step — use reactors with a defined harmonic current
                 capability (typically up to the 13th harmonic).
               </span>
@@ -443,23 +443,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Harmonic filtering effect</strong> — unlike passive harmonic filters
-                (which are tuned exactly to a harmonic frequency and actively absorb that
-                harmonic), detuned banks do not filter harmonics. They only prevent resonance.
-                Where harmonics must be reduced (to comply with ER G5/5 planning levels or to
-                prevent equipment interference), active harmonic filters (AHF) or passive filters
-                tuned to the offending harmonics must be specified in addition to or instead
-                of capacitor banks.
+                <strong>Harmonic filtering effect</strong> — unlike passive harmonic filters (which
+                are tuned exactly to a harmonic frequency and actively absorb that harmonic),
+                detuned banks do not filter harmonics. They only prevent resonance. Where harmonics
+                must be reduced (to comply with ER G5/5 planning levels or to prevent equipment
+                interference), active harmonic filters (AHF) or passive filters tuned to the
+                offending harmonics must be specified in addition to or instead of capacitor banks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Reactor heat dissipation</strong> — series reactors dissipate heat
-                (I²R losses). The panel enclosure must provide adequate ventilation for the
-                combined heat dissipation of capacitors and reactors. Reactor operating temperature
-                affects the inductance value — use thermally stable, iron-core reactors, not
-                air-core reactors, for detuned PFC applications.
+                <strong>Reactor heat dissipation</strong> — series reactors dissipate heat (I²R
+                losses). The panel enclosure must provide adequate ventilation for the combined heat
+                dissipation of capacitors and reactors. Reactor operating temperature affects the
+                inductance value — use thermally stable, iron-core reactors, not air-core reactors,
+                for detuned PFC applications.
               </span>
             </li>
           </ul>
@@ -473,30 +472,29 @@ const sections = [
     content: (
       <>
         <p>
-          The financial justification for power factor correction must be based on actual meter
-          data and current tariff rates, not on generic estimates. Request half-hourly kW and
-          kVArh data from the electricity supplier (available from the meter operator for all
-          half-hourly metered sites) and the supply contract tariff schedule before preparing
-          any PFC proposal.
+          The financial justification for power factor correction must be based on actual meter data
+          and current tariff rates, not on generic estimates. Request half-hourly kW and kVArh data
+          from the electricity supplier (available from the meter operator for all half-hourly
+          metered sites) and the supply contract tariff schedule before preparing any PFC proposal.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — measure existing power factor</strong> — from the half-hourly
-                data, calculate the average and peak reactive demand (kVAr) and the corresponding
-                power factor at various times of day. Identify whether the poor power factor
-                is constant or occurs at specific times (e.g., only during production hours).
+                <strong>Step 1 — measure existing power factor</strong> — from the half-hourly data,
+                calculate the average and peak reactive demand (kVAr) and the corresponding power
+                factor at various times of day. Identify whether the poor power factor is constant
+                or occurs at specific times (e.g., only during production hours).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 2 — calculate current reactive energy cost</strong> — identify the
-                kVArh charge threshold (typically when PF &lt; 0.95) and the charge rate from
-                the tariff schedule. Multiply the chargeable kVArh (from the meter data) by
-                the charge rate to get the annual reactive energy cost.
+                kVArh charge threshold (typically when PF &lt; 0.95) and the charge rate from the
+                tariff schedule. Multiply the chargeable kVArh (from the meter data) by the charge
+                rate to get the annual reactive energy cost.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -505,8 +503,8 @@ const sections = [
                 <strong>Step 3 — calculate kVAr correction required</strong> — using the power
                 triangle: kVAr required = kW × (tan(cos⁻¹(existing PF)) − tan(cos⁻¹(target PF))).
                 For example, 400 kW at 0.80 PF corrected to 0.95: kVAr = 400 × (tan(36.87°) −
-                tan(18.19°)) = 400 × (0.750 − 0.329) = 168 kVAr. Specify a 175 kVAr APFC bank
-                (next standard size up).
+                tan(18.19°)) = 400 × (0.750 − 0.329) = 168 kVAr. Specify a 175 kVAr APFC bank (next
+                standard size up).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -530,21 +528,21 @@ const sections = [
     content: (
       <>
         <p>
-          The payback period for power factor correction equipment varies considerably depending
-          on the site's existing power factor, annual electricity consumption, tariff structure,
-          and equipment specification. For large industrial users with significant reactive power
-          charges, payback of 2–4 years is typical. Smaller commercial sites may see longer
-          payback periods if their reactive power charges are modest.
+          The payback period for power factor correction equipment varies considerably depending on
+          the site's existing power factor, annual electricity consumption, tariff structure, and
+          equipment specification. For large industrial users with significant reactive power
+          charges, payback of 2–4 years is typical. Smaller commercial sites may see longer payback
+          periods if their reactive power charges are modest.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Large industrial (500+ kW)</strong> — typically 1.5–3 years payback.
-                High reactive power charges, large kVA maximum demand saving, capacity release
-                for additional load. 100–500 kVAr APFC bank, detuned if VFDs present. Total
-                installed cost typically £15,000–£60,000.
+                <strong>Large industrial (500+ kW)</strong> — typically 1.5–3 years payback. High
+                reactive power charges, large kVA maximum demand saving, capacity release for
+                additional load. 100–500 kVAr APFC bank, detuned if VFDs present. Total installed
+                cost typically £15,000–£60,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -560,28 +558,28 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Small commercial (under 100 kW)</strong> — often marginal or no financial
-                case. Small businesses on standard NHH tariffs without kVArh charges or kVA
-                maximum demand charges will see no bill reduction from PFC. Check the tariff
-                before specifying PFC — not all sites will benefit financially.
+                case. Small businesses on standard NHH tariffs without kVArh charges or kVA maximum
+                demand charges will see no bill reduction from PFC. Check the tariff before
+                specifying PFC — not all sites will benefit financially.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Non-financial benefits</strong> — reduced cable and switchgear loading
-                (extending equipment life), reduced transformer loading (allowing additional
-                load within existing transformer capacity), reduced I²R cable losses, and
-                improved voltage regulation. These benefits apply regardless of whether there
-                is a direct reactive power charge on the tariff.
+                (extending equipment life), reduced transformer loading (allowing additional load
+                within existing transformer capacity), reduced I²R cable losses, and improved
+                voltage regulation. These benefits apply regardless of whether there is a direct
+                reactive power charge on the tariff.
               </span>
             </li>
           </ul>
         </div>
         <p>
           PFC equipment requires minimal maintenance — capacitors should be inspected visually
-          annually for bulging or leakage, and the controller should be checked to confirm
-          all steps are operational. Capacitor life expectancy is typically 15–20 years; detuned
-          reactors are essentially maintenance-free.
+          annually for bulging or leakage, and the controller should be checked to confirm all steps
+          are operational. Capacitor life expectancy is typically 15–20 years; detuned reactors are
+          essentially maintenance-free.
         </p>
       </>
     ),
@@ -594,9 +592,9 @@ const sections = [
         <p>
           Power factor correction installation is profitable specialist work for commercial and
           industrial electricians. An APFC bank installation at a medium-sized factory or
-          distribution warehouse typically takes 2–3 days and commands a significant margin.
-          All PFC installations require an Electrical Installation Certificate under BS 7671 and
-          should include a{' '}
+          distribution warehouse typically takes 2–3 days and commands a significant margin. All PFC
+          installations require an Electrical Installation Certificate under BS 7671 and should
+          include a{' '}
           <SEOInternalLink href="/guides/eicr-observation-codes-explained">
             commissioning record
           </SEOInternalLink>{' '}
@@ -613,10 +611,10 @@ const sections = [
                   <SEOInternalLink href="/tools/electrical-installation-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
-                  to complete the Electrical Installation Certificate for the PFC installation
-                  on your phone. Record CT ratio, panel rating, step sizes, insulation resistance
-                  values, and initial/final power factor readings — then export a professional
-                  PDF before leaving site.
+                  to complete the Electrical Installation Certificate for the PFC installation on
+                  your phone. Record CT ratio, panel rating, step sizes, insulation resistance
+                  values, and initial/final power factor readings — then export a professional PDF
+                  before leaving site.
                 </p>
               </div>
             </div>
@@ -625,16 +623,18 @@ const sections = [
             <div className="flex items-start gap-4">
               <PoundSterling className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Quote PFC Upgrades to Industrial Clients</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Quote PFC Upgrades to Industrial Clients
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
-                  When completing an EICR or motor installation at an industrial site, check
-                  the power factor using your power quality analyser and calculate the savings
+                  When completing an EICR or motor installation at an industrial site, check the
+                  power factor using your power quality analyser and calculate the savings
                   potential. Quote the PFC bank immediately using the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
-                  . A well-presented 2–3 year payback calculation makes PFC an easy decision
-                  for a finance director.
+                  . A well-presented 2–3 year payback calculation makes PFC an easy decision for a
+                  finance director.
                 </p>
               </div>
             </div>
@@ -642,7 +642,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Certificate PFC installations and quote industrial work with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EIC completion, power quality test records, industrial quoting, and instant PDF export. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -679,7 +679,7 @@ export default function PowerFactorCorrectionPage() {
       faqHeading="Frequently Asked Questions About Power Factor Correction"
       relatedPages={relatedPages}
       ctaHeading="Complete PFC Installation EICs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site electrical installation certification, commissioning test records, and instant PDF export. 7-day free trial, cancel anytime."
     />
   );
 }

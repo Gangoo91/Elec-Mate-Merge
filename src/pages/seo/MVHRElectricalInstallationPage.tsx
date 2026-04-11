@@ -113,7 +113,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/building-regulations-electrical',
     title: 'Building Regulations Electrical',
-    description: 'MVHR installations must comply with Part F and Part P of the Building Regulations.',
+    description:
+      'MVHR installations must comply with Part F and Part P of the Building Regulations.',
     icon: Home,
     category: 'Guide',
   },
@@ -147,15 +148,16 @@ const sections = [
         <p>
           Mechanical Ventilation with Heat Recovery (MVHR) is becoming standard in new-build homes
           and energy-efficient retrofits. As buildings become better insulated and more airtight,
-          natural ventilation through gaps and openings is no longer sufficient — and opening windows
-          defeats the purpose of insulation. MVHR provides controlled ventilation while recovering up
-          to 90% of the heat that would otherwise be lost.
+          natural ventilation through gaps and openings is no longer sufficient — and opening
+          windows defeats the purpose of insulation. MVHR provides controlled ventilation while
+          recovering up to 90% of the heat that would otherwise be lost.
         </p>
         <p>
           An MVHR system consists of a central unit (typically installed in a utility room, loft, or
           cupboard) connected to a network of ducts that supply fresh air to habitable rooms and
           extract stale air from wet rooms. The heart of the system is the heat exchanger, which
-          transfers heat from the outgoing air to the incoming air without the two airstreams mixing.
+          transfers heat from the outgoing air to the incoming air without the two airstreams
+          mixing.
         </p>
         <p>
           The electrical scope includes the dedicated power supply, boost switch wiring, summer
@@ -171,9 +173,9 @@ const sections = [
     content: (
       <>
         <p>
-          The MVHR unit requires a dedicated electrical supply. Although the power consumption is low
-          (50 to 300W), a dedicated circuit ensures the unit is not affected by other loads tripping
-          and provides a clear means of isolation.
+          The MVHR unit requires a dedicated electrical supply. Although the power consumption is
+          low (50 to 300W), a dedicated circuit ensures the unit is not affected by other loads
+          tripping and provides a clear means of isolation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -233,8 +235,9 @@ const sections = [
               <span>
                 <strong>Wiring</strong> — most MVHR systems use a low-voltage signal input for the
                 boost switch — typically a volt-free contact (two wires from the switch to the
-                controller terminal strip). Some systems use a 230V switched live input. Run a 2-core
-                (or 3-core if 230V) cable from each boost switch location to the MVHR controller.
+                controller terminal strip). Some systems use a 230V switched live input. Run a
+                2-core (or 3-core if 230V) cable from each boost switch location to the MVHR
+                controller.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -310,8 +313,8 @@ const sections = [
       <>
         <p>
           The heat exchanger in an MVHR unit extracts moisture from the outgoing air, producing
-          condensate that must be drained. The volume is modest — typically 1 to 3 litres per day
-          in a domestic system — but it must be managed.
+          condensate that must be drained. The volume is modest — typically 1 to 3 litres per day in
+          a domestic system — but it must be managed.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -362,8 +365,8 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Power rating</strong> — domestic duct heaters are typically 1 to 3kW. A 2kW
-                heater draws approximately 8.7A at 230V. This requires its own dedicated circuit —
-                a 10A or 16A MCB with 1.5mm or 2.5mm cable.
+                heater draws approximately 8.7A at 230V. This requires its own dedicated circuit — a
+                10A or 16A MCB with 1.5mm or 2.5mm cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,16 +416,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum extract rates</strong> — kitchen: 13 litres per second (l/s) at
-                boost, bathroom: 8 l/s, utility room: 8 l/s, WC: 6 l/s. These are the minimum
-                rates that the MVHR must achieve at boost speed.
+                boost, bathroom: 8 l/s, utility room: 8 l/s, WC: 6 l/s. These are the minimum rates
+                that the MVHR must achieve at boost speed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Whole-house ventilation rate</strong> — the continuous background ventilation
-                rate (trickle speed) must provide at least 0.3 l/s per m2 of internal floor area.
-                For a 100m2 dwelling, this is 30 l/s continuous.
+                <strong>Whole-house ventilation rate</strong> — the continuous background
+                ventilation rate (trickle speed) must provide at least 0.3 l/s per m2 of internal
+                floor area. For a 100m2 dwelling, this is 30 l/s continuous.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -463,9 +466,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical testing</strong> — continuity of protective conductors, insulation
-                resistance, polarity, earth fault loop impedance, and RCD operation on the MVHR
-                circuit (and duct heater circuit if fitted). Issue an EIC or Minor Works Certificate.
+                <strong>Electrical testing</strong> — continuity of protective conductors,
+                insulation resistance, polarity, earth fault loop impedance, and RCD operation on
+                the MVHR circuit (and duct heater circuit if fitted). Issue an EIC or Minor Works
+                Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -507,15 +511,15 @@ const sections = [
       <>
         <p>
           MVHR installation is growing rapidly as Building Regulations tighten and more homes are
-          built (or retrofitted) to high insulation standards. The electrical scope is typically worth
-          £300 to £800 per installation, with more complex systems (duct heaters, multiple zones,
-          humidity sensors) commanding higher prices.
+          built (or retrofitted) to high insulation standards. The electrical scope is typically
+          worth £300 to £800 per installation, with more complex systems (duct heaters, multiple
+          zones, humidity sensors) commanding higher prices.
         </p>
         <p>
           Building relationships with ventilation installers and new-build developers provides a
           steady stream of MVHR electrical work. As an electrician, your value is in getting the
-          wiring right first time — incorrect boost switch wiring or missing condensate pump circuits
-          are common snags that delay handover.
+          wiring right first time — incorrect boost switch wiring or missing condensate pump
+          circuits are common snags that delay handover.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -563,7 +567,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Quote, install, and certify MVHR electrical work"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for MVHR installations. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certification. Everything you need for MVHR installations. 7-day free trial."
           icon={Fan}
         />
       </>
@@ -600,7 +604,7 @@ export default function MVHRElectricalInstallationPage() {
       faqHeading="Frequently Asked Questions About MVHR Electrical Installation"
       relatedPages={relatedPages}
       ctaHeading="Size Cables and Certify MVHR Installations on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site EIC certificates for MVHR installations. 7-day free trial, cancel anytime."
     />
   );
 }

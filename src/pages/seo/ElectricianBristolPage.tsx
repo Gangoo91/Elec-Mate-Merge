@@ -150,15 +150,15 @@ const sections = [
         <p>
           For electricians, Bristol offers a strong and varied market. The city's commitment to
           sustainability (it was the European Green Capital in 2015) drives demand for solar PV,
-          battery storage, and EV charger installations. The large student population and active
-          HMO market create steady demand for EICRs and fire alarm work. The ongoing regeneration
-          of Temple Quarter and the harbour-side generates commercial and new-build residential
+          battery storage, and EV charger installations. The large student population and active HMO
+          market create steady demand for EICRs and fire alarm work. The ongoing regeneration of
+          Temple Quarter and the harbour-side generates commercial and new-build residential
           opportunities.
         </p>
         <p>
-          This guide covers the regulatory framework, DNO details, property-specific challenges,
-          the eco-retrofit market, HMO requirements, pricing, and practical advice for
-          electricians working in Bristol.
+          This guide covers the regulatory framework, DNO details, property-specific challenges, the
+          eco-retrofit market, HMO requirements, pricing, and practical advice for electricians
+          working in Bristol.
         </p>
       </>
     ),
@@ -237,18 +237,18 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>G98/G99 notifications</strong> — solar PV, battery storage, and other
-                generation equipment must be notified to WPD/NGED. G98 notifications (up to 16A
-                per phase) are straightforward and do not require prior approval. G99 applications
-                for larger systems require approval before connection.
+                generation equipment must be notified to WPD/NGED. G98 notifications (up to 16A per
+                phase) are straightforward and do not require prior approval. G99 applications for
+                larger systems require approval before connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing arrangements</strong> — Bristol properties are predominantly
-                TN-C-S (PME) in newer areas and TN-S in older areas. Some Victorian and Edwardian
-                properties may have TT earthing or rely on lead water pipes as the earth electrode
-                — these must be identified and addressed. WPD/NGED can confirm the earthing
+                <strong>Earthing arrangements</strong> — Bristol properties are predominantly TN-C-S
+                (PME) in newer areas and TN-S in older areas. Some Victorian and Edwardian
+                properties may have TT earthing or rely on lead water pipes as the earth electrode —
+                these must be identified and addressed. WPD/NGED can confirm the earthing
                 arrangement at the supply point if needed.
               </span>
             </li>
@@ -284,8 +284,8 @@ const sections = [
               ornamental plasterwork, and period features. Many divided into flats with complex
               existing wiring. Cable routing must avoid damaging cornices and ceiling roses.
               Conservation area restrictions apply to much of Clifton. Lead water pipe earthing
-              still found in some properties. Full rewires are premium jobs — £6,000 to £10,000
-              for a large Clifton flat.
+              still found in some properties. Full rewires are premium jobs — £6,000 to £10,000 for
+              a large Clifton flat.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -328,10 +328,10 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol was awarded European Green Capital status in 2015, and the city has maintained
-          its commitment to sustainability through the One City Climate Strategy, which targets
-          carbon neutrality by 2030. For electricians, this translates into strong demand for
-          low-carbon electrical work:
+          Bristol was awarded European Green Capital status in 2015, and the city has maintained its
+          commitment to sustainability through the One City Climate Strategy, which targets carbon
+          neutrality by 2030. For electricians, this translates into strong demand for low-carbon
+          electrical work:
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -364,9 +364,9 @@ const sections = [
                 <SEOInternalLink href="/guides/ev-charger-installation">
                   EV charger installations
                 </SEOInternalLink>
-                . Terraced properties in areas like Redland and Cotham present challenges with
-                cable routes from the consumer unit to the parking location, often requiring runs
-                through garages or along external walls.
+                . Terraced properties in areas like Redland and Cotham present challenges with cable
+                routes from the consumer unit to the parking location, often requiring runs through
+                garages or along external walls.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -397,8 +397,8 @@ const sections = [
       <>
         <p>
           Bristol has two major universities — the University of Bristol and the University of the
-          West of England (UWE) — with a combined student population of over 60,000. This drives
-          a large HMO market, concentrated in Stokes Croft, Cotham, Redland, Fishponds, and the
+          West of England (UWE) — with a combined student population of over 60,000. This drives a
+          large HMO market, concentrated in Stokes Croft, Cotham, Redland, Fishponds, and the
           streets surrounding both campuses.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -407,17 +407,16 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Mandatory HMO licensing</strong> — Bristol City Council requires HMO
-                licences for properties with 5 or more occupants from 2 or more separate
-                households. Additional licensing schemes may extend this to smaller HMOs in certain
-                wards.
+                licences for properties with 5 or more occupants from 2 or more separate households.
+                Additional licensing schemes may extend this to smaller HMOs in certain wards.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR requirements</strong> — a satisfactory{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with no C1
-                or C2 observations is required for HMO licensing and must be renewed every 5 years.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with no C1 or
+                C2 observations is required for HMO licensing and must be renewed every 5 years.
                 This creates predictable repeat work for electricians who maintain a portfolio of
                 HMO clients.
               </span>
@@ -511,10 +510,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Rates in premium areas such as Clifton, Redland, and Bishopston tend to be at the
-          higher end of these ranges. Period property rewires in Clifton command a significant
-          premium due to the complexity of working around heritage features and the expectations
-          of the customer base.
+          Rates in premium areas such as Clifton, Redland, and Bishopston tend to be at the higher
+          end of these ranges. Period property rewires in Clifton command a significant premium due
+          to the complexity of working around heritage features and the expectations of the customer
+          base.
         </p>
       </>
     ),
@@ -525,9 +524,9 @@ const sections = [
     content: (
       <>
         <p>
-          Bristol is one of the best cities in the UK for electricians. The combination of a
-          strong local economy, diverse property stock, active rental market, and leading-edge
-          demand for green energy installations creates a broad and profitable workload.
+          Bristol is one of the best cities in the UK for electricians. The combination of a strong
+          local economy, diverse property stock, active rental market, and leading-edge demand for
+          green energy installations creates a broad and profitable workload.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -540,12 +539,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  on site with AI-assisted board scanning. HMO compliance, landlord certificates,
-                  and new installation documentation — all from your phone.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
+                  site with AI-assisted board scanning. HMO compliance, landlord certificates, and
+                  new installation documentation — all from your phone.
                 </p>
               </div>
             </div>
@@ -586,7 +582,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Professional electrical tools for Bristol electricians"
-          description="Join 430+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the demands of Bristol's diverse property market. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for cable sizing, professional quoting, and on-site certification. Built for the demands of Bristol's diverse property market. 7-day free trial."
           icon={MapPin}
         />
       </>
@@ -611,8 +607,7 @@ export default function ElectricianBristolPage() {
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician in Bristol:{' '}
-          <span className="text-yellow-400">Find Electricians 2026</span>
+          Electrician in Bristol: <span className="text-yellow-400">Find Electricians 2026</span>
         </>
       }
       heroSubtitle="Bristol's mix of Georgian elegance, Victorian terraces, harbour-side new builds, and the UK's strongest eco-retrofit market makes it one of the most rewarding cities for electricians. From Clifton rewires to Southville solar PV."
@@ -623,7 +618,7 @@ export default function ElectricianBristolPage() {
       faqHeading="Frequently Asked Questions About Electricians in Bristol"
       relatedPages={relatedPages}
       ctaHeading="Professional Electrical Tools for Bristol Electricians"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for cable sizing, quoting, and on-site certification. Built for Bristol's Victorian terraces, HMO market, and green energy demand. 7-day free trial."
     />
   );
 }

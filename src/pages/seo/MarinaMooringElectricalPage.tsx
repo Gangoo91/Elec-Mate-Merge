@@ -87,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/caravan-park-electrical',
     title: 'Caravan Park Electrical (Section 708)',
-    description: 'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
+    description:
+      'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
     icon: Plug,
     category: 'Guide',
   },
   {
     href: '/fountain-pool-electrical',
     title: 'Decorative Fountain & Feature Pool Electrical',
-    description: 'Zone requirements, SELV, IP ratings, and bonding for water features under BS 7671 Section 702.',
+    description:
+      'Zone requirements, SELV, IP ratings, and bonding for water features under BS 7671 Section 702.',
     icon: Zap,
     category: 'Guide',
   },
@@ -146,21 +148,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Anchor className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specific hazards</strong> — marina installations present hazards not
-                found in most other electrical environments: the corrosive salt and fresh water
-                environment, floating pontoons subject to tidal movement, the risk of electric
-                shock through conductive water (electric shock drowning), galvanic corrosion from
-                stray DC currents, and non-expert users (boat owners) connecting and disconnecting
-                their own shore power leads.
+                <strong>Specific hazards</strong> — marina installations present hazards not found
+                in most other electrical environments: the corrosive salt and fresh water
+                environment, floating pontoons subject to tidal movement, the risk of electric shock
+                through conductive water (electric shock drowning), galvanic corrosion from stray DC
+                currents, and non-expert users (boat owners) connecting and disconnecting their own
+                shore power leads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Anchor className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electric shock drowning</strong> — electric shock drowning (ESD) is a
-                potentially fatal hazard specific to aquatic environments. A voltage gradient in
-                the water — caused by a fault current flowing from shore power through the water
-                to earth — can cause muscular paralysis in swimmers, preventing them from reaching
+                potentially fatal hazard specific to aquatic environments. A voltage gradient in the
+                water — caused by a fault current flowing from shore power through the water to
+                earth — can cause muscular paralysis in swimmers, preventing them from reaching
                 safety. Earth leakage monitoring and rapid RCD disconnection are the primary
                 protective measures.
               </span>
@@ -184,8 +186,8 @@ const sections = [
     content: (
       <>
         <p>
-          Shore power socket outlet units (sometimes called pedestal units or power posts) are
-          the interface between the marina's fixed installation and individual boats. Their design,
+          Shore power socket outlet units (sometimes called pedestal units or power posts) are the
+          interface between the marina's fixed installation and individual boats. Their design,
           rating, and installation must comply with Section 709 and the requirements for outdoor
           electrical equipment.
         </p>
@@ -214,10 +216,10 @@ const sections = [
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP rating</strong> — socket outlet units must have a minimum IP rating of
-                IP44. Units on exposed pontoons or tidal locations may require IP55 or higher.
-                The pontoon environment exposes electrical equipment to salt spray, rain, wave
-                splash, and occasional immersion — IP rating selection must reflect the actual
-                installation conditions.
+                IP44. Units on exposed pontoons or tidal locations may require IP55 or higher. The
+                pontoon environment exposes electrical equipment to salt spray, rain, wave splash,
+                and occasional immersion — IP rating selection must reflect the actual installation
+                conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -252,30 +254,30 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>The galvanic cell</strong> — when two dissimilar metals (for example
-                aluminium and bronze) are immersed in the same electrolyte (salt or fresh water)
-                and electrically connected, a galvanic cell is formed. The less noble metal
-                (aluminium) acts as the anode and corrodes. In a marina, the shore power earth
-                conductor connecting multiple boats creates this electrical connection.
+                aluminium and bronze) are immersed in the same electrolyte (salt or fresh water) and
+                electrically connected, a galvanic cell is formed. The less noble metal (aluminium)
+                acts as the anode and corrodes. In a marina, the shore power earth conductor
+                connecting multiple boats creates this electrical connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Galvanic isolator</strong> — a galvanic isolator (complying with
-                BS EN 61191 or equivalent) is a DC blocking device fitted in series with the
-                shore power earth conductor. It passes AC fault currents (essential for
-                protective device operation) but blocks low-level DC galvanic currents. Galvanic
-                isolators are strongly recommended for all boats connected to shore power.
+                <strong>Galvanic isolator</strong> — a galvanic isolator (complying with BS EN 61191
+                or equivalent) is a DC blocking device fitted in series with the shore power earth
+                conductor. It passes AC fault currents (essential for protective device operation)
+                but blocks low-level DC galvanic currents. Galvanic isolators are strongly
+                recommended for all boats connected to shore power.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation transformer</strong> — an isolation transformer on board the
-                boat provides complete galvanic isolation from the shore earth. The boat's AC
-                system is referenced to a floating (unearthed) supply derived from the
-                transformer secondary. This eliminates galvanic currents entirely but is more
-                expensive and requires careful design to maintain shock protection.
+                <strong>Isolation transformer</strong> — an isolation transformer on board the boat
+                provides complete galvanic isolation from the shore earth. The boat's AC system is
+                referenced to a floating (unearthed) supply derived from the transformer secondary.
+                This eliminates galvanic currents entirely but is more expensive and requires
+                careful design to maintain shock protection.
               </span>
             </li>
           </ul>
@@ -294,8 +296,8 @@ const sections = [
     content: (
       <>
         <p>
-          Section 709 requires earth leakage monitoring (ELM) systems in marina installations.
-          ELM systems provide continuous monitoring of residual current in shore power circuits,
+          Section 709 requires earth leakage monitoring (ELM) systems in marina installations. ELM
+          systems provide continuous monitoring of residual current in shore power circuits,
           alerting marina staff to developing faults before they reach dangerous levels.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -303,39 +305,39 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>How ELM works</strong> — a current transformer fitted around the live
-                and neutral conductors of each shore power circuit continuously measures the
-                difference between outgoing and returning current. Any difference (residual
-                current) indicates a fault path — either through a fault on the boat, through
-                the water, or through a damaged cable. The ELM system triggers an alarm when
-                the residual current exceeds the pre-set threshold (typically 10 mA or 15 mA).
+                <strong>How ELM works</strong> — a current transformer fitted around the live and
+                neutral conductors of each shore power circuit continuously measures the difference
+                between outgoing and returning current. Any difference (residual current) indicates
+                a fault path — either through a fault on the boat, through the water, or through a
+                damaged cable. The ELM system triggers an alarm when the residual current exceeds
+                the pre-set threshold (typically 10 mA or 15 mA).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Alarm vs. trip</strong> — the ELM system typically provides an alarm
-                rather than automatically disconnecting the supply. This allows marina staff to
-                investigate and advise the boat owner before disconnection. The 30 mA RCD
-                remains the primary automatic protective device for shock protection.
+                <strong>Alarm vs. trip</strong> — the ELM system typically provides an alarm rather
+                than automatically disconnecting the supply. This allows marina staff to investigate
+                and advise the boat owner before disconnection. The 30 mA RCD remains the primary
+                automatic protective device for shock protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Central monitoring</strong> — in modern marinas, ELM signals are
-                aggregated to a central marina management system, allowing marina staff to
-                identify which berth has a developing fault and respond quickly. Systems can
-                send alerts by email or SMS to the marina manager.
+                <strong>Central monitoring</strong> — in modern marinas, ELM signals are aggregated
+                to a central marina management system, allowing marina staff to identify which berth
+                has a developing fault and respond quickly. Systems can send alerts by email or SMS
+                to the marina manager.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Testing at inspection</strong> — ELM systems must be tested at every
-                periodic inspection. Testing involves injecting a known residual current into
-                the monitoring circuit and verifying the alarm operates at or below the
-                pre-set threshold. Test results should be recorded in the inspection report.
+                periodic inspection. Testing involves injecting a known residual current into the
+                monitoring circuit and verifying the alarm operates at or below the pre-set
+                threshold. Test results should be recorded in the inspection report.
               </span>
             </li>
           </ul>
@@ -349,28 +351,27 @@ const sections = [
     content: (
       <>
         <p>
-          IEC 60309 (BS EN 60309) connectors are the standard for marina shore power throughout
-          the UK and Europe. Their weatherproof construction, earth-first engagement, and
-          colour-coded voltage identification make them well suited to the demanding marina
-          environment.
+          IEC 60309 (BS EN 60309) connectors are the standard for marina shore power throughout the
+          UK and Europe. Their weatherproof construction, earth-first engagement, and colour-coded
+          voltage identification make them well suited to the demanding marina environment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>16 A blue single-phase</strong> — the standard connector for leisure
-                craft and small boats. Provides a nominal 3.68 kW supply at 230 V. This is the
-                same connector used at caravan parks, making standardised EHU (electric hookup)
-                cables compatible between marinas and caravan sites.
+                <strong>16 A blue single-phase</strong> — the standard connector for leisure craft
+                and small boats. Provides a nominal 3.68 kW supply at 230 V. This is the same
+                connector used at caravan parks, making standardised EHU (electric hookup) cables
+                compatible between marinas and caravan sites.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Plug className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>32 A blue single-phase</strong> — used for larger motorboats and yachts
-                with higher power requirements (heating, air conditioning, refrigeration). Provides
-                up to 7.36 kW. Larger vessels may require 63 A or three-phase supplies.
+                <strong>32 A blue single-phase</strong> — used for larger motorboats and yachts with
+                higher power requirements (heating, air conditioning, refrigeration). Provides up to
+                7.36 kW. Larger vessels may require 63 A or three-phase supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -378,8 +379,8 @@ const sections = [
               <span>
                 <strong>Locking mechanism</strong> — marina-specific IEC 60309 socket outlets
                 typically incorporate a locking collar that prevents the plug from being
-                accidentally disconnected by a wave or the boat's movement. This feature is
-                not required by the standard but is strongly recommended for marina use.
+                accidentally disconnected by a wave or the boat's movement. This feature is not
+                required by the standard but is strongly recommended for marina use.
               </span>
             </li>
           </ul>
@@ -402,10 +403,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30 mA individual RCD per socket</strong> — Regulation 709.411.3.3
-                requires each socket outlet to be individually protected by a 30 mA RCD.
-                A single RCD protecting multiple berths is not acceptable under Section 709,
-                as a fault at one berth must not disconnect other berths.
+                <strong>30 mA individual RCD per socket</strong> — Regulation 709.411.3.3 requires
+                each socket outlet to be individually protected by a 30 mA RCD. A single RCD
+                protecting multiple berths is not acceptable under Section 709, as a fault at one
+                berth must not disconnect other berths.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -413,9 +414,9 @@ const sections = [
               <span>
                 <strong>Type A RCDs</strong> — boats with electronic equipment on board
                 (inverter-chargers, engine management, electronic instrumentation) can produce
-                pulsating DC residual currents that Type AC RCDs cannot detect. Type A RCDs
-                detect both sinusoidal and pulsating DC residual currents. All marina installations
-                should use Type A RCDs as standard.
+                pulsating DC residual currents that Type AC RCDs cannot detect. Type A RCDs detect
+                both sinusoidal and pulsating DC residual currents. All marina installations should
+                use Type A RCDs as standard.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,8 +424,8 @@ const sections = [
               <span>
                 <strong>Disconnection time</strong> — RCDs must operate within the time limits
                 specified in BS 7671 Table 41.1. For 30 mA RCDs protecting socket outlet circuits,
-                the maximum disconnection time at 5× IΔn (150 mA) is 40 ms. Annual RCD testing
-                must verify these operating times using a calibrated RCD tester.
+                the maximum disconnection time at 5× IΔn (150 mA) is 40 ms. Annual RCD testing must
+                verify these operating times using a calibrated RCD tester.
               </span>
             </li>
           </ul>
@@ -439,16 +440,16 @@ const sections = [
       <>
         <p>
           Earthing at marinas is complex and presents unique challenges not found in other
-          installations. The interaction between the shore earth, the water, galvanic currents,
-          and protective earth conductors on individual boats requires careful engineering.
+          installations. The interaction between the shore earth, the water, galvanic currents, and
+          protective earth conductors on individual boats requires careful engineering.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TT vs. TN systems</strong> — many marinas are TT earthed, particularly
-                where the distribution network does not provide a reliable PME (protective multiple
+                <strong>TT vs. TN systems</strong> — many marinas are TT earthed, particularly where
+                the distribution network does not provide a reliable PME (protective multiple
                 earthing) earth at the marina origin. TT earthing requires earth electrode
                 resistance testing at commissioning and at every annual inspection. The earth
                 electrode must be positioned to minimise the risk of step voltages in areas
@@ -458,21 +459,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PME prohibition</strong> — Section 709 prohibits the use of PME
-                (TN-C-S) earthing for shore power socket outlets at marinas. This is because
-                the PME combined neutral-earth conductor, if broken, can result in dangerous
-                voltages on metalwork accessible to users in or near the water. A local TT
-                earth arrangement or an isolating transformer must be used.
+                <strong>PME prohibition</strong> — Section 709 prohibits the use of PME (TN-C-S)
+                earthing for shore power socket outlets at marinas. This is because the PME combined
+                neutral-earth conductor, if broken, can result in dangerous voltages on metalwork
+                accessible to users in or near the water. A local TT earth arrangement or an
+                isolating transformer must be used.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Structural metalwork bonding</strong> — all metallic structural elements
-                of the marina — steel pontoon frames, handrails, ladders, berthing cleats — must
-                be assessed for bonding requirements. Where metalwork is accessible to persons
-                who may simultaneously contact the water, bonding is required to equalise
-                potentials and prevent electric shock.
+                <strong>Structural metalwork bonding</strong> — all metallic structural elements of
+                the marina — steel pontoon frames, handrails, ladders, berthing cleats — must be
+                assessed for bonding requirements. Where metalwork is accessible to persons who may
+                simultaneously contact the water, bonding is required to equalise potentials and
+                prevent electric shock.
               </span>
             </li>
           </ul>
@@ -502,10 +503,10 @@ const sections = [
                   <SEOInternalLink href="/tools/eicr-certificate">
                     Elec-Mate EICR app
                   </SEOInternalLink>{' '}
-                  to complete marina inspection reports berth-by-berth on your phone. Record
-                  RCD test results, earth leakage monitor test results, and earth electrode
-                  resistance measurements in the schedule of test results. Generate the PDF
-                  report before leaving the site.
+                  to complete marina inspection reports berth-by-berth on your phone. Record RCD
+                  test results, earth leakage monitor test results, and earth electrode resistance
+                  measurements in the schedule of test results. Generate the PDF report before
+                  leaving the site.
                 </p>
               </div>
             </div>
@@ -514,7 +515,9 @@ const sections = [
             <div className="flex items-start gap-4">
               <Building2 className="w-6 h-6 text-green-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Annual Contracts with Marina Operators</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Annual Contracts with Marina Operators
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Annual inspection is the recommended interval for marina installations. Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
@@ -530,7 +533,7 @@ const sections = [
         </div>
         <SEOAppBridge
           title="Marina inspection work made simple with Elec-Mate"
-          description="Join 430+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for annual marina and pontoon inspections. 7-day free trial."
+          description="Join 1,000+ UK electricians using Elec-Mate for on-site EICR completion, test result recording, and instant PDF export. Ideal for annual marina and pontoon inspections. 7-day free trial."
           icon={FileCheck2}
         />
       </>
@@ -567,7 +570,7 @@ export default function MarinaMooringElectricalPage() {
       faqHeading="Frequently Asked Questions About Marina Electrical Installations"
       relatedPages={relatedPages}
       ctaHeading="Complete Marina EICRs on Your Phone"
-      ctaSubheading="Join 430+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site inspection reporting, RCD and ELM test entry, and instant PDF export. Perfect for annual marina inspections. 7-day free trial."
     />
   );
 }

@@ -183,9 +183,9 @@ export default function AIForElectricalApprenticesPage() {
               </p>
               <p>
                 The lookup tool covers the full scope of BS 7671:2018+A3:2024, including Amendment
-                3:2024 which added Regulation 530.3.2 for bidirectional protective devices. It
-                also covers the IET On-Site Guide and all eight IET Guidance Notes, which are
-                essential study materials for{' '}
+                3:2024 which added Regulation 530.3.2 for bidirectional protective devices. It also
+                covers the IET On-Site Guide and all eight IET Guidance Notes, which are essential
+                study materials for{' '}
                 <SEOInternalLink href="/guides/city-guilds-2391">
                   City and Guilds 2391
                 </SEOInternalLink>{' '}
@@ -403,7 +403,7 @@ export default function AIForElectricalApprenticesPage() {
               </ul>
               <SEOAppBridge
                 title="Elec-Mate for Apprentices — AI-Powered Learning"
-                description="36+ training courses aligned to NVQ Level 2 and Level 3, AI tutor for instant explanations, practice question generators, component identification, and study planning. Everything an apprentice needs to learn faster."
+                description="46+ training courses aligned to NVQ Level 2 and Level 3, AI tutor for instant explanations, practice question generators, component identification, and study planning. Everything an apprentice needs to learn faster."
                 icon={GraduationCap}
               />
             </>
@@ -443,7 +443,7 @@ export default function AIForElectricalApprenticesPage() {
               <p>
                 Elec-Mate's study centre includes{' '}
                 <SEOInternalLink href="/guides/electrical-apprenticeship">
-                  36+ training courses
+                  46+ training courses
                 </SEOInternalLink>{' '}
                 covering the full apprenticeship curriculum from Level 2 through Level 3, plus
                 specialist courses for{' '}
@@ -493,7 +493,7 @@ export default function AIForElectricalApprenticesPage() {
         {
           question: 'How much does AI-powered apprentice training cost?',
           answer:
-            'All AI features are included in the standard Elec-Mate subscription at no extra cost. This includes the AI Tutor, practice question generator, component identifier, regulation lookup, study planner, and all 36+ training courses. There is a 7-day free trial with no card required to start. For apprentices, the subscription also includes access to 70+ calculators, certificate tools, and the complete Elec-Mate platform — tools that will continue to be useful throughout your career after qualifying.',
+            'All AI features are included in the standard Elec-Mate subscription at no extra cost. This includes the AI Tutor, practice question generator, component identifier, regulation lookup, study planner, and all 46+ training courses. There is a 7-day free trial with no card required to start. For apprentices, the subscription also includes access to 70+ calculators, certificate tools, and the complete Elec-Mate platform — tools that will continue to be useful throughout your career after qualifying.',
         },
       ]}
       faqHeading="AI for Apprentices FAQs"
@@ -548,7 +548,7 @@ export default function AIForElectricalApprenticesPage() {
         },
       ]}
       ctaHeading="Start learning smarter with AI"
-      ctaSubheading="36+ training courses, AI tutor, practice questions, component identification — everything an electrical apprentice needs. 7-day free trial, no card required."
+      ctaSubheading="46+ training courses, AI tutor, practice questions, component identification — everything an electrical apprentice needs. 7-day free trial, no card required."
     />
   );
 }

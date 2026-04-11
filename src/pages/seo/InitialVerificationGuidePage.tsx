@@ -238,9 +238,9 @@ const sections = [
     content: (
       <>
         <p>
-          Before testing begins, a thorough visual inspection must be carried out. BS 7671
-          Section 641 provides a detailed list of items to inspect. The inspection schedule
-          (sometimes called the inspection checklist) is a systematic record of every item checked.
+          Before testing begins, a thorough visual inspection must be carried out. BS 7671 Section
+          641 provides a detailed list of items to inspect. The inspection schedule (sometimes
+          called the inspection checklist) is a systematic record of every item checked.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="font-bold text-white text-lg mb-4">Key Inspection Items</h3>
@@ -619,7 +619,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Issue the EIC before you leave site"
-          description="Complete initial verification on your phone. AI board scanner, voice test entry, automatic pass/fail checking, and instant PDF export. Join 430+ UK electricians using Elec-Mate. 7-day free trial."
+          description="Complete initial verification on your phone. AI board scanner, voice test entry, automatic pass/fail checking, and instant PDF export. Join 1,000+ UK electricians using Elec-Mate. 7-day free trial."
           icon={FileCheck2}
         />
       </>
