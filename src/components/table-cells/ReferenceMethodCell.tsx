@@ -30,7 +30,7 @@ export const ReferenceMethodCell: React.FC<ReferenceMethodCellProps> = ({ result
             <SelectItem
               key={option.value}
               value={option.value}
-              className="text-xs text-neutral-100 whitespace-normal break-words"
+              className="text-xs text-white whitespace-normal break-words"
             >
               {option.label}
             </SelectItem>

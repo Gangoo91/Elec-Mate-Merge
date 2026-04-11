@@ -29,7 +29,7 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
         <SelectTrigger className="h-8 w-full text-sm text-white bg-transparent border border-transparent rounded-md px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="1P" />
         </SelectTrigger>
-        <SelectContent className="bg-background border border-border rounded-md z-[100]">
+        <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
           <SelectItem value="N/A" className="text-sm">
             <span className="font-medium text-white">N/A</span>
           </SelectItem>

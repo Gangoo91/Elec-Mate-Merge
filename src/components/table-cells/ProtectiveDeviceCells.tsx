@@ -148,20 +148,20 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           onValueChange={handleCurveChange}
           disabled={!showCurveSelector}
         >
-          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
+          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
             <SelectValue placeholder="Type" className="truncate" />
           </SelectTrigger>
           <SelectContent
             key={`protectiveDeviceCurve-content-${result.id}`}
             position="popper"
             sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
+            className="bg-background border border-border rounded-md z-[9999] min-w-[160px]"
           >
             {protectiveDeviceCurveOptions.map((option) => (
               <SelectItem
                 key={option.value}
                 value={option.value}
-                className="text-xs text-neutral-100"
+                className="text-xs text-white"
               >
                 {option.label}
               </SelectItem>

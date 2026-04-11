@@ -108,7 +108,7 @@ export const SmartTabs = ({
         <div
           ref={scrollRef}
           className={cn(
-            isMobile ? `grid gap-1 px-2 pb-2 ${tabs.length <= 3 ? 'grid-cols-3' : tabs.length <= 4 ? 'grid-cols-4' : 'grid-cols-5'}` : 'flex gap-2 overflow-x-auto scrollbar-hide'
+            isMobile ? `grid gap-1 px-2 pb-2 ${tabs.length <= 2 ? 'grid-cols-2' : tabs.length <= 3 ? 'grid-cols-3' : tabs.length <= 4 ? 'grid-cols-4' : 'grid-cols-5'}` : 'flex gap-2 overflow-x-auto scrollbar-hide'
           )}
           style={isMobile ? undefined : { scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >

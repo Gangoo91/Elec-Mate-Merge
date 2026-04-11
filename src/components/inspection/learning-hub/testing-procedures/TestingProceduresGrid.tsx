@@ -33,6 +33,8 @@ interface TestingProceduresGridProps {
   onStartSupplementaryTesting: () => void;
   onStartCertificateGuide?: () => void;
   onStartScheduleGuide?: () => void;
+  onStartTestSequence?: () => void;
+  onStartQuickReference?: () => void;
   onPreviewProcedure: (procedure: TestingProcedure) => void;
   onClearFilters: () => void;
 }
@@ -51,6 +53,8 @@ const TestingProceduresGrid = ({
   onStartSupplementaryTesting,
   onStartCertificateGuide,
   onStartScheduleGuide,
+  onStartTestSequence,
+  onStartQuickReference,
   onPreviewProcedure,
   onClearFilters,
 }: TestingProceduresGridProps) => {
@@ -467,6 +471,38 @@ const TestingProceduresGrid = ({
                 className="w-full bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
               >
                 Start Supplementary Testing
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Test Sequence */}
+          <Card className="bg-card/50 border-border border-l-4 border-l-elec-yellow hover:bg-card hover:border-border transition-all touch-manipulation">
+            <CardContent className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
+              <div>
+                <h4 className="text-base sm:text-lg font-semibold text-foreground">Test Sequence</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">BS 7671 mandated order — dead before live</p>
+              </div>
+              <Button
+                onClick={() => onStartTestSequence?.()}
+                className="w-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 hover:bg-elec-yellow/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
+              >
+                Open Test Sequence
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Quick Reference */}
+          <Card className="bg-card/50 border-border border-l-4 border-l-elec-yellow hover:bg-card hover:border-border transition-all touch-manipulation">
+            <CardContent className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
+              <div>
+                <h4 className="text-base sm:text-lg font-semibold text-foreground">Quick Reference</h4>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-1">All key values on one page</p>
+              </div>
+              <Button
+                onClick={() => onStartQuickReference?.()}
+                className="w-full bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 hover:bg-elec-yellow/30 min-h-[44px] touch-manipulation text-sm sm:text-base"
+              >
+                Open Quick Reference
               </Button>
             </CardContent>
           </Card>

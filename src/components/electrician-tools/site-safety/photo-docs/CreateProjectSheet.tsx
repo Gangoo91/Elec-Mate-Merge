@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,21 +10,37 @@ import { Customer } from '@/hooks/inspection/useCustomers';
 interface CreateProjectSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onCreated?: (project: PhotoProject) => void;
+  onCreated?: (project?: PhotoProject) => void;
+  editProject?: PhotoProject;
 }
 
 export default function CreateProjectSheet({
   open,
   onOpenChange,
   onCreated,
+  editProject,
 }: CreateProjectSheetProps) {
-  const { createProject, isCreating, generateJobReference } = usePhotoProjects();
+  const { createProject, isCreating, updateProject, isUpdating, generateJobReference } = usePhotoProjects();
+  const isEditMode = Boolean(editProject);
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [jobReference, setJobReference] = useState('');
   const [address, setAddress] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+
+  // Pre-fill when editing (ELE-725)
+  useEffect(() => {
+    if (editProject && open) {
+      setName(editProject.name || '');
+      setDescription(editProject.description || '');
+      setJobReference(editProject.job_reference || '');
+      setAddress(editProject.address || '');
+      if (editProject.customer_id && editProject.customer_name) {
+        setSelectedCustomer({ id: editProject.customer_id, name: editProject.customer_name } as Customer);
+      }
+    }
+  }, [editProject, open]);
 
   const resetForm = useCallback(() => {
     setName('');
@@ -42,6 +58,24 @@ export default function CreateProjectSheet({
   const handleCreate = useCallback(
     async (quickCreate = false) => {
       if (!name.trim()) return;
+
+      // Edit mode — update existing project (ELE-725)
+      if (isEditMode && editProject) {
+        updateProject({
+          id: editProject.id,
+          updates: {
+            name: name.trim(),
+            description: description.trim() || null,
+            job_reference: jobReference.trim() || null,
+            address: address.trim() || null,
+            customer_id: selectedCustomer?.id || null,
+          },
+        });
+        resetForm();
+        onOpenChange(false);
+        onCreated?.();
+        return;
+      }
 
       const input: CreateProjectInput = {
         name: name.trim(),
@@ -68,6 +102,9 @@ export default function CreateProjectSheet({
       jobReference,
       address,
       createProject,
+      updateProject,
+      isEditMode,
+      editProject,
       resetForm,
       onOpenChange,
       onCreated,
@@ -96,7 +133,7 @@ export default function CreateProjectSheet({
 
           {/* Header */}
           <div className="flex-shrink-0 px-4 pt-3 pb-3">
-            <h2 className="text-lg font-semibold text-white">New Project</h2>
+            <h2 className="text-lg font-semibold text-white">{isEditMode ? 'Edit Project' : 'New Project'}</h2>
           </div>
 
           {/* Form */}
@@ -172,30 +209,32 @@ export default function CreateProjectSheet({
           <div className="flex-shrink-0 p-4 border-t border-white/[0.06] space-y-2">
             <button
               onClick={() => handleCreate(false)}
-              disabled={!name.trim() || isCreating}
+              disabled={!name.trim() || isCreating || isUpdating}
               className="w-full h-12 rounded-xl bg-elec-yellow text-sm font-semibold text-black flex items-center justify-center gap-2 touch-manipulation active:bg-yellow-400 disabled:opacity-50 transition-all"
             >
-              {isCreating ? (
+              {(isCreating || isUpdating) ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Creating...</span>
+                  <span>{isEditMode ? 'Saving...' : 'Creating...'}</span>
                 </>
               ) : (
                 <>
                   <FolderPlus className="h-4 w-4" />
-                  <span>Create Project</span>
+                  <span>{isEditMode ? 'Save Changes' : 'Create Project'}</span>
                 </>
               )}
             </button>
 
-            <button
-              onClick={() => handleCreate(true)}
-              disabled={!name.trim() || isCreating}
-              className="w-full h-11 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white flex items-center justify-center gap-2 touch-manipulation active:bg-white/10 disabled:opacity-50 transition-all"
-            >
-              <Zap className="h-4 w-4" />
-              <span>Quick Create (name only)</span>
-            </button>
+            {!isEditMode && (
+              <button
+                onClick={() => handleCreate(true)}
+                disabled={!name.trim() || isCreating}
+                className="w-full h-11 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white flex items-center justify-center gap-2 touch-manipulation active:bg-white/10 disabled:opacity-50 transition-all"
+              >
+                <Zap className="h-4 w-4" />
+                <span>Quick Create (name only)</span>
+              </button>
+            )}
           </div>
 
           <div className="h-[env(safe-area-inset-bottom)]" />

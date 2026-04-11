@@ -76,31 +76,31 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
         >
-          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent
             key={`rcdRating-content-${result.id}`}
             position="popper"
             sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
+            className="bg-background border border-border rounded-md z-[9999] min-w-[160px]"
           >
-            <SelectItem value="N/A" className="text-xs text-neutral-100">
+            <SelectItem value="N/A" className="text-xs text-white">
               N/A
             </SelectItem>
-            <SelectItem value="10mA" className="text-xs text-neutral-100">
+            <SelectItem value="10mA" className="text-xs text-white">
               10mA
             </SelectItem>
-            <SelectItem value="30mA" className="text-xs text-neutral-100">
+            <SelectItem value="30mA" className="text-xs text-white">
               30mA
             </SelectItem>
-            <SelectItem value="100mA" className="text-xs text-neutral-100">
+            <SelectItem value="100mA" className="text-xs text-white">
               100mA
             </SelectItem>
-            <SelectItem value="300mA" className="text-xs text-neutral-100">
+            <SelectItem value="300mA" className="text-xs text-white">
               300mA
             </SelectItem>
-            <SelectItem value="500mA" className="text-xs text-neutral-100">
+            <SelectItem value="500mA" className="text-xs text-white">
               500mA
             </SelectItem>
           </SelectContent>

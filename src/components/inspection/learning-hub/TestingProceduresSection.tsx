@@ -13,6 +13,8 @@ import RcdTestingProcedure from './rcd-testing/RcdTestingProcedure';
 import PfcTestingProcedure from './pfc-testing/PfcTestingProcedure';
 import FunctionalTestingProcedure from './functional-testing/FunctionalTestingProcedure';
 import SupplementaryTestingProcedure from './supplementary-testing/SupplementaryTestingProcedure';
+import TestSequencePage from './test-sequence/TestSequencePage';
+import QuickReferencePage from './quick-reference/QuickReferencePage';
 import { testingProceduresData, TestingProcedure } from './testing-procedures/TestingProcedureData';
 
 interface TestingProceduresSectionProps {
@@ -32,7 +34,9 @@ type ViewMode =
   | 'functional'
   | 'supplementary'
   | 'certificate-guide'
-  | 'schedule-guide';
+  | 'schedule-guide'
+  | 'test-sequence'
+  | 'quick-reference';
 
 const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => {
   const [currentView, setCurrentView] = useState<ViewMode>('grid');
@@ -85,6 +89,14 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
 
   const handleStartScheduleGuide = () => {
     setCurrentView('schedule-guide');
+  };
+
+  const handleStartTestSequence = () => {
+    setCurrentView('test-sequence');
+  };
+
+  const handleStartQuickReference = () => {
+    setCurrentView('quick-reference');
   };
 
   const handleBackToProcedures = () => {
@@ -146,6 +158,14 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
     return <ScheduleGuideProcedure onBack={handleBackToProcedures} />;
   }
 
+  if (currentView === 'test-sequence') {
+    return <TestSequencePage onBack={handleBackToProcedures} />;
+  }
+
+  if (currentView === 'quick-reference') {
+    return <QuickReferencePage onBack={handleBackToProcedures} />;
+  }
+
   if (currentView === 'procedure' && selectedProcedure) {
     return <TestProcedureWizard procedure={selectedProcedure} onBack={handleBackToProcedures} />;
   }
@@ -168,6 +188,8 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
         onStartSupplementaryTesting={handleStartSupplementaryTesting}
         onStartCertificateGuide={handleStartCertificateGuide}
         onStartScheduleGuide={handleStartScheduleGuide}
+        onStartTestSequence={handleStartTestSequence}
+        onStartQuickReference={handleStartQuickReference}
         onPreviewProcedure={handleStartProcedure}
         onClearFilters={() => {}}
       />

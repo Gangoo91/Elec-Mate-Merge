@@ -2,6 +2,8 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SPD_MAKES, getSpdModelsForMake, SPD_LOCATIONS, SPD_RATED_KA } from '@/constants/spdData';
 
 interface DistributionBoardVerificationData {
   dbReference: string;
@@ -132,41 +134,44 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
               </div>
               <div>
                 <label className="text-xs text-white/80 block mb-1">Location</label>
-                <Input
+                <MobileSelectPicker
                   value={data.spdLocation || ''}
-                  onChange={(e) => onUpdate('spdLocation', e.target.value)}
-                  placeholder="Main DB"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  onValueChange={(v) => onUpdate('spdLocation', v)}
+                  options={SPD_LOCATIONS}
+                  placeholder="Select location"
+                  title="SPD Location"
                 />
               </div>
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div>
                 <label className="text-xs text-white/80 block mb-1">Make</label>
-                <Input
+                <MobileSelectPicker
                   value={data.spdMake || ''}
-                  onChange={(e) => onUpdate('spdMake', e.target.value)}
-                  placeholder="Hager"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  onValueChange={(v) => onUpdate('spdMake', v)}
+                  options={SPD_MAKES}
+                  placeholder="Select"
+                  title="SPD Make"
                 />
               </div>
               <div>
                 <label className="text-xs text-white/80 block mb-1">Model</label>
-                <Input
+                <MobileSelectPicker
                   value={data.spdModel || ''}
-                  onChange={(e) => onUpdate('spdModel', e.target.value)}
-                  placeholder="SPN115"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  onValueChange={(v) => onUpdate('spdModel', v)}
+                  options={getSpdModelsForMake(data.spdMake || '')}
+                  placeholder="Select"
+                  title="SPD Model"
                 />
               </div>
               <div>
                 <label className="text-xs text-white/80 block mb-1">kA</label>
-                <Input
+                <MobileSelectPicker
                   value={data.spdRatedCurrentKa || ''}
-                  onChange={(e) => onUpdate('spdRatedCurrentKa', e.target.value)}
-                  placeholder="12.5"
-                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                  inputMode="decimal"
+                  onValueChange={(v) => onUpdate('spdRatedCurrentKa', v)}
+                  options={SPD_RATED_KA}
+                  placeholder="Select"
+                  title="Rated kA"
                 />
               </div>
             </div>

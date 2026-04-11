@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SPD_MAKES, SPD_RATED_KA } from '@/constants/spdData';
 import MWSmartDefaults from './MWSmartDefaults';
 import {
   PROTECTIVE_DEVICE_TYPES,
@@ -507,19 +508,21 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
                 />
               </FormField>
               <FormField label="SPD Make">
-                <Input
+                <MobileSelectPicker
                   value={(formData.spdMake as string) || ''}
-                  onChange={(e) => onUpdate('spdMake', e.target.value)}
-                  placeholder="Make"
-                  className={inputClass}
+                  onValueChange={(v) => onUpdate('spdMake', v)}
+                  options={SPD_MAKES}
+                  placeholder="Select"
+                  title="SPD Make"
                 />
               </FormField>
               <FormField label="Rated kA">
-                <Input
+                <MobileSelectPicker
                   value={(formData.spdRatedKa as string) || ''}
-                  onChange={(e) => onUpdate('spdRatedKa', e.target.value)}
-                  placeholder="kA"
-                  className={inputClass}
+                  onValueChange={(v) => onUpdate('spdRatedKa', v)}
+                  options={SPD_RATED_KA}
+                  placeholder="Select"
+                  title="Rated kA"
                 />
               </FormField>
             </div>

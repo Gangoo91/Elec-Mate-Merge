@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SPD_MAKES, getSpdModelsForMake, SPD_LOCATIONS, SPD_RATED_KA } from '@/constants/spdData';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -1395,7 +1397,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         pfcLiveEarth: '',
         functionalTesting: circuit.tests?.functional_testing || '',
         notes:
-          `AI detected from test results (${circuit.confidence} confidence) - Please verify. ${circuit.notes || ''}`.trim(),
+          '',
         autoFilled: true,
         typeOfWiring: '',
         rcdBsStandard: '',
@@ -1620,7 +1622,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           ),
           rcdRating: requiresRCD ? '30mA' : '',
           functionalTesting: 'Satisfactory',
-          notes: `AI detected from board scan - Please verify all values`,
+          notes: '',
           autoFilled: true,
           // Three-phase fields
           phaseType: phaseType,
@@ -1704,7 +1706,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         pfcLiveNeutral: '',
         pfcLiveEarth: '',
         functionalTesting: 'Satisfactory',
-        notes: `AI detected from board scan - Please verify all values`,
+        notes: '',
         autoFilled: true,
         typeOfWiring: '',
         rcdBsStandard: '',
@@ -2396,69 +2398,48 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                                 })}
                               </div>
 
-                              {/* SPD Details */}
+                              {/* SPD Details — bottom sheet pickers */}
                               <div className="grid grid-cols-2 gap-2 mt-2">
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">
-                                    SPD Make
-                                  </label>
-                                  <DebouncedInput
-                                    type="text"
+                                  <label className="text-[10px] text-white block mb-1">SPD Make</label>
+                                  <MobileSelectPicker
                                     value={(board as any).spdMake || ''}
-                                    onChange={(value) =>
-                                      handleUpdateBoard(board.id, 'spdMake' as any, value)
-                                    }
-                                    placeholder="e.g. Hager"
-                                    className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                    style={{ fontSize: '16px' }}
+                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdMake' as any, v)}
+                                    options={SPD_MAKES}
+                                    placeholder="Select make"
+                                    title="SPD Make"
                                   />
                                 </div>
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">
-                                    SPD Model
-                                  </label>
-                                  <DebouncedInput
-                                    type="text"
+                                  <label className="text-[10px] text-white block mb-1">SPD Model</label>
+                                  <MobileSelectPicker
                                     value={(board as any).spdModel || ''}
-                                    onChange={(value) =>
-                                      handleUpdateBoard(board.id, 'spdModel' as any, value)
-                                    }
-                                    placeholder="e.g. SPN115"
-                                    className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                    style={{ fontSize: '16px' }}
+                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdModel' as any, v)}
+                                    options={getSpdModelsForMake((board as any).spdMake || '')}
+                                    placeholder="Select model"
+                                    title="SPD Model"
                                   />
                                 </div>
                               </div>
                               <div className="grid grid-cols-2 gap-2 mt-2">
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">
-                                    SPD Location
-                                  </label>
-                                  <DebouncedInput
-                                    type="text"
+                                  <label className="text-[10px] text-white block mb-1">SPD Location</label>
+                                  <MobileSelectPicker
                                     value={(board as any).spdLocation || ''}
-                                    onChange={(value) =>
-                                      handleUpdateBoard(board.id, 'spdLocation' as any, value)
-                                    }
-                                    placeholder="e.g. Main DB"
-                                    className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                    style={{ fontSize: '16px' }}
+                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdLocation' as any, v)}
+                                    options={SPD_LOCATIONS}
+                                    placeholder="Select location"
+                                    title="SPD Location"
                                   />
                                 </div>
                                 <div>
-                                  <label className="text-[10px] text-white block mb-1">
-                                    Rated kA
-                                  </label>
-                                  <DebouncedInput
-                                    type="text"
-                                    inputMode="decimal"
+                                  <label className="text-[10px] text-white block mb-1">Rated kA</label>
+                                  <MobileSelectPicker
                                     value={(board as any).spdRatedCurrentKa || ''}
-                                    onChange={(value) =>
-                                      handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, value)
-                                    }
-                                    placeholder="e.g. 12.5"
-                                    className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                    style={{ fontSize: '16px' }}
+                                    onValueChange={(v) => handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, v)}
+                                    options={SPD_RATED_KA}
+                                    placeholder="Select kA"
+                                    title="Rated kA"
                                   />
                                 </div>
                               </div>

@@ -1,7 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
-const TEMPLATE_ID = ''; // Set once template is created in PdfMonkey
+const TEMPLATE_ID = 'B8CA4903-F839-42D1-87D1-B40BFFF4593C';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -29,7 +29,7 @@ async function waitForPDF(docId: string, max = 30): Promise<PDFMonkeyDocument> {
 }
 
 Deno.serve(async (req: Request) => {
-  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders });
+  if (req.method === 'OPTIONS') return new Response('ok', { status: 200, headers: corsHeaders });
   try {
     if (!PDFMONKEY_API_KEY) throw new Error('PDFMONKEY_API_KEY not set');
     const { formData, templateId } = await req.json();
@@ -37,7 +37,7 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-testing-only-pdf] Ref:', formData.referenceNumber, 'Circuits:', formData.circuits?.length, 'Tester:', formData.testerName);
     const doc = await createDoc(formData, templateId);
     const completed = await waitForPDF(doc.id);
-    return new Response(JSON.stringify({ success: true, document_id: completed.id, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+    return new Response(JSON.stringify({ success: true, document_id: completed.id, pdfUrl: completed.download_url, download_url: completed.download_url, preview_url: completed.preview_url }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
     console.error('[generate-testing-only-pdf] Error:', error);
     return new Response(JSON.stringify({ success: false, error: error instanceof Error ? error.message : 'Unknown' }), { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });

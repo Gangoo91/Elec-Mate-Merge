@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
@@ -34,6 +34,8 @@ import { format, isToday, isYesterday } from 'date-fns';
 import CameraTab from './CameraTab';
 import PhotoDetailSheet from './PhotoDetailSheet';
 import ProjectExportSheet from './ProjectExportSheet';
+import BeforeAfterCompare from './BeforeAfterCompare';
+import CreateProjectSheet from './CreateProjectSheet';
 import { usePhotoAI, ProjectSummary } from '@/hooks/usePhotoAI';
 
 interface ProjectDetailViewProps {
@@ -78,6 +80,10 @@ export default function ProjectDetailView({
   const [detailPhoto, setDetailPhoto] = useState<SafetyPhoto | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [aiSummary, setAiSummary] = useState<ProjectSummary | null>(null);
+  const [compareOpen, setCompareOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [cameraPhotoType, setCameraPhotoType] = useState<string | undefined>();
+  const longPressTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const { summariseProject, isSummarising } = usePhotoAI();
 
   // Track which phases are open (all open by default)
@@ -357,7 +363,10 @@ export default function ProjectDetailView({
                   </button>
                 )}
                 {canCompare && (
-                  <button className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white touch-manipulation active:bg-white/10">
+                  <button
+                    onClick={() => setCompareOpen(true)}
+                    className="flex-1 h-11 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-white touch-manipulation active:bg-white/10"
+                  >
                     <ArrowLeftRight className="h-4 w-4" />
                     Before / After
                   </button>
@@ -404,7 +413,10 @@ export default function ProjectDetailView({
                       {phase.photos.length === 0 ? (
                         /* Empty phase - dashed placeholder */
                         <button
-                          onClick={() => setCameraOpen(true)}
+                          onClick={() => {
+                            setCameraPhotoType(phase.photoTypes[0]);
+                            setCameraOpen(true);
+                          }}
                           className="w-full h-24 rounded-xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center gap-1.5 mb-2 touch-manipulation active:border-white/20 active:bg-white/[0.02] transition-colors"
                         >
                           <Plus className="h-5 w-5 text-white" />
@@ -429,6 +441,11 @@ export default function ProjectDetailView({
                                 e.preventDefault();
                                 handleLongPress(photo);
                               }}
+                              onTouchStart={() => {
+                                longPressTimerRef.current = setTimeout(() => handleLongPress(photo), 500);
+                              }}
+                              onTouchEnd={() => clearTimeout(longPressTimerRef.current)}
+                              onTouchMove={() => clearTimeout(longPressTimerRef.current)}
                             >
                               <img
                                 src={photo.thumbnail_url || photo.file_url}
@@ -556,13 +573,17 @@ export default function ProjectDetailView({
         </div>
       </div>
 
-      {/* Camera Sheet */}
-      <Sheet open={cameraOpen} onOpenChange={setCameraOpen}>
+      {/* Camera Sheet (modal={false} prevents iOS scroll-to-top — ELE-722) */}
+      <Sheet modal={false} open={cameraOpen} onOpenChange={(open) => {
+        setCameraOpen(open);
+        if (!open) setCameraPhotoType(undefined);
+      }}>
         <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
           <CameraTab
             onPhotoUploaded={handlePhotoUploaded}
             projectReference={project.name}
             projectId={project.id}
+            defaultPhotoType={cameraPhotoType}
             onClose={() => setCameraOpen(false)}
           />
         </SheetContent>
@@ -586,6 +607,13 @@ export default function ProjectDetailView({
             <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-4" />
           </div>
           <div className="px-2 pb-4 space-y-1">
+            <button
+              onClick={() => { setMenuOpen(false); setEditOpen(true); }}
+              className="w-full flex items-center gap-3 px-4 h-12 rounded-xl text-white active:bg-white/5 touch-manipulation"
+            >
+              <Edit3 className="h-5 w-5 text-elec-yellow" />
+              <span className="text-sm font-medium">Edit Project</span>
+            </button>
             {project.status !== 'completed' && (
               <button
                 onClick={() => handleStatusChange('completed')}
@@ -637,6 +665,25 @@ export default function ProjectDetailView({
         onDeleted={() => {
           setDetailOpen(false);
           setDetailPhoto(null);
+          loadPhotos();
+        }}
+      />
+
+      {/* Before/After Compare (ELE-721) */}
+      {compareOpen && (
+        <BeforeAfterCompare
+          photos={photos}
+          onClose={() => setCompareOpen(false)}
+        />
+      )}
+
+      {/* Edit Project Sheet (ELE-725) */}
+      <CreateProjectSheet
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        editProject={project}
+        onCreated={() => {
+          setEditOpen(false);
           loadPhotos();
         }}
       />

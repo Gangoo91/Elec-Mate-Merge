@@ -25,6 +25,7 @@ interface CameraTabProps {
   onPhotoUploaded?: () => void;
   projectReference?: string;
   projectId?: string;
+  defaultPhotoType?: string;
   onClose?: () => void;
 }
 
@@ -40,6 +41,7 @@ export default function CameraTab({
   onPhotoUploaded,
   projectReference: initialProject,
   projectId: initialProjectId,
+  defaultPhotoType,
   onClose,
 }: CameraTabProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -62,7 +64,7 @@ export default function CameraTab({
   const isProjectLocked = Boolean(initialProject);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState('');
-  const [selectedPhotoType, setSelectedPhotoType] = useState<string>('general');
+  const [selectedPhotoType, setSelectedPhotoType] = useState<string>(defaultPhotoType || 'general');
   const [selectedProjectId, setSelectedProjectId] = useState<string>(initialProjectId || '');
   const { projects } = usePhotoProjects('active');
 
@@ -147,7 +149,15 @@ export default function CameraTab({
 
   const handleProceedToDetails = useCallback(() => {
     setCaptureState('details');
-  }, []);
+    // Auto-capture GPS when entering details (ELE-729)
+    if (!location) {
+      getCurrentLocation().then((coords) => {
+        if (coords) {
+          setLocation(`${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`);
+        }
+      }).catch(() => { /* GPS unavailable — user can still add manually */ });
+    }
+  }, [location, getCurrentLocation]);
 
   const handleAddTag = useCallback(() => {
     if (tagInput.trim() && !tags.includes(tagInput.trim())) {

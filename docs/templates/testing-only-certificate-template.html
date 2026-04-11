@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule of Tests Record</title>
+    <style>
+        :root { --accent: #3b82f6; }
+        @page { size: A4; margin: 3mm 3mm 5mm 3mm; }
+        @page landscape { size: A4 landscape; margin: 3mm 3mm 5mm 3mm; }
+        .schedule-page { page: landscape; page-break-before: always; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8px; line-height: 1.35; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+        /* ── Doc header ─────────────────────────────────────────── */
+        .doc-header { background: linear-gradient(180deg, #0a1628 0%, #152238 100%); color: #fff; padding: 8px 10px; margin-bottom: 2px; border-radius: 2px; position: relative; overflow: hidden; }
+        .doc-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+        .doc-header-content { display: flex; justify-content: space-between; align-items: center; }
+        .doc-title { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; }
+        .doc-subtitle { font-size: 7px; font-weight: 400; opacity: 0.85; margin-top: 1px; }
+        .doc-meta { text-align: right; }
+        .cert-number { font-size: 10px; font-weight: 700; color: var(--accent); }
+        .page-number { font-size: 7px; opacity: 0.7; margin-top: 1px; }
+
+        /* ── Front sheet ────────────────────────────────────────── */
+        .front-sheet { min-height: 100vh; display: flex; flex-direction: column; }
+        .front-banner { background: var(--accent); color: #fff; text-align: center; padding: 10px 16px; margin: 5px 0; border-radius: 3px; }
+        .front-banner h1 { font-size: 18px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; }
+        .front-banner p { font-size: 9px; font-weight: 600; margin-top: 2px; letter-spacing: 0.5px; }
+
+        .front-details-card { border: 1.5px solid var(--accent); border-radius: 3px; overflow: hidden; margin: 4px 0; }
+        .front-details-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8.5px; font-weight: 600; padding: 4px 10px; border-bottom: 1.5px solid var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+        .front-details-body { padding: 6px 10px; background: #fff; }
+        .front-field { display: flex; margin-bottom: 3px; gap: 6px; }
+        .front-field:last-child { margin-bottom: 0; }
+        .front-field-label { font-size: 8px; font-weight: 600; color: #64748b; min-width: 95px; flex-shrink: 0; }
+        .front-field-value { font-size: 9px; font-weight: 600; color: #0f172a; }
+
+        .info-box { background: #eff6ff; border: 1px solid #93c5fd; border-left: 3px solid var(--accent); border-radius: 2px; padding: 4px 8px; margin: 4px 0; font-size: 7px; color: #1e40af; line-height: 1.5; }
+        .info-box strong { color: #1e3a8a; }
+
+        .front-warning-box { background: #0f172a; color: #fff; text-align: center; padding: 6px 12px; border-radius: 3px; margin: 4px 0; border: 1.5px solid var(--accent); }
+        .front-warning-box p { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+        .front-warning-box .sub { font-size: 7px; font-weight: 400; margin-top: 2px; color: var(--accent); text-transform: none; }
+
+        .declaration-box { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 4px 8px; margin: 4px 0; font-size: 7px; color: #166534; line-height: 1.4; }
+
+        .sig-grid { display: flex; gap: 6px; margin-top: 4px; }
+        .sig-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+        .sig-box-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 7px; font-weight: 600; padding: 3px 8px; border-bottom: 1.5px solid var(--accent); }
+        .sig-box-body { padding: 4px 8px; background: #fafbfc; }
+        .sig-field { display: flex; align-items: center; margin-bottom: 2px; gap: 4px; }
+        .sig-field:last-child { margin-bottom: 0; }
+        .sig-field-label { font-size: 6.5px; font-weight: 600; color: #64748b; min-width: 55px; flex-shrink: 0; }
+        .sig-field-value { flex: 1; font-size: 7.5px; color: #1e293b; padding: 2px 4px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 14px; }
+        .sig-field-value img { max-height: 25px; }
+
+        .summary-grid { display: flex; gap: 6px; margin: 4px 0; }
+        .summary-box { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; padding: 6px 6px; text-align: center; }
+        .summary-box .number { font-size: 14px; font-weight: 700; color: var(--accent); line-height: 1; }
+        .summary-box .label { font-size: 6px; color: #64748b; margin-top: 2px; text-transform: uppercase; }
+
+        .section { margin-bottom: 4px; }
+        .section-title { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; font-size: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 3px 6px; margin-bottom: 2px; border-left: 3px solid var(--accent); }
+
+        .footer { margin-top: 4px; padding-top: 4px; border-top: 1.5px solid var(--accent); display: flex; justify-content: space-between; font-size: 6.5px; color: #64748b; }
+
+        /* ── Board info header (matches EICR — gold accent) ───── */
+        .board-info-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; padding: 8px 12px; margin-bottom: 6px; border-radius: 2px; border-left: 3px solid #f59e0b; }
+        .board-info-header .board-title { font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+        .board-info-header .board-details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 8.5px; margin-bottom: 4px; }
+        .board-info-header .board-verification { display: flex; flex-wrap: wrap; gap: 12px; font-size: 8.5px; padding-top: 4px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+
+        /* ── Test instrument inline form ─────────────────────── */
+        .inline-form { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 4px 6px; border: 1px solid #e2e8f0; background: #fff; }
+        .inline-group { display: flex; align-items: center; gap: 4px; }
+        .inline-label { font-size: 8px; font-weight: 600; color: #475569; }
+        .inline-value { font-size: 8.5px; font-weight: 600; color: #0f172a; padding: 2px 6px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1px; }
+
+        /* ── Circuit table (matches EICR exactly) ────────────── */
+        .circuit-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+        .circuit-table thead tr:first-child th { background: #1e293b; color: #fff; font-size: 10px; padding: 8px 5px; border: 1px solid #0f172a; }
+        .circuit-table thead tr:nth-child(2) th { background: #0f172a; color: #fff; font-size: 9px; padding: 6px 4px; border: 1px solid #0f172a; height: 100px; vertical-align: bottom; }
+        .circuit-table thead .rotate { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); white-space: nowrap; font-size: 9px; }
+        .circuit-table tbody td { padding: 8px 6px; border: 1px solid #d1d5db; text-align: center; font-size: 10px; background: #fff; }
+        .circuit-table tbody td.desc { text-align: left; padding-left: 6px; max-width: 120px; }
+        .circuit-table tbody td.remarks { text-align: left; padding-left: 6px; font-style: italic; color: #000; font-size: 8px; }
+        .circuit-table tbody tr:nth-child(even) td { background: #f8fafc; }
+    </style>
+</head>
+<body>
+
+<!-- ===== PAGE 1: FRONT SHEET (Portrait) ===== -->
+<div class="front-sheet">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div style="flex: 1;">
+                <div class="doc-title">SCHEDULE OF TESTS RECORD</div>
+                <div class="doc-subtitle">Testing Only — BS 7671:2018+A3:2024 Appendix 6</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ referenceNumber }}</div>
+                <div class="page-number">Page 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="front-banner">
+        <h1>Schedule of Tests</h1>
+        <p>Testing Record — No Installation Certificate Issued</p>
+    </div>
+
+    <div class="info-box">
+        <strong>What is this document?</strong> This is a standalone Schedule of Tests record produced by a subcontractor tester. It records test results only — no installation certificate, inspection checklist, or company details are included. The main contractor is responsible for issuing the full EIC/EICR.
+    </div>
+
+    <!-- Test Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Test Details</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Reference</div><div class="front-field-value">{{ referenceNumber }}</div></div>
+            <div class="front-field"><div class="front-field-label">Test Date</div><div class="front-field-value">{{ testDate }}</div></div>
+            <div class="front-field"><div class="front-field-label">Tester</div><div class="front-field-value">{{ testerName }}</div></div>
+            <div class="front-field"><div class="front-field-label">Qualifications</div><div class="front-field-value">{{ testerQualifications }}</div></div>
+            {% unless testerPhone == blank %}<div class="front-field"><div class="front-field-label">Contact</div><div class="front-field-value">{{ testerPhone }}{% unless testerEmail == blank %} | {{ testerEmail }}{% endunless %}</div></div>{% endunless %}
+            {% unless clientName == blank %}<div class="front-field"><div class="front-field-label">Client / Contractor</div><div class="front-field-value">{{ clientName }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- Installation Details -->
+    <div class="front-details-card">
+        <div class="front-details-header">Installation</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">Address</div><div class="front-field-value">{{ installationAddress }}</div></div>
+            {% unless installationDescription == blank %}<div class="front-field"><div class="front-field-label">Description</div><div class="front-field-value">{{ installationDescription }}</div></div>{% endunless %}
+            {% unless workCarriedOut == blank %}<div class="front-field"><div class="front-field-label">Work Carried Out</div><div class="front-field-value">{{ workCarriedOut }}</div></div>{% endunless %}
+            {% unless numberOfCircuits == blank %}<div class="front-field"><div class="front-field-label">Circuits Tested</div><div class="front-field-value">{{ numberOfCircuits }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- Test Instruments -->
+    <div class="front-details-card">
+        <div class="front-details-header">Test Instruments</div>
+        <div class="front-details-body">
+            <div class="front-field"><div class="front-field-label">MFT</div><div class="front-field-value">{{ mftMake }} {{ mftModel }} — S/N: {{ mftSerial }}{% unless mftCalDate == blank %}, Cal: {{ mftCalDate }}{% endunless %}</div></div>
+            {% unless loopMake == blank %}<div class="front-field"><div class="front-field-label">Loop Tester</div><div class="front-field-value">{{ loopMake }} — S/N: {{ loopSerial }}</div></div>{% endunless %}
+            {% unless rcdTesterMake == blank %}<div class="front-field"><div class="front-field-label">RCD Tester</div><div class="front-field-value">{{ rcdTesterMake }} — S/N: {{ rcdTesterSerial }}</div></div>{% endunless %}
+        </div>
+    </div>
+
+    <!-- Distribution Boards Summary -->
+    {% if boards.size > 0 %}
+    <div class="front-details-card">
+        <div class="front-details-header">Distribution Boards ({{ boards.size }})</div>
+        <div class="front-details-body">
+            {% for board in boards %}
+            <div class="front-field">
+                <div class="front-field-label">{{ board.db_reference }}</div>
+                <div class="front-field-value">
+                    {% unless board.db_location == blank %}{{ board.db_location }} — {% endunless %}
+                    {{ board.circuit_count }} circuits
+                    {% unless board.db_manufacturer == blank %} — {{ board.db_manufacturer }}{% endunless %}
+                    {% unless board.db_zdb == blank %} | Zdb: {{ board.db_zdb }}Ω{% endunless %}
+                    {% unless board.db_ipf == blank %} | Ipf: {{ board.db_ipf }}kA{% endunless %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Summary -->
+    <div class="summary-grid">
+        <div class="summary-box"><div class="number">{{ boards.size | default: 0 }}</div><div class="label">Boards</div></div>
+        <div class="summary-box"><div class="number">{{ circuits.size }}</div><div class="label">Circuits</div></div>
+        <div class="summary-box"><div class="number" style="color: #22c55e;">{% assign p = 0 %}{% for c in circuits %}{% if c.polarity == 'Y' %}{% assign p = p | plus: 1 %}{% endif %}{% endfor %}{{ p }}</div><div class="label">Polarity OK</div></div>
+    </div>
+
+    <!-- Declaration -->
+    {% if declarationConfirmed %}
+    <div class="declaration-box">
+        <strong>Declaration:</strong> I confirm that the tests recorded in this document have been carried out by me in accordance with BS 7671:2018+A3:2024, using calibrated instruments, and the results are a true record of the readings obtained.
+    </div>
+    {% endif %}
+
+    <!-- Signature -->
+    <div class="sig-grid">
+        <div class="sig-box" style="flex: 2;">
+            <div class="sig-box-header">Tester</div>
+            <div class="sig-box-body">
+                <div class="sig-field"><span class="sig-field-label">Name</span><span class="sig-field-value" style="font-weight: 600;">{{ testerName }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Qualifications</span><span class="sig-field-value">{{ testerQualifications }}</span></div>
+                <div class="sig-field"><span class="sig-field-label">Date</span><span class="sig-field-value">{{ testerDate }}</span></div>
+            </div>
+        </div>
+        <div class="sig-box" style="flex: 1;">
+            <div class="sig-box-header">Signature</div>
+            <div class="sig-box-body" style="min-height: 50px; display: flex; align-items: center; justify-content: center;">
+                {% if testerSignature %}<img src="{{ testerSignature }}" style="max-height: 40px; max-width: 100%;" />{% else %}<div style="width: 100%; border-bottom: 1px solid #94a3b8; margin: 15px 8px;"></div>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% unless notes == blank %}
+    <div class="section" style="margin-top: 4px;">
+        <div class="section-title">Notes</div>
+        <div style="padding: 3px 6px; border: 1px solid #e2e8f0; background: #fff; font-size: 8px; line-height: 1.4;">{{ notes }}</div>
+    </div>
+    {% endunless %}
+
+    <div class="front-warning-box">
+        <p>Testing Record Only</p>
+        <div class="sub">This document records test results only. The main contractor is responsible for issuing the full EIC or EICR.</div>
+    </div>
+
+    <div style="flex: 1;"></div>
+
+    <div class="footer">
+        <div>{{ testerName }}{% unless testerPhone == blank %} | {{ testerPhone }}{% endunless %}{% unless testerEmail == blank %} | {{ testerEmail }}{% endunless %}</div>
+        <div><span style="color: #94a3b8;">Schedule of Tests — BS 7671:2018+A3:2024</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 4px;"><span style="font-size: 6.5px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+
+<!-- ===== SCHEDULE OF TEST RESULTS — One landscape page per board (matches EICR) ===== -->
+{% for board in boards %}
+<div class="schedule-page">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div style="flex: 1;">
+                <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
+                <div class="doc-subtitle">{{ referenceNumber }} — {{ board.db_reference }}{% unless board.db_location == blank %} ({{ board.db_location }}){% endunless %}</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ referenceNumber }}</div>
+                <div class="page-number">Page {{ forloop.index | plus: 1 }}</div>
+            </div>
+        </div>
+    </div>
+
+    {% if forloop.first %}
+    <!-- Test Instrument Details (first board page only) -->
+    <div class="section" style="margin-bottom: 6px;">
+        <div class="section-title" style="font-size: 9px; padding: 4px 6px;">Test Instrument Details</div>
+        <div class="inline-form" style="font-size: 8px;">
+            <div class="inline-group"><span class="inline-label">Instrument Make/Model:</span><span class="inline-value">{{ mftMake }} {{ mftModel }}</span></div>
+            <div class="inline-group"><span class="inline-label">Serial No:</span><span class="inline-value">{{ mftSerial }}</span></div>
+            <div class="inline-group"><span class="inline-label">Calibration Date:</span><span class="inline-value">{{ mftCalDate }}</span></div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Board Info Header (matches EICR — gold accent) -->
+    <div class="board-info-header">
+        <div class="board-title">{{ board.db_reference }}</div>
+        <div class="board-details">
+            <span><strong>Location:</strong> {{ board.db_location }}</span>
+            {% unless board.db_manufacturer == blank %}<span><strong>Manufacturer:</strong> {{ board.db_manufacturer }}</span>{% endunless %}
+            {% unless board.db_type == blank %}<span><strong>Type:</strong> {{ board.db_type }}</span>{% endunless %}
+            {% unless board.db_ways == blank %}<span><strong>Ways:</strong> {{ board.db_ways }}</span>{% endunless %}
+        </div>
+        <div class="board-verification">
+            <span><strong>Zdb:</strong> {{ board.db_zdb }} Ω</span>
+            <span><strong>Ipf:</strong> {{ board.db_ipf }} kA</span>
+            {% unless board.main_switch_type == blank %}<span><strong>Main Switch:</strong> {{ board.main_switch_type }} {{ board.main_switch_rating }}A{% unless board.main_switch_poles == blank %} {{ board.main_switch_poles }}{% endunless %}</span>{% endunless %}
+            {% if board.spd_na %}<span><strong>SPD:</strong> N/A</span>{% elsif board.spd_operational %}<span><strong>SPD:</strong> {{ board.spd_make }} {{ board.spd_model }}{% unless board.spd_rated_current_ka == blank %} ({{ board.spd_rated_current_ka }}kA){% endunless %} ✓</span>{% endif %}
+        </div>
+    </div>
+
+    <!-- Circuit Table (matches EICR structure exactly) -->
+    <table class="circuit-table">
+        <thead>
+            <tr>
+                <th colspan="4">Circuit Details</th>
+                <th colspan="5">Conductor</th>
+                <th colspan="5">Overcurrent Device</th>
+                <th colspan="4">RCD</th>
+                <th colspan="5">Continuity (Ω)</th>
+                <th colspan="3">Insulation (MΩ)</th>
+                <th></th>
+                <th>Zs</th>
+                <th colspan="2">RCD Test</th>
+                <th>AFDD</th>
+                <th rowspan="2" style="width: 50px">Remarks</th>
+            </tr>
+            <tr>
+                <th style="width: 22px"><span class="rotate">Cct</span></th>
+                <th colspan="3" style="width: 70px">Description</th>
+                <th><span class="rotate">Wiring</span></th>
+                <th><span class="rotate">Ref</span></th>
+                <th><span class="rotate">Points</span></th>
+                <th><span class="rotate">Live mm²</span></th>
+                <th><span class="rotate">CPC mm²</span></th>
+                <th><span class="rotate">BS(EN)</span></th>
+                <th><span class="rotate">Type</span></th>
+                <th><span class="rotate">Rating A</span></th>
+                <th><span class="rotate">kA</span></th>
+                <th><span class="rotate">Max Zs</span></th>
+                <th><span class="rotate">BS(EN)</span></th>
+                <th><span class="rotate">Type</span></th>
+                <th><span class="rotate">IΔn mA</span></th>
+                <th><span class="rotate">Rating A</span></th>
+                <th><span class="rotate">r1 Ω</span></th>
+                <th><span class="rotate">rn Ω</span></th>
+                <th><span class="rotate">r2 Ω</span></th>
+                <th><span class="rotate">R1+R2</span></th>
+                <th><span class="rotate">R2</span></th>
+                <th><span class="rotate">Test V</span></th>
+                <th><span class="rotate">L-L/L-N</span></th>
+                <th><span class="rotate">L-E</span></th>
+                <th><span class="rotate">Pol</span></th>
+                <th><span class="rotate">Meas Ω</span></th>
+                <th><span class="rotate">ms</span></th>
+                <th><span class="rotate">Test Btn</span></th>
+                <th><span class="rotate">AFDD</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in board.circuits %}
+            <tr>
+                <td>{{ c.circuit_number }}</td>
+                <td colspan="3" class="desc">{{ c.circuit_description }}</td>
+                <td>{{ c.type_of_wiring }}</td>
+                <td>{{ c.reference_method }}</td>
+                <td>{{ c.points_served }}</td>
+                <td>{{ c.live_size }}</td>
+                <td>{{ c.cpc_size }}</td>
+                <td>{{ c.bs_standard }}</td>
+                <td>{{ c.protective_device_type }}</td>
+                <td>{{ c.protective_device_rating }}</td>
+                <td>{{ c.protective_device_ka_rating }}</td>
+                <td>{{ c.max_zs }}</td>
+                <td>{{ c.rcd_bs_standard }}</td>
+                <td>{{ c.rcd_type }}</td>
+                <td>{{ c.rcd_rating }}</td>
+                <td>{{ c.rcd_rating_a }}</td>
+                <td>{{ c.ring_r1 }}</td>
+                <td>{{ c.ring_rn }}</td>
+                <td>{{ c.ring_r2 }}</td>
+                <td>{{ c.r1r2 }}</td>
+                <td>{{ c.r2 }}</td>
+                <td>{{ c.insulation_test_voltage }}</td>
+                <td>{{ c.insulation_live_neutral }}</td>
+                <td>{{ c.insulation_live_earth }}</td>
+                <td>{{ c.polarity }}</td>
+                <td>{{ c.zs }}</td>
+                <td>{{ c.rcd_one_x }}</td>
+                <td>{{ c.rcd_test_button }}</td>
+                <td>{{ c.afdd_test }}</td>
+                <td class="remarks">{{ c.notes }}</td>
+            </tr>
+            {% endfor %}
+            {% if board.circuits.size == 0 %}
+            <tr><td colspan="31" style="text-align: center; color: #94a3b8; padding: 12px; font-style: italic;">No test results recorded for this board</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div>Tester: {{ testerName }} | Date: {{ testDate }} | Ref: {{ referenceNumber }}</div>
+        <div><span style="color: #94a3b8;">BS 7671:2018+A3:2024 — {{ board.db_reference }}</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 4px;"><span style="font-size: 6.5px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+{% endfor %}
+
+<!-- Fallback if no boards -->
+{% if boards.size == 0 %}
+<div class="schedule-page">
+    <div class="doc-header">
+        <div class="doc-header-content">
+            <div style="flex: 1;">
+                <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
+                <div class="doc-subtitle">{{ referenceNumber }} — {{ installationAddress }}</div>
+            </div>
+            <div class="doc-meta">
+                <div class="cert-number">{{ referenceNumber }}</div>
+                <div class="page-number">Page 2</div>
+            </div>
+        </div>
+    </div>
+    <table class="circuit-table">
+        <thead>
+            <tr>
+                <th colspan="4">Circuit Details</th>
+                <th colspan="5">Conductor</th>
+                <th colspan="5">Overcurrent Device</th>
+                <th colspan="4">RCD</th>
+                <th colspan="5">Continuity (Ω)</th>
+                <th colspan="3">Insulation (MΩ)</th>
+                <th></th>
+                <th>Zs</th>
+                <th colspan="2">RCD Test</th>
+                <th>AFDD</th>
+                <th rowspan="2" style="width: 50px">Remarks</th>
+            </tr>
+            <tr>
+                <th style="width: 22px"><span class="rotate">Cct</span></th>
+                <th colspan="3" style="width: 70px">Description</th>
+                <th><span class="rotate">Wiring</span></th>
+                <th><span class="rotate">Ref</span></th>
+                <th><span class="rotate">Points</span></th>
+                <th><span class="rotate">Live mm²</span></th>
+                <th><span class="rotate">CPC mm²</span></th>
+                <th><span class="rotate">BS(EN)</span></th>
+                <th><span class="rotate">Type</span></th>
+                <th><span class="rotate">Rating A</span></th>
+                <th><span class="rotate">kA</span></th>
+                <th><span class="rotate">Max Zs</span></th>
+                <th><span class="rotate">BS(EN)</span></th>
+                <th><span class="rotate">Type</span></th>
+                <th><span class="rotate">IΔn mA</span></th>
+                <th><span class="rotate">Rating A</span></th>
+                <th><span class="rotate">r1 Ω</span></th>
+                <th><span class="rotate">rn Ω</span></th>
+                <th><span class="rotate">r2 Ω</span></th>
+                <th><span class="rotate">R1+R2</span></th>
+                <th><span class="rotate">R2</span></th>
+                <th><span class="rotate">Test V</span></th>
+                <th><span class="rotate">L-L/L-N</span></th>
+                <th><span class="rotate">L-E</span></th>
+                <th><span class="rotate">Pol</span></th>
+                <th><span class="rotate">Meas Ω</span></th>
+                <th><span class="rotate">ms</span></th>
+                <th><span class="rotate">Test Btn</span></th>
+                <th><span class="rotate">AFDD</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in circuits %}
+            <tr>
+                <td>{{ c.circuit_number }}</td>
+                <td colspan="3" class="desc">{{ c.circuit_description }}</td>
+                <td>{{ c.type_of_wiring }}</td>
+                <td>{{ c.reference_method }}</td>
+                <td>{{ c.points_served }}</td>
+                <td>{{ c.live_size }}</td>
+                <td>{{ c.cpc_size }}</td>
+                <td>{{ c.bs_standard }}</td>
+                <td>{{ c.protective_device_type }}</td>
+                <td>{{ c.protective_device_rating }}</td>
+                <td>{{ c.protective_device_ka_rating }}</td>
+                <td>{{ c.max_zs }}</td>
+                <td>{{ c.rcd_bs_standard }}</td>
+                <td>{{ c.rcd_type }}</td>
+                <td>{{ c.rcd_rating }}</td>
+                <td>{{ c.rcd_rating_a }}</td>
+                <td>{{ c.ring_r1 }}</td>
+                <td>{{ c.ring_rn }}</td>
+                <td>{{ c.ring_r2 }}</td>
+                <td>{{ c.r1r2 }}</td>
+                <td>{{ c.r2 }}</td>
+                <td>{{ c.insulation_test_voltage }}</td>
+                <td>{{ c.insulation_live_neutral }}</td>
+                <td>{{ c.insulation_live_earth }}</td>
+                <td>{{ c.polarity }}</td>
+                <td>{{ c.zs }}</td>
+                <td>{{ c.rcd_one_x }}</td>
+                <td>{{ c.rcd_test_button }}</td>
+                <td>{{ c.afdd_test }}</td>
+                <td class="remarks">{{ c.notes }}</td>
+            </tr>
+            {% endfor %}
+            {% if circuits.size == 0 %}
+            <tr><td colspan="31" style="text-align: center; color: #94a3b8; padding: 12px; font-style: italic;">No test results recorded</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div class="footer">
+        <div>Tester: {{ testerName }} | Date: {{ testDate }} | Ref: {{ referenceNumber }}</div>
+        <div><span style="color: #94a3b8;">BS 7671:2018+A3:2024 — Schedule of Test Results</span></div>
+    </div>
+    <div style="text-align: center; margin-top: 4px;"><span style="font-size: 6.5px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
+</div>
+{% endif %}
+
+</body>
+</html>

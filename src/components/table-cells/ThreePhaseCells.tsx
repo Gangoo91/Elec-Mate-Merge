@@ -89,7 +89,7 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
             <SelectTrigger className="h-8 text-sm w-full px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
               <SelectValue placeholder="Select..." />
             </SelectTrigger>
-            <SelectContent className="bg-background border border-border rounded-md z-[100]">
+            <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
               <SelectItem
                 value="✓"
                 className="text-sm text-green-400 font-medium hover:text-green-300"
@@ -99,13 +99,13 @@ export const ThreePhaseCells: React.FC<ThreePhaseCellsProps> = ({ result, onUpda
               <SelectItem value="✗" className="text-sm text-red-400 font-medium hover:text-red-300">
                 ✗ Incorrect
               </SelectItem>
-              <SelectItem value="L1-L2-L3" className="text-sm text-neutral-100">
+              <SelectItem value="L1-L2-L3" className="text-sm text-white">
                 L1-L2-L3
               </SelectItem>
-              <SelectItem value="L1-L3-L2" className="text-sm text-neutral-100">
+              <SelectItem value="L1-L3-L2" className="text-sm text-white">
                 L1-L3-L2 (Reversed)
               </SelectItem>
-              <SelectItem value="N/A" className="text-sm text-neutral-100">
+              <SelectItem value="N/A" className="text-sm text-white">
                 N/A
               </SelectItem>
             </SelectContent>

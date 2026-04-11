@@ -280,7 +280,7 @@ export default function PhotoDetailSheet({
                       exit={{ x: slideDirection === 'left' ? -300 : 300, opacity: 0 }}
                       transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
                     >
-                      {photo.mime_type?.startsWith('video/') ? (
+                      {(photo.mime_type?.startsWith('video/') || /\.(mp4|mov|webm|avi)$/i.test(photo.file_url || '')) ? (
                         <video
                           src={photo.file_url}
                           controls

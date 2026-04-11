@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Zap } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import LearningHubOverview from './learning-hub/LearningHubOverview';
-import RegulationReferenceSection from './learning-hub/RegulationReferenceSection';
-import FaultFindingSection from './learning-hub/FaultFindingSection';
+import RegulationsProcedure from '@/components/inspection/learning-hub/regulations/RegulationsProcedure';
+import FaultFindingProcedure from '@/components/inspection/learning-hub/fault-finding/FaultFindingProcedure';
 import TestingProceduresSection from './learning-hub/TestingProceduresSection';
 import QuizAssessmentSection from './learning-hub/QuizAssessmentSection';
 
@@ -27,9 +27,9 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
   const renderCurrentSection = () => {
     switch (currentSection) {
       case 'fault-finding':
-        return <FaultFindingSection onBack={handleBackToOverview} />;
+        return <FaultFindingProcedure onBack={handleBackToOverview} />;
       case 'regulations':
-        return <RegulationReferenceSection onBack={handleBackToOverview} />;
+        return <RegulationsProcedure onBack={handleBackToOverview} />;
       case 'testing':
         return <TestingProceduresSection onBack={handleBackToOverview} />;
       case 'quiz':
@@ -63,14 +63,9 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <Zap className="h-4 w-4 text-amber-400" />
-              </div>
-              <div>
-                <h1 className="text-base font-semibold text-white">I&T Hub</h1>
-                <p className="text-[10px] text-white">BS 7671:2018+A3:2024</p>
-              </div>
+            <div>
+              <h1 className="text-base font-semibold text-white">Inspection &amp; Testing</h1>
+              <p className="text-[10px] text-white/50">BS 7671:2018+A3:2024</p>
             </div>
           </div>
         </div>

@@ -64,21 +64,22 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
             'fixed bottom-0 left-0 right-0 z-50',
             'bg-background rounded-t-3xl',
             'border-t border-white/10',
-            'max-h-[70vh]',
+            'max-h-[80vh]',
+            'flex flex-col',
             'focus:outline-none',
             className
           )}
         >
           {/* Drag handle */}
           {handleVisible && (
-            <div className="flex justify-center pt-4 pb-2">
+            <div className="flex justify-center pt-4 pb-2 flex-shrink-0">
               <div className="sheet-handle" />
             </div>
           )}
 
           {/* Header with title */}
           {(title || description) && (
-            <div className="px-6 pb-4 border-b border-white/5">
+            <div className="px-6 pb-4 border-b border-white/5 flex-shrink-0">
               {title && (
                 <Drawer.Title className="text-lg font-semibold text-foreground">
                   {title}
@@ -92,8 +93,8 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
             </div>
           )}
 
-          {/* Content */}
-          <div className={cn('momentum-scroll-y', 'px-6 py-4 pb-safe', contentClassName)}>
+          {/* Content — flex-1 fills remaining space, overflow-y-auto enables scroll */}
+          <div className={cn('flex-1 min-h-0 overflow-y-auto overscroll-contain', 'px-6 py-4 pb-safe', contentClassName)}>
             {children}
           </div>
         </Drawer.Content>

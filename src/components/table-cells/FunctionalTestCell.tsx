@@ -34,7 +34,7 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
         </SelectTrigger>
         <SelectContent
           key={`functionalTesting-content-${result.id}`}
-          className="bg-background border border-border rounded-md z-[100]"
+          className="bg-background border border-border rounded-md z-[9999] min-w-[160px]"
         >
           <SelectItem value="✓" className="text-xs text-green-400 font-medium hover:text-green-300">
             ✓ Satisfactory
@@ -42,7 +42,7 @@ const FunctionalTestCellComponent: React.FC<FunctionalTestCellProps> = ({ result
           <SelectItem value="✗" className="text-xs text-red-400 font-medium hover:text-red-300">
             ✗ Unsatisfactory
           </SelectItem>
-          <SelectItem value="N/A" className="text-xs text-neutral-100">
+          <SelectItem value="N/A" className="text-xs text-white">
             N/A
           </SelectItem>
         </SelectContent>

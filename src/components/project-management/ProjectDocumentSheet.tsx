@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Drawer } from 'vaul';
 import { X, Camera, Images, Upload, FileText, Loader2, Trash2 } from 'lucide-react';
+import { openExternalUrl } from '@/utils/open-external-url';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import {
   useProjectDocuments,
@@ -274,15 +275,16 @@ export function ProjectDocumentSheet({
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         {drawing.signedUrl && (
-                          <a
-                            href={drawing.signedUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <button
+                            type="button"
                             className="text-xs text-elec-yellow font-medium touch-manipulation"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openExternalUrl(drawing.signedUrl!);
+                            }}
                           >
                             Open
-                          </a>
+                          </button>
                         )}
                         <button
                           type="button"

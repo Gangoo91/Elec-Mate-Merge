@@ -97,6 +97,30 @@ export const quizAssessments: Assessment[] = [
     color: 'border-teal-500/20 bg-teal-500/5',
     regulation: 'BS 7671:643.8',
   },
+  {
+    id: 'safe-isolation',
+    title: 'Safe Isolation',
+    description: 'Safe isolation procedures, proving dead, and lock-off',
+    questions: 20,
+    duration: 18,
+    difficulty: 'Beginner' as const,
+    score: null,
+    category: 'Safe Isolation',
+    color: 'border-red-500/20 bg-red-500/5',
+    regulation: 'GS38 & EAW Regs',
+  },
+  {
+    id: 'fault-finding',
+    title: 'Fault Finding',
+    description: 'Systematic fault diagnosis and troubleshooting',
+    questions: 20,
+    duration: 18,
+    difficulty: 'Advanced' as const,
+    score: null,
+    category: 'Fault Finding',
+    color: 'border-orange-500/20 bg-orange-500/5',
+    regulation: 'IET GN3 Section 3',
+  },
 ];
 
 export const getAssessmentById = (id: string): Assessment | undefined => {

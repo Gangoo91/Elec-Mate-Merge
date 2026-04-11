@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions */
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SPD_MAKES, getSpdModelsForMake, SPD_LOCATIONS, SPD_RATED_KA } from '@/constants/spdData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -69,6 +71,7 @@ import SmartAutoFillPromptDialog from './SmartAutoFillPromptDialog';
 import { ThreePhaseScheduleOfTests } from './eicr/ThreePhaseScheduleOfTests';
 
 import { BoardPhotoCapture } from '@/components/testing/BoardPhotoCapture';
+import { BoardScannerOverlay } from '@/components/testing/BoardScannerOverlay';
 import { SimpleCircuitTable } from './testing/SimpleCircuitTable';
 import TestResultsPhotoCapture from './testing/TestResultsPhotoCapture';
 import TestResultsReviewDialog from './testing/TestResultsReviewDialog';
@@ -1125,7 +1128,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   }, []);
 
   const addTestResult = (boardId?: string) => {
-    const nextCircuitNumber = (testResults.length + 1).toString();
+    const targetBoard = boardId || activeBoardId || MAIN_BOARD_ID;
+    const boardCircuits = getCircuitsForBoard(testResults, targetBoard);
+    const nextCircuitNumber = (boardCircuits.length + 1).toString();
     setNewCircuitNumber(nextCircuitNumber);
     setShowAutoFillPrompt(true);
   };
@@ -1714,9 +1719,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
   // AI Photo Analysis Handlers
   const handleAIAnalysisComplete = (data: any) => {
-    setDetectedCircuits(data);
+    // BoardScannerOverlay handles the review internally, so we receive confirmed circuits
+    if (data.circuits && data.circuits.length > 0) {
+      handleApplyAICircuitsFromTable(data.circuits);
+      toast.success(`Added ${data.circuits.length} circuit(s) from AI scan`);
+    }
     setShowBoardCapture(false);
-    setShowAIReview(true);
+    setActiveBoardId(null);
   };
 
   // Test Results Scanner Handlers
@@ -1796,7 +1805,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         pfcLiveEarth: circuit.tests?.pfc_live_earth?.value || '',
         functionalTesting: circuit.tests?.functional_testing || '',
         notes:
-          `AI detected from test results (${circuit.confidence} confidence) - Please verify. ${circuit.notes || ''}`.trim(),
+          '',
         autoFilled: true,
       };
     });
@@ -1983,18 +1992,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             normalisedCircuit.protectiveDeviceCurve,
             normalisedCircuit.protectiveDeviceRating
           ),
-          ringContinuityLive: isRingCircuit ? '' : 'N/A',
-          ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
-          insulationTestVoltage: '500V',
-          polarity: 'Satisfactory',
+          ringContinuityLive: '',
+          ringContinuityNeutral: '',
+          insulationTestVoltage: '500',
+          polarity: '',
           pointsServed: calculatePointsServed(
             circuitDesc,
             circuitType,
             normalisedCircuit.protectiveDeviceType
           ),
           rcdRating: requiresRCD ? '30mA' : '',
-          functionalTesting: 'Satisfactory',
-          notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
+          functionalTesting: '',
+          notes: '',
           autoFilled: true,
           boardId: targetBoardId,
         };
@@ -2006,7 +2015,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
     // Append remaining circuits that didn't fit in blank slots
     remainingCircuits.forEach((circuit, index) => {
-      const circuitNumber = (updatedResults.length + 1).toString();
+      // Count only circuits on the TARGET board for per-board numbering
+      const boardCircuitCount = updatedResults.filter(
+        (r) => (r.boardId || MAIN_BOARD_ID) === targetBoardId
+      ).length;
+      const circuitNumber = (boardCircuitCount + 1).toString();
       const liveSize = circuit.liveSize;
       const circuitType = circuit.circuitType || '';
       const circuitDesc = circuit.circuitDescription || '';
@@ -2047,17 +2060,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           `${circuit.protectiveDeviceType} ${circuit.protectiveDeviceRating}`.trim(),
         r1r2: '',
         r2: '',
-        ringContinuityLive: isRingCircuit ? '' : 'N/A',
-        ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
-        ringR1: isRingCircuit ? '' : 'N/A',
-        ringRn: isRingCircuit ? '' : 'N/A',
-        ringR2: isRingCircuit ? '' : 'N/A',
-        insulationTestVoltage: '500V',
+        ringContinuityLive: '',
+        ringContinuityNeutral: '',
+        ringR1: '',
+        ringRn: '',
+        ringR2: '',
+        insulationTestVoltage: '500',
         insulationResistance: '',
         insulationLiveNeutral: '',
         insulationLiveEarth: '',
         insulationNeutralEarth: '',
-        polarity: 'Satisfactory',
+        polarity: '',
         zs: '',
         maxZs: calculateMaxZsForCircuit(
           circuit.bsStandard,
@@ -2073,7 +2086,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         pfcLiveNeutral: '',
         pfcLiveEarth: '',
         functionalTesting: 'Satisfactory',
-        notes: `AI detected (${circuit.confidence || 'unknown'} confidence) - Please verify all values`,
+        notes: '',
         autoFilled: true,
         typeOfWiring: '',
         rcdBsStandard: '',
@@ -2442,69 +2455,48 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               })}
                             </div>
 
-                            {/* SPD Details */}
+                            {/* SPD Details — bottom sheet pickers */}
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
-                                <label className="text-[10px] text-white block mb-1">
-                                  SPD Make
-                                </label>
-                                <DebouncedInput
-                                  type="text"
+                                <label className="text-[10px] text-white block mb-1">SPD Make</label>
+                                <MobileSelectPicker
                                   value={(board as any).spdMake || ''}
-                                  onChange={(value) =>
-                                    handleUpdateBoard(board.id, 'spdMake' as any, value)
-                                  }
-                                  placeholder="e.g. Hager"
-                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                  style={{ fontSize: '16px' }}
+                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdMake' as any, v)}
+                                  options={SPD_MAKES}
+                                  placeholder="Select make"
+                                  title="SPD Make"
                                 />
                               </div>
                               <div>
-                                <label className="text-[10px] text-white block mb-1">
-                                  SPD Model
-                                </label>
-                                <DebouncedInput
-                                  type="text"
+                                <label className="text-[10px] text-white block mb-1">SPD Model</label>
+                                <MobileSelectPicker
                                   value={(board as any).spdModel || ''}
-                                  onChange={(value) =>
-                                    handleUpdateBoard(board.id, 'spdModel' as any, value)
-                                  }
-                                  placeholder="e.g. SPN115"
-                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                  style={{ fontSize: '16px' }}
+                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdModel' as any, v)}
+                                  options={getSpdModelsForMake((board as any).spdMake || '')}
+                                  placeholder="Select model"
+                                  title="SPD Model"
                                 />
                               </div>
                             </div>
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
-                                <label className="text-[10px] text-white block mb-1">
-                                  SPD Location
-                                </label>
-                                <DebouncedInput
-                                  type="text"
+                                <label className="text-[10px] text-white block mb-1">SPD Location</label>
+                                <MobileSelectPicker
                                   value={(board as any).spdLocation || ''}
-                                  onChange={(value) =>
-                                    handleUpdateBoard(board.id, 'spdLocation' as any, value)
-                                  }
-                                  placeholder="e.g. Main DB"
-                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                  style={{ fontSize: '16px' }}
+                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdLocation' as any, v)}
+                                  options={SPD_LOCATIONS}
+                                  placeholder="Select location"
+                                  title="SPD Location"
                                 />
                               </div>
                               <div>
-                                <label className="text-[10px] text-white block mb-1">
-                                  Rated kA
-                                </label>
-                                <DebouncedInput
-                                  type="text"
-                                  inputMode="decimal"
+                                <label className="text-[10px] text-white block mb-1">Rated kA</label>
+                                <MobileSelectPicker
                                   value={(board as any).spdRatedCurrentKa || ''}
-                                  onChange={(value) =>
-                                    handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, value)
-                                  }
-                                  placeholder="e.g. 12.5"
-                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                  style={{ fontSize: '16px' }}
+                                  onValueChange={(v) => handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, v)}
+                                  options={SPD_RATED_KA}
+                                  placeholder="Select kA"
+                                  title="Rated kA"
                                 />
                               </div>
                             </div>
@@ -2856,35 +2848,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       )}
 
       {/* SHARED DIALOGS - Tool Sheet Pattern */}
-      {/* AI Board Photo Capture */}
+      {/* AI Board Scanner — proper Sheet overlay (matches EIC) */}
       {showBoardCapture && (
-        <>
-          <div className="tool-sheet-overlay" onClick={() => setShowBoardCapture(false)} />
-          <div className="tool-sheet-container">
-            <div className="tool-sheet-handle md:hidden" />
-            <div className="tool-sheet-header">
-              <div className="tool-sheet-title">
-                <Camera className="h-5 w-5 text-elec-yellow" />
-                AI Board Scanner
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowBoardCapture(false)}
-                className="text-white hover:text-white hover:bg-white/10"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="tool-sheet-content">
-              <BoardPhotoCapture
-                onAnalysisComplete={handleAIAnalysisComplete}
-                onClose={() => setShowBoardCapture(false)}
-                renderContentOnly={true}
-              />
-            </div>
-          </div>
-        </>
+        <BoardScannerOverlay
+          onClose={() => { setShowBoardCapture(false); setActiveBoardId(null); }}
+          onAnalysisComplete={(data) => { handleAIAnalysisComplete(data); setShowBoardCapture(false); }}
+          title="Scan Distribution Board"
+        />
       )}
 
       {/* Test Results Photo Capture */}
@@ -2917,30 +2887,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         </>
       )}
 
-      {/* AI Circuit Review */}
-      {showAIReview && detectedCircuits && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="max-h-[90vh] overflow-auto w-full">
-            <SimpleCircuitTable
-              circuits={detectedCircuits.circuits || []}
-              board={
-                detectedCircuits.board || {
-                  make: 'Unknown',
-                  model: 'Unknown',
-                  mainSwitch: 'Unknown',
-                  spd: 'Unknown',
-                  totalWays: 0,
-                }
-              }
-              onApply={handleApplyAICircuitsFromTable}
-              onClose={() => {
-                setShowAIReview(false);
-                setDetectedCircuits(null);
-              }}
-            />
-          </div>
-        </div>
-      )}
+      {/* AI Circuit Review now handled by BoardScannerOverlay's CircuitReviewSheet */}
 
       {/* Test Results Review Dialog */}
       {showTestResultsReview && extractedTestResults && (

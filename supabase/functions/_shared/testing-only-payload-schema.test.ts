@@ -48,45 +48,54 @@ function makeFullPayload() {
     installationDescription: 'Domestic rewire — first-fix testing',
     numberOfCircuits: '8',
 
-    // Circuits
+    // Circuits (full TestResult format, snake_case)
     circuits: [
       {
         id: 'c1',
-        circuitRef: '1',
-        description: 'Ring Final — Kitchen',
-        cableType: 'T&E',
-        cableSize: '2.5',
-        protectionType: 'MCB',
-        protectionRating: '32',
-        ze: '0.18',
-        zs: '0.52',
+        circuit_number: '1',
+        circuit_description: 'Ring Final — Kitchen',
+        type_of_wiring: 'T&E',
+        reference_method: 'C',
+        points_served: '6',
+        live_size: '2.5',
+        cpc_size: '1.5',
+        bs_standard: 'BS EN 60898',
+        protective_device_type: 'MCB',
+        protective_device_rating: '32',
+        protective_device_ka_rating: '6',
+        max_zs: '1.37',
+        rcd_type: 'Type A',
+        rcd_rating: '30',
+        ring_r1: '0.34',
+        ring_rn: '0.35',
+        ring_r2: '0.68',
         r1r2: '0.34',
-        r2: '0.68',
-        ir: '>200',
-        polarity: 'Correct',
-        rcdType: 'Type A',
-        rcdRating: '30',
-        rcdTripTime: '18',
-        result: 'pass',
+        insulation_test_voltage: '500',
+        insulation_live_neutral: '>200',
+        insulation_live_earth: '>200',
+        polarity: 'Y',
+        zs: '0.52',
+        rcd_one_x: '18',
+        rcd_test_button: 'Y',
+        afdd_test: '',
+        notes: '',
       },
       {
         id: 'c2',
-        circuitRef: '2',
-        description: 'Lighting — Ground Floor',
-        cableType: 'T&E',
-        cableSize: '1.5',
-        protectionType: 'MCB',
-        protectionRating: '6',
-        ze: '0.18',
-        zs: '0.95',
+        circuit_number: '2',
+        circuit_description: 'Lighting — Ground Floor',
+        type_of_wiring: 'T&E',
+        live_size: '1.5',
+        cpc_size: '1.0',
+        protective_device_type: 'MCB',
+        protective_device_rating: '6',
         r1r2: '0.77',
-        r2: '1.54',
-        ir: '>200',
-        polarity: 'Correct',
-        rcdType: '',
-        rcdRating: '',
-        rcdTripTime: '',
-        result: 'pass',
+        insulation_test_voltage: '500',
+        insulation_live_neutral: '>200',
+        insulation_live_earth: '>200',
+        polarity: 'Y',
+        zs: '0.95',
+        notes: '',
       },
     ],
 
@@ -121,7 +130,6 @@ Deno.test('Minimal valid payload parses', () => {
     assertEquals(result.data.referenceNumber, 'TOC-001');
     assertEquals(result.data.testerName, 'Bob Sparks');
     assertEquals(result.data.installationAddress, '123 Test St, London, SW1A 1AA');
-    // Unset fields should have defaults
     assertEquals(result.data.testerQualifications, '');
     assertEquals(result.data.mftMake, '');
     assertEquals(result.data.loopMake, '');
@@ -142,11 +150,13 @@ Deno.test('Full payload with circuits parses', () => {
     assertEquals(result.data.mftModel, 'MFT1741');
     assertEquals(result.data.numberOfCircuits, '8');
     assertEquals(result.data.circuits.length, 2);
-    assertEquals(result.data.circuits[0].circuitRef, '1');
-    assertEquals(result.data.circuits[0].description, 'Ring Final — Kitchen');
-    assertEquals(result.data.circuits[0].result, 'pass');
-    assertEquals(result.data.circuits[1].circuitRef, '2');
-    assertEquals(result.data.circuits[1].protectionRating, '6');
+    assertEquals(result.data.circuits[0].circuit_number, '1');
+    assertEquals(result.data.circuits[0].circuit_description, 'Ring Final — Kitchen');
+    assertEquals(result.data.circuits[0].polarity, 'Y');
+    assertEquals(result.data.circuits[0].zs, '0.52');
+    assertEquals(result.data.circuits[0].rcd_one_x, '18');
+    assertEquals(result.data.circuits[1].circuit_number, '2');
+    assertEquals(result.data.circuits[1].protective_device_rating, '6');
     assertEquals(result.data.notes, 'All circuits tested satisfactorily.');
     assertEquals(result.data.testerSignature, 'data:image/png;base64,iVBOR...');
   }
@@ -155,24 +165,22 @@ Deno.test('Full payload with circuits parses', () => {
 Deno.test('Circuit array validates with defaults', () => {
   const payload = {
     circuits: [
-      { id: 'c1', circuitRef: '1' },
-      { circuitRef: '2', description: 'Lighting' },
+      { id: 'c1', circuit_number: '1' },
+      { circuit_number: '2', circuit_description: 'Lighting' },
     ],
   };
   const result = testingOnlyPayloadSchema.safeParse(payload);
   assertEquals(result.success, true, `Schema errors: ${JSON.stringify((result as any).error?.issues?.slice(0, 5))}`);
   if (result.success) {
     assertEquals(result.data.circuits.length, 2);
-    // First circuit — explicit id, defaults for the rest
     assertEquals(result.data.circuits[0].id, 'c1');
-    assertEquals(result.data.circuits[0].circuitRef, '1');
-    assertEquals(result.data.circuits[0].description, '');
-    assertEquals(result.data.circuits[0].ze, '');
-    assertEquals(result.data.circuits[0].result, '');
-    // Second circuit — missing id gets default
+    assertEquals(result.data.circuits[0].circuit_number, '1');
+    assertEquals(result.data.circuits[0].circuit_description, '');
+    assertEquals(result.data.circuits[0].zs, '');
+    assertEquals(result.data.circuits[0].polarity, '');
     assertEquals(result.data.circuits[1].id, '');
-    assertEquals(result.data.circuits[1].description, 'Lighting');
-    assertEquals(result.data.circuits[1].polarity, '');
+    assertEquals(result.data.circuits[1].circuit_description, 'Lighting');
+    assertEquals(result.data.circuits[1].r1r2, '');
   }
 });
 

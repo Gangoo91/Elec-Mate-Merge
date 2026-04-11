@@ -680,99 +680,82 @@ const InvoicesPage = () => {
         {/* Stripe Connect Banner */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
-        {/* Revenue hero card — matching QuotesPage pipeline card */}
-        <div className="relative rounded-2xl bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.08] overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-60" />
-          <div className="p-4">
-            {/* Main value */}
-            <div className="flex items-baseline justify-between mb-4">
-              <div>
-                <p className="text-[11px] text-white uppercase tracking-wider">Total Revenue</p>
-                <p className="text-[28px] font-bold text-elec-yellow leading-tight mt-0.5">
-                  £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-[11px] text-white">Paid</p>
-                <p className="text-[20px] font-bold text-emerald-400 leading-tight">{stats.paid}</p>
-              </div>
+        {/* Revenue hero — matching QuotesPage pipeline exactly */}
+        <div className="space-y-3">
+          {/* Gradient accent */}
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+
+          {/* Main value */}
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[10px] text-white uppercase tracking-widest font-medium">Revenue</p>
+              <p className="text-[38px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">
+                {formatCurrency(stats.monthlyTotal)}
+              </p>
             </div>
-            {/* Secondary stats */}
-            <div className="flex gap-0 rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-              <button
-                onClick={() => handleFilterChange('overdue')}
-                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
-              >
-                <p className="text-[10px] text-white">Overdue</p>
-                <p className={cn('text-[14px] font-bold', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{stats.overdue}</p>
-              </button>
-              <div className="w-px h-10 self-center bg-white/[0.06]" />
-              <button
-                onClick={() => handleFilterChange('sent')}
-                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
-              >
-                <p className="text-[10px] text-white">Sent</p>
-                <p className="text-[14px] font-bold text-blue-400">{stats.sent}</p>
-              </button>
-              <div className="w-px h-10 self-center bg-white/[0.06]" />
-              <button
-                onClick={() => handleFilterChange('draft')}
-                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
-              >
-                <p className="text-[10px] text-white">Drafts</p>
-                <p className="text-[14px] font-bold text-white">{stats.draft}</p>
-              </button>
-              <div className="w-px h-10 self-center bg-white/[0.06]" />
-              <button
-                onClick={() => handleFilterChange('all')}
-                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
-              >
-                <p className="text-[10px] text-white">Total</p>
-                <p className="text-[14px] font-bold text-white">{stats.total}</p>
-              </button>
+            <div className="text-right pb-0.5">
+              <p className="text-[28px] font-bold text-white leading-none">{stats.paid}</p>
+              <p className="text-[10px] text-white uppercase tracking-widest mt-0.5">Paid</p>
             </div>
           </div>
-        </div>
 
-        {/* Chase alert — matching QuotesPage stale quote alert */}
-        {stats.overdue > 0 && (
-          <button
-            type="button"
-            onClick={handleCreateChaseTasks}
-            disabled={creatingChaseTasks}
-            className="w-full flex items-center justify-between p-3.5 rounded-xl bg-purple-500/[0.06] border border-purple-500/15 touch-manipulation active:bg-purple-500/10 transition-colors disabled:opacity-50"
-          >
-            <div>
-              <p className="text-[13px] font-semibold text-purple-300">
-                {stats.overdue} invoice{stats.overdue !== 1 && 's'} need chasing
+          {/* Stat pills — 2×2 grid */}
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={() => handleFilterChange('overdue')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+              <p className={cn('text-[18px] font-bold tabular-nums', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{stats.overdue}</p>
+              <p className="text-[11px] text-white mt-0.5">Overdue</p>
+            </button>
+            <button onClick={() => handleFilterChange('sent')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+              <p className="text-[18px] font-bold text-amber-400 tabular-nums">{stats.sent}</p>
+              <p className="text-[11px] text-white mt-0.5">Sent</p>
+            </button>
+            <button onClick={() => handleFilterChange('draft')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+              <p className="text-[18px] font-bold text-white tabular-nums">{stats.draft}</p>
+              <p className="text-[11px] text-white mt-0.5">Drafts</p>
+            </button>
+            <button onClick={() => handleFilterChange('all')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+              <p className="text-[18px] font-bold text-blue-400 tabular-nums">{stats.total}</p>
+              <p className="text-[11px] text-white mt-0.5">Total</p>
+            </button>
+          </div>
+
+          {/* Chase alert */}
+          {stats.overdue > 0 && (
+            <button
+              type="button"
+              onClick={handleCreateChaseTasks}
+              disabled={creatingChaseTasks}
+              className="w-full flex items-center justify-between py-2.5 px-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+            >
+              <p className="text-[12px] text-white">
+                <span className="font-bold text-amber-400">{stats.overdue}</span> invoice{stats.overdue !== 1 ? 's' : ''} need chasing
               </p>
-              <p className="text-[11px] text-white mt-0.5">Overdue and unpaid</p>
-            </div>
-            <span className="text-[12px] font-semibold text-purple-400 flex-shrink-0 ml-3">
-              {creatingChaseTasks ? 'Creating...' : 'Create Tasks'}
-            </span>
-          </button>
-        )}
+              <span className="text-[11px] font-bold text-amber-400 flex-shrink-0 ml-3">
+                {creatingChaseTasks ? 'Creating...' : 'Create Tasks'}
+              </span>
+            </button>
+          )}
 
-        {/* Analytics — collapsed by default */}
-        {invoices.length > 0 && (
-          <details>
-            <summary className="flex items-center justify-between cursor-pointer touch-manipulation py-2 list-none">
-              <span className="text-xs font-medium text-white uppercase tracking-wider">Analytics</span>
-              <ChevronRight className="w-4 h-4 text-white transition-transform [details[open]>&]:rotate-90" />
-            </summary>
-            <div className="mt-2">
-              <QuoteInvoiceAnalytics
-                quotes={[]}
-                invoices={invoices}
-                formatCurrency={formatCurrency}
-                lastUpdated={lastUpdated}
-                onRefresh={fetchInvoices}
-                isLoading={isLoading}
-              />
-            </div>
-          </details>
-        )}
+          {/* Analytics — collapsed by default */}
+          {invoices.length > 0 && (
+            <details>
+              <summary className="flex items-center justify-between cursor-pointer touch-manipulation py-2 list-none">
+                <span className="text-xs font-medium text-white uppercase tracking-wider">Analytics</span>
+                <ChevronRight className="w-4 h-4 text-white transition-transform [details[open]>&]:rotate-90" />
+              </summary>
+              <div className="mt-2">
+                <QuoteInvoiceAnalytics
+                  quotes={[]}
+                  invoices={invoices}
+                  formatCurrency={formatCurrency}
+                  lastUpdated={lastUpdated}
+                  onRefresh={fetchInvoices}
+                  isLoading={isLoading}
+                />
+              </div>
+            </details>
+          )}
+        </div>
 
         {/* Invoices List */}
         <section className="space-y-3">

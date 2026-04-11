@@ -134,8 +134,14 @@ const InspectionIndex = () => {
       navigate(`/electrician/inspection-testing/${effectiveType}/${reportId}`);
       return;
     }
+    // Types that go straight to /new (no hub page)
+    const directToNewTypes = ['testing-only', 'bess', 'lightning-protection', 'g98-commissioning', 'g99-commissioning', 'smoke-co-alarm'];
     if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
-      navigate(`/electrician/inspection-testing/${effectiveType}`);
+      if (directToNewTypes.includes(effectiveType)) {
+        navigate(`/electrician/inspection-testing/${effectiveType}/new`);
+      } else {
+        navigate(`/electrician/inspection-testing/${effectiveType}`);
+      }
       return;
     }
 

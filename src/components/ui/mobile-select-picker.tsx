@@ -114,7 +114,7 @@ export const MobileSelectPicker = ({
         open={open}
         onOpenChange={setOpen}
         title={title}
-        contentClassName="pb-8 max-h-[80vh] overflow-y-auto"
+        contentClassName="pb-8"
       >
         <div className={cn(options.length > 4 ? 'grid grid-cols-2 gap-1' : 'space-y-1')}>
           {options.map((option) => (

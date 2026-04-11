@@ -7,6 +7,8 @@ import { earthFaultLoopQuestions } from './earthFaultLoopQuestions';
 import { rcdTestingQuestions } from './rcdTestingQuestions';
 import { prospectiveFaultQuestions } from './prospectiveFaultQuestions';
 import { functionalTestingQuestions } from './functionalTestingQuestions';
+import { safeIsolationQuestions } from './safeIsolationQuestions';
+import { faultFindingQuestions } from './faultFindingQuestions';
 
 // Export all question banks
 export {
@@ -18,6 +20,8 @@ export {
   rcdTestingQuestions,
   prospectiveFaultQuestions,
   functionalTestingQuestions,
+  safeIsolationQuestions,
+  faultFindingQuestions,
 };
 
 // Map assessment IDs to their question banks
@@ -30,6 +34,8 @@ const questionBankMap: Record<string, QuizQuestion[]> = {
   'rcd-testing': rcdTestingQuestions,
   'prospective-fault': prospectiveFaultQuestions,
   'functional-testing': functionalTestingQuestions,
+  'safe-isolation': safeIsolationQuestions,
+  'fault-finding': faultFindingQuestions,
 };
 
 /**
