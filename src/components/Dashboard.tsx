@@ -123,17 +123,19 @@ const ContinueCard = ({ reportType, clientName, address, onClick }: ContinueCard
       className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
     >
       <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400" />
-        <div className="relative z-10 flex items-center gap-3 p-3.5">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 opacity-40 group-hover:opacity-100 transition-opacity duration-200" />
+        <div className="relative z-10 flex items-center gap-3.5 p-4">
           <div className="flex-1 min-w-0">
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 inline-block mb-1">
-              {getTypeLabel(reportType)}
-            </span>
-            <h4 className="text-sm font-semibold text-white truncate">{clientName || 'Untitled'}</h4>
-            <p className="text-[11px] text-white truncate">{address || 'No address'}</p>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
+                {getTypeLabel(reportType)}
+              </span>
+            </div>
+            <h4 className="text-[15px] font-semibold text-white truncate group-hover:text-elec-yellow transition-colors">{clientName || 'Untitled'}</h4>
+            <p className="text-[12px] text-white truncate mt-0.5">{address || 'No address'}</p>
           </div>
-          <div className="w-8 h-8 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-            <ChevronRight className="w-4 h-4 text-elec-yellow" />
+          <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center flex-shrink-0 group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
           </div>
         </div>
       </div>
@@ -272,18 +274,16 @@ const Dashboard = ({
           animate="visible"
           className="px-4 py-4 space-y-5"
         >
-          {/* Continue + New Certificate side by side */}
-          <motion.div variants={itemVariants} className={recentDraft ? 'grid grid-cols-2 gap-3' : ''}>
-            {recentDraft && (
-              <ContinueCard
-                reportType={recentDraft.report_type}
-                clientName={recentDraft.client_name}
-                address={recentDraft.installation_address}
-                onClick={handleContinue}
-              />
-            )}
-            <HeroCTA />
-          </motion.div>
+          {/* New Certificate + Continue — full width stacked */}
+          <HeroCTA />
+          {recentDraft && (
+            <ContinueCard
+              reportType={recentDraft.report_type}
+              clientName={recentDraft.client_name}
+              address={recentDraft.installation_address}
+              onClick={handleContinue}
+            />
+          )}
 
           {/* Recover Unsaved Work */}
           <RecoverUnsavedWork onNavigate={onNavigate} />
