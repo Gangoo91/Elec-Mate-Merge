@@ -47,6 +47,14 @@ const coreCerts: CertDef[] = [
     standard: 'BS 7671:2018+A3:2024',
     accentColor: 'from-orange-500 via-amber-400 to-yellow-400',
   },
+  {
+    id: 'testing-only',
+    title: 'Testing Only',
+    subtitle: 'Schedule of Tests Record',
+    description: 'Lightweight testing record for subcontractors — SoT only, no company details',
+    standard: 'BS 7671 Appendix 6',
+    accentColor: 'from-purple-500 via-purple-400 to-pink-400',
+  },
 ];
 
 interface CertificatesSectionProps {
@@ -69,7 +77,7 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h1 className="text-sm font-bold text-white tracking-wide uppercase">EICR, EIC & Minor Works</h1>
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Certificates</h1>
           </div>
         </div>
         <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
@@ -83,7 +91,7 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
       >
         {/* Section intro */}
         <motion.div variants={itemVariants} className="mb-2">
-          <p className="text-sm text-white/50">Select a certificate type to begin</p>
+          <p className="text-sm text-white">Select a certificate type to begin</p>
         </motion.div>
 
         {/* Cert cards — full width, one per row */}
@@ -114,16 +122,16 @@ const CertificatesSection = ({ onNavigate, onBack }: CertificatesSectionProps) =
                       <h3 className="text-lg font-bold text-white leading-tight group-hover:text-elec-yellow transition-colors">
                         {cert.title}
                       </h3>
-                      <p className="mt-0.5 text-[11px] font-medium text-white/40 uppercase tracking-wide">
+                      <p className="mt-0.5 text-[11px] font-medium text-white uppercase tracking-wide">
                         {cert.subtitle}
                       </p>
-                      <p className="mt-2 text-[13px] text-white/70 leading-snug">
+                      <p className="mt-2 text-[13px] text-white leading-snug">
                         {cert.description}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-4">
-                    <span className="text-[10px] font-bold text-white/30 bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded">
+                    <span className="text-[10px] font-bold text-white bg-white/[0.04] border border-white/[0.06] px-2.5 py-1 rounded">
                       {cert.standard}
                     </span>
                     <div className="flex items-center gap-2">

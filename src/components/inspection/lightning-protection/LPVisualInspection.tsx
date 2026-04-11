@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Camera, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 
 const SectionHeader = ({ title }: { title: string }) => (
   <div className="border-b border-white/[0.06] pb-1 mb-3">

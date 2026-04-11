@@ -161,7 +161,7 @@ const defaultData = (): IsolationData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-isolation-cert';
 
-const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const textareaCn = 'touch-manipulation text-xs min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
 const dateTimeCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 

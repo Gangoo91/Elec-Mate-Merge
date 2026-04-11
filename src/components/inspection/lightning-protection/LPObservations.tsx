@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { Observation } from '@/types/lightning-protection';
 
-const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
-const textareaCn = 'touch-manipulation text-xs min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const textareaCn = 'touch-manipulation text-xs min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
 const pickerTrigger = 'h-10 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
 
 const SectionHeader = ({ title }: { title: string }) => (

@@ -3,10 +3,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { useLightningProtectionSmartForm } from '@/hooks/inspection/useLightningProtectionSmartForm';
 
-const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn = '!h-10 !py-1 !text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const pickerTrigger = 'h-10 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
 
 const SectionHeader = ({ title }: { title: string }) => (
@@ -172,7 +171,7 @@ export default function LPCertificateDetails({ formData, onUpdate }: Props) {
       <div className="space-y-4">
         <SectionHeader title="Contractor & Tester" />
         {hasSavedTesterDetails && !formData.testerName && (
-          <Button variant="outline" onClick={handleLoadTester} className="w-full h-10 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation">Load from Business Settings</Button>
+          <button type="button" onClick={handleLoadTester} className="w-full h-10 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.98]">Load from Business Settings</button>
         )}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Company"><Input value={formData.contractorCompany} onChange={(e) => onUpdate('contractorCompany', e.target.value)} className={inputCn} /></Field>

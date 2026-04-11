@@ -43,6 +43,10 @@ const G98CommissioningCertificate = lazy(
 const G99CommissioningCertificate = lazy(
   () => import('@/pages/inspection/G99CommissioningCertificate')
 );
+// Testing Only
+const TestingOnlyCertificate = lazy(
+  () => import('@/pages/inspection/TestingOnlyCertificate')
+);
 
 // Labels & Warnings
 const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'));
@@ -121,6 +125,10 @@ export default function InspectionRoutes() {
         {/* G99 Commissioning (EREC G99) */}
         <Route path="g99-commissioning/new" element={<G99CommissioningCertificate />} />
         <Route path="g99-commissioning/:id" element={<G99CommissioningCertificate />} />
+
+        {/* Testing Only Certificate */}
+        <Route path="testing-only/new" element={<TestingOnlyCertificate />} />
+        <Route path="testing-only/:id" element={<TestingOnlyCertificate />} />
 
         {/* Labels & Warnings */}
         <Route path="danger-notice" element={<DangerNoticePage />} />

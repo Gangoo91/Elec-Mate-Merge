@@ -26,7 +26,8 @@ export type ReportType =
   | 'lightning-protection'
   | 'g98-commissioning'
   | 'g99-commissioning'
-  | 'smoke-co-alarm';
+  | 'smoke-co-alarm'
+  | 'testing-only';
 
 export interface CloudReport {
   id: string;
@@ -198,6 +199,8 @@ export const reportCloud = {
           return 'completed';
         // Smoke & CO Alarm
         if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
+        // Testing Only
+        if (reportType === 'testing-only' && data.testerSignature) return 'completed';
         // Labels & Warnings types
         if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
         if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
@@ -323,7 +326,9 @@ export const reportCloud = {
                               ? 'g99-commissioning'
                               : lc.startsWith('smoke-co')
                                 ? 'smoke-co-alarm'
-                                : lc.startsWith('danger-notice')
+                                : lc.startsWith('testing-only')
+                                  ? 'testing-only'
+                                  : lc.startsWith('danger-notice')
                                   ? 'danger-notice'
                                   : lc.startsWith('isolation-cert')
                                     ? 'isolation-cert'
