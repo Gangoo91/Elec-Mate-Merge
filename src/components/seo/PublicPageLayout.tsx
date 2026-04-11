@@ -571,15 +571,34 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
         </div>
       </footer>
 
-      {/* Sticky Mobile CTA */}
+      {/* Sticky Mobile CTA — social proof + price + badges */}
       {!user && (
-        <div className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-8 pb-[max(1rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
-          <Link to="/auth/signup">
-            <Button className="w-full h-12 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-transform">
-              Start 7-Day Free Trial
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-          </Link>
+        <div className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
+          <p className="text-center text-[11px] text-white/60 mb-2">
+            <span className="text-green-400 font-semibold">1,000+ electricians</span>
+            {' · '}From £5.99/mo after trial
+          </p>
+          <div className="flex items-center gap-2">
+            <Link to="/auth/signup" className="flex-1">
+              <Button className="w-full h-12 text-sm font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-transform">
+                Start Free Trial
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </Button>
+            </Link>
+            <a
+              href="https://apps.apple.com/gb/app/elec-mate/id6758948665"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0"
+            >
+              <img
+                src="/images/app-store-badge.svg"
+                alt="App Store"
+                className="h-10"
+                loading="lazy"
+              />
+            </a>
+          </div>
         </div>
       )}
     </div>

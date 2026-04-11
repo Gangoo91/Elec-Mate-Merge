@@ -20,7 +20,7 @@ export function SEOSocialProofBar() {
 
   return (
     <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 sm:p-5 mb-8">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
         {/* User count */}
         <div className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-full bg-green-500/15 border border-green-500/25 flex items-center justify-center">
@@ -32,7 +32,8 @@ export function SEOSocialProofBar() {
           </div>
         </div>
 
-        {/* Divider */}
+        {/* Separator — yellow line on mobile, vertical on desktop */}
+        <div className="w-full h-px bg-yellow-500/20 sm:hidden" />
         <div className="hidden sm:block w-px h-8 bg-white/10" />
 
         {/* Rotating testimonial */}

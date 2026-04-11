@@ -6,7 +6,12 @@ interface StoreBadgesProps {
 }
 
 export function StoreBadges({ className = '', size = 'md' }: StoreBadgesProps) {
-  const heights = { sm: 'h-10', md: 'h-12', lg: 'h-14' };
+  // Responsive: smaller on mobile, larger on sm+
+  const heights = {
+    sm: 'h-8 sm:h-10',
+    md: 'h-10 sm:h-12',
+    lg: 'h-12 sm:h-14',
+  };
   const h = heights[size];
 
   return (

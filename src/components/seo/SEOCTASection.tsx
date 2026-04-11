@@ -56,8 +56,8 @@ export function SEOCTASection({
 
             {/* Primary CTA */}
             <div className="flex justify-center mb-6">
-              <Link to="/auth/signup">
-                <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-all">
+              <Link to="/auth/signup" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black rounded-xl shadow-lg shadow-yellow-500/25 touch-manipulation transition-all">
                   Start Your Free Trial
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

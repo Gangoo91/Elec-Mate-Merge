@@ -172,7 +172,7 @@ export default function GuideTemplate({
         <div className="flex flex-wrap gap-3 mb-6">
           <a
             href="/auth/signup"
-            className="inline-flex items-center gap-2 h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
           >
             Start 7-Day Free Trial <ArrowRight className="w-4 h-4" />
           </a>
@@ -243,7 +243,7 @@ export default function GuideTemplate({
       {/* CTA */}
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />
 
-      <div className="h-16 sm:hidden" />
+      <div className="h-24 sm:hidden" />
     </SEOPageShell>
   );
 }

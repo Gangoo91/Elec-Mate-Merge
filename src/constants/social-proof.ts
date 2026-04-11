@@ -1,5 +1,5 @@
-export const USER_COUNT = '900+';
-export const USER_COUNT_LABEL = '900+ UK electricians & apprentices';
+export const USER_COUNT = '1,000+';
+export const USER_COUNT_LABEL = '1,000+ UK electricians & apprentices';
 
 export const TESTIMONIALS = [
   {

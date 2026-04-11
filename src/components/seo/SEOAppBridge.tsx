@@ -17,7 +17,6 @@ export function SEOAppBridge({
   ctaText = 'Try it free for 7 days',
   ctaHref = '/auth/signup',
   icon: Icon = Zap,
-  showStoreBadges = false,
 }: SEOAppBridgeProps) {
   return (
     <div className="rounded-2xl bg-gradient-to-r from-yellow-500/10 to-yellow-600/5 border-l-4 border-l-yellow-500 border border-yellow-500/20 p-5 my-8">
@@ -30,12 +29,12 @@ export function SEOAppBridge({
           <p className="text-sm text-white leading-relaxed mb-4">{description}</p>
           <Link
             to={ctaHref}
-            className="inline-flex items-center gap-2 h-10 px-5 bg-yellow-500 hover:bg-yellow-400 text-black text-sm font-semibold rounded-lg touch-manipulation transition-colors active:scale-[0.97]"
+            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-11 px-5 bg-yellow-500 hover:bg-yellow-400 text-black text-sm font-semibold rounded-lg touch-manipulation transition-colors active:scale-[0.97]"
           >
             {ctaText}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
-          {showStoreBadges && <StoreBadges size="sm" className="mt-4" />}
+          <StoreBadges size="sm" className="mt-3" />
         </div>
       </div>
     </div>
