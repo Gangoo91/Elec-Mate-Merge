@@ -562,14 +562,59 @@ export const useLiveEducationData = (category: string = 'all'): UseLiveEducation
         setLoading(false);
       }
 
-      // No cached data available — use static fallback
+      // No cached data available — fetch from further_education_courses table + static fallback
       if (!expiredCache?.education_data) {
-        console.log('📦 No cached data available, using static fallback');
-        setEducationData(FALLBACK_EDUCATION_DATA);
-        setAnalytics(generateFallbackAnalytics(FALLBACK_EDUCATION_DATA));
-        setLastUpdated(new Date().toISOString());
-        setIsFromCache(true);
-        setError(null);
+        console.log('📦 Fetching from further_education_courses table + static fallback');
+        try {
+          const { data: feCourses } = await supabase
+            .from('further_education_courses')
+            .select('*')
+            .order('scraped_at', { ascending: false })
+            .limit(200);
+
+          const mappedCourses: LiveEducationData[] = (feCourses || []).map((c) => ({
+            id: c.id as string,
+            title: c.title as string,
+            institution: (c.provider_name as string) || 'Various Providers',
+            description: (c.description as string) || '',
+            level: (c.level as string) || (c.qualification_type as string) || '',
+            duration: (c.duration as string) || '',
+            category: (c.category as string) || 'Professional Development',
+            studyMode: (c.format as string) || ((c.is_online as boolean) ? 'Online' : 'Classroom'),
+            locations: (c.venue_city as string) ? [c.venue_city as string] : ['Online'],
+            entryRequirements: (c.prerequisites as string) ? [c.prerequisites as string] : [],
+            keyTopics: [],
+            progressionOptions: (c.career_outcomes as string) ? [c.career_outcomes as string] : [],
+            fundingOptions: [],
+            tuitionFees: (c.price as string) || 'Contact provider',
+            applicationDeadline: '',
+            nextIntake: '',
+            rating: (c.rating as number) || 0,
+            employmentRate: 0,
+            averageStartingSalary: '',
+            courseUrl: (c.external_url as string) || (c.booking_url as string) || '',
+            imageUrl: (c.image_url as string) || undefined,
+            lastUpdated: (c.updated_at as string) || new Date().toISOString(),
+          }));
+
+          // Merge: scraped courses first, then static fallback for any not covered
+          const allData = [...mappedCourses, ...FALLBACK_EDUCATION_DATA];
+          console.log(
+            `✅ Loaded ${mappedCourses.length} scraped + ${FALLBACK_EDUCATION_DATA.length} static courses`
+          );
+          setEducationData(allData);
+          setAnalytics(generateFallbackAnalytics(allData));
+          setLastUpdated(new Date().toISOString());
+          setIsFromCache(false);
+          setError(null);
+        } catch (feError) {
+          console.log('📦 FE table fetch failed, using static fallback');
+          setEducationData(FALLBACK_EDUCATION_DATA);
+          setAnalytics(generateFallbackAnalytics(FALLBACK_EDUCATION_DATA));
+          setLastUpdated(new Date().toISOString());
+          setIsFromCache(true);
+          setError(null);
+        }
       }
     } catch (error) {
       console.error('❌ Error fetching education data:', error);
