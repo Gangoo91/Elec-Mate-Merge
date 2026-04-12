@@ -52,8 +52,7 @@ const audienceCards: {
   {
     icon: GraduationCap,
     title: 'Apprentices',
-    painPoint:
-      'Training courses cost thousands and revision materials are scattered everywhere.',
+    painPoint: 'Training courses cost thousands and revision materials are scattered everywhere.',
     tagline: 'Everything to ace your training.',
     features: [
       '46+ courses — Level 2, 3, AM2 & upskilling',
@@ -84,8 +83,7 @@ const audienceCards: {
   {
     icon: Building2,
     title: 'Employers',
-    painPoint:
-      'Managing apprentices, compliance and teams across multiple sites is chaos.',
+    painPoint: 'Managing apprentices, compliance and teams across multiple sites is chaos.',
     tagline: 'Manage your whole team from one dashboard.',
     features: [
       'Apprentice progress tracking',
@@ -226,8 +224,7 @@ const getPaidSteps: {
   {
     icon: Mic,
     title: 'Create quotes your way',
-    body:
-      'Type it, speak it, or scan materials with your camera — get a professional quote ready to send in minutes.',
+    body: 'Type it, speak it, or scan materials with your camera — get a professional quote ready to send in minutes.',
     bullets: [
       'Voice, manual, or scanner input',
       'AI formats line items & pricing',
@@ -237,8 +234,7 @@ const getPaidSteps: {
   {
     icon: Send,
     title: 'Send, sign & start work',
-    body:
-      'Clients get accept or reject buttons straight in their email. Chase signatures with automatic reminders.',
+    body: 'Clients get accept or reject buttons straight in their email. Chase signatures with automatic reminders.',
     bullets: [
       'Client accept/reject buttons',
       'Automated email reminders',
@@ -248,8 +244,7 @@ const getPaidSteps: {
   {
     icon: CreditCard,
     title: 'Get paid the same day',
-    body:
-      'Convert any signed quote to an invoice in one tap. Stripe payment links mean customers pay instantly by card.',
+    body: 'Convert any signed quote to an invoice in one tap. Stripe payment links mean customers pay instantly by card.',
     bullets: [
       'One-tap quote to invoice',
       'Stripe payment links in every invoice',
@@ -259,13 +254,37 @@ const getPaidSteps: {
 ];
 
 const exploreTools = [
-  { to: '/tools/eicr-certificate', label: 'EICR Certificate App', desc: 'Digital condition reports' },
-  { to: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator', desc: 'BS 7671 compliant' },
-  { to: '/tools/voltage-drop-calculator', label: 'Voltage Drop Calculator', desc: 'Check maximum runs' },
-  { to: '/tools/minor-works-certificate', label: 'Minor Works Certificate', desc: 'Digital EWC forms' },
-  { to: '/tools/electrical-testing-calculators', label: 'Testing Calculators', desc: 'Zs, fault current, RCD' },
+  {
+    to: '/tools/eicr-certificate',
+    label: 'EICR Certificate App',
+    desc: 'Digital condition reports',
+  },
+  {
+    to: '/tools/cable-sizing-calculator',
+    label: 'Cable Sizing Calculator',
+    desc: 'BS 7671 compliant',
+  },
+  {
+    to: '/tools/voltage-drop-calculator',
+    label: 'Voltage Drop Calculator',
+    desc: 'Check maximum runs',
+  },
+  {
+    to: '/tools/minor-works-certificate',
+    label: 'Minor Works Certificate',
+    desc: 'Digital EWC forms',
+  },
+  {
+    to: '/tools/electrical-testing-calculators',
+    label: 'Testing Calculators',
+    desc: 'Zs, fault current, RCD',
+  },
   { to: '/tools/ai-electrician', label: 'AI Electrician Tools', desc: '5 BS 7671 specialists' },
-  { to: '/training/18th-edition-course', label: '18th Edition Course', desc: 'BS 7671 + Amendment 3' },
+  {
+    to: '/training/18th-edition-course',
+    label: '18th Edition Course',
+    desc: 'BS 7671 + Amendment 3',
+  },
   { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
 ];
 
@@ -459,10 +478,13 @@ const LandingPage = () => {
       </Helmet>
 
       {/* ========== NAV ========== */}
-      <nav className="fixed inset-x-0 top-0 z-50">
+      <nav
+        className="fixed inset-x-0 top-0 z-50"
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      >
         <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.06]" />
-        <div className="relative mx-auto flex h-16 max-w-[80rem] items-center justify-between px-5 lg:h-[4.5rem] lg:px-8">
+        <div className="relative mx-auto flex h-12 max-w-[80rem] items-center justify-between px-4 sm:px-5 lg:h-16 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
             <img src="/logo.jpg" alt="Elec-Mate" className="h-9 w-9 rounded-xl lg:h-10 lg:w-10" />
             <span className="text-lg font-bold tracking-[-0.02em] lg:text-xl">
@@ -566,7 +588,7 @@ const LandingPage = () => {
       </nav>
 
       {/* ========== HERO ========== */}
-      <section className="relative overflow-hidden px-5 pb-16 pt-[calc(env(safe-area-inset-top)+6rem)] sm:pb-20 sm:pt-32 lg:px-8 lg:pb-24 lg:pt-40">
+      <section className="relative overflow-hidden px-5 pb-16 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {!prefersReducedMotion && (
             <>
@@ -605,8 +627,7 @@ const LandingPage = () => {
           </motion.div>
 
           <h1 className="mx-auto mt-7 max-w-[18ch] text-[2.5rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[4rem] lg:mx-0 lg:text-[5rem]">
-            Stop losing hours{' '}
-            <span className="text-yellow-400">on paperwork.</span>
+            Stop losing hours <span className="text-yellow-400">on paperwork.</span>
           </h1>
 
           <p className="mx-auto mt-7 max-w-[42rem] text-lg leading-[1.65] text-white sm:mt-8 sm:text-xl lg:mx-0">
@@ -621,20 +642,19 @@ const LandingPage = () => {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <a href="#features" className="w-full sm:w-auto">
+            <Link to="/auth/signin" className="w-full sm:w-auto">
               <Button
                 variant="outline"
                 className="h-14 w-full touch-manipulation rounded-2xl border-white/15 bg-white/[0.02] px-8 text-base font-semibold text-white hover:bg-white/[0.06] sm:w-auto"
               >
-                See the platform
+                Sign in
               </Button>
-            </a>
+            </Link>
           </div>
 
           <p className="mt-5 text-[14px] text-white">
-            Plans from{' '}
-            <span className="font-semibold text-yellow-400">{apprenticePrice}/mo</span> after your
-            free trial.
+            Plans from <span className="font-semibold text-yellow-400">{apprenticePrice}/mo</span>{' '}
+            after your free trial.
           </p>
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[13px] text-white lg:justify-start">
@@ -867,10 +887,7 @@ const LandingPage = () => {
                   <p className="mt-3 text-[15px] leading-[1.7] text-white">{step.body}</p>
                   <div className="mt-6 space-y-2.5 border-t border-white/[0.06] pt-5">
                     {step.bullets.map((bullet) => (
-                      <div
-                        key={bullet}
-                        className="flex items-start gap-2.5 text-[14px] text-white"
-                      >
+                      <div key={bullet} className="flex items-start gap-2.5 text-[14px] text-white">
                         <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
                         <span>{bullet}</span>
                       </div>
@@ -1234,7 +1251,10 @@ const AudienceCard = ({
 
     <div className="mt-6 space-y-2.5">
       {features.map((feature) => (
-        <div key={feature} className="flex items-start gap-2.5 text-[14px] leading-[1.6] text-white">
+        <div
+          key={feature}
+          className="flex items-start gap-2.5 text-[14px] leading-[1.6] text-white"
+        >
           <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
           <span>{feature}</span>
         </div>
@@ -1330,10 +1350,7 @@ const PricingCard = ({
 
     <div className="mt-7 space-y-3 border-t border-white/[0.08] pt-6">
       {features.map((feature) => (
-        <div
-          key={feature}
-          className="flex items-start gap-3 text-[14px] leading-[1.6] text-white"
-        >
+        <div key={feature} className="flex items-start gap-3 text-[14px] leading-[1.6] text-white">
           <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-yellow-400" />
           <span>{feature}</span>
         </div>

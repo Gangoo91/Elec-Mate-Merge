@@ -30,20 +30,6 @@ export function StoreBadges({ className = '', size = 'md' }: StoreBadgesProps) {
           loading="lazy"
         />
       </a>
-      <a
-        href={PLAY_STORE_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Get it on Google Play"
-        className="transition-opacity hover:opacity-80 active:scale-[0.97]"
-      >
-        <img
-          src="/images/google-play-badge.svg"
-          alt="Get it on Google Play"
-          className={h}
-          loading="lazy"
-        />
-      </a>
     </div>
   );
 }
