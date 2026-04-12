@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone — required for all notifiable work in England.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Whitehaven Georgian properties, rural TT-earthed systems, and coastal installations.',
@@ -473,7 +473,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
@@ -493,7 +493,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for rewires in Georgian townhouses where surface-mounted trunking routes create
@@ -510,7 +510,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Whitehaven jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Factor heritage premiums for Georgian town centre properties, planning

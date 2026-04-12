@@ -87,21 +87,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: Cable,
     category: 'Guide',
   },
   {
-    href: '/guides/earth-electrode-test',
+    href: '/guides/earth-electrode-testing',
     title: 'Earth Electrode Testing',
     description: 'How to test earth electrode resistance and interpret results.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
@@ -487,7 +487,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   SPD installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   or Minor Works Certificate. Complete it on site with Elec-Mate.

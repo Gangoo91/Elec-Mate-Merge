@@ -83,14 +83,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the dedicated circuit cable for electric underfloor heating installations.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for underfloor heating circuits on your phone.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote underfloor heating installations with element, thermostat, circuit, and Part P costs.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long circuit runs from consumer unit to underfloor heating thermostats.',
@@ -359,7 +359,7 @@ const sections = [
                 <strong>Cable sizing</strong> — 2.5mm twin and earth is appropriate for most
                 domestic UFH circuits (up to 3kW element). For larger systems (3kW to 4kW), 4mm
                 cable may be required depending on the circuit length. Use the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm.

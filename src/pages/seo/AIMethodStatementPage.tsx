@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Method Statement Generator', href: '/tools/ai-method-statement-generator' },
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Guide',
     description:
       'Step-by-step guide to safe isolation procedures in accordance with GS38 and the Electricity at Work Regulations.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Training on manual handling regulations and safe lifting techniques for electricians on site.',
@@ -216,7 +216,7 @@ const sections = [
           The generator covers the full scope of electrical installation work, from simple domestic
           tasks to complex commercial and industrial projects. It understands the specific hazards
           associated with electrical work —{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>,
+          <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>,
           live working, arc flash, cable avoidance, working at height near distribution boards,
           asbestos risk in older buildings — and produces control measures and method statements
           that reflect the actual risks of your specific job.
@@ -418,7 +418,7 @@ const sections = [
           job description, specifies control measures that are practical and actionable for the
           actual work being carried out, describes a method statement that follows the logical
           sequence of your specific task, and includes details such as the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements-uk">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing system type
           </SEOInternalLink>
           , cable routes, access arrangements, and building occupancy that demonstrate genuine site

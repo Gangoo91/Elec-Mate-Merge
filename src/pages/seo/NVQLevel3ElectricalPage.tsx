@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career Guide',
   },
   {
-    href: '/am2-assessment-prep',
+    href: '/guides/am2-assessment-preparation',
     title: 'AM2 Assessment Preparation',
     description: 'What to expect in the AM2 practical assessment and how to pass first time.',
     icon: Award,
@@ -437,7 +437,7 @@ const sections = [
                 <strong>Preparation</strong> — practise your inspection and testing technique,
                 ensure you can complete test documentation quickly and accurately, and review common
                 fault-finding scenarios. The{' '}
-                <SEOInternalLink href="/am2-assessment-prep">AM2 preparation guide</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/am2-assessment-preparation">AM2 preparation guide</SEOInternalLink>{' '}
                 covers the assessment in detail.
               </span>
             </li>
@@ -582,7 +582,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice Like a Professional</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Going self-employed means quoting and invoicing from day one. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written, itemised quotes and turn them into invoices in one tap.

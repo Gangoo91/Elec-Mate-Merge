@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Electrical Guides', href: '/electrical-safety-at-home' },
+  { label: 'Electrical Guides', href: '/guides/electrical-safety-at-home' },
   { label: 'Power Surge Protection', href: '/power-surge-protection' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/electrical-safety-at-home',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description:
       'Complete home electrical safety guide including RCD testing, overloaded sockets, and DIY rules.',

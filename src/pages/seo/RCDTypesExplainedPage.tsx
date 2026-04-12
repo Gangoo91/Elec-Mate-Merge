@@ -573,7 +573,7 @@ export default function RCDTypesExplainedPage() {
               </p>
               <p>
                 When testing Type S RCDs during an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>, make sure
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, make sure
                 your test instrument is set to the correct mode (Type S or selective). Testing a
                 Type S device in non-delayed mode will give trip times that appear to exceed the
                 standard limits, potentially leading you to fail a device that is actually
@@ -643,21 +643,21 @@ export default function RCDTypesExplainedPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/rcd-testing',
+          href: '/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'Trip time testing procedures and pass/fail criteria.',
           icon: Timer,
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT and their impact on RCD selection.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Complete guide to the current Wiring Regulations.',
           icon: BookOpen,

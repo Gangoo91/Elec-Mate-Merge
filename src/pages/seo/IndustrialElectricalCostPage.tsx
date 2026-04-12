@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on site with instant PDF export — no evening admin.',
     icon: FileCheck2,
@@ -169,7 +169,7 @@ const sections = [
               <Factory className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Life-safety and welfare</strong> — emergency lighting to{' '}
-                <SEOInternalLink href="/guides/emergency-lighting-bs5266">
+                <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                   BS 5266-1
                 </SEOInternalLink>
                 , fire alarm, machine safety guarding interlocks, and welfare facilities (lighting,
@@ -583,7 +583,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Certificate Industrial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce detailed itemised quotes for industrial projects. Issue{' '}

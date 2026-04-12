@@ -499,7 +499,7 @@ const sections = [
         />
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             three-phase power calculator
           </SEOInternalLink>{' '}
           and the PFC calculator both support three-phase values. The board scanner can read
@@ -551,7 +551,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Three-phase power calculator, PFC calculator, Zs verification, and dozens more.',
     icon: Calculator,

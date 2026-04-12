@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Installation Specialist', href: '/tools/ai-installation-specialist' },
 ];
 
@@ -222,7 +222,7 @@ const sections = [
           installations, garden offices, EV chargers), commercial installations (distribution
           boards, submains, three-phase systems, lighting controls, fire alarms, emergency
           lighting), and specialist installations (solar PV, battery storage, data cabling,{' '}
-          <SEOInternalLink href="/tools/ev-charger-certificate">
+          <SEOInternalLink href="/ev-charger-certificate">
             EV charging infrastructure
           </SEOInternalLink>
           ).
@@ -297,7 +297,7 @@ const sections = [
               Guide. Each cable has a cable factor based on its overall diameter, and the total of
               all cable factors must not exceed 45% of the trunking internal cross-sectional area.
               The AI selects the smallest standard{' '}
-              <SEOInternalLink href="/calculators/trunking-fill">trunking size</SEOInternalLink>{' '}
+              <SEOInternalLink href="/trunking-fill-calculator">trunking size</SEOInternalLink>{' '}
               that satisfies this requirement and specifies the appropriate fixing method and
               spacing.
             </p>
@@ -306,7 +306,7 @@ const sections = [
             <h4 className="font-bold text-white mb-2">Conduit</h4>
             <p className="text-white text-sm leading-relaxed">
               For conduit installations, the AI uses the{' '}
-              <SEOInternalLink href="/calculators/conduit-fill">
+              <SEOInternalLink href="/conduit-fill-calculator">
                 conduit factor tables
               </SEOInternalLink>{' '}
               to determine the correct conduit size based on the number and size of cables and the
@@ -410,7 +410,7 @@ const sections = [
               <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/how-to-test-insulation-resistance">
                     Insulation resistance
                   </SEOInternalLink>
                   :

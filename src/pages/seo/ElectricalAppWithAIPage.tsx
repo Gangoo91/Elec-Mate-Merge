@@ -138,7 +138,7 @@ const faqs = [
   {
     question: 'What AI agents are included in Elec-Mate?',
     answer:
-      'Elec-Mate includes 5 specialist AI agents, each trained for a specific domain: Circuit Designer (produces complete consumer unit schedules with cable sizes, protective devices, and diversity calculations to BS 7671), Cost Engineer (generates itemised quotes with real UK trade pricing and labour estimates), Installation Specialist (answers installation questions with BS 7671 regulation references), Maintenance Specialist (fault diagnosis with probable causes and diagnostic steps), and Health and Safety agent (generates site-specific RAMS, risk assessments, COSHH assessments, and toolbox talks). In addition, there are 12 AI-powered tools including the Board Scanner, Defect Code AI, Voice to Test Results, Remedial Cost Estimator, Component Identifier, Client Explainer, Diagram Builder, Regulations Lookup, and Report Writer. All AI features are included in the standard subscription at no extra cost.',
+      'Elec-Mate includes 8 specialist AI agents covering circuit design, cost estimation, installation guidance, maintenance and fault finding, health and safety documentation, and other electrician-specific workflows. In addition, there are 12 AI-powered tools including the Board Scanner, Defect Code AI, Voice to Test Results, Remedial Cost Estimator, Component Identifier, Client Explainer, Diagram Builder, Regulations Lookup, and Report Writer. All AI features are included in the standard subscription at no extra cost.',
   },
   {
     question: 'How does AI RAMS generation work?',
@@ -152,7 +152,7 @@ const relatedPages: RelatedPage[] = [
     href: '/tools/ai-electrician',
     title: 'AI Electrician Hub',
     description:
-      '5 specialist AI agents and 12 AI-powered tools built for UK electricians. The central hub for all AI features.',
+      '8 specialist AI agents and 12 AI-powered tools built for UK electricians. The central hub for all AI features.',
     icon: Brain,
     category: 'AI Tools',
   },
@@ -284,7 +284,7 @@ const sections = [
         <p>
           The extracted data flows directly into your{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> certificate form. You
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> certificate form. You
           review it, make any corrections, and move on to testing. What used to take 5-10 minutes of
           manual typing now takes under 30 seconds.
         </p>
@@ -431,7 +431,7 @@ const sections = [
           at Work Regulations 1989.
         </p>
         <p>
-          The <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> exports
+          The <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports
           the document as a professional PDF ready for submission. No more spending 30 minutes
           adapting a generic template for each job. No more RAMS that read like they were written
           for a different site. Describe the job, and the AI does the rest.
@@ -475,7 +475,7 @@ const sections = [
         <p>
           The AI answers with specific regulation references from BS 7671:2018+A3:2024, IET Guidance
           Notes, and exam-relevant content. Elec-Mate also includes structured{' '}
-          <SEOInternalLink href="/study-centre/apprentice">training courses</SEOInternalLink> for
+          <SEOInternalLink href="/study-centre">training courses</SEOInternalLink> for
           Level 2, Level 3, and CPD topics that complement the AI Tutor with sequential learning
           modules, quizzes, and progress tracking.
         </p>
@@ -553,7 +553,7 @@ export default function ElectricalAppWithAIPage() {
       faqHeading="Frequently Asked Questions About Elec-Mate's AI Features"
       relatedPages={relatedPages}
       ctaHeading="Try Every AI Feature Free for 7 Days"
-      ctaSubheading="5 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No card required to start."
+      ctaSubheading="8 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No card required to start."
     />
   );
 }

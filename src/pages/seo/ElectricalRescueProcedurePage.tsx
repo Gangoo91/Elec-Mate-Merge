@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Health & Safety', href: '/guides/electrical-safety-guide' },
+  { label: 'Health & Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Electrical Rescue Procedure', href: '/electrical-rescue-procedure' },
 ];
 
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/tools/rams',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments including electrical emergency procedures.',
     icon: HardHat,
@@ -536,7 +536,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Site RAMS with Emergency Procedures</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">
+                <SEOInternalLink href="/rams-generator">
                   Elec-Mate RAMS generator
                 </SEOInternalLink>{' '}
                 to create site-specific risk assessments that include electrical emergency rescue

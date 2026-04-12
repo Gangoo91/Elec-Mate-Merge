@@ -559,8 +559,8 @@ export default function FireAlarmCertificatePage() {
             </p>
             <p>
               The platform includes 70 electrical calculators, 16 certificate types ({' '}
-              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works,{' '}
               <SEOInternalLink href="/emergency-lighting-certificate">
                 emergency lighting

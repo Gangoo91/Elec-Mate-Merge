@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic fault finding approach for diagnosing non-working circuits.',
     icon: Search,
@@ -112,14 +112,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'How an EICR identifies defects in outdoor electrical installations.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Documentation required when replacing or repairing outdoor lighting.',
     icon: FileCheck2,
@@ -153,7 +153,7 @@ const sections = [
           This guide covers every common cause of outdoor light failure, explains what you can check
           yourself safely, and tells you when to call an electrician. If you are an electrician, the
           later sections cover{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             outdoor circuit fault finding
           </SEOInternalLink>{' '}
           and the specific challenges of weatherproof installations.

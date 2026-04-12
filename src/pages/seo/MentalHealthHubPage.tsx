@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description:
       'Guide to self-employment for electricians. Covers financial management, work-life balance, and managing business stress.',
@@ -225,7 +225,7 @@ const sections = [
           <SEOInternalLink href="/tools/apprentice-training-app">young apprentice</SEOInternalLink>{' '}
           dealing with the pressures of training and exams, an experienced electrician going through
           a difficult period, or a{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             self-employed electrician
           </SEOInternalLink>{' '}
           managing the stress of running a business, the Mental Health Hub has resources that speak
@@ -399,7 +399,7 @@ const sections = [
         </p>
         <p>
           The content covers financial pressure (particularly for{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             self-employed electricians
           </SEOInternalLink>{' '}
           dealing with cash flow, late payments, and irregular income), work-related stress (tight

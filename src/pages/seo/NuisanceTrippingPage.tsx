@@ -210,7 +210,7 @@ const sections = [
               simultaneously (for example, the kitchen lights and the lounge sockets). This is not
               nuisance tripping but a genuine wiring fault. It is common in older installations,
               properties with extensions, and DIY work. A{' '}
-              <SEOInternalLink href="/guides/borrowed-neutral-fault">
+              <SEOInternalLink href="/guides/borrowed-neutral-explained">
                 borrowed neutral fault
               </SEOInternalLink>{' '}
               must be identified and corrected rather than masked by splitting circuits across RCDs.
@@ -343,7 +343,7 @@ const sections = [
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Shared neutral (borrowed neutral).</strong> A{' '}
-              <SEOInternalLink href="/guides/borrowed-neutral-fault">
+              <SEOInternalLink href="/guides/borrowed-neutral-explained">
                 borrowed neutral
               </SEOInternalLink>{' '}
               causes current imbalance that the RCD detects as earth leakage. The tripping pattern
@@ -394,7 +394,7 @@ const sections = [
           <SEOInternalLink href="/guides/ai-tools-for-electricians">Defect Code AI</SEOInternalLink>{' '}
           classifies nuisance tripping findings with the appropriate observation code and suggests
           remedial actions. The{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> documents the
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> documents the
           findings professionally, providing the client with clear evidence of why an upgrade is
           recommended.
         </p>
@@ -412,7 +412,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/borrowed-neutral-fault',
+    href: '/guides/borrowed-neutral-explained',
     title: 'Borrowed Neutral Fault',
     description: 'How shared neutrals cause RCD tripping that mimics nuisance tripping.',
     icon: Cable,
@@ -433,7 +433,7 @@ const relatedPages = [
     category: 'Testing',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate',
     description: 'Document nuisance tripping findings and recommended upgrades on the EICR.',
     icon: FileText,

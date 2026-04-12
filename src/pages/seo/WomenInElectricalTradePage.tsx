@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/self-employed-electrician-guide',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description:
       'How to set up your own electrical business — from registration to finding clients.',
@@ -386,7 +386,7 @@ const sections = [
               <span>
                 <strong>Build your portfolio from day one.</strong> Document your work with photos,
                 descriptions, and evidence of competence. The{' '}
-                <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 is a requirement for your NVQ — start it early and keep it up to date throughout
@@ -508,7 +508,7 @@ const sections = [
                   inspection and testing (C&G 2391)
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/guides/ev-charger-installation-guide">
+                <SEOInternalLink href="/guides/ev-charger-installation">
                   EV charger installation
                 </SEOInternalLink>
                 , fire alarm systems, emergency lighting, solar PV, or building management systems.
@@ -521,7 +521,7 @@ const sections = [
                 <strong>Self-employment.</strong> Many electricians — men and women — eventually go
                 self-employed. Running your own business gives you control over your schedule, your
                 clients, and your income. The{' '}
-                <SEOInternalLink href="/guides/self-employed-electrician-guide">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed electrician guide
                 </SEOInternalLink>{' '}
                 covers the practical steps.

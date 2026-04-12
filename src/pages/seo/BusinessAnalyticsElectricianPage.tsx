@@ -287,7 +287,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 quotes you send are accepted? A healthy win rate is 40% to 60%. Below 30% suggests
                 your pricing is too high or your quotes are not compelling enough. Above 70%
                 suggests you may be undercharging. The{' '}
-                <SEOInternalLink href="/tools/best-quoting-app">quoting app</SEOInternalLink> tracks
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> tracks
                 this automatically.
               </p>
               <p>
@@ -301,7 +301,7 @@ export default function BusinessAnalyticsElectricianPage() {
                 average does it take your clients to pay? Lower is better. If debtor days are
                 creeping up, you need to tighten payment terms or chase invoices more aggressively.
                 The{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
                 sends automatic payment reminders to reduce debtor days.
               </p>
             </>

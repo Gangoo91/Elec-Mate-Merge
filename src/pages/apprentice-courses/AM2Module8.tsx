@@ -388,7 +388,7 @@ const AM2Module8 = () => {
                   Retake Exam
                 </Button>
                 <Button
-                  onClick={() => navigate('am2')}
+                  onClick={() => navigate('/study-centre/apprentice/am2')}
                   variant="outline"
                   size="lg"
                   className="border-border/40 hover:bg-card/10 text-white"

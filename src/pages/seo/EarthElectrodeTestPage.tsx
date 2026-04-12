@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and when you encounter them.',
@@ -145,7 +145,7 @@ const sections = [
           An earth electrode is a conductor (usually a copper-clad steel rod) driven into the ground
           to provide a connection between the electrical installation's earthing system and the
           general mass of earth. It is the foundation of the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements-explained">
+          <SEOInternalLink href="/earthing-arrangements">
             TT earthing system
           </SEOInternalLink>
           , where the electricity supplier does not provide an earth terminal and the installation
@@ -189,7 +189,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Periodic inspection of an existing TT system.</strong> Every{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> for a
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> for a
                 property with a TT earthing arrangement should include an earth electrode resistance
                 measurement. The value is recorded on the schedule of test results.
               </span>
@@ -533,7 +533,7 @@ const sections = [
         <p>
           The earth electrode resistance value (RA) is recorded on the schedule of test results for
           the <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. It should be entered
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It should be entered
           in the "Earth electrode resistance" field in the supply characteristics section of the
           certificate.
         </p>

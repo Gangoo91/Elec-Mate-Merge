@@ -257,7 +257,7 @@ serve(async (req) => {
       mode: mode,
       payment_method_collection: 'always',
       success_url: `${origin}/payment-success?plan=${planId}&trial=${isNoTrialPlan ? 'false' : 'true'}`,
-      cancel_url: `${origin}/checkout-trial`,
+      cancel_url: `${origin}/auth/signup?cancelled=1`,
       client_reference_id: user.id,
       metadata: {
         userId: user.id,

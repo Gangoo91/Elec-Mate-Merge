@@ -270,12 +270,12 @@ export default function EICCertificatePage() {
               an existing installation that involves the creation of new circuits — for example,
               installing a new radial circuit for an electric shower, a new dedicated cooker
               circuit, a new ring final circuit for an extension, or an{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">
+              <SEOInternalLink href="/ev-charger-certificate">
                 EV charger installation
               </SEOInternalLink>{' '}
               requiring a new circuit from the consumer unit. To issue an EIC independently you must
               hold the{' '}
-              <SEOInternalLink href="/training/city-guilds-2391">
+              <SEOInternalLink href="/city-guilds2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>
               .

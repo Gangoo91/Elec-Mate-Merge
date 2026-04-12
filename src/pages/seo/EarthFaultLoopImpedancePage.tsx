@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Earth Fault Loop Impedance', href: '/guides/earth-fault-loop-impedance-calculation' },
 ];
 
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables with automatic Zs verification to ensure disconnection times are met.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S (PME), and TT earthing systems and how they affect Ze and Zs values.',
@@ -226,7 +226,7 @@ const sections = [
           outside the installation, belonging to the supply company. It includes the impedance of
           the supply transformer winding, the phase conductor of the supply cable from the
           transformer to the property, and the earth return path (which varies depending on the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangement
           </SEOInternalLink>
           ).
@@ -567,7 +567,7 @@ const sections = [
               Note: If Ze were higher (for example, 0.80 ohms on a property far from the
               transformer), Zs would be 0.939 ohms — still within the maximum but above the 80% rule
               of thumb. This shows why{' '}
-              <SEOInternalLink href="/guides/earthing-arrangements">Ze values</SEOInternalLink>{' '}
+              <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink>{' '}
               matter for high-current circuits.
             </p>
           </div>
@@ -630,7 +630,7 @@ const sections = [
                 Zs and PFC are inversely related. A high Zs means a low earth fault current. While
                 this may still be within limits for disconnection time (especially with RCD
                 protection), it should be considered alongside the{' '}
-                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                <SEOInternalLink href="/adiabatic-equation-calculator">
                   adiabatic equation
                 </SEOInternalLink>{' '}
                 check.
@@ -684,11 +684,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Zs is one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/guides/voltage-drop-guide-bs-7671">
+                  <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                     voltage drop
                   </SEOInternalLink>
                   ,{' '}

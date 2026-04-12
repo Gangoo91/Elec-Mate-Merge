@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Newcastle', href: '/consumer-unit-replacement-newcastle' },
 ];
 
@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on your phone with AI assistance and instant PDF export.',
     icon: Zap,
@@ -290,7 +290,7 @@ const sections = [
               <span>
                 <strong>Certification documentation</strong> — upon completion, the electrician must
                 issue an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 together with a Schedule of Test Results. For a consumer unit replacement that is
@@ -552,7 +552,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate and Schedule of Test Results
                   on your phone while still on site. Record all circuit test values directly,
                   generate the PDF, and send it to the client before you leave. No evening
@@ -569,7 +569,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you find earthing deficiencies, defective wiring, or additional circuits
                   needed, quote them immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>
                   . Customers are most likely to approve additional work while you are on site and

@@ -131,7 +131,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 (MCBs, fuses) alone cannot provide adequate disconnection times — the fault current
                 is too low to trip them quickly. This is why BS 7671 requires RCD protection on
                 every circuit in a TT system. Understanding{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>{' '}
                 is fundamental to safe installation design.
@@ -170,7 +170,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 single rod, your options are to use a longer rod, install parallel rods, or choose a
                 location with lower soil resistivity. Increasing the rod diameter has very little
                 benefit. These calculations feed into the overall{' '}
-                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+                <SEOInternalLink href="/prospective-fault-current-calculator">
                   fault current assessment
                 </SEOInternalLink>{' '}
                 for the installation.
@@ -276,7 +276,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 The parallel rods must all be bonded together with a copper earth conductor, and the
                 conductor must be protected against mechanical damage and corrosion. The bonding
                 connections should be accessible for future testing. Correct{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 for the earthing conductor is essential. This is part of the overall{' '}
@@ -393,7 +393,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements Guide',
           description:
             'Complete guide to TN-S, TN-C-S, and TT earthing systems with BS 7671 requirements explained.',
@@ -401,7 +401,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/tools/prospective-fault-current-calculator',
+          href: '/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Calculate PSCC at the origin and at each distribution board for BS 7671 compliance.',
@@ -425,7 +425,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

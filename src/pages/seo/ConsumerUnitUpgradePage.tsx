@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/afdd-guide',
+    href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
     description:
       'Arc Fault Detection Devices — how they work, where they are required, and BS 7671 recommendations.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-safety-at-home',
+    href: '/guides/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description: 'When to call an electrician, DIY limits, danger signs, and EICR for homeowners.',
     icon: Home,
@@ -218,7 +218,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR recommendation.</strong> An{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> identifying
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> identifying
                 the consumer unit as a C2 (Potentially Dangerous) or C3 (Improvement Recommended)
                 observation is a clear signal that an upgrade is needed.
               </span>

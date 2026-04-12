@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for long runs in Lace Market warehouse conversions with automatic derating.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Nottingham customers with accurate local pricing.',
     icon: PoundSterling,
@@ -484,7 +484,7 @@ const sections = [
                 <strong>Thick masonry walls</strong> — warehouse buildings have 450mm to 600mm solid
                 brick walls. Core drilling for cable penetrations requires specialist equipment.
                 Plan routes to minimise penetrations and use existing openings. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 helps verify cable sizes for the long runs typical in these buildings.
@@ -554,7 +554,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Nottingham landlords and managing agents expect prompt, professional certificates.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>

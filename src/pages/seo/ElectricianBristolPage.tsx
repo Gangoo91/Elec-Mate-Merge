@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone for Bristol domestic and commercial work.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Victorian property rewires, EV charger circuits, and heat pump installations.',
@@ -170,7 +170,7 @@ const sections = [
       <>
         <p>
           Bristol is in England, so{' '}
-          <SEOInternalLink href="/guides/part-p-electrical-regulations">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           applies to all notifiable domestic electrical work. The key points for Bristol
@@ -203,7 +203,7 @@ const sections = [
                 additions or alterations in bathrooms and wet rooms, outdoor electrical
                 installations, and work in special locations (swimming pools, saunas) are all
                 notifiable under Part P. An{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> must be issued
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued
                 for all notifiable work.
               </span>
             </li>
@@ -536,7 +536,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
@@ -553,7 +553,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Period Properties</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for rewires in Bristol's Victorian and Georgian properties. Longer cable routes
@@ -569,7 +569,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Bristol jobs accurately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemise materials, labour, testing, and certification for everything from

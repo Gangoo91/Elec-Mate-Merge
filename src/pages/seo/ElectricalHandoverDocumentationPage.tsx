@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/eicr-explained',
+    href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
       'Complete guide to the Electrical Installation Condition Report -- what it covers, how it works, and when it is needed.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Complete guide to consumer unit replacement including documentation and certification requirements.',
@@ -120,14 +120,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description: 'BS 5839 compliance, system grades and categories, and fire alarm certification.',
     icon: ShieldCheck,
     category: 'Certificate',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'How to set up and grow your electrical business, including documentation and compliance systems.',
@@ -170,7 +170,7 @@ const sections = [
         <p>
           This guide covers every element of a professional electrical handover package, from the
           mandatory{' '}
-          <SEOInternalLink href="/guides/eicr-explained">EIC and test results</SEOInternalLink> to
+          <SEOInternalLink href="/tools/eicr-certificate">EIC and test results</SEOInternalLink> to
           the best-practice additions that set you apart from the competition.
         </p>
       </>
@@ -327,7 +327,7 @@ const sections = [
               <span>
                 <strong>Maintenance requirements</strong> -- what routine maintenance the client is
                 responsible for (monthly{' '}
-                <SEOInternalLink href="/guides/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   emergency lighting
                 </SEOInternalLink>{' '}
                 function tests, quarterly RCD tests, keeping ventilation clear around distribution

@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly for any circuit with correction factors and voltage drop checks.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering all BS 7671 requirements.',
@@ -372,7 +372,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification
           </SEOInternalLink>
           , Section 534 and Regulation 443.4 are commonly examined topics. Understanding the risk
@@ -427,7 +427,7 @@ const sections = [
               <strong>Test and verify.</strong> After installation, check the SPD status indicator
               shows healthy (green). Verify the backup MCB is correctly rated and functioning.
               Record the SPD installation on the{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate
               </SEOInternalLink>
               .
@@ -621,11 +621,11 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             Elec-Mate calculators
           </SEOInternalLink>{' '}
           to verify conductor sizes, earth fault loop impedance, and{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> for
+          <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> for
           SPD installations. Getting the basics right prevents callbacks and ensures the SPD
           performs when it is needed most.
         </p>

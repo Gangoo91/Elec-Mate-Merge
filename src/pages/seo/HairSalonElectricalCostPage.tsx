@@ -104,14 +104,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for salon fit-outs.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote salon electrical work with station-by-station pricing.',
     icon: Calculator,
@@ -392,7 +392,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Get the salon floor plan showing every styling station, wash station, reception
                   desk, and back-of-house area. Price per station plus common areas. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build the quote station by station.

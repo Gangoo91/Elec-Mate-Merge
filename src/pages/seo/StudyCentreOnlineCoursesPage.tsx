@@ -95,6 +95,13 @@ export default function StudyCentreOnlineCoursesPage() {
                 </SEOInternalLink>{' '}
                 for team progress tracking.
               </p>
+              <p>
+                The strongest SEO and product advantage here is that learning does not sit in a
+                separate silo. Study a topic, then apply it immediately in the{' '}
+                <SEOInternalLink href="/tools/digital-certificates-app">certificate workflow</SEOInternalLink>,
+                the <SEOInternalLink href="/electrical-testing-calculators">calculator suite</SEOInternalLink>,
+                or the <SEOInternalLink href="/tools/electrical-app-with-ai">AI app tools</SEOInternalLink>.
+              </p>
             </>
           ),
           appBridge: {
@@ -131,19 +138,19 @@ export default function StudyCentreOnlineCoursesPage() {
               <p>Level 3 courses build on this foundation:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+                  <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                     BS 7671 18th Edition
                   </SEOInternalLink>{' '}
                   wiring regulations
                 </li>
                 <li>Inspection and testing principles</li>
                 <li>
-                  <SEOInternalLink href="/guides/cable-sizing-guide">Cable sizing</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">Cable sizing</SEOInternalLink>{' '}
                   and selection
                 </li>
                 <li>Fault finding and diagnosis</li>
                 <li>
-                  <SEOInternalLink href="/guides/earthing-arrangements">
+                  <SEOInternalLink href="/earthing-arrangements">
                     Earthing arrangements
                   </SEOInternalLink>{' '}
                   (TN-S, TN-C-S, TT)
@@ -193,7 +200,7 @@ export default function StudyCentreOnlineCoursesPage() {
                   — selection, installation, and testing
                 </li>
                 <li>
-                  <SEOInternalLink href="/guides/afdd-guide">AFDDs</SEOInternalLink> — arc fault
+                  <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink> — arc fault
                   detection devices
                 </li>
                 <li>Commercial electrical installations</li>
@@ -327,7 +334,7 @@ export default function StudyCentreOnlineCoursesPage() {
                   <span className="font-semibold text-white">AM2 mock exam</span> — practical
                   assessment preparation with scenario-based questions covering installation,
                   inspection, testing, and fault finding. See our{' '}
-                  <SEOInternalLink href="/guides/am2-exam-preparation">
+                  <SEOInternalLink href="/am2-exam-preparation">
                     AM2 exam preparation guide
                   </SEOInternalLink>
                   .
@@ -536,12 +543,20 @@ export default function StudyCentreOnlineCoursesPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ calculators to apply what you learn — cable sizing, voltage drop, Zs verification, and more.',
           icon: Calculator,
           category: 'Tools',
+        },
+        {
+          href: '/tools/electrical-app-with-ai',
+          title: 'Electrical App with AI',
+          description:
+            'Take what you learn in the Study Centre into AI-assisted certificates, quoting, and site workflows.',
+          icon: Brain,
+          category: 'AI Tools',
         },
       ]}
       ctaHeading="Start studying free for 7 days"

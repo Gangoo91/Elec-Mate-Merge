@@ -553,7 +553,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue the EIC On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate Electrical Installation Certificate app
                   </SEOInternalLink>{' '}
                   to complete and sign the EIC before leaving the property. Record test results,
@@ -571,7 +571,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the shower circuit has undersized cable or an unprotected circuit, quote the
                   upgrade immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Customers who receive a professional quote while you are present approve work at

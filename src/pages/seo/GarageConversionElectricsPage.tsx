@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for heating circuits, cooker circuits, and sub-mains in garage conversions.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on circuits running from house consumer unit to the converted garage.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for garage conversions on your phone.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price garage conversion electrical packages with itemised materials and labour.',
     icon: Wrench,
@@ -476,7 +476,7 @@ const sections = [
       <>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           is required for the garage conversion electrical work. The scope of testing includes all
@@ -675,7 +675,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . First fix, second fix, consumer unit, lighting, sockets, heating, smoke

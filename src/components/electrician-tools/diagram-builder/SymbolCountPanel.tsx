@@ -5,13 +5,16 @@ import { CIRCUIT_COLOURS } from '@/pages/electrician-tools/ai-tools/DiagramBuild
 interface SymbolCountPanelProps {
   counts: { id: string; name: string; category: string; count: number }[];
   circuits?: { ref: string; name: string; count: number; colour: string }[];
+  hidden?: boolean;
+  mobile?: boolean;
+  bottomOffset?: number;
 }
 
-export const SymbolCountPanel = ({ counts, circuits }: SymbolCountPanelProps) => {
+export const SymbolCountPanel = ({ counts, circuits, hidden = false, mobile = false, bottomOffset = 0 }: SymbolCountPanelProps) => {
   const [expanded, setExpanded] = useState(false);
   const [tab, setTab] = useState<'items' | 'circuits'>('items');
 
-  if (counts.length === 0) return null;
+  if (counts.length === 0 || hidden) return null;
 
   const totalItems = counts.reduce((sum, s) => sum + s.count, 0);
 
@@ -25,7 +28,10 @@ export const SymbolCountPanel = ({ counts, circuits }: SymbolCountPanelProps) =>
   const categoryOrder = Object.keys(grouped).sort();
 
   return (
-    <div className="absolute bottom-28 left-4 z-20 rounded-xl bg-black/70 backdrop-blur-lg min-w-[140px] max-w-[220px]">
+    <div
+      className={`absolute z-20 rounded-xl bg-black/70 backdrop-blur-lg ${mobile ? 'left-2 right-2 min-w-0 max-w-none' : 'left-4 min-w-[140px] max-w-[220px]'}`}
+      style={{ bottom: `${112 + bottomOffset}px` }}
+    >
       {/* Pill toggle */}
       <button
         onClick={() => setExpanded(!expanded)}

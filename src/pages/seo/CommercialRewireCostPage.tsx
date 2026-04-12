@@ -104,14 +104,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote commercial rewires with itemised materials, labour, and professional PDF output.',
@@ -453,7 +453,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Walk the building and measure every containment route before pricing anything
                   else. Containment is the biggest variable cost. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised schedules of containment, distribution equipment, and final
@@ -469,7 +469,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Include All Certification Costs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Allow adequate time for testing and completing the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. A 500m²
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A 500m²
                   commercial installation might take 2 to 3 days to test and certify properly. Do
                   not squeeze this into the last afternoon of the contract.
                 </p>

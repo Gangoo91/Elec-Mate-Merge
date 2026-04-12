@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Generate compliant Electrical Installation Certificates for Part P-notifiable work.',
@@ -275,7 +275,7 @@ const sections = [
         </div>
         <p>
           Even where work is non-notifiable, it must still comply with BS 7671. A{' '}
-          <SEOInternalLink href="/tools/minor-works" label="Minor Works Certificate" /> should be
+          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> should be
           issued for non-notifiable additions or alterations to record what was done and confirm
           compliance.
         </p>
@@ -326,7 +326,7 @@ const sections = [
           property — it proves the work was carried out by a competent person and is compliant with
           Building Regulations. Issue the{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />{' '}
           alongside the BRCC as the technical record of the installation.
@@ -490,7 +490,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — generate Part P-compliant EICs on your phone with circuit schedules, test results,
@@ -500,7 +500,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor works certificates for non-notifiable additions and alterations to give
                 clients a record of compliant work.
               </span>

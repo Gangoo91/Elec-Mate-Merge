@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/calculators/max-demand',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate maximum demand for commercial kitchens with diversity factors applied to three-phase loads.',
@@ -368,7 +368,7 @@ const sections = [
           Before starting any commercial kitchen fit-out, obtain the manufacturer data sheets for
           every piece of equipment. Calculate the total connected load, apply diversity, and design
           the distribution board schedule accordingly. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/calculators/max-demand">max demand calculator</SEOInternalLink> to
+          <SEOInternalLink href="/max-demand-calculator">max demand calculator</SEOInternalLink> to
           verify the supply capacity is adequate.
         </p>
       </>
@@ -701,7 +701,7 @@ const sections = [
         <p>
           Elec-Mate supports the full range of certificates needed for restaurant work —{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>, Fire
           Alarm, Emergency Lighting, and PAT Testing. Complete every certificate on your phone,
           generate professional PDFs, and deliver them to the restaurant owner before you leave the

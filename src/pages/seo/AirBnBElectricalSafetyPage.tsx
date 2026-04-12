@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/pat-testing',
+    href: '/guides/pat-testing-guide-uk',
     title: 'PAT Testing Guide',
     description: 'When PAT testing is required, what it covers, and how often it should be done.',
     icon: ClipboardCheck,
@@ -602,7 +602,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit upgrades, additional sockets, hot tub connections, and garden
                   supplies are all high-value follow-on jobs. Quote on the day with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and convert inspection clients into installation clients.

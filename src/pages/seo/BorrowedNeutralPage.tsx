@@ -541,7 +541,7 @@ const sections = [
         <p>
           For these reasons, a borrowed neutral should be classified as at least a Code C2
           (potentially dangerous) defect on an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>, with a
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, with a
           recommendation for immediate investigation and rectification.
         </p>
       </>
@@ -567,7 +567,7 @@ const sections = [
           icon={Search}
         />
         <p>
-          The <SEOInternalLink href="/guides/eicr-certificate">EICR form</SEOInternalLink> records
+          The <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink> records
           the finding with the observation code, recommended remedial action, and priority. The
           certificate provides the client with clear documentation of the fault and the reason for
           the recommended work, supporting your quotation for the repair.
@@ -610,7 +610,7 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate',
     description: 'Record borrowed neutral findings with observation codes on the EICR.',
     icon: FileText,

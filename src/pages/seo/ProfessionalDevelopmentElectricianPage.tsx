@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 18th Edition qualification with structured training content.',
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/city-and-guilds-2391',
+    href: '/city-guilds2391',
     title: 'C&G 2391 Guide',
     description: 'Everything you need to know about the inspection and testing qualification.',
     icon: ClipboardCheck,
@@ -273,7 +273,7 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               If you qualified through the installation route and do not hold{' '}
-              <SEOInternalLink href="/guides/city-and-guilds-2391">C&G 2391</SEOInternalLink>,
+              <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink>,
               adding this qualification opens up periodic inspection work — a steady, recurring
               income stream, particularly landlord EICRs.
             </p>
@@ -479,7 +479,7 @@ const sections = [
                 <strong>Budget for CPD annually.</strong> Set aside a fixed amount each year for
                 training costs and lost earnings. Treat it as a business expense — because it is.
                 CPD costs are tax-deductible for{' '}
-                <SEOInternalLink href="/guides/electrician-self-employed">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed electricians
                 </SEOInternalLink>
                 .

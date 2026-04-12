@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for commercial and domestic installations with automatic derating factors.',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Southampton customers with accurate local pricing.',
@@ -540,7 +540,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Southampton landlords and waterfront developers expect professional certificates.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site sets you apart from
                   competitors still posting handwritten certificates.
                 </p>

@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
       'Current regulations for consumer units including amendment 3 requirements and metal enclosure rules.',
@@ -148,7 +148,7 @@ const sections = [
           region. The cause can be external (a fault on the Distribution Network Operator's network,
           severe weather damage to overhead lines, planned maintenance) or internal (a tripped
           protective device in your own{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer unit
           </SEOInternalLink>
           , a failed main switch, a fault on your internal wiring).
@@ -257,7 +257,7 @@ const sections = [
                 or melted wire. Do not attempt to replace the fuse wire yourself if you are not
                 confident — call an electrician. If the fuse box is very old (pre-2000), consider
                 having it upgraded to a modern{' '}
-                <SEOInternalLink href="/guides/consumer-unit-change-cost-uk">
+                <SEOInternalLink href="/guides/consumer-unit-change">
                   consumer unit
                 </SEOInternalLink>{' '}
                 with MCBs and RCD protection.
@@ -492,7 +492,7 @@ const sections = [
             NICEIC, NAPIT, or ELECSA
           </SEOInternalLink>
           ) and hold an{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391-exam-guide">
+          <SEOInternalLink href="/city-guilds2391">
             inspection and testing qualification
           </SEOInternalLink>
           . A general handyman is not qualified to diagnose electrical faults.
@@ -544,7 +544,7 @@ const sections = [
               <Lightbulb className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Have your installation inspected regularly.</strong> A periodic{' '}
-                <SEOInternalLink href="/guides/eicr-certificate-explained">
+                <SEOInternalLink href="/tools/eicr-certificate">
                   EICR inspection
                 </SEOInternalLink>{' '}
                 every 5 to 10 years (or every 5 years for rented properties) identifies problems
@@ -599,10 +599,10 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the callout results in remedial work — replacing a faulty MCB, re-terminating a
                   connection, or fitting a new socket — generate the{' '}
-                  <SEOInternalLink href="/guides/minor-works-certificate-explained">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
-                  or <SEOInternalLink href="/guides/eic-certificate-explained">EIC</SEOInternalLink>{' '}
+                  or <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   on site. Send it to the customer before you leave.
                 </p>
               </div>

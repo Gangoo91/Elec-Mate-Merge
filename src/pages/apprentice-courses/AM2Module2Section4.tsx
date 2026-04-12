@@ -986,7 +986,7 @@ const AM2Module2Section4 = () => {
         nextHref="/study-centre/apprentice/am2/module2/section5"
         nextLabel="Continue to Section 5"
         currentSection={4}
-        totalSections={8}
+        totalSections={5}
       />
     </AM2SectionLayout>
   );

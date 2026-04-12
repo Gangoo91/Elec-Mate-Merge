@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with automatic voltage drop checks.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -333,7 +333,7 @@ const sections = [
                 <strong>Cable sizing for voltage drop</strong> — all cable sizing must be calculated
                 to ensure voltage drop does not exceed 3% for lighting circuits or 5% for other
                 circuits under BS 7671. Use{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify cable selection for the actual cable run length.
@@ -512,7 +512,7 @@ const sections = [
                   Factor in North East labour rates (£35 to £50/hour), typical cable run distances
                   (5 to 15 metres for most Newcastle semis and terraces), earth rod costs where
                   needed, and Northern Powergrid notification time. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build accurate itemised quotes on site, including all materials and
@@ -528,7 +528,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every EV charger installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   signed by the designer, constructor, and inspector. Complete and issue the EIC

@@ -17,7 +17,7 @@ import {
 // Data
 // -------------------------------------------------------------------
 
-const breadcrumbs = [{ label: 'Electrical Safety', href: '/electrical-safety-at-home' }];
+const breadcrumbs = [{ label: 'Electrical Safety', href: '/guides/electrical-safety-at-home' }];
 
 const tocItems = [
   { id: 'common-hazards', label: 'Common Electrical Hazards' },

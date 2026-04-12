@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Health & Safety', href: '/guides/electrical-safety-guide' },
+  { label: 'Health & Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Confined Space Electrical Work', href: '/confined-space-electrical' },
 ];
 
@@ -104,14 +104,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/electrical-safety-guide',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety Guide',
     description: 'Complete UK electrical safety reference for qualified electricians.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/rams',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate confined space risk assessments and method statements.',
     icon: FileCheck2,
@@ -526,7 +526,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Confined Space RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">
+                <SEOInternalLink href="/rams-generator">
                   Elec-Mate RAMS generator
                 </SEOInternalLink>{' '}
                 to produce comprehensive risk assessments and method statements for confined space

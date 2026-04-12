@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Complete guide to BS 7671:2018+A3:2024 — the 18th Edition wiring regulations.',
     icon: BookOpen,
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate correct cable sizes using BS 7671 correction factors and tabulated current ratings.',

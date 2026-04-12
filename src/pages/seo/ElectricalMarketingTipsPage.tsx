@@ -583,7 +583,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'Complete guide to setting up as a self-employed electrician in the UK.',
           icon: TrendingUp,
@@ -597,7 +597,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -605,7 +605,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Professional invoices with online payment links, created and sent from site.',

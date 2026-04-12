@@ -263,7 +263,7 @@ const features = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Create Electrical Installation Certificates for new work and alterations.',
     icon: FileCheck2,
@@ -438,7 +438,7 @@ export default function EICRCertificatePage() {
             (the IET Wiring Regulations, 18th Edition) and follows the model forms published in
             Appendix 6 of the standard. It records the extent of the installation inspected, the
             supply characteristics, details of the{' '}
-            <SEOInternalLink href="/guides/earthing-arrangements">
+            <SEOInternalLink href="/earthing-arrangements">
               earthing arrangements
             </SEOInternalLink>
             , the test results for every circuit, and any observations about departures from the

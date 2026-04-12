@@ -118,7 +118,7 @@ export default function ElectricalLoadSchedulePage() {
                 <li>
                   <span className="font-semibold text-white">EIC and EICR certificates</span> —
                   Section 6 of the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> and Section F
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and Section F
                   of the EICR require the assessed maximum demand. You cannot complete these
                   certificates accurately without a load schedule.
                 </li>
@@ -264,7 +264,7 @@ export default function ElectricalLoadSchedulePage() {
                 Elec-Mate applies these rules automatically as you build the schedule. Each circuit
                 is categorised by load type, and the diversity percentages are applied in the
                 summary section. The result is the assessed maximum demand — the figure you enter on
-                the <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                the <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                 and compare against the supply rating.
               </p>
             </>
@@ -406,7 +406,7 @@ export default function ElectricalLoadSchedulePage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Quick maximum demand calculation with IET diversity factors for domestic installations.',
@@ -430,7 +430,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for each circuit in the load schedule using BS 7671 tables and correction factors.',
@@ -438,7 +438,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description:
             'Complete Electrical Installation Certificates with automatic assessed demand from load schedules.',
@@ -446,7 +446,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Certificates',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

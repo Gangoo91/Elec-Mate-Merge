@@ -221,7 +221,7 @@ export default function BusinessCostCalculatorPage() {
                   VAT scheme comparison tool
                 </SEOInternalLink>{' '}
                 to understand how these costs interact with your VAT position, and the{' '}
-                <SEOInternalLink href="/tools/electrician-tax-guide">tax guide</SEOInternalLink> to
+                <SEOInternalLink href="/guides/electrician-tax-guide-uk">tax guide</SEOInternalLink> to
                 ensure you claim all allowable deductions.
               </p>
             </>
@@ -285,11 +285,11 @@ export default function BusinessCostCalculatorPage() {
               <p>
                 <strong className="text-yellow-400">CPD hours:</strong> Your certification body
                 requires evidence of ongoing CPD. Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/cpd-for-electricians">CPD tracking</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/cpd-for-electricians">CPD tracking</SEOInternalLink>{' '}
                 feature logs your training automatically. Budget £500 to £1,500 per year for
                 training and development, depending on how actively you are expanding your skill
                 set. The{' '}
-                <SEOInternalLink href="/tools/starting-electrical-business">
+                <SEOInternalLink href="/guides/starting-an-electrical-business">
                   starting an electrical business guide
                 </SEOInternalLink>{' '}
                 covers how to plan training investment in your first years.
@@ -459,7 +459,7 @@ export default function BusinessCostCalculatorPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'Complete guide to setting up as a self-employed electrician in the UK.',
           icon: Wrench,

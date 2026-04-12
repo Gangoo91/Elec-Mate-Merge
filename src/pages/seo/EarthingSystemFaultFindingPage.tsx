@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding-methodology',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Methodology',
     description: 'Systematic fault finding approach including safe isolation.',
     icon: Wrench,

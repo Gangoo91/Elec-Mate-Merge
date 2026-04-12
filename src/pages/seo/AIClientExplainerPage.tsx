@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Client Explainer', href: '/tools/ai-client-explainer' },
 ];
 

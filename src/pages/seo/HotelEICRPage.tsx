@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description: 'BS 5266-1 emergency lighting inspection, testing, and certification guide.',
     icon: Zap,
@@ -684,7 +684,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Distribution board replacements, emergency lighting upgrades, and fire alarm
                   remediation in hotels are high-value contracts. Quote on site with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and convert inspection clients into recurring annual maintenance relationships.

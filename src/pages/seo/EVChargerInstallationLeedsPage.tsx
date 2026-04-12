@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -216,7 +216,7 @@ const sections = [
         <p>
           These prices include supply and installation of a smart charger unit, all cabling,
           containment, DNO G98 notification, and the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>
           . Earth rod installation (where required) adds approximately £80 to £150.
@@ -389,7 +389,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm the circuit cable size meets both current-carrying capacity and voltage
@@ -506,7 +506,7 @@ const sections = [
                   Factor in Yorkshire day rates (£300 to £400), cable run lengths in older terraced
                   stock, potential board upgrades on pre-2000 consumer units, and parking
                   considerations in inner-city Leeds streets. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes on site.
@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification and Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every EV charger installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , NPG G98/G99 notification, and Building Regulations notification (Part P).

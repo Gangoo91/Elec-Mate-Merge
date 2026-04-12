@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Sheffield', href: '/consumer-unit-replacement-sheffield' },
 ];
 
@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on your phone with AI assistance and instant PDF export.',
     icon: FileCheck2,
@@ -314,7 +314,7 @@ const sections = [
               <span>
                 <strong>Electrical Installation Certificate</strong> — the electrician must also
                 issue an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 detailing the new consumer unit and a Schedule of Test Results for all circuits
@@ -500,7 +500,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Paperless EICs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to record all circuit test results, complete the Electrical Installation
                   Certificate, and generate the PDF while still on site in Sheffield. Send the
                   certificate to your customer before you leave. No clipboards, no evening data
@@ -517,7 +517,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When your inspection uncovers old wiring, missing bonding, or additional circuits
                   needed, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote the additional work while you are still on site. Customers in Sheffield

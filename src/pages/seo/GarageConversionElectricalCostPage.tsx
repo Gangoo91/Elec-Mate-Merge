@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for garage conversion circuits including long runs to remote consumer units.',
@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for garage conversion circuits on your phone.',
@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price garage conversion electrical packages with labour, materials, and Part P notification.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long cable runs from house consumer unit to converted garage.',
@@ -317,7 +317,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           allows the correct cable size and MCB rating to be confirmed once the heating load is
@@ -457,7 +457,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site after testing. AI board scanning, voice test entry, and instant PDF export

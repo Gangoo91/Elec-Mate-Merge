@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote warehouse and industrial electrical projects with instant PDF proposals.',
     icon: PoundSterling,
@@ -577,7 +577,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Warehouse projects involve large cable quantities, significant containment
                   systems, and multiple sub-systems. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build detailed, professional proposals with accurate material takeoffs and

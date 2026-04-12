@@ -63,12 +63,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  // User signed up but never completed checkout — redirect to checkout
-  if (user && !canAccess && profile?.onboarding_completed === false) {
-    return <Navigate to="/checkout-trial" replace />;
-  }
-
-  // User had a subscription that expired — show paywall
+  // Authed but no access — show the in-app paywall. Single rule for all
+  // states: fresh signup abandonment, trial lapsed, or never-paid legacy
+  // account. The paywall replaces the child content entirely, so there is
+  // no "app loaded behind a modal" escape. Subscribe Now goes to plans;
+  // Sign Out clears the session.
   if (user && !canAccess) {
     return <TrialExpiredPaywall />;
   }

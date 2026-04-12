@@ -364,7 +364,7 @@ export default function IPRatingGuidePage() {
                 Bathroom zones have specific IP requirements too. Zone 1 requires at least IPX4
                 (splash protection), and equipment in Zone 0 must be at least IPX7 (temporary
                 immersion). The{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                 records the IP rating of equipment installed in special locations.
               </p>
             </>
@@ -506,7 +506,7 @@ export default function IPRatingGuidePage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for circuits in wet or outdoor locations where derating for installation method applies.',
@@ -514,7 +514,7 @@ export default function IPRatingGuidePage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description: '50+ BS 7671 calculators and reference tools for UK electricians.',
           icon: Calculator,

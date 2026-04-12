@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any electric shower rating with automatic correction factors and voltage drop check.',
@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for shower circuits — critical for longer cable runs on high-current circuits.',
@@ -167,7 +167,7 @@ const sections = [
           </SEOInternalLink>
           . It must be carried out by an electrician registered with a competent person scheme or
           notified to Building Control before the work starts. An{' '}
-          <SEOInternalLink href="/guides/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           must be issued on completion.
@@ -242,7 +242,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">cable size</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           depends on the shower rating, the installation method, and the applicable correction
           factors. The cable must carry the full load current continuously — diversity does not
           apply to electric shower circuits because the full load operates whenever the shower is in
@@ -273,7 +273,7 @@ const sections = [
           These sizes assume standard installation conditions with no adverse correction factors. If
           the cable is grouped with other cables, passes through thermal insulation, or is installed
           in a high ambient temperature, apply the{' '}
-          <SEOInternalLink href="/guides/correction-factors-guide">
+          <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
           </SEOInternalLink>{' '}
           from Appendix 4 of BS 7671. After applying correction factors, the cable's adjusted
@@ -281,7 +281,7 @@ const sections = [
         </p>
         <p>
           Check{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop</SEOInternalLink>{' '}
           for the actual cable length and design current. Shower circuits often have longer cable
           runs because the distribution board may be on the ground floor and the shower on the first
           floor or in a loft conversion. A 20-metre run of 10mm{'\u00B2'} at 41.3A gives a voltage
@@ -430,7 +430,7 @@ const sections = [
         </div>
         <p>
           When testing the completed installation, the{' '}
-          <SEOInternalLink href="/guides/rcd-testing-guide">RCD must be tested</SEOInternalLink> at
+          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at
           rated residual operating current (30mA) and at 5x (150mA). The trip times must be within
           300ms at 1x and 40ms at 5x.
         </p>

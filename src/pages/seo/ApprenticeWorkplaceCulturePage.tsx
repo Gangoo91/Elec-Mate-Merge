@@ -94,7 +94,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/apprentice-rights-pay',
+    href: '/guides/apprentice-rights-pay-uk',
     title: 'Apprentice Rights and Pay',
     description:
       'Your legal rights as an apprentice including pay, hours, holiday, and workplace protections.',
@@ -102,7 +102,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/apprentice-professional-development',
+    href: '/guides/professional-development-electrician',
     title: 'Professional Development',
     description:
       'CPD, portfolio building, networking, and career planning from your apprenticeship onwards.',
@@ -110,7 +110,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/what-to-expect-as-apprentice',
+    href: '/guides/what-to-expect-electrical-apprentice',
     title: 'What to Expect as an Apprentice',
     description: 'Complete overview of the apprenticeship experience from induction to EPA.',
     icon: Target,
@@ -217,7 +217,7 @@ const sections = [
           happened, and ask how to correct it. Do not hide mistakes, do not blame others, and do not
           make excuses. Honesty about errors earns respect. Dishonesty about errors destroys it. For
           more on managing your early career, see our{' '}
-          <SEOInternalLink href="/guides/what-to-expect-as-apprentice">
+          <SEOInternalLink href="/guides/what-to-expect-electrical-apprentice">
             guide to what to expect
           </SEOInternalLink>
           .
@@ -322,7 +322,7 @@ const sections = [
         </p>
         <p>
           <strong>Your legal protections:</strong> The{' '}
-          <SEOInternalLink href="/guides/apprentice-rights-pay">Equality Act 2010</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/apprentice-rights-pay-uk">Equality Act 2010</SEOInternalLink>{' '}
           protects you from harassment and discrimination based on protected characteristics. The
           Health and Safety at Work Act 1974 requires your employer to provide a safe working
           environment, which includes protection from bullying. Your employer has a legal duty to
@@ -390,7 +390,7 @@ const sections = [
           training provider. You deserve quality mentoring — it is a fundamental part of the
           apprenticeship that your employer has committed to providing. A change of supervisor is
           sometimes necessary and is not a reflection of failure on your part. Your{' '}
-          <SEOInternalLink href="/guides/apprentice-professional-development">
+          <SEOInternalLink href="/guides/professional-development-electrician">
             professional development
           </SEOInternalLink>{' '}
           depends on receiving proper guidance throughout your training.

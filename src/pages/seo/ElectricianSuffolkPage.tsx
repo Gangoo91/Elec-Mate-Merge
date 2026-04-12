@@ -167,7 +167,7 @@ const sections = [
         </div>
         <p>
           For{' '}
-          <SEOInternalLink href="/consumer-unit-replacement">
+          <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
             consumer unit replacements
           </SEOInternalLink>{' '}
           or <SEOInternalLink href="/guides/eicr-for-landlords">landlord EICRs</SEOInternalLink>{' '}

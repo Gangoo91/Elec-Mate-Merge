@@ -629,21 +629,21 @@ export default function VoltageDropGuideBS7671Page() {
           category: 'Guide',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Calculate voltage drop instantly with BS 7671 Appendix 4 tables.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size cables with automatic voltage drop verification.',
           icon: Zap,
           category: 'Calculator',
         },
         {
-          href: '/guides/bs-7671-18th-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition Guide',
           description: 'Complete overview of the 18th Edition Wiring Regulations.',
           icon: BookOpen,
@@ -657,7 +657,7 @@ export default function VoltageDropGuideBS7671Page() {
           category: 'Guide',
         },
         {
-          href: '/calculators/adiabatic-equation',
+          href: '/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
           description: 'Verify fault current withstand after sizing cables.',
           icon: ShieldCheck,

@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Reference Methods', href: '/guides/reference-methods-cable-installation' },
 ];
 
@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Automated cable sizing with reference method selection and correction factor application.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/correction-factors-guide',
+    href: '/guides/correction-factors-bs-7671',
     title: 'Correction Factors Guide',
     description:
       'Ambient temperature, grouping, and thermal insulation correction factors explained.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/voltage-drop-guide-bs-7671',
+    href: '/guides/voltage-drop-limits-bs-7671',
     title: 'Voltage Drop Guide',
     description:
       'Calculating voltage drop for cable runs and ensuring compliance with BS 7671 limits.',
@@ -515,12 +515,12 @@ const sections = [
         </p>
         <p>
           These tabulated values are <strong>before</strong>{' '}
-          <SEOInternalLink href="/guides/correction-factors-guide">
+          <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
           </SEOInternalLink>{' '}
           for grouping, ambient temperature, and thermal insulation are applied. After applying
           those factors, the effective capacity is lower still. The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           handles all of this in one step.

@@ -105,14 +105,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for new build handovers.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote new build electrical packages with per-plot pricing and specification levels.',
@@ -432,7 +432,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculate your cost per house type (based on the outlet schedule), then quote the
                   development in phases. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build per-plot pricing templates that you can replicate across the development.
@@ -447,7 +447,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Templates for Each House Type</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC template</SEOInternalLink> for
+                  <SEOInternalLink href="/eic-certificate">EIC template</SEOInternalLink> for
                   each house type on the development. Pre-populate the circuit schedule, design
                   current, and protective device details. On second fix, you only need to enter the
                   test results for each plot — saving significant administration time.

@@ -176,7 +176,7 @@ const sections = [
           installer can complete 2 to 3 installations per day. Commercial installations for
           workplaces, car parks, and fleet depots command even higher fees. The work combines
           standard{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 electrical installation
           </SEOInternalLink>{' '}
           skills with specialist knowledge of the IET Code of Practice, making it ideal for
@@ -274,7 +274,7 @@ const sections = [
           The IET Code of Practice for Electric Vehicle Charging Equipment Installation is the
           primary reference document for EV charger installations in the UK. Now in its 4th edition
           (2020), it supplements{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink> with
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> with
           specific guidance for the unique requirements of EV charging installations.
         </p>
         <p>
@@ -396,7 +396,7 @@ const sections = [
         <p>
           The <strong>electrical installation</strong> includes fitting a dedicated circuit from the
           consumer unit, selecting the correct{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">cable size</SEOInternalLink> for
+          <SEOInternalLink href="/cable-sizing-calculator">cable size</SEOInternalLink> for
           the run length and installation method, installing the protective device (typically a 32A
           Type B or Type A RCBO), and mounting and connecting the charge point unit.
         </p>
@@ -412,7 +412,7 @@ const sections = [
         </p>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           must be issued for the new circuit. Building control notification is required under Part P
@@ -441,7 +441,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for EV charger circuits with voltage drop verification.',
@@ -449,14 +449,14 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'The wiring regulations that form the foundation of all EV charger installations.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue professional Electrical Installation Certificates for EV charger installations.',

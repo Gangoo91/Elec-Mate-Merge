@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for spurs with BS 7671 correction factors and fuse coordination check.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ring-circuit-calculator',
+    href: '/ring-circuit-calculator',
     title: 'Ring Circuit Calculator',
     description:
       'Ring circuit testing calculations, R1+R2 values, and the three-step continuity test explained.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'When to issue a Minor Works Certificate for spur additions and how to complete it correctly.',
@@ -156,7 +156,7 @@ const sections = [
         <p>
           Spurs are the most common method of adding socket outlets or fixed equipment connections
           to an existing{' '}
-          <SEOInternalLink href="/guides/ring-circuit-calculator">ring circuit</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/ring-circuit-calculator">ring circuit</SEOInternalLink> or{' '}
           <SEOInternalLink href="/guides/radial-circuit-explained">radial circuit</SEOInternalLink>{' '}
           without running a completely new circuit from the distribution board. They are quick to
           install, require minimal disruption, and — when done correctly — are fully compliant with{' '}
@@ -321,7 +321,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">cable size</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           for a spur depends on whether it is fused or unfused, and the rating of the fuse (if
           fused).
         </p>
@@ -370,7 +370,7 @@ const sections = [
           Remember: the cable from the circuit to the FCU (the supply side) must be the same size as
           the circuit cable. Only the cable from the FCU to the load (the load side) can be reduced
           because the fuse provides independent protection for that section. Always check{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop</SEOInternalLink>{' '}
           for the total cable length from the distribution board through the circuit cable and spur
           cable to the load.
         </p>
@@ -561,7 +561,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/minor-works-certificate">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>
                 </strong>{' '}
@@ -574,7 +574,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate (EIC)
                   </SEOInternalLink>
                 </strong>{' '}

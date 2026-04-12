@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
@@ -483,10 +483,10 @@ const sections = [
         </div>
         <p>
           Record all jointing work on a{' '}
-          <SEOInternalLink href="/tools/minor-works" label="Minor Works Certificate" /> for small
+          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> for small
           repairs or an{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />{' '}
           for new circuit work. Test results must be documented.
@@ -509,7 +509,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor electrical installation works certificates for cable repairs and joint work,
                 including pre- and post-repair insulation resistance readings.
               </span>
@@ -518,7 +518,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — generate a compliant EIC for new underground cable installations including

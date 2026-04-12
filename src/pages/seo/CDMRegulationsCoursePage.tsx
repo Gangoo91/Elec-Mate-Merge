@@ -186,7 +186,7 @@ const sections = [
         </p>
         <p>
           The Elec-Mate{' '}
-          <SEOInternalLink href="/tools/rams-generator">AI RAMS generator</SEOInternalLink> creates
+          <SEOInternalLink href="/rams-generator">AI RAMS generator</SEOInternalLink> creates
           CDM-compliant risk assessments and method statements for every type of electrical work —
           from domestic installations to commercial fit-outs and industrial projects.
         </p>
@@ -383,7 +383,7 @@ const sections = [
           <strong>Competence evidence</strong> including qualifications (18th Edition, C&G 2391),
           competent person scheme registration (NICEIC, NAPIT, ELECSA), CSCS card details, insurance
           certificates, and any specialist training certificates (
-          <SEOInternalLink href="/training/safe-isolation-procedure">
+          <SEOInternalLink href="/guides/safe-isolation-procedure">
             safe isolation
           </SEOInternalLink>
           , asbestos awareness, working at height).
@@ -474,7 +474,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description:
       'Generate professional, CDM-compliant risk assessments and method statements from your phone.',
@@ -489,7 +489,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/site-safety',
+    href: '/guides/construction-site-safety',
     title: 'Site Safety Course',
     description:
       'Comprehensive site safety training covering all hazards electricians face on construction sites.',
@@ -505,7 +505,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/safe-isolation-procedure',
+    href: '/guides/safe-isolation-procedure',
     title: 'Safe Isolation Course',
     description:
       'Safe isolation procedure training — essential competence evidence for CDM compliance.',

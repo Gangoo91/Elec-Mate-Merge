@@ -475,7 +475,7 @@ export default function LEDLightingGuidePage() {
                       fittings in bathrooms must have the correct IP rating for their zone. Zone 0
                       requires IPX7, Zone 1 requires IPX4 minimum, and Zone 2 requires IPX4 if there
                       is a likelihood of water jets. See{' '}
-                      <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+                      <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                         BS 7671
                       </SEOInternalLink>{' '}
                       Section 701 for full requirements.
@@ -486,7 +486,7 @@ export default function LEDLightingGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Cable derating</strong> — While LED
                       circuits draw less current, the{' '}
-                      <SEOInternalLink href="/guides/cable-sizing-guide">
+                      <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                         cable sizing
                       </SEOInternalLink>{' '}
                       must still account for installation method, grouping, and insulation. In
@@ -498,7 +498,7 @@ export default function LEDLightingGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Emergency lighting</strong> — In
                       commercial installations, LED{' '}
-                      <SEOInternalLink href="/guides/emergency-lighting-certificate">
+                      <SEOInternalLink href="/emergency-lighting-certificate">
                         emergency lighting
                       </SEOInternalLink>{' '}
                       must comply with BS 5266 and provide the required lux levels for the specified
@@ -611,21 +611,21 @@ export default function LEDLightingGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'Guide to emergency lighting testing and certification.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate cable sizes for lighting circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 Guide',
           description: 'Full guide to the 18th Edition Wiring Regulations.',
           icon: ShieldCheck,
@@ -639,14 +639,14 @@ export default function LEDLightingGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,
           category: 'Guide',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Check voltage drop on long lighting cable runs.',
           icon: Gauge,

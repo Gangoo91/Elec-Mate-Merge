@@ -597,7 +597,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate complete RAMS packs from a job description using AI.',
     icon: Brain,

@@ -313,7 +313,7 @@ const sections = [
         <p>
           Smart thermostats such as Nest, Hive, and Tado provide basic scheduling and remote control
           via smartphone apps. More advanced systems use{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             dedicated wiring
           </SEOInternalLink>{' '}
           to zone controllers that manage individual room temperatures based on occupancy sensors,
@@ -386,7 +386,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'The wiring regulations that apply to all smart home electrical installations.',
     icon: BookOpen,
@@ -400,14 +400,14 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/solar-pv-installation',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description: 'Solar PV and battery storage integration for smart energy management systems.',
     icon: Lightbulb,
     category: 'Training',
   },
   {
-    href: '/training/electrical-science-fundamentals',
+    href: '/training/electrical-science-fundamentals-fundamentals',
     title: 'Electrical Science Fundamentals',
     description:
       'The theory foundation that underpins all smart home power supply and circuit design.',

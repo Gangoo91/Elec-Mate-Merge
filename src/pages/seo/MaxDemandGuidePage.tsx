@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Max Demand Guide', href: '/guides/max-demand-calculation-guide' },
 ];
 
@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate max demand with automatic diversity factor application for domestic and commercial installations.',
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly using design current, correction factors, and current-carrying capacity tables.',
@@ -531,7 +531,7 @@ const sections = [
                 <strong>Not documenting the calculation.</strong> BS 7671 requires design records.
                 Your max demand calculation should be documented and retained with the Electrical
                 Installation Certificate. A{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   max demand calculator tool
                 </SEOInternalLink>{' '}
                 makes this straightforward.
@@ -589,11 +589,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">50+ Calculators in One App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Max demand is just one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/guides/voltage-drop-guide-bs-7671">
+                  <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                     voltage drop
                   </SEOInternalLink>
                   ,{' '}
@@ -605,7 +605,7 @@ const sections = [
                     PFC
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                  <SEOInternalLink href="/adiabatic-equation-calculator">
                     adiabatic equation
                   </SEOInternalLink>
                   , conduit fill, trunking fill, power factor, and three-phase power.

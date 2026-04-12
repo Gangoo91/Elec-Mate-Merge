@@ -682,7 +682,7 @@ const sections = [
                   multiple installation methods apply along a single circuit (e.g. partly in
                   conduit, partly clipped direct), use the most onerous method for the design
                   calculation. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete all circuit fields on site.
                 </p>
               </div>

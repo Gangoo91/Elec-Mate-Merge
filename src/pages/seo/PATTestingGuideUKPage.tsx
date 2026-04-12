@@ -532,9 +532,9 @@ export default function PATTestingGuideUKPage() {
               <p>
                 Elec-Mate's business tools are built for electricians running multiple service
                 lines. The{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                 lets you generate PAT testing quotes with per-appliance pricing, the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   invoice builder
                 </SEOInternalLink>{' '}
                 sends professional invoices from site, and the customer management system tracks
@@ -612,7 +612,7 @@ export default function PATTestingGuideUKPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/how-to-test-insulation-resistance',
+          href: '/how-to-test-insulation-resistance',
           title: 'Insulation Resistance Testing',
           description:
             'How to carry out insulation resistance tests correctly, including test voltages, minimum values, and when to test.',
@@ -620,7 +620,7 @@ export default function PATTestingGuideUKPage() {
           category: 'Guides',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional quoting for PAT testing rounds, EICR inspections, and installation work. AI-powered cost estimation.',
@@ -628,7 +628,7 @@ export default function PATTestingGuideUKPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/best-electrician-app-uk',
+          href: '/best-electrician-app-uk',
           title: 'Best Electrician App UK',
           description:
             'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',

@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for clean room LV installations on your phone.',
@@ -394,7 +394,7 @@ const sections = [
           (a short pharmaceutical industry awareness course is a useful investment); experience with
           commercial LV distribution and large-scale cable installation; and attention to
           documentation detail. The{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             EIC certificate
           </SEOInternalLink>{' '}
           produced by Elec-Mate is suitable for the test certificate component of the IQ package.

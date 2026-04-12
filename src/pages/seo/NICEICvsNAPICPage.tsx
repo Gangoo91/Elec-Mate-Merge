@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician',
     description:
       'Setting up as self-employed — scheme registration is one of the essential steps covered in this guide.',
@@ -164,7 +164,7 @@ const sections = [
           Registration with any of these schemes demonstrates to clients, employers, and regulatory
           bodies that you are qualified, competent, and regularly assessed. It is one of the most
           important steps in establishing yourself as a professional electrician, whether you are{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">self-employed</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/going-self-employed-electrician">self-employed</SEOInternalLink>{' '}
           or working for a contractor.
         </p>
       </>
@@ -395,7 +395,7 @@ const sections = [
       <>
         <p>
           Reputation matters when choosing a scheme, particularly if you are a{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             self-employed electrician
           </SEOInternalLink>{' '}
           who relies on consumer trust for work:

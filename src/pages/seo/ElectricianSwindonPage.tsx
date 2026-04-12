@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for all notifiable work in Swindon and Wiltshire.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables accurately for Swindon new-build and rewire projects with correct voltage drop calculations.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Swindon electrical jobs accurately with the right South West pricing — send professional quotes on site.',
@@ -417,7 +417,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from
@@ -434,7 +434,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win More Swindon Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send professional PDF quotes from site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Accurate pricing for the Swindon market — quote consumer unit upgrades, EV

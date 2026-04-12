@@ -99,14 +99,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for new UFH circuits on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote underfloor heating installations with itemised materials and labour costs.',
     icon: Calculator,
@@ -560,7 +560,7 @@ const sections = [
                   after installation. Test before laying (to confirm it arrived undamaged), after
                   laying but before tiling (to catch any damage during installation), and after
                   tiling (final test). Record all readings on the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. A damaged
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A damaged
                   heating element discovered after tiling means the entire floor must be lifted.
                 </p>
               </div>

@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit cable for ASHP compressor supply including starting current considerations.',
@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for heat pump circuits on your phone.',
@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote heat pump electrical packages including dedicated circuit, immersion, and controls wiring.',
@@ -207,7 +207,7 @@ const sections = [
           Always request the electrical specification sheet from the heat pump manufacturer before
           sizing the circuit. The rated current, maximum current, and starting current are all
           relevant. Use the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to confirm the cable size for the actual run length from the consumer unit to the outdoor
@@ -438,7 +438,7 @@ const sections = [
         </div>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           must be issued covering all new circuits. The EIC should note the heat pump model, the
@@ -483,7 +483,7 @@ const sections = [
                   The heat pump installer needs the EIC to complete their MCS commissioning
                   documentation and to register the BUS grant. A prompt EIC — issued the same day
                   using the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     EIC Certificate app
                   </SEOInternalLink>{' '}
                   — makes you the preferred electrical sub-contractor for heat pump installers who

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Regulations Lookup', href: '/tools/ai-regulations-lookup' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-uk',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements UK',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with regulation references and practical guidance.',
@@ -308,7 +308,7 @@ const sections = [
               adds practical guidance: while 1.0mm cable may be adequate for the current- carrying
               capacity requirement of a low-wattage LED lighting circuit, the electrician must also
               consider voltage drop (particularly on long runs), the{' '}
-              <SEOInternalLink href="/calculators/earth-loop-impedance">
+              <SEOInternalLink href="/earth-loop-impedance-calculator">
                 earth fault loop impedance
               </SEOInternalLink>{' '}
               at the furthest point (which increases with smaller conductors and longer runs), and

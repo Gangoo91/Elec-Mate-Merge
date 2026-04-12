@@ -92,14 +92,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA supply cables for outbuildings correctly.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long supply runs to remote outbuildings.',
     icon: Zap,
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for outbuilding supplies on your phone.',
     icon: FileCheck2,
@@ -468,7 +468,7 @@ const sections = [
         </div>
         <p>
           Register with an approved competent person scheme to self-certify and issue the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           on site. The certificate should cover the supply circuit from the main consumer unit to
@@ -497,7 +497,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Long cable runs to remote outbuildings cause voltage drop. Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to confirm the SWA cable size meets both current-carrying capacity and voltage
@@ -513,7 +513,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   for the outbuilding supply on site before you leave. Include all test results —

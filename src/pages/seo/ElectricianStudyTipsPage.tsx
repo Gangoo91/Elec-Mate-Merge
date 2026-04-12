@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation',
     description: 'Preparing for the End-Point Assessment with the Elec-Mate EPA simulator.',
     icon: GraduationCap,

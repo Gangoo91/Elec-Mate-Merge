@@ -169,7 +169,7 @@ export default function SPDSurgeProtectionPage() {
                 Where the risk assessment determines that SPDs are not required — for example, in a
                 simple installation with no valuable electronic equipment and no safety-critical
                 systems — the designer must document this decision on the{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>
                 .
@@ -306,7 +306,7 @@ export default function SPDSurgeProtectionPage() {
               </div>
               <p>
                 The{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 must be verified on site before specifying the SPD. The SPD manufacturer's
@@ -574,7 +574,7 @@ export default function SPDSurgeProtectionPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT systems and their impact on SPD selection.',
           icon: Cable,
@@ -595,14 +595,14 @@ export default function SPDSurgeProtectionPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate Guide',
           description: 'Documenting SPD installation on the certificate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Full guide to the current Wiring Regulations.',
           icon: BookOpen,

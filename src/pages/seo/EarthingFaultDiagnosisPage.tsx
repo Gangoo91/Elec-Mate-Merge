@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'How to Test Insulation Resistance',
     description:
       'Step-by-step guide to insulation resistance testing including test voltages, pass criteria, and recording.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — understanding earthing is essential for earth fault diagnosis.',

@@ -262,7 +262,7 @@ const sections = [
           extends this to 400 metres, and OM5 adds support for wavelength division multiplexing for
           future-proofed data centre deployments. Multimode uses lower-cost LED or VCSEL light
           sources and is the standard for building backbone and{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">data centre</SEOInternalLink>{' '}
+          <SEOInternalLink href="/cable-sizing-calculator">data centre</SEOInternalLink>{' '}
           interconnections within a single building or campus.
         </p>
         <p>
@@ -305,7 +305,7 @@ const sections = [
           fill ratio specified in the standards (typically 40% to 60% of cross-sectional area to
           allow for future additions and adequate ventilation). Separation from power cables must
           comply with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 Chapter 52
           </SEOInternalLink>{' '}
           electromagnetic compatibility requirements.
@@ -401,7 +401,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations covering electromagnetic compatibility and data cable separation requirements.',
@@ -417,7 +417,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/electrical-science-fundamentals',
+    href: '/training/electrical-science-fundamentals-fundamentals',
     title: 'Electrical Science Fundamentals',
     description:
       'The electrical theory foundation for understanding PoE power delivery and cable performance.',
@@ -425,7 +425,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for power circuits that supply network equipment rooms and switch cabinets.',

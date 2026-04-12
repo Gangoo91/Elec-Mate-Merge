@@ -183,7 +183,7 @@ const sections = [
         <p>
           Unlike general electrical installation work, fire alarm systems have their own dedicated
           British Standard — BS 5839 — which sits alongside{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink> for
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> for
           the electrical wiring aspects. An electrician who understands both standards can offer a
           complete fire alarm design, installation, commissioning, and maintenance service that is
           in high demand across the construction and facilities management sectors.
@@ -412,7 +412,7 @@ const sections = [
           Circuit design depends on whether the system is conventional or addressable. Conventional
           systems use radial zone circuits — each zone has its own pair of cables running from the
           panel. Addressable systems use loop circuits where a single pair of{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             fire-resistant cable
           </SEOInternalLink>{' '}
           runs from the panel, through every device on the loop, and back to the panel.
@@ -483,7 +483,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that apply alongside BS 5839 for fire alarm circuit wiring.',

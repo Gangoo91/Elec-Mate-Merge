@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units including metal enclosure requirements and RCD protection.',
@@ -158,7 +158,7 @@ const sections = [
           potentially fatal heart rhythm — and a domestic socket can deliver over 50A through a
           short circuit. The only thing standing between you and that current is the insulation on
           the cables, the protective devices in your{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer unit
           </SEOInternalLink>
           , and your own awareness of the risks.
@@ -253,7 +253,7 @@ const sections = [
           If your property does not have RCD protection (common in older installations with
           rewirable fuse boxes), you are not protected against electric shock. Consider upgrading
           your{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change-cost-uk">
+          <SEOInternalLink href="/guides/consumer-unit-change">
             consumer unit
           </SEOInternalLink>{' '}
           to a modern board with RCD or RCBO protection on every circuit. This is one of the most
@@ -401,7 +401,7 @@ const sections = [
               <span>
                 <strong>Tip 15: All outdoor electrical work must be done by a professional.</strong>{' '}
                 Under{' '}
-                <SEOInternalLink href="/guides/part-p-building-regulations-explained">
+                <SEOInternalLink href="/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 , all outdoor electrical work (lighting, sockets, garden building supplies) is
@@ -467,7 +467,7 @@ const sections = [
         <p>
           Do not ignore these signs. A loose connection, deteriorated insulation, or overloaded
           circuit that produces a warm socket today can start a fire tomorrow. Regular{' '}
-          <SEOInternalLink href="/guides/eicr-certificate-explained">
+          <SEOInternalLink href="/tools/eicr-certificate">
             EICR inspections
           </SEOInternalLink>{' '}
           are designed to catch these problems before they become dangerous.

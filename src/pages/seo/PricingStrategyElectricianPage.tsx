@@ -280,7 +280,7 @@ export default function PricingStrategyElectricianPage() {
                 If you are NICEIC, NAPIT, or ELECSA registered, include the logo on your quote. It
                 signals competence and compliance, and many clients specifically look for registered
                 electricians. Use the{' '}
-                <SEOInternalLink href="/tools/best-quoting-app">best quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">best quoting app</SEOInternalLink>{' '}
                 features in Elec-Mate to add these automatically.
               </p>
               <p>
@@ -403,7 +403,7 @@ export default function PricingStrategyElectricianPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/best-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Best Quoting App for Electricians',
           description:
             'Build and send professional quotes from your phone. Win more work with branded PDF quotes.',

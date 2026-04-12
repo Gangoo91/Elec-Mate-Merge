@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -306,7 +306,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to size correctly for Manchester's longer terraced-house cable runs. Voltage drop on
@@ -444,7 +444,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Factor in terraced house cable runs (12 to 20 metres average), frequent board
                   upgrades, and earth rod installations on PME supplies. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build accurate itemised quotes on site.
@@ -459,7 +459,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                   on your phone after installation and testing. ENW G98 notification, Part P
                   building control notification, and professional PDF certificate — all from site.
                 </p>

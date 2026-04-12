@@ -1,42 +1,51 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { storageGetSync, storageRemoveSync } from '@/utils/storage';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Capacitor } from '@capacitor/core';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
-  Loader2,
-  Shield,
-  Zap,
-  LogOut,
   ArrowRight,
-  RefreshCw,
-  Mail,
+  Bot,
   Clock,
   FileCheck,
   GraduationCap,
-  Bot,
+  Loader2,
+  LogOut,
+  Mail,
+  RefreshCw,
+  Shield,
   Wrench,
+  Zap,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Capacitor } from '@capacitor/core';
-import { useRevenueCat } from '@/hooks/useRevenueCat';
 
-// Role → Stripe price mapping
-const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
-  electrician: { planId: 'electrician-monthly', priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I' },
-  apprentice: { planId: 'apprentice-monthly', priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b' },
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
+import { storageGetSync, storageRemoveSync } from '@/utils/storage';
+import { cn } from '@/lib/utils';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
+import { useUserCount } from '@/hooks/useUserCount';
+
+const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
+  electrician: {
+    planId: 'electrician-monthly',
+    priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
+    label: 'Electrician',
+  },
+  apprentice: {
+    planId: 'apprentice-monthly',
+    priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b',
+    label: 'Apprentice',
+  },
 };
 
 const MAX_PACKAGE_RETRIES = 3;
 
 const FEATURES = [
-  { icon: FileCheck, label: 'Certificates, quotes & invoices' },
-  { icon: Bot, label: 'AI design consultations' },
-  { icon: GraduationCap, label: 'Full study centre access' },
-  { icon: Wrench, label: 'Every calculator & tool' },
-  { icon: Zap, label: 'Unlimited usage — no caps' },
+  { icon: FileCheck, label: 'Certificates, quotes and invoices' },
+  { icon: Bot, label: 'AI tools built around electrical work' },
+  { icon: GraduationCap, label: 'Full Study Centre access' },
+  { icon: Wrench, label: 'Every calculator and specialist tool' },
+  { icon: Zap, label: 'Unlimited usage during your trial' },
 ];
 
 const CheckoutTrial = () => {
@@ -48,6 +57,7 @@ const CheckoutTrial = () => {
   const [retryCount, setRetryCount] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const userCount = useUserCount();
 
   const {
     isNative,
@@ -57,56 +67,51 @@ const CheckoutTrial = () => {
     purchasePackage,
     loadOfferings,
     getPackageForPlan,
+    error: revenueCatError,
   } = useRevenueCat(user?.id);
 
-  // Determine plan from profile role or localStorage fallback
+  // Merge the hook's error (purchase cancelled, SDK failure) with the local
+  // error (Stripe flow, package loading) so the UI shows whichever is active.
+  const displayError = error || revenueCatError;
+
   const role = profile?.role || storageGetSync('elec-mate-profile-role') || 'electrician';
   const priceInfo = ROLE_TO_PRICE[role] || ROLE_TO_PRICE.electrician;
 
-  // Whether native payment options are ready
   const packagesReady = isInitialised && availablePackages.length > 0;
-  // Stay in loading state while: not yet initialised, OR initialised but no packages and still retrying
   const packagesLoading =
     isNative &&
     !packagesReady &&
     (!isInitialised || retryCount < MAX_PACKAGE_RETRIES || isRetrying);
 
-  // Backfill role to profile if missing (handles race condition from signup)
   useEffect(() => {
     if (user?.id && profile && !profile.role) {
       supabase
         .from('profiles')
         .update({ role, updated_at: new Date().toISOString() })
         .eq('id', user.id)
-        .then(({ error }) => {
-          if (error) console.warn('Failed to backfill role:', error);
+        .then(({ error: updateError }) => {
+          if (updateError) console.warn('Failed to backfill role:', updateError);
         });
     }
   }, [user?.id, profile, role]);
 
-  // Auto-retry loading packages on native if they don't arrive after init
   useEffect(() => {
     if (!isNative || packagesReady || !isInitialised) return;
     if (retryCount >= MAX_PACKAGE_RETRIES) return;
 
     const delay = retryCount === 0 ? 1500 : 3000;
-
     retryTimerRef.current = setTimeout(async () => {
-      console.log(
-        `[CheckoutTrial] Auto-retrying loadOfferings (attempt ${retryCount + 1}/${MAX_PACKAGE_RETRIES})`
-      );
       setIsRetrying(true);
       await loadOfferings();
-      setRetryCount((c) => c + 1);
+      setRetryCount((count) => count + 1);
       setIsRetrying(false);
     }, delay);
 
     return () => {
       if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
     };
-  }, [isNative, packagesReady, isInitialised, retryCount, loadOfferings]);
+  }, [isInitialised, isNative, loadOfferings, packagesReady, retryCount]);
 
-  // Reset retry count when packages finally arrive
   useEffect(() => {
     if (packagesReady && retryCount > 0) {
       setRetryCount(0);
@@ -146,18 +151,18 @@ const CheckoutTrial = () => {
       if (data?.url) {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
-        window.location.href = data.url;
+        // Use replace() so browser-back from Stripe skips this page
+        // and jumps straight to /auth/signup instead of sitting idle here.
+        window.location.replace(data.url);
       } else {
         throw new Error('No checkout URL returned');
       }
     } catch (err: unknown) {
-      console.error('Checkout error:', err);
       setError(err instanceof Error ? err.message : 'Failed to start checkout. Please try again.');
       setIsRedirecting(false);
     }
-  }, [isRedirecting, priceInfo]);
+  }, [isRedirecting, priceInfo.planId, priceInfo.priceId]);
 
-  // Native IAP purchase handler
   const startNativePurchase = useCallback(async () => {
     if (!packagesReady) {
       setIsRetrying(true);
@@ -166,7 +171,7 @@ const CheckoutTrial = () => {
 
       if (!availablePackages.length) {
         setError(
-          'Subscription plans are taking longer than usual to load. Please check your internet connection and try again.'
+          'Subscription plans are taking longer than usual to load. Please check your connection and try again.'
         );
         return;
       }
@@ -174,18 +179,14 @@ const CheckoutTrial = () => {
 
     setError(null);
 
-    const pkg = getPackageForPlan(priceInfo.planId) ?? availablePackages[0];
-    if (!pkg) {
-      setError(
-        'Could not find your subscription plan. Please try again or contact support@elec-mate.com.'
-      );
+    const packageToBuy = getPackageForPlan(priceInfo.planId) ?? availablePackages[0];
+    if (!packageToBuy) {
+      setError('Could not find your subscription plan. Please try again or contact support.');
       return;
     }
 
-    const success = await purchasePackage(pkg);
+    const success = await purchasePackage(packageToBuy);
     if (success) {
-      // ELE-509: Immediately update Supabase profile so ProtectedRoute doesn't loop
-      // Don't wait for RC webhook — set subscribed=true now
       try {
         const tier = priceInfo.planId.replace(/-monthly|-yearly/, '');
         await supabase
@@ -198,57 +199,50 @@ const CheckoutTrial = () => {
           })
           .eq('id', user?.id);
 
-        // Clear subscription status cache so ProtectedRoute gets fresh data
         if (user?.id) {
           sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
         }
 
-        // Process referral reward for native purchases (Stripe webhook won't fire)
         if (user?.id) {
-          supabase.functions
-            .invoke('process-referral-reward', {
-              body: { referred_user_id: user.id },
-            })
-            .then(({ error: refErr }) => {
-              if (refErr) console.warn('Referral reward processing failed (non-fatal):', refErr);
-              else console.log('Referral reward processed for native purchase');
-            });
+          supabase.functions.invoke('process-referral-reward', {
+            body: { referred_user_id: user.id },
+          });
         }
-      } catch (updateErr) {
-        console.warn('Profile update after purchase failed (webhook will handle):', updateErr);
+      } catch (updateError) {
+        console.warn('Profile update after purchase failed:', updateError);
       }
 
       navigate(`/payment-success?plan=${priceInfo.planId}&trial=true`);
     }
   }, [
-    packagesReady,
-    getPackageForPlan,
-    priceInfo.planId,
     availablePackages,
-    purchasePackage,
-    navigate,
+    getPackageForPlan,
     loadOfferings,
+    navigate,
+    packagesReady,
+    priceInfo.planId,
+    purchasePackage,
+    user?.id,
   ]);
 
-  // Auth / subscription guard
   useEffect(() => {
     if (!user) {
       navigate('/auth/signin');
       return;
     }
     if (!profile) return;
-    if (profile?.subscribed || profile?.free_access_granted) {
+    if (profile.subscribed || profile.free_access_granted) {
       navigate('/dashboard');
       return;
     }
 
     if (!hasAttempted) {
       setHasAttempted(true);
-      if (!isNative && !profile?.stripe_customer_id) {
+      if (!isNative && !profile.stripe_customer_id) {
         startCheckout();
       }
     }
-  }, [user, profile, hasAttempted, navigate, startCheckout, isNative]);
+  }, [hasAttempted, isNative, navigate, profile, startCheckout, user]);
 
   const handleSignOut = async () => {
     if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
@@ -266,22 +260,22 @@ const CheckoutTrial = () => {
   });
 
   const platform = Capacitor.getPlatform();
-
-  // Derive CTA state for native
   const persistentError =
     isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
   const ctaLoading =
-    isRedirecting || isPurchasing || (isNative && packagesLoading && !error) || isRetrying;
+    isRedirecting ||
+    isPurchasing ||
+    (isNative && packagesLoading && !displayError) ||
+    isRetrying;
 
-  // Web: full-screen loading while auto-redirecting to Stripe
-  if (isRedirecting && !error) {
+  if (isRedirecting && !displayError) {
     return (
-      <div className="min-h-[100svh] bg-[#0a0a0a] flex items-center justify-center p-6">
+      <div className="flex min-h-[100svh] items-center justify-center bg-[#0a0a0a] p-6">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center">
-          <div className="w-14 h-14 rounded-2xl bg-elec-yellow/10 ring-1 ring-elec-yellow/20 flex items-center justify-center mx-auto mb-6">
-            <Loader2 className="h-7 w-7 text-elec-yellow animate-spin" />
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+            <Loader2 className="h-7 w-7 animate-spin text-yellow-400" />
           </div>
-          <h1 className="text-[18px] font-semibold text-white mb-2">Setting up your trial...</h1>
+          <h1 className="mb-2 text-[18px] font-semibold text-white">Setting up your trial...</h1>
           <p className="text-[14px] text-white">Redirecting to secure checkout</p>
         </motion.div>
       </div>
@@ -290,235 +284,232 @@ const CheckoutTrial = () => {
 
   return (
     <div
-      className="min-h-[100svh] flex flex-col relative overflow-hidden"
+      className="min-h-[100svh] bg-[#0a0a0a]"
       style={{
         background:
-          'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(250,204,21,0.06) 0%, transparent 60%), #0a0a0a',
+          'radial-gradient(ellipse 90% 55% at 50% 0%, rgba(250,204,21,0.07) 0%, transparent 58%), #0a0a0a',
       }}
     >
-      <div className="flex-1 flex flex-col justify-center px-5 py-10 pt-[calc(env(safe-area-inset-top)+48px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
-        <div className="w-full max-w-[400px] mx-auto">
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-10"
-          >
-            <img
-              src="/logo.jpg"
-              alt=""
-              className="w-11 h-11 rounded-xl object-cover ring-1 ring-white/10"
-            />
-            <span className="text-[20px] font-bold tracking-tight">
-              <span className="text-elec-yellow">Elec-</span>
-              <span className="text-white">Mate</span>
-            </span>
-          </motion.div>
-
-          {/* Trial badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.05 }}
-            className="flex justify-center mb-5"
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-elec-yellow/8 ring-1 ring-elec-yellow/15 text-[13px] font-semibold text-elec-yellow tracking-wide">
-              <Clock className="h-4 w-4" />7 DAYS FREE
-            </span>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-center mb-7"
-          >
-            <h1 className="text-[28px] font-bold text-white tracking-tight leading-tight mb-2">
-              Start your free trial
-            </h1>
-            <p className="text-[14px] text-white leading-relaxed">
-              {isNative
-                ? `Full access to every feature — payment secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
-                : 'Full access for 7 days. Card details at checkout.'}
-            </p>
-          </motion.div>
-
-          {/* No charge callout */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="p-4 rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] mb-6"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <p className="text-[14px] font-semibold text-white">
-                  Not charged until {trialEndDate}
-                </p>
-                <p className="text-[12px] text-white mt-0.5">
-                  Cancel anytime — no commitment, no lock-in
-                </p>
-              </div>
+      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:px-8">
+        <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
+          <div>
+            <div className="flex items-center gap-3">
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-11 w-11 rounded-xl object-cover" />
+              <span className="text-[22px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
             </div>
-          </motion.div>
 
-          {/* Error states */}
-          <AnimatePresence>
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mb-6 overflow-hidden"
-              >
-                <div className="p-4 rounded-2xl bg-red-500/8 ring-1 ring-red-500/20 space-y-3">
-                  <p className="text-[14px] text-white text-center font-medium">{error}</p>
-                  {isNative && (
+            <div className="mt-14 max-w-[30rem]">
+              <h1 className="text-[4rem] font-bold leading-[1.02] tracking-[-0.045em] text-white">
+                Your trial.
+                <br />
+                <span className="text-yellow-400">Zero risk.</span>
+              </h1>
+              <p className="mt-6 max-w-[26rem] text-lg leading-[1.65] text-white">
+                Full access from the moment you start. No charge for 7 days. Cancel in a couple
+                of clicks if it is not for you.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 text-[14px] leading-[1.7] text-white">
+            <div>Plan selected: {priceInfo.label}</div>
+            <div>Trial ends on {trialEndDate}</div>
+            <div>
+              {isNative ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}` : 'Secured by Stripe'}
+            </div>
+            <div>{userCount} UK electricians already live on Elec-Mate.</div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center py-8 lg:py-10">
+          <div className="mx-auto w-full max-w-[440px]">
+            <div className="mb-10 flex items-center justify-center gap-3 lg:hidden">
+              <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover" />
+              <span className="text-[20px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:p-8">
+              <div className="mb-5 flex justify-center">
+                <span className="inline-flex items-center gap-2 rounded-full border border-yellow-500/25 bg-yellow-500/[0.08] px-4 py-2 text-[13px] font-semibold text-yellow-400">
+                  <Clock className="h-4 w-4" />
+                  7 days free
+                </span>
+              </div>
+
+              <div className="text-center">
+                <h2 className="text-[1.75rem] font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-[2rem]">
+                  Start your{' '}
+                  <span className="text-yellow-400">{priceInfo.label.toLowerCase()}</span> trial.
+                </h2>
+                <p className="mx-auto mt-4 max-w-[26rem] text-[15px] leading-[1.7] text-white">
+                  {isNative
+                    ? `Full access to every feature. Payment is secured by ${platform === 'ios' ? 'Apple' : 'Google'}.`
+                    : 'Full access for 7 days. Your card is collected securely at checkout.'}
+                </p>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                    <Shield className="h-5 w-5 text-yellow-400" />
+                  </div>
+                  <div>
+                    <p className="text-[14px] font-semibold text-white">
+                      You will not be charged for 7 days
+                    </p>
+                    <p className="mt-0.5 text-[12px] text-white">
+                      Trial ends on {trialEndDate}. Cancel in a couple of clicks before then.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <AnimatePresence>
+                {displayError && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="mt-5 overflow-hidden"
+                  >
+                    <div className="space-y-3 rounded-2xl border border-red-500/25 bg-red-500/[0.08] p-4">
+                      <p className="text-center text-[14px] font-medium text-white">
+                        {displayError}
+                      </p>
+                      {isNative && (
+                        <button
+                          onClick={handleManualRetry}
+                          className="flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.06] text-[14px] font-semibold text-white transition-colors hover:bg-white/[0.12]"
+                        >
+                          <RefreshCw className="h-4 w-4" />
+                          Try again
+                        </button>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {persistentError && !displayError && (
+                <div className="mt-5 space-y-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4">
+                  <p className="text-center text-[14px] font-medium text-white">
+                    Payment options could not be loaded
+                  </p>
+                  <div className="flex gap-3">
                     <button
                       onClick={handleManualRetry}
-                      className="w-full flex items-center justify-center gap-2 text-[14px] text-white font-semibold h-11 rounded-xl bg-white/[0.08] active:bg-white/[0.12] touch-manipulation transition-colors"
+                      className="flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-yellow-500/25 bg-yellow-500/[0.1] text-[13px] font-semibold text-white transition-colors hover:bg-yellow-500/[0.15]"
                     >
-                      <RefreshCw className="h-4 w-4" /> Try again
+                      <RefreshCw className="h-3.5 w-3.5" />
+                      Retry
                     </button>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {persistentError && !error && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-6 p-4 rounded-2xl bg-white/[0.04] ring-1 ring-white/[0.08] space-y-3"
-            >
-              <p className="text-[14px] text-white text-center font-medium">
-                Payment options couldn't be loaded
-              </p>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleManualRetry}
-                  className="flex-1 flex items-center justify-center gap-2 text-[13px] text-white font-semibold h-11 rounded-xl bg-elec-yellow/10 ring-1 ring-elec-yellow/20 active:bg-elec-yellow/15 touch-manipulation transition-colors"
-                >
-                  <RefreshCw className="h-3.5 w-3.5" /> Retry
-                </button>
-                <a
-                  href="mailto:support@elec-mate.com"
-                  className="flex-1 flex items-center justify-center gap-2 text-[13px] text-white font-semibold h-11 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08] active:bg-white/[0.10] touch-manipulation transition-colors"
-                >
-                  <Mail className="h-3.5 w-3.5" /> Contact support
-                </a>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Features */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-8"
-          >
-            <div className="space-y-3">
-              {FEATURES.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.25 + i * 0.04 }}
-                  className="flex items-center gap-3.5"
-                >
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08] flex items-center justify-center flex-shrink-0">
-                    <item.icon className="h-4 w-4 text-elec-yellow" />
+                    <a
+                      href="mailto:support@elec-mate.com"
+                      className="flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.06] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.10]"
+                    >
+                      <Mail className="h-3.5 w-3.5" />
+                      Support
+                    </a>
                   </div>
-                  <span className="text-[14px] text-white font-medium">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45 }}
-          >
-            <Button
-              onClick={isNative ? startNativePurchase : startCheckout}
-              disabled={ctaLoading || persistentError}
-              className={cn(
-                'w-full h-14 rounded-2xl text-[16px] font-bold transition-all duration-150 touch-manipulation',
-                ctaLoading
-                  ? 'bg-white/10 text-white cursor-not-allowed'
-                  : error
-                    ? 'bg-white/10 hover:bg-white/15 text-white ring-1 ring-white/10'
-                    : 'bg-[#FFD700] hover:bg-[#FFD700]/90 text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] active:scale-[0.98]'
+                </div>
               )}
-            >
-              {ctaLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  {isPurchasing
-                    ? 'Processing...'
-                    : isRedirecting
-                      ? 'Redirecting...'
-                      : 'Loading plans...'}
-                </>
-              ) : error ? (
-                <>
-                  <RefreshCw className="mr-2 h-4 w-4" /> Try again
-                </>
-              ) : (
-                <>
-                  {isNative ? 'Start Free Trial' : 'Continue to Checkout'}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </>
+
+              <div className="mt-7 space-y-3">
+                {FEATURES.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.08 + index * 0.04 }}
+                    className="flex items-center gap-3.5"
+                  >
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
+                      <item.icon className="h-4 w-4 text-yellow-400" />
+                    </div>
+                    <span className="text-[14px] font-medium text-white">{item.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <Button
+                onClick={isNative ? startNativePurchase : startCheckout}
+                disabled={ctaLoading || persistentError}
+                className={cn(
+                  'mt-8 h-14 w-full touch-manipulation rounded-2xl text-[16px] font-bold transition-all duration-150',
+                  ctaLoading
+                    ? 'cursor-not-allowed bg-white/[0.08] text-white'
+                    : displayError
+                      ? 'border border-white/[0.12] bg-white/[0.06] text-white hover:bg-white/[0.12]'
+                      : 'bg-yellow-500 text-black hover:bg-yellow-400'
+                )}
+              >
+                {ctaLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    {isPurchasing
+                      ? 'Processing...'
+                      : isRedirecting
+                        ? 'Redirecting...'
+                        : 'Loading plans...'}
+                  </>
+                ) : displayError ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Try again
+                  </>
+                ) : (
+                  <>
+                    {isNative ? 'Start free trial' : 'Continue to secure checkout'}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </>
+                )}
+              </Button>
+
+              {isNative && packagesLoading && !displayError && (
+                <p className="mt-3 text-center text-[12px] text-white">Loading payment options...</p>
               )}
-            </Button>
-          </motion.div>
 
-          {isNative && packagesLoading && !error && (
-            <p className="text-center text-[12px] text-white mt-3">Loading payment options...</p>
-          )}
+              <div className="mt-6 border-t border-white/[0.08] pt-5">
+                <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] text-white">
+                  <span className="flex items-center gap-1.5">
+                    <Shield className="h-3.5 w-3.5 text-yellow-400" />
+                    {isNative
+                      ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
+                      : 'Secured by Stripe'}
+                  </span>
+                  <span>Cancel anytime</span>
+                  <span>No charge until {trialEndDate}</span>
+                </div>
 
-          {/* Trust signals */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-6"
-          >
-            <div className="flex items-center justify-center gap-4 text-[12px] text-white">
-              <span className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5 text-elec-yellow/50" />
-                {isNative
-                  ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
-                  : 'Secured by Stripe'}
-              </span>
-              <span className="w-1 h-1 rounded-full bg-white/15" />
-              <span>Cancel anytime</span>
+                <p className="mt-3 text-center text-[12px] text-white">
+                  Joining{' '}
+                  <span className="font-semibold text-yellow-400">{userCount}</span> UK
+                  electricians already live.
+                </p>
+
+                {isNative && (
+                  <p className="mx-auto mt-3 max-w-[320px] text-center text-[10px] leading-relaxed text-white">
+                    Payment is charged to your{' '}
+                    {platform === 'ios' ? 'Apple ID' : 'Google account'} at confirmation and
+                    auto-renews unless cancelled 24h before the period ends.
+                  </p>
+                )}
+              </div>
             </div>
 
-            {isNative && (
-              <p className="text-[10px] text-white/60 text-center mt-3 leading-relaxed max-w-[320px] mx-auto">
-                Payment charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'} at
-                confirmation. Auto-renews unless cancelled 24h before period ends.
-              </p>
-            )}
-          </motion.div>
-
-          {/* Sign out */}
-          <div className="mt-10 text-center">
-            <button
-              onClick={handleSignOut}
-              className="inline-flex items-center gap-1.5 text-[12px] text-white hover:text-white/60 transition-colors touch-manipulation py-2 px-4 rounded-xl"
-            >
-              <LogOut className="h-3 w-3" /> Sign out
-            </button>
+            <div className="mt-6 text-center">
+              <button
+                onClick={handleSignOut}
+                className="inline-flex touch-manipulation items-center gap-1.5 rounded-xl px-4 py-2 text-[12px] text-white transition-colors hover:text-yellow-400"
+              >
+                <LogOut className="h-3 w-3" />
+                Sign out
+              </button>
+            </div>
           </div>
         </div>
       </div>

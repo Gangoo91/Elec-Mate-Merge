@@ -83,14 +83,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size fixed wiring cables with BS 7671 Appendix 4 current ratings and derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates for fixed wiring installations on your phone.',
     icon: FileCheck2,
@@ -421,7 +421,7 @@ const sections = [
           For installation work, always verify the cable type is appropriate for the application:
           check the current rating from the correct BS 7671 Appendix 4 table (4D/4E for fixed,
           4F for flexible), apply the correct derating factors, and use the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           to confirm the selected cable size.

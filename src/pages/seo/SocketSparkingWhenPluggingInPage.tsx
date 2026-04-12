@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic fault finding approach for electricians diagnosing socket and circuit faults.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an EICR involves and when you need one for your home or rental property.',
     icon: FileCheck2,
@@ -509,7 +509,7 @@ const sections = [
           When an electrician investigates a sparking socket, they will typically carry out
           insulation resistance testing (to check for damaged insulation), a tightness check on all
           connections, and visual inspection of the circuit. They may recommend an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> if the socket
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> if the socket
           damage suggests wider installation issues. Regulation 411.3.3 of BS 7671 requires RCD
           protection on final socket-outlet circuits in domestic dwellings — the electrician will
           verify this protection is in place.

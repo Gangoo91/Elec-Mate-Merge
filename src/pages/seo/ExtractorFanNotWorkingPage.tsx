@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic fault finding approach for diagnosing non-working circuits and equipment.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'What an EICR involves and how it identifies wiring faults and non-compliant installations.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Documentation required when replacing or repairing an extractor fan installation.',
@@ -154,7 +154,7 @@ const sections = [
           This guide covers every common cause, explains the difference between bathroom and kitchen
           fan types, tells you what you can check yourself, and explains when you need a qualified
           electrician. If you are an electrician, the later sections cover{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             fault finding techniques
           </SEOInternalLink>{' '}
           specific to extractor fan circuits.

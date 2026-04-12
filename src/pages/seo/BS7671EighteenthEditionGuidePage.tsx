@@ -606,7 +606,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382-22 exam with 2,000+ practice questions and AI study assistant.',

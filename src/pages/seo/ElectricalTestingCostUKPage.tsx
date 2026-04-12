@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/insulation-resistance-test',
+    href: '/guides/insulation-resistance-testing',
     title: 'Insulation Resistance Testing',
     description:
       'How to carry out insulation resistance testing to BS 7671 with test voltages and pass/fail values.',
@@ -390,7 +390,7 @@ const sections = [
       <>
         <p>
           Periodic inspection (EICR) frequencies are recommended by BS 7671 and{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             IET Guidance Note 3
           </SEOInternalLink>
           . The required interval affects how often clients need your services and therefore how you
@@ -543,7 +543,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">70 Electrical Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Zs verification, prospective fault current, voltage drop, cable sizing,{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-test">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing">
                     insulation resistance
                   </SEOInternalLink>
                   , and dozens more. All built to BS 7671:2018+A3:2024.

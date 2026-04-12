@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -557,7 +557,7 @@ const sections = [
             <li>
               For consumer unit changes, consider energy stored in capacitors or batteries (e.g.,
               UPS or{' '}
-              <SEOInternalLink href="/guides/ev-charger-installation-guide">
+              <SEOInternalLink href="/guides/ev-charger-installation">
                 EV charger
               </SEOInternalLink>{' '}
               systems) that may maintain voltage even after the mains supply is isolated.
@@ -768,7 +768,7 @@ const sections = [
                   working at height
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,
+                <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,
                 asbestos awareness, and site safety — all of which contribute to the competence
                 needed to carry out safe isolation and LOTO procedures.
               </span>
@@ -776,7 +776,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The <SEOInternalLink href="/tools/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
           combines the{' '}
           <SEOInternalLink href="/guides/method-statement-electricians">
             method statement

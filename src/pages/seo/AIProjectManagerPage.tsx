@@ -25,7 +25,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Project Manager', href: '/tools/ai-project-manager' },
 ];
 
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your project before work begins.',
@@ -235,7 +235,7 @@ const sections = [
           price the project plan to produce an accurate quotation. The{' '}
           <SEOInternalLink href="/tools/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
           feed circuit specifications into the material list. And the{' '}
-          <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> produces
+          <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> produces
           the health and safety documentation you need before starting work.
         </p>
       </>

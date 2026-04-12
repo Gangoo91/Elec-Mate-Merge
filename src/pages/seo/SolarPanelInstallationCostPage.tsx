@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for solar PV electrical connections.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote solar PV electrical work with itemised components, labour, and professional PDF.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/ev-charger-installation-guide',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
     description: 'EV chargers and solar PV are commonly installed together for maximum savings.',
     icon: Zap,
@@ -612,7 +612,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   An{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate (EIC)
                   </SEOInternalLink>{' '}
                   must be issued for the new solar PV circuit. Complete it on site using Elec-Mate's

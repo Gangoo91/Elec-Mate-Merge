@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for new installations and Titanic Quarter projects.',
@@ -112,14 +112,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Belfast customers with accurate local pricing.',
     icon: PoundSterling,
@@ -559,7 +559,7 @@ const sections = [
                   Belfast landlords, developers, and commercial clients expect professional
                   certificates. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
                   a phone app and sent as a PDF before you leave the site demonstrates
                   professionalism and saves hours of admin.
                 </p>

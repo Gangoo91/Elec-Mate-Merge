@@ -68,6 +68,7 @@ export const SavedRoomsStrip = ({
         {/* New room button */}
         <button
           onClick={onNewRoom}
+          aria-label="Create new room"
           className="flex-shrink-0 w-[60px] h-[60px] rounded-lg border border-dashed border-white/30 flex items-center justify-center touch-manipulation hover:border-elec-yellow/50 transition-colors"
         >
           <Plus className="h-5 w-5 text-white/50" />

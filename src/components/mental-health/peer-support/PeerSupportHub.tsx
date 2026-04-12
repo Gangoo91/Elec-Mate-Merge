@@ -614,10 +614,34 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       subtitle="Connect with someone who understands"
       headerColor="purple"
       showBackButton={false}
+      hideHeader={true}
       onRefresh={handleRefresh}
       collapsingHeader={true}
       compactTitle={true}
     >
+      <div className="space-y-6">
+        <div className="pt-1">
+          <button
+            onClick={() => (onClose ? onClose() : window.history.back())}
+            className="inline-flex items-center gap-2 text-sm text-white/72 transition-colors hover:text-white"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </button>
+        </div>
+
+        <div className="border-b border-white/10 pb-5">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/45">
+            Peer Support
+          </p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+            Mental Health Mates
+          </h1>
+          <p className="mt-2 max-w-xl text-sm leading-6 text-white/68">
+            Connect with someone who understands. Start with a conversation, not a complicated process.
+          </p>
+        </div>
+
       {/* Push Notification Prompt */}
       <PushNotificationPrompt
         compact
@@ -629,14 +653,13 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       {profileLoading ? (
         <StatusSkeleton />
       ) : myProfile ? (
-        <div className="mb-6">
-          {/* Status Toggle Row */}
+        <div className="mb-2">
           <div
             className={cn(
-              'flex items-center justify-between p-4 rounded-2xl transition-all duration-300',
+              'flex items-center justify-between transition-all duration-300',
               myProfile.is_available
-                ? 'bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/20'
-                : 'bg-white/[0.03] border border-white/10'
+                ? ''
+                : ''
             )}
           >
             <div className="flex items-center gap-3">
@@ -686,16 +709,16 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             )}
           </div>
 
-          {/* Quick Stats Row */}
-          <div className="grid grid-cols-2 gap-3 mt-3">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+          <div className="mt-4 flex items-center gap-6 border-t border-white/10 pt-4">
+            <div className="flex items-center gap-3">
               <MessageCircle className="h-5 w-5 text-purple-400" />
               <div>
                 <p className="text-lg font-bold text-white">{myProfile.total_conversations}</p>
-                <p className="text-xs text-white">Total chats</p>
+                <p className="text-xs text-white/65">Total chats</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
+            <div className="h-8 w-px bg-white/10" />
+            <div className="flex items-center gap-3">
               <Clock className="h-5 w-5 text-blue-400" />
               <div>
                 <p className="text-sm font-medium text-white">
@@ -703,22 +726,21 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                     ? formatDistanceToNow(new Date(myProfile.last_active_at), { addSuffix: false })
                     : 'Never'}
                 </p>
-                <p className="text-xs text-white">Last active</p>
+                <p className="text-xs text-white/65">Last active</p>
               </div>
             </div>
           </div>
         </div>
       ) : null}
 
-      {/* Native Segment Control */}
-      <div className="flex p-1 bg-white/5 rounded-xl mb-6">
+      <div className="mb-6 flex gap-6 border-b border-white/10">
         <button
           onClick={() => setActiveTab('browse')}
           className={cn(
-            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
+            'inline-flex items-center justify-center gap-2 border-b-2 px-1 pb-3 text-sm font-medium transition-all touch-manipulation',
             activeTab === 'browse'
-              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-              : 'text-white'
+              ? 'border-purple-400 text-white'
+              : 'border-transparent text-white/65'
           )}
         >
           <Users className="h-4 w-4" />
@@ -727,10 +749,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         <button
           onClick={() => setActiveTab('chats')}
           className={cn(
-            'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
+            'ml-6 inline-flex items-center justify-center gap-2 border-b-2 px-1 pb-3 text-sm font-medium transition-all touch-manipulation',
             activeTab === 'chats'
-              ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-              : 'text-white'
+              ? 'border-purple-400 text-white'
+              : 'border-transparent text-white/65'
           )}
         >
           <MessageCircle className="h-4 w-4" />
@@ -744,11 +766,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       {/* Tab Content: Find Support */}
       {activeTab === 'browse' && (
         <div className="space-y-6">
-          {/* Become a Mate CTA (if not registered) */}
           {!profileLoading && !myProfile && (
             <Button
               onClick={() => setViewState('become-supporter')}
-              className="w-full h-14 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-base rounded-2xl touch-manipulation"
+              className="w-full h-14 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 text-base font-semibold text-white hover:from-purple-600 hover:to-pink-600 touch-manipulation"
             >
               <Heart className="mr-2 h-5 w-5" />
               Become a Mental Health Mate
@@ -857,10 +878,9 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         </div>
       )}
 
-      {/* Safety Notice */}
-      <div className="mt-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+      <div className="mt-6 border-t border-amber-500/20 pt-4">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0">
             <AlertTriangle className="h-5 w-5 text-amber-400" />
           </div>
           <div>
@@ -876,6 +896,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </NativePageWrapper>
   );

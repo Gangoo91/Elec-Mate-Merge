@@ -90,14 +90,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site from your phone.',
     icon: FileCheck2,
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Verify maximum Zs compliance using measured Ze and R1+R2 values.',
     icon: Calculator,
@@ -484,7 +484,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Enter Ze, Zs, RCD trip times, insulation resistance, and continuity values into
                   the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     EIC schedule of test results
                   </SEOInternalLink>{' '}
                   on your phone. Voice entry allows hands-free recording while holding the MFT.

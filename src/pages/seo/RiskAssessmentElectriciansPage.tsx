@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -528,7 +528,7 @@ const sections = [
           The template should be easy to adapt for different types of work. Maintain a library of
           generic risk assessments for your common tasks — consumer unit change, rewire, first fix,
           second fix, periodic inspection,{' '}
-          <SEOInternalLink href="/guides/ev-charger-installation-guide">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger installation
           </SEOInternalLink>
           , and fault finding — and customise each one with site-specific details for every job.
@@ -670,15 +670,15 @@ const sections = [
           standards, and produces a professional document ready for use on site.
         </p>
         <p>
-          The <SEOInternalLink href="/tools/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
           goes further by combining the risk assessment with a matching method statement, giving you
           the complete RAMS package in one go. This is particularly valuable for commercial and
           industrial work where main contractors require RAMS before you can start on site.
         </p>
         <p>
           The AI also helps with Elec-Mate training courses including{' '}
-          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/pasma">PASMA</SEOInternalLink>, and{' '}
+          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>, and{' '}
           <SEOInternalLink href="/training/working-at-height">working at height</SEOInternalLink> —
           ensuring your team has the knowledge to implement the control measures identified in the
           risk assessment.

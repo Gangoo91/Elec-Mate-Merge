@@ -25,7 +25,7 @@ const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
   {
     label: 'Emergency Lighting Certificate Guide',
-    href: '/guides/emergency-lighting-certificate-guide',
+    href: '/emergency-lighting-certificate-guide',
   },
 ];
 

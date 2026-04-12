@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for cooker circuits with diversity, correction factors, and voltage drop.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/voltage-drop-guide-bs7671',
+    href: '/guides/voltage-drop-limits-bs-7671',
     title: 'Voltage Drop Guide',
     description:
       'How to calculate and verify voltage drop for cooker circuits and other high-current radials.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/correction-factors-guide',
+    href: '/guides/correction-factors-bs-7671',
     title: 'Correction Factors Guide',
     description:
       'BS 7671 Appendix 4 correction factors for grouping, ambient temperature, and thermal insulation.',
@@ -178,12 +178,12 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">cable size</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable size</SEOInternalLink>{' '}
           for a cooker circuit is determined by the design current (after diversity), the
           installation method (
-          <SEOInternalLink href="/guides/reference-methods-guide">reference method</SEOInternalLink>
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">reference method</SEOInternalLink>
           ), and the applicable{' '}
-          <SEOInternalLink href="/guides/correction-factors-guide">
+          <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
           </SEOInternalLink>{' '}
           from Appendix 4 of BS 7671.
@@ -502,7 +502,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">Voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">Voltage drop</SEOInternalLink>{' '}
           must be checked for every cooker circuit. The limit under BS 7671 is 5% of the nominal
           supply voltage — that is 11.5V for a 230V supply. The voltage drop depends on the cable
           size, the cable length, and the design current.

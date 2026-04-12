@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for rewires in period properties and new-build installations across Oxford.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for new circuits, rewires, and HMO conversions.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/eicr-guide',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'Complete guide to EICRs — inspection intervals, coding, and HMO licensing requirements.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, HMO conversions, and commercial work with professional itemised PDFs.',
@@ -507,7 +507,7 @@ const sections = [
           domestic rates; Cowley and Blackbird Leys are more price-sensitive. Commercial rates vary
           significantly by sector — retail fit-outs at £300 to £400 per day, laboratory work at £380
           to £500. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate, itemised quotes tailored to the Oxford market.
         </p>
       </>
@@ -546,7 +546,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for rewires, new builds, and HMO conversions with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Factor in derating for concealed routes in listed buildings and long cable runs
@@ -562,7 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, HMO conversions, and commercial fit-outs with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemised PDF quotes with your branding, sent from the survey.

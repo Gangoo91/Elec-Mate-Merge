@@ -702,7 +702,7 @@ const sections = [
                   When C2 observations are found in an Exeter student house or a rural Devon
                   property with a TT earth, quote the consumer unit replacement or earthing upgrade
                   immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Devon landlords must act within 28 days — the electrician who quotes on the day

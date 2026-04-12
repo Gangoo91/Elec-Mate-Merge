@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering the full scope of BS 7671.',
@@ -289,7 +289,7 @@ const sections = [
           Even though this work is not notifiable, it must still be carried out to the standard
           required by BS 7671 and an appropriate certificate should be issued. For additions and
           alterations to existing circuits, a{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           is the correct document. For like-for-like replacements, a certificate is not strictly

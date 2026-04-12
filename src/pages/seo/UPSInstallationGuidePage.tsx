@@ -261,7 +261,7 @@ export default function UPSInstallationGuidePage() {
                 UPS installation involves more than simply plugging in a box. Larger systems (above
                 3kVA) require dedicated circuits, appropriate cable sizing, mechanical ventilation,
                 and compliance with manufacturer specifications and{' '}
-                <SEOInternalLink href="/guides/bs7671-eighteenth-edition">BS 7671</SEOInternalLink>.
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>.
               </p>
               <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
                 <h3 className="font-bold text-white text-lg mb-4">
@@ -283,7 +283,7 @@ export default function UPSInstallationGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Cable sizing</strong> — Input and output
                       cables must be sized for the full rated current of the UPS, accounting for{' '}
-                      <SEOInternalLink href="/guides/cable-sizing-guide">
+                      <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                         derating factors
                       </SEOInternalLink>{' '}
                       for installation method, ambient temperature, and grouping. For three-phase
@@ -363,7 +363,7 @@ export default function UPSInstallationGuidePage() {
                     reference must be established at the UPS output transformer, with a
                     neutral-earth bond and a local earth electrode if required. This arrangement
                     must be clearly documented on the{' '}
-                    <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> and the
+                    <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and the
                     earthing arrangement verified during commissioning.
                   </p>
                 </div>
@@ -372,7 +372,7 @@ export default function UPSInstallationGuidePage() {
                 In all cases, the UPS chassis must be bonded to the installation earth. Any external
                 battery cabinets must also be bonded. The earth continuity through the UPS must be
                 verified during{' '}
-                <SEOInternalLink href="/guides/testing-sequence">testing</SEOInternalLink> — an open
+                <SEOInternalLink href="/testing-sequence-guide">testing</SEOInternalLink> — an open
                 earth on the UPS output would leave connected equipment without a safety earth,
                 creating a serious danger.
               </p>
@@ -590,42 +590,42 @@ export default function UPSInstallationGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'How to complete the Electrical Installation Certificate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size cables for UPS input and output circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 Guide',
           description: 'Full guide to the 18th Edition Wiring Regulations.',
           icon: ShieldCheck,
           category: 'Regulation',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,
           category: 'Guide',
         },
         {
-          href: '/calculators/max-demand',
+          href: '/max-demand-calculator',
           title: 'Max Demand Calculator',
           description: 'Calculate maximum demand for UPS sizing.',
           icon: Gauge,
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing explained.',
           icon: Zap,

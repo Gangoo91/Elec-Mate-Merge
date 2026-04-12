@@ -174,7 +174,7 @@ const sections = [
           the Order. For electricians, this includes understanding fire risk assessments, hot works
           permits, and their personal responsibility to prevent fires through good workmanship and
           compliance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           wiring regulations.
         </p>
       </>
@@ -264,7 +264,7 @@ const sections = [
           starting work, clear all combustible materials within at least 3 metres of the work area,
           have a suitable fire extinguisher immediately available, use fire-retardant blankets or
           screens to contain sparks, and maintain a{' '}
-          <SEOInternalLink href="/training/risk-assessment">fire watch</SEOInternalLink> for at
+          <SEOInternalLink href="/guides/risk-assessment-electricians">fire watch</SEOInternalLink> for at
           least 60 minutes after work is completed. The fire watch period is essential because
           smouldering materials may not produce visible flames until well after the hot works
           activity has finished.
@@ -273,7 +273,7 @@ const sections = [
           Electrical installation work also creates fire risks through incorrect cable sizing
           (leading to overheating), loose connections (creating high-resistance hot spots), and
           incorrect protective device selection (allowing sustained overcurrent). The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing process
           </SEOInternalLink>{' '}
           specified in BS 7671 Appendix 4 is a fire prevention measure — every correction factor and
@@ -331,7 +331,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid-electrical',
+    href: '/training/first-aid-electrical-electrical',
     title: 'First Aid for Electricians',
     description:
       'Emergency response skills including burn treatment and CPR for fire and electrical incidents.',
@@ -339,7 +339,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/risk-assessment',
+    href: '/guides/risk-assessment-electricians',
     title: 'Risk Assessment Course',
     description:
       'Identifying fire hazards and implementing control measures as part of workplace risk assessment.',
@@ -354,7 +354,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/ppe-for-electricians',
+    href: '/guides/ppe-for-electricians',
     title: 'PPE for Electricians',
     description:
       'Arc-rated clothing and flame-resistant workwear that protect against fire and arc flash.',
@@ -362,7 +362,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that specify fire prevention measures in electrical installation design.',

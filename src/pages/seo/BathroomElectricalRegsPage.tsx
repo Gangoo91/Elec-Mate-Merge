@@ -84,7 +84,7 @@ export default function BathroomElectricalRegsPage() {
               <p>
                 For electricians, bathroom work is some of the most regulation-intensive domestic
                 electrical work. An{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR inspection</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>{' '}
                 of a property always requires careful assessment of the bathroom installation, and
                 new bathroom circuits require detailed design consideration.
               </p>
@@ -222,7 +222,7 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR form</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink>{' '}
                 includes fields for recording the IP ratings of equipment installed in each bathroom
                 zone, ensuring nothing is missed during inspection.
               </p>
@@ -518,11 +518,11 @@ export default function BathroomElectricalRegsPage() {
               </p>
               <p>
                 Cable sizing is critical —{' '}
-                <SEOInternalLink href="/calculators/voltage-drop">voltage drop</SEOInternalLink>{' '}
+                <SEOInternalLink href="/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
                 must be calculated for the specific cable length and installation method. A 10.5 kW
                 shower on a long cable run can easily exceed the 5% voltage drop limit if the cable
                 is undersized. Use the{' '}
-                <SEOInternalLink href="/calculators/cable-sizing">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -566,7 +566,7 @@ export default function BathroomElectricalRegsPage() {
                 An insulation resistance test of the heating element should be carried out before
                 and after installation of the floor finish, to identify any damage to the element
                 during the tiling process. The results should be recorded on the{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>
                 .
@@ -637,42 +637,42 @@ export default function BathroomElectricalRegsPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'How to complete an EICR — including bathroom-specific requirements.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'Electrical Installation Certificate for new bathroom circuits.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for shower circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop on shower circuits and long cable runs.',
           icon: Activity,
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'Understanding earthing — essential for bonding decisions.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/guides/rcd-testing',
+          href: '/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'How to test RCDs correctly — mandatory for all bathroom circuits.',
           icon: ShieldCheck,

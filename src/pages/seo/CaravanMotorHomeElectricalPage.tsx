@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/caravan-park-electrical',
+    href: '/guides/caravan-park-electrical',
     title: 'Caravan Park Electrical (BS 7671 Section 708)',
     description:
       'Site-side requirements for caravan park hookup installations — CEE connectors, RCDs, earthing.',
@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/battery-storage-guide',
+    href: '/guides/battery-storage-installation',
     title: 'Battery Storage Systems Guide',
     description:
       'Leisure and domestic battery storage — technology, sizing, and installation guidance.',
@@ -173,7 +173,7 @@ const sections = [
           governed by BS EN 1648-1 (touring caravans) and BS EN 1648-2 (motorhomes), which specify
           the requirements for 12V DC and 230V AC systems within the vehicle. The shore power
           installation at the caravan park is covered by{' '}
-          <SEOInternalLink href="/caravan-park-electrical">BS 7671 Section 708</SEOInternalLink>.
+          <SEOInternalLink href="/guides/caravan-park-electrical">BS 7671 Section 708</SEOInternalLink>.
         </p>
       </>
     ),

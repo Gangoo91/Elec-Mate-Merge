@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for medical location installations.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote dental surgery electrical work with equipment schedules and Section 710 provisions.',
@@ -461,7 +461,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">CQC-Ready Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Dental practices are inspected by CQC. Provide a comprehensive{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> with Section
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> with Section
                   710 compliance clearly documented, supplementary bonding test results, and an
                   as-installed drawing showing all equipment positions and circuit references. This
                   level of documentation justifies premium pricing.

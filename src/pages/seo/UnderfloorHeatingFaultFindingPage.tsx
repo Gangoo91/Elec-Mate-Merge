@@ -541,7 +541,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Record Test Results On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate Electrical Installation Certificate app
                   </SEOInternalLink>{' '}
                   to record mat resistance values, IR test results, and circuit details during
@@ -558,7 +558,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Floor Replacement Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When diagnosing a mat fault, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed quote covering the electrical work element. Present it

@@ -83,7 +83,7 @@ export default function ElectricalLoadAssessmentPage() {
               </p>
               <p>
                 Load assessments are not optional. Regulation 311.1 of{' '}
-                <SEOInternalLink href="/guides/bs7671-18th-edition">BS 7671</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
                 requires that the maximum demand of every installation is assessed to ensure that
                 the supply characteristics are adequate. Getting this wrong means the supply fuse
                 blows under peak load, or worse, the supply cable overheats because the fuse rating
@@ -276,7 +276,7 @@ export default function ElectricalLoadAssessmentPage() {
               <p>
                 Diversity factors do not apply to individual circuits for cable sizing purposes.
                 Each circuit cable must be sized for the full expected load on that circuit. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 handles this separately from the maximum demand calculation.
@@ -544,7 +544,7 @@ export default function ElectricalLoadAssessmentPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Max Demand Calculator',
           description:
             'Calculate maximum demand with BS 7671 diversity factors applied automatically.',
@@ -559,7 +559,7 @@ export default function ElectricalLoadAssessmentPage() {
           category: 'Calculator',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables correctly for current capacity, voltage drop, and fault current.',
@@ -575,7 +575,7 @@ export default function ElectricalLoadAssessmentPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/bs7671-18th-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'The national standard for electrical installations and its requirements.',
           icon: Scale,

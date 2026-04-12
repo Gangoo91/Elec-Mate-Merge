@@ -28,7 +28,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
   return (
     <div
       onClick={() => onViewProfile?.(supporter)}
-      className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-purple-500/20 active:scale-[0.98] transition-transform touch-manipulation"
+      className="flex items-center gap-4 border-b border-white/10 pb-4 transition-transform touch-manipulation active:scale-[0.995]"
     >
       {/* Avatar */}
       <div className="relative shrink-0">
@@ -36,10 +36,10 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
           <img
             src={supporter.avatar_url}
             alt={supporter.display_name}
-            className="w-14 h-14 rounded-xl object-cover border border-purple-500/30"
+            className="w-14 h-14 rounded-xl object-cover border border-white/10"
           />
         ) : (
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/40 to-pink-500/40 border border-purple-500/30 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/25 border border-white/10 flex items-center justify-center">
             <User className="w-7 h-7 text-purple-300" />
           </div>
         )}
@@ -63,7 +63,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
 
         {/* Bio preview */}
         {supporter.bio && (
-          <p className="text-sm text-white line-clamp-1 mt-0.5">{supporter.bio}</p>
+          <p className="text-sm text-white/72 line-clamp-1 mt-0.5">{supporter.bio}</p>
         )}
 
         {/* Topics preview - larger touch targets */}
@@ -72,7 +72,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
             {topics.slice(0, 2).map((topic) => (
               <span
                 key={topic}
-                className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-white"
+                className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] text-white/80"
               >
                 {topic}
               </span>
@@ -86,18 +86,20 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
 
       {/* Chat Button - 48px minimum touch target */}
       <Button
-        size="icon"
         onClick={(e) => {
           e.stopPropagation();
           onConnect(supporter.id);
         }}
         disabled={isConnecting}
-        className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg shadow-purple-500/20 touch-manipulation active:scale-[0.95]"
+        className="h-10 rounded-full px-4 bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 touch-manipulation active:scale-[0.95]"
       >
         {isConnecting ? (
           <Loader2 className="h-5 w-5 animate-spin" />
         ) : (
-          <MessageCircle className="h-5 w-5" />
+          <>
+            <MessageCircle className="h-4 w-4" />
+            <span className="ml-1 text-sm">Chat</span>
+          </>
         )}
       </Button>
     </div>

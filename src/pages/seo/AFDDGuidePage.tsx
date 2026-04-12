@@ -609,7 +609,7 @@ export default function AFDDGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate Guide',
           description: 'How to complete a condition report with AFDD observations.',
           icon: FileText,
@@ -623,7 +623,7 @@ export default function AFDDGuidePage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Complete guide to the current Wiring Regulations.',
           icon: BookOpen,

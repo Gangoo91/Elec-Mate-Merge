@@ -182,7 +182,7 @@ const sections = [
         </p>
         <p>
           Unlike general electrical installation work governed by{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>,
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>,
           instrumentation work combines electrical skills with process knowledge, control theory,
           and communication protocols. This broader skill set commands premium rates — contract
           instrumentation engineers routinely earn £250 to £400 per day, with offshore and shutdown
@@ -190,7 +190,7 @@ const sections = [
         </p>
         <p>
           For electricians already working in{' '}
-          <SEOInternalLink href="/training/industrial-electrician">
+          <SEOInternalLink href="/guides/industrial-electrician-guide">
             industrial environments
           </SEOInternalLink>
           , adding instrumentation skills is a natural career progression. You already understand
@@ -319,7 +319,7 @@ const sections = [
           transmitter output against a known reference, check for open circuits (broken wires, loose
           terminals), and check for ground faults (insulation breakdown on instrument cable).
           Elec-Mate provides{' '}
-          <SEOInternalLink href="/training/electrical-science">
+          <SEOInternalLink href="/training/electrical-science-fundamentals">
             interactive fault-finding scenarios
           </SEOInternalLink>{' '}
           that walk you through real-world loop troubleshooting.
@@ -416,7 +416,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/industrial-electrician',
+    href: '/guides/industrial-electrician-guide',
     title: 'Industrial Electrician Course',
     description:
       'Industrial wiring, motor control, power distribution, and three-phase systems for factory environments.',
@@ -424,7 +424,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/electrical-science',
+    href: '/training/electrical-science-fundamentals',
     title: 'Electrical Science Course',
     description:
       'The foundational science — Ohms law, AC theory, magnetism, and circuit analysis — that underpins all instrumentation work.',
@@ -448,7 +448,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that govern all fixed electrical installations alongside instrumentation wiring.',

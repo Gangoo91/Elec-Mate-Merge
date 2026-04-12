@@ -436,7 +436,7 @@ export default function NetworkedFireAlarmPage() {
               </div>
               <p>
                 Always check the{' '}
-                <SEOInternalLink href="/guides/fire-alarm-certificate">
+                <SEOInternalLink href="/fire-alarm-certificate">
                   fire alarm certificate
                 </SEOInternalLink>{' '}
                 requirements for the specific building type. The fire risk assessment should specify
@@ -499,7 +499,7 @@ export default function NetworkedFireAlarmPage() {
                     device. Some panels support Class A (loop returns to panel) and Class B (radial
                     — does not return) loop configurations. Class A provides the highest resilience
                     and is the standard for most commercial installations. The{' '}
-                    <SEOInternalLink href="/guides/testing-sequence">
+                    <SEOInternalLink href="/testing-sequence-guide">
                       testing sequence
                     </SEOInternalLink>{' '}
                     for fire alarm circuits includes loop resistance, insulation resistance, and
@@ -575,14 +575,14 @@ export default function NetworkedFireAlarmPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/fire-alarm-certificate',
+          href: '/fire-alarm-certificate',
           title: 'Fire Alarm Certificate',
           description: 'How to complete fire alarm commissioning certificates.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'BS 5266 emergency lighting certification guide.',
           icon: Zap,
@@ -596,7 +596,7 @@ export default function NetworkedFireAlarmPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'Electrical installation condition reports for commercial premises.',
           icon: ClipboardCheck,
@@ -610,7 +610,7 @@ export default function NetworkedFireAlarmPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct sequence for electrical testing procedures.',
           icon: ShieldCheck,

@@ -178,7 +178,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for or holding the{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification (C&G 2382)
           </SEOInternalLink>
           , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530
@@ -369,7 +369,7 @@ const sections = [
         </p>
         <p>
           The Elec-Mate{' '}
-          <SEOInternalLink href="/training/cpd-for-electricians">
+          <SEOInternalLink href="/guides/cpd-for-electricians">
             CPD training platform
           </SEOInternalLink>{' '}
           includes a dedicated Amendment 3 module that covers every aspect of A3:2024 in structured,
@@ -457,7 +457,7 @@ const sections = [
         <p>
           Staying current with each amendment is not optional — it is a professional obligation for
           any electrician designing, installing, inspecting, or certifying{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             electrical installations under BS 7671
           </SEOInternalLink>
           .
@@ -469,7 +469,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course (C&G 2382)',
     description:
       'Full 18th Edition study course covering all parts of BS 7671:2018+A3:2024 with interactive quizzes and mock exams.',
@@ -477,7 +477,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'Comprehensive guide to the IET Wiring Regulations — key changes, structure, and application.',
@@ -509,7 +509,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/solar-pv-installation',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV design and installation training — including inverter selection and bidirectional protection.',

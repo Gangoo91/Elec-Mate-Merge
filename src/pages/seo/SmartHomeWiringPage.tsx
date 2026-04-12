@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size power cables for smart home circuits, dedicated equipment feeds, and PoE switch power supplies.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on dedicated circuits for smart home hubs and server equipment.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for smart home rewires and new circuit installations.',
@@ -522,7 +522,7 @@ const sections = [
           Include the smart home equipment load in the maximum demand calculation when designing the
           installation. While the individual loads are small, they are continuous (24/7) and
           cumulative. The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           can help with dedicated circuit sizing for network cabinets and equipment rooms.
@@ -547,7 +547,7 @@ const sections = [
                 <strong>Electrical testing (BS 7671)</strong> — all new power circuits must be
                 tested: continuity, insulation resistance, polarity, earth fault loop impedance,
                 prospective fault current, and RCD operation. An{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 must be issued for all new circuits.
@@ -610,7 +610,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Size dedicated circuits for network cabinets, equipment rooms, and smart home hubs
                   with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic derating and voltage drop checks for every circuit.
@@ -625,7 +625,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote smart home packages with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Structured cabling, containment, access points, smart switches, network

@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems and how they affect supply voltage and fault protection.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop for any cable size, length, and load to verify BS 7671 compliance.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly for current carrying capacity, voltage drop, and fault current.',
@@ -189,7 +189,7 @@ const sections = [
         <p>
           Note that the BS EN 50160 limits apply at the point of supply (the meter position). Within
           the installation, additional{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/voltage-drop-calculator">voltage drop</SEOInternalLink>{' '}
           occurs on the circuit wiring — BS 7671 limits this to 3% for lighting and 5% for other
           circuits.
         </p>
@@ -542,7 +542,7 @@ const sections = [
                   Measure L-N voltage at the supply side of the main switch. Record it. If it is
                   outside 216V-253V, the issue is on the DNO supply. If it is within range, measure
                   at the final circuit to check for excessive{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop
                   </SEOInternalLink>{' '}
                   within the installation.

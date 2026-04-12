@@ -101,7 +101,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Smart quoting app for UK electricians. AI-powered cost estimation, professional PDF quotes, material pricing, labour calculation, quote-to-invoice conversion, and client portal.',
-  url: 'https://elec-mate.com/tools/electrical-quoting-app',
+  url: 'https://elec-mate.com/electrical-quoting-app',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -133,6 +133,12 @@ export default function ElectricalQuotingAppPage() {
     title: 'Electrical Quoting App | Smart Quotes for Electricians',
     description:
       'AI-powered quoting app for UK electricians. Produce professional quotes with accurate material and labour costs. Quote-to-invoice conversion, client portal, Xero and QuickBooks integration.',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Electrical Quoting App', url: '/electrical-quoting-app' },
+    ],
+    dateModified: '2026-04-12',
+    author: 'Elec-Mate Technical Team',
   });
 
   return (
@@ -483,8 +489,8 @@ export default function ElectricalQuotingAppPage() {
               Elec-Mate is not just a quoting app — it is the complete platform for running an
               electrical business. Your subscription includes access to 70+ calculators (56
               technical + 14 business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with
-              8 certificate types,{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">
+              16 certificate types,{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">
                 digital EICR and EIC certification
               </SEOInternalLink>
               , and the full quoting,
@@ -512,6 +518,33 @@ export default function ElectricalQuotingAppPage() {
             ctaHref="/auth/signup"
             icon={PoundSterling}
           />
+        </div>
+      </section>
+
+      <section className="py-12 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+            Build the Full Quote-to-Cash Workflow
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
+            <p>
+              Quoting works best when it is connected to the rest of the commercial stack. Start
+              with the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+              for the estimate, protect margin with the{' '}
+              <SEOInternalLink href="/tools/minimum-charge-calculator">
+                minimum charge calculator
+              </SEOInternalLink>
+              , convert the accepted job into the{' '}
+              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>,
+              and tie completed work back to the{' '}
+              <SEOInternalLink href="/tools/eicr-certificate">certificate record</SEOInternalLink>{' '}
+              where relevant.
+            </p>
+            <p>
+              That linking is where Elec-Mate gets stronger than a standalone quoting app. Instead
+              of one nice PDF, you get a proper commercial system.
+            </p>
+          </div>
         </div>
       </section>
 

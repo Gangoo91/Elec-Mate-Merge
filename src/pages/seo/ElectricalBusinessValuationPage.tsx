@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Finance Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Professional quotes and invoices that support a strong, valuable business.',
     icon: Zap,
@@ -559,7 +559,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate's quoting and invoicing tools
                   </SEOInternalLink>{' '}
                   to run a professional, organised business. Buyers see a business with proper job

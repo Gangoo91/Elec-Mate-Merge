@@ -99,14 +99,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-certificates',
+    href: '/tools/digital-certificates-app',
     title: 'Electrical Certificates App',
     description: 'Complete wind turbine and MCS installation certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote wind turbine electrical installations accurately.',
     icon: PoundSterling,
@@ -509,7 +509,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-certificates">
+                  <SEOInternalLink href="/tools/digital-certificates-app">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete EIC certificates, G99 commissioning test records, and MCS installation
@@ -527,7 +527,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Wind turbine projects often include battery storage, G99 application, and surge
                   protection upgrades. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build comprehensive itemised quotes that clearly show the value of the full

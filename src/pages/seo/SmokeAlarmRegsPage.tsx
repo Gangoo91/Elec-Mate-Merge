@@ -521,7 +521,7 @@ export default function SmokeAlarmRegsPage() {
               </p>
               <p>
                 During an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR inspection</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>{' '}
                 of a rented property, the condition of the smoke and carbon monoxide alarm system
                 should be recorded, even though it is not technically part of the fixed electrical
                 installation. Many landlords expect the electrician carrying out the EICR to also
@@ -718,14 +718,14 @@ export default function SmokeAlarmRegsPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/fire-alarm-certificate',
+          href: '/fire-alarm-certificate',
           title: 'Fire Alarm Certificate',
           description: 'Complete fire alarm certificates to BS 5839 in Elec-Mate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'Capture smoke alarm condition during periodic inspection.',
           icon: ClipboardCheck,
@@ -739,7 +739,7 @@ export default function SmokeAlarmRegsPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Certifying mains-powered smoke alarm installations.',
           icon: FileText,

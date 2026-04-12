@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description:
       'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
@@ -580,7 +580,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete your Electrical Installation Certificate on your phone before leaving
                   the property. Auto-populated test schedules, instant PDF export, and same-day
                   delivery to the client — no evening paperwork.
@@ -595,7 +595,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Brighton Rewires Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate detailed, itemised rewire quotes in minutes with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . In Brighton's competitive market, a professional quote with clear circuit

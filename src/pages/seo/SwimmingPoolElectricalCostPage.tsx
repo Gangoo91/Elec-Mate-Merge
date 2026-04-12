@@ -85,21 +85,21 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for pool filtration pump circuits, heat pump supplies, and SELV transformer feeds.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for swimming pool installations on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Price swimming pool electrical packages including bonding, SELV lighting, and filtration circuits.',
     icon: Wrench,
@@ -474,7 +474,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and Section 702 Declaration</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   must reference Section 702 compliance. Note the zone boundaries, SELV transformer

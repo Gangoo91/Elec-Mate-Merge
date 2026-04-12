@@ -201,7 +201,7 @@ export default function ManualHandlingCoursePage() {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'Manual Handling Course',
-                item: 'https://elec-mate.com/training/manual-handling',
+                item: 'https://elec-mate.com/manual-handling-course',
               },
             ],
           })}
@@ -252,7 +252,7 @@ export default function ManualHandlingCoursePage() {
               and manoeuvre lengths of conduit and trunking through corridors and ceiling voids.
               Each of these tasks presents a genuine risk of musculoskeletal injury if performed
               incorrectly. Proper{' '}
-              <SEOInternalLink href="/tools/rams-generator">RAMS documentation</SEOInternalLink>{' '}
+              <SEOInternalLink href="/rams-generator">RAMS documentation</SEOInternalLink>{' '}
               should always include manual handling risk assessments for these activities.
             </p>
             <p>
@@ -453,7 +453,7 @@ export default function ManualHandlingCoursePage() {
               your body and make multiple trips if necessary. A tool hoist or bucket-and-rope system
               is safer for heavier items. Your hands should be free to maintain three points of
               contact on the ladder at all times. See also the{' '}
-              <SEOInternalLink href="/training/pasma-training">
+              <SEOInternalLink href="/pasma-training">
                 PASMA training course
               </SEOInternalLink>{' '}
               for safe working at height with mobile towers.

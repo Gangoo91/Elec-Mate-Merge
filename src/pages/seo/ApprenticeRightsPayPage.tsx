@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/year-1-electrical-apprentice',
+    href: '/guides/year-1-apprentice-guide',
     title: 'Year 1 Apprentice Guide',
     description: 'What to expect in your first year on site as an electrical apprentice.',
     icon: Calendar,

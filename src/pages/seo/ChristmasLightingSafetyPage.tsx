@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/pat-testing-guide',
+    href: '/guides/pat-testing-guide-uk',
     title: 'PAT Testing Guide',
     description:
       'Complete guide to portable appliance testing for commercial and domestic settings.',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ip-rating-guide',
+    href: '/tools/ip-rating-guide',
     title: 'IP Rating Guide',
     description: 'Full IP rating chart with practical examples for electrical installations.',
     icon: Droplets,
@@ -253,7 +253,7 @@ const sections = [
         </div>
         <p>
           For a detailed breakdown of all IP ratings and their applications, see the{' '}
-          <SEOInternalLink href="/guides/ip-rating-guide">IP Rating Guide</SEOInternalLink>.
+          <SEOInternalLink href="/tools/ip-rating-guide">IP Rating Guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -477,7 +477,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Offer pre-season PAT testing for commercial Christmas lighting displays. Pubs,
                   restaurants, shops, and offices need this service annually. Use the{' '}
-                  <SEOInternalLink href="/guides/pat-testing-guide">
+                  <SEOInternalLink href="/guides/pat-testing-guide-uk">
                     PAT testing guide
                   </SEOInternalLink>{' '}
                   for procedures and record-keeping requirements.
@@ -493,7 +493,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Install dedicated RCD-protected outdoor sockets for customers who want permanent
                   outdoor lighting capability. This is notifiable work under Part P and requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>.
+                  <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>.
                 </p>
               </div>
             </div>

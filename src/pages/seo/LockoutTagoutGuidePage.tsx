@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Health & Safety', href: '/guides/electrical-safety-guide' },
+  { label: 'Health & Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Lockout Tagout Guide', href: '/lockout-tagout-guide' },
 ];
 
@@ -105,14 +105,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/electrical-safety-guide',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety Guide',
     description: 'Complete UK electrical safety reference for qualified electricians.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/rams',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments and method statements instantly.',
     icon: FileCheck2,
@@ -552,7 +552,7 @@ const sections = [
                 <strong>Buried and concealed cables</strong> — when chasing walls or cutting into
                 floors, use a cable detection device before starting. Cables do not always follow
                 expected routes, particularly in older buildings.{' '}
-                <SEOInternalLink href="/guides/electrical-safety-guide">
+                <SEOInternalLink href="/guides/electrical-safety-at-home">
                   Consult the full electrical safety guide
                 </SEOInternalLink>{' '}
                 for detection device guidance.
@@ -581,7 +581,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Safe Isolation RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
                 create site-specific risk assessments and method statements for electrical work
                 including safe isolation procedures, permit to work requirements, and multi-trade
                 coordination. Compliant with UK health and safety regulations and ready to share

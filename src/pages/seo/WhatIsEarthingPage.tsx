@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/supplementary-bonding-guide',
+    href: '/guides/supplementary-bonding',
     title: 'Supplementary Bonding Guide',
     description:
       'When supplementary bonding is required, where to connect it, and minimum conductor sizes.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earth-fault-loop-explained',
+    href: '/guides/earth-fault-loop-impedance-explained',
     title: 'Earth Fault Loop Explained',
     description:
       'What Zs and Ze mean, how to measure them, and why they determine protective device operation.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earth-electrode-test',
+    href: '/guides/earth-electrode-testing',
     title: 'Earth Electrode Test',
     description:
       'How to test an earth electrode on a TT system — fall of potential method and interpretation of results.',
@@ -265,7 +265,7 @@ const sections = [
           The total impedance of this path — from the fault point, through the CPC, through the
           earthing conductor, through the earth return path, through the transformer, and back on
           the line conductor to the fault — is the{' '}
-          <SEOInternalLink href="/guides/earth-fault-loop-explained">
+          <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
             earth fault loop impedance (Zs)
           </SEOInternalLink>
           . The lower the Zs, the higher the fault current, and the faster the protective device
@@ -388,7 +388,7 @@ const sections = [
                   Additional bonding connections between exposed conductive parts and extraneous
                   conductive parts in specific locations. The most common location is bathrooms,
                   where{' '}
-                  <SEOInternalLink href="/guides/supplementary-bonding-guide">
+                  <SEOInternalLink href="/guides/supplementary-bonding">
                     supplementary bonding
                   </SEOInternalLink>{' '}
                   connects metal pipes, radiators, bath/shower trays (if metal), and any other
@@ -512,7 +512,7 @@ const sections = [
                 <strong>Earth electrode resistance (TT systems).</strong> On TT systems, the
                 resistance of the earth electrode is measured using the fall-of-potential method or
                 the loop impedance method. See{' '}
-                <SEOInternalLink href="/guides/earth-electrode-test">
+                <SEOInternalLink href="/guides/earth-electrode-testing">
                   earth electrode testing
                 </SEOInternalLink>
                 .

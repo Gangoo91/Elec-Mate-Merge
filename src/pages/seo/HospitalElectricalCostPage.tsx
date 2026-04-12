@@ -165,7 +165,7 @@ const sections = [
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Life-safety systems</strong> — emergency lighting to{' '}
-                <SEOInternalLink href="/guides/emergency-lighting-bs5266">
+                <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                   BS 5266-1
                 </SEOInternalLink>
                 , fire alarm to{' '}
@@ -628,7 +628,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Document Complex Installations</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   for each phase of hospital electrical work. Generate{' '}

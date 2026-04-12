@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, MapPin } from 'lucide-react';
+
 import { supabase } from '@/integrations/supabase/client';
 
 interface StepProps {
-  formData: any;
-  onChange: (data: any) => void;
+  formData: {
+    email: string;
+    phone: string;
+    address: string;
+    [key: string]: unknown;
+  };
+  onChange: (data: Record<string, unknown>) => void;
 }
 
 export function ContactDetailsStep({ formData, onChange }: StepProps) {
-  // Pre-fill email from auth user
   useEffect(() => {
     const prefillEmail = async () => {
       const {
@@ -21,69 +22,67 @@ export function ContactDetailsStep({ formData, onChange }: StepProps) {
         onChange({ ...formData, email: user.email });
       }
     };
-    prefillEmail();
+    void prefillEmail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const inputClass =
+    'h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20';
 
   return (
     <div className="space-y-6">
-      <div className="text-center mb-6">
-        <div className="inline-flex p-4 rounded-2xl bg-blue-500/10 border border-blue-500/30 mb-4">
-          <Mail className="h-10 w-10 text-blue-500" />
-        </div>
-        <h3 className="text-xl font-bold mb-2">Contact Information</h3>
-        <p className="text-muted-foreground">How should clients get in touch with you?</p>
+      <div>
+        <h3 className="text-[1.5rem] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:text-[1.75rem]">
+          How do clients <span className="text-yellow-400">reach you?</span>
+        </h3>
+        <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">
+          These appear on your quote and invoice documents so clients know where to get in touch.
+        </p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <Label htmlFor="email" className="flex items-center gap-2 text-base">
-            <Mail className="h-4 w-4" />
-            Business Email
-          </Label>
-          <Input
+          <label htmlFor="email" className="mb-2 block text-[13px] font-medium text-white">
+            Business email
+          </label>
+          <input
             id="email"
             type="email"
             value={formData.email}
             onChange={(e) => onChange({ ...formData, email: e.target.value })}
             placeholder="you@yourcompany.com"
-            className="h-11 mt-2 touch-manipulation"
+            autoComplete="email"
+            className={inputClass}
           />
-          <p className="text-xs text-muted-foreground mt-1">
-            Clients will reply to this email address
-          </p>
         </div>
 
         <div>
-          <Label htmlFor="phone" className="flex items-center gap-2 text-base">
-            <Phone className="h-4 w-4" />
-            Phone Number
-          </Label>
-          <Input
+          <label htmlFor="phone" className="mb-2 block text-[13px] font-medium text-white">
+            Phone number
+          </label>
+          <input
             id="phone"
             type="tel"
             value={formData.phone}
             onChange={(e) => onChange({ ...formData, phone: e.target.value })}
             placeholder="07XXX XXXXXX"
-            className="h-11 mt-2 touch-manipulation"
+            autoComplete="tel"
+            className={inputClass}
           />
         </div>
 
         <div>
-          <Label htmlFor="address" className="flex items-center gap-2 text-base">
-            <MapPin className="h-4 w-4" />
-            Business Address
-          </Label>
-          <Textarea
+          <label htmlFor="address" className="mb-2 block text-[13px] font-medium text-white">
+            Business address
+          </label>
+          <textarea
             id="address"
             value={formData.address}
             onChange={(e) => onChange({ ...formData, address: e.target.value })}
             placeholder="123 High Street&#10;London&#10;SW1A 1AA"
             rows={3}
-            className="mt-2 touch-manipulation"
+            className="w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-[16px] leading-[1.6] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
           />
-          <p className="text-xs text-muted-foreground mt-1">
-            Appears on quote and invoice documents
-          </p>
         </div>
       </div>
     </div>

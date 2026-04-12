@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Troubleshooting',
   },
   {
-    href: '/tools/calculators',
+    href: '/electrical-testing-calculators',
     title: 'Ring Circuit Calculator',
     description:
       'Verify ring circuit continuity with R1, Rn, and R2 values to confirm the ring is intact.',

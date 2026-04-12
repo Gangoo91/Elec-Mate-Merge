@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/emergency-lighting-certificate-guide',
+    href: '/emergency-lighting-certificate-guide',
     title: 'Emergency Lighting Certificate Guide',
     description:
       'BS 5266 emergency lighting certificate requirements including completion, verification, and testing records.',
@@ -556,7 +556,7 @@ const sections = [
         <p>
           Third-party certification through schemes such as BAFE SP203-1 provides external
           verification of competence. Many insurers, building control bodies, and{' '}
-          <SEOInternalLink href="/guides/notifiable-work-guide">notifiable work</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/notifiable-electrical-work">notifiable work</SEOInternalLink>{' '}
           authorities require BAFE registration as a condition of accepting fire alarm work.
         </p>
       </>

@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on site for Part P notifiable work in Lincoln.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       "Size cables correctly for rewires and new circuits in Lincoln's varied housing stock.",
@@ -108,14 +108,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Replace old fuse boards with modern RCD-protected consumer units — step by step.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Send professional PDF quotes for rewires, EICRs, and EV charger installations in Lincoln.',
@@ -418,7 +418,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on
@@ -434,7 +434,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for long cable runs in agricultural buildings and domestic rewires in Lincoln's
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win Lincoln jobs with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Send professional PDF quotes on survey day.

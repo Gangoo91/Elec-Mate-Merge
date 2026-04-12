@@ -113,7 +113,7 @@ export const SymbolLibrary = ({
         </div>
 
         <SheetHeader className="px-4 pb-3">
-          <SheetTitle className="text-white text-lg font-semibold">Symbols</SheetTitle>
+          <SheetTitle className="text-white text-lg font-semibold">Electrical Items</SheetTitle>
           <div className="relative mt-2">
             {!searchActive ? (
               // Tappable search bar — does NOT focus an input or trigger keyboard
@@ -126,7 +126,7 @@ export const SymbolLibrary = ({
                 className="w-full h-11 bg-elec-dark border border-white/10 rounded-md px-3 flex items-center gap-2 touch-manipulation"
               >
                 <Search className="h-4 w-4 text-white flex-shrink-0" />
-                <span className="text-white text-base">Search symbols...</span>
+                <span className="text-white text-base">Search items or fittings...</span>
               </button>
             ) : (
               <>
@@ -136,7 +136,7 @@ export const SymbolLibrary = ({
                 <Input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Search symbols..."
+                  placeholder="Search items or fittings..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onBlur={() => {

@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Finance Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create VAT-compliant invoices with correct DRC wording on your phone.',
     icon: Zap,
@@ -484,7 +484,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">VAT-Compliant Invoices on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate's invoicing tool
                   </SEOInternalLink>{' '}
                   to create professional, VAT-compliant invoices in seconds on your phone. Include

@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/year-1-electrical-apprentice',
+    href: '/guides/year-1-apprentice-guide',
     title: 'Year 1 Apprentice Guide',
     description: 'Detailed guide to your first year — on-site tasks, college, and assessments.',
     icon: Calendar,
@@ -148,7 +148,7 @@ const sections = [
           You will spend four years learning a skilled trade. During that time, you will work on
           construction sites, attend college, study for qualifications, build a portfolio of
           evidence, complete practical assessments, and eventually sit the{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">AM2</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> and{' '}
           <SEOInternalLink href="/guides/epa-what-to-expect">End Point Assessment</SEOInternalLink>{' '}
           to become a qualified electrician. You will earn money from day one (unlike university),
           and you will finish with a qualification that is in demand across the country.
@@ -193,7 +193,7 @@ const sections = [
                 Sign in, put on PPE, check the task list for the day. You might be running cables,
                 fitting containment, chasing out for back boxes, or assisting with a consumer unit
                 installation. In{' '}
-                <SEOInternalLink href="/guides/year-1-electrical-apprentice">
+                <SEOInternalLink href="/guides/year-1-apprentice-guide">
                   Year 1
                 </SEOInternalLink>
                 , you will mainly be assisting; by{' '}
@@ -500,7 +500,7 @@ const sections = [
               <span>
                 <strong>Years 1-2:</strong> Learning the foundations. Basic hand skills,
                 containment, first-fix work, Level 2 theory, building confidence. See our{' '}
-                <SEOInternalLink href="/guides/year-1-electrical-apprentice">
+                <SEOInternalLink href="/guides/year-1-apprentice-guide">
                   Year 1
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -613,7 +613,7 @@ const sections = [
                     off-the-job training hours
                   </SEOInternalLink>
                   , and build your{' '}
-                  <SEOInternalLink href="/guides/apprentice-portfolio">portfolio</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink>{' '}
                   evidence as you go. Everything connects so your evidence accumulates naturally
                   over four years.
                 </p>

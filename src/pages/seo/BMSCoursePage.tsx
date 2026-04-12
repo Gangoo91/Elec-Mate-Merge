@@ -182,7 +182,7 @@ export default function BMSCoursePage() {
                 '@type': 'ListItem',
                 position: 3,
                 name: 'BMS Course',
-                item: 'https://elec-mate.com/training/bms-building-management-systems',
+                item: 'https://elec-mate.com/training/bms-course',
               },
             ],
           })}
@@ -255,11 +255,11 @@ export default function BMSCoursePage() {
               regulations. The combination of electrical installation skills, IT networking
               knowledge, and HVAC understanding that BMS work demands means qualified engineers are
               in short supply and command premium day rates. Before moving into BMS, ensure your{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition qualification
               </SEOInternalLink>{' '}
               and{' '}
-              <SEOInternalLink href="/training/city-guilds-2391">
+              <SEOInternalLink href="/city-guilds2391">
                 inspection and testing certificate
               </SEOInternalLink>{' '}
               are up to date.

@@ -17,7 +17,19 @@ with open('/tmp/existing-routes.txt') as f:
         existing.add(line.strip())
 
 # Filter to only routes not yet in AppRouter
-new_routes = [(comp, route) for comp, route in registry if route not in existing]
+candidate_routes = [(comp, route) for comp, route in registry if route not in existing]
+
+# De-duplicate by route path. When multiple page components claim the same path,
+# keep the first one from the registry and surface the conflict for cleanup.
+new_routes = []
+seen_routes = {}
+duplicate_routes = []
+for comp, route in candidate_routes:
+    if route in seen_routes:
+        duplicate_routes.append((route, seen_routes[route], comp))
+        continue
+    seen_routes[route] = comp
+    new_routes.append((comp, route))
 
 # Sort by route for readability
 new_routes.sort(key=lambda x: x[1])
@@ -60,3 +72,7 @@ with open(outpath, 'w') as f:
     f.write(output)
 
 print(f"Generated {outpath} with {len(new_routes)} routes")
+if duplicate_routes:
+    print("Skipped duplicate route paths:")
+    for route, kept_comp, skipped_comp in duplicate_routes:
+        print(f"  {route}: kept {kept_comp}, skipped {skipped_comp}")

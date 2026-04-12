@@ -1,23 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CheckCircle2, Eye, EyeOff, Loader2 } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
-import {
-  Loader2,
-  Mail,
-  Lock,
-  ArrowRight,
-  CheckCircle2,
-  Eye,
-  EyeOff,
-  Fingerprint,
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
+import { useAuth } from '@/contexts/AuthContext';
+import { useBiometricAuth } from '@/hooks/useBiometricAuth';
+import { useUserCount } from '@/hooks/useUserCount';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
-import { useBiometricAuth } from '@/hooks/useBiometricAuth';
-import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
-import { supabase } from '@/integrations/supabase/client';
 
 const SignIn = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +22,7 @@ const SignIn = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
   const [isBiometricLoggingIn, setIsBiometricLoggingIn] = useState(false);
-  const [userCount, setUserCount] = useState('700+');
+  const userCount = useUserCount();
 
   const pendingCredentials = useRef<{ email: string; password: string } | null>(null);
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -38,15 +30,6 @@ const SignIn = () => {
   const { signIn } = useAuth();
   const navigate = useNavigate();
   const biometric = useBiometricAuth();
-
-  useEffect(() => {
-    supabase
-      .from('profiles')
-      .select('*', { count: 'exact', head: true })
-      .then(({ count }) => {
-        if (count && count > 0) setUserCount(`${count}`);
-      });
-  }, []);
 
   useEffect(() => {
     const emailParam = searchParams.get('email');
@@ -59,13 +42,15 @@ const SignIn = () => {
       setError('Please fill in all fields');
       return;
     }
+
     setError(null);
     setIsSubmitting(true);
     addBreadcrumb('Login attempt', 'auth', { email });
+
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        setError(error.message);
+      const { error: signInError } = await signIn(email, password);
+      if (signInError) {
+        setError(signInError.message);
       } else if (biometric.isAvailable && !biometric.isEnabled && !biometric.isChecking) {
         pendingCredentials.current = { email, password };
         setShowBiometricPrompt(true);
@@ -110,8 +95,8 @@ const SignIn = () => {
         setIsBiometricLoggingIn(false);
         return;
       }
-      const { error } = await signIn(credentials.email, credentials.password);
-      if (error) {
+      const { error: signInError } = await signIn(credentials.email, credentials.password);
+      if (signInError) {
         await biometric.disableBiometric();
         setError('Saved credentials are no longer valid. Please sign in with your password.');
       } else {
@@ -126,265 +111,204 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-[100svh] bg-black flex flex-col">
-      {/* Success overlay */}
+    <div className="min-h-[100svh] bg-black">
       <AnimatePresence>
         {showSuccess && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/95 z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/96"
           >
             <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
+              initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 20 }}
               className="flex flex-col items-center gap-3"
             >
-              <div className="w-16 h-16 rounded-full bg-green-500/15 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/15">
                 <CheckCircle2 className="h-8 w-8 text-green-400" />
               </div>
-              <p className="text-[17px] text-white font-semibold">Welcome back</p>
+              <p className="text-[17px] font-semibold text-white">Welcome back</p>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Content — vertically centred */}
-      <div className="flex-1 flex flex-col justify-center px-6 py-12 pt-[calc(env(safe-area-inset-top)+48px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
-        <div className="w-full max-w-[340px] mx-auto">
-          {/* Logo + wordmark */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex items-center justify-center gap-3 mb-10"
-          >
-            <img src="/logo.jpg" alt="" className="w-10 h-10 rounded-xl object-cover" />
-            <span className="text-[20px] font-bold tracking-tight">
-              <span className="text-elec-yellow">Elec-</span>
-              <span className="text-white">Mate</span>
-            </span>
-          </motion.div>
+      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-8">
+        <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
+          <div>
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-11 w-11 rounded-xl object-cover" />
+              <span className="text-[22px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </Link>
 
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.05 }}
-            className="mb-8"
-          >
-            <h1 className="text-[24px] font-semibold text-white tracking-tight text-center">
-              Sign in to your account
-            </h1>
-          </motion.div>
+            <div className="mt-16 max-w-[30rem]">
+              <h1 className="text-[4rem] font-bold leading-[1.02] tracking-[-0.045em] text-white">
+                Welcome <span className="text-yellow-400">back.</span>
+              </h1>
+              <p className="mt-6 max-w-[24rem] text-lg leading-[1.65] text-white/68">
+                Quotes, certificates, training, AI and every core workflow are already waiting in
+                the same place.
+              </p>
+            </div>
+          </div>
 
-          {/* Error */}
-          <AnimatePresence>
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mb-5 overflow-hidden"
-              >
-                <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
-                  {error}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <div className="grid gap-5 border-t border-white/10 pt-6 text-sm leading-7 text-white/68">
+            <div>{userCount} electricians already live on Elec-Mate.</div>
+            <div>Secure sign-in with password, with biometric sign-in where available.</div>
+            <div>Need an account? Start a 7-day free trial with no charge for 7 days.</div>
+          </div>
+        </div>
 
-          {/* Biometric */}
-          {biometric.isAvailable && biometric.isEnabled && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
+        <div className="flex flex-col justify-start py-5 lg:justify-center lg:py-10">
+          <div className="mx-auto w-full max-w-[430px]">
+            <div className="mb-6 flex items-center justify-center gap-3 lg:mb-10 lg:hidden">
+              <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover" />
+              <span className="text-[20px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </div>
+
+            <div>
+              <h2 className="text-[2rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.25rem] lg:text-[2.75rem]">
+                Sign in and <span className="text-yellow-400">carry on.</span>
+              </h2>
+              <p className="mt-3 max-w-[26rem] text-[14px] leading-[1.6] text-white lg:mt-4 lg:text-[15px] lg:leading-[1.7]">
+                No clutter. Just the fastest route back into your account.
+              </p>
+            </div>
+
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-7 overflow-hidden"
+                >
+                  <p className="border-y border-red-500/15 bg-red-500/8 px-3 py-3 text-[13px] text-red-400">
+                    {error}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {biometric.isAvailable && biometric.isEnabled && (
               <button
                 type="button"
                 onClick={handleBiometricLogin}
                 disabled={isBiometricLoggingIn || isSubmitting}
-                className="w-full h-12 rounded-xl text-[14px] font-medium bg-white/[0.05] border border-white/[0.08] text-white hover:bg-white/[0.10] transition-all duration-150 touch-manipulation flex items-center justify-center gap-2 mb-4"
+                className="mt-6 h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[14px] font-medium text-white transition-colors hover:bg-white/[0.08] lg:mt-8"
               >
-                {isBiometricLoggingIn ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Verifying...
-                  </>
-                ) : (
-                  <>
-                    <Fingerprint className="h-4.5 w-4.5 text-elec-yellow" /> Sign in with{' '}
-                    {biometric.biometricType}
-                  </>
-                )}
+                {isBiometricLoggingIn ? 'Verifying...' : `Sign in with ${biometric.biometricType}`}
               </button>
+            )}
 
-              <div className="flex items-center gap-3 mb-5">
-                <div className="flex-1 h-px bg-white/[0.10]" />
-                <span className="text-[11px] text-white uppercase tracking-widest font-medium">
-                  or
-                </span>
-                <div className="flex-1 h-px bg-white/[0.10]" />
+            {biometric.isAvailable && biometric.isEnabled && (
+              <div className="my-5 flex items-center gap-3 lg:my-6">
+                <div className="h-px flex-1 bg-white/[0.10]" />
+                <span className="text-[13px] font-medium text-white">or</span>
+                <div className="h-px flex-1 bg-white/[0.10]" />
               </div>
-            </motion.div>
-          )}
+            )}
 
-          {/* Form */}
-          <motion.form
-            onSubmit={handleSubmit}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="space-y-4"
-          >
-            {/* Email */}
-            <div>
-              <label className="block text-[12px] font-medium text-white mb-1.5 ml-0.5 uppercase tracking-wider">
-                Email
-              </label>
-              <div className="relative">
-                <Mail
-                  className={cn(
-                    'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
-                    focusedField === 'email' ? 'text-elec-yellow' : 'text-white'
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4 lg:mt-8 lg:space-y-5">
+              <div>
+                <label className="block text-[13px] font-medium text-white">Email</label>
+                <div className="relative mt-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder="you@example.com"
+                    autoComplete="email"
+                    className={cn(
+                      'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-11 text-[16px] text-white placeholder:text-white/38 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
+                      focusedField === 'email'
+                        ? 'border-yellow-400/70 bg-white/[0.06] ring-2 ring-yellow-400/20'
+                        : 'border-white/[0.12] hover:border-white/[0.22]'
+                    )}
+                  />
+                  {isEmailValid && email.length > 0 && (
+                    <CheckCircle2 className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-green-400" />
                   )}
-                />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onFocus={() => setFocusedField('email')}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                  className={cn(
-                    'w-full h-12 pl-11 pr-10 rounded-xl text-[15px] text-white placeholder:text-white',
-                    'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
-                    focusedField === 'email'
-                      ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
-                      : 'ring-1 ring-white/20 hover:ring-white/30'
-                  )}
-                />
-                {isEmailValid && email.length > 0 && (
-                  <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400/70" />
-                )}
+                </div>
               </div>
-            </div>
 
-            {/* Password */}
-            <div>
-              <div className="flex items-center justify-between mb-1.5 ml-0.5">
-                <label className="block text-[12px] font-medium text-white uppercase tracking-wider">
-                  Password
-                </label>
-                <Link
-                  to="/auth/forgot-password"
-                  className="text-[12px] text-elec-yellow/70 hover:text-elec-yellow font-medium transition-colors touch-manipulation"
-                >
-                  Forgot?
-                </Link>
+              <div>
+                <div className="flex items-center justify-between">
+                  <label className="block text-[13px] font-medium text-white">Password</label>
+                  <Link
+                    to="/auth/forgot-password"
+                    className="text-[13px] font-medium text-yellow-400 transition-colors hover:text-yellow-300"
+                  >
+                    Forgot password
+                  </Link>
+                </div>
+                <div className="relative mt-2">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setFocusedField('password')}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder="Enter password"
+                    autoComplete="current-password"
+                    className={cn(
+                      'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white/38 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
+                      focusedField === 'password'
+                        ? 'border-yellow-400/70 bg-white/[0.06] ring-2 ring-yellow-400/20'
+                        : 'border-white/[0.12] hover:border-white/[0.22]'
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 touch-manipulation items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
-              <div className="relative">
-                <Lock
-                  className={cn(
-                    'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
-                    focusedField === 'password' ? 'text-elec-yellow' : 'text-white'
-                  )}
-                />
-                <input
-                  type="text"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onFocus={() => setFocusedField('password')}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder="Enter password"
-                  autoComplete="current-password"
-                  className={cn(
-                    'w-full h-12 pl-11 pr-11 rounded-xl text-[15px] text-white placeholder:text-white',
-                    'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
-                    !showPassword && 'pw-masked',
-                    focusedField === 'password'
-                      ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
-                      : 'ring-1 ring-white/20 hover:ring-white/30'
-                  )}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-lg text-white hover:text-white transition-colors touch-manipulation"
-                >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
 
-            {/* CTA */}
-            <div className="pt-2">
               <Button
                 type="submit"
                 disabled={isSubmitting || showSuccess}
-                className={cn(
-                  'w-full h-12 rounded-xl text-[15px] font-semibold',
-                  'bg-elec-yellow hover:bg-elec-yellow/90 text-black',
-                  'shadow-[0_1px_20px_rgba(250,204,21,0.15)] transition-all duration-150',
-                  'active:scale-[0.98] disabled:opacity-50'
-                )}
+                className="mt-2 h-12 w-full touch-manipulation rounded-2xl bg-yellow-500 text-[15px] font-semibold text-black transition-all duration-150 hover:bg-yellow-400 disabled:opacity-50 lg:mt-3 lg:h-14"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Signing in...
                   </>
                 ) : (
-                  <>
-                    Sign in <ArrowRight className="ml-1.5 h-4 w-4" />
-                  </>
+                  'Sign in'
                 )}
               </Button>
-            </div>
-          </motion.form>
+            </form>
 
-          {/* Separator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="mt-8 mb-6"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-white/[0.10]" />
-              <span className="text-[11px] text-white uppercase tracking-widest font-medium">
-                new here?
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[12px] text-white lg:mt-8">
+              <span>
+                <span className="font-semibold text-yellow-400">{userCount}</span> electricians live
               </span>
-              <div className="flex-1 h-px bg-white/[0.10]" />
+              <span>No charge for 7 days on new accounts</span>
             </div>
-          </motion.div>
 
-          {/* Sign up link */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35 }}
-          >
-            <Link to="/auth/signup" className="block">
-              <button className="w-full h-12 rounded-xl text-[14px] font-medium bg-transparent border border-white/[0.08] text-white hover:bg-white/[0.10] transition-all duration-150 touch-manipulation flex items-center justify-center gap-2">
-                Create an account
-                <span className="text-[10px] font-semibold text-elec-yellow bg-elec-yellow/10 px-2 py-0.5 rounded-full">
-                  7 days free
-                </span>
-              </button>
-            </Link>
-          </motion.div>
-
-          {/* Social proof — subtle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="text-[11px] text-white text-center mt-6 flex items-center justify-center gap-1.5"
-          >
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-            {userCount} electricians use Elec-Mate
-          </motion.p>
+            <div className="mt-4 text-center lg:mt-5 lg:text-left">
+              <Link
+                to="/auth/signup"
+                className="text-[14px] font-medium text-white transition-colors hover:text-yellow-400"
+              >
+                Need an account?{' '}
+                <span className="font-semibold text-yellow-400">Start a 7-day free trial.</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 

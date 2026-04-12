@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Elec-Mate Quoting App',
     description: 'Send professional quotes to referral leads within minutes.',
     icon: PoundSterling,

@@ -93,14 +93,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates on site after a rewire.',
     icon: FileCheck2,
@@ -228,7 +228,7 @@ const sections = [
     content: (
       <>
         <p>
-          Book an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a
+          Book an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with a
           qualified electrician to get a definitive assessment. However, these signs indicate you
           should arrange an inspection promptly:
         </p>
@@ -334,7 +334,7 @@ const sections = [
           residual operating current not exceeding 30 mA for socket outlets with a rated current not
           exceeding 32 A. All new rewires must comply with this requirement. The electrician must
           issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           on completion, documenting the design, construction, inspection, and testing of the

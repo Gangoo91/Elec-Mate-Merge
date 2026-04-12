@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/solar-panel-installation-guide',
+    href: '/guides/solar-panel-installation',
     title: 'Solar PV Installation Guide',
     description:
       'Complete guide to solar panel installation including certification, Part P notification, and DNO requirements.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
       'Amendment 3 consumer unit regulations, device selection, and Part P compliance for board changes.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 18th Edition qualification with structured training modules and mock exams.',
@@ -416,7 +416,7 @@ const sections = [
         </div>
         <p>
           If you are studying for your{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391-guide">
+          <SEOInternalLink href="/city-guilds2391">
             C&G 2391 inspection and testing qualification
           </SEOInternalLink>
           , expect questions on Amendment 3 to appear in exam papers. The examiners will be looking
@@ -434,7 +434,7 @@ const sections = [
         <p>
           The driving force behind Amendment 3 is the rapid growth of solar PV and battery storage
           installations in the UK. When a{' '}
-          <SEOInternalLink href="/guides/solar-panel-installation-guide">
+          <SEOInternalLink href="/guides/solar-panel-installation">
             solar PV system
           </SEOInternalLink>{' '}
           is connected to a domestic consumer unit via an AC-coupled inverter, the inverter

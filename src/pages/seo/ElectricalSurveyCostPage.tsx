@@ -364,7 +364,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/how-to-test-insulation-resistance">
                     Insulation resistance testing
                   </SEOInternalLink>
                 </strong>{' '}

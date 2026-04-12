@@ -90,7 +90,7 @@ export default function MotorStartingCurrentCalculatorPage() {
               <p>
                 This high starting current has significant implications for the electrical
                 installation. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable must be sized
                 </SEOInternalLink>{' '}
                 to carry the starting current without excessive voltage drop, the protective device
@@ -392,7 +392,7 @@ export default function MotorStartingCurrentCalculatorPage() {
                 to any load point to 5% for motor circuits. However, the transient voltage dip
                 during starting is a separate consideration — a dip greater than 10-15% at the point
                 of common coupling is generally considered unacceptable. The{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 can help assess the steady-state voltage drop, while the motor starting current
@@ -508,7 +508,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with correction factors, voltage drop, and fault current verification for motor circuits.',
@@ -524,7 +524,7 @@ export default function MotorStartingCurrentCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/voltage-drop-calculator',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop for motor circuits including the impact of starting current on long cable runs.',

@@ -403,7 +403,7 @@ const sections = [
       <>
         <p>
           Functional test results are recorded on the inspection schedule of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. The inspection
           schedule includes a section for functional testing where each item is recorded as
           satisfactory, unsatisfactory, or not applicable.
@@ -446,7 +446,7 @@ const sections = [
         />
         <p>
           The app also auto-generates the circuit schedule from the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             board scanner
           </SEOInternalLink>
           , so your functional test checklist is already populated with the correct circuit
@@ -500,7 +500,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',

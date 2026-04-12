@@ -193,7 +193,7 @@ const sections = [
         <p>
           For those who get it right, the rewards are significant. Supervisors earn more, have
           greater influence over project outcomes, and open the door to careers in{' '}
-          <SEOInternalLink href="/training/project-management-electricians">
+          <SEOInternalLink href="/tools/project-management-electrician">
             project management
           </SEOInternalLink>
           , contracts management, and business ownership. The skills you learn as a supervisor —
@@ -272,7 +272,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/employer-platform">Elec-Mate employer platform</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/employer-electrical-platform">Elec-Mate employer platform</SEOInternalLink>{' '}
           provides tools for tracking team performance, recording one-to-one conversations, and
           maintaining a structured approach to staff development — all designed for busy site
           supervisors.
@@ -350,7 +350,7 @@ const sections = [
         </p>
         <p>
           For electrical work, quality control means ensuring compliance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>, the
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, the
           project specification, the design drawings, and the employer's quality management system.
           Specific checks include: correct cable types and sizes, proper containment installation,
           adequate fixings, correct terminations, appropriate labelling, and compliance with{' '}
@@ -429,7 +429,7 @@ const sections = [
                 <strong>Support their portfolio.</strong> Help the apprentice identify portfolio
                 evidence from their daily work. Photographs of completed work, descriptions of
                 tasks, and supervisor witness statements all contribute to their{' '}
-                <SEOInternalLink href="/training/apprentice-portfolio-guide">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   portfolio
                 </SEOInternalLink>
                 .
@@ -449,7 +449,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/employer-platform',
+    href: '/tools/employer-electrical-platform',
     title: 'Employer Platform',
     description:
       'Staff management tools — task tracking, apprentice portfolios, performance records, and team scheduling.',
@@ -465,7 +465,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/project-management-electricians',
+    href: '/tools/project-management-electrician',
     title: 'Project Management Course',
     description:
       'Programme planning, cost control, and contract management for electrical projects.',
@@ -481,7 +481,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to build a strong NVQ portfolio — evidence types, witness statements, and assessment preparation.',

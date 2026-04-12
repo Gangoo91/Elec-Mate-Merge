@@ -159,8 +159,8 @@ const sections = [
         <p>
           Elec-Mate's Schedule Manager is designed for the specific needs of UK electricians. It
           integrates with the{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting system</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/tools/electrician-invoice-app">invoicing</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/electrical-quoting-app">quoting system</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/electrician-invoice-app">invoicing</SEOInternalLink>,{' '}
           <SEOInternalLink href="/tools/staff-management-electrician">
             staff management
           </SEOInternalLink>
@@ -379,7 +379,7 @@ const sections = [
           Elec-Mate's team scheduling view shows all operatives in parallel columns (or swimlanes in
           weekly view). You can see at a glance who is free, who is on site, and who is booked for
           the rest of the week. When allocating a new job, filter by qualification (only show
-          operatives with <SEOInternalLink href="/courses/city-guilds-2391">2391</SEOInternalLink>{' '}
+          operatives with <SEOInternalLink href="/city-guilds2391">2391</SEOInternalLink>{' '}
           if the job requires inspection and testing) and by location (show operatives nearest to
           the job site).
         </p>
@@ -421,14 +421,14 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'AI-powered cost estimation and professional PDF quotes for electrical work.',
     icon: FileText,
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrician-invoice-app',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description: 'Digital invoicing with Stripe payments and automatic payment reminders.',
     icon: Receipt,

@@ -21,7 +21,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Luton', href: '/eicr-luton' },
 ];
 
@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/eicr-explained',
+    href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
       'Complete guide to Electrical Installation Condition Reports — what inspectors check, what the codes mean, and what happens next.',
@@ -537,7 +537,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work immediately using
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Luton landlords must act within 28 days — the electrician who quotes on the day

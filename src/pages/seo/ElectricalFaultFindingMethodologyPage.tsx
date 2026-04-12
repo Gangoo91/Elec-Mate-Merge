@@ -22,7 +22,7 @@ const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
   {
     label: 'Electrical Fault Finding Methodology',
-    href: '/guides/electrical-fault-finding-methodology',
+    href: '/guides/electrical-fault-finding-guide',
   },
 ];
 

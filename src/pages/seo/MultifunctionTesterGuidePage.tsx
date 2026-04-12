@@ -163,7 +163,7 @@ const sections = [
         </p>
         <p>
           For anyone preparing for the{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">C&G 2391</SEOInternalLink> inspection and
+          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> inspection and
           testing qualification, mastering the MFT is fundamental. The practical exam requires you
           to demonstrate competent use of a multifunction tester on a real installation.
         </p>

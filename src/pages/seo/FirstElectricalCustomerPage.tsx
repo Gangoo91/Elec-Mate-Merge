@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price jobs accurately and send professional PDF quotes from your phone. Build customer confidence from your first quote.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue professional Electrical Installation Certificates on site. Same-day certification builds your reputation.',
@@ -374,7 +374,7 @@ const sections = [
           For individual jobs, estimate the hours, multiply by your hourly rate, add materials with
           markup, and add 10% contingency. Always quote after a site visit — never quote from
           photographs alone. Use a{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">
+          <SEOInternalLink href="/electrical-quoting-app">
             professional quoting app
           </SEOInternalLink>{' '}
           to produce itemised PDF quotes that show the customer exactly what they are paying for.
@@ -559,7 +559,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send itemised PDF quotes from your phone with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Professional quotes win more jobs and set clear expectations. No more
@@ -575,7 +575,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Same-Day Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and{' '}

@@ -54,7 +54,6 @@ const BS7671EighteenthEditionGuidePage = lazy(
 );
 const BS7671Amendment3Page = lazy(() => import('@/pages/seo/BS7671Amendment3Page'));
 const BS7671Amendment4Page = lazy(() => import('@/pages/seo/BS7671Amendment4Page'));
-const BuildingRegsElectricalPage = lazy(() => import('@/pages/seo/BuildingRegsElectricalPage'));
 const BurningSmellFromSocketPage = lazy(() => import('@/pages/seo/BurningSmellFromSocketPage'));
 const CableColourCodesPage = lazy(() => import('@/pages/seo/CableColourCodesPage'));
 const CalculationsForApprenticesPage = lazy(
@@ -85,6 +84,15 @@ const ConstructionSiteTemporarySupplyPage = lazy(
   () => import('@/pages/seo/ConstructionSiteTemporarySupplyPage')
 );
 const ConsumerUnitUpgradePage = lazy(() => import('@/pages/seo/ConsumerUnitUpgradePage'));
+const ConsumerUnitUpgradeCostGuidePage = lazy(
+  () => import('@/pages/seo/ConsumerUnitUpgradeCostGuidePage')
+);
+const ConsumerUnitUpgradeLabourAndMaterialsPage = lazy(
+  () => import('@/pages/seo/ConsumerUnitUpgradeLabourAndMaterialsPage')
+);
+const ConsumerUnitUpgradePriceBreakdownPage = lazy(
+  () => import('@/pages/seo/ConsumerUnitUpgradePriceBreakdownPage')
+);
 const ContinuityTestingR1R2Page = lazy(() => import('@/pages/seo/ContinuityTestingR1R2Page'));
 const ContractorVsEmployeePage = lazy(() => import('@/pages/seo/ContractorVsEmployeePage'));
 const CookerCircuitGuidePage = lazy(() => import('@/pages/seo/CookerCircuitGuidePage'));
@@ -110,10 +118,10 @@ const EarthingFaultDiagnosisPage = lazy(() => import('@/pages/seo/EarthingFaultD
 const ECSCardTypesPage = lazy(() => import('@/pages/seo/ECSCardTypesPage'));
 const EICRCostUKPage = lazy(() => import('@/pages/seo/EICRCostUKPage'));
 const EICRFailRentedPropertyPage = lazy(() => import('@/pages/seo/EICRFailRentedPropertyPage'));
-const EICRForCommercialPage = lazy(() => import('@/pages/seo/EICRForCommercialPage'));
 const EICRForLandlordsPage = lazy(() => import('@/pages/seo/EICRForLandlordsPage'));
 const EICRLimitationsPage = lazy(() => import('@/pages/seo/EICRLimitationsPage'));
 const EICRObservationCodesPage = lazy(() => import('@/pages/seo/EICRObservationCodesPage'));
+const FireRiskAssessmentPage = lazy(() => import('@/pages/seo/FireRiskAssessmentPage'));
 const EICRScheduleOfInspectionsPage = lazy(
   () => import('@/pages/seo/EICRScheduleOfInspectionsPage')
 );
@@ -243,9 +251,7 @@ const FunctionalTestingGuidePage = lazy(() => import('@/pages/seo/FunctionalTest
 const GarageElectricsGuidePage = lazy(() => import('@/pages/seo/GarageElectricsGuidePage'));
 const GardenLightingRegsPage = lazy(() => import('@/pages/seo/GardenLightingRegsPage'));
 const GardenOfficeElectricsPage = lazy(() => import('@/pages/seo/GardenOfficeElectricsPage'));
-const ElectricianSelfEmployedPage = lazy(() => import('@/pages/seo/ElectricianSelfEmployedPage'));
 const GS38ProvingDeadPage = lazy(() => import('@/pages/seo/GS38ProvingDeadPage'));
-const HeatPumpElectricalPage = lazy(() => import('@/pages/seo/HeatPumpElectricalPage'));
 const HighEarthResistancePage = lazy(() => import('@/pages/seo/HighEarthResistancePage'));
 const HighElectricityBillPage = lazy(() => import('@/pages/seo/HighElectricityBillPage'));
 const HMOElectricalRequirementsPage = lazy(
@@ -271,9 +277,6 @@ const IndustrialElectricianGuidePage = lazy(
   () => import('@/pages/seo/IndustrialElectricianGuidePage')
 );
 const InitialVerificationGuidePage = lazy(() => import('@/pages/seo/InitialVerificationGuidePage'));
-const InsulationResistanceMinValuesPage = lazy(
-  () => import('@/pages/seo/InsulationResistanceMinValuesPage')
-);
 const InsulationResistanceTestPage = lazy(() => import('@/pages/seo/InsulationResistanceTestPage'));
 const IntermittentElectricalFaultsPage = lazy(
   () => import('@/pages/seo/IntermittentElectricalFaultsPage')
@@ -301,7 +304,6 @@ const MethodStatementGuidePage = lazy(() => import('@/pages/seo/MethodStatementG
 const MinorWorksVsEICPage = lazy(() => import('@/pages/seo/MinorWorksVsEICPage'));
 const MockExamsElectricalPage = lazy(() => import('@/pages/seo/MockExamsElectricalPage'));
 const MultifunctionTesterGuidePage = lazy(() => import('@/pages/seo/MultifunctionTesterGuidePage'));
-const NAPICCertificateGuidePage = lazy(() => import('@/pages/seo/NAPICCertificateGuidePage'));
 const NAPITRegistrationPage = lazy(() => import('@/pages/seo/NAPITRegistrationPage'));
 const NearMissReportingPage = lazy(() => import('@/pages/seo/NearMissReportingPage'));
 const NewBuildElectricalPage = lazy(() => import('@/pages/seo/NewBuildElectricalPage'));
@@ -359,6 +361,7 @@ const RiskAssessmentElectricalPage = lazy(() => import('@/pages/seo/RiskAssessme
 const RiskAssessmentElectriciansPage = lazy(
   () => import('@/pages/seo/RiskAssessmentElectriciansPage')
 );
+const ScheduleOfTestResultsPage = lazy(() => import('@/pages/seo/ScheduleOfTestResultsPage'));
 const SafeIsolationProcedurePage = lazy(() => import('@/pages/seo/SafeIsolationProcedurePage'));
 const SchoolElectricalInspectionPage = lazy(
   () => import('@/pages/seo/SchoolElectricalInspectionPage')
@@ -435,6 +438,7 @@ const ApprenticeTrainingAppPage = lazy(() => import('@/pages/seo/ApprenticeTrain
 const BatteryBackupCalculatorPage = lazy(() => import('@/pages/seo/BatteryBackupCalculatorPage'));
 const BoardScannerToolPage = lazy(() => import('@/pages/seo/BoardScannerToolPage'));
 const BreakEvenCalculatorPage = lazy(() => import('@/pages/seo/BreakEvenCalculatorPage'));
+const MinimumChargeCalculatorPage = lazy(() => import('@/pages/seo/MinimumChargeCalculatorPage'));
 const BusbarSizingCalculatorPage = lazy(() => import('@/pages/seo/BusbarSizingCalculatorPage'));
 const BusinessAnalyticsElectricianPage = lazy(
   () => import('@/pages/seo/BusinessAnalyticsElectricianPage')
@@ -604,8 +608,17 @@ const NAPICertificateGuidePage = lazy(() => import('@/pages/seo/NAPICertificateG
 const NetworkedFireAlarmPage = lazy(() => import('@/pages/seo/NetworkedFireAlarmPage'));
 const OutdoorElectricsPage = lazy(() => import('@/pages/seo/OutdoorElectricsPage'));
 const PATTestingGuideUKPage = lazy(() => import('@/pages/seo/PATTestingGuideUKPage'));
-const PFCExplainedPage = lazy(() => import('@/pages/seo/PFCExplainedPage'));
 const RCDKeepsTrippingPage = lazy(() => import('@/pages/seo/RCDKeepsTrippingPage'));
+const RCDKeepsTrippingCausesAndFixesPage = lazy(
+  () => import('@/pages/seo/RCDKeepsTrippingCausesAndFixesPage')
+);
+const RCDKeepsTrippingTestSequencePage = lazy(
+  () => import('@/pages/seo/RCDKeepsTrippingTestSequencePage')
+);
+const RCBOKeepsTrippingCausesAndFixesPage = lazy(
+  () => import('@/pages/seo/RCBOKeepsTrippingCausesAndFixesPage')
+);
+const RCBOKeepsTrippingGuidePage = lazy(() => import('@/pages/seo/RCBOKeepsTrippingGuidePage'));
 const RCDTypesExplainedPage = lazy(() => import('@/pages/seo/RCDTypesExplainedPage'));
 const SmokeAlarmRegsPage = lazy(() => import('@/pages/seo/SmokeAlarmRegsPage'));
 const SolarPanelInstallationPage = lazy(() => import('@/pages/seo/SolarPanelInstallationPage'));
@@ -627,7 +640,6 @@ const ACVsDCEarthingPage = lazy(() => import('@/pages/seo/ACVsDCEarthingPage'));
 const AirSourceHeatPumpElectricalPage = lazy(() => import('@/pages/seo/AirSourceHeatPumpElectricalPage'));
 const AM2AssessmentPrepPage = lazy(() => import('@/pages/seo/AM2AssessmentPrepPage'));
 const AnnexElectricalInstallationPage = lazy(() => import('@/pages/seo/AnnexElectricalInstallationPage'));
-const AppendixFourTablesGuidePage = lazy(() => import('@/pages/seo/AppendixFourTablesGuidePage'));
 const ApprenticeFirstYearRevisionPage = lazy(() => import('@/pages/seo/ApprenticeFirstYearRevisionPage'));
 const ApprenticeMathsElectricianPage = lazy(() => import('@/pages/seo/ApprenticeMathsElectricianPage'));
 const ApprenticePortfolioBuildingPage = lazy(() => import('@/pages/seo/ApprenticePortfolioBuildingPage'));
@@ -1026,6 +1038,12 @@ const UnderfloorHeatingFaultFindingPage = lazy(() => import('@/pages/seo/Underfl
 const USBSocketNotChargingPage = lazy(() => import('@/pages/seo/USBSocketNotChargingPage'));
 const UTRNumberElectricianPage = lazy(() => import('@/pages/seo/UTRNumberElectricianPage'));
 const V2GInstallationGuidePage = lazy(() => import('@/pages/seo/V2GInstallationGuidePage'));
+const VictorianTerraceConsumerUnitUpgradePage = lazy(
+  () => import('@/pages/seo/VictorianTerraceConsumerUnitUpgradePage')
+);
+const VictorianTerraceElectricalRequirementsPage = lazy(
+  () => import('@/pages/seo/VictorianTerraceElectricalRequirementsPage')
+);
 const VictorianHouseRewirePage = lazy(() => import('@/pages/seo/VictorianHouseRewirePage'));
 const WarehouseLightingCostPage = lazy(() => import('@/pages/seo/WarehouseLightingCostPage'));
 const WarmPlugOrSocketPage = lazy(() => import('@/pages/seo/WarmPlugOrSocketPage'));
@@ -1187,6 +1205,7 @@ const BestElectricianAppPage = lazy(() => import('@/pages/seo/BestElectricianApp
 const CableSizingCalculatorPage = lazy(() => import('@/pages/seo/CableSizingCalculatorPage'));
 const CashFlowPlannerPage = lazy(() => import('@/pages/seo/CashFlowPlannerPage'));
 const CityGuilds2391Page = lazy(() => import('@/pages/seo/CityGuilds2391Page'));
+const CompareHubPage = lazy(() => import('@/pages/seo/CompareHubPage'));
 const ConduitFillCalculatorPage = lazy(() => import('@/pages/seo/ConduitFillCalculatorPage'));
 const DiversityFactorCalculatorPage = lazy(() => import('@/pages/seo/DiversityFactorCalculatorPage'));
 const EarthLoopImpedanceCalculatorPage = lazy(() => import('@/pages/seo/EarthLoopImpedanceCalculatorPage'));
@@ -1196,6 +1215,7 @@ const ElecMateVsICertifiPage = lazy(() => import('@/pages/seo/ElecMateVsICertifi
 const ElectricalQuotingAppPage = lazy(() => import('@/pages/seo/ElectricalQuotingAppPage'));
 const ElectricalTestingCalculatorsPage = lazy(() => import('@/pages/seo/ElectricalTestingCalculatorsPage'));
 const ElectricianInvoiceAppPage = lazy(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
+const GuidesHubPage = lazy(() => import('@/pages/seo/GuidesHubPage'));
 const IPAFTrainingPage = lazy(() => import('@/pages/seo/IPAFTrainingPage'));
 const InspectionTestingCoursePage = lazy(() => import('@/pages/seo/InspectionTestingCoursePage'));
 const JobProfitabilityCalculatorPage = lazy(() => import('@/pages/seo/JobProfitabilityCalculatorPage'));
@@ -1212,7 +1232,9 @@ const RAMSGeneratorPage = lazy(() => import('@/pages/seo/RAMSGeneratorPage'));
 const RingCircuitCalculatorPage = lazy(() => import('@/pages/seo/RingCircuitCalculatorPage'));
 const TestingSequenceGuidePage = lazy(() => import('@/pages/seo/TestingSequenceGuidePage'));
 const ThreePhasePowerCalculatorPage = lazy(() => import('@/pages/seo/ThreePhasePowerCalculatorPage'));
+const ToolsHubPage = lazy(() => import('@/pages/seo/ToolsHubPage'));
 const TrunkingFillCalculatorPage = lazy(() => import('@/pages/seo/TrunkingFillCalculatorPage'));
+const TrainingHubPage = lazy(() => import('@/pages/seo/TrainingHubPage'));
 const VoltageDropCalculatorPage = lazy(() => import('@/pages/seo/VoltageDropCalculatorPage'));
 const EPAPreparationPage = lazy(() => import('@/pages/seo/EPAPreparationPage'));
 const CableJointingGuidePage = lazy(() => import('@/pages/seo/CableJointingGuidePage'));
@@ -1248,6 +1270,11 @@ const ElectricianDerbyshirePage = lazy(() => import('@/pages/seo/ElectricianDerb
 const ElectricianHourlyRatePage = lazy(() => import('@/pages/seo/ElectricianHourlyRatePage'));
 const EmergencyLightingCertificatePage = lazy(() => import('@/pages/seo/EmergencyLightingCertificatePage'));
 const FireAlarmCertificatePage = lazy(() => import('@/pages/seo/FireAlarmCertificatePage'));
+const EICRClientHandoverGuidePage = lazy(
+  () => import('@/pages/seo/EICRClientHandoverGuidePage')
+);
+const EICRCommonMistakesPage = lazy(() => import('@/pages/seo/EICRCommonMistakesPage'));
+const EICRWhatToIncludePage = lazy(() => import('@/pages/seo/EICRWhatToIncludePage'));
 const HowToDoSafeIsolationPage = lazy(() => import('@/pages/seo/HowToDoSafeIsolationPage'));
 const HowToFillInEICRPage = lazy(() => import('@/pages/seo/HowToFillInEICRPage'));
 const HowToReadWiringDiagramPage = lazy(() => import('@/pages/seo/HowToReadWiringDiagramPage'));
@@ -1264,6 +1291,48 @@ const FusedSpurInstallationGuidePage = lazy(() => import('@/pages/seo/FusedSpurI
 const TwoWaySwitchWiringPage = lazy(() => import('@/pages/seo/TwoWaySwitchWiringPage'));
 const ElectricianStaffordshirePage = lazy(() => import('@/pages/seo/ElectricianStaffordshirePage'));
 const EICRForStudentHousesPage = lazy(() => import('@/pages/seo/EICRForStudentHousesPage'));
+const EICClientHandoverGuidePage = lazy(() => import('@/pages/seo/EICClientHandoverGuidePage'));
+const EICCommonMistakesPage = lazy(() => import('@/pages/seo/EICCommonMistakesPage'));
+const EICDigitalVsPaperPage = lazy(() => import('@/pages/seo/EICDigitalVsPaperPage'));
+const EICRExampleAndTemplatePage = lazy(() => import('@/pages/seo/EICRExampleAndTemplatePage'));
+const EICRWhenYouNeedOnePage = lazy(() => import('@/pages/seo/EICRWhenYouNeedOnePage'));
+const EICWhatToIncludePage = lazy(() => import('@/pages/seo/EICWhatToIncludePage'));
+const FullRewireCostGuidePage = lazy(() => import('@/pages/seo/FullRewireCostGuidePage'));
+const FullRewireLabourAndMaterialsPage = lazy(
+  () => import('@/pages/seo/FullRewireLabourAndMaterialsPage')
+);
+const FullRewirePriceBreakdownPage = lazy(
+  () => import('@/pages/seo/FullRewirePriceBreakdownPage')
+);
+const MinorWorksCertificateCommonMistakesPage = lazy(
+  () => import('@/pages/seo/MinorWorksCertificateCommonMistakesPage')
+);
+const MinorWorksCertificateHowToFillInPage = lazy(
+  () => import('@/pages/seo/MinorWorksCertificateHowToFillInPage')
+);
+const MinorWorksCertificateWhatToIncludePage = lazy(
+  () => import('@/pages/seo/MinorWorksCertificateWhatToIncludePage')
+);
+const PartialRewireCostGuidePage = lazy(() => import('@/pages/seo/PartialRewireCostGuidePage'));
+const PartialRewireLabourAndMaterialsPage = lazy(
+  () => import('@/pages/seo/PartialRewireLabourAndMaterialsPage')
+);
+const PartialRewirePriceBreakdownPage = lazy(
+  () => import('@/pages/seo/PartialRewirePriceBreakdownPage')
+);
+const RCBOKeepsTrippingCommonCausesPage = lazy(
+  () => import('@/pages/seo/RCBOKeepsTrippingCommonCausesPage')
+);
+const RCBOKeepsTrippingTestSequencePage = lazy(
+  () => import('@/pages/seo/RCBOKeepsTrippingTestSequencePage')
+);
+const Semi1930sConsumerUnitUpgradePage = lazy(
+  () => import('@/pages/seo/Semi1930sConsumerUnitUpgradePage')
+);
+const Semi1930sEICRGuidePage = lazy(() => import('@/pages/seo/Semi1930sEICRGuidePage'));
+const Semi1930sElectricalRequirementsPage = lazy(
+  () => import('@/pages/seo/Semi1930sElectricalRequirementsPage')
+);
 
 /**
  * Returns all SEO page routes as JSX elements.
@@ -1537,14 +1606,6 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/guides/building-regulations-electrical"
-        element={
-          <LazyRoute>
-            <BuildingRegsElectricalPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/guides/burning-smell-from-socket"
         element={
           <LazyRoute>
@@ -1581,6 +1642,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <CDM2015ElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/chapter-44-overvoltage-protection"
+        element={
+          <LazyRoute>
+            <Chapter44OvervoltageProtectionPage />
           </LazyRoute>
         }
       />
@@ -1669,6 +1738,30 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <ConsumerUnitUpgradePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-upgrade-cost-guide"
+        element={
+          <LazyRoute>
+            <ConsumerUnitUpgradeCostGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-upgrade-labour-and-materials"
+        element={
+          <LazyRoute>
+            <ConsumerUnitUpgradeLabourAndMaterialsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/consumer-unit-upgrade-price-breakdown"
+        element={
+          <LazyRoute>
+            <ConsumerUnitUpgradePriceBreakdownPage />
           </LazyRoute>
         }
       />
@@ -1841,14 +1934,6 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/guides/eicr-for-commercial-premises"
-        element={
-          <LazyRoute>
-            <EICRForCommercialPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/guides/eicr-for-landlords"
         element={
           <LazyRoute>
@@ -1865,10 +1950,42 @@ export function getSEORoutes() {
         }
       />
       <Route
+        path="/guides/eicr-client-handover-guide"
+        element={
+          <LazyRoute>
+            <EICRClientHandoverGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-common-mistakes"
+        element={
+          <LazyRoute>
+            <EICRCommonMistakesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
         path="/guides/eicr-observation-codes-explained"
         element={
           <LazyRoute>
             <EICRObservationCodesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-what-to-include"
+        element={
+          <LazyRoute>
+            <EICRWhatToIncludePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/fire-risk-assessment"
+        element={
+          <LazyRoute>
+            <FireRiskAssessmentPage />
           </LazyRoute>
         }
       />
@@ -2409,26 +2526,10 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/guides/going-self-employed-electrician"
-        element={
-          <LazyRoute>
-            <ElectricianSelfEmployedPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/guides/gs-38-proving-dead"
         element={
           <LazyRoute>
             <GS38ProvingDeadPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/heat-pump-electrical-requirements"
-        element={
-          <LazyRoute>
-            <HeatPumpElectricalPage />
           </LazyRoute>
         }
       />
@@ -2557,14 +2658,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <InitialVerificationGuidePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/insulation-resistance-minimum-values"
-        element={
-          <LazyRoute>
-            <InsulationResistanceMinValuesPage />
           </LazyRoute>
         }
       />
@@ -2717,14 +2810,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <MultifunctionTesterGuidePage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/napit-certificate-guide"
-        element={
-          <LazyRoute>
-            <NAPICCertificateGuidePage />
           </LazyRoute>
         }
       />
@@ -3069,6 +3154,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <RiskAssessmentElectriciansPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/schedule-of-test-results"
+        element={
+          <LazyRoute>
+            <ScheduleOfTestResultsPage />
           </LazyRoute>
         }
       />
@@ -3505,6 +3598,14 @@ export function getSEORoutes() {
         }
       />
       <Route
+        path="/tools/minimum-charge-calculator"
+        element={
+          <LazyRoute>
+            <MinimumChargeCalculatorPage />
+          </LazyRoute>
+        }
+      />
+      <Route
         path="/tools/busbar-sizing-calculator"
         element={
           <LazyRoute>
@@ -3789,6 +3890,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <StaffManagementToolPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/study-centre"
+        element={
+          <LazyRoute>
+            <StudyCentreOnlineCoursesPage />
           </LazyRoute>
         }
       />
@@ -4379,18 +4488,42 @@ export function getSEORoutes() {
         }
       />
       <Route
-        path="/guides/prospective-fault-current-explained"
-        element={
-          <LazyRoute>
-            <PFCExplainedPage />
-          </LazyRoute>
-        }
-      />
-      <Route
         path="/guides/rcd-keeps-tripping"
         element={
           <LazyRoute>
             <RCDKeepsTrippingPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcd-keeps-tripping-causes-and-fixes"
+        element={
+          <LazyRoute>
+            <RCDKeepsTrippingCausesAndFixesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcd-keeps-tripping-test-sequence"
+        element={
+          <LazyRoute>
+            <RCDKeepsTrippingTestSequencePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcbo-keeps-tripping-causes-and-fixes"
+        element={
+          <LazyRoute>
+            <RCBOKeepsTrippingCausesAndFixesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcbo-keeps-tripping-guide"
+        element={
+          <LazyRoute>
+            <RCBOKeepsTrippingGuidePage />
           </LazyRoute>
         }
       />
@@ -4483,6 +4616,166 @@ export function getSEORoutes() {
         }
       />
       <Route
+        path="/guides/1930s-semi-consumer-unit-upgrade"
+        element={
+          <LazyRoute>
+            <Semi1930sConsumerUnitUpgradePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/1930s-semi-eicr-guide"
+        element={
+          <LazyRoute>
+            <Semi1930sEICRGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/1930s-semi-electrical-requirements"
+        element={
+          <LazyRoute>
+            <Semi1930sElectricalRequirementsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eic-client-handover-guide"
+        element={
+          <LazyRoute>
+            <EICClientHandoverGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eic-common-mistakes"
+        element={
+          <LazyRoute>
+            <EICCommonMistakesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eic-digital-vs-paper"
+        element={
+          <LazyRoute>
+            <EICDigitalVsPaperPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eic-what-to-include"
+        element={
+          <LazyRoute>
+            <EICWhatToIncludePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-example-and-template"
+        element={
+          <LazyRoute>
+            <EICRExampleAndTemplatePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/eicr-when-you-need-one"
+        element={
+          <LazyRoute>
+            <EICRWhenYouNeedOnePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/full-rewire-cost-guide"
+        element={
+          <LazyRoute>
+            <FullRewireCostGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/full-rewire-labour-and-materials"
+        element={
+          <LazyRoute>
+            <FullRewireLabourAndMaterialsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/full-rewire-price-breakdown"
+        element={
+          <LazyRoute>
+            <FullRewirePriceBreakdownPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/minor-works-certificate-common-mistakes"
+        element={
+          <LazyRoute>
+            <MinorWorksCertificateCommonMistakesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/minor-works-certificate-how-to-fill-in"
+        element={
+          <LazyRoute>
+            <MinorWorksCertificateHowToFillInPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/minor-works-certificate-what-to-include"
+        element={
+          <LazyRoute>
+            <MinorWorksCertificateWhatToIncludePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/partial-rewire-cost-guide"
+        element={
+          <LazyRoute>
+            <PartialRewireCostGuidePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/partial-rewire-labour-and-materials"
+        element={
+          <LazyRoute>
+            <PartialRewireLabourAndMaterialsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/partial-rewire-price-breakdown"
+        element={
+          <LazyRoute>
+            <PartialRewirePriceBreakdownPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcbo-keeps-tripping-common-causes"
+        element={
+          <LazyRoute>
+            <RCBOKeepsTrippingCommonCausesPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/rcbo-keeps-tripping-test-sequence"
+        element={
+          <LazyRoute>
+            <RCBOKeepsTrippingTestSequencePage />
+          </LazyRoute>
+        }
+      />
+      <Route
         path="/training/workplace-safety-course"
         element={
           <LazyRoute>
@@ -4527,14 +4820,6 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <AnnexElectricalInstallationPage />
-          </LazyRoute>
-        }
-      />
-      <Route
-        path="/guides/appendix-4-tables-bs-7671"
-        element={
-          <LazyRoute>
-            <AppendixFourTablesGuidePage />
           </LazyRoute>
         }
       />
@@ -7723,6 +8008,22 @@ export function getSEORoutes() {
         }
       />
       <Route
+        path="/guides/victorian-terrace-consumer-unit-upgrade"
+        element={
+          <LazyRoute>
+            <VictorianTerraceConsumerUnitUpgradePage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/guides/victorian-terrace-electrical-requirements"
+        element={
+          <LazyRoute>
+            <VictorianTerraceElectricalRequirementsPage />
+          </LazyRoute>
+        }
+      />
+      <Route
         path="/victorian-house-rewire"
         element={
           <LazyRoute>
@@ -7928,6 +8229,7 @@ export function getSEORoutes() {
               <Route path="/bms-course" element={<LazyRoute><BMSCoursePage /></LazyRoute>} />
               <Route path="/bs7671-observation-codes" element={<LazyRoute><BS7671ObservationCodesPage /></LazyRoute>} />
               <Route path="/best-electrician-app" element={<LazyRoute><BestElectricianAppPage /></LazyRoute>} />
+              <Route path="/compare" element={<LazyRoute><CompareHubPage /></LazyRoute>} />
               <Route path="/cable-sizing-calculator" element={<LazyRoute><CableSizingCalculatorPage /></LazyRoute>} />
               <Route path="/cash-flow-planner" element={<LazyRoute><CashFlowPlannerPage /></LazyRoute>} />
               <Route path="/city-guilds2391" element={<LazyRoute><CityGuilds2391Page /></LazyRoute>} />
@@ -7940,6 +8242,7 @@ export function getSEORoutes() {
               <Route path="/electrical-quoting-app" element={<LazyRoute><ElectricalQuotingAppPage /></LazyRoute>} />
               <Route path="/electrical-testing-calculators" element={<LazyRoute><ElectricalTestingCalculatorsPage /></LazyRoute>} />
               <Route path="/electrician-invoice-app" element={<LazyRoute><ElectricianInvoiceAppPage /></LazyRoute>} />
+              <Route path="/guides" element={<LazyRoute><GuidesHubPage /></LazyRoute>} />
               <Route path="/ipaf-training" element={<LazyRoute><IPAFTrainingPage /></LazyRoute>} />
               <Route path="/inspection-testing-course" element={<LazyRoute><InspectionTestingCoursePage /></LazyRoute>} />
               <Route path="/job-profitability-calculator" element={<LazyRoute><JobProfitabilityCalculatorPage /></LazyRoute>} />
@@ -7956,7 +8259,9 @@ export function getSEORoutes() {
               <Route path="/ring-circuit-calculator" element={<LazyRoute><RingCircuitCalculatorPage /></LazyRoute>} />
               <Route path="/testing-sequence-guide" element={<LazyRoute><TestingSequenceGuidePage /></LazyRoute>} />
               <Route path="/three-phase-power-calculator" element={<LazyRoute><ThreePhasePowerCalculatorPage /></LazyRoute>} />
+              <Route path="/tools" element={<LazyRoute><ToolsHubPage /></LazyRoute>} />
               <Route path="/trunking-fill-calculator" element={<LazyRoute><TrunkingFillCalculatorPage /></LazyRoute>} />
+              <Route path="/training" element={<LazyRoute><TrainingHubPage /></LazyRoute>} />
               <Route path="/voltage-drop-calculator" element={<LazyRoute><VoltageDropCalculatorPage /></LazyRoute>} />
               <Route path="/epa-preparation" element={<LazyRoute><EPAPreparationPage /></LazyRoute>} />
               <Route path="/night-storage-heater-replacement" element={<LazyRoute><NightStorageHeaterReplacementPage /></LazyRoute>} />

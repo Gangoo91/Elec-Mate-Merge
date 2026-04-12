@@ -167,9 +167,9 @@ const sections = [
       <>
         <p>
           Every electrical certificate — whether an{' '}
-          <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>, or{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, or{' '}
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           — has mandatory fields that must be completed. NICEIC assessors check for the following on
@@ -475,8 +475,8 @@ const sections = [
       <>
         <p>
           While the EICR gets the most attention, NICEIC also expects high standards on{' '}
-          <SEOInternalLink href="/guides/eic-certificate">EICs</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">
+          <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificates
           </SEOInternalLink>
           . The most common issues are:

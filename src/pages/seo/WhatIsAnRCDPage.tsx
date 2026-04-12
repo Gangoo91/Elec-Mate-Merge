@@ -309,7 +309,7 @@ const sections = [
                 <strong>Type B:</strong> Detects AC, pulsating DC, and smooth DC earth leakage.
                 Required for circuits supplying equipment with three-phase rectifiers or frequency
                 inverters — such as{' '}
-                <SEOInternalLink href="/guides/ev-charger-installation-guide">
+                <SEOInternalLink href="/guides/ev-charger-installation">
                   EV chargers
                 </SEOInternalLink>{' '}
                 and variable speed drives.
@@ -490,7 +490,7 @@ const sections = [
                   In older properties, the PVC insulation on cables can degrade over time —
                   especially in hot locations (near boilers, in lofts during summer) or where cables
                   have been damaged during building work. The{' '}
-                  <SEOInternalLink href="/guides/insulation-resistance-test">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing">
                     insulation resistance test
                   </SEOInternalLink>{' '}
                   during an EICR identifies this.

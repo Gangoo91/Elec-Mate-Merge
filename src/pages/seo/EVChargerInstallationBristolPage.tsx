@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -330,7 +330,7 @@ const sections = [
               <span>
                 <strong>Voltage drop on long cable runs</strong> — Bristol terraces with long cable
                 runs (15 to 20 metres) from rear consumer units to front parking require careful{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>
                 . 10mm² cable may be needed to keep voltage drop within limits.
@@ -441,7 +441,7 @@ const sections = [
                   Factor in Bristol day rates (£300 to £420), long cable runs in Victorian terraces,
                   steep site access, PME earthing requirements, and conservation area constraints.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes on site.
@@ -456,7 +456,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification and Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , National Grid Electricity Distribution G98/G99 notification, and Part P Building

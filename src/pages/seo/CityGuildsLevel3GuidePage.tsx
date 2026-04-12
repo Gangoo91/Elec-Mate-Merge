@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Study Centre', href: '/study-centre' },
-  { label: 'City & Guilds Level 3 Guide', href: '/city-guilds-level-3-guide' },
+  { label: 'City & Guilds Level 3 Guide', href: '/city-guilds-level3-guide' },
 ];
 
 const tocItems = [

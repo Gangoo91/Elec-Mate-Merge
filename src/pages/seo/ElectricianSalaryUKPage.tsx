@@ -714,7 +714,7 @@ const relatedPages = [
     category: 'Business Guide',
   },
   {
-    href: '/guides/electrician-apprentice-salary',
+    href: '/guides/apprentice-electrician-salary-uk',
     title: 'Apprentice Salary Guide',
     description: 'Detailed breakdown of apprentice electrician pay rates by year and region.',
     icon: PoundSterling,
@@ -735,7 +735,7 @@ const relatedPages = [
     category: 'Salary Guide',
   },
   {
-    href: '/tools/hourly-rate-calculator',
+    href: '/electrician-hourly-rate',
     title: 'Hourly Rate Calculator',
     description: 'Calculate your true hourly rate after accounting for all business costs.',
     icon: Calculator,

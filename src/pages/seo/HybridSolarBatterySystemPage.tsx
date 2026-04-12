@@ -96,14 +96,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-certificates',
+    href: '/tools/digital-certificates-app',
     title: 'Electrical Certificates App',
     description: 'Complete solar and MCS installation certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote hybrid solar and battery installations accurately.',
     icon: PoundSterling,
@@ -454,7 +454,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete MCS Documents On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-certificates">
+                  <SEOInternalLink href="/tools/digital-certificates-app">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete MCS commissioning sheets, EIC certificates, and G98 notification forms
@@ -471,7 +471,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upsell Battery on Every Solar Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Present hybrid system options alongside every solar-only quote using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Show the customer the payback difference between solar only and solar plus

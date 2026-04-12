@@ -218,9 +218,10 @@ interface RoomShapePickerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onShapePlaced: (walls: CanvasObject[]) => void;
+  getPlacementCenter?: () => { x: number; y: number } | null;
 }
 
-export function RoomShapePicker({ open, onOpenChange, onShapePlaced }: RoomShapePickerProps) {
+export function RoomShapePicker({ open, onOpenChange, onShapePlaced, getPlacementCenter }: RoomShapePickerProps) {
   const [selectedShapeId, setSelectedShapeId] = useState<string | null>(null);
   const [wallLengths, setWallLengths] = useState<(number | string)[]>([]);
   const haptic = useHaptic();
@@ -264,12 +265,13 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced }: RoomShape
     const shapeWidthPx = (maxX - minX) * SCALE;
     const shapeHeightPx = (maxY - minY) * SCALE;
 
-    const canvasCentreX = window.innerWidth / 2;
-    const canvasCentreY = window.innerHeight / 2;
+    const placementCentre = getPlacementCenter?.();
+    const canvasCentreX = placementCentre?.x ?? window.innerWidth / 2;
+    const canvasCentreY = placementCentre?.y ?? window.innerHeight / 2;
     const offsetX = canvasCentreX - shapeWidthPx / 2 - minX * SCALE;
     const offsetY = canvasCentreY - shapeHeightPx / 2 - minY * SCALE;
 
-    const gridSnap = (v: number) => Math.round(v / 20) * 20;
+    const gridSnap = (v: number) => Math.round(v / 10) * 10;
     const walls: CanvasObject[] = [];
 
     for (let i = 0; i < points.length; i++) {

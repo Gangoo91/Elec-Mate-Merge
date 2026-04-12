@@ -85,14 +85,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/rcd-testing-procedure-bs7671',
+    href: '/guides/rcd-testing-procedure',
     title: 'RCD Testing Procedure',
     description: 'The 50%, 100%, and 5× RCD tests with BS 7671 Regulation 643.8.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding-methodology',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Methodology',
     description:
       'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',
@@ -382,7 +382,7 @@ const sections = [
           For new commercial lighting installations, good design practice is to specify the maximum
           permitted earth leakage per driver and calculate the total expected leakage for each RCD
           circuit before installation. The{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding-methodology">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             systematic fault finding methodology
           </SEOInternalLink>{' '}
           is equally applicable here — measure first, isolate systematically, identify the source.

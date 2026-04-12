@@ -216,7 +216,7 @@ export default function DiversityFactorCalculatorPage() {
               larger main tails, and an oversized distribution board. The IET On-Site Guide Table 1A
               provides standardised diversity allowances based on decades of measured usage patterns
               in UK installations. Use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size main tails once your diversified demand is confirmed, and the{' '}

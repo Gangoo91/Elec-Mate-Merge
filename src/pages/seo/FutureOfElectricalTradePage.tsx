@@ -206,7 +206,7 @@ export default function FutureOfElectricalTradePage() {
                     prices and improving panel efficiency. A typical 4kW domestic system generates
                     enough electricity to cover 40-50% of an average household's consumption.
                     Electricians need the{' '}
-                    <SEOInternalLink href="/guides/solar-pv-certificate">
+                    <SEOInternalLink href="/solar-pv-certificate">
                       solar PV qualification
                     </SEOInternalLink>{' '}
                     and MCS (Microgeneration Certification Scheme) accreditation to install and
@@ -226,7 +226,7 @@ export default function FutureOfElectricalTradePage() {
                     Battery storage installations are growing rapidly alongside solar PV. The
                     electrical work includes DC connections, hybrid inverter installation, AC
                     coupling, and integration with the existing consumer unit. Understanding of{' '}
-                    <SEOInternalLink href="/guides/earthing-arrangements">
+                    <SEOInternalLink href="/earthing-arrangements">
                       earthing arrangements
                     </SEOInternalLink>{' '}
                     for battery systems is essential.
@@ -367,7 +367,7 @@ export default function FutureOfElectricalTradePage() {
                 rising{' '}
                 <SEOInternalLink href="/guides/electrician-salary-uk">salaries</SEOInternalLink>,
                 and plenty of work. For{' '}
-                <SEOInternalLink href="/guides/starting-electrical-business">
+                <SEOInternalLink href="/guides/starting-an-electrical-business">
                   electrical business owners
                 </SEOInternalLink>
                 , recruiting and retaining qualified staff is one of the biggest challenges — and
@@ -430,7 +430,7 @@ export default function FutureOfElectricalTradePage() {
                     supervisor to contracts manager still exists, but there are now many more
                     options. Specialist roles in EV, solar, BMS, data centres, and fire alarm
                     systems offer alternative progression routes. Starting an{' '}
-                    <SEOInternalLink href="/guides/starting-electrical-business">
+                    <SEOInternalLink href="/guides/starting-an-electrical-business">
                       electrical business
                     </SEOInternalLink>{' '}
                     is increasingly viable with lower barriers to entry through digital tools and
@@ -480,7 +480,7 @@ export default function FutureOfElectricalTradePage() {
                       <strong className="text-yellow-400">Adopt digital tools</strong> — Move from
                       paper certificates to digital. Use apps for quoting, invoicing, and job
                       management. Embrace AI tools that reduce your admin time. The{' '}
-                      <SEOInternalLink href="/guides/best-electrician-app">
+                      <SEOInternalLink href="/best-electrician-app">
                         right app
                       </SEOInternalLink>{' '}
                       can save you 5-10 hours per week on paperwork.
@@ -528,7 +528,7 @@ export default function FutureOfElectricalTradePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     Amendment 4 to{' '}
-                    <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+                    <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                       BS 7671:2018
                     </SEOInternalLink>{' '}
                     is expected in 2026. While the exact content is not yet published, it is
@@ -546,7 +546,7 @@ export default function FutureOfElectricalTradePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     Arc Fault Detection Devices ({' '}
-                    <SEOInternalLink href="/guides/afdd-guide">AFDDs</SEOInternalLink>) are
+                    <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink>) are
                     currently recommended by BS 7671 Regulation 421.1 for certain locations. There
                     is ongoing discussion about making AFDDs mandatory for a wider range of
                     installations, particularly in high-risk premises (HMOs, care homes, and
@@ -632,7 +632,7 @@ export default function FutureOfElectricalTradePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'How to go self-employed as an electrician.',
           icon: Users,

@@ -603,7 +603,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 findings are identified, produce a written quote for the remedial
                   work using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and send it to the buyer with the EICR. This quote becomes their evidence in the

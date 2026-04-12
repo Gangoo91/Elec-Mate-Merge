@@ -285,7 +285,7 @@ const sections = [
         <p>
           A two-pole voltage indicator is a dedicated instrument for detecting the presence or
           absence of voltage. It is the primary instrument used during{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+          <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
           to prove that a circuit is dead before work begins. GS38 recommends a dedicated two-pole
           voltage indicator over a multimeter for this purpose because it is simpler, more reliable,
           and does not rely on batteries for its basic function.
@@ -436,7 +436,7 @@ const sections = [
         />
         <p>
           The app's{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             70+ electrical calculators
           </SEOInternalLink>{' '}
           help you verify your instrument readings against BS 7671 limits in real time on site.
@@ -489,7 +489,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. Verify your instrument readings on site.',

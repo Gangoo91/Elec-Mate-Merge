@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone with instant PDF export.',
@@ -406,7 +406,7 @@ const sections = [
                 covering the entire outbuilding installation (cable route, sub-board, all circuits,
                 and earthing) must be issued on completion. Keep this with your property records.
                 Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the certificate on site.
               </span>
             </li>
@@ -434,7 +434,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC Including Earth Test</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
                   to record all test results including the earth electrode resistance value — a
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote for the Full Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise SWA cable, glands, sub-board, earth rod, circuits, and testing. Clients

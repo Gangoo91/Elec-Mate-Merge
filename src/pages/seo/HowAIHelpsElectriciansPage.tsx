@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-electrician-tools',
+    href: '/ai-electrician-tools',
     title: 'AI Electrician Tools',
     description:
       'Complete overview of all 8 AI agents available in Elec-Mate — from circuit design to fault diagnosis.',
@@ -278,7 +278,7 @@ const sections = [
               Search BS 7671 in plain English. Ask "what are the Zs values for a 32A Type B MCB on a
               TN-C-S system?" or "what does Regulation 411.3.3 require?" and get the specific
               regulation text with practical guidance. Covers the complete 18th Edition including{' '}
-              <SEOInternalLink href="/guides/bs-7671-amendment-3">Amendment 3:2024</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 3:2024</SEOInternalLink>{' '}
               and Regulation 530.3.201.
             </p>
           </div>
@@ -321,7 +321,7 @@ const sections = [
             cable tails, earth bar, bonding cable, labels, blanking plates), labour estimate
             (typically 4 to 6 hours depending on the number of circuits), and total cost with markup
             applied. The electrician reviews, adjusts if needed, and sends the quote straight from
-            the <SEOInternalLink href="/tools/electrical-quoting-app">quoting tool</SEOInternalLink>
+            the <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink>
             .
           </p>
         </div>
@@ -420,7 +420,7 @@ const sections = [
           Compounded across a typical working week, these savings translate to approximately 4 to 6
           additional billable hours. At an average day rate of £300 to £400, that is £300 to £500
           per week in recovered time — significantly more than the cost of an{' '}
-          <SEOInternalLink href="/tools/best-electrician-app">
+          <SEOInternalLink href="/best-electrician-app">
             Elec-Mate subscription
           </SEOInternalLink>
           .
@@ -517,7 +517,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/ai-electrician-tools">AI Electrician Tools</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-electrician-tools">AI Electrician Tools</SEOInternalLink>{' '}
           page provides a complete overview of all 8 agents with detailed examples of how to use
           each one effectively.
         </p>

@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone with instant PDF export.',
@@ -398,7 +398,7 @@ const sections = [
                 <strong>EIC on completion</strong> — the electrician must issue an Electrical
                 Installation Certificate (EIC) on completion. This document must be provided to the
                 homeowner and retained with the building regulations completion certificate. Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the certificate on site.
               </span>
             </li>
@@ -436,7 +436,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue the EIC Same Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
                   to complete and issue the EIC on site, including the full schedule of test
@@ -453,7 +453,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win with Professional Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed, itemised quote for the conversion electrical works. Include

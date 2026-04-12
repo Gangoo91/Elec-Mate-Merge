@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit cable for V2G charger installations with automatic derating.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for V2G charger installations on your phone.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/ev-charger-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charger Certificate',
     description: 'Dedicated EV charger installation certificate with V2G-specific fields.',
     icon: ClipboardCheck,
@@ -544,7 +544,7 @@ const sections = [
         </div>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           must be issued for the new circuit. The certificate should note the V2G charger, the G99
@@ -579,7 +579,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the dedicated circuit for the V2G charger with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic voltage drop check and derating for the installation method.
@@ -594,7 +594,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price V2G installations accurately with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Charger unit, dedicated circuit, CT clamp, commissioning, DNO application, and

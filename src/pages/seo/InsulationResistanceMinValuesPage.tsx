@@ -105,14 +105,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'How to Test Insulation Resistance',
     description: 'Practical guide with step-by-step instrument setup and connections.',
     icon: Gauge,
     category: 'Guide' as const,
   },
   {
-    href: '/guides/bs7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Complete guide to the current Wiring Regulations.',
     icon: BookOpen,
@@ -196,7 +196,7 @@ const sections = [
         </p>
         <p>
           During a{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
+          <SEOInternalLink href="/tools/eicr-certificate">
             periodic inspection (EICR)
           </SEOInternalLink>
           , insulation resistance readings that are declining over successive inspections (even if
@@ -326,7 +326,7 @@ const sections = [
         </div>
         <p>
           Always check your{' '}
-          <SEOInternalLink href="/compare/fluke-vs-megger">multifunction tester</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/fluke-vs-megger">multifunction tester</SEOInternalLink>{' '}
           settings before starting the test. Accidentally using 1000V on a 230V circuit with
           connected electronic equipment could damage sensitive components. This is another reason
           why all equipment must be disconnected before testing.
@@ -447,7 +447,7 @@ const sections = [
         </p>
         <p>
           For initial verification ({' '}
-          <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink>), all three
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>), all three
           measurements should be recorded for every circuit. For periodic inspection (EICR), the
           extent of IR testing depends on the agreed scope, but all circuits should ideally be
           tested.

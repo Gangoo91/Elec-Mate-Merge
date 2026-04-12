@@ -108,14 +108,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire — what to expect.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site after a rewire.',
     icon: FileCheck2,
@@ -185,7 +185,7 @@ const sections = [
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
           initial verification testing, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Part P notification. Making good is quoted separately — budget £500–£1,500 for a
@@ -258,7 +258,7 @@ const sections = [
       <>
         <p>
           The definitive assessment requires an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>. These warning
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. These warning
           signs indicate you should arrange an inspection promptly:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
@@ -349,7 +349,7 @@ const sections = [
         <p>
           Unregistered electricians require a Leeds City Council building control inspection (£200
           to £350) and cause project delays. Every rewire must also produce an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           documenting design, construction, inspection, and testing of the full installation.

@@ -263,11 +263,11 @@ export default function RingCircuitCalculatorPage() {
               interconnections have been made incorrectly. This is where the cross-connection method
               comes in — the standard testing procedure described in GN3 (Guidance Note 3:
               Inspection and Testing) and BS 7671:2018+A3:2024. Use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               when adding new ring circuits and the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify compliance on long ring runs.

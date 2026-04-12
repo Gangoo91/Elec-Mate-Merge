@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'PFC Explained', href: '/guides/prospective-fault-current-explained' },
 ];
 
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/prospective-fault-current-calculator',
+    href: '/prospective-fault-current-calculator',
     title: 'PFC Calculator',
     description:
       'Calculate prospective fault current from supply impedance and verify protective device breaking capacity.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly with automatic current-carrying capacity, voltage drop, and fault current verification.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/adiabatic-equation-calculator',
+    href: '/adiabatic-equation-calculator',
     title: 'Adiabatic Equation Calculator',
     description: 'Verify cable fault current withstand using the adiabatic equation (k²S² vs I²t).',
     icon: Flame,
@@ -440,7 +440,7 @@ const sections = [
                   For distribution boards fed by a submain cable, the PFC at the sub-board is lower
                   than at the main board because the submain cable impedance reduces the fault
                   current. The{' '}
-                  <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+                  <SEOInternalLink href="/prospective-fault-current-calculator">
                     PFC calculator
                   </SEOInternalLink>{' '}
                   can determine the PFC at a downstream point from the origin PFC and the cable
@@ -461,7 +461,7 @@ const sections = [
         <p>
           PFC is also critical for verifying that cables can withstand the fault current energy
           without damage. The{' '}
-          <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+          <SEOInternalLink href="/adiabatic-equation-calculator">
             adiabatic equation
           </SEOInternalLink>{' '}
           (BS 7671 Regulation 434.5.2) checks whether the cable conductor can survive the thermal
@@ -503,7 +503,7 @@ const sections = [
       <>
         <p>
           Elec-Mate includes a dedicated{' '}
-          <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+          <SEOInternalLink href="/prospective-fault-current-calculator">
             PFC calculator
           </SEOInternalLink>{' '}
           as part of its suite of 50+ electrical calculators. The PFC calculator helps with both
@@ -543,11 +543,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Full Calculator Suite</h4>
                 <p className="text-white text-sm leading-relaxed">
                   PFC is one of over 70+ calculators on Elec-Mate. Others include{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/guides/voltage-drop-guide-bs-7671">
+                  <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                     voltage drop
                   </SEOInternalLink>
                   ,{' '}

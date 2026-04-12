@@ -90,7 +90,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs5839-fire-alarm-standard',
+    href: '/guides/bs-5839-fire-alarm-standard',
     title: 'BS 5839 Fire Alarm Standard',
     description:
       'Complete guide to BS 5839 Part 1 and Part 6, including system categories and grades.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote fire alarm installations with itemised detectors, cable, panels, and labour.',
@@ -165,7 +165,7 @@ const sections = [
           For electricians, fire alarm work is a growing and profitable specialism. The combination
           of regulatory pressure, new-build requirements, and retrofit demand means there is no
           shortage of work. But you need to understand{' '}
-          <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">BS 5839</SEOInternalLink> (both
+          <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">BS 5839</SEOInternalLink> (both
           Part 1 for commercial and Part 6 for domestic), the wiring requirements under BS 7671, and
           how to certify the work correctly.
         </p>
@@ -572,7 +572,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for fire alarm installations. Detectors, call points,

@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Nottingham', href: '/consumer-unit-replacement-nottingham' },
 ];
 
@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on your phone with AI assistance and instant PDF export.',
     icon: FileCheck2,
@@ -307,7 +307,7 @@ const sections = [
               <span>
                 <strong>Electrical Installation Certificate</strong> — the electrician must issue a
                 full{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 together with a Schedule of Test Results recording measured values for all circuits.
@@ -488,7 +488,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Paperless EICs in Nottingham</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate and Schedule of Test Results
                   on your phone while still on site. Record all circuit test values, generate the
                   PDF, and send it to your Nottingham customer before you leave. No clipboards, no
@@ -505,7 +505,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When your consumer unit replacement job reveals old wiring, missing bonding, or a
                   need for smoke alarms, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote additional work on the day. Nottingham landlords with multiple properties

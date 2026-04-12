@@ -82,14 +82,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Calculate cable sizes with earth fault loop impedance checks for TN and TT systems.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Record earthing system details, Ze measurements, and MET information on EIC certificates.',
     icon: FileCheck2,

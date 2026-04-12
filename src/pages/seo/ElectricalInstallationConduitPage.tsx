@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
@@ -293,7 +293,7 @@ const sections = [
           Always document your fill calculations as part of the installation records. If completing
           an{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />
           , note the conduit sizes and cable quantities in the circuit schedule.
@@ -429,7 +429,7 @@ const sections = [
           separate insulated CPC inside the conduit in addition to relying on the steel for
           continuity. Record the CPC type used on the circuit schedule of the{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />
           .
@@ -554,7 +554,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — record conduit type, cable sizes, circuit protective conductor details, and test
@@ -572,7 +572,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor electrical installation works certificates for small conduit extensions or
                 additional circuit outlets.
               </span>

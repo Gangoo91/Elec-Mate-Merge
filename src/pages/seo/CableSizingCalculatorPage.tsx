@@ -151,7 +151,7 @@ const softwareAppSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/cable-sizing-calculator',
+  url: 'https://elec-mate.com/cable-sizing-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -283,7 +283,7 @@ export default function CableSizingCalculatorPage() {
               designing a three-phase distribution board for a commercial fit-out, you need to
               verify the cable size against BS 7671 before you install it. The Elec-Mate cable
               sizing calculator does this in seconds, right on your phone. Use it alongside the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               and the{' '}

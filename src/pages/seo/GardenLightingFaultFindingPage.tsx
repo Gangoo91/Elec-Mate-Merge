@@ -615,7 +615,7 @@ const sections = [
                     Elec-Mate Minor Works Certificate app
                   </SEOInternalLink>{' '}
                   or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate app
                   </SEOInternalLink>{' '}
                   to complete and issue the certificate before leaving the garden. PDF to the

@@ -100,14 +100,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ev-charger-installation-guide',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
     description: 'Installation requirements for EV chargers including supply capacity assessment.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for 3-phase installations on your phone.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote 3-phase installations with itemised materials, labour, and professional PDF output.',
@@ -355,7 +355,7 @@ const sections = [
         <p>
           In addition to installation labour, the cost should include comprehensive testing of all
           circuits on all three phases, completion of an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Part P notification (for domestic premises). Testing a 3-phase installation takes
@@ -619,7 +619,7 @@ const sections = [
                   Factor in adequate time for testing a 3-phase installation. Phase rotation checks,
                   loop impedance on all three phases, RCD testing, insulation resistance on each
                   phase, and continuity testing all take longer on a 3-phase system. Use{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate's EIC app
                   </SEOInternalLink>{' '}
                   to complete the certification efficiently on site.

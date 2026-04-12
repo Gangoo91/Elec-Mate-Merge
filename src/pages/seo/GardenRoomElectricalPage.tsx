@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone with instant PDF export.',
@@ -404,7 +404,7 @@ const sections = [
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 covering the entire installation — SWA cable, sub-board, all circuits, earthing
                 system, and test results — must be issued on completion. Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the EIC on site, including the earth electrode resistance
                 measurement.
               </span>
@@ -445,7 +445,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
                   to record all test results on site, including the TT earth electrode resistance.
@@ -465,7 +465,7 @@ const sections = [
                   infrastructure. A client who is not planning an EV now may be planning one in two
                   years — upsizing the cable now costs little but saves them thousands later. Use
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce clear alternative quotes for standard, EV-ready, and full-spec options.

@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs quickly and accurately as your team grows. Consistent pricing across your business.',
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue certificates on site with your team. Professional documentation from every member of your team.',
@@ -682,7 +682,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Consistent Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to ensure every team member quotes accurately and consistently. No more
@@ -698,7 +698,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Team Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Your team can complete{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> and{' '}
+                  <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> and{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works
                   </SEOInternalLink>{' '}
@@ -715,7 +715,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Apprentice Training</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If you take on an apprentice, the{' '}
-                  <SEOInternalLink href="/study-centre/apprentice">
+                  <SEOInternalLink href="/study-centre">
                     Elec-Mate study centre
                   </SEOInternalLink>{' '}
                   supports their learning with structured modules covering Level 2 and Level 3

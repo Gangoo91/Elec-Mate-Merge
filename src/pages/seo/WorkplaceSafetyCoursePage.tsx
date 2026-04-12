@@ -405,7 +405,7 @@ const sections = [
           Fire prevention starts with your installation work. Properly rated cables, correctly sized
           protective devices, tight terminations, adequate ventilation for equipment that generates
           heat, and compliance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink> are
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> are
           all fire prevention measures. During construction, additional risks include hot work
           (soldering, brazing), use of flammable solvents, and temporary electrical installations
           with inadequate protection.
@@ -435,7 +435,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/safe-isolation-procedure',
+    href: '/guides/safe-isolation-procedure',
     title: 'Safe Isolation Procedure',
     description:
       'Step-by-step safe isolation training — the essential electrical safety procedure.',
@@ -443,14 +443,14 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/ppe-for-electricians',
+    href: '/guides/ppe-for-electricians',
     title: 'PPE Guide for Electricians',
     description: 'Complete guide to selecting and using PPE for electrical installation work.',
     icon: HardHat,
     category: 'Training' as const,
   },
   {
-    href: '/training/site-safety',
+    href: '/guides/construction-site-safety',
     title: 'Site Safety Course',
     description:
       'Broader site safety training covering construction-specific hazards and procedures.',
@@ -458,14 +458,14 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/first-aid-course',
+    href: '/training/first-aid-electrical-course',
     title: 'First Aid Course',
     description: 'Emergency first aid training including CPR for electric shock casualties.',
     icon: HeartPulse,
     category: 'Training' as const,
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate professional risk assessments and method statements from your phone.',
     icon: FileCheck2,

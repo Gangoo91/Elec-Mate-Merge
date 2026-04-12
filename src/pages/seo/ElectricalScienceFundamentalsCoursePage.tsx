@@ -26,7 +26,7 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
-  { label: 'Electrical Science Fundamentals', href: '/training/electrical-science-fundamentals' },
+  { label: 'Electrical Science Fundamentals', href: '/training/electrical-science-fundamentals-fundamentals' },
 ];
 
 const tocItems = [
@@ -195,7 +195,7 @@ const sections = [
         <p>
           Electrical science is the theoretical foundation that underpins everything an electrician
           does. Every cable size, every protective device rating, every earthing arrangement in{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           exists because of the principles taught in this course. Understanding the science behind
           the regulations transforms you from someone who follows rules to someone who understands
           why those rules exist.
@@ -209,10 +209,10 @@ const sections = [
         </p>
         <p>
           For qualified electricians, a strong understanding of electrical science enables confident{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">circuit design</SEOInternalLink>,
+          <SEOInternalLink href="/cable-sizing-calculator">circuit design</SEOInternalLink>,
           accurate fault diagnosis, and the ability to explain technical concepts to clients and
           colleagues. It is also essential for passing the{' '}
-          <SEOInternalLink href="/training/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             inspection and testing
           </SEOInternalLink>{' '}
           examination (2391/2394/2395) where electrical science questions feature prominently.
@@ -243,7 +243,7 @@ const sections = [
           Practical applications for electricians include: calculating the current drawn by a known
           load to select the correct cable size and protective device rating, determining voltage
           drop across a cable run for{' '}
-          <SEOInternalLink href="/guides/voltage-drop-bs7671">BS 7671 compliance</SEOInternalLink>,
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">BS 7671 compliance</SEOInternalLink>,
           and calculating the resistance of an earth fault path to verify disconnection times. Every
           one of these everyday calculations starts with Ohm's law.
         </p>
@@ -278,7 +278,7 @@ const sections = [
           sum of all voltages around any closed loop in a circuit equals zero. In practical terms,
           this means the supply voltage equals the sum of all the voltage drops around the circuit.
           This is the principle behind the{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculation
           </SEOInternalLink>{' '}
           in BS 7671 — the voltage available at the load equals the supply voltage minus the voltage
@@ -317,7 +317,7 @@ const sections = [
         <p>
           Transformers are everywhere in electrical installations: distribution transformers (11kV
           to 400V), isolating transformers for{' '}
-          <SEOInternalLink href="/training/bathroom-regulations">
+          <SEOInternalLink href="/guides/bathroom-electrical-regulations">
             bathroom shaver sockets
           </SEOInternalLink>
           , bell transformers (230V to 8V), and current transformers for metering. Understanding how
@@ -394,7 +394,7 @@ const sections = [
         </p>
         <p>
           Maximum demand calculations for{' '}
-          <SEOInternalLink href="/tools/max-demand-calculator">BS 7671 design</SEOInternalLink> must
+          <SEOInternalLink href="/max-demand-calculator">BS 7671 design</SEOInternalLink> must
           account for power factor — a 10kW load at 0.8 power factor draws 12.5kVA from the supply,
           requiring larger cables and protective devices than the same 10kW load at unity power
           factor. Understanding this relationship is essential for accurate circuit design.
@@ -435,7 +435,7 @@ const sections = [
         <p>
           <strong>Delta connection</strong> has no neutral point — each load is connected between
           two phase conductors. Delta is used for{' '}
-          <SEOInternalLink href="/training/three-phase-installation">
+          <SEOInternalLink href="/guides/three-phase-installation">
             three-phase motor connections
           </SEOInternalLink>{' '}
           and for high-power balanced loads. The line current in a balanced delta system is the
@@ -449,7 +449,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that apply electrical science principles to practical installation design.',
@@ -457,21 +457,21 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: "Apply Ohm's law and impedance calculations to real cable sizing problems.",
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: "Kirchhoff's voltage law in practice — calculate voltage drop across cable runs.",
     icon: Zap,
     category: 'Tool',
   },
   {
-    href: '/training/three-phase-installation',
+    href: '/guides/three-phase-installation',
     title: 'Three-Phase Installation Course',
     description: 'Apply three-phase theory to practical commercial and industrial installations.',
     icon: GraduationCap,
@@ -559,7 +559,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       ctaHeading="Ready to master electrical science?"
       ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 12 structured modules covering every electrical science topic from Ohm's law to three-phase power. Video explanations, interactive quizzes, and an AI tutor for any theory question. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
-      coursePath="/training/electrical-science-fundamentals"
+      coursePath="/training/electrical-science-fundamentals-fundamentals"
     />
   );
 }

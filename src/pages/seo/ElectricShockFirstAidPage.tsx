@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Electrical Safety', href: '/electrical-safety-at-home' },
+  { label: 'Electrical Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Electric Shock First Aid', href: '/electric-shock-first-aid' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/electrical-safety-at-home',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description:
       'Complete guide to home electrical safety including RCD testing and common hazards.',
@@ -497,7 +497,7 @@ const sections = [
                 <strong>Test your RCD monthly</strong> — a functioning 30mA RCD can trip fast enough
                 to prevent a fatal shock in many situations. Test by pressing the test button on
                 your consumer unit monthly. See{' '}
-                <SEOInternalLink href="/electrical-safety-at-home">
+                <SEOInternalLink href="/guides/electrical-safety-at-home">
                   our home electrical safety guide
                 </SEOInternalLink>{' '}
                 for full testing instructions.

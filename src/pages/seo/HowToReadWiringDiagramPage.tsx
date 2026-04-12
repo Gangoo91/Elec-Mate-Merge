@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Electrical Guides', href: '/electrical-design-guide' },
+  { label: 'Electrical Guides', href: '/guides/electrical-design-guide' },
   { label: 'How to Read Wiring Diagrams', href: '/how-to-read-wiring-diagram' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/electrical-design-guide',
+    href: '/guides/electrical-design-guide',
     title: 'Electrical Design Guide',
     description:
       'Principles of electrical system design, load assessment, diversity, and cable sizing.',
@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Technical Guide',
   },
   {
-    href: '/single-phase-vs-three-phase',
+    href: '/guides/single-phase-vs-three-phase',
     title: 'Single Phase vs Three Phase',
     description:
       'Differences between single-phase and three-phase supplies, when each is required, and upgrade costs.',
@@ -452,7 +452,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/electrical-design-guide">electrical design guide</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/electrical-design-guide">electrical design guide</SEOInternalLink>{' '}
           covers SLD production and interpretation in more detail for those working in commercial
           electrical design.
         </p>
@@ -512,7 +512,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/single-phase-vs-three-phase">
+          <SEOInternalLink href="/guides/single-phase-vs-three-phase">
             single phase vs three phase guide
           </SEOInternalLink>{' '}
           explains the practical difference between supply types and when three-phase is required

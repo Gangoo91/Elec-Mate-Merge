@@ -116,14 +116,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Leeds customers.',
     icon: PoundSterling,
@@ -528,7 +528,7 @@ const sections = [
                   Leeds letting agents manage large portfolios of student and professional rental
                   properties. They need certificates fast and in digital format. Complete your{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on your
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on your
                   phone, email the PDF on the day, and stand out from competitors still posting
                   paper copies.
                 </p>

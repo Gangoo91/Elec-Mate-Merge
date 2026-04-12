@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and testing requirements.',
@@ -242,7 +242,7 @@ const sections = [
         </div>
         <p>
           Identifying the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements-explained">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangement
           </SEOInternalLink>{' '}
           is one of the first steps in any inspection. It determines the expected earth fault loop
@@ -523,7 +523,7 @@ const sections = [
                 (twin and earth), the CPC size is determined by the cable manufacturer — for
                 example, a 2.5 mm twin and earth cable has a 1.5 mm CPC, and a 6 mm cable has a 2.5
                 mm CPC. For separate CPCs in conduit or trunking, use Table 54.7 or the{' '}
-                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                <SEOInternalLink href="/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 to verify the CPC is adequate.

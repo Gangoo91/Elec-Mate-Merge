@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description:
       'How to set up as a self-employed electrician — insurance, tax, scheme registration, and finding work.',
@@ -260,7 +260,7 @@ const sections = [
           to any job in any industry. Tailor your personal statement to each application — if you
           are applying for a commercial role, lead with your commercial experience; if it is a
           testing-focused role, lead with your{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">2391 qualification</SEOInternalLink> and
+          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and
           testing experience.
         </p>
       </>
@@ -553,7 +553,7 @@ const sections = [
         />
         <p>
           Whether you are employed or{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">self-employed</SEOInternalLink>,
+          <SEOInternalLink href="/guides/going-self-employed-electrician">self-employed</SEOInternalLink>,
           a strong CV combined with a verified digital profile gives you the best chance of landing
           the roles and contracts you want.
         </p>

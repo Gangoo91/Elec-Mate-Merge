@@ -144,7 +144,7 @@ const sections = [
           Trend analysis is invaluable. If a circuit read 150 MΩ five years ago and now reads 8 MΩ,
           the insulation is deteriorating rapidly even though 8 MΩ is well above the minimum. This
           trend should be noted on the{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> as it may indicate
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> as it may indicate
           an underlying issue such as persistent moisture ingress, overheating, or chemical
           degradation.
         </p>
@@ -407,7 +407,7 @@ const sections = [
               a single downlighter), replacing just the affected cable run may suffice. For
               widespread age-related degradation showing low readings across multiple circuits, a
               full or partial rewire is the appropriate recommendation. Record this on the{' '}
-              <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with the
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with the
               appropriate observation code and classification.
             </p>
           </div>
@@ -545,7 +545,7 @@ const sections = [
           icon={Mic}
         />
         <p>
-          The <SEOInternalLink href="/guides/eicr-certificate">EICR form</SEOInternalLink> records
+          The <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink> records
           insulation resistance results per circuit alongside all other test results. The{' '}
           <SEOInternalLink href="/guides/ai-tools-for-electricians">Defect Code AI</SEOInternalLink>{' '}
           classifies the severity of low insulation resistance findings and suggests the appropriate
@@ -574,7 +574,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/earth-fault-loop-impedance-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained-too-high',
     title: 'Earth Fault Loop Impedance Too High',
     description: 'When Zs exceeds the maximum for the protective device — related fault scenarios.',
     icon: Activity,
@@ -589,7 +589,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate',
     description:
       'Complete guide to Electrical Installation Condition Reports and observation codes.',
@@ -597,7 +597,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Zs lookup, R1+R2, cable sizing, voltage drop, and more built-in calculators.',
     icon: Calculator,

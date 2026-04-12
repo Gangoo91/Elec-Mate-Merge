@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Electrical Installation Certificates for all notifiable work in Basingstoke and Hampshire.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Basingstoke rewires, EV charger circuits, and new installations with accurate calculations.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Basingstoke electrical jobs with South East pricing — send professional quotes on site.',
@@ -418,7 +418,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from
@@ -435,7 +435,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win South East Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce professional PDF quotes for Basingstoke customers. Quote accurately at

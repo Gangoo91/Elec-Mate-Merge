@@ -173,7 +173,7 @@ const sections = [
           socket outlets are typically 32A ring mains or 20A radials, each protecting a defined
           floor area. The circuit schedule should be documented on an{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />{' '}
           on completion.
@@ -460,7 +460,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — generate compliant EICs for office fit-out circuits with full circuit schedules

@@ -235,7 +235,7 @@ const sections = [
         <p>
           During periodic inspection, electricians should torque-check every accessible terminal
           connection. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/calculators">testing calculators</SEOInternalLink> help you
+          <SEOInternalLink href="/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
           verify that measured values are within acceptable limits for each circuit type.
         </p>
       </>
@@ -582,7 +582,7 @@ const sections = [
         <p>
           For electricians, recommending AFDDs and regular thermal imaging surveys to clients is an
           opportunity to add value. Elec-Mate's{' '}
-          <SEOInternalLink href="/training/18th-edition">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition training courses
           </SEOInternalLink>{' '}
           cover the latest requirements for arc fault protection and socket circuit design.

@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional outbuilding electrical quotes from your phone.',
     icon: FileCheck2,
@@ -420,7 +420,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> documents the
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> documents the
                 full installation including the supply cable, sub-board, and all circuits. Essential
                 for property sale conveyancing.
               </span>
@@ -473,7 +473,7 @@ const sections = [
                   Always offer to pull a Cat6 data cable in the same trench as the armoured power
                   cable. The materials cost is minimal, the trench is already open, and the customer
                   saves significant money versus having it done separately. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to add it as an optional extra.

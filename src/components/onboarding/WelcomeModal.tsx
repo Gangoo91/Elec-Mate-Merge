@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageSetSync } from '@/utils/storage';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -137,6 +143,10 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={handleSkip}>
       <DialogContent className="max-w-md sm:max-w-lg md:max-w-xl p-0 gap-0 bg-neutral-900 border-white/10 overflow-hidden">
+        <VisuallyHidden>
+          <DialogTitle>{content.title}</DialogTitle>
+          <DialogDescription>{content.subtitle}</DialogDescription>
+        </VisuallyHidden>
         {/* Header with gradient */}
         <div className={`relative px-6 md:px-8 pt-8 md:pt-10 pb-6 md:pb-8 ${content.bgColor}`}>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-neutral-900" />

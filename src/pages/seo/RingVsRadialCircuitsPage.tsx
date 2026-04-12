@@ -83,14 +83,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for ring and radial circuits with automatic derating and voltage drop.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for new circuits on your phone.',
     icon: FileCheck2,
@@ -387,7 +387,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             Elec-Mate cable sizing calculator
           </SEOInternalLink>{' '}
           to verify that voltage drop is within the 5% limit for power circuits under BS 7671

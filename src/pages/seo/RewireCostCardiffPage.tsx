@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description:
       'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
@@ -562,7 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete and sign off your Electrical Installation Certificate on your phone
                   before you leave the property. Auto-populated test schedules and instant PDF
                   export mean the customer receives their certificate the same day.
@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Rewire Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate detailed, itemised rewire quotes in minutes using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Win more Cardiff rewire jobs with professional quotes that clearly break down

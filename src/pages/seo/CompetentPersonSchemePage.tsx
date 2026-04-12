@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description: 'Step-by-step guide to setting up as a self-employed electrician in the UK.',
     icon: PoundSterling,
@@ -132,7 +132,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 — the qualification required for competent person scheme registration.',

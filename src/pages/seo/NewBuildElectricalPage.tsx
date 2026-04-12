@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for new builds on your phone with voice test entry and PDF export.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size every cable in the new build correctly with all BS 7671 correction factors applied automatically.',
@@ -246,7 +246,7 @@ const sections = [
           For electricians registered with NICEIC, NAPIT, ELECSA, or another competent person
           scheme, the process is straightforward: complete the installation, carry out initial
           verification testing, issue the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, and notify Building
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, and notify Building
           Control through your scheme. The scheme provider issues a Building Regulations Compliance
           Certificate to the developer.
         </p>
@@ -340,7 +340,7 @@ const sections = [
                 <strong>Cable sizing</strong> — a 7kW single phase charge point draws approximately
                 32A. The circuit typically requires a 6.0mm2 or 10.0mm2 cable (depending on cable
                 length and correction factors) protected by a 32A or 40A RCBO. Use Elec-Mate's{' '}
-                <SEOInternalLink href="/guides/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -456,7 +456,7 @@ const sections = [
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-purple-500/10 border border-purple-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">
-              <SEOInternalLink href="/guides/afdd-guide">AFDDs</SEOInternalLink>
+              <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink>
             </h3>
             <p className="text-white text-sm leading-relaxed">
               BS 7671 Regulation 421.1 recommends AFDDs for circuits in locations with sleeping
@@ -485,7 +485,7 @@ const sections = [
           Both AFDDs and SPDs add cost to the consumer unit — budget an additional £30-£50 per
           circuit for AFDDs and £50-£100 for an SPD module. Include these in the initial quote to
           avoid surprises. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/quoting-app">quoting app</SEOInternalLink> to price the full
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to price the full
           new build installation including all protective devices.
         </p>
       </>
@@ -516,7 +516,7 @@ const sections = [
               <CircuitBoard className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/max-demand-calculator">
+                  <SEOInternalLink href="/max-demand-calculator">
                     Maximum demand
                   </SEOInternalLink>
                 </strong>{' '}

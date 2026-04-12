@@ -583,7 +583,7 @@ const sections = [
                   offshore electrical recruitment agencies — Petrofac, Wood, Bilfinger, and other
                   major operators and contractors all use specialist offshore electrical recruiters.
                   Consider your{' '}
-                  <SEOInternalLink href="/guides/eicr-certificate">
+                  <SEOInternalLink href="/tools/eicr-certificate">
                     inspection and testing qualifications
                   </SEOInternalLink>{' '}
                   as these are valued for offshore maintenance roles.

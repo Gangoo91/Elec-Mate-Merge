@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/city-guilds-level-3-guide',
+    href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
     description: 'Everything you need to know about the City & Guilds 2365 Level 3 Electrical Installation qualification.',
     icon: BookOpen,
@@ -342,7 +342,7 @@ const sections = [
         </div>
         <p>
           Practise these calculations using the{' '}
-          <SEOInternalLink href="/study-centre/apprentice">
+          <SEOInternalLink href="/study-centre">
             apprentice module calculator tools
           </SEOInternalLink>{' '}
           in the Elec-Mate Study Centre. Working through multiple examples is far more effective

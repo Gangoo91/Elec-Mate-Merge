@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/calculators',
+    href: '/electrical-testing-calculators',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop on lighting circuits to check whether long cable runs are the cause.',

@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Wiring Instructions', href: '/tools/ai-wiring-instructions' },
 ];
 
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes using the full BS 7671 Appendix 4 method with all correction factors.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-training',
+    href: '/apprentice-training-training',
     title: 'Apprentice Training',
     description:
       'Level 2 and Level 3 electrical apprentice courses with interactive wiring exercises and AM2 preparation.',
@@ -319,7 +319,7 @@ const sections = [
           For specific installation methods, the AI provides guidance on surface clipping, cable in
           conduit (rigid PVC and flexible), cable in trunking (including trunking fill calculations
           using the{' '}
-          <SEOInternalLink href="/tools/trunking-fill-calculator">
+          <SEOInternalLink href="/trunking-fill-calculator">
             trunking fill calculator
           </SEOInternalLink>
           ), cable in ceiling voids (avoiding thermal insulation or using appropriate derating
@@ -397,7 +397,7 @@ const sections = [
         <p>
           The regulation references also help apprentices connect their practical work with the
           theory they learn in{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course studies
           </SEOInternalLink>
           . Understanding why a cable must be in a safe zone (not just that it must) deepens their

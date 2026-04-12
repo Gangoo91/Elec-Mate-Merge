@@ -182,7 +182,7 @@ export default function ElecMateVsEasyEICRPage() {
                 and writes a professionally worded observation for your certificate. This is
                 particularly valuable for less common defects where you might need to check the
                 regulation reference. See our{' '}
-                <SEOInternalLink href="/guides/eicr-observation-codes">
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   EICR observation codes guide
                 </SEOInternalLink>{' '}
                 for more on classification.
@@ -213,7 +213,7 @@ export default function ElecMateVsEasyEICRPage() {
                 earth fault loop impedance checks, prospective fault current, disconnection time
                 verification, and many more. All referencing BS 7671:2018+A3:2024 tables. See our
                 full{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>{' '}
                 for the complete list.
@@ -389,7 +389,7 @@ export default function ElecMateVsEasyEICRPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/electrician-app-for-iphone',
+          href: '/tools/electrician-app-iphone',
           title: 'Electrician App for iPhone',
           description:
             'Full feature set on iPhone. Touch-optimised for use with work gloves, works offline in basements.',

@@ -640,9 +640,9 @@ const sections = [
         </p>
         <p>
           Elec-Mate training courses including{' '}
-          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/pasma">PASMA</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/ipaf">IPAF</SEOInternalLink>, and{' '}
+          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink>, and{' '}
           <SEOInternalLink href="/training/working-at-height">working at height</SEOInternalLink>{' '}
           ensure your team understands when and how to use each type of PPE correctly.
         </p>

@@ -90,7 +90,7 @@ export default function EVChargerInstallationPage() {
                     overnight in 6-8 hours. This is the charger type covered by the OZEV grant
                     scheme and the IET Code of Practice. Requires a dedicated 32A circuit with no
                     diversity, appropriate{' '}
-                    <SEOInternalLink href="/calculators/cable-sizing">cable sizing</SEOInternalLink>
+                    <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>
                     , and RCD protection.
                   </p>
                 </div>
@@ -158,7 +158,7 @@ export default function EVChargerInstallationPage() {
                       <strong className="text-yellow-400">Cable sizing</strong> — Minimum 6mm² PVC
                       twin-and-earth (for short runs clipped direct). 10mm² required for longer runs
                       to meet the{' '}
-                      <SEOInternalLink href="/calculators/voltage-drop">
+                      <SEOInternalLink href="/voltage-drop-calculator">
                         5% voltage drop limit
                       </SEOInternalLink>
                       . SWA (steel wire armoured) cable for external underground runs.
@@ -248,7 +248,7 @@ export default function EVChargerInstallationPage() {
                 For properties with an existing TN-S earthing system (earth provided by the cable
                 sheath) or TT system (existing earth electrode), the separate earth rod may not be
                 required — but the 30 mA RCD protection is still mandatory. Always check the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 before specifying the installation design.
@@ -480,7 +480,7 @@ export default function EVChargerInstallationPage() {
                 To claim any OZEV grant, the installer must be OZEV-approved and registered with a
                 competent person scheme. The installation must comply with BS 7671 and the IET Code
                 of Practice. Comprehensive documentation is required — including the{' '}
-                <SEOInternalLink href="/guides/ev-charger-certificate">
+                <SEOInternalLink href="/ev-charger-certificate">
                   EV charger certificate
                 </SEOInternalLink>
                 , photographs, and DNO notification evidence. Incomplete documentation is the most
@@ -535,7 +535,7 @@ export default function EVChargerInstallationPage() {
               <p>
                 The maximum demand of the property — including the new EV charger — must be assessed
                 before installation. Elec-Mate includes a{' '}
-                <SEOInternalLink href="/calculators/max-demand">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 that factors in the EV charger load and checks it against the supply fuse rating.
@@ -605,28 +605,28 @@ export default function EVChargerInstallationPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/ev-charger-certificate',
+          href: '/ev-charger-certificate',
           title: 'EV Charger Certificate',
           description: 'How to complete a Section 722 compliant EV charger certificate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate the correct cable size for EV charging circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop compliance for long cable runs.',
           icon: Activity,
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,

@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for rewires and EV charger installations. Ring final and radial circuit calculations.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for rewires, new circuits, and EV charger installations.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EV charger installations, and HMO conversions with professional itemised PDFs.',
@@ -334,7 +334,7 @@ const sections = [
           circuits (ground floor and first floor) for the main socket outlets, with radials for the
           kitchen (dedicated 32A ring or 20A radials for individual appliances), garage, and any
           extension or loft conversion. This balances efficiency, simplicity, and compliance. The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           can verify the cable sizes for both ring and radial options.
@@ -360,7 +360,7 @@ const sections = [
               <span>
                 <strong>HMO licensing requirements</strong> — Coventry City Council operates
                 mandatory and additional HMO licensing schemes. Licensed HMOs require a satisfactory{' '}
-                <SEOInternalLink href="/guides/eicr-guide">EICR</SEOInternalLink> (maximum 5 years
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> (maximum 5 years
                 old), a fire alarm system to BS 5839-6 (typically LD2 minimum, LD1 for higher-risk
                 properties), emergency lighting in escape routes, and adequate socket provision in
                 each letting room. The EICR requirement alone generates regular, recurring work.
@@ -521,7 +521,7 @@ const sections = [
           Coventry's strength is volume. The sheer number of post-war properties needing rewires,
           the growing HMO market, and the accelerating EV charger demand mean that a well-organised
           electrician can achieve strong turnover at these rates. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate quotes quickly and convert more surveys into confirmed jobs.
         </p>
       </>
@@ -561,7 +561,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for rewires and EV charger installations with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Verify ring final and radial circuit designs. Check voltage drop on long EV
@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote rewires, EV charger installations, and HMO conversions with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Professional PDF quotes with clear itemisation help you convert more surveys

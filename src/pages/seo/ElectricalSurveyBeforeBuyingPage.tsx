@@ -612,7 +612,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 findings are identified, quote the remedial work immediately using
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Buyers need quotes quickly to negotiate with vendors. The electrician who

@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — understanding why TT is required for marina installations.',
@@ -341,7 +341,7 @@ const sections = [
                 distributes power to sub-mains cables running to each supply pillar. Each sub-main
                 should have overcurrent protection and isolation at the main board. The sub-main
                 cable must be sized for the maximum demand of the supply pillar, considering{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop
                 </SEOInternalLink>{' '}
                 on potentially long cable runs to the end of the pontoon.

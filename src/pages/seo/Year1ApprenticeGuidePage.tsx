@@ -118,7 +118,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'The prove-test-prove method you will learn in year 1 — step by step.',
     icon: Shield,

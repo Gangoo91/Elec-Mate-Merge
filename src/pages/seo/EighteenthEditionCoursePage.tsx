@@ -180,7 +180,7 @@ export default function EighteenthEditionCoursePage() {
                 '@type': 'ListItem',
                 position: 3,
                 name: '18th Edition Course',
-                item: 'https://elec-mate.com/training/18th-edition-course',
+                item: 'https://elec-mate.com/eighteenth-edition-course',
               },
             ],
           })}
@@ -247,11 +247,11 @@ export default function EighteenthEditionCoursePage() {
               Together, these parts form a comprehensive framework that governs everything from
               domestic rewires to large commercial installations. Once qualified, you can apply your
               knowledge directly in practice — generating compliant{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificates
               </SEOInternalLink>{' '}
               and preparing for the{' '}
-              <SEOInternalLink href="/training/city-guilds-2391">
+              <SEOInternalLink href="/city-guilds2391">
                 City &amp; Guilds 2391 Inspection &amp; Testing
               </SEOInternalLink>{' '}
               qualification.

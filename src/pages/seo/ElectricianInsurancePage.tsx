@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/expense-tracker',
+    href: '/tools/expenses-manager-electrician',
     title: 'Expenses Tracker',
     description:
       'Track insurance payments and all business expenses. Photograph receipts and export for your accountant.',
@@ -372,7 +372,7 @@ const sections = [
           its make, model, serial number, date of purchase, and cost. Photograph your tool kit
           regularly. If you buy a new tester or power tool, add it to the list and update your
           insurer about the total value. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expense-tracker">expenses tracker</SEOInternalLink> can help
+          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> can help
           — every tool purchase you log is a record of what you own and what it cost.
         </p>
       </>

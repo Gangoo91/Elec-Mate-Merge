@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Issue Minor Works Certificates for lighting modifications on your phone.',
     icon: FileCheck2,
@@ -502,7 +502,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 an MWC for two-way or intermediate switch additions to existing circuits.
               </span>
             </li>

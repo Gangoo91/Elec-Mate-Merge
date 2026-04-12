@@ -90,7 +90,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size SWA cable for shed supply runs with automatic voltage drop and derating calculations.',
@@ -98,14 +98,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long runs from house to shed — critical for SWA sizing.',
     icon: Zap,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for shed installations on your phone.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price shed electrical installations with itemised materials, labour, and certification.',
@@ -168,7 +168,7 @@ const sections = [
           </SEOInternalLink>{' '}
           because it involves a new circuit in a location outside the main dwelling. A registered
           electrician can self-certify and issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           .
@@ -259,7 +259,7 @@ const sections = [
         <p>
           The sub-main cable must be sized for the maximum demand at the shed, accounting for
           voltage drop over the cable run. Use the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to determine the correct cable size for the run length and load.
@@ -456,7 +456,7 @@ const sections = [
       <>
         <p>
           The shed installation must be fully tested and an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           issued before the installation is energised. The scope of testing includes:
@@ -620,7 +620,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing on the Survey</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to determine the SWA size while you are on site. Measure the run, estimate the
@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . SWA cable, glands, consumer unit, accessories, labour, trench work, testing, and

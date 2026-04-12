@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Generate compliant Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
@@ -383,7 +383,7 @@ const sections = [
                 <strong>Electrical Installation Certificate:</strong> an EIC must be issued for any
                 new circuit. Use the{' '}
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Elec-Mate EIC Certificate tool"
                 />{' '}
                 to generate a compliant certificate on-site.
@@ -541,7 +541,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — generate compliant EICs for new boiler circuits with BS 7671 test results.

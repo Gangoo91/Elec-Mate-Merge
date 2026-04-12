@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/apprentice-portfolio-building-tips',
+    href: '/apprentice-portfolio-guide-building-tips',
     title: 'Apprentice Portfolio Building Tips',
     description: 'NVQ evidence requirements, observation records, and portfolio organisation.',
     icon: BookOpen,

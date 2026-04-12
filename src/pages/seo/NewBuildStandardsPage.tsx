@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete digital Electrical Installation Certificates on your phone. AI board scanner, voice test entry, and professional PDF export.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'BS 7671 requirements for consumer units including SPD integration, AFDD selection, and metal enclosure rules.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate correct cable sizes for new build circuits accounting for voltage drop, grouping, and thermal insulation.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules on the Elec-Mate platform.',
@@ -347,7 +347,7 @@ const sections = [
         </div>
         <p>
           For electricians specifying{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer units for new builds
           </SEOInternalLink>
           , the practical impact is significant. A new build consumer unit now typically includes

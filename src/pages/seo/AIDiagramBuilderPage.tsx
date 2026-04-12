@@ -25,7 +25,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Diagram Builder', href: '/tools/ai-diagram-builder' },
 ];
 
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-training',
+    href: '/apprentice-training-training',
     title: 'Apprentice Training',
     description:
       'Level 2 and Level 3 electrical apprentice courses with circuit diagram reading and drawing exercises.',
@@ -339,7 +339,7 @@ const sections = [
           as junction boxes, draw points, and fire stops. Where cables share common containment
           routes, the diagram shows the containment sizing and the cables it contains, linking to
           the{' '}
-          <SEOInternalLink href="/tools/trunking-fill-calculator">
+          <SEOInternalLink href="/trunking-fill-calculator">
             trunking fill calculator
           </SEOInternalLink>{' '}
           or{' '}

@@ -7,7 +7,7 @@ import { Zap, AlertTriangle, CheckCircle2, FileCheck2, Wrench, ShieldCheck } fro
 const breadcrumbs = [
   { label: 'Home', href: '/' },
   { label: 'Electrical Guides', href: '/home-office-electrical-guide' },
-  { label: 'Electrical Fault Finding Guide', href: '/electrical-fault-finding-guide' },
+  { label: 'Electrical Fault Finding Guide', href: '/guides/electrical-fault-finding-guide' },
 ];
 
 const tocItems = [

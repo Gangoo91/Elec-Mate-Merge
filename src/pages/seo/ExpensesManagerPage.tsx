@@ -459,14 +459,14 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'AI-powered cost estimation and professional PDF quotes for electrical work.',
     icon: FileText,
     category: 'Business Tool',
   },
   {
-    href: '/tools/electrician-invoice-app',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Digital invoicing with Stripe payments, automatic reminders, and accounting sync.',

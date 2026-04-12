@@ -231,7 +231,7 @@ const sections = [
                 <strong className="text-yellow-400">BS 7671 18th Edition</strong> — Current edition
                 certification is essential. As site manager, you need to understand the regulations
                 that govern the work your team carries out. See our{' '}
-                <SEOInternalLink href="/guides/bs7671-18th-edition-guide">
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 guide
                 </SEOInternalLink>
                 .
@@ -581,7 +581,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate risk assessments and method statements with AI.',
     icon: Brain,

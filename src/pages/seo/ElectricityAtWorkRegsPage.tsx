@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/permit-to-work-electrical',
+    href: '/guides/permit-to-work-electrician',
     title: 'Permit to Work (Electrical)',
     description:
       'How to implement a permit-to-work system for electrical work, as required for high-risk activities under the EAWR.',

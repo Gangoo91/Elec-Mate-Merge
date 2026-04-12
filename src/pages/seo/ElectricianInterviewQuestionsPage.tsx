@@ -400,7 +400,7 @@ const sections = [
       <>
         <p>
           If you are applying for a role that involves inspection and testing — or if you hold a{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">C&G 2391 qualification</SEOInternalLink>{' '}
+          <SEOInternalLink href="/city-guilds2391">C&G 2391 qualification</SEOInternalLink>{' '}
           — expect questions about test procedures and acceptable values:
         </p>
         <div className="space-y-4 my-4">

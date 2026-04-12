@@ -90,21 +90,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Interactive voltage drop calculator for BS 7671 compliant cable sizing.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Calculate cable size with correction factors, voltage drop, and Zs verification.',
     icon: Zap,
     category: 'Tool',
   },
   {
-    href: '/guides/voltage-drop-guide-bs7671',
+    href: '/guides/voltage-drop-limits-bs-7671',
     title: 'Voltage Drop Guide',
     description: 'In-depth guide to voltage drop calculations under BS 7671.',
     icon: BarChart3,
@@ -378,7 +378,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">Voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">Voltage drop</SEOInternalLink>{' '}
           becomes a problem on long cable runs and with smaller cable sizes. If the calculated
           voltage drop exceeds the permitted limit, you have two options: use a larger cable (lower
           resistance per metre) or reduce the cable length (shorter route). In practice, you often
@@ -600,11 +600,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Built-in Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>
                   ,{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   , and other tools to check your manual calculations and understand how the numbers

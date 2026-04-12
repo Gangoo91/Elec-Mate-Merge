@@ -95,11 +95,11 @@ export default function BestCableSizingAppPage() {
                 Appendix 4 tables, applies all correction factors, and verifies voltage drop is
                 within the permitted limits (typically 3% for lighting and 5% for other circuits on
                 a consumer installation). It should also account for the{' '}
-                <SEOInternalLink href="/guides/reference-methods-guide">
+                <SEOInternalLink href="/guides/reference-methods-cable-installation">
                   reference installation method
                 </SEOInternalLink>{' '}
                 and allow you to check{' '}
-                <SEOInternalLink href="/guides/correction-factors-guide">
+                <SEOInternalLink href="/guides/correction-factors-bs-7671">
                   correction factors
                 </SEOInternalLink>{' '}
                 for your specific installation conditions.
@@ -159,11 +159,11 @@ export default function BestCableSizingAppPage() {
               </p>
               <p>
                 Beyond cable sizing, Elec-Mate includes calculators for{' '}
-                <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">
+                <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                   voltage drop verification
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">
+                <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                   cable sizing to Appendix 4
                 </SEOInternalLink>
                 , maximum demand, diversity factors, earth fault loop impedance, prospective fault
@@ -308,7 +308,7 @@ export default function BestCableSizingAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/cable-sizing-guide-bs7671',
+          href: '/guides/cable-sizing-guide-bs-7671',
           title: 'Cable Sizing Guide BS 7671',
           description:
             'Complete guide to cable sizing using BS 7671 Appendix 4 tables with worked examples.',
@@ -316,7 +316,7 @@ export default function BestCableSizingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/voltage-drop-guide-bs7671',
+          href: '/guides/voltage-drop-limits-bs-7671',
           title: 'Voltage Drop Guide',
           description:
             'How to calculate and verify voltage drop to BS 7671 limits for any circuit.',
@@ -324,7 +324,7 @@ export default function BestCableSizingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/correction-factors-guide',
+          href: '/guides/correction-factors-bs-7671',
           title: 'Correction Factors Guide',
           description:
             'All BS 7671 correction factors explained — Ca, Cg, Ci, Cf — with worked examples.',
@@ -332,7 +332,7 @@ export default function BestCableSizingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/reference-methods-guide',
+          href: '/guides/reference-methods-cable-installation',
           title: 'Reference Methods Guide',
           description:
             'All BS 7671 reference installation methods explained with diagrams and tables.',
@@ -340,7 +340,7 @@ export default function BestCableSizingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '50+ BS 7671 calculators including cable sizing, voltage drop, Zs, maximum demand, and more.',

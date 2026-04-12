@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional retail electrical fit-out quotes from your phone.',
     icon: FileCheck2,
@@ -458,7 +458,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC on completion</strong> — an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 must be issued for all new retail electrical work. The building landlord will
@@ -491,7 +491,7 @@ const sections = [
                   Retail clients often have a clear idea of the lighting effect they want but no
                   idea what it costs. Build a detailed lighting schedule — number of tracks, number
                   of spot heads per track, driver specifications — and price it accurately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . A detailed quote wins trust and avoids scope creep disputes.
@@ -506,7 +506,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Retail clients need the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, emergency
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, emergency
                   lighting commissioning certificate, and fire alarm commissioning certificate on
                   the day the shop opens — not two weeks later. Complete all paperwork on site using
                   Elec-Mate and hand over the full documentation package before you leave.

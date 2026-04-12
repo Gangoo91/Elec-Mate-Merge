@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/invoice-generator',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Create and send professional invoices on site. Track payment status and send automated reminders.',
@@ -165,7 +165,7 @@ const sections = [
                 <strong>Always provide a written quote.</strong> A verbal agreement is hard to
                 enforce. A written quote — even a simple one sent by email or WhatsApp — documents
                 what was agreed, the price, and the payment terms. Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/quote-generator">quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                 generates professional quotes from your phone in minutes.
               </span>
             </li>
@@ -487,7 +487,7 @@ const sections = [
         </p>
         <p>
           Having good documentation is critical. Keep every{' '}
-          <SEOInternalLink href="/tools/invoice-generator">invoice</SEOInternalLink>, quote, email,
+          <SEOInternalLink href="/electrician-invoice-app">invoice</SEOInternalLink>, quote, email,
           text message, photograph, and certificate related to the job. Elec-Mate stores all of
           these digitally, giving you an airtight evidence trail if you need to go to court.
         </p>
@@ -566,7 +566,7 @@ const sections = [
                 <strong>Written quotes with clear payment terms.</strong> Every job should start
                 with a written quote that states the price, what is included, and when payment is
                 due. Use Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/quote-generator">quoting app</SEOInternalLink> to
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
                 generate professional quotes in minutes.
               </span>
             </li>
@@ -575,7 +575,7 @@ const sections = [
               <span>
                 <strong>Invoice immediately on completion.</strong> Do not wait until the weekend to
                 do your invoicing. Send invoices from site, before you leave, using{' '}
-                <SEOInternalLink href="/tools/invoice-generator">
+                <SEOInternalLink href="/electrician-invoice-app">
                   Elec-Mate's invoice app
                 </SEOInternalLink>
                 .
@@ -609,7 +609,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expense-tracker">business analytics</SEOInternalLink> show
+          <SEOInternalLink href="/tools/expenses-manager-electrician">business analytics</SEOInternalLink> show
           you your average payment collection time, outstanding invoices, and cash flow forecast.
           Use this data to identify problem customers early and adjust your credit control
           accordingly.

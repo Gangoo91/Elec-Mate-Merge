@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -326,7 +326,7 @@ const sections = [
               <span>
                 <strong>Cable sizing for long runs</strong> — the long cable runs common in London
                 terraces require careful{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 to account for voltage drop. A 20-metre run in 6mm2 cable for a 32A load is close to
@@ -502,7 +502,7 @@ const sections = [
                   18 metres in terraced properties), frequent consumer unit upgrades, parking
                   restrictions affecting van access, and the time cost of congestion. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build accurate itemised quotes on site.
@@ -517,7 +517,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification and Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every EV charger installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , UKPN G98/G99 notification, and (if the property has no existing Part P

@@ -106,14 +106,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Crawley customers with accurate local pricing.',
     icon: PoundSterling,
@@ -407,7 +407,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Completing an{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on a phone
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone
                   app and sending an instant PDF sets you apart from competitors still posting
                   handwritten certificates. Landlords and letting agents in Crawley increasingly
                   expect digital documentation.

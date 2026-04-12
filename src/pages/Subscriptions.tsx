@@ -379,8 +379,8 @@ const Subscriptions = () => {
           </section>
         )}
 
-        {/* ── Expired banner ──────────────────────────────────────────── */}
-        {!isSubscribed && !isTrialActive && (
+        {/* ── Expired banner (only if they actually HAD a trial) ────── */}
+        {!isSubscribed && !isTrialActive && trialEndsAt && (
           <section className="relative rounded-2xl border border-red-500/30 bg-red-500/[0.06] p-4 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-red-500/[0.06] to-transparent pointer-events-none" />
             <div className="relative flex items-center gap-3">
@@ -389,7 +389,7 @@ const Subscriptions = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-red-400">Trial expired</p>
-                <p className="text-xs text-white/70 mt-0.5">
+                <p className="text-xs text-white mt-0.5">
                   Subscribe below to unlock all features
                 </p>
               </div>

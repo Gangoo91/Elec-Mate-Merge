@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician',
     description:
       'How to set up as a self-employed electrician — insurance, tax, scheme registration, and finding work.',
@@ -620,8 +620,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Domestic to Commercial</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Get your ECS card (apply through the JIB). Complete SSSTS training (2-day course).
-                  Consider <SEOInternalLink href="/training/ipaf">IPAF</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/training/pasma">PASMA</SEOInternalLink> if you want to
+                  Consider <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink> and{' '}
+                  <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink> if you want to
                   work at height. Build experience with three-phase systems and containment — ask to
                   shadow a commercial electrician or take on light commercial work first. Update
                   your <SEOInternalLink href="/guides/electrician-cv-guide">CV</SEOInternalLink> to

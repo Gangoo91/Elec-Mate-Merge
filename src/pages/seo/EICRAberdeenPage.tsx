@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Aberdeen', href: '/eicr-aberdeen' },
 ];
 
@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/eicr-explained',
+    href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
       'A complete guide to Electrical Installation Condition Reports — what they are, what inspectors check, and what the codes mean.',
@@ -557,7 +557,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are identified in Aberdeen properties, quote the
                   remedial work immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Scottish landlords must act within 28 days — the electrician who quotes on the

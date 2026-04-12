@@ -104,14 +104,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for nursery premises.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote nursery electrical work with fire alarm, emergency lighting, and heating.',
     icon: Calculator,
@@ -501,7 +501,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Ofsted-Ready Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Provide a comprehensive{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, fire alarm
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, fire alarm
                   commissioning certificate, emergency lighting commissioning certificate, and a
                   summary document listing all safety provisions. This helps the nursery pass Ofsted
                   registration and is a strong selling point for your quote.

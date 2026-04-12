@@ -86,12 +86,12 @@ export default function CableTrayCalculatorPage() {
                 Sizing cable tray correctly ensures that cables fit without overcrowding, that the
                 tray can support the weight of the cables, and that current-carrying capacity is not
                 reduced by excessive grouping. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 determines the cable sizes, and the tray calculator determines the tray size needed
                 to carry them. For enclosed containment, see the{' '}
-                <SEOInternalLink href="/tools/trunking-fill-calculator">
+                <SEOInternalLink href="/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -150,7 +150,7 @@ export default function CableTrayCalculatorPage() {
                 4C2 provides correction factors for different installation methods, and cables on
                 open tray (ladder or perforated) generally have higher ratings than cables in
                 enclosed tray or trunking. This connects directly with the{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for long cable runs.
@@ -197,7 +197,7 @@ export default function CableTrayCalculatorPage() {
                 BS 7671 Regulation 528.1 apply. The tray may need a divider or the cables may need
                 to be separated by a minimum distance. Compartmentalised tray or separate trays are
                 often the simplest solution. For more on containment sizing, see the{' '}
-                <SEOInternalLink href="/tools/trunking-fill-calculator">
+                <SEOInternalLink href="/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>
                 .
@@ -307,7 +307,7 @@ export default function CableTrayCalculatorPage() {
                 </SEOInternalLink>{' '}
                 helps determine how many and what size cables each tray run will carry, feeding into
                 the tray sizing calculation. For overall project documentation, the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                 records the containment system used.
               </p>
             </>
@@ -420,7 +420,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/trunking-fill-calculator',
+          href: '/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description:
             'Calculate trunking fill to the 45% rule for enclosed rectangular containment.',
@@ -428,7 +428,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for each circuit using BS 7671 current-carrying capacity tables and correction factors.',
@@ -436,7 +436,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/voltage-drop-calculator',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Check voltage drop on long cable runs — critical for cables on tray in large commercial installations.',
@@ -452,7 +452,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description: '50+ BS 7671 calculators and containment tools for UK electricians.',
           icon: Calculator,

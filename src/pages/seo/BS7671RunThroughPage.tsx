@@ -93,7 +93,7 @@ const sections = [
         </p>
         <p>
           The current edition is the 18th Edition:{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
           </SEOInternalLink>
           . The "+A3:2024" indicates that Amendment 3 has been incorporated. Every electrician
@@ -177,7 +177,7 @@ const sections = [
         </p>
         <p>
           Spend time reading Part 2 carefully. Mark definitions you find confusing and use the{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             Elec-Mate 18th Edition course
           </SEOInternalLink>{' '}
           flashcards to practise them until they are second nature.
@@ -289,7 +289,7 @@ const sections = [
           full calculation process: determine design current, select protective device rating, apply
           correction factors, look up the minimum cable size from the Appendix 3 tables, and verify
           voltage drop. Use the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           to check your manual calculations during revision.
@@ -450,7 +450,7 @@ const sections = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'Comprehensive guide to the 18th Edition — key changes, structure, and practical application.',
@@ -458,7 +458,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/eighteenth-edition-exam-tips',
+    href: '/guides/18th-edition-exam-tips',
     title: '18th Edition Exam Tips',
     description:
       'Specific exam preparation advice — question analysis, time management, and common pitfalls.',
@@ -488,7 +488,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Full structured study course for the C&G 2382 exam with interactive quizzes and mock exams.',

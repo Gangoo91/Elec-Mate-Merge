@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/data-cabling-installation',
+    href: '/guides/data-cabling-installation',
     title: 'Data Cabling Installation',
     description: 'CAT6, structured cabling, and network infrastructure for BMS and smart buildings.',
     icon: Wifi,
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote BMS electrical installation and controls work accurately.',
     icon: PoundSterling,
@@ -454,7 +454,7 @@ const sections = [
         </div>
         <p>
           See the{' '}
-          <SEOInternalLink href="/data-cabling-installation">
+          <SEOInternalLink href="/guides/data-cabling-installation">
             data cabling installation guide
           </SEOInternalLink>{' '}
           for structured cabling requirements that support BACnet/IP and Modbus TCP networks.
@@ -587,7 +587,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote BMS Electrical Work Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build accurate quotes for BMS electrical installation — sensor wiring,
@@ -607,7 +607,7 @@ const sections = [
                   BMS projects are typically led by mechanical and electrical (M&E) contractors or
                   specialist BMS companies. Positioning your business as the preferred electrical
                   subcontractor for BMS and smart building projects — alongside{' '}
-                  <SEOInternalLink href="/data-cabling-installation">
+                  <SEOInternalLink href="/guides/data-cabling-installation">
                     data cabling
                   </SEOInternalLink>{' '}
                   and{' '}

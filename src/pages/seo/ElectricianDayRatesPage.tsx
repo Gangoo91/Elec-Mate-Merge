@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/contractor-vs-employee-electrician',
+    href: '/guides/contractor-vs-employee-electrician-electrician',
     title: 'Contractor vs Employee',
     description: 'Financial comparison of self-employed contractor versus employed electrician.',
     icon: Briefcase,
@@ -361,7 +361,7 @@ const sections = [
           The biggest jump in day rate comes from gaining specialist qualifications. An electrician
           with 3 years of general experience earning £250 per day can jump to £320+ per day by
           adding a{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391-inspection-testing">
+          <SEOInternalLink href="/training/city-guilds-2391">
             C&G 2391 inspection and testing
           </SEOInternalLink>{' '}
           qualification and targeting EICR work.

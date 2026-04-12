@@ -702,14 +702,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/gs38-proving-dead',
+    href: '/guides/gs-38-proving-dead',
     title: 'GS 38 Proving Dead',
     description: 'Voltage indicator requirements and the prove-test-prove procedure.',
     icon: ShieldAlert,
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate risk assessments, method statements, and PTW templates with AI.',
     icon: Brain,

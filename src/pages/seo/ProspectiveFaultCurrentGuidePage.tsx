@@ -381,7 +381,7 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements
           </SEOInternalLink>{' '}
           data.
@@ -530,7 +530,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/tools/prospective-fault-current-calculator',
+    href: '/prospective-fault-current-calculator',
     title: 'PFC Calculator',
     description:
       'Calculate prospective fault current from supply impedance. Verify against device breaking capacities.',
@@ -538,7 +538,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/tools/adiabatic-equation-calculator',
+    href: '/adiabatic-equation-calculator',
     title: 'Adiabatic Equation Calculator',
     description:
       'Verify cable can withstand fault current using k squared S squared vs I squared t.',
@@ -546,7 +546,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, TT systems explained. Ze values and their relationship to PFC.',
     icon: Activity,

@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-fault-finding-methodology',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Methodology',
     description:
       'Systematic approach: gather info, visual inspection, test, diagnose, fix, verify.',

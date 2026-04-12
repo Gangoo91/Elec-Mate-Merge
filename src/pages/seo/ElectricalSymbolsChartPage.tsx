@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained with symbols and diagrams.',
     icon: Zap,
@@ -596,7 +596,7 @@ const sections = [
             </li>
             <li>
               <strong>Check the earthing.</strong> Identify the{' '}
-              <SEOInternalLink href="/guides/earthing-arrangements">
+              <SEOInternalLink href="/earthing-arrangements">
                 earthing arrangement
               </SEOInternalLink>{' '}
               (TN-S, TN-C-S, or TT) and trace the main earth conductor to the earthing terminal.

@@ -288,7 +288,7 @@ const sections = [
                   Inconsistent quoting — sometimes charging market rates, sometimes undercharging
                   out of habit — is the most common reason small electrical businesses leave money
                   on the table. Use a{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     professional quoting app
                   </SEOInternalLink>{' '}
                   with pre-built price lists for your common jobs. This ensures consistency, speeds

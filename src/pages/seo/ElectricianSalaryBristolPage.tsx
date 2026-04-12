@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs professionally and maximise your day rate as a self-employed electrician.',
@@ -581,7 +581,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Self-employed Bristol electricians lose income through slow quoting and late
                   invoicing. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce professional quotes on site and send invoices the moment the job is
@@ -599,7 +599,7 @@ const sections = [
                   Bristol has the highest EV ownership rate per capita in the South West.
                   OZEV-authorised EV charger installers can charge £400 to £600 per day for a skill
                   set that takes two to three days to acquire. The{' '}
-                  <SEOInternalLink href="/guides/ev-charging-installation">
+                  <SEOInternalLink href="/guides/ev-charger-installation">
                     EV charging installation guide
                   </SEOInternalLink>{' '}
                   explains the OZEV process and business opportunity.

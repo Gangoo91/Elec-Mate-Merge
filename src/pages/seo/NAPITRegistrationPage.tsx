@@ -261,7 +261,7 @@ const sections = [
         <p>
           The most common reason for delays or initial rejection is incomplete or poorly completed
           certification paperwork. Before applying, ensure your{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink> and EICs are
+          <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> and EICs are
           completed thoroughly and accurately. NAPIT assessors look at the quality of your paperwork
           as an indicator of the quality of your work.
         </p>
@@ -617,7 +617,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/competent-person-scheme',
+    href: '/guides/competent-person-scheme-guide',
     title: 'Competent Person Schemes',
     description:
       'Overview of all competent person schemes for electrical work in England and Wales.',

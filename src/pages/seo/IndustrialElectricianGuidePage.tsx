@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-guide-bs7671',
+    href: '/guides/cable-sizing-guide-bs-7671',
     title: 'Cable Sizing Guide BS 7671',
     description:
       'Cable selection for three-phase circuits, correction factors, voltage drop, and fault current calculations.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate professional Risk Assessments and Method Statements with AI for industrial projects.',
@@ -188,7 +188,7 @@ const sections = [
           Three-phase power is the foundation of industrial electrical distribution. Unlike domestic
           single-phase supplies, industrial facilities use three-phase 400V (and often 11kV or 33kV
           at the incoming supply) to power large motors, heating elements, and{' '}
-          <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">cable sizing</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable sizing</SEOInternalLink>{' '}
           for distribution systems that supply entire factory floors.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -305,7 +305,7 @@ const sections = [
         <p>
           Fault-finding motor circuits is a core skill for industrial electricians. Common faults
           include overload trips (check motor current against nameplate rating), earth faults ({' '}
-          <SEOInternalLink href="/guides/insulation-resistance-test">
+          <SEOInternalLink href="/guides/insulation-resistance-testing">
             insulation resistance testing
           </SEOInternalLink>{' '}
           of motor windings), contactor coil failure, thermal overload relay settings, VSD parameter
@@ -668,7 +668,7 @@ const sections = [
           focus), maintenance management (leading teams of electricians and fitters), project
           engineering (managing capital investment projects), or health and safety management. Some
           industrial electricians move into{' '}
-          <SEOInternalLink href="/guides/starting-electrical-business">
+          <SEOInternalLink href="/guides/starting-an-electrical-business">
             self-employment
           </SEOInternalLink>
           , offering specialist services such as PLC programming, thermal imaging, or high-voltage
@@ -696,7 +696,7 @@ const sections = [
                   Cable sizing for three-phase circuits with correction factors, voltage drop
                   calculations for long sub-main runs, maximum demand assessment, prospective fault
                   current calculations, and{' '}
-                  <SEOInternalLink href="/guides/three-phase-power-calculator">
+                  <SEOInternalLink href="/three-phase-power-calculator">
                     three-phase power calculations
                   </SEOInternalLink>
                   . All the calculations an industrial electrician needs, right on your phone.

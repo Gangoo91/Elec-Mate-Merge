@@ -366,7 +366,7 @@ export default function BusbarSizingCalculatorPage() {
                 voltage drop is negligible and rarely a concern. For long busbar trunking runs
                 (which can extend tens of metres through a building), the voltage drop must be
                 calculated and verified against the{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   BS 7671 voltage drop limits
                 </SEOInternalLink>{' '}
                 of 3% for lighting and 5% for other circuits.
@@ -432,7 +432,7 @@ export default function BusbarSizingCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+                <SEOInternalLink href="/prospective-fault-current-calculator">
                   prospective fault current calculator
                 </SEOInternalLink>{' '}
                 can determine the fault level at the point where the busbar is installed, which is
@@ -610,7 +610,7 @@ export default function BusbarSizingCalculatorPage() {
       faqHeading="Frequently Asked Questions About Busbar Sizing"
       relatedPages={[
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault current verification.',
@@ -618,7 +618,7 @@ export default function BusbarSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/prospective-fault-current-calculator',
+          href: '/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Calculate the prospective short-circuit current at any point in the installation for busbar withstand verification.',
@@ -634,7 +634,7 @@ export default function BusbarSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/voltage-drop-calculator',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop for busbar trunking runs and cable circuits to verify BS 7671 compliance.',

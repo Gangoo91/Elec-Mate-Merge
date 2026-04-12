@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Plymouth', href: '/consumer-unit-replacement-plymouth' },
 ];
 
@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete UK guide to fuse box upgrades — costs, regulations, and process.',
     icon: Wrench,
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description: 'Issue EICs on site for consumer unit replacements in Plymouth.',
     icon: ShieldCheck,
@@ -463,7 +463,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Plymouth</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to complete the certificate and schedule of test results on your phone while at
@@ -480,7 +480,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR reveals C2 consumer unit deficiencies, quote the replacement using
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   on the same day. Plymouth landlords must act within 28 days — quote first, win the

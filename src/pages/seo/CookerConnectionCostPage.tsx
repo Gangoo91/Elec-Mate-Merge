@@ -100,14 +100,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue EICs and Minor Works certificates for cooker installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote cooker connections and kitchen electrical work with professional PDF output.',
@@ -395,7 +395,7 @@ const sections = [
                   Ask the customer what cooker they are installing (make, model, kW rating) and
                   whether there is an existing cooker circuit. This tells you whether you need 6mm²
                   or 10mm² cable, and whether a new circuit is required. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   for a professional PDF quote.

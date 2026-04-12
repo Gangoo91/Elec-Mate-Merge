@@ -629,7 +629,7 @@ const sections = [
                   not have battery storage. Battery retrofit work is a high-margin, growing revenue
                   stream. Quote battery storage immediately on any new installation or service visit
                   using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   .

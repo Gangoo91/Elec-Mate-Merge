@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for consumer unit upgrades on your phone.',
@@ -476,7 +476,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price consumer unit upgrades with itemised RCBO costs using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Show the customer the cost difference between split-load and RCBO boards with
@@ -492,7 +492,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site with RCD test recording and instant PDF export.

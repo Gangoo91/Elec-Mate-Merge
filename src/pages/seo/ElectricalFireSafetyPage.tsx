@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Health & Safety', href: '/guides/electrical-safety-guide' },
+  { label: 'Health & Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Electrical Fire Safety', href: '/electrical-fire-safety' },
 ];
 
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/electrical-safety-guide',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety Guide',
     description: 'Complete UK electrical safety reference for electricians.',
     icon: ShieldCheck,

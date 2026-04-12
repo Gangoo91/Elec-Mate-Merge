@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Electrical Safety', href: '/electrical-safety-at-home' },
+  { label: 'Electrical Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Finding an Emergency Electrician', href: '/finding-emergency-electrician' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/electrical-safety-at-home',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description:
       'Complete guide to home electrical safety including RCD testing and common hazards.',

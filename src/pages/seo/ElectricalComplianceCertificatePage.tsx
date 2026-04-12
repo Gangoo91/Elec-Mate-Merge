@@ -234,7 +234,7 @@ const sections = [
         </div>
         <p>
           Other specialist certificates include the{' '}
-          <SEOInternalLink href="/tools/ev-charger-certificate">
+          <SEOInternalLink href="/ev-charger-certificate">
             EV Charger Installation Certificate
           </SEOInternalLink>
           ,{' '}

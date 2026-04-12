@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for bathroom work on your phone.',
     icon: FileCheck2,
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size shower and bathroom circuit cables correctly.',
     icon: Calculator,
@@ -590,7 +590,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site after every bathroom installation. All bathroom work (except like-for-like)
@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Bathroom Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to correctly size shower circuits (typically 6mm to 10mm depending on the

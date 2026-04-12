@@ -24,6 +24,8 @@ import {
   Trash2,
   Spline,
   Download,
+  Copy,
+  Crosshair,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -102,6 +104,135 @@ function getCircuitRefForSymbol(symbolId: string): string | undefined {
 
 const HEADER_HEIGHT = 48;
 const TOOLBAR_HEIGHT = 56;
+const ROOM_IMAGE_PADDING = 64;
+const ROOM_THUMBNAIL_SIZE = { width: 120, height: 90 };
+const ROOM_EXPORT_SIZE = { width: 1800, height: 1350 };
+
+const getObjectBounds = (items: CanvasObject[]) => {
+  if (items.length === 0) return null;
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  for (const obj of items) {
+    if (obj.points && obj.points.length > 0) {
+      for (const point of obj.points) {
+        minX = Math.min(minX, point.x);
+        minY = Math.min(minY, point.y);
+        maxX = Math.max(maxX, point.x);
+        maxY = Math.max(maxY, point.y);
+      }
+      continue;
+    }
+
+    const width = obj.width || 40;
+    const height = obj.height || 40;
+    minX = Math.min(minX, obj.x);
+    minY = Math.min(minY, obj.y);
+    maxX = Math.max(maxX, obj.x + width);
+    maxY = Math.max(maxY, obj.y + height);
+  }
+
+  if (!isFinite(minX)) return null;
+  return {
+    minX,
+    minY,
+    maxX,
+    maxY,
+    width: maxX - minX,
+    height: maxY - minY,
+    centreX: (minX + maxX) / 2,
+    centreY: (minY + maxY) / 2,
+  };
+};
+
+const applyCanvasObjectUpdates = (obj: CanvasObject, updates: Partial<CanvasObject>): CanvasObject => {
+  if (!obj.points || obj.points.length === 0) {
+    return { ...obj, ...updates };
+  }
+
+  const nextX = updates.x ?? obj.x;
+  const nextY = updates.y ?? obj.y;
+  const deltaX = nextX - obj.x;
+  const deltaY = nextY - obj.y;
+
+  return {
+    ...obj,
+    ...updates,
+    x: nextX,
+    y: nextY,
+    points: obj.points.map((point) => ({
+      x: point.x + deltaX,
+      y: point.y + deltaY,
+    })),
+  };
+};
+
+const duplicateCanvasObject = (obj: CanvasObject, offset = 24): CanvasObject => ({
+  ...obj,
+  id: `obj-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  x: obj.x + offset,
+  y: obj.y + offset,
+  points: obj.points?.map((point) => ({
+    x: point.x + offset,
+    y: point.y + offset,
+  })),
+});
+
+const renderCenteredRoomImage = (
+  sourceCanvas: HTMLCanvasElement,
+  bounds: ReturnType<typeof getObjectBounds>,
+  targetSize: { width: number; height: number },
+  padding: number,
+  quality = 1
+) => {
+  const outputCanvas = document.createElement('canvas');
+  outputCanvas.width = targetSize.width;
+  outputCanvas.height = targetSize.height;
+  const ctx = outputCanvas.getContext('2d');
+  if (!ctx) return '';
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
+
+  if (!bounds || bounds.width <= 0 || bounds.height <= 0) {
+    ctx.drawImage(sourceCanvas, 0, 0, outputCanvas.width, outputCanvas.height);
+    return outputCanvas.toDataURL('image/png', quality);
+  }
+
+  const cropX = Math.max(0, bounds.minX - padding);
+  const cropY = Math.max(0, bounds.minY - padding);
+  const cropWidth = Math.min(sourceCanvas.width - cropX, bounds.width + padding * 2);
+  const cropHeight = Math.min(sourceCanvas.height - cropY, bounds.height + padding * 2);
+
+  const scale = Math.min(
+    (outputCanvas.width - padding * 2) / cropWidth,
+    (outputCanvas.height - padding * 2) / cropHeight
+  );
+
+  const drawWidth = cropWidth * scale;
+  const drawHeight = cropHeight * scale;
+  const drawX = (outputCanvas.width - drawWidth) / 2;
+  const drawY = (outputCanvas.height - drawHeight) / 2;
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(
+    sourceCanvas,
+    cropX,
+    cropY,
+    cropWidth,
+    cropHeight,
+    drawX,
+    drawY,
+    drawWidth,
+    drawHeight
+  );
+
+  return outputCanvas.toDataURL('image/png', quality);
+};
 
 const DiagramBuilderPage = () => {
   const navigate = useNavigate();
@@ -127,8 +258,9 @@ const DiagramBuilderPage = () => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
-  const [showCircuits, setShowCircuits] = useState(false);
-  const { rooms, saveRoom, deleteRoom } = useFloorPlanRooms();
+  const [viewportWidth, setViewportWidth] = useState(() => window.innerWidth);
+  const [mobileUiOffset, setMobileUiOffset] = useState(0);
+  const { rooms, saveRoom, deleteRoom, updateRoom } = useFloorPlanRooms();
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
@@ -184,6 +316,14 @@ const DiagramBuilderPage = () => {
     });
   }, [canvasObjects]);
 
+  const activeRoom = useMemo(
+    () => rooms.find((room) => room.id === activeRoomId) || null,
+    [activeRoomId, rooms]
+  );
+  const isMobileViewport = viewportWidth < 768;
+  const floatingUiBottom = 72 + mobileUiOffset;
+  const overlayBottom = mobileUiOffset;
+
   // Auto-open AI Room Builder dialog when ?ai=true is in the URL
   useEffect(() => {
     if (searchParams.get('ai') === 'true') {
@@ -194,6 +334,32 @@ const DiagramBuilderPage = () => {
   // Preload symbol SVGs on mount
   useEffect(() => {
     preloadAllSymbols();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+
+    const updateViewportOffset = () => {
+      const keyboardOverlap = Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop);
+      setMobileUiOffset(keyboardOverlap > 80 ? keyboardOverlap + 12 : 0);
+    };
+
+    updateViewportOffset();
+    viewport.addEventListener('resize', updateViewportOffset);
+    viewport.addEventListener('scroll', updateViewportOffset);
+
+    return () => {
+      viewport.removeEventListener('resize', updateViewportOffset);
+      viewport.removeEventListener('scroll', updateViewportOffset);
+    };
   }, []);
 
   // Auto-save every 30 seconds when canvas has objects
@@ -232,6 +398,8 @@ const DiagramBuilderPage = () => {
       setCanvasObjects(data.objects || []);
       setGridEnabled(data.settings?.gridEnabled ?? true);
       setSnapEnabled(data.settings?.snapEnabled ?? true);
+      setSelectedObject(null);
+      setTimeout(() => canvasRef.current?.zoomToFit?.(), 120);
       toast({
         title: 'Project loaded',
         description: 'Your saved diagram has been restored',
@@ -261,11 +429,24 @@ const DiagramBuilderPage = () => {
     }
   }, [activeTool, placingSymbolName]);
 
+  useEffect(() => {
+    if (!selectedObject) return;
+    const updatedSelection = canvasObjects.find((obj) => obj.id === selectedObject.id) || null;
+    if (!updatedSelection) {
+      setSelectedObject(null);
+      return;
+    }
+    if (updatedSelection !== selectedObject) {
+      setSelectedObject(updatedSelection);
+    }
+  }, [canvasObjects, selectedObject]);
+
   const handleRotateAll = () => {
     haptic.medium();
-    // Rotate all objects 90° clockwise around the canvas centre
-    const centreX = window.innerWidth / 2;
-    const centreY = (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+    const bounds = getObjectBounds(canvasObjects);
+    const placementCentre = canvasRef.current?.getPlacementCenter?.();
+    const centreX = bounds?.centreX ?? placementCentre?.x ?? window.innerWidth / 2;
+    const centreY = bounds?.centreY ?? placementCentre?.y ?? (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
 
     const rotated = canvasObjects.map((obj) => {
       // Rotate position around centre
@@ -302,11 +483,26 @@ const DiagramBuilderPage = () => {
 
   const handleObjectUpdate = (updates: Partial<CanvasObject>) => {
     if (!selectedObject) return;
+    if ((updates as any)._delete) {
+      setCanvasObjects((prev) => prev.filter((obj) => obj.id !== selectedObject.id));
+      setSelectedObject(null);
+      canvasRef.current?.deleteSelected?.();
+      return;
+    }
     const updatedObjects = canvasObjects.map((obj) =>
-      obj.id === selectedObject.id ? { ...obj, ...updates } : obj
+      obj.id === selectedObject.id ? applyCanvasObjectUpdates(obj, updates) : obj
     );
     setCanvasObjects(updatedObjects);
-    setSelectedObject({ ...selectedObject, ...updates });
+    setSelectedObject(applyCanvasObjectUpdates(selectedObject, updates));
+  };
+
+  const handleDuplicateSelected = () => {
+    if (!selectedObject) return;
+    const duplicated = duplicateCanvasObject(selectedObject);
+    setCanvasObjects((prev) => [...prev, duplicated]);
+    setSelectedObject(duplicated);
+    setTimeout(() => canvasRef.current?.focusOnObject?.(duplicated.id), 120);
+    toast({ title: 'Item duplicated' });
   };
 
   const handleRoomGenerated = (roomData: any) => {
@@ -322,8 +518,8 @@ const DiagramBuilderPage = () => {
   };
 
   const handleSaveRoom = (name: string) => {
-    // Reset viewport to 1:1 zoom before capture so coordinates match pixels
     const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+    const previousViewport = fabricCanvas?.viewportTransform ? [...fabricCanvas.viewportTransform] : null;
     if (fabricCanvas) {
       fabricCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
       fabricCanvas.renderAll();
@@ -333,87 +529,53 @@ const DiagramBuilderPage = () => {
     let thumbnail = '';
     let fullImage = '';
     if (canvasEl) {
-      // Calculate bounding box of all objects to crop whitespace
-      const pad = 40; // padding around content
-      let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-      for (const obj of canvasObjects) {
-        const w = obj.width || 40;
-        const h = obj.height || 40;
-        if (obj.points) {
-          for (const p of obj.points) {
-            minX = Math.min(minX, p.x);
-            minY = Math.min(minY, p.y);
-            maxX = Math.max(maxX, p.x);
-            maxY = Math.max(maxY, p.y);
-          }
-        } else {
-          minX = Math.min(minX, obj.x);
-          minY = Math.min(minY, obj.y);
-          maxX = Math.max(maxX, obj.x + w);
-          maxY = Math.max(maxY, obj.y + h);
-        }
-      }
+      const bounds = getObjectBounds(canvasObjects);
+      fullImage = renderCenteredRoomImage(
+        canvasEl,
+        bounds,
+        ROOM_EXPORT_SIZE,
+        ROOM_IMAGE_PADDING,
+        1
+      );
+      thumbnail = renderCenteredRoomImage(
+        canvasEl,
+        bounds,
+        ROOM_THUMBNAIL_SIZE,
+        18,
+        0.8
+      );
+    }
 
-      // If no objects, fall back to full canvas
-      if (!isFinite(minX)) {
-        minX = 0; minY = 0;
-        maxX = canvasEl.width; maxY = canvasEl.height;
-      } else {
-        minX = Math.max(0, minX - pad);
-        minY = Math.max(0, minY - pad);
-        maxX = Math.min(canvasEl.width, maxX + pad);
-        maxY = Math.min(canvasEl.height, maxY + pad);
-      }
-
-      const cropW = maxX - minX;
-      const cropH = maxY - minY;
-
-      // High-res image for PDF (3x scale for HD print quality) — cropped to content
-      const scale = 3;
-      const hiResCanvas = document.createElement('canvas');
-      hiResCanvas.width = cropW * scale;
-      hiResCanvas.height = cropH * scale;
-      const hiCtx = hiResCanvas.getContext('2d');
-      if (hiCtx) {
-        hiCtx.fillStyle = '#FFFFFF';
-        hiCtx.fillRect(0, 0, hiResCanvas.width, hiResCanvas.height);
-        hiCtx.imageSmoothingEnabled = true;
-        hiCtx.imageSmoothingQuality = 'high';
-        hiCtx.drawImage(canvasEl, minX, minY, cropW, cropH, 0, 0, hiResCanvas.width, hiResCanvas.height);
-        fullImage = hiResCanvas.toDataURL('image/png', 1.0);
-      }
-
-      // Small thumbnail for the room strip — also cropped
-      const thumbCanvas = document.createElement('canvas');
-      thumbCanvas.width = 120;
-      thumbCanvas.height = 90;
-      const thumbCtx = thumbCanvas.getContext('2d');
-      if (thumbCtx) {
-        thumbCtx.fillStyle = '#FFFFFF';
-        thumbCtx.fillRect(0, 0, 120, 90);
-        thumbCtx.drawImage(canvasEl, minX, minY, cropW, cropH, 0, 0, 120, 90);
-        thumbnail = thumbCanvas.toDataURL('image/png', 0.7);
-      }
+    if (fabricCanvas && previousViewport) {
+      fabricCanvas.setViewportTransform(previousViewport as [number, number, number, number, number, number]);
+      fabricCanvas.renderAll();
     }
 
     const symbolIds = canvasObjects
       .filter((o) => o.type === 'symbol' && o.symbolId)
       .map((o) => o.symbolId!);
 
-    saveRoom({
+    const roomPayload = {
       name,
       thumbnail,
       fullImage,
       canvasState: JSON.stringify(canvasObjects),
       symbolIds,
-    });
+    };
 
-    canvasRef.current?.forceFullRedraw?.();
-    setCanvasObjects([]);
-    setActiveRoomId(null);
+    if (activeRoomId) {
+      updateRoom(activeRoomId, roomPayload);
+    } else {
+      const newRoom = saveRoom(roomPayload);
+      setActiveRoomId(newRoom.id);
+    }
+
     setSaveSheetOpen(false);
     haptic.success();
-    toast({ title: `${name} saved`, description: `${symbolCounts.length > 0 ? symbolCounts.reduce((sum, s) => sum + s.count, 0) + ' items. ' : ''}Add another room or export.` });
+    toast({
+      title: `${name} saved`,
+      description: `${symbolCounts.length > 0 ? symbolCounts.reduce((sum, s) => sum + s.count, 0) + ' items. ' : ''}Keep editing or export when ready.`,
+    });
   };
 
   const handleRoomSelect = (roomId: string) => {
@@ -424,7 +586,14 @@ const DiagramBuilderPage = () => {
         canvasRef.current?.forceFullRedraw?.();
         setCanvasObjects(objects);
         setActiveRoomId(roomId);
-        setTimeout(() => canvasRef.current?.zoomToFit?.(), 300);
+        setSelectedObject(null);
+        const bounds = getObjectBounds(objects);
+        if (bounds) {
+          setTimeout(() => canvasRef.current?.focusOnPoint?.(bounds.centreX, bounds.centreY), 80);
+          setTimeout(() => canvasRef.current?.zoomToFit?.(), 220);
+        } else {
+          setTimeout(() => canvasRef.current?.zoomToFit?.(), 220);
+        }
       } catch { /* ignore parse errors */ }
     }
   };
@@ -433,18 +602,19 @@ const DiagramBuilderPage = () => {
     canvasRef.current?.forceFullRedraw?.();
     setCanvasObjects([]);
     setActiveRoomId(null);
+    setSelectedObject(null);
   };
 
   // Primary toolbar — the tools electricians need most
   const toolButtons: { id: DrawingTool | 'add-symbol' | 'ai-room' | 'undo' | 'redo' | 'shapes'; icon: any; label: string }[] = [
     { id: 'select', icon: MousePointer2, label: 'Select' },
     { id: 'wall', icon: PenTool, label: 'Wall' },
-    { id: 'shapes', icon: LayoutGrid, label: 'Shapes' },
-    { id: 'add-symbol', icon: Plus, label: 'Symbol' },
+    { id: 'shapes', icon: LayoutGrid, label: 'Room' },
+    { id: 'add-symbol', icon: Plus, label: 'Add Item' },
     { id: 'cable', icon: Spline, label: 'Cable' },
-    { id: 'dimension', icon: Ruler, label: 'Measure' },
-    { id: 'eraser', icon: Eraser, label: 'Delete' },
-    { id: 'ai-room', icon: Sparkles, label: 'AI' },
+    { id: 'dimension', icon: Ruler, label: 'Size' },
+    { id: 'eraser', icon: Eraser, label: 'Erase' },
+    { id: 'ai-room', icon: Sparkles, label: 'AI Help' },
     { id: 'undo', icon: Undo2, label: 'Undo' },
     { id: 'redo', icon: Redo2, label: 'Redo' },
   ];
@@ -582,10 +752,11 @@ const DiagramBuilderPage = () => {
               haptic.light();
               setSaveSheetOpen(true);
             }}
+            aria-label="Save Room"
             className="h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg"
           >
             <Save className="h-3.5 w-3.5 mr-1" />
-            Save
+            Save Room
           </Button>
 
           {/* Export — visible when rooms saved */}
@@ -598,11 +769,12 @@ const DiagramBuilderPage = () => {
                 }
                 setExportReviewOpen(true);
               }}
+              aria-label="Export PDF"
               variant="ghost"
               className="h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
             >
               <Download className="h-3.5 w-3.5 mr-1" />
-              PDF
+              Export PDF
             </Button>
           )}
 
@@ -640,28 +812,28 @@ const DiagramBuilderPage = () => {
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Minus className="h-4 w-4 mr-2" />
-                Line Tool
+                Draw Line
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => { setActiveTool('rectangle'); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Square className="h-4 w-4 mr-2" />
-                Rectangle Tool
+                Draw Box
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => { setActiveTool('text'); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Type className="h-4 w-4 mr-2" />
-                Text Label
+                Add Label
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => { setActiveTool('dimension'); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Ruler className="h-4 w-4 mr-2" />
-                Measure Distance
+                Add Dimension
               </DropdownMenuItem>
 
               <DropdownMenuSeparator className="bg-white/10" />
@@ -685,21 +857,21 @@ const DiagramBuilderPage = () => {
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <FolderOpen className="h-4 w-4 mr-2" />
-                My Floor Plans
+                Saved Plans
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleSave}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <Save className="h-4 w-4 mr-2" />
-                Quick Save
+                Save Draft
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleLoad}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <FolderOpen className="h-4 w-4 mr-2" />
-                Load Saved
+                Open Draft
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -750,30 +922,37 @@ const DiagramBuilderPage = () => {
               setPlacingSymbolName(null);
             }
           }}
+          onSelectionChange={(object) => {
+            setSelectedObject(object);
+            if (object && isMobileViewport) {
+              setTimeout(() => canvasRef.current?.focusOnObject?.(object.id), 90);
+            }
+          }}
+          showMinimap={!isMobileViewport && canvasObjects.length > 0}
         />
         {/* Empty canvas hint */}
         {canvasObjects.length === 0 && rooms.length === 0 && (
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <div className="text-center pointer-events-auto px-6 max-w-sm">
-              <h2 className="text-white text-lg font-bold mb-1">Create Your First Room</h2>
-              <p className="text-white text-xs mb-5">Pick a method below to get started</p>
+            <div className="text-center pointer-events-auto px-6 max-w-sm rounded-3xl bg-black/45 backdrop-blur-md border border-white/10 shadow-2xl py-6">
+              <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
+              <p className="text-white/80 text-xs mb-5">Choose a starting point to draw your room layout.</p>
               <div className="space-y-2">
                 <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3 bg-white/[0.08] border border-white/15 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
                   <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
-                    <p className="text-sm font-semibold text-white">Room Shape</p>
-                    <p className="text-[10px] text-white/50">Rectangle, L-shape, T-shape...</p>
+                    <p className="text-sm font-semibold text-white">Use a Room Shape</p>
+                    <p className="text-[10px] text-white/60">Start with a rectangle, L-shape, T-shape, or corridor.</p>
                   </div>
                 </button>
                 <button onClick={() => setAiDialogOpen(true)} className="w-full p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
                   <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
-                    <p className="text-sm font-semibold text-elec-yellow">AI Generate</p>
-                    <p className="text-[10px] text-elec-yellow/50">Templates, voice, or photo</p>
+                    <p className="text-sm font-semibold text-elec-yellow">Use AI Help</p>
+                    <p className="text-[10px] text-elec-yellow/70">Create a room from a template, voice description, or photo.</p>
                   </div>
                 </button>
               </div>
-              <p className="text-white text-[10px] mt-4">Or use the wall tool in the toolbar below</p>
+              <p className="text-white/70 text-[10px] mt-4">You can also draw walls manually from the toolbar below.</p>
             </div>
           </div>
         )}
@@ -790,6 +969,7 @@ const DiagramBuilderPage = () => {
               <button
                 key={tool.id}
                 onClick={() => handleToolTap(tool.id)}
+                aria-label={tool.label}
                 className={cn(
                   'flex flex-col items-center justify-center transition-all touch-manipulation active:scale-90',
                   active
@@ -809,8 +989,52 @@ const DiagramBuilderPage = () => {
         </div>
       </div>
 
+      {selectedObject && !wallEditState && (
+        <div
+          className="absolute left-1/2 z-40 -translate-x-1/2 rounded-2xl border border-white/10 bg-black/75 backdrop-blur-xl px-2 py-2 shadow-2xl max-w-[calc(100vw-16px)] overflow-x-auto"
+          style={{ bottom: `${floatingUiBottom}px` }}
+        >
+          <div className="flex items-center gap-1.5 min-w-max">
+            <button
+              onClick={handleDuplicateSelected}
+              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+            >
+              <Copy className="h-3.5 w-3.5" />
+              Duplicate
+            </button>
+            <button
+              onClick={() => canvasRef.current?.focusOnObject?.(selectedObject.id)}
+              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+            >
+              <Crosshair className="h-3.5 w-3.5" />
+              Focus
+            </button>
+            <button
+              onClick={() => canvasRef.current?.handleRotate?.()}
+              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-white hover:bg-white/10 touch-manipulation active:scale-95"
+            >
+              <RotateCw className="h-3.5 w-3.5" />
+              Rotate
+            </button>
+            <button
+              onClick={() => canvasRef.current?.deleteSelected?.()}
+              className="flex items-center gap-1 rounded-xl px-3 py-2.5 text-xs font-medium text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-95"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              Delete
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Symbol count panel — floats above scale bar */}
-      <SymbolCountPanel counts={symbolCounts} circuits={circuitSummary} />
+      <SymbolCountPanel
+        counts={symbolCounts}
+        circuits={circuitSummary}
+        mobile={isMobileViewport}
+        bottomOffset={overlayBottom}
+        hidden={isMobileViewport && (!!selectedObject || !!wallEditState || saveSheetOpen || symbolSheetOpen || shapesSheetOpen)}
+      />
 
       {/* Scale bar is rendered by DiagramCanvas — no duplicate needed */}
 
@@ -830,13 +1054,13 @@ const DiagramBuilderPage = () => {
             // Multi-place: add symbols in a grid pattern near canvas centre
             // Use viewport-aware centre (account for zoom/pan)
             const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
-            let centreX = window.innerWidth / 2;
-            let centreY = (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
-            if (fabricCanvas) {
+            const placementCentre = canvasRef.current?.getPlacementCenter?.();
+            let centreX = placementCentre?.x ?? window.innerWidth / 2;
+            let centreY = placementCentre?.y ?? (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+            if (!placementCentre && fabricCanvas) {
               const vpt = fabricCanvas.viewportTransform;
               const zoom = fabricCanvas.getZoom();
               if (vpt) {
-                // Convert screen centre to canvas coordinates
                 centreX = (centreX - vpt[4]) / zoom;
                 centreY = (centreY - vpt[5]) / zoom;
               }
@@ -860,6 +1084,7 @@ const DiagramBuilderPage = () => {
               });
             }
             setCanvasObjects((prev) => [...prev, ...newObjects]);
+            setTimeout(() => canvasRef.current?.focusOnPoint?.(centreX, centreY), 120);
             setSymbolSheetOpen(false);
             setPlacingSymbolName(null);
             setSelectedSymbolId(null);
@@ -908,6 +1133,7 @@ const DiagramBuilderPage = () => {
           });
           setCanvasObjects([]);
           setActiveRoomId(null);
+          setSelectedObject(null);
           toast({ title: `Loaded: ${plan.name}`, description: `${plan.rooms.length} rooms` });
         }}
         onNewPlan={() => {
@@ -933,6 +1159,7 @@ const DiagramBuilderPage = () => {
         open={saveSheetOpen}
         onOpenChange={setSaveSheetOpen}
         onSave={handleSaveRoom}
+        defaultName={activeRoom?.name || `Room ${rooms.length + 1}`}
       />
 
       {/* Export Review Sheet */}
@@ -1042,20 +1269,28 @@ const DiagramBuilderPage = () => {
       <RoomShapePicker
         open={shapesSheetOpen}
         onOpenChange={setShapesSheetOpen}
+        getPlacementCenter={() => canvasRef.current?.getPlacementCenter?.() ?? null}
         onShapePlaced={(walls) => {
           haptic.success();
           setCanvasObjects((prev) => [...prev, ...walls]);
-          // Auto-zoom to fit after walls render
-          setTimeout(() => canvasRef.current?.zoomToFit?.(), 200);
+          const bounds = getObjectBounds(walls);
+          if (bounds) {
+            setTimeout(() => canvasRef.current?.focusOnPoint?.(bounds.centreX, bounds.centreY), 90);
+          }
+          setTimeout(() => canvasRef.current?.zoomToFit?.(), 220);
         }}
       />
 
       {/* Wall length edit — fixed bottom bar */}
       {wallEditState && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#111] border-t border-elec-yellow/30 px-4 py-3 safe-area-pb">
+        <div
+          className="fixed left-0 right-0 z-50 bg-[#111] border-t border-elec-yellow/30 px-4 py-3 safe-area-pb"
+          style={{ bottom: `${overlayBottom}px` }}
+        >
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div className="flex-1">
               <p className="text-xs text-white mb-1.5 font-medium">Wall length</p>
+              <p className="text-[11px] text-white/55 mb-2">Drag the end handles on the wall or enter an exact length.</p>
               <div className="flex items-center gap-2">
                 <input
                   type="number"

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Regulations', href: '/guides/bs7671-18th-edition-guide' },
+  { label: 'Regulations', href: '/guides/bs-7671-18th-edition-guide' },
   { label: 'History', href: '/guides/electrical-wiring-regulations-history' },
 ];
 
@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'Complete guide to BS 7671:2018+A3:2024 — structure, key regulations, and what changed in each amendment.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/afdd-guide',
+    href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
     description:
       'Arc Fault Detection Devices explained — what they do, where they are required, and BS 7671 requirements.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course Guide',
     description: 'Everything you need to know about the City and Guilds 2382 18th Edition course.',
     icon: GraduationCap,
@@ -147,7 +147,7 @@ const sections = [
       <>
         <p>
           The UK wiring regulations — now formally known as{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">BS 7671</SEOInternalLink> — have
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> — have
           been the foundation of electrical safety in Britain for over 140 years. From the first
           basic fire prevention rules in 1882 to the comprehensive 18th Edition we use today, the
           regulations have evolved alongside electrical technology, installation methods, and our
@@ -413,7 +413,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">The IET Today</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The IET publishes{' '}
-                  <SEOInternalLink href="/guides/bs7671-18th-edition-guide">
+                  <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                     BS 7671
                   </SEOInternalLink>
                   , the On-Site Guide, the Guidance Notes (GN1 to GN8), the Code of Practice for EV

@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cooker cables, appliance radial circuits, and kitchen ring finals.',
     icon: Calculator,
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for kitchen rewires on your phone.',
     icon: FileCheck2,
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long cooker cable runs.',
     icon: Zap,
@@ -215,7 +215,7 @@ const sections = [
           Voltage drop on the cooker circuit must be calculated. BS 7671 limits voltage drop to
           3% for lighting circuits and 5% for power circuits from the origin of the installation.
           For a 32A cooker circuit, the{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           will confirm whether the cable size is adequate for the cable run length.
@@ -494,7 +494,7 @@ const sections = [
           existing circuit, with no changes to the circuit itself) is non-notifiable. For all
           notifiable kitchen work, register with an approved competent person scheme to
           self-certify and issue the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           or{' '}
@@ -525,7 +525,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to size the cooker circuit cable, appliance radial circuits, and ring final.
@@ -541,7 +541,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   for the kitchen installation on your phone. AI board scanning populates the

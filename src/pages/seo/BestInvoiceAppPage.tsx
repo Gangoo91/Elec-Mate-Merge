@@ -98,7 +98,7 @@ export default function BestInvoiceAppPage() {
                 complete an EICR or EIC, hand it to the client, and then need to invoice for the
                 work. If your invoicing app and your certificate app are separate, you are doubling
                 the admin. See our{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   electrician invoice app guide
                 </SEOInternalLink>{' '}
                 for more on streamlining this workflow.
@@ -162,6 +162,14 @@ export default function BestInvoiceAppPage() {
                 defects are automatically converted into a priced remedial works quotation using
                 real UK trade pricing. You hand the client the inspection report and the repair
                 quote simultaneously, increasing conversion rates for follow-up work.
+              </p>
+              <p>
+                If you want the strongest version of that workflow, pair the invoice flow with the{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
+                the <SEOInternalLink href="/tools/minimum-charge-calculator">minimum charge calculator</SEOInternalLink>.
+                That gives you one chain from estimate to certificate to payment instead of four
+                disconnected tools.
               </p>
             </>
           ),
@@ -268,7 +276,7 @@ export default function BestInvoiceAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Professional invoicing, Stripe payments, and Xero integration built for UK electricians.',
@@ -290,6 +298,22 @@ export default function BestInvoiceAppPage() {
             'Feature comparison between Elec-Mate and SimplyEICR for certificate generation.',
           icon: Sparkles,
           category: 'Comparison',
+        },
+        {
+          href: '/electrical-quoting-app',
+          title: 'Electrical Quoting App',
+          description:
+            'Create the quote first, then convert accepted work into invoices without duplicate entry.',
+          icon: PoundSterling,
+          category: 'Business',
+        },
+        {
+          href: '/ai-cost-engineer',
+          title: 'AI Cost Engineer',
+          description:
+            'Use AI job estimating and remedial pricing before the invoice stage to protect margin.',
+          icon: Brain,
+          category: 'AI Tools',
         },
         {
           href: '/tools/digital-certificates-app',

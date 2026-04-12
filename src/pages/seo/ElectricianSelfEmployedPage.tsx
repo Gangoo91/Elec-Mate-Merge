@@ -871,7 +871,7 @@ const relatedPages = [
     category: 'Business Guide',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'From sole trader to limited company — setting up and growing your electrical business.',

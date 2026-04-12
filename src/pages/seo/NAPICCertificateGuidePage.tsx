@@ -182,11 +182,11 @@ const sections = [
             </li>
             <li>
               <strong>Provide your qualifications.</strong> Upload copies of your{' '}
-              <SEOInternalLink href="/guides/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition qualification
               </SEOInternalLink>{' '}
               (C&G 2382), inspection and testing qualification (
-              <SEOInternalLink href="/guides/city-guilds-2391">C&G 2391</SEOInternalLink> or
+              <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> or
               equivalent), and NVQ Level 3 or equivalent evidence of competence.
             </li>
             <li>

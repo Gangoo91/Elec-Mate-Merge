@@ -102,14 +102,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire — what to expect.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site after a rewire.',
     icon: FileCheck2,
@@ -180,7 +180,7 @@ const sections = [
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
           initial verification testing, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Part P notification. Making good (plastering and decoration) is typically quoted
@@ -267,7 +267,7 @@ const sections = [
       <>
         <p>
           The definitive way to assess whether your property needs a rewire is to book an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a qualified
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with a qualified
           electrician. However, these warning signs suggest you should arrange an inspection
           promptly:
         </p>
@@ -385,7 +385,7 @@ const sections = [
           residual operating current not exceeding 30 mA for socket outlets with a rated current not
           exceeding 32 A. This is a fundamental safety requirement for all new rewires. The
           electrician must issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           on completion, documenting the design, construction, inspection, and testing of the entire

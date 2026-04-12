@@ -83,7 +83,7 @@ export default function BoardScannerToolPage() {
                 coding, and spatial position within the board. The result is a structured dataset
                 that maps directly onto your{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink>{' '}
                 schedule of circuits.
               </p>
               <p>
@@ -225,7 +225,7 @@ export default function BoardScannerToolPage() {
                 The auto-population works with both{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR certificates</SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificates</SEOInternalLink>.
+                <SEOInternalLink href="/eic-certificate">EIC certificates</SEOInternalLink>.
                 For{' '}
                 <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works certificates
@@ -312,7 +312,7 @@ export default function BoardScannerToolPage() {
                 </SEOInternalLink>{' '}
                 page for full details on offline capabilities. You can also explore our full range
                 of{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 that work without an internet connection.
@@ -456,7 +456,7 @@ export default function BoardScannerToolPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',

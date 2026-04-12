@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Build professional quotes and schedule of rates for framework call-offs.',
     icon: PoundSterling,
@@ -623,7 +623,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Schedule of Rates and Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build and maintain a schedule of rates for framework mini-competitions. Quickly

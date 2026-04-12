@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment with task breakdowns and scoring criteria.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'End-Point Assessment preparation for Level 3 electrical apprentices.',
     icon: Target,
@@ -225,7 +225,7 @@ const sections = [
               <span>
                 <strong>Part 4:</strong> Protection for safety — protection against electric shock,
                 overcurrent, overvoltage,{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements-explained">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>
                 , RCD selection.
@@ -323,7 +323,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/am2-exam-preparation">AM2</SEOInternalLink> is the
+          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> is the
           practical assessment that sits at the end of an electrical apprenticeship. It is
           administered by the JIB (Joint Industry Board) and typically takes 1 to 2 days at an
           approved assessment centre.
@@ -381,7 +381,7 @@ const sections = [
       <>
         <p>
           The End-Point Assessment (
-          <SEOInternalLink href="/guides/epa-preparation">EPA</SEOInternalLink>) is the final
+          <SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>) is the final
           assessment for electrical apprentices under the apprenticeship standard. It confirms that
           you are occupationally competent — that you can work safely and effectively as a qualified
           electrician.
@@ -408,7 +408,7 @@ const sections = [
               <span>
                 <strong>Professional discussion:</strong> A structured interview where you discuss
                 your workplace experience, using your{' '}
-                <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 as evidence. You need to demonstrate understanding, not just describe what you did.

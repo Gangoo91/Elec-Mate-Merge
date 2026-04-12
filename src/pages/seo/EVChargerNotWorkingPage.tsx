@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Fault Finding', href: '/guides/electrical-fault-finding' },
+  { label: 'Fault Finding', href: '/guides/electrical-fault-finding-guide' },
   { label: 'EV Charger Not Working', href: '/ev-charger-not-working' },
 ];
 
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description: 'Systematic fault finding for domestic and commercial electrical installations.',
     icon: Search,
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate',
     description: 'Generate EV charger installation certificates on site with Elec-Mate.',
     icon: Zap,
@@ -473,7 +473,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EV Charger Installation Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete installation and minor works certificates on site. Covers BS 7671

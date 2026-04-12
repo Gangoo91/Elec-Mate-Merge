@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated office circuit with automatic derating and voltage drop calculations.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on the office circuit — particularly for longer runs to upstairs rooms.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue an Electrical Installation Certificate or Minor Works Certificate for the new circuit.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price home office electrical upgrades with itemised materials and labour costs.',
     icon: Wrench,
@@ -530,7 +530,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New circuit from consumer unit</strong> — an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 or{' '}
@@ -669,7 +669,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quick Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the home office setup with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Dedicated circuit, sockets, data cabling, lighting — all itemised. Send a

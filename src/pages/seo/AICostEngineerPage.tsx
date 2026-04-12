@@ -141,6 +141,12 @@ export default function AICostEngineerPage() {
   useSEO({
     title: 'AI Cost Engineer | Electrical Job Estimator',
     description: PAGE_DESCRIPTION,
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'AI Cost Engineer', url: '/ai-cost-engineer' },
+    ],
+    dateModified: '2026-04-12',
+    author: 'Elec-Mate Technical Team',
   });
 
   return (
@@ -244,7 +250,7 @@ export default function AICostEngineerPage() {
               quoting typically requires.
             </p>
             <p>
-              The Cost Engineer is part of the Elec-Mate platform alongside 70+ calculators, 8
+              The Cost Engineer is part of the Elec-Mate platform alongside 70+ calculators, 16
               certificate types, 46+ training courses, and the other seven Elec-AI specialist
               agents. It integrates with the Circuit Designer (which can feed circuit specifications
               directly into a cost estimate) and the certification system (so completed jobs flow
@@ -386,10 +392,36 @@ export default function AICostEngineerPage() {
           </h2>
           <p className="text-white text-center mb-10 max-w-2xl mx-auto">
             Trained specifically for UK electrical work. Quote domestic and commercial jobs in
-            minutes instead of hours. Part of 70+ calculators, 8 AI agents, and 46+ training
+            minutes instead of hours. Part of 70+ calculators, 8 AI agents, 16 certificate types,
+            and 46+ training
             courses.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      <section className="py-12 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+            Turn the Estimate Into Revenue
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
+            <p>
+              The estimate is only the first step. Use the{' '}
+              <SEOInternalLink href="/electrical-quoting-app">electrical quoting app</SEOInternalLink>{' '}
+              to package the output professionally, sanity-check your floor price with the{' '}
+              <SEOInternalLink href="/tools/minimum-charge-calculator">
+                minimum charge calculator
+              </SEOInternalLink>{' '}
+              and the <SEOInternalLink href="/tools/break-even-calculator">break-even calculator</SEOInternalLink>,
+              then move the accepted job into the{' '}
+              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>.
+            </p>
+            <p>
+              That cluster is where Elec-Mate becomes more than an AI demo page. It becomes a full
+              commercial system for electrical contractors.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -433,7 +465,7 @@ export default function AICostEngineerPage() {
           />
           <p className="text-white mt-4 text-sm">
             Want a complete quoting workflow?{' '}
-            <SEOInternalLink href="/tools/electrical-quoting-app">
+            <SEOInternalLink href="/electrical-quoting-app">
               See the electrical quoting app
             </SEOInternalLink>{' '}
             for job management, invoicing, and client communication.

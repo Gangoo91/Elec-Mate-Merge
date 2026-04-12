@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone with instant PDF export.',
@@ -178,7 +178,7 @@ const sections = [
           The electrician should produce a circuit schedule before first fix begins. This records
           every circuit, its cable size, protective device rating, and RCD protection type. This
           document forms the basis of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           issued on completion.
@@ -445,7 +445,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use the <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+          Use the <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
           to complete the Electrical Installation Certificate on site, including the schedule of
           test results. Generate a professional PDF and send it to the client before you leave.
         </p>
@@ -471,7 +471,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
                   to enter test results as you go and generate a finished PDF before you leave the
@@ -488,7 +488,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately and Win More Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build professional extension quotes with itemised materials and labour.

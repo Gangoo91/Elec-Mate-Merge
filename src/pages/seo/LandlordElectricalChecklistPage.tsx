@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/pat-testing-guide',
+    href: '/guides/pat-testing-guide-uk',
     title: 'PAT Testing Guide',
     description: 'Complete guide to portable appliance testing.',
     icon: ClipboardCheck,
@@ -457,7 +457,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting and Invoicing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote remedial work on site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords want a clear, itemised price for repairs — provide it before you

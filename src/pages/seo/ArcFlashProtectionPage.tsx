@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',

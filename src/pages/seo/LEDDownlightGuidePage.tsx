@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for lighting circuits including LED loads with voltage drop verification.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Issue a Minor Works Certificate for LED downlight replacements and additions to existing circuits.',
@@ -419,7 +419,7 @@ const sections = [
         <p>
           When quoting LED downlight installations with dimming, always specify the dimmer switch
           and confirm compatibility with the chosen downlight before ordering materials. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets
           you build a detailed quote with specific fittings, switches, and cable quantities — so the
           customer knows exactly what they are getting.
         </p>
@@ -478,7 +478,7 @@ const sections = [
         </div>
         <p>
           Check{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop</SEOInternalLink>{' '}
           on long lighting circuits. Although LED loads are small, very long cable runs can still
           exceed the 5% voltage drop limit, particularly on 1.0mm{'\u00B2'} cable in larger
           properties. If voltage drop is marginal, upgrade to 1.5mm{'\u00B2'} cable.
@@ -576,7 +576,7 @@ const sections = [
                 <strong>No certification for new circuit work.</strong> Installing LED downlights on
                 a new circuit in a bathroom without issuing an EIC and notifying Building Control.
                 This is a Part P offence. A{' '}
-                <SEOInternalLink href="/guides/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is appropriate for additions to existing circuits outside special locations.

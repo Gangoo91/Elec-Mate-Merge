@@ -99,21 +99,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site from your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for any circuit — domestic, commercial, or industrial.',
     icon: Calculator,
@@ -507,7 +507,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Load Survey Documentation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Record clamp meter load measurements against circuit schedule entries in your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or EICR.
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or EICR.
                   Document actual demand for distribution board design verification.
                 </p>
               </div>
@@ -533,7 +533,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Diversity and Load Calculations</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use measured actual demand values in the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to verify cables are correctly rated. Actual measured current is more accurate

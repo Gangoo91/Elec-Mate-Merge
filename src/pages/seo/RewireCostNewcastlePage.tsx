@@ -108,14 +108,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire — what to expect.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site after a rewire.',
     icon: FileCheck2,
@@ -181,7 +181,7 @@ const sections = [
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
           initial verification testing, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Part P notification. Making good (plastering and decoration) is quoted separately —
@@ -263,7 +263,7 @@ const sections = [
     content: (
       <>
         <p>
-          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is the
           definitive method to confirm rewire need. These warning signs indicate urgent attention is
           required:
         </p>
@@ -429,7 +429,7 @@ const sections = [
           receive a Building Regulations Compliance Certificate within 30 days. Using an
           unregistered electrician means a building control inspection fee of £150–£280 and a longer
           process. On completion, the electrician must issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           confirming compliance with BS 7671:2018+A3:2024.

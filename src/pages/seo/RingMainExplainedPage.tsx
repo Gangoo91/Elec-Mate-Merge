@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate circuit loading and diversity factors to determine whether a ring or radial is appropriate.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Verify cable sizes for ring and radial circuits with BS 7671 correction factors.',
     icon: Calculator,
@@ -331,7 +331,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           applies the correct diversity factors from the IET On-Site Guide to calculate the expected
@@ -539,7 +539,7 @@ const sections = [
                 reduces voltage drop because current flows in both directions. For long runs with
                 high loads, the ring may achieve lower voltage drop than a radial of the same cable
                 size. Check with Elec-Mate's{' '}
-                <SEOInternalLink href="/guides/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>
                 .
@@ -568,7 +568,7 @@ const sections = [
         <p>
           Whatever your choice — ring or radial — the installation must comply with BS 7671, be
           properly tested, and be correctly certified. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             minor works certificate
           </SEOInternalLink>{' '}

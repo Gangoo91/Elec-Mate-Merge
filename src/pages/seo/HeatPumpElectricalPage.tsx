@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the dedicated circuit for any heat pump installation with full BS 7671 correction factors.',
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate the total maximum demand of the property including the new heat pump load.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for the new heat pump circuit on your phone.',
@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on long SWA runs to outdoor heat pump units.',
     icon: Gauge,
@@ -209,7 +209,7 @@ const sections = [
           the specific model. Some heat pumps are available in both single-phase and three-phase
           variants. For borderline cases (around 12-14kW thermal output), check the maximum
           electrical input current and compare it with the available supply capacity using a{' '}
-          <SEOInternalLink href="/tools/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             maximum demand calculation
           </SEOInternalLink>
           .
@@ -401,7 +401,7 @@ const sections = [
                 protective conductor for the external section, it must be terminated correctly at
                 both ends. Some installations use a separate earth electrode at the outdoor unit for
                 additional protection — check the manufacturer requirements and the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 of the supply.
@@ -562,11 +562,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Circuit Design Tools</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   and{' '}
-                  <SEOInternalLink href="/tools/max-demand-calculator">
+                  <SEOInternalLink href="/max-demand-calculator">
                     max demand calculator
                   </SEOInternalLink>{' '}
                   to design the heat pump circuit. Check cable size, voltage drop, and supply

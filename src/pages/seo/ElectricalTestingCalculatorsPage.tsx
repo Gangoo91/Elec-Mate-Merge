@@ -53,7 +53,7 @@ const softwareApplicationSchema = {
   applicationCategory: 'UtilitiesApplication',
   operatingSystem: 'Web, iOS, Android',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/electrical-testing-calculators',
+  url: 'https://elec-mate.com/electrical-testing-calculators',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -118,7 +118,7 @@ const itemListSchema = {
     '@type': 'ListItem',
     position: index + 1,
     name,
-    url: 'https://elec-mate.com/tools/electrical-testing-calculators',
+    url: 'https://elec-mate.com/electrical-testing-calculators',
   })),
 };
 
@@ -465,13 +465,13 @@ export default function ElectricalTestingCalculatorsPage() {
               divided by the product of all these factors. You then select a cable from the
               appropriate table in Appendix 4 whose tabulated current rating meets or exceeds this
               value. Finally, you verify that the cable also satisfies the{' '}
-              <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+              <SEOInternalLink href="/adiabatic-equation-calculator">
                 adiabatic equation
               </SEOInternalLink>{' '}
               for fault protection, and that the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">volt drop</SEOInternalLink> is
+              <SEOInternalLink href="/voltage-drop-calculator">volt drop</SEOInternalLink> is
               within limits. Our{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               performs all of these steps in one go, showing the full working and the selected cable

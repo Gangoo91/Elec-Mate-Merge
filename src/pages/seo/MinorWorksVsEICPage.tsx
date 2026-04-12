@@ -85,7 +85,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Full Electrical Installation Certificates for new work and alterations.',
     icon: FileCheck2,
@@ -137,7 +137,7 @@ const sections = [
         <p>
           If the work involves running a new cable from the distribution board with a new protective
           device (MCB, RCBO, or fuse), you are installing a new circuit and a full{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> is required. If the
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is required. If the
           work is an addition or alteration to an existing circuit — without creating a new one — a{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works certificate

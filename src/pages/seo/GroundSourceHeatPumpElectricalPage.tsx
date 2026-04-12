@@ -96,21 +96,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for heat pump compressor circuits and circulation pump circuits.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on longer cable runs to plant rooms and outdoor equipment.',
     icon: Zap,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for heat pump installations on your phone.',
@@ -219,7 +219,7 @@ const sections = [
         <p>
           Total electrical demand for a typical domestic GSHP installation is 5 to 12kW. Carry out a
           thorough{' '}
-          <SEOInternalLink href="/tools/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             maximum demand assessment
           </SEOInternalLink>{' '}
           to determine whether the existing supply can cope.
@@ -571,7 +571,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Size the compressor circuit, circulation pump circuits, and immersion heater
                   circuits with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Three-phase calculations included.
@@ -586,7 +586,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price GSHP electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Compressor circuit, three-phase supply, circulation pumps, zone valves,

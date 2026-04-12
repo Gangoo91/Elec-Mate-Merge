@@ -600,8 +600,8 @@ export default function EmergencyLightingCertificatePage() {
               The platform includes 70 electrical calculators covering cable sizing, voltage drop,
               maximum demand, diversity, conduit and trunking fill, prospective fault current, and
               more. Combined with 16 certificate types — including{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works, emergency lighting,{' '}
               <SEOInternalLink href="/fire-alarm-certificate">fire alarm</SEOInternalLink>, and EV
               charger certificates — plus 8 Elec-AI agents and 12 AI tools, it replaces multiple

@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional garage and outbuilding electrical quotes from your phone.',
     icon: FileCheck2,
@@ -430,7 +430,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Certificate</strong> — the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> documents the
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> documents the
                 design, construction, inspection, and test results. It is your property's compliance
                 evidence when you sell — solicitors routinely request it for garage and outbuilding
                 electrical work.
@@ -484,7 +484,7 @@ const sections = [
                   If the customer has a car, offer the EV charger option. On a new garage
                   installation, adding a 32A EV circuit costs far less than a standalone job. Use
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to show the cost with and without the EV charger option — most customers choose

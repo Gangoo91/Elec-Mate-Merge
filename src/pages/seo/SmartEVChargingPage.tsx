@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate App',
     description: 'Complete BS 7671 EV charging certificates on your phone with instant PDF export.',
     icon: FileCheck2,
@@ -439,7 +439,7 @@ const sections = [
                 <strong>OZEV-approved installer</strong> — grants require installation by an
                 OZEV-approved installer. Approval requires registration with the OZEV installer
                 register and compliance with installation standards. The{' '}
-                <SEOInternalLink href="/tools/ev-charging-certificate">
+                <SEOInternalLink href="/ev-charger-certificate">
                   EV charging certificate
                 </SEOInternalLink>{' '}
                 must be completed for every installation.
@@ -480,7 +480,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete the BS 7671 Section 722 installation certificate on your phone while
@@ -499,7 +499,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Customers with solar PV are prime candidates for solar-integrated chargers and CT
                   clamp upgrades. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote CT clamp supply and fit, Zappi charger supply and install, and app

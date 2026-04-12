@@ -227,7 +227,7 @@ const sections = [
         <p>
           The core requirement of Part P is that electrical installation work must be designed,
           installed, inspected, and tested in accordance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink> (the
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> (the
           IET Wiring Regulations). This means the work must provide reasonable protection against
           fire caused by the electrical installation and against electric shock to persons and
           livestock.
@@ -316,11 +316,11 @@ const sections = [
         </p>
         <p>
           Membership requirements typically include: Level 3 electrical qualification, current{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             BS 7671 (18th Edition) certificate
           </SEOInternalLink>
           , inspection and testing qualification (
-          <SEOInternalLink href="/training/2391-course">City & Guilds 2391</SEOInternalLink> or
+          <SEOInternalLink href="/training/city-guilds-2391">City & Guilds 2391</SEOInternalLink> or
           equivalent), public liability insurance, calibrated test equipment, and evidence of CPD.
         </p>
       </>
@@ -361,7 +361,7 @@ const sections = [
         </p>
         <p>
           {' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">Cable sizing</SEOInternalLink> must
+          <SEOInternalLink href="/cable-sizing-calculator">Cable sizing</SEOInternalLink> must
           account for the installation method (clipped direct, in conduit, within thermal
           insulation), ambient temperature, grouping with other cables, and voltage drop. The
           correction factors can significantly affect the required cable size, particularly for
@@ -480,14 +480,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue professional Electrical Installation Certificates for all domestic work.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that form the technical standard behind Part P compliance.',

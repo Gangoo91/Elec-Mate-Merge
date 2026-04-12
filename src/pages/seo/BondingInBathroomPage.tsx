@@ -111,14 +111,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-C-S, TN-S, and TT earthing systems explained with main bonding requirements.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/guides/supplementary-bonding-guide',
+    href: '/guides/supplementary-bonding',
     title: 'Supplementary Bonding Guide',
     description:
       'Detailed technical guide to supplementary equipotential bonding in special locations.',
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A3:2024 including Section 701 (bathrooms) on the Elec-Mate platform.',
@@ -303,7 +303,7 @@ const sections = [
                 disconnection times of Regulation 411.3.2.2 (0.4 seconds for 230V final circuits).
                 This is verified by measuring the earth fault loop impedance (Zs) and confirming it
                 is within the{' '}
-                <SEOInternalLink href="/guides/maximum-zs-values">
+                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
                   maximum Zs values
                 </SEOInternalLink>{' '}
                 for the protective device.

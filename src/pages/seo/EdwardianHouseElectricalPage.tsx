@@ -537,7 +537,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Edwardian house rewires are typically quoted at the survey stage. Present a
                   detailed, professional quote using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   on the day of the survey. A thorough quote that specifies circuit numbers, socket

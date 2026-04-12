@@ -176,7 +176,7 @@ const sections = [
         <p>
           The key rule: if you have reset a protective device once and it trips again, stop. There
           is an active fault that requires testing with professional instruments —{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-test-guide">
+          <SEOInternalLink href="/insulation-resistance-testing-guide">
             insulation resistance testing
           </SEOInternalLink>
           , continuity testing, and earth fault loop impedance testing. These tests identify the
@@ -237,7 +237,7 @@ const sections = [
           appliances), faulty appliances with internal short circuits, water ingress into sockets or
           junction boxes, and deteriorated cable insulation in older properties. An electrician will
           use an{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-test-guide">
+          <SEOInternalLink href="/insulation-resistance-testing-guide">
             insulation resistance test
           </SEOInternalLink>{' '}
           to identify exactly where the breakdown is.
@@ -392,7 +392,7 @@ const sections = [
                 <strong>Check other sockets on the same circuit.</strong> If multiple sockets are
                 dead, the fault may be at a junction point — a spurred connection, a damaged cable,
                 or a{' '}
-                <SEOInternalLink href="/guides/continuity-testing-r1-r2-guide">
+                <SEOInternalLink href="/guides/continuity-testing-r1-r2">
                   broken ring circuit
                 </SEOInternalLink>
                 .
@@ -465,7 +465,7 @@ const sections = [
           vibration, thermal cycling, and poor initial workmanship can cause terminal screws to work
           loose. The resistance at a loose joint generates heat, which melts insulation, which can
           ignite nearby materials. This is why regular{' '}
-          <SEOInternalLink href="/guides/eicr-certificate-explained">
+          <SEOInternalLink href="/tools/eicr-certificate">
             periodic inspection and testing
           </SEOInternalLink>{' '}
           is so important — it identifies loose connections and deteriorated terminations before
@@ -617,7 +617,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Instant Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Fixed the fault? Generate a{' '}
-                  <SEOInternalLink href="/guides/minor-works-certificate-explained">
+                  <SEOInternalLink href="/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on site with voice-dictated test results. Send it to the customer by email or

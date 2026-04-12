@@ -171,7 +171,7 @@ const sections = [
         </p>
         <p>
           The COSHH Regulations sit within the broader framework of UK health and safety law. The{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 wiring regulations
           </SEOInternalLink>{' '}
           address electrical safety, but your overall wellbeing on site depends equally on
@@ -208,7 +208,7 @@ const sections = [
           rosin which produces toxic fumes when heated. Inhalation of soldering fumes can cause
           occupational asthma — a condition that, once developed, means permanent sensitivity and
           potentially the end of soldering work. Electricians carrying out{' '}
-          <SEOInternalLink href="/training/inspection-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             inspection and testing
           </SEOInternalLink>{' '}
           work should also be aware of flux residues on older installations.
@@ -385,7 +385,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid',
+    href: '/training/first-aid-electrical',
     title: 'First Aid Course',
     description:
       'First aid for chemical burns, eye contamination, and inhalation complements COSHH training.',

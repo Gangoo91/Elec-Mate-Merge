@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates with test schedules on your phone.',
     icon: FileCheck2,
@@ -149,7 +149,7 @@ const sections = [
           conductors (to verify the CPC is continuous from the main earthing terminal to the
           furthest point of every circuit). The results of continuity testing are recorded on the
           schedule of test results, which forms part of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           or <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
@@ -403,7 +403,7 @@ const sections = [
         <p>
           The schedule of test results on an EIC or EICR includes a dedicated column for R1+R2 (or
           r1+r2/4 for ring circuits), which must be completed for every circuit. The{' '}
-          <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink> records
+          <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink> records
           these values and uses them to calculate Zs automatically.
         </p>
       </>

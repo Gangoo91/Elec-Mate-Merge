@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional extension electrical quotes in minutes with Elec-Mate.',
     icon: FileCheck2,
@@ -347,7 +347,7 @@ const sections = [
               <span>
                 <strong>Electrical Installation Certificate (EIC)</strong> — on completion, the
                 electrician must issue an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 documenting the design, construction, and test results of the new installation. Keep
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete and issue the Electrical Installation Certificate while still on site.
                   The customer gets their document immediately, and you avoid evening paperwork.
                 </p>
@@ -465,7 +465,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   At the first-fix stage, you can see exactly what the consumer unit situation is.
                   Quote the upgrade immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   — customers almost always accept when the need is clearly explained on site.

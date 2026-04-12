@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study all Part 7 special locations with structured training modules on the Elec-Mate platform.',
@@ -175,7 +175,7 @@ const sections = [
         <p>
           Every electrician working in the UK must be familiar with Part 7. These sections are
           heavily tested in the{' '}
-          <SEOInternalLink href="/training/18th-edition">C&G 2382 (18th Edition)</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382 (18th Edition)</SEOInternalLink>{' '}
           and{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             C&G 2391 (Inspection & Testing)
@@ -238,7 +238,7 @@ const sections = [
           with the requirements of Regulation 411.3.1.2 — in practice, most modern installations
           meet this condition, but the electrician must verify it.
         </p>
-        <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+        <SEOInternalLink href="/consumer-unit-regulations">
           Consumer unit regulations
         </SEOInternalLink>{' '}
         require that bathroom circuits are typically on dedicated RCBOs or protected via an RCD
@@ -732,7 +732,7 @@ const sections = [
       <>
         <p>
           Part 7 is one of the most examination-heavy areas of BS 7671. Whether you are studying for
-          the <SEOInternalLink href="/training/18th-edition">18th Edition exam</SEOInternalLink> or
+          the <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink> or
           preparing for the{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             C&G 2391 inspection and testing qualification
@@ -781,7 +781,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Need to size a cable for an outdoor circuit, calculate maximum Zs for a bathroom
                   circuit, or work out{' '}
-                  <SEOInternalLink href="/guides/voltage-drop-calculator-bs-7671">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop
                   </SEOInternalLink>{' '}
                   for a long SWA run to a caravan park feeder pillar? Elec-Mate calculators handle

@@ -769,8 +769,8 @@ export default function PATTestingPage() {
               results, and identify any items that need particular attention. This makes repeat
               visits faster, more efficient, and more valuable to the client. For fixed installation
               testing, see the{' '}
-              <SEOInternalLink href="/guides/eicr-guide">EICR guide</SEOInternalLink> and{' '}
-              <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+              <SEOInternalLink href="/tools/eicr-certificate">EICR guide</SEOInternalLink> and{' '}
+              <SEOInternalLink href="/prospective-fault-current-calculator">
                 prospective fault current calculator
               </SEOInternalLink>
               .

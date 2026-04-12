@@ -258,7 +258,7 @@ export default function ElectricalBIMGuidePage() {
                 design. BS 7671-specific calculations (cable sizing with derating factors, Zs
                 calculations, prospective fault current) are not built into Revit and must be done
                 in separate tools. This is where complementary applications like{' '}
-                <SEOInternalLink href="/calculators/cable-sizing">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculators
                 </SEOInternalLink>{' '}
                 and circuit design tools remain essential.
@@ -518,7 +518,7 @@ export default function ElectricalBIMGuidePage() {
                       <strong className="text-yellow-400">Digital O&M manuals</strong> — Traditional
                       paper O&M (operation and maintenance) manuals are being replaced by digital
                       O&M data linked to the BIM model. Test{' '}
-                      <SEOInternalLink href="/guides/eic-certificate">certificates</SEOInternalLink>
+                      <SEOInternalLink href="/eic-certificate">certificates</SEOInternalLink>
                       , commissioning records, and maintenance schedules are linked directly to the
                       relevant equipment in the model.
                     </span>
@@ -640,14 +640,14 @@ export default function ElectricalBIMGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'Electrical Installation Certificate guide.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'BS 7671 cable sizing for BIM projects.',
           icon: Calculator,
@@ -661,14 +661,14 @@ export default function ElectricalBIMGuidePage() {
           category: 'Career',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 Guide',
           description: 'Full guide to the 18th Edition Wiring Regulations.',
           icon: ShieldCheck,
           category: 'Regulation',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: Zap,

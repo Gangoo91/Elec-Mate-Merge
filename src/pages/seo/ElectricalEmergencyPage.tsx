@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-safety-at-home',
+    href: '/guides/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description: 'When to call an electrician, DIY limits, danger signs, and EICR for homeowners.',
     icon: Home,
@@ -411,12 +411,12 @@ const sections = [
         </div>
         <p>
           After a flood, the electrician will carry out comprehensive{' '}
-          <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+          <SEOInternalLink href="/how-to-test-insulation-resistance">
             insulation resistance testing
           </SEOInternalLink>{' '}
           on every circuit, inspect all accessories and junction boxes for water damage, and verify
           the earthing and bonding. An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> will be issued
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> will be issued
           once the installation is confirmed safe.
         </p>
       </>

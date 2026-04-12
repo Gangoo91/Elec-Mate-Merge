@@ -116,14 +116,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Swansea customers with accurate local pricing.',
     icon: PoundSterling,
@@ -546,7 +546,7 @@ const sections = [
                   Swansea landlords and letting agents managing student properties expect rapid
                   turnaround on EICRs and certificates. Completing an{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on a phone
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on a phone
                   app and sending the PDF before leaving site sets you apart from competitors still
                   posting handwritten certificates.
                 </p>

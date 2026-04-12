@@ -93,14 +93,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote commercial EICR and remedial works packages for commercial landlords.',
     icon: Wrench,
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size sub-main cables and distribution board feeds for commercial installations.',
     icon: Calculator,
@@ -494,7 +494,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Works at the Same Time</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to quote remedial works immediately after identifying C1 and C2 defects. Sending

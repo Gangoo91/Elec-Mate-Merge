@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/unsatisfactory-eicr',
+    href: '/guides/unsatisfactory-eicr-what-next',
     title: 'Unsatisfactory EICR Guide',
     description:
       'What makes an EICR unsatisfactory, what the codes mean, and what must happen next.',
@@ -134,7 +134,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Step-by-step guide to consumer unit replacement — the most common remedial job from an unsatisfactory EICR.',
@@ -433,7 +433,7 @@ const sections = [
           Common remedial jobs and approximate costs (2026 prices, excluding VAT) include: fitting{' '}
           <SEOInternalLink href="/guides/rcd-types-explained">RCD protection</SEOInternalLink> to
           unprotected circuits (£150 to £400 depending on method),{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change-guide">
+          <SEOInternalLink href="/guides/consumer-unit-change">
             consumer unit replacement
           </SEOInternalLink>{' '}
           with RCBOs and SPD (£500 to £1,000), replacing deteriorated cable on a single circuit
@@ -462,7 +462,7 @@ const sections = [
                 <strong>Competent person scheme registration</strong> — NICEIC, NAPIT, or ELECSA.
                 This is essential if the remedial work involves notifiable work under Part P (for
                 example, a{' '}
-                <SEOInternalLink href="/guides/consumer-unit-change-guide">
+                <SEOInternalLink href="/guides/consumer-unit-change">
                   consumer unit replacement
                 </SEOInternalLink>
                 ).

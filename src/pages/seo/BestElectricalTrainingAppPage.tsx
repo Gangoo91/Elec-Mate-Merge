@@ -181,7 +181,7 @@ export default function BestElectricalTrainingAppPage() {
               <p>
                 What makes Elec-Mate's training unique is that it sits alongside professional tools.
                 You can study the 18th Edition during your lunch break, then use the{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   70+ BS 7671 calculators
                 </SEOInternalLink>{' '}
                 to apply what you have learned on site. You can revise safe isolation in the
@@ -502,7 +502,7 @@ export default function BestElectricalTrainingAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/courses/18th-edition',
+          href: '/eighteenth-edition-course',
           title: '18th Edition Course',
           description:
             'Complete BS 7671:2018+A3:2024 course with practice questions, flashcards, and AI study assistant.',
@@ -510,7 +510,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Training',
         },
         {
-          href: '/courses/am2-exam-preparation',
+          href: '/am2-exam-preparation',
           title: 'AM2 Exam Preparation',
           description:
             'AM2 simulator with practical scenarios, testing sequences, and assessor expectations.',
@@ -533,7 +533,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, maximum demand, and more.',
@@ -541,7 +541,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrician-app-for-iphone',
+          href: '/tools/electrician-app-iphone',
           title: 'Electrician App for iPhone',
           description:
             'Full feature set on iPhone — training, certificates, calculators, and AI tools.',

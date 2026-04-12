@@ -190,15 +190,21 @@ export const peerSupporterService = {
       updateData.last_active_at = new Date().toISOString();
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('mental_health_peer_supporters')
       .update(updateData)
-      .eq('user_id', user.id)
-      .select()
-      .single();
+      .eq('user_id', user.id);
 
     if (error) throw error;
-    return data as unknown as PeerSupporter;
+
+    // Reload through RPC instead of relying on PostgREST update+select row returns,
+    // which can fail with PGRST116 when the row isn't returned after the update.
+    const refreshedProfile = await this.getMyProfile();
+    if (!refreshedProfile) {
+      throw new Error('Supporter profile was updated but could not be reloaded');
+    }
+
+    return refreshedProfile;
   },
 
   /**

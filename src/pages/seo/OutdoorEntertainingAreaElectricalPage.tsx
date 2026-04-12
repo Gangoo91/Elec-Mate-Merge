@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size armoured cables for underground outdoor circuits to garden buildings and entertaining areas.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for outdoor garden electrical installations.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote outdoor entertaining area electrical packages including armoured cable and IP66 sockets.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on armoured cable runs to remote garden buildings and BBQ areas.',
@@ -464,7 +464,7 @@ const sections = [
         </div>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           must be issued for all new outdoor circuits. The EIC should note the buried cable routes,
@@ -524,7 +524,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   A 20m armoured cable run to a garden kitchen or remote entertaining area can have
                   significant voltage drop on 2.5mm cable. Use the{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to confirm that the cable size is adequate for the run length and confirm the MCB

@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement-cost' },
   {
     label: 'Consumer Unit Replacement Southampton',
     href: '/consumer-unit-replacement-southampton',
@@ -94,7 +94,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on your phone with AI assistance and instant PDF export.',
     icon: FileCheck2,
@@ -364,7 +364,7 @@ const sections = [
                 <strong>Installation testing</strong> — following BS EN 61439-3 factory testing, the
                 installed consumer unit and all connected circuits are tested on site under BS 7671
                 Part 6. Results are recorded in the Schedule of Test Results forming part of the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>
                 .
@@ -493,7 +493,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Southampton</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the full Electrical Installation Certificate and Schedule of Test
                   Results while still at the Southampton property. Record all circuit test values on
                   your phone, generate the PDF, and send it to your customer before you leave. No
@@ -509,7 +509,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Additional Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote earthing upgrades, smoke alarm systems, or additional circuits while

@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Health & Safety', href: '/guides/electrical-safety-guide' },
+  { label: 'Health & Safety', href: '/guides/electrical-safety-at-home' },
   { label: 'Electrical Accident Reporting', href: '/electrical-accident-reporting' },
 ];
 
@@ -105,14 +105,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/electrical-safety-guide',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety Guide',
     description: 'Complete UK electrical safety reference for qualified electricians.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/rams',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments to prevent reportable accidents.',
     icon: FileCheck2,
@@ -570,7 +570,7 @@ const sections = [
               </h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
                 create site-specific risk assessments and method statements for electrical work.
                 Including safe isolation procedures, electrical hazard identification, PPE
                 requirements, and emergency procedures — the documentation required by law and

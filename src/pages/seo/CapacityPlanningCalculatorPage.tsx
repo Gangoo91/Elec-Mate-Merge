@@ -131,7 +131,7 @@ export default function CapacityPlanningCalculatorPage() {
               <p>
                 <strong className="text-yellow-400">Deduct training:</strong> 3 to 5 days per year
                 for CPD, update courses, and new qualifications = 24 to 40 hours. Use Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/cpd-for-electricians">CPD tracker</SEOInternalLink> to
+                <SEOInternalLink href="/guides/cpd-for-electricians">CPD tracker</SEOInternalLink> to
                 log these hours automatically.
               </p>
               <p>
@@ -454,7 +454,7 @@ export default function CapacityPlanningCalculatorPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'Complete guide to setting up as a self-employed electrician in the UK.',
           icon: Briefcase,

@@ -196,7 +196,7 @@ export default function MICCCableGuidePage() {
                     during fire. MICC cable meets the enhanced fire resistance requirements and is
                     the traditional choice for fire alarm mains wiring in commercial and industrial
                     premises. For domestic fire alarm installations to{' '}
-                    <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">
+                    <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">
                       BS 5839-6
                     </SEOInternalLink>
                     , MICC or standard fire-resistant cable may be used depending on the system
@@ -206,7 +206,7 @@ export default function MICCCableGuidePage() {
                 <div className="p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20">
                   <h3 className="font-bold text-yellow-400 text-lg mb-2">Emergency Lighting</h3>
                   <p className="text-white text-sm leading-relaxed">
-                    <SEOInternalLink href="/guides/bs5266-emergency-lighting">
+                    <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                       BS 5266
                     </SEOInternalLink>{' '}
                     requires fire-resistant cabling for centrally supplied emergency lighting
@@ -402,7 +402,7 @@ export default function MICCCableGuidePage() {
             <>
               <p>
                 Testing MICC cable installations follows the standard{' '}
-                <SEOInternalLink href="/guides/testing-sequence">
+                <SEOInternalLink href="/testing-sequence-guide">
                   BS 7671 testing sequence
                 </SEOInternalLink>
                 , but with particular attention to insulation resistance. The insulation resistance
@@ -611,14 +611,14 @@ export default function MICCCableGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/bs5839-fire-alarm-standard',
+          href: '/guides/bs-5839-fire-alarm-standard',
           title: 'BS 5839 Fire Alarm Standard',
           description: 'Fire detection and alarm system requirements.',
           icon: ShieldCheck,
           category: 'Regulations',
         },
         {
-          href: '/guides/bs5266-emergency-lighting',
+          href: '/guides/bs-5266-emergency-lighting-standard',
           title: 'BS 5266 Emergency Lighting',
           description: 'Emergency lighting standards and testing.',
           icon: Zap,
@@ -639,7 +639,7 @@ export default function MICCCableGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/insulation-resistance-test',
+          href: '/guides/insulation-resistance-testing',
           title: 'Insulation Resistance Testing',
           description: 'IR test procedures for all cable types.',
           icon: ClipboardCheck,

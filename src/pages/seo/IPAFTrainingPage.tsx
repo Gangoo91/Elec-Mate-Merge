@@ -235,11 +235,11 @@ export default function IPAFTrainingPage() {
               protective equipment correctly, and knowing the emergency procedures for every
               scenario — from hydraulic failure to operator incapacitation. IPAF is often studied
               alongside other safety qualifications such as{' '}
-              <SEOInternalLink href="/study/pasma-training">
+              <SEOInternalLink href="/pasma-training">
                 PASMA scaffold tower training
               </SEOInternalLink>{' '}
               and pairs with technical qualifications like the{' '}
-              <SEOInternalLink href="/study/inspection-testing-course">
+              <SEOInternalLink href="/inspection-testing-course">
                 C&G 2391 Inspection and Testing
               </SEOInternalLink>{' '}
               for a well-rounded professional profile.

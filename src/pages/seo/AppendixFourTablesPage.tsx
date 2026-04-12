@@ -107,7 +107,7 @@ const sections = [
           The tables cover every combination of cable type (PVC, XLPE, MICC, SWA, flexible),
           conductor material (copper, aluminium), conductor configuration (single-core, multicore),
           and{' '}
-          <SEOInternalLink href="/guides/reference-methods-bs-7671">
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">
             installation method
           </SEOInternalLink>{' '}
           (Reference Methods A through G). The values in these tables are based on defined reference
@@ -257,7 +257,7 @@ const sections = [
         </div>
         <p>
           When using Table 4D5A for twin and earth cable, the column you select depends on the{' '}
-          <SEOInternalLink href="/guides/reference-methods-bs-7671">
+          <SEOInternalLink href="/guides/reference-methods-cable-installation">
             reference method
           </SEOInternalLink>
           . Column 6 (two loaded conductors) is the standard column for single-phase circuits in
@@ -507,7 +507,7 @@ const sections = [
                 <h3 className="font-bold text-white mb-1">Identify the reference method</h3>
                 <p className="text-white text-sm leading-relaxed">
                   Assess the{' '}
-                  <SEOInternalLink href="/guides/reference-methods-bs-7671">
+                  <SEOInternalLink href="/guides/reference-methods-cable-installation">
                     installation method
                   </SEOInternalLink>{' '}
                   — how the cable will be physically installed. This determines the column of the
@@ -642,7 +642,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/reference-methods-bs-7671',
+    href: '/guides/reference-methods-cable-installation',
     title: 'Cable Reference Methods',
     description:
       'Reference Methods A to G from Table 4A2 — how installation method affects cable capacity.',
@@ -658,7 +658,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'All Appendix 4 tables built in. Select cable type and method, get the right cable size.',
@@ -666,7 +666,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop using mV/A/m values from Appendix 12 for any cable type and circuit.',

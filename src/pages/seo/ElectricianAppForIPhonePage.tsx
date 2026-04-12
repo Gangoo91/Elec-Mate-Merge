@@ -87,7 +87,7 @@ export default function ElectricianAppForiPhonePage() {
                 tool, and an AI assistant. Having everything in one app means less switching, less
                 storage used, and a single subscription instead of multiple. See how we compare
                 against other options in our{' '}
-                <SEOInternalLink href="/guides/best-electrician-app">
+                <SEOInternalLink href="/best-electrician-app">
                   best electrician app guide
                 </SEOInternalLink>
                 .
@@ -182,7 +182,7 @@ export default function ElectricianAppForiPhonePage() {
             <>
               <p>
                 The full suite of{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   70+ BS 7671 calculators
                 </SEOInternalLink>{' '}
                 runs natively on your iPhone. All calculations execute locally — no network
@@ -197,19 +197,19 @@ export default function ElectricianAppForiPhonePage() {
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   — BS 7671 cable selection with all correction factors
                 </li>
                 <li>
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     Voltage drop calculator
                   </SEOInternalLink>{' '}
                   — verify compliance with Regulation 525
                 </li>
                 <li>
-                  <SEOInternalLink href="/tools/max-demand-calculator">
+                  <SEOInternalLink href="/max-demand-calculator">
                     Maximum demand calculator
                   </SEOInternalLink>{' '}
                   — total installation demand with diversity factors
@@ -238,7 +238,7 @@ export default function ElectricianAppForiPhonePage() {
                 Courses can be downloaded for offline study — ideal for commutes, lunch breaks, or
                 quiet periods on site. Progress syncs to the cloud when connectivity returns, so
                 your employer dashboard stays up to date. Mock exams for{' '}
-                <SEOInternalLink href="/guides/am2-exam-preparation">AM2</SEOInternalLink> and other
+                <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> and other
                 qualifications work offline too.
               </p>
               <p>
@@ -281,6 +281,13 @@ export default function ElectricianAppForiPhonePage() {
                 means you never have to worry about losing work. The app detects network state
                 changes automatically and transitions between online and offline modes seamlessly,
                 with no user action required.
+              </p>
+              <p>
+                On iPhone, that creates a proper mobile workflow rather than just a form filler:
+                capture the certificate, run the calculator, price the remedial using the{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, then
+                finish with the <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
+                from the same device.
               </p>
             </>
           ),
@@ -409,7 +416,7 @@ export default function ElectricianAppForiPhonePage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',
@@ -431,6 +438,14 @@ export default function ElectricianAppForiPhonePage() {
             'Manage your team, track apprentices, oversee certificates, and monitor compliance.',
           icon: Building,
           category: 'Platform',
+        },
+        {
+          href: '/ai-cost-engineer',
+          title: 'AI Cost Engineer',
+          description:
+            'Use your iPhone to turn site notes into priced quotes and remedial estimates quickly.',
+          icon: Brain,
+          category: 'AI Tools',
         },
       ]}
       ctaHeading="Download Elec-Mate for iPhone — free for 7 days"

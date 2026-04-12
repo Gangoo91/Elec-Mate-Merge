@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'Step-by-step safe isolation procedure following GS38 and best practice.',
     icon: ShieldCheck,

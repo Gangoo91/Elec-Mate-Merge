@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/emergency-lighting-certificate-guide',
+    href: '/emergency-lighting-certificate-guide',
     title: 'Emergency Lighting Certificate',
     description: 'Complete guide to emergency lighting certification and testing requirements.',
     icon: Lightbulb,
@@ -578,7 +578,7 @@ const sections = [
               <span>
                 <strong>Offer a comprehensive package.</strong> Bundle EICR, emergency lighting
                 testing, fire alarm servicing, and{' '}
-                <SEOInternalLink href="/guides/pat-testing-guide">PAT testing</SEOInternalLink> into
+                <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink> into
                 a single annual maintenance contract. This is more convenient for the school and
                 more profitable for you.
               </span>

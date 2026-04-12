@@ -6,18 +6,20 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Gift, X } from 'lucide-react';
+
 import { useAuth } from '@/contexts/AuthContext';
-import ReferralShareSheet from './ReferralShareSheet';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import ReferralShareSheet from './ReferralShareSheet';
+
+const DISMISS_KEY = 'elec-mate-referral-banner-dismissed';
 
 const ReferralBanner: React.FC = () => {
   const { profile } = useAuth();
-  const [dismissed, setDismissed] = useState(false);
+  const [dismissed, setDismissed] = useState(
+    () => typeof window !== 'undefined' && storageGetSync(DISMISS_KEY) === 'true'
+  );
   const [shareSheetOpen, setShareSheetOpen] = useState(false);
 
-  // Only show in first 7 days
   if (dismissed) return null;
 
   const createdAt = profile?.created_at ? new Date(profile.created_at) : null;
@@ -26,12 +28,8 @@ const ReferralBanner: React.FC = () => {
   const daysSinceSignup = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24));
   if (daysSinceSignup > 7) return null;
 
-  // Check localStorage for dismissal
-  const dismissKey = 'elec-mate-referral-banner-dismissed';
-  if (typeof window !== 'undefined' && storageGetSync(dismissKey)) return null;
-
   const handleDismiss = () => {
-    storageSetSync(dismissKey, 'true');
+    storageSetSync(DISMISS_KEY, 'true');
     setDismissed(true);
   };
 
@@ -49,31 +47,28 @@ const ReferralBanner: React.FC = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className="relative p-4 rounded-2xl bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-transparent border border-green-500/20 overflow-hidden"
+        className="relative rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-5 sm:p-6"
       >
-        {/* Glow */}
-        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl opacity-20 bg-green-400" />
+        <button
+          type="button"
+          onClick={handleDismiss}
+          className="absolute right-3 top-3 h-8 touch-manipulation rounded-xl border border-white/[0.12] bg-black/40 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/70 hover:text-yellow-400"
+          aria-label="Dismiss"
+        >
+          Dismiss
+        </button>
 
-        <div className="relative flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
-            <Gift className="h-5 w-5 text-green-400" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-white">Invite a mate</p>
-            <p className="text-xs text-white truncate">Free month for both of you</p>
-          </div>
-          <Button
+        <div className="flex flex-col gap-4 pr-20 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-24">
+          <h2 className="text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[1.5rem]">
+            Invite a mate.{' '}
+            <span className="text-yellow-400">First month free.</span>
+          </h2>
+          <button
+            type="button"
             onClick={() => setShareSheetOpen(true)}
-            size="sm"
-            className="bg-green-500 hover:bg-green-500/90 text-white font-semibold h-11 px-4 rounded-xl touch-manipulation active:scale-[0.97] flex-shrink-0"
+            className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
           >
             Share
-          </Button>
-          <button
-            onClick={handleDismiss}
-            className="p-1.5 rounded-lg hover:bg-white/10 touch-manipulation absolute top-1 right-1"
-          >
-            <X className="h-3.5 w-3.5 text-white" />
           </button>
         </div>
       </motion.div>

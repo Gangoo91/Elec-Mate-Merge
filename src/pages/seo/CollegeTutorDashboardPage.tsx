@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'College Tutor Dashboard', href: '/tools/college-tutor-dashboard' },
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Guidance on building a strong apprenticeship portfolio that meets KSB requirements for the EPA gateway.',
@@ -329,7 +329,7 @@ const sections = [
         <p>
           Custom quizzes let you create shorter, topic-specific assessments. For example, after
           teaching a session on{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements
           </SEOInternalLink>
           , you might assign a 15-question quiz on TN-S, TN-C-S, and TT systems to check

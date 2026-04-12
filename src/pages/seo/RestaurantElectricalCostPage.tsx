@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on site with instant PDF export — no evening paperwork.',
     icon: FileCheck2,
@@ -163,7 +163,7 @@ const sections = [
               <ChefHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Life-safety systems</strong> — emergency lighting to{' '}
-                <SEOInternalLink href="/guides/emergency-lighting-bs5266">
+                <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                   BS 5266-1
                 </SEOInternalLink>
                 , fire alarm wiring, gas interlock systems, and fire suppression electrical
@@ -398,7 +398,7 @@ const sections = [
         <p>
           The electrical interlock wiring for a suppression system adds approximately £600–£1,500 to
           the kitchen electrical costs. This work must be documented and an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           issued for all new circuits.
@@ -553,7 +553,7 @@ const sections = [
       <>
         <p>
           All new restaurant electrical installations must be accompanied by an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           issued by the installing electrician. For existing premises, periodic inspection and
@@ -612,11 +612,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional itemised quote during your site survey. Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   direct from your phone — no evening admin.

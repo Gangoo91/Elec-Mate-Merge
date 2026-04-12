@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables correctly for rewires in York period properties. Automatic derating and voltage drop checks.',
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for new circuits and rewires directly from your phone.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/eicr-guide',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'Complete guide to Electrical Installation Condition Reports — inspection intervals, coding, and reporting.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EICRs, and commercial work with professional PDF quotes sent from site.',
@@ -364,7 +364,7 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR inspections</strong> — commercial premises require an{' '}
-                <SEOInternalLink href="/guides/eicr-guide">EICR</SEOInternalLink> typically every 5
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> typically every 5
                 years. Hotels and guest houses with sleeping accommodation are treated as special
                 locations under BS 7671 and may require more frequent inspection. Many insurers
                 require a satisfactory EICR as a condition of cover.
@@ -462,7 +462,7 @@ const sections = [
           These rates are indicative for 2026 and will vary based on property access, complexity,
           and material costs. Flood-affected property work and listed building work command the
           highest premiums. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate, itemised quotes that reflect the true cost of specialist work.
         </p>
       </>
@@ -505,7 +505,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for rewires in York's period properties with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Factor in derating for thermal insulation in loft spaces and limited route
@@ -522,7 +522,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Price heritage rewires, flood remediation, and commercial maintenance contracts
                   with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemised PDF quotes with your branding, sent from the survey.

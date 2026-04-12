@@ -233,8 +233,8 @@ export default function ElecMateVsCertsAppPage() {
             </p>
             <p>
               The platform includes 16 certificate types (EICR,{' '}
-              <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
+              <SEOInternalLink href="/ev-charger-certificate">
                 EV Charger Installation
               </SEOInternalLink>
               , Solar PV, Fire Alarm Commissioning, Emergency Lighting, and PAT Testing), over 70

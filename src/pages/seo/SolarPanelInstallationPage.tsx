@@ -152,7 +152,7 @@ export default function SolarPanelInstallationPage() {
               </div>
               <p>
                 Without MCS certification, the homeowner cannot register the installation for{' '}
-                <SEOInternalLink href="/guides/solar-panel-installation#seg">
+                <SEOInternalLink href="/guides/solar-panel-installation">
                   Smart Export Guarantee
                 </SEOInternalLink>{' '}
                 payments. This is a significant financial consideration — over a 25-year system
@@ -293,7 +293,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <p>
                 Always verify the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 by inspecting the supply and measuring Ze before designing the PV installation
@@ -698,7 +698,7 @@ export default function SolarPanelInstallationPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/solar-pv-certificate',
+          href: '/solar-pv-certificate',
           title: 'Solar PV Certificate',
           description:
             'How to complete a solar PV installation certificate to BS 7671 Section 712.',
@@ -706,21 +706,21 @@ export default function SolarPanelInstallationPage() {
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for DC and AC solar PV circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop compliance for DC string cables and AC circuits.',
           icon: Activity,
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing — critical for PV installations.',
           icon: Cable,

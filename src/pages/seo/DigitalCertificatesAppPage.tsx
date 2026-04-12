@@ -127,7 +127,7 @@ export default function DigitalCertificatesAppPage() {
                   <span className="font-semibold text-white">EIC</span> — for new installations and
                   alterations. Design, construction, inspection, and testing sections with full
                   schedule of circuits. See the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     EIC certificate page
                   </SEOInternalLink>
                   .
@@ -272,6 +272,14 @@ export default function DigitalCertificatesAppPage() {
                 EICR, capture signatures, generate the PDF, and email it to the landlord — all while
                 standing in the client's hallway.
               </p>
+              <p>
+                That certificate workflow becomes even stronger when it feeds straight into the{' '}
+                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> or a
+                priced remedial quote via the{' '}
+                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>. The
+                point is not just sending a PDF quickly; it is turning completed certification into
+                a clean commercial workflow while the job is still live.
+              </p>
             </>
           ),
         },
@@ -329,11 +337,11 @@ export default function DigitalCertificatesAppPage() {
                 Automatic validation catches errors before they appear on the final certificate. It
                 is like having a second pair of eyes checking every test result against the
                 regulations. For more on testing procedures, see our{' '}
-                <SEOInternalLink href="/guides/testing-sequence">
+                <SEOInternalLink href="/testing-sequence-guide">
                   testing sequence guide
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 18th Edition guide
                 </SEOInternalLink>
                 .
@@ -414,7 +422,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How many certificate types does Elec-Mate support?',
           answer:
-            'Elec-Mate supports 16 certificate types: EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works Certificate, EV Charger Installation Certificate, Solar PV Certificate, Fire Alarm Commissioning Certificate, Emergency Lighting Certificate, and PAT Testing. All 8 types are included in the standard subscription with unlimited usage — there are no per-certificate charges.',
+            'Elec-Mate supports 16 certificate types including EICR (Electrical Installation Condition Report), EIC (Electrical Installation Certificate), Minor Works Certificate, EV Charger Installation Certificate, Solar PV Certificate, Fire Alarm Commissioning Certificate, Emergency Lighting Certificate, and PAT Testing. All 16 certificate types are included in the standard subscription with unlimited usage — there are no per-certificate charges.',
         },
         {
           question: 'Are certificates compliant with BS 7671?',
@@ -444,7 +452,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How much does Elec-Mate cost for certificates?',
           answer:
-            'Elec-Mate starts from £5.99 per month with unlimited certificate generation across all 8 types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 5 AI specialist agents, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
+            'Elec-Mate starts from £5.99 per month with unlimited certificate generation across all 16 certificate types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 8 AI specialist agents plus 12 AI tools, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
         },
       ]}
       relatedPages={[
@@ -481,7 +489,23 @@ export default function DigitalCertificatesAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrician-invoice-app',
+          title: 'Electrician Invoice App',
+          description:
+            'Turn completed certificates into invoices quickly and collect payment without rebuilding the job admin.',
+          icon: Mail,
+          category: 'Business',
+        },
+        {
+          href: '/ai-cost-engineer',
+          title: 'AI Cost Engineer',
+          description:
+            'Convert defects and follow-on work into priced remedial quotes using UK labour and material assumptions.',
+          icon: Sparkles,
+          category: 'AI Tools',
+        },
+        {
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',

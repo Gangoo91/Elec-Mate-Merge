@@ -97,7 +97,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Critical for barn conversions — size cables for long runs with automatic voltage drop checking.',
@@ -105,14 +105,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on 30m to 50m cable runs typical in barn conversions.',
     icon: Zap,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for barn conversions on your phone.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price barn conversion electrical packages with itemised materials, labour, and heritage accessories.',
@@ -288,7 +288,7 @@ const sections = [
                 approximately 14.4V — exceeding the limit. The solution is to increase the cable
                 size: 4.0mm² drops to 9.0V, and 6.0mm² drops to 6.0V. Always check voltage drop at
                 the design stage using the{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>
                 .
@@ -541,7 +541,7 @@ const sections = [
         <p>
           Barn conversion testing follows the same BS 7671 requirements as any domestic
           installation, but the scale and complexity are greater. An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           is required covering all circuits:
@@ -714,7 +714,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Detailed Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete barn conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Every circuit, every accessory, every metre of cable — itemised with your
@@ -731,7 +731,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Long Runs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to size every circuit with voltage drop verification. Get the cable sizes right at

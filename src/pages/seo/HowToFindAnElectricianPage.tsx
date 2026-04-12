@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-cost-uk',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Cost',
     description:
       'Detailed breakdown of consumer unit upgrade costs and what should be included in the price.',
@@ -205,7 +205,7 @@ const sections = [
         </div>
         <p>
           All three schemes are authorised by the UK Government under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations-explained">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . Registration with any of them confirms that the electrician has been independently
@@ -248,7 +248,7 @@ const sections = [
               <span>
                 <strong>C&G 2391 — Inspection and Testing.</strong> Essential for any electrician
                 carrying out{' '}
-                <SEOInternalLink href="/guides/eicr-certificate-explained">
+                <SEOInternalLink href="/tools/eicr-certificate">
                   EICR inspections
                 </SEOInternalLink>
                 . This qualification covers the theory and practice of initial verification and
@@ -364,12 +364,12 @@ const sections = [
             <li>
               <strong>What certification will I receive?</strong> For new installations, you should
               receive an{' '}
-              <SEOInternalLink href="/guides/eic-certificate-explained">EIC</SEOInternalLink> or{' '}
-              <SEOInternalLink href="/guides/minor-works-certificate-explained">
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
+              <SEOInternalLink href="/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>
               . For inspections, an{' '}
-              <SEOInternalLink href="/guides/eicr-certificate-explained">EICR</SEOInternalLink>.
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
             </li>
             <li>
               <strong>Will the work be notified to Building Control?</strong> For notifiable work,

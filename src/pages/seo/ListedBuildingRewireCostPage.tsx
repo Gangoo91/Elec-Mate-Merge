@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote heritage electrical work with itemised materials and specialist rates.',
     icon: Calculator,
@@ -471,7 +471,7 @@ const sections = [
                   Photograph every stage of the work — before, during, and after. The conservation
                   officer may request evidence that the work was carried out in accordance with the
                   agreed method. Use Elec-Mate to attach site photos to your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> and generate
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> and generate
                   a visual record of the installation.
                 </p>
               </div>

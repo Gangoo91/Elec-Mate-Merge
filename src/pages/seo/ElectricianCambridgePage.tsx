@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for domestic rewires and commercial fit-outs. Automatic derating and voltage drop calculations.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for new circuits, rewires, and commercial installations.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/eicr-guide',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'Complete guide to Electrical Installation Condition Reports — intervals, coding, and commercial requirements.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, commercial fit-outs, and maintenance contracts with professional itemised PDFs.',
@@ -508,7 +508,7 @@ const sections = [
           These rates reflect 2026 Cambridge market conditions. Commercial and biotech work commands
           significantly higher rates — laboratory fit-out day rates of £400 to £550 are common. Use
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate, itemised quotes that reflect Cambridge pricing levels.
         </p>
       </>
@@ -549,7 +549,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for domestic rewires and commercial installations with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Factor in derating for concealed routes in listed buildings and long cable runs
@@ -566,7 +566,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, laboratory fit-outs, and maintenance contracts with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemised PDF quotes with your branding, sent from the survey.

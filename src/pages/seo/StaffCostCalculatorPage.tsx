@@ -136,12 +136,12 @@ export default function StaffCostCalculatorPage() {
               </p>
               <p>
                 If your employees work under{' '}
-                <SEOInternalLink href="/tools/cis-for-electricians">
+                <SEOInternalLink href="/guides/cis-for-electricians">
                   CIS as subcontractors
                 </SEOInternalLink>
                 , you do not pay employer NI on their earnings, but you also lose the benefits of
                 direct employment (control over schedule, exclusivity, training investment). The{' '}
-                <SEOInternalLink href="/tools/electrician-tax-guide">tax guide</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/electrician-tax-guide-uk">tax guide</SEOInternalLink>{' '}
                 explains the difference between employment and self-employment status.
               </p>
             </>
@@ -497,7 +497,7 @@ export default function StaffCostCalculatorPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/electrician-tax-guide',
+          href: '/guides/electrician-tax-guide-uk',
           title: 'Electrician Tax Guide',
           description:
             'Complete guide to tax for self-employed electricians and electrical business owners.',

@@ -493,7 +493,7 @@ const sections = [
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
               <strong>Apprentice card (red)</strong> — start your apprenticeship, study{' '}
-              <SEOInternalLink href="/guides/level-2-electrical">Level 2</SEOInternalLink> and{' '}
+              <SEOInternalLink href="/level2-electrical">Level 2</SEOInternalLink> and{' '}
               <SEOInternalLink href="/guides/nvq-level-3-electrical">Level 3</SEOInternalLink> at
               college while gaining on-site experience.
             </li>

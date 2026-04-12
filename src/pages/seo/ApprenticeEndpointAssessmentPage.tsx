@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/city-guilds-level-3-guide',
+    href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
     description: 'The 2365 qualification — units, assessment methods, and how to achieve distinction.',
     icon: BookOpen,

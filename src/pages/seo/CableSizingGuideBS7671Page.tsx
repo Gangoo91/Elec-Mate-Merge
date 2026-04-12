@@ -82,7 +82,7 @@ export default function CableSizingGuideBS7671Page() {
                 involves multiple lookups and calculations that are easy to get wrong. This is why
                 many electricians use a cable sizing calculator — and why Elec-Mate has built every
                 Appendix 4 table and correction factor into its{' '}
-                <SEOInternalLink href="/calculators/cable-sizing">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>
                 .
@@ -638,7 +638,7 @@ export default function CableSizingGuideBS7671Page() {
               </p>
               <p>
                 For more detail, see the{' '}
-                <SEOInternalLink href="/calculators/adiabatic-equation">
+                <SEOInternalLink href="/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 guide.
@@ -779,35 +779,35 @@ export default function CableSizingGuideBS7671Page() {
           category: 'Guide',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate the correct cable size with all correction factors.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Calculate voltage drop with Appendix 4 mV/A/m values.',
           icon: Zap,
           category: 'Calculator',
         },
         {
-          href: '/calculators/adiabatic-equation',
+          href: '/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
           description: 'Verify fault current withstand for any cable.',
           icon: ShieldCheck,
           category: 'Calculator',
         },
         {
-          href: '/guides/bs-7671-18th-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition Guide',
           description: 'Complete overview of the 18th Edition Wiring Regulations.',
           icon: BookOpen,
           category: 'Regulations',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ClipboardCheck,

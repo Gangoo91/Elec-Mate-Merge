@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Professional PDF quotes with itemised pricing — include insurance overhead in your rates.',
@@ -615,7 +615,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Insurance is a cost of doing business. Factor it into your hourly rate or job
                   pricing using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   so customers are paying for your professionalism, not eating into your profit.

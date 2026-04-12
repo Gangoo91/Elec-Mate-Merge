@@ -171,7 +171,7 @@ const sections = [
                   Protects a circuit against overcurrent (overload and short circuit). Contains a
                   thermal element (bimetallic strip) that trips on sustained overload and a magnetic
                   element (solenoid) that trips instantly on short circuit. Available in{' '}
-                  <SEOInternalLink href="/guides/mcb-types-b-c-d">Type B, C, and D</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/guides/mcb-types-b-c-d-explained">Type B, C, and D</SEOInternalLink>{' '}
                   — the type determines the instantaneous trip threshold. Type B trips at 3-5x rated
                   current (domestic). Type C at 5-10x (commercial/motor circuits). Type D at 10-20x
                   (heavy inductive loads).
@@ -269,7 +269,7 @@ const sections = [
                 flow under fault conditions at a given point in the installation. Measured at the
                 origin and at distribution boards. Must not exceed the breaking capacity of the
                 protective devices. Calculated from Ohm's Law: PFC = V / Zs. See{' '}
-                <SEOInternalLink href="/guides/prospective-fault-current-guide">
+                <SEOInternalLink href="/guides/prospective-fault-current-explained">
                   PFC explained
                 </SEOInternalLink>
                 .
@@ -293,7 +293,7 @@ const sections = [
                 the protective device to disconnect within the required time (0.4s for socket
                 circuits, 5s for fixed equipment circuits under BS 7671). Maximum Zs values are
                 tabulated in{' '}
-                <SEOInternalLink href="/guides/maximum-zs-values">
+                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">
                   BS 7671 Tables 41.2-41.6
                 </SEOInternalLink>
                 .
@@ -319,7 +319,7 @@ const sections = [
                 between live conductors and earth, measured at 500V DC. Must be at least 1MΩ (one
                 megohm) for circuits rated up to 500V. Low insulation resistance indicates damaged
                 or deteriorated insulation and is a common cause of RCD tripping. See{' '}
-                <SEOInternalLink href="/guides/insulation-resistance-test">
+                <SEOInternalLink href="/guides/insulation-resistance-testing">
                   insulation resistance testing
                 </SEOInternalLink>
                 .
@@ -374,7 +374,7 @@ const sections = [
                   Protective Multiple Earthing (PME) — the most common arrangement for newer UK
                   domestic properties. Typical Ze: 0.2-0.35Ω. The risk is an open PEN fault, which
                   is why PME supplies have strict{' '}
-                  <SEOInternalLink href="/guides/supplementary-bonding-guide">
+                  <SEOInternalLink href="/guides/supplementary-bonding">
                     bonding requirements
                   </SEOInternalLink>
                   .
@@ -415,7 +415,7 @@ const sections = [
                 <strong>EIC — Electrical Installation Certificate.</strong> Issued when new
                 installation work or a significant alteration is completed. Confirms the work
                 complies with BS 7671. See{' '}
-                <SEOInternalLink href="/guides/eicr-vs-eic">EIC vs EICR comparison</SEOInternalLink>
+                <SEOInternalLink href="/guides/eicr-vs-eic-difference">EIC vs EICR comparison</SEOInternalLink>
                 .
               </span>
             </li>
@@ -458,7 +458,7 @@ const sections = [
                 Document P covers electrical safety in dwellings. Certain types of work are
                 notifiable and must be either carried out by a registered competent person or
                 inspected by building control. See{' '}
-                <SEOInternalLink href="/guides/notifiable-work-guide">
+                <SEOInternalLink href="/guides/notifiable-electrical-work">
                   notifiable work guide
                 </SEOInternalLink>
                 .
@@ -553,7 +553,7 @@ const sections = [
                 One of the main competent person scheme providers. NICEIC registration allows
                 electricians to self-certify notifiable work under Part P without involving building
                 control. See{' '}
-                <SEOInternalLink href="/guides/niceic-registration-guide">
+                <SEOInternalLink href="/guides/niceic-registration">
                   NICEIC registration guide
                 </SEOInternalLink>
                 .

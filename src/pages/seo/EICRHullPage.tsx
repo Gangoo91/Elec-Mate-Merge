@@ -531,7 +531,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you find C1 or C2 observations — common in Hull's older housing stock — quote
                   the remedial work on site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords facing the 28-day deadline almost always accept the quote from the

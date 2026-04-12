@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems — how they work and why they matter for fault protection.',
@@ -322,7 +322,7 @@ const sections = [
         <p>
           Most modern UK domestic properties are supplied with a PME (Protective Multiple Earthing)
           system, technically known as{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements-explained">
+          <SEOInternalLink href="/earthing-arrangements">
             TN-C-S earthing
           </SEOInternalLink>
           . In this system, the DNO combines the neutral and earth conductors into a single PEN

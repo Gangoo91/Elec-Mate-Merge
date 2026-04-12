@@ -151,7 +151,7 @@ export default function ElectricalBoardTypesPage() {
                 Split load boards are rarely specified for new installations today. The poor
                 discrimination and the near-universal requirement for RCD protection make them
                 impractical for most modern domestic work. However, you may encounter them during{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">
+                <SEOInternalLink href="/tools/eicr-certificate">
                   periodic inspections
                 </SEOInternalLink>{' '}
                 on existing installations.
@@ -594,7 +594,7 @@ export default function ElectricalBoardTypesPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Complete guide to the current Wiring Regulations.',
           icon: BookOpen,

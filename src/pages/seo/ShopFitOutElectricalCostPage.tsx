@@ -103,21 +103,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for commercial distribution boards and sub-mains.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create detailed, itemised quotes for commercial fit-out projects.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for commercial fit-outs on your phone.',
@@ -355,7 +355,7 @@ const sections = [
           Emergency lighting is a legal requirement in all commercial premises. It must provide
           sufficient illumination for safe evacuation when the normal lighting fails. The system
           must comply with{' '}
-          <SEOInternalLink href="/guides/bs-5266-emergency-lighting">BS 5266-1</SEOInternalLink> and
+          <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">BS 5266-1</SEOInternalLink> and
           be specified based on the fire risk assessment:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -402,7 +402,7 @@ const sections = [
           A fire alarm system is required in all commercial premises under the Regulatory Reform
           (Fire Safety) Order 2005. The system category depends on the fire risk assessment and is
           specified under{' '}
-          <SEOInternalLink href="/guides/bs-5839-fire-alarm">BS 5839-1</SEOInternalLink>:
+          <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">BS 5839-1</SEOInternalLink>:
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-4">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
@@ -559,7 +559,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Maximum Demand</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Calculate sub-mains and distribution board sizing with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Verify 3-phase balance and voltage drop on longer sub-mains runs.
@@ -574,7 +574,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Commercial Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised commercial quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Lighting, power, emergency lighting, fire alarm, data cabling — all broken down

@@ -1,145 +1,96 @@
 import { useNavigate } from 'react-router-dom';
+
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import {
-  Zap,
-  Clock,
-  Lock,
-  CheckCircle2,
-  ArrowRight,
-  Sparkles,
-  Shield,
-  BookOpen,
-  ClipboardCheck,
-  Calculator,
-} from 'lucide-react';
+
+const FEATURES = [
+  'Certificates, quotes and invoices',
+  '5 AI specialists trained on BS 7671',
+  '50+ electrical calculators',
+  'Study Centre, 46+ courses and mock exams',
+  'RAMS, method statements and reports',
+  'Branded client-ready output',
+];
 
 const TrialExpiredPaywall = () => {
   const navigate = useNavigate();
   const { trialEndsAt, signOut } = useAuth();
 
-  const features = [
-    { icon: BookOpen, label: 'Study Centre & Training Materials' },
-    { icon: ClipboardCheck, label: 'Inspection & Testing Tools' },
-    { icon: Calculator, label: 'Electrical Calculators' },
-    { icon: Shield, label: 'BS7671 Compliance Resources' },
-  ];
+  const formattedTrialEnd = trialEndsAt
+    ? new Date(trialEndsAt).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    : null;
 
   return (
-    <div className="min-h-screen bg-black flex flex-col">
-      {/* Background Effects */}
-      <div className="fixed inset-0 bg-gradient-to-b from-yellow-500/5 via-transparent to-transparent pointer-events-none" />
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-card rounded-full blur-[120px] opacity-20 pointer-events-none" />
+    <div className="relative min-h-[100svh] overflow-hidden bg-[#0a0a0a]">
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-[10%] h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.14),transparent_60%)] blur-3xl" />
+      </div>
 
-      {/* Header */}
-      <header className="relative w-full px-4 pt-6 pb-4 sm:pt-8">
-        <div className="flex items-center justify-center gap-2">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-yellow-400 flex items-center justify-center">
-            <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
+      <div className="relative mx-auto flex min-h-[100svh] max-w-[520px] flex-col px-5 pb-[calc(env(safe-area-inset-bottom)+20px)] pt-[calc(env(safe-area-inset-top)+24px)] sm:px-6">
+        {/* Logo */}
+        <div className="flex justify-center">
+          <div className="flex items-center gap-3">
+            <img src="/logo.jpg" alt="Elec-Mate" className="h-10 w-10 rounded-xl" />
+            <span className="text-[20px] font-bold tracking-[-0.02em] text-white">
+              Elec-<span className="text-yellow-400">Mate</span>
+            </span>
           </div>
-          <span className="text-xl sm:text-2xl font-bold text-white">
-            Elec-<span className="text-yellow-400">Mate</span>
-          </span>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="relative flex-1 flex flex-col items-center justify-center px-4 pb-8">
-        <div className="w-full max-w-md animate-fade-in">
-          {/* Trial Ended Icon */}
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/30 flex items-center justify-center">
-                <Clock className="h-10 w-10 text-amber-400" />
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-red-500/20 border border-red-500/30 flex items-center justify-center">
-                <Lock className="h-4 w-4 text-red-400" />
-              </div>
+        {/* Card */}
+        <div className="mt-10 flex-1 rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-7 text-center sm:p-9">
+          <h1 className="text-[2rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.5rem]">
+            Subscribe to keep using{' '}
+            <span className="text-yellow-400">Elec-Mate.</span>
+          </h1>
+          <p className="mx-auto mt-5 max-w-[26rem] text-[15px] leading-[1.65] text-white sm:text-[16px]">
+            {formattedTrialEnd
+              ? `Your free trial ended on ${formattedTrialEnd}. Pick a plan to pick up right where you left off.`
+              : 'Pick a plan to unlock certificates, quotes, invoices and the whole platform.'}
+          </p>
+
+          <div className="mt-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 text-left">
+            <p className="text-[13px] font-semibold text-yellow-400">What you get back</p>
+            <div className="mt-4 space-y-2.5">
+              {FEATURES.map((feature) => (
+                <div
+                  key={feature}
+                  className="flex items-start gap-2.5 text-[14px] leading-[1.55] text-white"
+                >
+                  <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
+                  <span>{feature}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Message */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-white">
-              Your Free Trial Has Ended
-            </h1>
-            <p className="text-gray-400 text-sm sm:text-base max-w-sm mx-auto">
-              Your 7-day free trial expired
-              {trialEndsAt && (
-                <span className="text-amber-400">
-                  {' '}
-                  on{' '}
-                  {new Date(trialEndsAt).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </span>
-              )}
-              . Subscribe to continue using Elec-Mate.
-            </p>
-          </div>
-
-          {/* Locked Features Card */}
-          <Card className="border-white/10 bg-neutral-900/80 backdrop-blur-xl shadow-xl mb-6">
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm font-medium text-white">You had access to:</span>
-              </div>
-              <div className="space-y-3">
-                {features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 border border-white/5"
-                  >
-                    <div className="p-1.5 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
-                      <feature.icon className="h-4 w-4 text-yellow-400" />
-                    </div>
-                    <span className="text-sm text-white">{feature.label}</span>
-                    <Lock className="h-3.5 w-3.5 text-white ml-auto" />
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* CTA Buttons */}
-          <div className="space-y-3">
+          <div className="mt-8 space-y-3">
             <Button
-              className="w-full h-12 text-base font-semibold bg-yellow-400 hover:bg-yellow-300 text-black transition-all duration-200 hover:scale-[1.02]"
               onClick={() => navigate('/subscriptions')}
+              className="h-14 w-full touch-manipulation rounded-2xl bg-yellow-500 text-[15px] font-semibold text-black hover:bg-yellow-400"
             >
-              <CheckCircle2 className="mr-2 h-5 w-5" />
-              Subscribe Now
-              <ArrowRight className="ml-2 h-5 w-5" />
+              Subscribe now
             </Button>
-
             <Button
               variant="outline"
-              className="w-full h-11 border-white/10 hover:bg-white/5 text-white hover:text-white transition-all"
               onClick={async () => {
                 await signOut();
                 window.location.replace('/');
               }}
+              className="h-12 w-full touch-manipulation rounded-2xl border-white/[0.12] bg-transparent text-[14px] font-medium text-white hover:bg-white/[0.06]"
             >
-              Sign Out
+              Sign out
             </Button>
           </div>
 
-          {/* Reassurance */}
-          <div className="mt-6 text-center">
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              <span className="flex items-center gap-1.5">
-                <Shield className="h-3.5 w-3.5 text-green-500" />
-                Cancel anytime
-              </span>
-              <span>30-day money back</span>
-            </div>
-          </div>
+          <p className="mt-6 text-[13px] text-white">Cancel anytime.</p>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

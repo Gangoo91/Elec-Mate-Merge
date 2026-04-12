@@ -99,14 +99,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote infrared heating installations accurately with AI-assisted pricing.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement',
     description: 'Consumer unit upgrades when installing dedicated heating circuits.',
     icon: Settings,
@@ -534,7 +534,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-certificates">
+                  <SEOInternalLink href="/tools/digital-certificates-app">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete Minor Works Certificates or Electrical Installation Certificates for
@@ -552,7 +552,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Single-panel enquiries often convert to multi-room systems when you present a
                   clear whole-house proposal. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for each room and present the total system cost

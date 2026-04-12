@@ -82,14 +82,14 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/bs7671-amendment-3',
+    href: '/guides/bs-7671-amendment-3-changes',
     title: 'BS 7671 Amendment 3',
     description: 'Complete overview of all changes in A3:2024.',
     icon: BookOpen,
     category: 'Regulations' as const,
   },
   {
-    href: '/guides/bs7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition',
     description: 'Complete guide to the current Wiring Regulations.',
     icon: BookOpen,
@@ -103,7 +103,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/battery-storage-guide',
+    href: '/guides/battery-storage-installation',
     title: 'Battery Storage Guide',
     description: 'Battery energy storage installation and certification.',
     icon: Battery,
@@ -137,7 +137,7 @@ const sections = [
       <>
         <p>
           Regulation 530.3.201 is a new regulation introduced by{' '}
-          <SEOInternalLink href="/guides/bs7671-amendment-3">Amendment 3 (A3:2024)</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-amendment-3-changes">Amendment 3 (A3:2024)</SEOInternalLink>{' '}
           to BS 7671:2018. It addresses a specific safety concern: the use of switching and
           protective devices in installations where electrical current can flow in both directions
           through those devices.
@@ -219,7 +219,7 @@ const sections = [
           The current full citation for the standard is BS 7671:2018+A3:2024. When referencing the
           standard on certificates and documentation, use this full citation to confirm compliance
           with the latest amendment. The{' '}
-          <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             18th Edition guide
           </SEOInternalLink>{' '}
           covers the base standard in detail.
@@ -352,7 +352,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/battery-storage-guide">battery storage</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/battery-storage-installation">battery storage</SEOInternalLink>{' '}
           system's AC connection to the consumer unit or distribution board carries current in both
           directions during normal operation — not just under fault conditions. This is a key
           distinction from some solar PV installations where reverse current flow occurs only during
@@ -494,7 +494,7 @@ const sections = [
     content: (
       <>
         <p>
-          When issuing an <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> for
+          When issuing an <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> for
           an installation with bidirectional power flow, the certificate should reference compliance
           with BS 7671:2018+A3:2024 (not just BS 7671:2018 or A2:2022). This confirms that the
           installation has been designed and installed in accordance with the latest amendment,
@@ -525,7 +525,7 @@ const sections = [
           </li>
         </ul>
         <p>
-          For <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink> on existing
+          For <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> on existing
           installations with solar PV or battery storage, check whether the installed devices are
           bidirectional-rated. If unidirectional devices are found in the bidirectional current
           path, raise a C3 observation recommending replacement with bidirectional-rated devices.

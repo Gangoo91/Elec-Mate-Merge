@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate App',
     description: 'Complete BS 7671 EV charging certificates on your phone with instant PDF export.',
     icon: FileCheck2,
@@ -547,7 +547,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   OZEV grant claims require photographic evidence and an electrical installation
                   certificate. Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete the BS 7671 Section 722 certificate on site, take the required photos
@@ -564,7 +564,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Show Grant Savings on Your Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to present WCS quotes with the per-socket grant deduction clearly shown. Business

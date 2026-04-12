@@ -127,7 +127,7 @@ export default function ConsumerUnitChangePage() {
                     indicate that the board has been subjected to fault conditions or has
                     deteriorated to the point where it presents a fire risk. An electrician
                     discovering these conditions during an{' '}
-                    <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> would
+                    <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> would
                     typically classify them as C1 (Danger Present) or C2 (Potentially Dangerous).
                   </p>
                 </div>
@@ -285,7 +285,7 @@ export default function ConsumerUnitChangePage() {
               </div>
               <p>
                 A full{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 is required for a consumer unit replacement. A Minor Works Certificate is{' '}
@@ -458,7 +458,7 @@ export default function ConsumerUnitChangePage() {
                     <p className="text-white text-sm leading-relaxed">
                       Once all circuits are connected and the supply is restored, every circuit must
                       be tested. The full{' '}
-                      <SEOInternalLink href="/guides/testing-sequence">
+                      <SEOInternalLink href="/testing-sequence-guide">
                         testing sequence
                       </SEOInternalLink>{' '}
                       includes continuity of protective conductors (R1+R2), insulation resistance,
@@ -563,28 +563,28 @@ export default function ConsumerUnitChangePage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'How to complete an Electrical Installation Certificate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for every circuit.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ClipboardCheck,
           category: 'Testing',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'Condition reports for existing installations.',
           icon: FileText,

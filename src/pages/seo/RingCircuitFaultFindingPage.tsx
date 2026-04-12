@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/calculators/ring-circuit',
+    href: '/ring-circuit-calculator',
     title: 'Ring Circuit Calculator',
     description:
       'Calculate expected R1, R2, and R1+R2 values for ring circuits based on cable size and length.',
@@ -435,7 +435,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/calculators/ring-circuit">
+          <SEOInternalLink href="/ring-circuit-calculator">
             ring circuit calculator
           </SEOInternalLink>{' '}
           calculates the expected R1, R2, and R1+R2 values based on the cable size and estimated

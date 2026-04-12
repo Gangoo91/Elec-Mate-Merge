@@ -197,7 +197,7 @@ export default function FP200CableGuidePage() {
                     Fire Detection and Alarm Systems (BS 5839)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">
+                    <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">
                       BS 5839-1
                     </SEOInternalLink>{' '}
                     requires that cables forming part of a fire alarm system maintain circuit
@@ -216,7 +216,7 @@ export default function FP200CableGuidePage() {
                     Emergency Lighting (BS 5266)
                   </h3>
                   <p className="text-white text-sm leading-relaxed">
-                    <SEOInternalLink href="/guides/bs5266-emergency-lighting">
+                    <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                       BS 5266-1
                     </SEOInternalLink>{' '}
                     requires fire-resistant cabling for centrally supplied emergency lighting
@@ -416,7 +416,7 @@ export default function FP200CableGuidePage() {
             <>
               <p>
                 Testing FP200 cable installations follows the standard{' '}
-                <SEOInternalLink href="/guides/testing-sequence">
+                <SEOInternalLink href="/testing-sequence-guide">
                   BS 7671 testing sequence
                 </SEOInternalLink>
                 . Unlike MICC cable, FP200 does not have moisture sensitivity issues, so insulation
@@ -580,21 +580,21 @@ export default function FP200CableGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/bs5839-fire-alarm-standard',
+          href: '/guides/bs-5839-fire-alarm-standard',
           title: 'BS 5839 Fire Alarm Standard',
           description: 'Fire detection and alarm system requirements.',
           icon: ShieldCheck,
           category: 'Regulations',
         },
         {
-          href: '/guides/bs5266-emergency-lighting',
+          href: '/guides/bs-5266-emergency-lighting-standard',
           title: 'BS 5266 Emergency Lighting',
           description: 'Emergency lighting standards and testing.',
           icon: Zap,
           category: 'Regulations',
         },
         {
-          href: '/guides/fire-alarm-certificate',
+          href: '/fire-alarm-certificate',
           title: 'Fire Alarm Certificate',
           description: 'Generating BS 5839 certificates digitally.',
           icon: FileText,

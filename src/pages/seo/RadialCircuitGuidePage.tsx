@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any radial circuit with automatic BS 7671 correction factors and voltage drop check.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for radial circuits against the 5% BS 7671 limit with cable length and load inputs.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-guide-bs7671',
+    href: '/guides/cable-sizing-guide-bs-7671',
     title: 'Cable Sizing Guide BS 7671',
     description:
       'Complete guide to cable selection using Appendix 4 tables, correction factors, and reference methods.',
@@ -163,7 +163,7 @@ const sections = [
         </p>
         <p>
           The term "radial" distinguishes this configuration from a{' '}
-          <SEOInternalLink href="/guides/ring-circuit-calculator">
+          <SEOInternalLink href="/ring-circuit-calculator">
             ring final circuit
           </SEOInternalLink>
           , where the cable forms a loop starting and finishing at the same terminals in the
@@ -202,7 +202,7 @@ const sections = [
                 <strong>Progressive voltage drop</strong> — voltage drop increases with distance
                 from the board. The furthest outlet sees the highest voltage drop, which must be
                 checked against the{' '}
-                <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">
+                <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
                   BS 7671 voltage drop limits
                 </SEOInternalLink>{' '}
                 (5% for lighting, 5% for other circuits in domestic installations).
@@ -354,10 +354,10 @@ const sections = [
       <>
         <p>
           Correct{' '}
-          <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">cable sizing</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">cable sizing</SEOInternalLink>{' '}
           is critical for radial circuits. The cable must be able to carry the design current
           continuously without exceeding its rated temperature, and the{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop</SEOInternalLink>{' '}
           at the furthest point must not exceed the BS 7671 limit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -409,7 +409,7 @@ const sections = [
         </div>
         <p>
           These are starting points for standard installation conditions. You must always apply the{' '}
-          <SEOInternalLink href="/guides/correction-factors-guide">
+          <SEOInternalLink href="/guides/correction-factors-bs-7671">
             correction factors
           </SEOInternalLink>{' '}
           from Appendix 4 of BS 7671 for the actual installation conditions — grouping with other
@@ -579,7 +579,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/guides/insulation-resistance-test">
+                <SEOInternalLink href="/guides/insulation-resistance-testing">
                   Insulation resistance.
                 </SEOInternalLink>
               </strong>{' '}
@@ -600,7 +600,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/guides/rcd-testing-guide">RCD operation.</SEOInternalLink>
+                <SEOInternalLink href="/rcd-testing-guide">RCD operation.</SEOInternalLink>
               </strong>{' '}
               If the circuit is RCD-protected, test the trip time at rated residual operating
               current (30mA for domestic circuits). The RCD must trip within 300ms at 1x and within
@@ -632,7 +632,7 @@ const sections = [
                 <strong>Undersized cable for the installation method.</strong> A cable clipped
                 direct to a joist has a different current-carrying capacity to the same cable
                 enclosed in insulation. Always check the correct{' '}
-                <SEOInternalLink href="/guides/reference-methods-guide">
+                <SEOInternalLink href="/guides/reference-methods-cable-installation">
                   reference method
                 </SEOInternalLink>{' '}
                 and apply the corresponding correction factors.

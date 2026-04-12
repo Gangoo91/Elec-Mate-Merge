@@ -1,50 +1,45 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
-import { Lightbulb, Building2 } from 'lucide-react';
-
 interface StepProps {
-  formData: any;
-  onChange: (data: any) => void;
+  formData: {
+    companyName: string;
+    [key: string]: unknown;
+  };
+  onChange: (data: Record<string, unknown>) => void;
 }
 
 export function CompanyNameStep({ formData, onChange }: StepProps) {
   return (
     <div className="space-y-6">
-      <div className="text-center mb-6">
-        <div className="inline-flex p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
-          <Building2 className="h-10 w-10 text-elec-yellow" />
-        </div>
-        <h3 className="text-xl font-bold mb-2">What's your business name?</h3>
-        <p className="text-muted-foreground">This will appear on all your quotes and invoices</p>
+      <div>
+        <h3 className="text-[1.5rem] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:text-[1.75rem]">
+          What's your <span className="text-yellow-400">business name?</span>
+        </h3>
+        <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">
+          This appears on every quote, invoice and certificate you send.
+        </p>
       </div>
 
       <div>
-        <Label htmlFor="company-name" className="text-base">
-          Company Name
-        </Label>
-        <Input
+        <label htmlFor="company-name" className="mb-2 block text-[13px] font-medium text-white">
+          Company name
+        </label>
+        <input
           id="company-name"
+          type="text"
           value={formData.companyName}
           onChange={(e) => onChange({ ...formData, companyName: e.target.value })}
-          placeholder="e.g., Smith Electrical Services Ltd"
-          className="h-12 text-lg mt-2 touch-manipulation"
+          placeholder="e.g. Smith Electrical Services Ltd"
           autoFocus
+          className="h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
         />
       </div>
 
-      <Card className="bg-elec-yellow/5 border-elec-yellow/20 p-4">
-        <div className="flex items-start gap-3">
-          <Lightbulb className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <p className="font-medium mb-1">Why we need this</p>
-            <p className="text-muted-foreground">
-              Your company name builds trust and professionalism. It appears prominently on every
-              quote and invoice you send to clients.
-            </p>
-          </div>
-        </div>
-      </Card>
+      <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.06] p-4">
+        <p className="text-[13px] font-semibold text-yellow-400">Why we need this</p>
+        <p className="mt-1 text-[13px] leading-[1.6] text-white">
+          Your company name builds trust and professionalism. It appears prominently on every quote
+          and invoice you send to clients.
+        </p>
+      </div>
     </div>
   );
 }

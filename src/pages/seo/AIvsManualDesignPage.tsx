@@ -384,7 +384,7 @@ export default function AIvsManualDesignPage() {
                 <li>
                   <span className="font-semibold text-white">Step 5: Documentation</span> — the
                   final design feeds into the{' '}
-                  <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> schedule of
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule of
                   circuits and the{' '}
                   <SEOInternalLink href="/tools/ai-cost-engineer">cost estimate</SEOInternalLink>{' '}
                   for the client quotation.
@@ -520,7 +520,7 @@ export default function AIvsManualDesignPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'BS 7671 Appendix 4 cable sizing with all correction factors — ambient temperature, grouping, thermal insulation.',

@@ -19,7 +19,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Commercial Electrical', href: '/electrical-design-guide' },
+  { label: 'Commercial Electrical', href: '/guides/electrical-design-guide' },
   { label: 'Electrical Maintenance Contracts', href: '/electrical-maintenance-contract' },
 ];
 
@@ -607,7 +607,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Maintenance contracts often involve separate invoices for the annual fee and for
                   reactive callout works. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting and invoicing app
                   </SEOInternalLink>{' '}
                   to issue professional invoices for both elements, with clear itemisation that

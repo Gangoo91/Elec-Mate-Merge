@@ -93,7 +93,7 @@ const sections = [
         <p>
           Quality assurance in electrical work is a systematic approach to ensuring that
           installations are completed correctly, safely, and in compliance with the specification
-          and <SEOInternalLink href="/guides/bs7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
+          and <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           from the outset. It is fundamentally about prevention — building quality into the process
           rather than trying to inspect quality into the finished product.
         </p>
@@ -183,7 +183,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong className="text-yellow-400">
-                  <SEOInternalLink href="/guides/testing-sequence">Testing</SEOInternalLink>
+                  <SEOInternalLink href="/testing-sequence-guide">Testing</SEOInternalLink>
                 </strong>{' '}
                 — Full BS 7671 testing sequence: continuity, insulation resistance, polarity, earth
                 fault loop impedance, PFC, and RCD operation. Results recorded on schedule of test
@@ -313,7 +313,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/guides/emergency-lighting-certificate">
+                <SEOInternalLink href="/emergency-lighting-certificate">
                   Emergency lighting
                 </SEOInternalLink>{' '}
                 legends missing or incorrectly positioned
@@ -349,14 +349,14 @@ const sections = [
             </div>
             <p className="text-white text-sm leading-relaxed">
               The{' '}
-              <SEOInternalLink href="/guides/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate (EIC)
               </SEOInternalLink>{' '}
               and schedule of test results form the core QA documentation for any new installation.
               Every circuit must be tested in accordance with BS 7671 Chapter 64, with results
               recorded on the schedule of test results. The test results provide objective evidence
               that the installation meets the required standard. For additions and alterations, a{' '}
-              <SEOInternalLink href="/guides/minor-works-certificate">
+              <SEOInternalLink href="/minor-works-certificate">
                 minor works certificate
               </SEOInternalLink>{' '}
               serves the same purpose.
@@ -557,14 +557,14 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate Guide',
     description: 'How to complete an Electrical Installation Certificate correctly.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/testing-sequence',
+    href: '/testing-sequence-guide',
     title: 'Testing Sequence Guide',
     description: 'The correct BS 7671 testing sequence from continuity to RCD testing.',
     icon: ClipboardCheck,
@@ -585,14 +585,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Complete guide to the current UK wiring regulations and amendments.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate method statements with quality requirements built in.',
     icon: Brain,

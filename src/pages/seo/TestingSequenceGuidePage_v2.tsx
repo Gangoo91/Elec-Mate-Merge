@@ -605,7 +605,7 @@ const sections = [
             devices, isolators, and interlocking arrangements operate as designed. This test is
             often the most overlooked, but it is required by BS 7671 Regulation 643.10. For a
             detailed guide to RCD testing, see our{' '}
-            <SEOInternalLink href="/guides/rcd-testing-guide">RCD testing guide</SEOInternalLink>.
+            <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink>.
           </p>
           <p>
             <strong className="text-yellow-400">RCD testing method:</strong> For each RCD, carry out
@@ -782,7 +782,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'Insulation Resistance Guide',
     description:
       'In-depth guide to insulation resistance testing — methods, limits, troubleshooting.',
@@ -797,7 +797,7 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/guides/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'Complete guide to RCD testing — trip times, half-cycle testing, Type A vs Type AC.',

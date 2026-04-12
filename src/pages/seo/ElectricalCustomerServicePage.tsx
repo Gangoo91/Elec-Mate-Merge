@@ -243,7 +243,7 @@ export default function ElectricalCustomerServicePage() {
                     <li className="flex items-start gap-3">
                       <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                       <span>
-                        <SEOInternalLink href="/guides/electrical-certificate-types">
+                        <SEOInternalLink href="/guides/electrical-certificate-types-uk">
                           Electrical certificates
                         </SEOInternalLink>{' '}
                         delivered promptly
@@ -552,14 +552,14 @@ export default function ElectricalCustomerServicePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'Complete guide to setting up as a self-employed electrician in the UK.',
           icon: TrendingUp,
           category: 'Guide',
         },
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -567,14 +567,14 @@ export default function ElectricalCustomerServicePage() {
           category: 'Tool',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Professional invoices with online payment links, created from site.',
           icon: Receipt,
           category: 'Tool',
         },
         {
-          href: '/guides/electrical-certificate-types',
+          href: '/guides/electrical-certificate-types-uk',
           title: 'Electrical Certificate Types',
           description: 'EIC, EICR, minor works, and other certificates explained.',
           icon: FileText,

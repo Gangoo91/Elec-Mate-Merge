@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
@@ -566,6 +572,13 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg p-0 bg-card border-border/50 overflow-hidden max-h-[85vh] flex flex-col">
+        <VisuallyHidden>
+          <DialogTitle>Quick Add Circuit — C{circuitNumber}</DialogTitle>
+          <DialogDescription>
+            BS 7671 compliant circuit builder. Choose a category, set the parameters, and add it to
+            the board.
+          </DialogDescription>
+        </VisuallyHidden>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border/30 bg-gradient-to-r from-amber-500/10 to-transparent">
           <div className="flex items-center gap-3">

@@ -295,7 +295,7 @@ const sections = [
             electrical qualifications
           </SEOInternalLink>
           . Progressing from electrician to approved electrician requires the{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             2391 inspection and testing qualification
           </SEOInternalLink>
           , and further progression to technician requires additional qualifications and experience.
@@ -412,9 +412,9 @@ const sections = [
           training courses, bursaries for members pursuing further education, and partnerships with
           training providers for discounted course fees. For electricians, this can include support
           towards the cost of{' '}
-          <SEOInternalLink href="/guides/18th-edition-course">18th Edition courses</SEOInternalLink>
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition courses</SEOInternalLink>
           ,{' '}
-          <SEOInternalLink href="/guides/inspection-testing-course">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing
           </SEOInternalLink>
           , and other qualifications needed for career progression through the JIB grading system.
@@ -453,7 +453,7 @@ const sections = [
         </p>
         <p>
           If you are a self-employed{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             domestic electrician
           </SEOInternalLink>{' '}
           working entirely on your own in the residential market, the collective bargaining benefits
@@ -463,7 +463,7 @@ const sections = [
         </p>
         <p>
           If you run your own{' '}
-          <SEOInternalLink href="/guides/starting-electrical-business">
+          <SEOInternalLink href="/guides/starting-an-electrical-business">
             electrical business
           </SEOInternalLink>{' '}
           and employ other electricians, you are an employer, and union membership as an individual
@@ -503,14 +503,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description: 'Tax, insurance, and business management for self-employed electricians.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description: 'How to set up your own electrical contracting company in the UK.',
     icon: Building,

@@ -269,7 +269,7 @@ export default function CustomerManagementElectricianPage() {
                 <strong className="text-yellow-400">Quote follow-ups:</strong> If a client has not
                 responded to a quote within 7 days, Elec-Mate can send a polite follow-up. Many jobs
                 are won simply because you followed up when competitors did not. The{' '}
-                <SEOInternalLink href="/tools/best-quoting-app">quoting app</SEOInternalLink> tracks
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> tracks
                 quote status and response times.
               </p>
             </>
@@ -417,7 +417,7 @@ export default function CustomerManagementElectricianPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/best-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Quoting App',
           description:
             'Build and send professional quotes linked to client records for seamless tracking.',
@@ -425,7 +425,7 @@ export default function CustomerManagementElectricianPage() {
           category: 'App Features',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Invoice App',
           description: 'Invoice clients directly from job records with automatic payment tracking.',
           icon: Receipt,

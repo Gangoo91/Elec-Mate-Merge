@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-certificates',
+    href: '/tools/digital-certificates-app',
     title: 'Electrical Certificates App',
     description:
       'Complete off-grid installation certificates on your phone with instant PDF export.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote off-grid system installations accurately with AI-assisted pricing.',
     icon: PoundSterling,
@@ -489,7 +489,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certificate On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-certificates">
+                  <SEOInternalLink href="/tools/digital-certificates-app">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete Electrical Installation Certificates for off-grid systems on your
@@ -507,7 +507,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Off-grid installations are high-value jobs where accurate quoting is essential.
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build detailed proposals with equipment itemisation, labour, and commissioning

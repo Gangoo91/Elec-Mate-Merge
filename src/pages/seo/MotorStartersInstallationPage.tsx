@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description:
       'Complete EICs on your phone and export PDF instantly for motor circuit installations.',
@@ -587,7 +587,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue the EIC On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate on your phone during
@@ -605,7 +605,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When servicing star-delta or DOL starters, calculate the energy savings from a VFD
                   upgrade and quote immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A VFD upgrade on a 15 kW pump running at 80% speed typically pays back in under

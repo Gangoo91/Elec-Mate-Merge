@@ -20,7 +20,9 @@ import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
 import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
-import { storageGetSync } from '@/utils/storage';
+import { storageGetSync, storageSetSync } from '@/utils/storage';
+
+const FIRST_STOP_DISMISSED_KEY = 'elec-mate-first-stop-dismissed';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -40,6 +42,27 @@ const Dashboard = () => {
   const { user, profile, isLoading } = useAuth();
   const navigate = useNavigate();
   const [showWelcome, setShowWelcome] = useState(false);
+  const [firstStopDismissed, setFirstStopDismissed] = useState(
+    () => storageGetSync(FIRST_STOP_DISMISSED_KEY) === '1'
+  );
+  const isFirstVisit =
+    !isLoading && !!profile && !profile.onboarding_completed && !firstStopDismissed;
+
+  const quickStart =
+    profile?.role === 'apprentice'
+      ? {
+          cta: 'Open Study Centre',
+          href: '/study-centre/apprentice',
+        }
+      : {
+          cta: 'Open Certificates',
+          href: '/tools/eicr-certificate',
+        };
+
+  const dismissFirstStop = () => {
+    storageSetSync(FIRST_STOP_DISMISSED_KEY, '1');
+    setFirstStopDismissed(true);
+  };
 
   // Safety net: redirect users with NULL role to complete their profile
   useEffect(() => {
@@ -68,6 +91,44 @@ const Dashboard = () => {
   return (
     <DashboardContainer>
       <div className="space-y-6 sm:space-y-8">
+        {isFirstVisit && (
+          <motion.section
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            custom={-0.5}
+          >
+            <div className="relative rounded-[1.5rem] border border-white/[0.08] bg-white/[0.03] p-5 sm:p-6">
+              <button
+                type="button"
+                onClick={dismissFirstStop}
+                className="absolute right-3 top-3 h-8 touch-manipulation rounded-xl border border-white/[0.12] bg-black/40 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/70 hover:text-yellow-400"
+                aria-label="Dismiss"
+              >
+                Dismiss
+              </button>
+              <div className="flex flex-col gap-4 pr-20 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-24">
+                <div>
+                  <h2 className="text-[1.25rem] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[1.5rem]">
+                    Make the first{' '}
+                    <span className="text-yellow-400">ten minutes</span> count.
+                  </h2>
+                  <p className="mt-2 text-[14px] leading-[1.55] text-white sm:text-[15px]">
+                    Run one real task through the platform — the rest of the workflow unfolds
+                    from there.
+                  </p>
+                </div>
+                <a
+                  href={quickStart.href}
+                  className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
+                >
+                  {quickStart.cta}
+                </a>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
         {/* Premium Hero Welcome */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
           <PremiumHero />

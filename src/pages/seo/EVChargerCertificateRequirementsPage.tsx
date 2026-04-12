@@ -27,7 +27,7 @@ const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
   {
     label: 'EV Charger Certificate Requirements',
-    href: '/guides/ev-charger-certificate-requirements',
+    href: '/ev-charger-certificate-requirements',
   },
 ];
 
@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete digital Electrical Installation Certificates on your phone with Elec-Mate.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for EV charger circuits and other installations.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description:
       'Certification requirements for solar PV installations — often combined with EV charging.',
@@ -389,7 +389,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate includes a{' '}
-          <SEOInternalLink href="/guides/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           that automates this calculation and generates documentation you can include with the EIC.

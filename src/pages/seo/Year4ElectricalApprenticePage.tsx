@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment — format, tips, and common failure points.',
@@ -174,7 +174,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">
+          <SEOInternalLink href="/am2-exam-preparation">
             AM2 (Achievement Measurement 2)
           </SEOInternalLink>{' '}
           is the industry-standard practical assessment for electricians completing their
@@ -377,7 +377,7 @@ const sections = [
               <span>
                 <strong>Plan your next qualification</strong> — many newly qualified electricians
                 go straight into the{' '}
-                <SEOInternalLink href="/guides/city-guilds-2391">
+                <SEOInternalLink href="/city-guilds2391">
                   C&G 2391 Inspection and Testing
                 </SEOInternalLink>{' '}
                 qualification to broaden their scope. Others pursue specialist qualifications in EV
@@ -531,7 +531,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Research local rates for qualified electricians — both employed and self-employed.
                   Use the{' '}
-                  <SEOInternalLink href="/guides/electrician-day-rates">
+                  <SEOInternalLink href="/guides/electrician-day-rates-uk">
                     Elec-Mate day rates guide
                   </SEOInternalLink>{' '}
                   and talk to qualified electricians in your area. Do not undersell yourself, but be

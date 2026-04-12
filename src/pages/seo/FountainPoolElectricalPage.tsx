@@ -453,7 +453,7 @@ const sections = [
               <span>
                 <strong>Outdoor socket outlets</strong> — socket outlets used to supply garden water
                 features must be weatherproof, RCD-protected, and installed in accordance with the{' '}
-                <SEOInternalLink href="/guides/outdoor-electrical">
+                <SEOInternalLink href="/guides/outdoor-electrical-installations">
                   outdoor electrical installation requirements
                 </SEOInternalLink>
                 . Plugs and cables must be rated for outdoor use. Extension leads used outdoors must
@@ -508,7 +508,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Annual Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Commercial fountain installations require annual periodic inspection. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to offer annual maintenance contracts to commercial property managers and

@@ -204,7 +204,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> is issued after
+          The <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued after
           new installation work or a significant alteration to confirm that the work complies with
           BS 7671 at the time of completion. It is required for all notifiable work under{' '}
           <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> of
@@ -301,7 +301,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/tools/ev-charger-certificate">
+          <SEOInternalLink href="/ev-charger-certificate">
             EV charger installations
           </SEOInternalLink>{' '}
           require a dedicated circuit and therefore a full Electrical Installation Certificate
@@ -676,7 +676,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Electrical Installation Certificates for new work and significant alterations.',
     icon: FileText,
@@ -690,7 +690,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/ev-charger-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charger Certificate',
     description: 'Dedicated EV charger installation certificate with Section 722 compliance.',
     icon: Car,

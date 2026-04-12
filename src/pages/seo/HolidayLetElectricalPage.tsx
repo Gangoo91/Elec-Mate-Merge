@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/pat-testing',
+    href: '/guides/pat-testing-guide-uk',
     title: 'PAT Testing Guide',
     description: 'When PAT testing is required, what it covers, and how often it should be done.',
     icon: ClipboardCheck,
@@ -557,7 +557,7 @@ const sections = [
               <span>
                 <strong>EICR within the past five years</strong> — if you do not have a current
                 EICR, commission one from a{' '}
-                <SEOInternalLink href="/guides/competent-person-schemes">
+                <SEOInternalLink href="/guides/competent-person-scheme-guide">
                   NICEIC, NAPIT, or ELECSA registered electrician
                 </SEOInternalLink>{' '}
                 before the next letting.
@@ -649,7 +649,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Holiday let owners need annual PAT testing, five-yearly EICRs, and ongoing
                   remedial work. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to provide professional quotes on the day and convert inspection clients into

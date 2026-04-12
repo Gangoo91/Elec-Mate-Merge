@@ -2,38 +2,35 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRight, ChevronLeft, ShieldCheck, Sparkles, Zap } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import WalkthroughSlide from '@/components/onboarding/WalkthroughSlide';
-import type { TestimonialData, ScreenshotItem } from '@/components/onboarding/WalkthroughSlide';
-import { Zap, Sparkles, ArrowRight, ShieldCheck, ChevronLeft } from 'lucide-react';
+import type { ScreenshotItem, TestimonialData } from '@/components/onboarding/WalkthroughSlide';
 import { useHaptic } from '@/hooks/useHaptic';
 import { storageSetSync } from '@/utils/storage';
 
 const WALKTHROUGH_KEY = 'walkthrough_completed';
-const SLIDE_DURATION_DEFAULT = 5000; // 5 seconds per slide
-const SLIDE_DURATIONS = [5000, 15000, 5000, 5000]; // Slide 2 longer for feature showcase
+const SLIDE_DURATION_DEFAULT = 6000;
+const SLIDE_DURATIONS = [7000, 12000, 6500, 7000];
 
-/* ── Testimonials — real businesses, real logos ── */
 const testimonials: TestimonialData[] = [
   {
-    quote:
-      "Everything is practical, easy to use, and actually useful on site. It saves time, takes the hassle out of calculations and checks — it's an absolute game-changer.",
+    quote: 'It saves time, takes the hassle out of calculations and checks, and makes day-to-day work smoother.',
     name: 'Cole Humphreys',
     company: 'Corevolt Electrical',
     companyLogo: '/images/testimonials/corevolt.jpg',
     logoBg: '#fff',
   },
   {
-    quote:
-      'Elec-Mate has replaced 2/3 other apps and merged them into one. The AI circuit designer in our handover packs has already won us additional contracts.',
+    quote: 'It has replaced multiple apps for us and the circuit designer has already helped us win more work.',
     name: 'Dan Palmer',
     company: 'Dan Palmer Services',
     companyLogo: '/images/testimonials/dan-palmer.jpg',
     logoBg: '#fff',
   },
   {
-    quote:
-      'Really easy to use and keeps everything in one place. The calculation and circuit design features are a big help when pricing jobs on site.',
+    quote: 'Quoting, invoicing and managing jobs all feel easier because everything lives in the same place.',
     name: 'Nathan Perry',
     company: 'NP Electrical Services',
     companyLogo: '/images/testimonials/np-electrical.png',
@@ -41,44 +38,42 @@ const testimonials: TestimonialData[] = [
   },
 ];
 
-/* ── Screenshots — App Store versions (black bg + headlines baked in) ── */
+const heroProof = ['Quotes to certs', 'Training to tools', 'Web, iPhone and Android'];
+
 const solutionScreenshots: ScreenshotItem[] = [
-  { src: '/images/walkthrough/appstore-certs.png', alt: 'Certificates', caption: '' },
-  { src: '/images/walkthrough/appstore-quotes.png', alt: 'Quoting', caption: '' },
-  { src: '/images/walkthrough/appstore-rams.png', alt: 'RAMS', caption: '' },
-  { src: '/images/walkthrough/appstore-ai.png', alt: 'AI', caption: '' },
-  { src: '/images/walkthrough/appstore-designer.png', alt: 'Designer', caption: '' },
-  { src: '/images/walkthrough/appstore-calculators.png', alt: 'Calculators', caption: '' },
-  { src: '/images/walkthrough/appstore-study.png', alt: 'Study', caption: '' },
+  { src: '/images/walkthrough/appstore-dashboard.png', alt: 'Dashboard', caption: 'Platform Home' },
+  { src: '/images/walkthrough/appstore-certs.png', alt: 'Certificates', caption: 'Certificates' },
+  { src: '/images/walkthrough/appstore-quotes.png', alt: 'Quotes', caption: 'Quotes & Invoices' },
+  { src: '/images/walkthrough/appstore-rams.png', alt: 'RAMS', caption: 'RAMS' },
+  { src: '/images/walkthrough/appstore-designer.png', alt: 'Designer', caption: 'Designer' },
+  { src: '/images/walkthrough/appstore-calculators.png', alt: 'Calculators', caption: 'Calculators' },
+  { src: '/images/walkthrough/appstore-study.png', alt: 'Study', caption: 'Study Centre' },
+  { src: '/images/walkthrough/appstore-ai.png', alt: 'Elec-AI', caption: 'Elec-AI' },
 ];
 
-/* ── Per-slide CTA button text ── */
-const ctaTexts = [
-  "See What's Inside",
-  'See What Others Say',
-  'Start Free Trial',
-  "Get Started — It's Free",
-];
+const ctaTexts = ['See What It Covers', 'Why People Switch', 'Continue', 'Go To Landing Page'];
 
-/* ── Slides ── */
 const slides = [
   {
     icon: Zap,
     title: null,
-    titleWords: [] as string[],
-    accentWord: '',
-    description: '',
+    titleWords: ['One', 'Platform', 'for', 'the', 'Trade'],
+    accentWord: 'Platform',
+    description:
+      'Commercial workflows, compliance, study and specialist tools in one connected system for UK electricians.',
     accentColour: '#FACC15',
     variant: 'hero-pain' as const,
-    badgeText: '',
+    badgeText: 'The first look at Elec-Mate',
     heroImage: '/images/walkthrough/appstore-dashboard.png',
+    checkmarks: heroProof,
   },
   {
     icon: Zap,
     title: null,
-    titleWords: [] as string[],
-    accentWord: '',
-    description: '',
+    titleWords: ['Run', 'the', 'Job', 'Without', 'the', 'Tool', 'Chaos'],
+    accentWord: 'Without',
+    description:
+      'See the core platform first, then the specialist tools that make it feel deeper once you are in.',
     accentColour: '#FACC15',
     variant: 'solution-demo' as const,
     screenshots: solutionScreenshots,
@@ -88,7 +83,8 @@ const slides = [
     title: null,
     titleWords: ['Trusted', 'by', 'UK', 'Electricians'],
     accentWord: 'Electricians',
-    description: '',
+    description:
+      'People stay because the platform saves time, sharpens output and removes friction from the week.',
     accentColour: '#FACC15',
     variant: 'proof' as const,
     testimonials,
@@ -96,22 +92,21 @@ const slides = [
   {
     icon: Sparkles,
     title: null,
-    titleWords: ['Try', 'Everything', 'Free', 'for', '7', 'Days'],
-    accentWord: '7 Days',
+    titleWords: ['Start', 'Free', 'and', 'Feel', 'the', 'Difference'],
+    accentWord: 'Free',
     description: '',
     accentColour: '#FACC15',
     variant: 'cta-final' as const,
-    subtitle: 'No commitment. Cancel anytime.',
+    subtitle: 'No charge for 7 days. Cancel in a couple of clicks if it is not right for you.',
     checkmarks: [
-      'All features unlocked',
-      'Cancel anytime from your account',
-      'Takes 30 seconds to sign up',
-      "Card won't be charged for 7 days",
+      'Every feature unlocked from day one',
+      'You will not be charged for 7 days',
+      'Simple signup and role-based setup',
+      'Go from walkthrough to platform to trial in minutes',
     ],
   },
 ];
 
-/* ── Ambient orb component ── */
 const AmbientOrb = ({
   colour,
   size,
@@ -138,16 +133,8 @@ const AmbientOrb = ({
       filter: 'blur(120px)',
       transform: 'translate(-50%, -50%)',
     }}
-    animate={{
-      scale: [1, 1.15, 1],
-      opacity: [0.04, 0.08, 0.04],
-    }}
-    transition={{
-      duration,
-      repeat: Infinity,
-      ease: 'easeInOut',
-      delay,
-    }}
+    animate={{ scale: [1, 1.12, 1], opacity: [0.04, 0.08, 0.04] }}
+    transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay }}
   />
 );
 
@@ -167,14 +154,12 @@ const Walkthrough = () => {
     setIsMobile(window.innerWidth < 768);
   }, []);
 
-  // Preload all walkthrough images so they're cached before the user reaches them
   useEffect(() => {
     const urls = [
-      slides[0].heroImage,
+      '/images/walkthrough/appstore-dashboard.png',
       ...solutionScreenshots.map((s) => s.src),
       ...testimonials.map((t) => t.companyLogo),
-      '/images/walkthrough/appstore-dashboard.png',
-    ].filter(Boolean) as string[];
+    ];
 
     urls.forEach((url) => {
       const img = new Image();
@@ -182,13 +167,11 @@ const Walkthrough = () => {
     });
   }, []);
 
-  // Reset progress when slide changes
   useEffect(() => {
     setElapsed(0);
     lastTimeRef.current = Date.now();
   }, [currentSlide]);
 
-  // Auto-advance timer using requestAnimationFrame
   useEffect(() => {
     if (isPaused || isLastSlide) return;
 
@@ -198,11 +181,10 @@ const Walkthrough = () => {
       const delta = now - lastTimeRef.current;
       lastTimeRef.current = now;
 
-      const dur = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
+      const duration = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
       setElapsed((prev) => {
         const next = prev + delta;
-        if (next >= dur) return dur;
-        return next;
+        return next >= duration ? duration : next;
       });
 
       raf = requestAnimationFrame(tick);
@@ -211,30 +193,29 @@ const Walkthrough = () => {
     lastTimeRef.current = Date.now();
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [isPaused, currentSlide, isLastSlide]);
+  }, [currentSlide, isLastSlide, isPaused]);
 
-  // Auto-advance when timer fills — reset elapsed FIRST to prevent skip
   useEffect(() => {
-    const dur = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
-    if (elapsed >= dur && currentSlide < slides.length - 1) {
+    const duration = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
+    if (elapsed >= duration && currentSlide < slides.length - 1) {
       setElapsed(0);
       lastTimeRef.current = Date.now();
       setDirection(1);
       setCurrentSlide((prev) => prev + 1);
       light();
     }
-  }, [elapsed, currentSlide, light]);
+  }, [currentSlide, elapsed, light]);
 
-  const slideDur = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
-  const progress = Math.min(elapsed / slideDur, 1);
+  const slideDuration = SLIDE_DURATIONS[currentSlide] ?? SLIDE_DURATION_DEFAULT;
+  const progress = Math.min(elapsed / slideDuration, 1);
 
   const completeWalkthrough = useCallback(() => {
     storageSetSync(WALKTHROUGH_KEY, 'true');
   }, []);
 
-  const handleGetStarted = useCallback(() => {
+  const handleContinue = useCallback(() => {
     completeWalkthrough();
-    navigate('/auth/signup');
+    navigate('/');
   }, [completeWalkthrough, navigate]);
 
   const handleLogIn = useCallback(() => {
@@ -261,9 +242,9 @@ const Walkthrough = () => {
   }, [currentSlide, light]);
 
   const goToSlide = useCallback(
-    (i: number) => {
-      setDirection(i > currentSlide ? 1 : -1);
-      setCurrentSlide(i);
+    (index: number) => {
+      setDirection(index > currentSlide ? 1 : -1);
+      setCurrentSlide(index);
       setHasInteracted(true);
       light();
     },
@@ -279,9 +260,8 @@ const Walkthrough = () => {
 
   return (
     <div
-      className="min-h-[100svh] flex flex-col relative overflow-hidden"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-black"
       style={{
-        backgroundColor: '#000000',
         paddingTop: 'env(safe-area-inset-top, 0px)',
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
@@ -290,51 +270,36 @@ const Walkthrough = () => {
       onMouseDown={() => setIsPaused(true)}
       onMouseUp={() => setIsPaused(false)}
     >
-      {/* ── Subtle outer-edge accent glow ── */}
       <div className="absolute inset-0 pointer-events-none">
-        <AmbientOrb
-          colour="#FACC15"
-          size={isMobile ? 180 : 250}
-          top="0%"
-          left="0%"
-          delay={0}
-          duration={6}
-        />
-        <AmbientOrb
-          colour="#FACC15"
-          size={isMobile ? 160 : 220}
-          top="90%"
-          left="95%"
-          delay={3}
-          duration={8}
-        />
+        <AmbientOrb colour="#FACC15" size={isMobile ? 180 : 260} top="0%" left="0%" delay={0} duration={6} />
+        <AmbientOrb colour="#FACC15" size={isMobile ? 180 : 240} top="92%" left="95%" delay={3} duration={8} />
       </div>
 
-      {/* ── Top bar: logo + stories progress ── */}
       <div className="relative z-10 px-5 pt-3">
-        {/* Elec-Mate wordmark */}
-        <div className="flex items-center justify-center mb-3">
+        <div className="mb-3 flex items-center justify-center">
           <span className="text-[15px] font-bold tracking-tight">
             <span className="text-[#FACC15]">Elec-</span>
             <span className="text-white">Mate</span>
           </span>
         </div>
 
-        {/* Stories-style progress bars */}
         <div className="flex gap-1.5">
-          {slides.map((_, i) => (
+          {slides.map((_, index) => (
             <button
-              key={i}
-              onClick={() => goToSlide(i)}
-              className="flex-1 h-[3px] rounded-full bg-white/15 overflow-hidden touch-manipulation"
-              aria-label={`Go to slide ${i + 1}`}
+              key={index}
+              onClick={() => goToSlide(index)}
+              className="h-[3px] flex-1 overflow-hidden rounded-full bg-white/15 touch-manipulation"
+              aria-label={`Go to slide ${index + 1}`}
             >
               <div
-                className="h-full rounded-full"
+                className="h-full rounded-full bg-[#FACC15]"
                 style={{
-                  backgroundColor: '#FACC15',
                   width:
-                    i < currentSlide ? '100%' : i === currentSlide ? `${progress * 100}%` : '0%',
+                    index < currentSlide
+                      ? '100%'
+                      : index === currentSlide
+                        ? `${progress * 100}%`
+                        : '0%',
                   transition: isPaused ? 'none' : undefined,
                 }}
               />
@@ -343,68 +308,57 @@ const Walkthrough = () => {
         </div>
       </div>
 
-      {/* Slide content */}
       <div
         {...swipeHandlers}
-        className="flex-1 flex items-center justify-center touch-manipulation overflow-hidden relative z-10"
+        className="relative z-10 flex flex-1 items-center justify-center overflow-hidden px-1 pt-2 touch-manipulation"
       >
         <AnimatePresence mode="wait" custom={direction}>
           <WalkthroughSlide key={currentSlide} {...slides[currentSlide]} direction={direction} />
         </AnimatePresence>
 
-        {/* ── Swipe hint — slide 1 only, fades after interaction ── */}
         {currentSlide === 0 && !hasInteracted && (
           <motion.div
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 pointer-events-none"
+            className="pointer-events-none absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-1.5"
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 0.5, 0] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 2,
-            }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
           >
-            <ChevronLeft className="w-4 h-4 text-white" />
-            <span className="text-white text-xs font-medium">Swipe to explore</span>
+            <ChevronLeft className="h-4 w-4 text-white" />
+            <span className="text-xs font-medium text-white">Swipe to explore</span>
           </motion.div>
         )}
       </div>
 
-      {/* ── Bottom bar — persistent every slide ── */}
-      <div className="px-6 pb-6 flex-shrink-0 relative z-10">
-        {/* CTA — slides 0-1 advance, slides 2-3 navigate to signup */}
-        <motion.div whileTap={{ scale: 0.97 }} className="relative">
-          {/* Pulsing glow on final slide */}
+      <div className="relative z-10 flex-shrink-0 px-6 pb-5">
+        <motion.div whileTap={{ scale: 0.98 }} className="relative">
           {isLastSlide && (
             <motion.div
-              className="absolute -inset-1 rounded-2xl pointer-events-none"
-              style={{ backgroundColor: '#FACC15' }}
-              animate={{ opacity: [0.15, 0.35, 0.15] }}
+              className="absolute -inset-1 rounded-2xl bg-[#FACC15] pointer-events-none"
+              animate={{ opacity: [0.15, 0.32, 0.15] }}
               transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             />
           )}
+
           <Button
-            onClick={currentSlide <= 1 ? goNext : handleGetStarted}
-            className="relative w-full h-[56px] text-[16px] font-bold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-2xl shadow-[0_4px_24px_rgba(250,204,21,0.3)] touch-manipulation transition-shadow hover:shadow-[0_4px_32px_rgba(250,204,21,0.4)]"
+            onClick={currentSlide < slides.length - 1 ? goNext : handleContinue}
+            className="relative h-[56px] w-full rounded-2xl bg-elec-yellow text-[16px] font-bold text-black shadow-[0_4px_24px_rgba(250,204,21,0.3)] transition-shadow hover:bg-elec-yellow/90 hover:shadow-[0_4px_32px_rgba(250,204,21,0.4)]"
           >
             {ctaTexts[currentSlide]}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </motion.div>
 
-        {/* Secondary links */}
-        <div className="flex items-center justify-between mt-2">
+        <div className="mt-2 flex items-center justify-between">
           <button
             onClick={handleLogIn}
-            className="text-[13px] text-white font-medium py-2 px-1 touch-manipulation min-h-[44px] flex items-center"
+            className="min-h-[44px] px-1 py-2 text-[13px] font-medium text-white touch-manipulation"
           >
             I have an account
           </button>
           {!isLastSlide && (
             <button
               onClick={goNext}
-              className="text-[13px] text-white font-medium py-2 px-1 touch-manipulation min-h-[44px] flex items-center gap-1"
+              className="flex min-h-[44px] items-center gap-1 px-1 py-2 text-[13px] font-medium text-white touch-manipulation"
             >
               Next
               <ArrowRight className="h-3.5 w-3.5" />

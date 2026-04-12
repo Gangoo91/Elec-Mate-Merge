@@ -130,7 +130,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/ev-charger-certificate',
+  url: 'https://elec-mate.com/ev-charger-certificate',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -248,14 +248,14 @@ export default function EVChargerCertificatePage() {
             <p>
               Unlike a standard domestic circuit installation, an EV charger certificate must
               address several additional considerations specific to Section 722. These include the{' '}
-              <SEOInternalLink href="/guides/earthing-arrangements">
+              <SEOInternalLink href="/earthing-arrangements">
                 earthing arrangement assessment (particularly for PME supplies)
               </SEOInternalLink>
               , load management provisions, the type of charging mode, cable sizing for continuous
               duty at maximum load, and the selection of appropriate protective devices. The
               certificate must demonstrate that all of these requirements have been properly
               assessed and met. The underlying{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate
               </SEOInternalLink>{' '}
               form is the basis for EV charger certification.

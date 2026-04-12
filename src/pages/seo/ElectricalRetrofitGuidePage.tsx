@@ -83,7 +83,7 @@ export default function ElectricalRetrofitGuidePage() {
                     particularly where cables are exposed to heat from lighting or run through warm
                     loft spaces. When disturbed during any work, the insulation can crumble away
                     entirely, exposing bare copper conductors. This is invariably coded as{' '}
-                    <SEOInternalLink href="/guides/eicr-observation-codes">
+                    <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                       C1 (Danger Present)
                     </SEOInternalLink>{' '}
                     on an EICR.
@@ -192,7 +192,7 @@ export default function ElectricalRetrofitGuidePage() {
                       <strong className="text-yellow-400">
                         Multiple C1/C2 observations across all circuits
                       </strong>{' '}
-                      — An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
+                      — An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
                       with systemic failures indicates the entire installation has deteriorated
                       beyond economical repair.
                     </span>
@@ -328,7 +328,7 @@ export default function ElectricalRetrofitGuidePage() {
               <p>
                 Earthing deficiencies are among the most common findings during inspections of older
                 properties. The{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements guide
                 </SEOInternalLink>{' '}
                 covers the theory in detail. In a retrofit context, the practical considerations
@@ -470,11 +470,11 @@ export default function ElectricalRetrofitGuidePage() {
               <p>
                 The correct certificate type depends on the scope of work. A consumer unit change
                 with no other alterations requires an{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>
                 . Adding a spur or replacing accessories requires a{' '}
-                <SEOInternalLink href="/guides/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 . A larger retrofit involving multiple new circuits and a consumer unit change
@@ -490,7 +490,7 @@ export default function ElectricalRetrofitGuidePage() {
             <>
               <p>
                 The most effective approach to retrofit work in older properties is to start with a
-                thorough <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
+                thorough <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
                 that identifies every deficiency, then prioritise the remedial work based on safety
                 impact and cost-effectiveness.
               </p>
@@ -637,14 +637,14 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: ShieldCheck,
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'How to carry out and report an EICR.',
           icon: ClipboardCheck,
@@ -658,7 +658,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes with derating factors.',
           icon: Calculator,

@@ -189,7 +189,7 @@ const sections = [
         <p>
           For electricians, this represents the biggest opportunity in a generation. Those who
           develop green skills now — understanding{' '}
-          <SEOInternalLink href="/training/energy-efficiency-course">
+          <SEOInternalLink href="/training/energy-efficiency">
             energy efficiency
           </SEOInternalLink>
           , renewable energy technologies, and sustainable installation practices — will be in the
@@ -240,7 +240,7 @@ const sections = [
           Even <strong>cable sizing</strong> affects energy efficiency. Over-long cable runs with
           undersized conductors increase resistive losses (I squared R losses), wasting energy as
           heat. Using the{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           in Elec-Mate ensures cables are sized for both safety and efficiency.
@@ -272,7 +272,7 @@ const sections = [
                 Solar photovoltaic systems convert sunlight into electricity. A typical domestic
                 system (3.5 to 4kWp) generates 3,000 to 4,000kWh per year, offsetting 30% to 50% of
                 household electricity consumption. The{' '}
-                <SEOInternalLink href="/training/solar-pv-installation">
+                <SEOInternalLink href="/solar-pv-certificate">
                   solar PV installation course
                 </SEOInternalLink>{' '}
                 covers design, DC wiring, inverter selection, and MCS certification.
@@ -473,7 +473,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/energy-efficiency-course',
+    href: '/training/energy-efficiency',
     title: 'Energy Efficiency Course',
     description:
       'Detailed training on LED design, lighting controls, motor efficiency, and Building Regulations Part L compliance.',
@@ -481,7 +481,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/solar-pv-installation',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV system design, DC wiring, inverter selection, and MCS certification training.',
@@ -513,7 +513,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for both safety and efficiency — minimise resistive losses while meeting BS 7671 requirements.',

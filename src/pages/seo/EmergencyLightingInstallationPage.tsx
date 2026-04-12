@@ -450,7 +450,7 @@ const sections = [
                 live feed (not switched) so the battery remains charged at all times. The supply
                 must not be on the same circuit as the normal lighting it is designed to replace.
                 The emergency circuit must be protected by a dedicated{' '}
-                <SEOInternalLink href="/guides/rcd-protection-explained">RCD</SEOInternalLink> or
+                <SEOInternalLink href="/guides/rcd-types-explained">RCD</SEOInternalLink> or
                 RCBO.
               </span>
             </li>

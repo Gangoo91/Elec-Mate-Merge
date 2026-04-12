@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Detailed guide to the AM2 practical assessment with task breakdowns.',
     icon: Award,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'End-Point Assessment preparation for Level 3 electrical apprentices.',
     icon: Target,
@@ -161,8 +161,8 @@ const sections = [
           <SEOInternalLink href="/training/inspection-and-testing">
             2391 (Inspection and Testing)
           </SEOInternalLink>
-          , the <SEOInternalLink href="/guides/am2-exam-preparation">AM2</SEOInternalLink>, or the{' '}
-          <SEOInternalLink href="/guides/epa-preparation">EPA</SEOInternalLink>, flashcards
+          , the <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink>, or the{' '}
+          <SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>, flashcards
           transform revision from a passive, frustrating process into an active, efficient one.
         </p>
       </>
@@ -337,7 +337,7 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/earthing-arrangements-explained">
+                  <SEOInternalLink href="/earthing-arrangements">
                     Earthing arrangements:
                   </SEOInternalLink>
                 </strong>{' '}

@@ -163,7 +163,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 The <strong>Defect Code AI</strong> lets you describe a defect in plain English and
                 the AI assigns the correct observation code (C1, C2, C3, or FI), cites the specific
                 BS 7671 regulation, and writes a professionally worded observation. See our{' '}
-                <SEOInternalLink href="/guides/eicr-observation-codes">
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   EICR observation codes guide
                 </SEOInternalLink>{' '}
                 for more on classification.
@@ -192,7 +192,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 verification, maximum demand, diversity factors, conduit and trunking fill rates,
                 earth fault loop impedance checks, prospective fault current, and more. All
                 referencing BS 7671:2018+A3:2024 tables. See the full{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>
                 .

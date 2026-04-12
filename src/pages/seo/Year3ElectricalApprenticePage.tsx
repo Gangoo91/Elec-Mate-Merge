@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment with tips from electricians who have passed.',
@@ -352,7 +352,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">
+          <SEOInternalLink href="/am2-exam-preparation">
             AM2 (Achievement Measurement 2)
           </SEOInternalLink>{' '}
           is the practical assessment that proves you can work as a competent electrician. Although

@@ -108,14 +108,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire — what to expect.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site after a rewire.',
     icon: FileCheck2,
@@ -185,7 +185,7 @@ const sections = [
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
           initial verification testing, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Part P notification. Making good (plastering and decoration) is typically quoted
@@ -260,7 +260,7 @@ const sections = [
     content: (
       <>
         <p>
-          Book an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a
+          Book an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with a
           qualified electrician for a definitive assessment. These warning signs suggest urgent
           action:
         </p>
@@ -373,7 +373,7 @@ const sections = [
         <p>
           Under BS 7671:2018+A3:2024, Regulation 411.3.3 requires RCD protection for all socket
           outlets rated up to 32A. The electrician must issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           on completion.

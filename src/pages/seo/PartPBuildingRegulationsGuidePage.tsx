@@ -93,14 +93,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/competent-person-scheme-electricians',
+    href: '/guides/competent-person-scheme-guide-electricians',
     title: 'Competent Person Scheme Guide',
     description: 'NICEIC, NAPIT, ELECSA — which scheme to join and what membership costs.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates on site from your phone.',
     icon: FileCheck2,
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for new circuits that require Part P notification.',
     icon: Calculator,
@@ -538,7 +538,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site using Elec-Mate. AI board scanning populates the schedule of circuits

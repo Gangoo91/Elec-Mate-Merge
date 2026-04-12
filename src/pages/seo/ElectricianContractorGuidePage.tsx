@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'Complete guide to starting your own electrical business in the UK as a sole trader or limited company.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'AI Tool',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your team. Consistent H&S documentation across all sites.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Health & Safety',
   },
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Guide to building an apprentice evidence portfolio. Help your apprentices meet their qualification requirements.',
@@ -280,7 +280,7 @@ const sections = [
           determine whether a worker is an employee or a self-employed subcontractor, and getting
           this wrong can result in significant tax liabilities and penalties. If you are currently
           self-employed and considering your options, see our{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             electrician self-employed guide
           </SEOInternalLink>{' '}
           for more detail. Use the HMRC Check Employment Status for Tax (CEST) tool to determine the
@@ -492,7 +492,7 @@ const sections = [
           site. Construction insurance is a specialist area, and a broker who understands the
           electrical contracting sector will ensure you have the correct level of cover for your
           specific activities and contractual obligations. For more on starting out, see our{' '}
-          <SEOInternalLink href="/guides/starting-electrical-business">
+          <SEOInternalLink href="/guides/starting-an-electrical-business">
             starting an electrical business guide
           </SEOInternalLink>
           .
@@ -654,7 +654,7 @@ const sections = [
               <span>
                 <strong>Health and safety documentation</strong> — generate RAMS for every job.
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink>{' '}
                 produces site-specific risk assessments from a job description, ensuring your team
                 has compliant H&S documentation on every site.
               </span>

@@ -216,11 +216,11 @@ export default function ThreePhasePowerCalculatorPage() {
               three-phase formulas are essential. The key difference from single-phase is the
               presence of the square root of 3 factor in the power and voltage/current
               relationships. Use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size three-phase cables once the line current is known, and the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify compliance with BS 7671 limits on three-phase distribution circuits.

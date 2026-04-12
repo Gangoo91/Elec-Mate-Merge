@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for commercial lighting installations on your phone.',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size commercial lighting circuits with full correction factors for containment and grouping.',
@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Verify voltage drop on long commercial lighting circuit runs before installation.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A3:2024 with structured training modules on the Elec-Mate platform.',
@@ -353,7 +353,7 @@ const sections = [
         <p>
           When quoting an LED retrofit, include a detailed cost-benefit analysis showing the energy
           savings, maintenance savings, and payback period. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets
           you build a professional quote with materials, labour, and projected savings — and send it
           to the client from your phone.
         </p>
@@ -564,11 +564,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Circuit Design Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing
                   </SEOInternalLink>{' '}
                   and{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop calculators
                   </SEOInternalLink>{' '}
                   to design commercial lighting circuits. Check cable capacity, voltage drop on long
@@ -597,7 +597,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Build detailed commercial lighting quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemise luminaires, cables, controls, labour, and projected energy savings. Send

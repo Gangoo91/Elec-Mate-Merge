@@ -106,14 +106,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Apply Ohm\'s law and voltage drop calculations with real circuits.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/training/apprentice-hub',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,

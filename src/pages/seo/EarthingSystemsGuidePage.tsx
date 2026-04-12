@@ -588,7 +588,7 @@ const sections = [
         <p>
           The earthing system must be correctly identified and documented on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. Errors in earthing
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. Errors in earthing
           system identification are among the most consequential mistakes on electrical
           certificates, as they affect the interpretation of all Zs measurements and the assessment
           of protective device adequacy.

@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Regulations', href: '/guides/bs-7671-18th-edition-guide' },
-  { label: 'Smoke Alarm Regs', href: '/guides/smoke-alarm-regulations-2022' },
+  { label: 'Smoke Alarm Regs', href: '/guides/smoke-alarm-regulations-uk-2022' },
 ];
 
 const tocItems = [
@@ -340,7 +340,7 @@ const sections = [
         <p>
           For mains-wired smoke alarm systems in domestic premises, the design and installation
           should follow{' '}
-          <SEOInternalLink href="/guides/bs5839-fire-alarm-standard">BS 5839-6</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-5839-fire-alarm-standard">BS 5839-6</SEOInternalLink>{' '}
           (the code of practice for fire detection and fire alarm systems in domestic premises).
           This standard covers system grades (A to F), categories (LD1, LD2, LD3), positioning,
           wiring, interlinking, and testing.
@@ -528,7 +528,7 @@ const sections = [
           </SEOInternalLink>{' '}
           registered electricians, a new mains-wired smoke alarm circuit is notifiable work that can
           be self-certified. Issue an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           for the new circuit and notify the work through your scheme provider.

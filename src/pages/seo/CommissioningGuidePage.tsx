@@ -86,7 +86,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Create Electrical Installation Certificates digitally with AI assistance and voice test entry.',
@@ -553,7 +553,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed and
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and
                 signed
               </span>
             </li>
@@ -604,7 +604,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Photograph the new consumer unit. The AI reads MCB/RCBO ratings and circuit labels
                   from the image. The{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> schedule
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> schedule
                   pre-fills with circuit descriptions and protective device details.
                 </p>
               </div>

@@ -74,7 +74,10 @@ with open(f'{outdir}/sitemap-training.xml', 'w') as f:
 with open(f'{outdir}/sitemap-compare.xml', 'w') as f:
     f.write(make_sitemap(compare))
 
-# Generate index
+# Generate index.
+# Keep the index focused on the split sitemap set so search engines have
+# one clear sitemap ownership model instead of overlapping split + catch-all
+# sitemap files for the same URLs.
 with open(f'{outdir}/sitemap.xml', 'w') as f:
     f.write(make_index([
         'sitemap-pages.xml',

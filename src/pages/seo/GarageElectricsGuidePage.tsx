@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size SWA cables for garage supplies with burial depth derating, voltage drop checks, and grouping factors.',
@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop on long SWA cable runs from the consumer unit to the garage sub-board.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete digital Electrical Installation Certificates on your phone for garage installations.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with implications for outbuilding supplies.',
@@ -226,7 +226,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink>{' '}
           must account for the installation method (direct burial), the soil thermal resistivity,
           and the voltage drop over the full cable run. For a typical 10 to 15 metre run supplying a
           light workshop load, 4.0mm 3-core SWA is usually sufficient. For runs exceeding 20 metres
@@ -557,7 +557,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           must cover all new circuits including the SWA cable supply. If you are registered with a
@@ -591,7 +591,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable on site during the survey.{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     Enter the load, cable length, and installation method
                   </SEOInternalLink>{' '}
                   — the calculator applies burial depth derating, soil thermal resistivity, and
@@ -608,7 +608,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the garage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . SWA cable by the metre, trenching labour, sub-board, accessories, testing, and

@@ -19,7 +19,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Exeter', href: '/consumer-unit-replacement-exeter' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete UK guide to fuse box upgrades — costs, regulations, and process.',
     icon: Wrench,
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description: 'Issue EICs on site for consumer unit replacements in Exeter. Instant PDF.',
     icon: ShieldCheck,
@@ -431,7 +431,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site in Exeter</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to complete the certificate and full schedule of test results on your phone while
@@ -447,7 +447,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When an Exeter EICR identifies C2 consumer unit deficiencies, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a quote on the same day. Landlords must act within 28 days — the first

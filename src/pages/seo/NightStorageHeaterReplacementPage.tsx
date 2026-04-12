@@ -179,7 +179,7 @@ const sections = [
           For electricians, storage heater replacements are a growing area of domestic work.
           Understanding the wiring implications, tariff considerations, and Lot 20 requirements is
           essential for providing accurate advice and completing compliant installations. Use the{' '}
-          <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate tool" /> to generate an
+          <SEOAppBridge href="/eic-certificate" label="EIC Certificate tool" /> to generate an
           Electrical Installation Certificate for any new heating circuit.
         </p>
       </>
@@ -571,7 +571,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — generate compliant EICs for new heating circuits with instant PDF export.
@@ -587,7 +587,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor works certificates for small additions like fused spurs for panel heaters.
               </span>
             </li>

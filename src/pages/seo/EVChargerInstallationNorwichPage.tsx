@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate App',
     description: 'Complete EV installation certificates on site with instant PDF export.',
     icon: FileCheck2,
@@ -543,7 +543,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EV Certificates On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete the EIC and OZEV documentation on your phone at the Norwich or Norfolk
@@ -560,7 +560,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional EV charger quotes — including armoured cable, earth
                   electrodes, and consumer unit upgrades — using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include OZEV grant deductions automatically and send a professional PDF quote

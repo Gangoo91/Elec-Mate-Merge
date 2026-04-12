@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Fault Finding', href: '/guides/electrical-fault-finding' },
+  { label: 'Fault Finding', href: '/guides/electrical-fault-finding-guide' },
   { label: 'Security Alarm Electrical Fault', href: '/security-alarm-electrical-fault' },
 ];
 
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description: 'Systematic fault finding for domestic and commercial electrical installations.',
     icon: Search,

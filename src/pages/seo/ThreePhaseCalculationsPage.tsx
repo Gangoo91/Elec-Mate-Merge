@@ -24,7 +24,7 @@ const PAGE_DESCRIPTION =
   'Complete guide to three-phase electrical calculations. Three-phase power formula (P = root 3 x VL x IL x cos phi), line vs phase values, star vs delta, calculating line current, power factor, phase balancing, three-phase voltage drop, and cable sizing with worked examples.';
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Three Phase Calculations', href: '/guides/three-phase-calculations' },
 ];
 
@@ -780,7 +780,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Three-phase mode with correct Appendix 4 tables, correction factors, and voltage drop verification.',
@@ -788,7 +788,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Three-phase voltage drop calculation using mV/A/m values from Appendix 12.',
     icon: Zap,

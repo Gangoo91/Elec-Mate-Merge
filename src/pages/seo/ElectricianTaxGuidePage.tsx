@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/invoice-generator',
+    href: '/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Create and send professional invoices from your phone. Track payments, send reminders, and export for your accountant.',
@@ -273,7 +273,7 @@ const sections = [
         <p>
           The golden rule: if you spent money to earn money, it is probably an allowable expense.
           When in doubt, keep the receipt and ask your accountant. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expense-tracker">expenses tracker</SEOInternalLink> lets you
+          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> lets you
           photograph receipts on the spot, categorise them, and export everything your accountant
           needs at year end.
         </p>
@@ -493,8 +493,8 @@ const sections = [
           Making Tax Digital (MTD) requires all VAT-registered businesses to keep digital records
           and submit VAT returns using compatible software. Spreadsheets alone are no longer
           acceptable — you need digital record-keeping software. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/invoice-generator">invoice app</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/tools/expense-tracker">expenses tracker</SEOInternalLink> provide
+          <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> provide
           the digital records you need for MTD compliance.
         </p>
       </>

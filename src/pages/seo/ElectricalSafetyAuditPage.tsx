@@ -87,7 +87,7 @@ export default function ElectricalSafetyAuditPage() {
               <p>
                 For electricians, understanding the audit process is important because you may be
                 asked to support an audit by providing{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR certificates</SEOInternalLink>
+                <SEOInternalLink href="/tools/eicr-certificate">EICR certificates</SEOInternalLink>
                 , test records, and information about the installations you maintain. Knowing what
                 auditors look for helps you keep your documentation in order and your clients
                 compliant.
@@ -196,7 +196,7 @@ export default function ElectricalSafetyAuditPage() {
                       <strong className="text-yellow-400">BS 7671:2018+A2:2022</strong> — While not
                       legislation, it is the national standard for electrical installations.
                       Compliance with{' '}
-                      <SEOInternalLink href="/guides/bs7671-18th-edition">BS 7671</SEOInternalLink>{' '}
+                      <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
                       is generally accepted as evidence of meeting the legal requirements.
                     </span>
                   </li>
@@ -245,7 +245,7 @@ export default function ElectricalSafetyAuditPage() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <SEOInternalLink href="/guides/eicr-certificate">
+                      <SEOInternalLink href="/tools/eicr-certificate">
                         EICR reports
                       </SEOInternalLink>{' '}
                       for all installations, current and within recommended re-inspection dates
@@ -254,7 +254,7 @@ export default function ElectricalSafetyAuditPage() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <SEOInternalLink href="/guides/eic-certificate">
+                      <SEOInternalLink href="/eic-certificate">
                         EIC certificates
                       </SEOInternalLink>{' '}
                       for all new installations and alterations
@@ -263,7 +263,7 @@ export default function ElectricalSafetyAuditPage() {
                   <li className="flex items-start gap-3">
                     <CheckCircle2 className="w-4 h-4 text-yellow-400 mt-0.5 shrink-0" />
                     <span>
-                      <SEOInternalLink href="/guides/pat-testing">PAT testing</SEOInternalLink>{' '}
+                      <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink>{' '}
                       records for all portable appliances
                     </span>
                   </li>
@@ -453,7 +453,7 @@ export default function ElectricalSafetyAuditPage() {
                 For electricians who maintain the installation, the audit report is valuable because
                 it identifies the client's priorities and budget allocation for electrical work. If
                 the audit has flagged overdue EICRs or un-actioned{' '}
-                <SEOInternalLink href="/guides/eicr-observation-codes">
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   observation codes
                 </SEOInternalLink>
                 , the client is likely to commission that work promptly. Understanding the audit
@@ -475,9 +475,9 @@ export default function ElectricalSafetyAuditPage() {
               </p>
               <p>
                 The most common approach is a rolling programme of{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink> covering a
+                <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> covering a
                 proportion of the installation each year, combined with annual{' '}
-                <SEOInternalLink href="/guides/pat-testing">PAT testing</SEOInternalLink>, quarterly
+                <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink>, quarterly
                 visual inspections of distribution boards and cable routes, and monthly checks of
                 emergency lighting and fire alarm systems.
               </p>
@@ -559,7 +559,7 @@ export default function ElectricalSafetyAuditPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate Guide',
           description:
             'Complete guide to Electrical Installation Condition Reports including when required and observation codes.',
@@ -567,7 +567,7 @@ export default function ElectricalSafetyAuditPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/pat-testing',
+          href: '/guides/pat-testing-guide-uk',
           title: 'PAT Testing Guide',
           description:
             'Portable appliance testing requirements, frequencies, and record keeping for UK workplaces.',
@@ -582,14 +582,14 @@ export default function ElectricalSafetyAuditPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-observation-codes',
+          href: '/guides/eicr-observation-codes-explained',
           title: 'EICR Observation Codes',
           description: 'Understanding C1, C2, C3, and FI observation codes and required actions.',
           icon: BookOpen,
           category: 'Guide',
         },
         {
-          href: '/guides/bs7671-18th-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition Guide',
           description: 'The national standard for electrical installations in the UK.',
           icon: Scale,

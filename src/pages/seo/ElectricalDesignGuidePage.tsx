@@ -27,7 +27,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
-  { label: 'Electrical Design', href: '/guides/electrical-design-guide' },
+  { label: 'Electrical Design', href: '/guides/guides/electrical-design-guide' },
 ];
 
 const tocItems = [
@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit with correction factors, voltage drop, and fault protection.',
@@ -100,14 +100,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/voltage-drop-guide-bs-7671',
+    href: '/guides/voltage-drop-limits-bs-7671',
     title: 'Voltage Drop Guide',
     description: 'Complete guide to voltage drop calculations under BS 7671 with worked examples.',
     icon: Activity,
     category: 'Guide',
   },
   {
-    href: '/guides/correction-factors-guide',
+    href: '/guides/correction-factors-bs-7671',
     title: 'Correction Factors Guide',
     description:
       'How to apply Ca, Cg, Ci, and Cf correction factors for cable sizing under BS 7671.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — characteristics, advantages, and BS 7671 requirements.',
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description: 'Study for C&G 2382 with structured training courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -211,7 +211,7 @@ const sections = [
                 <strong>Earthing arrangement.</strong> Identify the type of earthing system — TN-S,
                 TN-C-S (PME), or TT. This is determined by the DNO and fundamentally affects the
                 design of the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing and bonding
                 </SEOInternalLink>
                 , the selection of protective devices, and the maximum earth fault loop impedance
@@ -351,7 +351,7 @@ const sections = [
         <p>
           After selecting the cable size for current-carrying capacity, you must also verify that it
           meets the{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs-7671">
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">
             voltage drop limits
           </SEOInternalLink>{' '}
           and that the earth fault loop impedance at the extremity of the circuit is low enough for
@@ -487,7 +487,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing and bonding arrangement
           </SEOInternalLink>{' '}
           is a fundamental part of the design. It provides the path for earth fault current to flow,

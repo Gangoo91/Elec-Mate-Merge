@@ -37,7 +37,7 @@ export default function FlukeVsMeggerPage() {
       dateModified="2026-02-13"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
-        { label: 'Fluke vs Megger', href: '/compare/fluke-vs-megger' },
+        { label: 'Fluke vs Megger', href: '/guides/fluke-vs-megger' },
       ]}
       tocItems={[
         { id: 'overview', label: 'Fluke vs Megger Overview' },
@@ -104,7 +104,7 @@ export default function FlukeVsMeggerPage() {
                 Fluke and Megger are the two most recognised names in electrical test instruments
                 among UK electricians. Both brands produce multifunction testers that comply with BS
                 EN 61557 and are capable of performing all the tests required by{' '}
-                <SEOInternalLink href="/guides/bs-7671-18th-edition">BS 7671</SEOInternalLink>. The
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>. The
                 question of which is "better" is one of the most debated topics in the trade — the
                 answer depends entirely on what you value most in a testing instrument.
               </p>
@@ -121,11 +121,11 @@ export default function FlukeVsMeggerPage() {
                 This comparison focuses on the current flagship models from each brand — the Fluke
                 1664FC and the Megger MFT1845. Both are designed for professional electricians
                 carrying out{' '}
-                <SEOInternalLink href="/guides/initial-verification-guide">
+                <SEOInternalLink href="/guides/initial-verification">
                   initial verification
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/guides/periodic-inspection-guide">
+                <SEOInternalLink href="/guides/periodic-inspection">
                   periodic inspection
                 </SEOInternalLink>{' '}
                 under BS 7671:2018+A3:2024. We also reference the Megger MFT1741 (Megger's mid-range
@@ -365,7 +365,7 @@ export default function FlukeVsMeggerPage() {
               <p>
                 Both instruments must be calibrated annually by a UKAS-accredited laboratory. This
                 is the industry-standard interval required by all major{' '}
-                <SEOInternalLink href="/guides/competent-person-scheme">
+                <SEOInternalLink href="/guides/competent-person-scheme-guide">
                   competent person scheme
                 </SEOInternalLink>{' '}
                 providers (NICEIC, NAPIT, ELECSA, STROMA). Using an instrument with expired
@@ -444,7 +444,7 @@ export default function FlukeVsMeggerPage() {
               <p>
                 In terms of learning curve, both instruments are straightforward for anyone who has
                 completed a{' '}
-                <SEOInternalLink href="/courses/city-guilds-2391">
+                <SEOInternalLink href="/city-guilds2391">
                   City and Guilds 2391 inspection and testing course
                 </SEOInternalLink>
                 . If you trained on a Megger (which is more common in UK training centres), you may
@@ -483,7 +483,7 @@ export default function FlukeVsMeggerPage() {
                 Your instrument details (make, model, serial number, calibration date) are stored
                 once and printed on every{' '}
                 <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, and{' '}
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, and{' '}
                 <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works certificate
                 </SEOInternalLink>{' '}
@@ -652,7 +652,7 @@ export default function FlukeVsMeggerPage() {
           category: 'Certificate' as const,
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: '70+ Electrical Calculators',
           description:
             'Zs verification, cable sizing, voltage drop, PFC, and dozens more. Verify your MFT readings on site.',
@@ -662,7 +662,7 @@ export default function FlukeVsMeggerPage() {
       ]}
       ctaHeading="Works with any MFT — auto-validates every reading"
       ctaSubheading="Join 1,000+ UK electricians using Elec-Mate for on-site testing and certification. Enter results from any instrument brand and get instant BS 7671 validation. 7-day free trial, cancel anytime."
-      comparePath="/compare/fluke-vs-megger"
+      comparePath="/guides/fluke-vs-megger"
     />
   );
 }

@@ -177,7 +177,7 @@ const sections = [
           The CSCS scheme exists because construction remains one of the most dangerous industries
           in the UK. The Health and Safety Executive (HSE) reports around 40 fatal injuries and over
           60,000 non-fatal injuries on construction sites each year. The{' '}
-          <SEOInternalLink href="/training/risk-assessment">HS&E test</SEOInternalLink> ensures that
+          <SEOInternalLink href="/guides/risk-assessment-electricians">HS&E test</SEOInternalLink> ensures that
           every worker entering a construction site has a baseline understanding of the hazards they
           will encounter and the precautions required to work safely.
         </p>
@@ -212,7 +212,7 @@ const sections = [
         <p>
           To check which card your qualifications entitle you to, use the CSCS card finder tool on
           the CSCS website or contact the JIB directly. The{' '}
-          <SEOInternalLink href="/training/electrical-apprenticeship">
+          <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
             apprenticeship
           </SEOInternalLink>{' '}
           qualification pathway determines which card you are eligible for at each stage of your
@@ -338,7 +338,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Manual handling technique and risk assessment — a key HS&E test topic for construction workers.',
@@ -354,7 +354,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid-electrical',
+    href: '/training/first-aid-electrical-electrical',
     title: 'First Aid for Electricians',
     description:
       'Emergency first aid response is tested in the HS&E examination and required on construction sites.',
@@ -370,7 +370,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/electrical-apprenticeship',
+    href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:
       'Understanding the apprenticeship pathway and when to apply for your first CSCS card.',

@@ -266,7 +266,7 @@ const sections = [
         </p>
         <p>
           For commercial properties,{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICRs</SEOInternalLink> should be carried
+          <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> should be carried
           out at intervals recommended by BS 7671 — typically every 5 years for commercial premises
           and every 3 years for industrial premises. The certificates must be retained by the duty
           holder (the person responsible for the premises under the Health and Safety at Work etc.

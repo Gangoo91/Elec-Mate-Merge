@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'Complete guide to RCD testing procedures, trip times, and test sequences for UK electricians.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/afdd-guide',
+    href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
     description:
       'Arc fault detection devices — where they are required and how they work alongside RCDs and RCMs.',
@@ -244,7 +244,7 @@ const sections = [
         </div>
         <p>
           In practice, RCM and RCD are often used together. The{' '}
-          <SEOInternalLink href="/guides/rcd-testing-guide">RCD</SEOInternalLink> provides automatic
+          <SEOInternalLink href="/rcd-testing-guide">RCD</SEOInternalLink> provides automatic
           disconnection for fault protection, while the RCM provides early warning of degrading
           insulation or developing faults — allowing planned maintenance before the RCD trips and
           causes an unplanned outage.

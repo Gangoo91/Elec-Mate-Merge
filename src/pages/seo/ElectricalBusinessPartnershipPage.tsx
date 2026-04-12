@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs quickly on site and send professional PDFs to clients.',
     icon: FileCheck2,
@@ -511,8 +511,8 @@ const sections = [
         <p>
           Once the partnership is up and running, shared visibility of jobs, certificates, and
           finances is essential. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/job-scheduling">job scheduling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>, and
+          <SEOInternalLink href="/tools/schedule-manager-electrician">job scheduling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, and
           certificate tools give both partners real-time visibility of the business from their own
           phones.
         </p>
@@ -524,7 +524,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Both Partners, One Business Account</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Both partners can access the same{' '}
-                  <SEOInternalLink href="/tools/job-scheduling">Elec-Mate account</SEOInternalLink>,
+                  <SEOInternalLink href="/tools/schedule-manager-electrician">Elec-Mate account</SEOInternalLink>,
                   see each other's scheduled jobs, issue certificates, and track invoices. No more
                   emailing each other spreadsheets.
                 </p>

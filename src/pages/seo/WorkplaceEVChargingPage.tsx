@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate App',
     description: 'Complete BS 7671 EV charging certificates on your phone with instant PDF export.',
     icon: FileCheck2,
@@ -178,7 +178,7 @@ const sections = [
               <span>
                 <strong>Installation requirements</strong> — a BS 7671 electrical installation
                 certificate must be provided. The{' '}
-                <SEOInternalLink href="/tools/ev-charging-certificate">
+                <SEOInternalLink href="/ev-charger-certificate">
                   EV charging certificate
                 </SEOInternalLink>{' '}
                 must cover the circuit protective device, earthing arrangement, protective
@@ -497,7 +497,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certificates & Documentation On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete BS 7671 Section 722 installation certificates on your phone or tablet
@@ -515,7 +515,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Commercial Projects Confidently</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build detailed multi-line quotes for commercial EV installations — charger

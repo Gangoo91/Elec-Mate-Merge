@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price jobs and send professional quotes from your phone. Include van and travel costs in your pricing.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone from the van. Instant PDF export.',

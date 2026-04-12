@@ -116,7 +116,7 @@ const articleSchema = {
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
-    '@id': 'https://elec-mate.com/guides/earthing-arrangements',
+    '@id': 'https://elec-mate.com/earthing-arrangements',
   },
 };
 
@@ -141,7 +141,7 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 3,
       name: 'Earthing Arrangements',
-      item: 'https://elec-mate.com/guides/earthing-arrangements',
+      item: 'https://elec-mate.com/earthing-arrangements',
     },
   ],
 };
@@ -237,11 +237,11 @@ export default function EarthingArrangementsPage() {
               every circuit, which in turn affects cable sizing, protective device selection, and
               the need for additional protection by RCDs. All earthing details must be recorded on
               your{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate
               </SEOInternalLink>{' '}
               or{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">
+              <SEOInternalLink href="/ev-charger-certificate">
                 EV charger installation certificate
               </SEOInternalLink>{' '}
               at the time of inspection.

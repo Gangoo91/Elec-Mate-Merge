@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for consumer unit replacements on your phone.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote consumer unit replacements with itemised materials, labour, and professional PDF output.',
@@ -315,7 +315,7 @@ const sections = [
           In addition to the installation labour, the cost should include Part P notification
           (typically £35 to £80 through the electrician's competent person scheme) and the time to
           complete the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           .
@@ -495,7 +495,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR recommendation</strong> — if an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> has
                 identified a C2 (potentially dangerous) observation at the consumer unit,
                 replacement is strongly recommended.
               </span>
@@ -617,7 +617,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes with real trade pricing data. The AI cost engineer checks
@@ -634,7 +634,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site using the board scanner to auto-populate circuit details. Voice-entry for

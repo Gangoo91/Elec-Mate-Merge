@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/city-guilds-level-3-guide',
+    href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
     description: 'The 2365 qualification — structure, units, assessment, and how to achieve distinction.',
     icon: BookOpen,
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs professionally from your phone — essential for self-employed electricians.',
     icon: PoundSterling,
@@ -287,7 +287,7 @@ const sections = [
                 <strong>What it covers:</strong> The Level 3 includes units in installation
                 technology, inspection and testing, fault diagnosis, electrical system design,
                 and BS 7671. See the{' '}
-                <SEOInternalLink href="/city-guilds-level-3-guide">
+                <SEOInternalLink href="/city-guilds-level3-guide">
                   City & Guilds 2365 Level 3 guide
                 </SEOInternalLink>{' '}
                 for the full unit breakdown.
@@ -506,7 +506,7 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Business tools:</strong> Use the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">
+                <SEOInternalLink href="/electrical-quoting-app">
                   Elec-Mate quoting app
                 </SEOInternalLink>{' '}
                 to produce professional quotes from your phone, and the EICR and certificate tools

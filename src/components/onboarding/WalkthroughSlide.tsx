@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { type LucideIcon, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { type LucideIcon, CircleCheck, Star } from 'lucide-react';
 
 export interface ScreenshotItem {
   src: string;
@@ -35,30 +35,16 @@ interface WalkthroughSlideProps {
   direction?: number;
 }
 
-/* ── mask-image style for screenshot bottom-fade ── */
-const maskFadeStyle: React.CSSProperties = {
-  maskImage: 'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
-  WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 90%, transparent 100%)',
-};
-
-/* ── Fast crossfade variants — no lag ── */
 const slideVariants = {
-  enter: () => ({
-    opacity: 0,
-  }),
-  center: {
-    opacity: 1,
-  },
-  exit: () => ({
-    opacity: 0,
-  }),
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 const slideTransition = {
-  opacity: { duration: 0.15 },
+  opacity: { duration: 0.16 },
 };
 
-/* ── Word-by-word headline component ── */
 const WordRevealHeadline = ({
   words,
   accentWord,
@@ -72,21 +58,18 @@ const WordRevealHeadline = ({
 }) => {
   if (!words.length) return null;
   const accentWords = accentWord.split(' ');
+
   return (
     <motion.h2 className={className}>
-      {words.map((word, i) => {
+      {words.map((word, index) => {
         const isAccent = accentWords.includes(word);
         return (
           <motion.span
-            key={`${word}-${i}`}
-            initial={{ opacity: 0, y: 12 }}
+            key={`${word}-${index}`}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.3,
-              delay: 0.06 * i,
-              ease: [0.25, 0.1, 0.25, 1],
-            }}
-            className="inline-block mr-[0.3em]"
+            transition={{ duration: 0.28, delay: 0.05 * index, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mr-[0.26em] inline-block"
             style={isAccent ? { color: accentColour } : undefined}
           >
             {word}
@@ -97,7 +80,6 @@ const WordRevealHeadline = ({
   );
 };
 
-/* ── Auto-cycling feature showcase — smooth crossfade dissolve ── */
 const FeatureShowcase = ({
   screenshots,
   accentColour,
@@ -106,60 +88,150 @@ const FeatureShowcase = ({
   accentColour: string;
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const active = screenshots[activeIndex];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % screenshots.length);
-    }, 2500);
+    }, 2600);
     return () => clearInterval(interval);
   }, [screenshots.length]);
 
   return (
-    <div className="flex flex-col items-center w-full">
-      {/* Overlapping crossfade — both images present during transition */}
-      <div className="relative w-full max-w-[320px]" style={{ aspectRatio: '1284/2778' }}>
-        <AnimatePresence initial={false}>
+    <div className="w-full">
+      <div className="mx-auto max-w-[302px]">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.img
-            key={activeIndex}
-            src={screenshots[activeIndex].src}
-            alt={screenshots[activeIndex].alt}
-            initial={{ opacity: 0, scale: 1.02 }}
+            key={active.src}
+            src={active.src}
+            alt={active.alt}
+            initial={{ opacity: 0, scale: 1.01 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute inset-0 w-full h-full object-contain"
+            className="w-full rounded-[2rem]"
             loading="eager"
           />
         </AnimatePresence>
       </div>
 
-      {/* Mini dot indicators for features */}
-      <div className="flex gap-1 mt-3">
-        {screenshots.map((_, i) => (
-          <button key={i} onClick={() => setActiveIndex(i)} className="touch-manipulation p-1">
+      <div className="mt-3 text-center">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.16em]" style={{ color: accentColour }}>
+          {active.caption}
+        </div>
+      </div>
+
+      <div className="mx-auto mt-3 flex justify-center gap-1.5">
+        {screenshots.map((item, index) => {
+          const isActive = item.src === active.src;
+          return (
+            <button
+              key={item.src}
+              onClick={() => setActiveIndex(index)}
+              className="p-1 touch-manipulation"
+              aria-label={`Show ${item.caption}`}
+            >
+              <div
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: isActive ? 16 : 5,
+                  height: 5,
+                  backgroundColor: isActive ? accentColour : 'rgba(255,255,255,0.2)',
+                }}
+              />
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const TestimonialShowcase = ({
+  testimonials,
+  accentColour,
+}: {
+  testimonials: TestimonialData[];
+  accentColour: string;
+}) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = testimonials[activeIndex];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
+
+  return (
+    <div className="mx-auto w-full max-w-sm">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={`${active.name}-${active.company}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.35 }}
+          className="rounded-xl border border-white/[0.08] bg-white/[0.05] p-4 text-left"
+        >
+          <div className="mb-2 flex items-center gap-2.5">
             <div
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: i === activeIndex ? 16 : 4,
-                height: 4,
-                backgroundColor: i === activeIndex ? accentColour : 'rgba(255,255,255,0.2)',
-              }}
-            />
-          </button>
-        ))}
+              className="h-9 w-9 flex-shrink-0 overflow-hidden rounded-lg"
+              style={{ backgroundColor: active.logoBg || '#fff' }}
+            >
+              <img src={active.companyLogo} alt={active.company} className="h-full w-full object-contain" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-[13px] font-bold leading-tight text-white">{active.name}</p>
+              <p className="text-[12px] font-medium" style={{ color: accentColour }}>
+                {active.company}
+              </p>
+            </div>
+            <div className="flex flex-shrink-0 gap-px">
+              {Array.from({ length: 5 }).map((_, starIndex) => (
+                <Star key={starIndex} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+              ))}
+            </div>
+          </div>
+          <p className="text-[12px] leading-[1.55] text-white">&ldquo;{active.quote}&rdquo;</p>
+        </motion.div>
+      </AnimatePresence>
+
+      <div className="mt-3 flex justify-center gap-1.5">
+        {testimonials.map((testimonial, index) => {
+          const isActive = testimonial.name === active.name;
+          return (
+            <button
+              key={testimonial.name}
+              onClick={() => setActiveIndex(index)}
+              className="p-1 touch-manipulation"
+              aria-label={`Show testimonial from ${testimonial.name}`}
+            >
+              <div
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: isActive ? 16 : 5,
+                  height: 5,
+                  backgroundColor: isActive ? accentColour : 'rgba(255,255,255,0.2)',
+                }}
+              />
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 };
 
 const WalkthroughSlide = ({
-  title: _title,
   titleWords,
   accentWord,
   description,
   accentColour,
   variant,
   subtitle,
+  badgeText,
   heroImage,
   screenshots,
   testimonials,
@@ -174,99 +246,49 @@ const WalkthroughSlide = ({
       animate="center"
       exit="exit"
       transition={slideTransition}
-      className="flex flex-col items-center text-center w-full overflow-hidden"
+      className="flex w-full flex-col items-center overflow-hidden text-center"
     >
-      {/* ─── SLIDE 1: HERO — full App Store image ─── */}
       {variant === 'hero-pain' && (
-        <div className="flex flex-col items-center w-full px-6">
-          {heroImage && (
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                type: 'spring',
-                stiffness: 80,
-                damping: 15,
-                delay: 0.1,
-              }}
-              className="relative w-full max-w-[320px]"
-            >
-              <img
-                src={heroImage}
-                alt="Elec-Mate app"
-                className="relative w-full h-auto"
-                style={maskFadeStyle}
-                loading="eager"
-              />
-            </motion.div>
-          )}
-        </div>
-      )}
-
-      {/* ─── SLIDE 2: SOLUTION — auto-cycling single feature showcase ─── */}
-      {variant === 'solution-demo' && (
-        <div className="flex flex-col items-center w-full px-6">
-          {/* Headline */}
-          {titleWords.length > 0 && (
-            <div className="mb-6">
-              <WordRevealHeadline
-                words={titleWords}
-                accentWord={accentWord}
-                accentColour={accentColour}
-                className="text-[28px] leading-[1.15] font-extrabold text-white tracking-tight"
-              />
+        <div className="w-full px-6">
+          {badgeText && (
+            <div className="mx-auto inline-flex items-center rounded-full border border-yellow-400/20 bg-yellow-400/8 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-yellow-300">
+              {badgeText}
             </div>
           )}
 
-          {/* Auto-cycling feature showcase — no swipe conflict */}
-          {screenshots && <FeatureShowcase screenshots={screenshots} accentColour={accentColour} />}
-        </div>
-      )}
-
-      {/* ─── SLIDE 3: SOCIAL PROOF ─── */}
-      {variant === 'proof' && (
-        <div className="flex flex-col items-center w-full px-5">
           <WordRevealHeadline
             words={titleWords}
             accentWord={accentWord}
             accentColour={accentColour}
-            className="text-[32px] leading-[1.1] font-extrabold text-white mb-6 tracking-tight"
+            className="mx-auto mt-4 max-w-[10ch] text-[32px] font-extrabold leading-[1.02] tracking-tight text-white"
           />
 
-          {testimonials && (
-            <div className="w-full max-w-sm space-y-2.5">
-              {testimonials.map((t, i) => (
+          {description && (
+            <p className="mx-auto mt-3 max-w-[312px] text-[13px] leading-6 text-white/72">{description}</p>
+          )}
+
+          {heroImage && (
+            <motion.div
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 90, damping: 16, delay: 0.12 }}
+              className="mx-auto mt-5 w-full max-w-[270px]"
+            >
+              <img src={heroImage} alt="Elec-Mate platform preview" className="w-full" loading="eager" />
+            </motion.div>
+          )}
+
+          {checkmarks && (
+            <div className="mx-auto mt-4 flex max-w-sm flex-wrap justify-center gap-2">
+              {checkmarks.map((item, index) => (
                 <motion.div
-                  key={t.name}
-                  initial={{ opacity: 0, y: 20 }}
+                  key={item}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25, delay: 0.08 * i }}
-                  className="w-full rounded-xl bg-white/[0.05] border border-white/[0.08] p-4 text-left"
+                  transition={{ delay: 0.12 + index * 0.06 }}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-[11px] font-medium text-white/86"
                 >
-                  <div className="flex items-center gap-2.5 mb-2">
-                    <div
-                      className="w-9 h-9 rounded-lg overflow-hidden flex-shrink-0"
-                      style={{ backgroundColor: t.logoBg || '#fff' }}
-                    >
-                      <img
-                        src={t.companyLogo}
-                        alt={t.company}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-white text-[13px] font-bold leading-tight">{t.name}</p>
-                      <p className="text-[12px] font-medium" style={{ color: accentColour }}>
-                        {t.company}
-                      </p>
-                    </div>
-                    <div className="flex gap-px flex-shrink-0">
-                      {Array.from({ length: 5 }).map((_, j) => (
-                        <Star key={j} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-white text-[12px] leading-[1.5]">&ldquo;{t.quote}&rdquo;</p>
+                  {item}
                 </motion.div>
               ))}
             </div>
@@ -274,67 +296,83 @@ const WalkthroughSlide = ({
         </div>
       )}
 
-      {/* ─── SLIDE 4: CTA FINAL ─── */}
+      {variant === 'solution-demo' && (
+        <div className="w-full px-6">
+          <WordRevealHeadline
+            words={titleWords}
+            accentWord={accentWord}
+            accentColour={accentColour}
+            className="mx-auto max-w-[11ch] text-[29px] font-extrabold leading-[1.08] tracking-tight text-white"
+          />
+          {description && (
+            <p className="mx-auto mt-3 max-w-[312px] text-[13px] leading-6 text-white/72">{description}</p>
+          )}
+
+          {screenshots && <div className="mt-5"><FeatureShowcase screenshots={screenshots} accentColour={accentColour} /></div>}
+        </div>
+      )}
+
+      {variant === 'proof' && (
+        <div className="w-full px-5">
+          <WordRevealHeadline
+            words={titleWords}
+            accentWord={accentWord}
+            accentColour={accentColour}
+            className="mx-auto max-w-[10ch] text-[31px] font-extrabold leading-[1.08] tracking-tight text-white"
+          />
+          {description && (
+            <p className="mx-auto mt-3 max-w-[312px] text-[13px] leading-6 text-white/72">{description}</p>
+          )}
+
+          {testimonials && <div className="mt-5"><TestimonialShowcase testimonials={testimonials} accentColour={accentColour} /></div>}
+        </div>
+      )}
+
       {variant === 'cta-final' && (
-        <div className="flex flex-col items-center px-8 w-full relative">
-          {/* Faded background screenshot for visual depth */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.06]">
+        <div className="relative flex w-full flex-col items-center px-8">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.06]">
             <img
               src="/images/walkthrough/appstore-dashboard.png"
               alt=""
-              className="w-full max-w-[400px] h-auto"
-              style={maskFadeStyle}
+              className="w-full max-w-[400px]"
             />
           </div>
 
-          <div className="relative z-10 flex flex-col items-center w-full">
+          <div className="relative z-10 flex w-full flex-col items-center">
             <WordRevealHeadline
               words={titleWords}
               accentWord={accentWord}
               accentColour={accentColour}
-              className="text-[28px] leading-[1.15] font-extrabold text-white mb-2 tracking-tight"
+              className="mx-auto max-w-[10ch] text-[29px] font-extrabold leading-[1.1] tracking-tight text-white"
             />
             {subtitle && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.3 }}
-                className="text-white text-[15px] mb-8 max-w-[280px] leading-relaxed"
+                transition={{ duration: 0.28, delay: 0.24 }}
+                className="mt-3 max-w-[290px] text-[14px] leading-6 text-white/78"
               >
                 {subtitle}
               </motion.p>
             )}
 
             {checkmarks && (
-              <div className="space-y-4 w-full max-w-xs">
-                {checkmarks.map((item, i) => (
+              <div className="mt-6 w-full max-w-xs space-y-3">
+                {checkmarks.map((item, index) => (
                   <motion.div
                     key={item}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 120,
-                      damping: 15,
-                      delay: 0.08 * i,
-                    }}
-                    className="flex items-center gap-3.5 text-left"
+                    transition={{ type: 'spring', stiffness: 120, damping: 15, delay: 0.08 * index }}
+                    className="flex items-start gap-3.5 text-left"
                   >
                     <div
-                      className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                      className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
                       style={{ backgroundColor: accentColour }}
                     >
-                      <svg
-                        className="w-3.5 h-3.5 text-black"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
+                      <CircleCheck className="h-3.5 w-3.5 text-black" />
                     </div>
-                    <span className="text-[15px] text-white font-medium">{item}</span>
+                    <span className="text-[14px] font-medium text-white">{item}</span>
                   </motion.div>
                 ))}
               </div>

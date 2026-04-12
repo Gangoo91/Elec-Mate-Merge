@@ -88,7 +88,7 @@ export default function EmployerElectricalPlatformPage() {
                   completing certificates
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   using calculators
                 </SEOInternalLink>
                 , and{' '}
@@ -150,11 +150,11 @@ export default function EmployerElectricalPlatformPage() {
                 spreadsheets, email check-ins, and guesswork with real-time data. You know exactly
                 where each apprentice stands without having to ask them. For more on apprentice
                 training, see our{' '}
-                <SEOInternalLink href="/guides/apprentice-training">
+                <SEOInternalLink href="/apprentice-training">
                   apprentice training guide
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/guides/epa-preparation">
+                <SEOInternalLink href="/epa-preparation">
                   EPA preparation guide
                 </SEOInternalLink>
                 .
@@ -216,7 +216,7 @@ export default function EmployerElectricalPlatformPage() {
                 produced by the team:
               </p>
               <ul className="list-disc pl-6 space-y-2">
-                <li>All certificates across all 8 types in one searchable list</li>
+                <li>All certificates across all 16 types in one searchable list</li>
                 <li>Status tracking — draft, in progress, completed, delivered, and archived</li>
                 <li>
                   Quality review — managers can review certificates before they are sent to clients
@@ -236,6 +236,14 @@ export default function EmployerElectricalPlatformPage() {
                 completed six months ago, you can find it instantly by property address, client
                 name, or date — without asking the electrician who did the job to dig through their
                 phone.
+              </p>
+              <p>
+                For companies trying to tighten commercial control as well as technical control,
+                certificate oversight works best when paired with the{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
+                and the <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>.
+                That way managers can see not just what was certified, but how that work turned into
+                revenue and whether follow-on remedials were actually quoted and billed.
               </p>
             </>
           ),
@@ -361,7 +369,7 @@ export default function EmployerElectricalPlatformPage() {
           icon: FileCheck2,
           title: 'Certificate Oversight',
           description:
-            'Review, approve, and track all certificates across 8 types. Search by property, client, date, or electrician.',
+            'Review, approve, and track all certificates across 16 types. Search by property, client, date, or electrician.',
         },
         {
           icon: Shield,
@@ -447,6 +455,14 @@ export default function EmployerElectricalPlatformPage() {
           category: 'AI Tools',
         },
         {
+          href: '/electrical-quoting-app',
+          title: 'Electrical Quoting App',
+          description:
+            'Extend employer oversight beyond certificates into pricing consistency, quotes, and commercial workflow.',
+          icon: TrendingUp,
+          category: 'Business',
+        },
+        {
           href: '/tools/offline-electrical-app',
           title: 'Offline Electrical App',
           description:
@@ -463,7 +479,7 @@ export default function EmployerElectricalPlatformPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators available to your entire team — cable sizing, voltage drop, and more.',

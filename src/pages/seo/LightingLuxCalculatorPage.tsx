@@ -86,7 +86,7 @@ export default function LightingLuxCalculatorPage() {
                 for indoor workplaces. These standards specify the maintained illuminance — the
                 minimum average lux level on the working plane — for every type of room and task.
                 The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   Elec-Mate calculator suite
                 </SEOInternalLink>{' '}
                 includes all these values built in, so you do not need to look them up manually.
@@ -161,7 +161,7 @@ export default function LightingLuxCalculatorPage() {
               <p>
                 These values should be treated as minimums. Many designers specify higher levels for
                 premium fit-outs or where the client has specific requirements. For{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 on lighting circuits, the total wattage derived from the lux calculation feeds
@@ -203,7 +203,7 @@ export default function LightingLuxCalculatorPage() {
                 select the room type, input the luminaire lumen output, and the calculator returns
                 the number of fittings needed. It also calculates the achieved lux level if you want
                 to check a fixed number of luminaires against the target. This pairs well with the{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 when sizing the supply for a lighting-heavy installation.
@@ -245,7 +245,7 @@ export default function LightingLuxCalculatorPage() {
               </p>
               <p>
                 Understanding room index is also important when working with{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for long lighting circuit runs in large commercial spaces.
@@ -409,7 +409,7 @@ export default function LightingLuxCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for lighting circuits using BS 7671 current-carrying capacity tables and correction factors.',
@@ -417,7 +417,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/voltage-drop-calculator',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Check voltage drop on long lighting circuit runs to ensure lamps operate at their rated voltage.',
@@ -425,7 +425,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total maximum demand including lighting loads with IET diversity allowances.',
@@ -441,7 +441,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',
@@ -449,7 +449,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Tools',
         },
         {
-          href: '/guides/emergency-lighting-certificate',
+          href: '/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description:
             'Complete emergency lighting certificates with built-in BS 5266-1 compliance checks.',

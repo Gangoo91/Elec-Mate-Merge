@@ -104,14 +104,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for rewires on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote flat rewires with itemised materials, labour, and professional PDF output.',
     icon: Calculator,
@@ -136,7 +136,7 @@ const sections = [
             BS 7671:2018+A3:2024
           </SEOInternalLink>
           . It is typically necessary when the existing wiring is more than 25 to 30 years old, when
-          an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has identified
+          an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> has identified
           serious deficiencies, or as part of a major renovation.
         </p>
         <p>
@@ -461,11 +461,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Use Elec-Mate for Quoting and Certs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Build itemised rewire quotes with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on site with
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on site with
                   voice-entry test results and PDF export.
                 </p>
               </div>

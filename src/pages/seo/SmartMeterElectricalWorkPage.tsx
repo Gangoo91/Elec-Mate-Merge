@@ -97,7 +97,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Full guide to replacing a consumer unit — what to expect, cost, and certification.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-fault-finding-guide',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
@@ -120,14 +120,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Generate Electrical Installation Certificates on your phone with Elec-Mate.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/minor-works',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Issue compliant MWCs instantly on your phone.',
     icon: FileCheck2,
@@ -216,7 +216,7 @@ const sections = [
         </div>
         <p>
           For guidance on safe isolation procedures, see our{' '}
-          <SEOInternalLink href="/electrical-fault-finding-guide">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             electrical fault finding guide
           </SEOInternalLink>
           .

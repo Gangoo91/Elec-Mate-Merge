@@ -88,6 +88,7 @@ interface DiagramCanvasProps {
   selectedSymbolId: string | null;
   objects: CanvasObject[];
   onObjectsChange: (objects: CanvasObject[]) => void;
+  onSelectionChange?: (object: CanvasObject | null) => void;
   gridEnabled: boolean;
   snapEnabled: boolean;
   headerHeight?: number;
@@ -95,6 +96,7 @@ interface DiagramCanvasProps {
   onWallTapped?: (wallId: string, currentLength: number, screenPos: { x: number; y: number }) => void;
   onRotate?: () => void;
   onToolChange?: (tool: string) => void;
+  showMinimap?: boolean;
 }
 
 /** Convert pixel distance to metres string */
@@ -102,8 +104,48 @@ const pxToMetres = (px: number): string => {
   return (Math.abs(px) / SCALE).toFixed(2) + 'm';
 };
 
+const WALL_SNAP_THRESHOLD = 32;
+const WALL_MOUNT_OFFSET = 14;
+const WALL_END_MARGIN = 12;
+const WALL_SNAP_GUIDE_COLOUR = '#EAB308';
+const WALL_POINT_MATCH_TOLERANCE = 6;
+
+const serialiseCanvasObject = (obj: CanvasObject): string => JSON.stringify(obj);
+
+const isWallMountSymbol = (symbolId?: string | null): boolean => {
+  if (!symbolId) return false;
+  const sym = symbolRegistry.find((entry) => entry.id === symbolId);
+  return !!sym && (sym.mountType === 'wall' || sym.mountType === 'panel');
+};
+
+const cloneCanvasObjectWithOffset = (obj: CanvasObject, offset = 20): CanvasObject => ({
+  ...obj,
+  id: `obj-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  x: obj.x + offset,
+  y: obj.y + offset,
+  points: obj.points?.map((point) => ({
+    x: point.x + offset,
+    y: point.y + offset,
+  })),
+});
+
+interface WallSnapPlacement {
+  x: number;
+  y: number;
+  rotation: number;
+  projectedX: number;
+  projectedY: number;
+  wallId: string;
+}
+
+const pointsMatch = (
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  tolerance = WALL_POINT_MATCH_TOLERANCE
+) => Math.abs(a.x - b.x) <= tolerance && Math.abs(a.y - b.y) <= tolerance;
+
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
-  ({ activeTool, selectedSymbolId, objects, onObjectsChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange }, ref) => {
+  ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvasRef = useRef<FabricCanvas | null>(null);
     // Drawing state as refs — avoids stale closures in event handlers and prevents
@@ -112,6 +154,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const startPointRef = useRef<{ x: number; y: number } | null>(null);
     const undoStack = useRef<CanvasObject[][]>([]);
     const redoStack = useRef<CanvasObject[][]>([]);
+    const clipboardRef = useRef<CanvasObject[]>([]);
+    const wallSnapPreviewIdsRef = useRef<Set<string>>(new Set());
+    const wallAdornmentIdsRef = useRef<Set<string>>(new Set());
+    const selectedWallIdRef = useRef<string | null>(null);
+    const wallDragPreviewRef = useRef<CanvasObject[] | null>(null);
     const dimensionStartRef = useRef<{ x: number; y: number } | null>(null);
     const cableStartIdRef = useRef<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);
@@ -128,6 +175,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const onWallTappedRef = useRef(onWallTapped);
     const onToolChangeRef = useRef(onToolChange);
     const onObjectsChangeRef = useRef(onObjectsChange);
+    const onSelectionChangeRef = useRef(onSelectionChange);
     const gridEnabledRef = useRef(gridEnabled);
 
     // Sync refs on every render (synchronous, before effects fire)
@@ -138,23 +186,37 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     onWallTappedRef.current = onWallTapped;
     onToolChangeRef.current = onToolChange;
     onObjectsChangeRef.current = onObjectsChange;
+    onSelectionChangeRef.current = onSelectionChange;
     gridEnabledRef.current = gridEnabled;
 
+    const getRenderableObjects = () => wallDragPreviewRef.current ?? objectsRef.current;
+
     // Collect all wall endpoints from current objects for snapping
-    const getWallEndpoints = (): { x: number; y: number }[] => {
+    const getWallEndpoints = (
+      items = getRenderableObjects(),
+      exclude: { x: number; y: number }[] = []
+    ): { x: number; y: number }[] => {
       const endpoints: { x: number; y: number }[] = [];
-      for (const obj of objectsRef.current) {
+      for (const obj of items) {
         if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
-          endpoints.push(obj.points[0]);
-          endpoints.push(obj.points[obj.points.length - 1]);
+          [obj.points[0], obj.points[obj.points.length - 1]].forEach((point) => {
+            if (!exclude.some((excluded) => pointsMatch(point, excluded))) {
+              endpoints.push(point);
+            }
+          });
         }
       }
       return endpoints;
     };
 
     // Find nearest wall endpoint within SNAP_DISTANCE
-    const findSnapEndpoint = (x: number, y: number): { x: number; y: number } | null => {
-      const endpoints = getWallEndpoints();
+    const findSnapEndpoint = (
+      x: number,
+      y: number,
+      items = getRenderableObjects(),
+      exclude: { x: number; y: number }[] = []
+    ): { x: number; y: number } | null => {
+      const endpoints = getWallEndpoints(items, exclude);
       let closest: { x: number; y: number } | null = null;
       let closestDist = SNAP_DISTANCE;
       for (const ep of endpoints) {
@@ -165,6 +227,366 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
       }
       return closest;
+    };
+
+    const buildWallEndpointUpdate = (
+      items: CanvasObject[],
+      wallId: string,
+      endpointIndex: 0 | 1,
+      nextPoint: { x: number; y: number }
+    ) => {
+      const wall = items.find((obj) => obj.id === wallId && obj.type === 'wall');
+      if (!wall?.points || wall.points.length < 2) {
+        return items;
+      }
+
+      const originalPoint = wall.points[endpointIndex];
+      const otherPoint = wall.points[endpointIndex === 0 ? 1 : 0];
+      const isHorizontal = Math.abs(otherPoint.x - originalPoint.x) >= Math.abs(otherPoint.y - originalPoint.y);
+      const constrainedPoint = {
+        x: isHorizontal ? nextPoint.x : otherPoint.x,
+        y: isHorizontal ? otherPoint.y : nextPoint.y,
+      };
+
+      const snappedPoint = findSnapEndpoint(
+        constrainedPoint.x,
+        constrainedPoint.y,
+        items,
+        [originalPoint, otherPoint]
+      ) || constrainedPoint;
+
+      return items.map((obj) => {
+        if (obj.type !== 'wall' || !obj.points || obj.points.length < 2) {
+          return obj;
+        }
+
+        const points = [...obj.points];
+        let changed = false;
+
+        if (obj.id === wallId) {
+          points[endpointIndex] = snappedPoint;
+          changed = true;
+        } else {
+          if (pointsMatch(points[0], originalPoint)) {
+            points[0] = snappedPoint;
+            changed = true;
+          }
+          if (pointsMatch(points[1], originalPoint)) {
+            points[1] = snappedPoint;
+            changed = true;
+          }
+        }
+
+        return changed
+          ? {
+              ...obj,
+              x: points[0].x,
+              y: points[0].y,
+              points,
+            }
+          : obj;
+      });
+    };
+
+    const getBoundsForObjects = (items: CanvasObject[]) => {
+      if (items.length === 0) return null;
+
+      let minX = Infinity;
+      let minY = Infinity;
+      let maxX = -Infinity;
+      let maxY = -Infinity;
+
+      for (const obj of items) {
+        if (obj.points && obj.points.length > 0) {
+          for (const point of obj.points) {
+            minX = Math.min(minX, point.x);
+            minY = Math.min(minY, point.y);
+            maxX = Math.max(maxX, point.x);
+            maxY = Math.max(maxY, point.y);
+          }
+        } else {
+          const width = obj.width || 40;
+          const height = obj.height || 40;
+          minX = Math.min(minX, obj.x);
+          minY = Math.min(minY, obj.y);
+          maxX = Math.max(maxX, obj.x + width);
+          maxY = Math.max(maxY, obj.y + height);
+        }
+      }
+
+      if (!isFinite(minX)) return null;
+      return {
+        minX,
+        minY,
+        maxX,
+        maxY,
+        centreX: (minX + maxX) / 2,
+        centreY: (minY + maxY) / 2,
+      };
+    };
+
+    const clearWallSnapPreview = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas || wallSnapPreviewIdsRef.current.size === 0) return;
+
+      const previewObjects = canvas.getObjects().filter((obj) => {
+        const previewId = (obj as any).wallSnapPreviewId;
+        return previewId && wallSnapPreviewIdsRef.current.has(previewId);
+      });
+
+      previewObjects.forEach((obj) => canvas.remove(obj));
+      wallSnapPreviewIdsRef.current.clear();
+    };
+
+    const renderWallSnapPreview = (placement: WallSnapPlacement | null) => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      clearWallSnapPreview();
+      if (!placement) {
+        canvas.renderAll();
+        return;
+      }
+
+      const wall = objectsRef.current.find((obj) => obj.id === placement.wallId);
+      if (!wall?.points || wall.points.length < 2) {
+        canvas.renderAll();
+        return;
+      }
+
+      const [p1, p2] = wall.points;
+      const guideId = `${placement.wallId}-${placement.projectedX}-${placement.projectedY}`;
+      wallSnapPreviewIdsRef.current.add(guideId);
+
+      const guideLine = new Line([p1.x, p1.y, p2.x, p2.y], {
+        stroke: WALL_SNAP_GUIDE_COLOUR,
+        strokeWidth: WALL_THICKNESS + 2,
+        opacity: 0.2,
+        selectable: false,
+        evented: false,
+      });
+      (guideLine as any).wallSnapPreviewId = guideId;
+
+      const projectionDot = new Circle({
+        left: placement.projectedX,
+        top: placement.projectedY,
+        radius: 5,
+        fill: '#FFFFFF',
+        stroke: WALL_SNAP_GUIDE_COLOUR,
+        strokeWidth: 2,
+        originX: 'center',
+        originY: 'center',
+        selectable: false,
+        evented: false,
+      });
+      (projectionDot as any).wallSnapPreviewId = guideId;
+
+      const placementHalo = new Circle({
+        left: placement.x,
+        top: placement.y,
+        radius: 12,
+        fill: 'rgba(234,179,8,0.16)',
+        stroke: WALL_SNAP_GUIDE_COLOUR,
+        strokeWidth: 1,
+        originX: 'center',
+        originY: 'center',
+        selectable: false,
+        evented: false,
+      });
+      (placementHalo as any).wallSnapPreviewId = guideId;
+
+      canvas.add(guideLine);
+      canvas.add(projectionDot);
+      canvas.add(placementHalo);
+      canvas.bringObjectToFront(guideLine);
+      canvas.bringObjectToFront(projectionDot);
+      canvas.bringObjectToFront(placementHalo);
+      canvas.renderAll();
+    };
+
+    const clearWallAdornment = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas || wallAdornmentIdsRef.current.size === 0) return;
+
+      const adornments = canvas.getObjects().filter((obj) => {
+        const adornmentId = (obj as any).wallAdornmentId;
+        return adornmentId && wallAdornmentIdsRef.current.has(adornmentId);
+      });
+
+      adornments.forEach((obj) => canvas.remove(obj));
+      wallAdornmentIdsRef.current.clear();
+    };
+
+    const renderWallAdornment = (wallId: string | null) => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      clearWallAdornment();
+      selectedWallIdRef.current = wallId;
+      if (!wallId) {
+        canvas.renderAll();
+        return;
+      }
+
+      const wall = getRenderableObjects().find((obj) => obj.id === wallId && obj.type === 'wall');
+      if (!wall?.points || wall.points.length < 2) {
+        canvas.renderAll();
+        return;
+      }
+
+      const [p1, p2] = wall.points;
+      const highlightId = `wall-highlight-${wallId}`;
+      wallAdornmentIdsRef.current.add(highlightId);
+
+      const highlight = new Line([p1.x, p1.y, p2.x, p2.y], {
+        stroke: WALL_SNAP_GUIDE_COLOUR,
+        strokeWidth: WALL_THICKNESS + 6,
+        opacity: 0.15,
+        selectable: false,
+        evented: false,
+      });
+      (highlight as any).wallAdornmentId = highlightId;
+
+        const handles = [p1, p2].map((point, endpointIndex) => {
+          const handleId = `wall-handle-${wallId}-${endpointIndex}`;
+          wallAdornmentIdsRef.current.add(handleId);
+          const handle = new Circle({
+            left: point.x,
+            top: point.y,
+            radius: 10,
+            fill: 'rgba(255,255,255,0.96)',
+            stroke: WALL_SNAP_GUIDE_COLOUR,
+            strokeWidth: 2,
+            originX: 'center',
+            originY: 'center',
+            selectable: true,
+            hasControls: false,
+            hasBorders: false,
+            lockScalingX: true,
+            lockScalingY: true,
+            padding: 10,
+            hoverCursor: 'grab',
+            moveCursor: 'grabbing',
+          });
+        (handle as any).wallAdornmentId = handleId;
+        (handle as any).customData = { type: 'wall-handle', wallId, endpointIndex };
+        return handle;
+      });
+
+      canvas.add(highlight);
+      handles.forEach((handle) => canvas.add(handle));
+      canvas.bringObjectToFront(highlight);
+      handles.forEach((handle) => canvas.bringObjectToFront(handle));
+      canvas.renderAll();
+    };
+
+    const redrawWallVisual = (wall: CanvasObject) => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas || wall.type !== 'wall') return;
+
+      const existing = canvas.getObjects().filter((obj) => {
+        const customData = (obj as any).customData;
+        return customData?.id === wall.id || (customData?.parentId === wall.id && customData?.type === 'wall-label');
+      });
+      existing.forEach((obj) => canvas.remove(obj));
+      addObjectToCanvas(wall);
+    };
+
+    const getViewportCentre = () => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return { x: 0, y: 0 };
+
+      const width = canvas.width || 0;
+      const height = canvas.height || 0;
+      const zoom = canvas.getZoom() || 1;
+      const vpt = canvas.viewportTransform || [1, 0, 0, 1, 0, 0];
+
+      return {
+        x: (width / 2 - vpt[4]) / zoom,
+        y: (height / 2 - vpt[5]) / zoom,
+      };
+    };
+
+    const getPreferredPlacementCentre = () => {
+      const wallBounds = getBoundsForObjects(objectsRef.current.filter((obj) => obj.type === 'wall'));
+      if (wallBounds) {
+        return { x: wallBounds.centreX, y: wallBounds.centreY };
+      }
+
+      const objectBounds = getBoundsForObjects(objectsRef.current);
+      if (objectBounds) {
+        return { x: objectBounds.centreX, y: objectBounds.centreY };
+      }
+
+      return getViewportCentre();
+    };
+
+    const getWallSnapPlacement = (
+      x: number,
+      y: number,
+      symbolId?: string | null
+    ): WallSnapPlacement | null => {
+      if (!isWallMountSymbol(symbolId)) return null;
+
+      const wallObjects = objectsRef.current.filter(
+        (obj) => obj.type === 'wall' && obj.points && obj.points.length >= 2
+      );
+
+      let best:
+        | (WallSnapPlacement & { distance: number })
+        | null = null;
+
+      for (const wall of wallObjects) {
+        const p1 = wall.points![0];
+        const p2 = wall.points![1];
+        const dx = p2.x - p1.x;
+        const dy = p2.y - p1.y;
+        const length = Math.hypot(dx, dy);
+        if (length === 0) continue;
+
+        const unitX = dx / length;
+        const unitY = dy / length;
+        const normalX = -unitY;
+        const normalY = unitX;
+
+        let t = ((x - p1.x) * dx + (y - p1.y) * dy) / (length * length);
+        const marginRatio = Math.min(WALL_END_MARGIN / length, 0.2);
+        t = Math.max(marginRatio, Math.min(1 - marginRatio, t));
+
+        const projX = p1.x + t * dx;
+        const projY = p1.y + t * dy;
+        const distance = Math.hypot(x - projX, y - projY);
+
+        if (distance > WALL_SNAP_THRESHOLD) continue;
+
+        const side = (x - projX) * normalX + (y - projY) * normalY >= 0 ? 1 : -1;
+        const snapX = projX + normalX * WALL_MOUNT_OFFSET * side;
+        const snapY = projY + normalY * WALL_MOUNT_OFFSET * side;
+        const rotation = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+
+        if (!best || distance < best.distance) {
+          best = {
+            x: snapX,
+            y: snapY,
+            rotation,
+            projectedX: projX,
+            projectedY: projY,
+            wallId: wall.id,
+            distance,
+          };
+        }
+      }
+
+      return best
+        ? {
+            x: best.x,
+            y: best.y,
+            rotation: best.rotation,
+            projectedX: best.projectedX,
+            projectedY: best.projectedY,
+            wallId: best.wallId,
+          }
+        : null;
     };
 
     // Snap wall direction to horizontal/vertical if within threshold
@@ -221,15 +643,52 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.renderAll();
     };
 
+    const focusOnPoint = (x: number, y: number, zoom?: number) => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      const width = canvas.width || 0;
+      const height = canvas.height || 0;
+      const targetZoom = zoom ?? canvas.getZoom() ?? 1;
+      canvas.viewportTransform = [
+        targetZoom,
+        0,
+        0,
+        targetZoom,
+        width / 2 - x * targetZoom,
+        height / 2 - y * targetZoom,
+      ];
+      setZoomLevel(targetZoom);
+      canvas.renderAll();
+    };
+
     // Expose methods to parent via ref
     useImperativeHandle(ref, () => ({
       getCanvasElement: (): HTMLCanvasElement | null => {
         return canvasRef.current;
       },
       getFabricCanvas: () => fabricCanvasRef.current,
+      getPlacementCenter: () => getPreferredPlacementCentre(),
       undo,
       redo,
       zoomToFit,
+      focusOnPoint,
+      focusOnObject: (id: string) => {
+        const target = objectsRef.current.find((obj) => obj.id === id);
+        if (!target) return;
+
+        if (target.points && target.points.length > 0) {
+          const xs = target.points.map((point) => point.x);
+          const ys = target.points.map((point) => point.y);
+          focusOnPoint(
+            (Math.min(...xs) + Math.max(...xs)) / 2,
+            (Math.min(...ys) + Math.max(...ys)) / 2
+          );
+          return;
+        }
+
+        focusOnPoint(target.x + (target.width || 0) / 2, target.y + (target.height || 0) / 2);
+      },
       handleRotate,
       deleteSelected: () => {
         const canvas = fabricCanvasRef.current;
@@ -250,12 +709,21 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             canvas.renderAll();
             onObjectsChangeRef.current(objectsRef.current.filter(o => o.id !== customData.id));
           }
+        } else if (selectedWallIdRef.current) {
+          const wallId = selectedWallIdRef.current;
+          clearWallAdornment();
+          selectedWallIdRef.current = null;
+          onObjectsChangeRef.current(objectsRef.current.filter((obj) => obj.id !== wallId));
+          onSelectionChangeRef.current?.(null);
         }
       },
       forceFullRedraw: () => {
         // Clear rendered IDs + clear all non-grid objects from canvas
         const canvas = fabricCanvasRef.current;
         if (!canvas) return;
+        wallDragPreviewRef.current = null;
+        clearWallSnapPreview();
+        clearWallAdornment();
         const nonGrid = canvas.getObjects().filter((obj) => !(obj as any).isGridLine);
         nonGrid.forEach((obj) => canvas.remove(obj));
         renderedObjectIds.current.clear();
@@ -544,25 +1012,27 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       });
 
       fabricCanvasRef.current = canvas;
-      console.log('[DiagramCanvas] Canvas created:', canvasWidth, 'x', canvasHeight, 'grid:', gridEnabled);
 
       // Draw initial grid immediately
       if (gridEnabled) {
         const gridSize = 10;
         for (let i = 0; i <= canvasWidth / gridSize; i++) {
           const isMajor = i % 5 === 0;
-          canvas.add(new Line([i * gridSize, 0, i * gridSize, canvasHeight], {
+          const line = new Line([i * gridSize, 0, i * gridSize, canvasHeight], {
             stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-          }));
+          });
+          (line as any).isGridLine = true;
+          canvas.add(line);
         }
         for (let i = 0; i <= canvasHeight / gridSize; i++) {
           const isMajor = i % 5 === 0;
-          canvas.add(new Line([0, i * gridSize, canvasWidth, i * gridSize], {
+          const line = new Line([0, i * gridSize, canvasWidth, i * gridSize], {
             stroke: isMajor ? '#999999' : '#CCCCCC', strokeWidth: isMajor ? 1 : 0.5, selectable: false, evented: false,
-          }));
+          });
+          (line as any).isGridLine = true;
+          canvas.add(line);
         }
         canvas.renderAll();
-        console.log('[DiagramCanvas] Grid drawn:', canvas.getObjects().length, 'lines');
       }
 
       // Pinch-to-zoom + two-finger pan handler (ELE-712 fix: deselect objects during gesture)
@@ -723,6 +1193,31 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         return;
       }
 
+      const stateMap = new Map(objects.map((obj) => [obj.id, obj]));
+
+      // If an existing object's serialised state changed outside Fabric,
+      // remove its rendered version so it can be rebuilt from state.
+      canvas.getObjects().forEach((fabricObj) => {
+        const customData = (fabricObj as any).customData;
+        if (!customData?.id || customData.type === 'wall-label' || customData.type === 'circuit-dot') {
+          return;
+        }
+
+        const stateObj = stateMap.get(customData.id);
+        if (!stateObj) return;
+
+        const stateHash = serialiseCanvasObject(stateObj);
+        if (customData.stateHash === stateHash) return;
+
+        const related = canvas.getObjects().filter((obj) => {
+          const data = (obj as any).customData;
+          return data?.id === customData.id || data?.parentId === customData.id;
+        });
+
+        related.forEach((obj) => canvas.remove(obj));
+        renderedObjectIds.current.delete(customData.id);
+      });
+
       // Find objects in state that aren't on the canvas yet
       const newObjects = objects.filter((obj) => !renderedObjectIds.current.has(obj.id));
 
@@ -740,7 +1235,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
       // Remove deleted objects from canvas
       toRemove.forEach((fObj) => {
-        const id = (fObj as any).customData?.id;
+        const id = (fObj as any).customData?.id || (fObj as any).customData?.parentId;
         if (id) renderedObjectIds.current.delete(id);
         canvas.remove(fObj);
       });
@@ -761,6 +1256,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             }
           });
           canvas.renderAll();
+        }
+
+        if (selectedWallIdRef.current) {
+          const wallStillExists = objects.some((obj) => obj.id === selectedWallIdRef.current && obj.type === 'wall');
+          renderWallAdornment(wallStillExists ? selectedWallIdRef.current : null);
         }
       };
       addNewObjects();
@@ -930,10 +1430,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       if (obj.type === 'symbol' && obj.symbolId) {
         try {
           const svgString = await loadSymbolSvg(obj.symbolId);
-          console.log('[Symbol] Loading:', obj.symbolId, 'SVG length:', svgString.length, 'starts:', svgString.substring(0, 60));
           const result = await loadSVGFromString(svgString);
           const svgObjects = result.objects;
-          console.log('[Symbol] Parsed objects:', svgObjects?.length, 'from', obj.symbolId);
           const validObjects = (svgObjects || []).filter((o): o is FabricObject => o !== null);
           if (validObjects.length > 0) {
             fabricObj = util.groupSVGElements(validObjects, {
@@ -951,7 +1449,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               originY: 'center',
             });
             // SVG elements already have correct fill/stroke from resolveCurrentColor
-            (fabricObj as any).customData = { id: obj.id, type: 'symbol', symbolId: obj.symbolId };
+            (fabricObj as any).customData = {
+              id: obj.id,
+              type: 'symbol',
+              symbolId: obj.symbolId,
+              stateHash: serialiseCanvasObject(obj),
+            };
 
             // Circuit colour dot — small indicator showing which circuit this symbol is on
             if (obj.circuitRef && fabricObj) {
@@ -992,7 +1495,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           selectable: true,
           hasControls: true,
         });
-        (fabricObj as any).customData = { id: obj.id, type: 'rectangle' };
+        (fabricObj as any).customData = { id: obj.id, type: 'rectangle', stateHash: serialiseCanvasObject(obj) };
       } else if (obj.type === 'line' && obj.points && obj.points.length >= 2) {
         const points = obj.points;
         fabricObj = new Line(
@@ -1004,7 +1507,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             hasControls: true,
           }
         );
-        (fabricObj as any).customData = { id: obj.id, type: 'line' };
+        (fabricObj as any).customData = { id: obj.id, type: 'line', stateHash: serialiseCanvasObject(obj) };
       } else if (obj.type === 'text') {
         fabricObj = new FabricText(obj.text || 'Text', {
           left: obj.x,
@@ -1016,7 +1519,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           selectable: true,
           hasControls: true,
         });
-        (fabricObj as any).customData = { id: obj.id, type: 'text' };
+        (fabricObj as any).customData = { id: obj.id, type: 'text', stateHash: serialiseCanvasObject(obj) };
       } else if (obj.type === 'wall' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];
         const p2 = obj.points[1];
@@ -1039,7 +1542,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             hasControls: false,
             evented: true,
           });
-          (wallRect as any).customData = { id: obj.id, type: 'wall' };
+          (wallRect as any).customData = { id: obj.id, type: 'wall', stateHash: serialiseCanvasObject(obj) };
           canvas.add(wallRect);
         } else {
           const wallRect = new Rect({
@@ -1054,7 +1557,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             hasControls: false,
             evented: true,
           });
-          (wallRect as any).customData = { id: obj.id, type: 'wall' };
+          (wallRect as any).customData = { id: obj.id, type: 'wall', stateHash: serialiseCanvasObject(obj) };
           canvas.add(wallRect);
         }
 
@@ -1095,14 +1598,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           hasControls: false,
           evented: true,
         });
-        (cableLine as any).customData = { id: obj.id, type: 'cable' };
+        (cableLine as any).customData = { id: obj.id, type: 'cable', stateHash: serialiseCanvasObject(obj) };
         canvas.add(cableLine);
         return;
       } else if (obj.type === 'dimension' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];
         const p2 = obj.points[1];
         const group = createDimensionGroup(p1.x, p1.y, p2.x, p2.y);
-        (group as any).customData = { id: obj.id, type: 'dimension' };
+        (group as any).customData = { id: obj.id, type: 'dimension', stateHash: serialiseCanvasObject(obj) };
         canvas.add(group);
         return; // Already added manually
       }
@@ -1164,38 +1667,36 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             onObjectsChangeRef.current(updatedObjects);
             canvas.discardActiveObject();
             canvas.renderAll();
+          } else if (selectedWallIdRef.current) {
+            saveState();
+            const wallId = selectedWallIdRef.current;
+            renderWallAdornment(null);
+            onObjectsChangeRef.current(objectsRef.current.filter((obj) => obj.id !== wallId));
+            onSelectionChangeRef.current?.(null);
           }
         }
         if ((e.ctrlKey || e.metaKey) && e.key === 'c') {
-          const activeObject = canvas.getActiveObject();
-          if (activeObject) {
-            (window as any).clipboard = activeObject;
-          }
+          const activeObjects = canvas.getActiveObjects();
+          const selectedIds = activeObjects
+            .map((obj) => (obj as any).customData?.id)
+            .filter(Boolean);
+
+          clipboardRef.current = objectsRef.current
+            .filter((obj) => selectedIds.includes(obj.id))
+            .map((obj) => cloneCanvasObjectWithOffset(obj, 0));
         }
         if ((e.ctrlKey || e.metaKey) && e.key === 'v') {
-          const clipboardObj = (window as any).clipboard;
-          if (clipboardObj) {
-            clipboardObj.clone((cloned: FabricObject) => {
-              cloned.set({
-                left: (cloned.left || 0) + 20,
-                top: (cloned.top || 0) + 20,
-              });
-              canvas.add(cloned);
-              canvas.setActiveObject(cloned);
-              canvas.renderAll();
-
-              saveState();
-              const newObj: CanvasObject = {
-                id: `obj-${Date.now()}`,
-                type: (cloned as any).customData?.type || 'rectangle',
-                x: cloned.left || 0,
-                y: cloned.top || 0,
-                width: (cloned as any).width || 100,
-                height: (cloned as any).height || 100,
-                rotation: cloned.angle || 0,
-              };
-              onObjectsChangeRef.current([...objectsRef.current, newObj]);
-            });
+          if (clipboardRef.current.length > 0) {
+            saveState();
+            const clones = clipboardRef.current.map((obj) => cloneCanvasObjectWithOffset(obj, 24));
+            clipboardRef.current = clones.map((obj) => cloneCanvasObjectWithOffset(obj, 0));
+            onObjectsChangeRef.current([...objectsRef.current, ...clones]);
+            setTimeout(() => {
+              focusOnPoint(
+                clones.reduce((sum, obj) => sum + obj.x, 0) / clones.length,
+                clones.reduce((sum, obj) => sum + obj.y, 0) / clones.length
+              );
+            }, 80);
           }
         }
         // Escape clears dimension tool first-click
@@ -1214,6 +1715,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       if (activeTool !== 'cable') cableStartIdRef.current = null;
       const canvas = fabricCanvasRef.current;
       if (canvas) {
+        if (activeTool !== 'select') {
+          wallDragPreviewRef.current = null;
+          renderWallAdornment(null);
+        }
+        clearWallSnapPreview();
         canvas.selection = activeTool === 'select';
         // Clean up any leftover temp objects from previous tool
         const tempObjs = canvas.getObjects().filter((obj) => (obj as any).isTemp);
@@ -1234,6 +1740,27 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const tool = activeToolRef.current;
 
         if (tool === 'select') {
+          if (e.target) {
+            const tapped = e.target as any;
+            const customData = tapped.customData;
+
+            if (customData?.type === 'wall-handle') {
+              return;
+            }
+
+            if (customData?.type === 'wall') {
+              const wallObj = getRenderableObjects().find((o) => o.id === customData.id);
+              if (wallObj) {
+                renderWallAdornment(customData.id);
+                onSelectionChangeRef.current?.(null);
+              }
+            } else if (!customData || customData.type !== 'wall-selection') {
+              renderWallAdornment(null);
+            }
+          } else {
+            renderWallAdornment(null);
+          }
+
           // Check if user tapped a wall object — emit onWallTapped
           const wallTapCb = onWallTappedRef.current;
           if (wallTapCb && e.target) {
@@ -1386,6 +1913,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         startPointRef.current = { x, y };
 
         if (tool === 'symbol' && selectedSymbolIdRef.current) {
+          clearWallSnapPreview();
           const symId = selectedSymbolIdRef.current;
           saveState();
           const found = symbolRegistry.find((s) => s.id === symId) ||
@@ -1394,50 +1922,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             let placeX = x;
             let placeY = y;
             let placeRotation = 0;
-
-            // Wall-snap: if symbol is wall-mounted, snap to nearest wall within 40px
-            const regEntry = symbolRegistry.find((s) => s.id === symId);
-            if (regEntry && (regEntry.mountType === 'wall' || regEntry.mountType === 'panel')) {
-              const wallObjects = objectsRef.current.filter((o) => o.type === 'wall' && o.points && o.points.length >= 2);
-              let bestDist = 40;
-              let bestPoint = { x: placeX, y: placeY };
-              let bestAngle = 0;
-
-              for (const wall of wallObjects) {
-                const p1 = wall.points![0];
-                const p2 = wall.points![1];
-                const dx = p2.x - p1.x;
-                const dy = p2.y - p1.y;
-                const lenSq = dx * dx + dy * dy;
-                if (lenSq === 0) continue;
-
-                let t = ((x - p1.x) * dx + (y - p1.y) * dy) / lenSq;
-                t = Math.max(0, Math.min(1, t));
-                const projX = p1.x + t * dx;
-                const projY = p1.y + t * dy;
-                const dist = Math.hypot(x - projX, y - projY);
-
-                if (dist < bestDist) {
-                  bestDist = dist;
-                  bestPoint = { x: projX, y: projY };
-                  bestAngle = Math.atan2(dy, dx) * (180 / Math.PI);
-                }
-              }
-
-              if (bestDist < 40) {
-                const wallAngleRad = bestAngle * (Math.PI / 180);
-                const offsetDist = 2;
-                const perpX = -Math.sin(wallAngleRad) * offsetDist;
-                const perpY = Math.cos(wallAngleRad) * offsetDist;
-                const tapDx = x - bestPoint.x;
-                const tapDy = y - bestPoint.y;
-                const dotProduct = tapDx * perpX + tapDy * perpY;
-                const sign = dotProduct >= 0 ? 1 : -1;
-
-                placeX = bestPoint.x + perpX * sign;
-                placeY = bestPoint.y + perpY * sign;
-                placeRotation = bestAngle + 90;
-              }
+            const snappedPlacement = getWallSnapPlacement(x, y, symId);
+            if (snappedPlacement) {
+              placeX = snappedPlacement.x;
+              placeY = snappedPlacement.y;
+              placeRotation = snappedPlacement.rotation;
             }
 
             const newObj: CanvasObject = {
@@ -1451,6 +1940,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               symbolId: symId,
             };
             onObjectsChangeRef.current([...objectsRef.current, newObj]);
+            setTimeout(() => focusOnPoint(placeX, placeY), 80);
           }
           isDrawingRef.current = false;
         } else if (tool === 'text') {
@@ -1473,8 +1963,16 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         const tool = activeToolRef.current;
         const pointer = canvas.getPointer(e.e);
-        let x = snapToGrid(pointer.x);
-        let y = snapToGrid(pointer.y);
+        const x = snapToGrid(pointer.x);
+        const y = snapToGrid(pointer.y);
+
+        if (tool === 'symbol') {
+          const snappedPlacement = getWallSnapPlacement(x, y, selectedSymbolIdRef.current);
+          renderWallSnapPreview(snappedPlacement);
+        } else if (wallSnapPreviewIdsRef.current.size > 0) {
+          clearWallSnapPreview();
+          canvas.renderAll();
+        }
 
         // Dimension tool preview line from first click to cursor
         const dimStart = dimensionStartRef.current;
@@ -1520,6 +2018,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         const tempObjects = canvas.getObjects().filter((obj) => (obj as any).isTemp);
         tempObjects.forEach((obj) => canvas.remove(obj));
+        clearWallSnapPreview();
 
         if (tool === 'line') {
           const line = new Line([sp.x, sp.y, x, y], {
@@ -1645,8 +2144,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         if (tool === 'symbol' || tool === 'text' || tool === 'dimension') return;
 
         const pointer = canvas.getPointer(e.e);
-        let x = snapToGrid(pointer.x);
-        let y = snapToGrid(pointer.y);
+        const x = snapToGrid(pointer.x);
+        const y = snapToGrid(pointer.y);
 
         saveState();
 
@@ -1699,6 +2198,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         isDrawingRef.current = false;
         startPointRef.current = null;
+        canvas.renderAll();
       };
 
       canvas.on('mouse:down', handleMouseDown);
@@ -1722,7 +2222,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const customData = (modifiedObj as any).customData;
         if (!customData) return;
 
+        if (customData.type === 'wall-handle') {
+          const previewObjects = wallDragPreviewRef.current ?? getRenderableObjects();
+          saveState();
+          wallDragPreviewRef.current = null;
+          onObjectsChangeRef.current(previewObjects);
+          renderWallAdornment(customData.wallId);
+          return;
+        }
+
         saveState();
+        clearWallSnapPreview();
 
         // Move circuit colour dots to follow the symbol
         if (customData.type === 'symbol') {
@@ -1745,14 +2255,50 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             if (customData.type === 'symbol') {
               // Reset any accidental scaling back to 1:1 (ELE-712 safety)
               modifiedObj.set({ scaleX: 1.2, scaleY: 1.2 });
-              return {
+              const updatedObject = {
                 ...obj,
                 x: modifiedObj.left || obj.x,
                 y: modifiedObj.top || obj.y,
                 rotation: modifiedObj.angle || obj.rotation || 0,
               };
+              customData.stateHash = serialiseCanvasObject(updatedObject);
+              return updatedObject;
             }
-            return {
+
+            if ((customData.type === 'line' || customData.type === 'wall' || customData.type === 'cable' || customData.type === 'dimension') && obj.points && obj.points.length >= 2) {
+              const currentBounds = getBoundsForObjects([obj]);
+              const nextLeft = modifiedObj.left ?? currentBounds?.minX ?? obj.x;
+              const nextTop = modifiedObj.top ?? currentBounds?.minY ?? obj.y;
+              const deltaX = nextLeft - (currentBounds?.minX ?? obj.x);
+              const deltaY = nextTop - (currentBounds?.minY ?? obj.y);
+              const nextPoints = obj.points.map((point) => ({
+                x: point.x + deltaX,
+                y: point.y + deltaY,
+              }));
+              const updatedObject = {
+                ...obj,
+                x: (obj.x || 0) + deltaX,
+                y: (obj.y || 0) + deltaY,
+                points: nextPoints,
+                rotation: modifiedObj.angle || obj.rotation || 0,
+              };
+              customData.stateHash = serialiseCanvasObject(updatedObject);
+              return updatedObject;
+            }
+
+            if (customData.type === 'text') {
+              const updatedObject = {
+                ...obj,
+                x: modifiedObj.left || obj.x,
+                y: modifiedObj.top || obj.y,
+                rotation: modifiedObj.angle || obj.rotation || 0,
+                text: modifiedObj.text || obj.text,
+              };
+              customData.stateHash = serialiseCanvasObject(updatedObject);
+              return updatedObject;
+            }
+
+            const updatedObject = {
               ...obj,
               x: modifiedObj.left || obj.x,
               y: modifiedObj.top || obj.y,
@@ -1760,6 +2306,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               height: (modifiedObj.height || obj.height || 100) * (modifiedObj.scaleY || 1),
               rotation: modifiedObj.angle || obj.rotation || 0,
             };
+            customData.stateHash = serialiseCanvasObject(updatedObject);
+            return updatedObject;
           }
           return obj;
         });
@@ -1771,44 +2319,40 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       const handleObjectMoving = (e: any) => {
         const movingObj = e.target;
         const customData = (movingObj as any).customData;
-        if (!customData || customData.type !== 'symbol') return;
+        if (!customData) return;
 
-        const sym = symbolRegistry.find((s) => s.id === customData.symbolId);
-        if (!sym || (sym.mountType !== 'wall' && sym.mountType !== 'panel')) return;
-
-        const wallObjects = objectsRef.current.filter((o) => o.type === 'wall' && o.points && o.points.length >= 2);
-        let bestDist = 40;
-        let bestPoint = { x: movingObj.left, y: movingObj.top };
-        let bestAngle = movingObj.angle || 0;
-
-        for (const wall of wallObjects) {
-          const p1 = wall.points![0];
-          const p2 = wall.points![1];
-          const dx = p2.x - p1.x;
-          const dy = p2.y - p1.y;
-          const lenSq = dx * dx + dy * dy;
-          if (lenSq === 0) continue;
-          let t = ((movingObj.left - p1.x) * dx + (movingObj.top - p1.y) * dy) / lenSq;
-          t = Math.max(0, Math.min(1, t));
-          const projX = p1.x + t * dx;
-          const projY = p1.y + t * dy;
-          const dist = Math.hypot(movingObj.left - projX, movingObj.top - projY);
-
-          if (dist < bestDist) {
-            bestDist = dist;
-            bestPoint = { x: projX, y: projY };
-            bestAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
-          }
+        if (customData.type === 'wall-handle') {
+          const snapshot = wallDragPreviewRef.current ?? getRenderableObjects();
+          const nextObjects = buildWallEndpointUpdate(snapshot, customData.wallId, customData.endpointIndex, {
+            x: snapToGrid(movingObj.left || 0),
+            y: snapToGrid(movingObj.top || 0),
+          });
+          wallDragPreviewRef.current = nextObjects;
+          nextObjects
+            .filter((obj) => obj.type === 'wall')
+            .forEach((wall) => redrawWallVisual(wall));
+          renderWallAdornment(customData.wallId);
+          return;
         }
 
-        if (bestDist < 40) {
-          // Offset 12px from wall into the room
-          const wallRad = bestAngle * (Math.PI / 180);
-          const px = -Math.sin(wallRad) * 2;
-          const py = Math.cos(wallRad) * 2;
-          const dot = (movingObj.left - bestPoint.x) * px + (movingObj.top - bestPoint.y) * py;
-          const s = dot >= 0 ? 1 : -1;
-          movingObj.set({ left: bestPoint.x + px * s, top: bestPoint.y + py * s, angle: bestAngle });
+        if (customData.type !== 'symbol') return;
+
+        const snappedPlacement = getWallSnapPlacement(
+          movingObj.left || 0,
+          movingObj.top || 0,
+          customData.symbolId
+        );
+
+        if (snappedPlacement) {
+          movingObj.set({
+            left: snappedPlacement.x,
+            top: snappedPlacement.y,
+            angle: snappedPlacement.rotation,
+          });
+          renderWallSnapPreview(snappedPlacement);
+        } else if (wallSnapPreviewIdsRef.current.size > 0) {
+          clearWallSnapPreview();
+          canvas.renderAll();
         }
       };
 
@@ -1817,6 +2361,51 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return () => {
         canvas.off('object:modified', handleObjectModified);
         canvas.off('object:moving', handleObjectMoving);
+      };
+    }, []);
+
+    useEffect(() => {
+      const canvas = fabricCanvasRef.current;
+      if (!canvas) return;
+
+      const emitSelection = (target?: FabricObject | null) => {
+        if (!target) {
+          renderWallAdornment(null);
+          onSelectionChangeRef.current?.(null);
+          return;
+        }
+
+        const customData = (target as any).customData;
+        if (
+          !customData?.id ||
+          customData.type === 'wall-label' ||
+          customData.type === 'circuit-dot' ||
+          customData.type === 'wall-handle' ||
+          customData.type === 'wall-selection'
+        ) {
+          onSelectionChangeRef.current?.(null);
+          return;
+        }
+
+        if (customData.type !== 'wall') {
+          renderWallAdornment(null);
+        }
+        const selected = objectsRef.current.find((obj) => obj.id === customData.id) || null;
+        onSelectionChangeRef.current?.(selected);
+      };
+
+      const handleSelectionCreated = (e: any) => emitSelection(e.selected?.[0] || e.target || null);
+      const handleSelectionUpdated = (e: any) => emitSelection(e.selected?.[0] || e.target || null);
+      const handleSelectionCleared = () => emitSelection(null);
+
+      canvas.on('selection:created', handleSelectionCreated);
+      canvas.on('selection:updated', handleSelectionUpdated);
+      canvas.on('selection:cleared', handleSelectionCleared);
+
+      return () => {
+        canvas.off('selection:created', handleSelectionCreated);
+        canvas.off('selection:updated', handleSelectionUpdated);
+        canvas.off('selection:cleared', handleSelectionCleared);
       };
     }, []);
 
@@ -1866,6 +2455,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const handleResetView = () => {
       const canvas = fabricCanvasRef.current;
       if (!canvas) return;
+      if (objectsRef.current.length > 0) {
+        zoomToFit();
+        return;
+      }
       canvas.setZoom(1);
       setZoomLevel(1);
       canvas.viewportTransform = [1, 0, 0, 1, 0, 0];
@@ -1928,7 +2521,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         </div>
 
         {/* Minimap — bottom-right overview */}
-        <MinimapOverlay fabricCanvas={fabricCanvasRef.current} />
+        {showMinimap && <MinimapOverlay fabricCanvas={fabricCanvasRef.current} />}
       </div>
     );
   }

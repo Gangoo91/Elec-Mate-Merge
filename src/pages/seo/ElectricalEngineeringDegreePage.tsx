@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Qualification',
   },
   {
-    href: '/am2-assessment-prep',
+    href: '/guides/am2-assessment-preparation',
     title: 'AM2 Assessment Preparation',
     description: 'What to expect in the AM2 practical assessment and how to pass first time.',
     icon: Award,
@@ -587,7 +587,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   As you move into engineering or grow your trade business, professional quoting and
                   invoicing becomes increasingly important. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written quotes and invoices that reflect the quality of your work.

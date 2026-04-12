@@ -212,11 +212,11 @@ export default function VATSchemeComparisonPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/electrician-tax-guide">
+                <SEOInternalLink href="/guides/electrician-tax-guide-uk">
                   electrician tax guide
                 </SEOInternalLink>{' '}
                 covers how VAT interacts with income tax and National Insurance, and the{' '}
-                <SEOInternalLink href="/tools/self-employed-electrician">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed guide
                 </SEOInternalLink>{' '}
                 explains the wider tax picture for sole traders.
@@ -406,7 +406,7 @@ export default function VATSchemeComparisonPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/tools/electrician-tax-guide',
+          href: '/guides/electrician-tax-guide-uk',
           title: 'Electrician Tax Guide',
           description:
             'Complete guide to income tax, National Insurance, and allowable expenses for electricians.',
@@ -422,7 +422,7 @@ export default function VATSchemeComparisonPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/self-employed-electrician',
+          href: '/guides/going-self-employed-electrician',
           title: 'Self-Employed Electrician Guide',
           description:
             'Everything you need to know about running your own electrical business in the UK.',

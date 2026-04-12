@@ -432,7 +432,7 @@ const sections = [
           pension contributions. After accounting for these costs, a GBP 250/day contract rate is
           roughly equivalent to a GBP 35,000-40,000 permanent salary. For a detailed breakdown, see
           our{' '}
-          <SEOInternalLink href="/guides/contractor-vs-employee">
+          <SEOInternalLink href="/guides/contractor-vs-employee-electrician">
             contractor vs employee comparison
           </SEOInternalLink>
           .
@@ -583,7 +583,7 @@ const relatedPages = [
     category: 'Salary Guide',
   },
   {
-    href: '/guides/contractor-vs-employee',
+    href: '/guides/contractor-vs-employee-electrician',
     title: 'Contractor vs Employee',
     description: 'Detailed comparison of contract and permanent employment for electricians.',
     icon: Briefcase,

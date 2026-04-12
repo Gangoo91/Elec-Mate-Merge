@@ -26,7 +26,7 @@ const PAGE_DESCRIPTION =
 
 const breadcrumbs = [
   { label: 'Training', href: '/training' },
-  { label: 'First Aid for Electricians', href: '/training/first-aid-electrical' },
+  { label: 'First Aid for Electricians', href: '/training/first-aid-electrical-electrical' },
 ];
 
 const tocItems = [
@@ -171,7 +171,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/training/safe-isolation">
+          <SEOInternalLink href="/guides/safe-isolation-procedure">
             safe isolation procedure
           </SEOInternalLink>{' '}
           is the primary defence against electric shock. But when prevention fails, first aid
@@ -265,7 +265,7 @@ const sections = [
           Temperatures in an arc flash can exceed 20,000 degrees Celsius, causing severe burns to
           any exposed skin, igniting clothing, and generating a pressure wave that can cause blast
           injuries. Wearing appropriate{' '}
-          <SEOInternalLink href="/training/ppe-for-electricians">PPE</SEOInternalLink> including
+          <SEOInternalLink href="/guides/ppe-for-electricians">PPE</SEOInternalLink> including
           arc-rated clothing, face shields, and insulated gloves is the primary prevention measure.
         </p>
         <p>
@@ -315,7 +315,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/safe-isolation',
+    href: '/guides/safe-isolation-procedure',
     title: 'Safe Isolation Procedure Course',
     description:
       'The primary prevention measure against electric shock — essential companion to first aid training.',
@@ -330,7 +330,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/ppe-for-electricians',
+    href: '/guides/ppe-for-electricians',
     title: 'PPE for Electricians',
     description:
       'Arc-rated clothing, insulated gloves, and face shields — the first line of defence before first aid.',
@@ -346,7 +346,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/risk-assessment',
+    href: '/guides/risk-assessment-electricians',
     title: 'Risk Assessment Course',
     description:
       'Identifying and mitigating workplace hazards to prevent injuries before they happen.',
@@ -354,7 +354,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'The wiring regulations that mandate safe working practices for all electrical installations.',
@@ -429,7 +429,7 @@ export default function FirstAidCoursePage() {
       ctaHeading="Ready to learn life-saving first aid skills?"
       ctaSubheading="Join 1,000+ UK electricians studying smarter with Elec-Mate. 5 focused modules covering electric shock response, CPR, burns treatment, and workplace emergencies. 7-day free trial, cancel anytime."
       extraSchemas={extraSchemas}
-      coursePath="/training/first-aid-electrical"
+      coursePath="/training/first-aid-electrical-electrical"
     />
   );
 }

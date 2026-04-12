@@ -387,7 +387,7 @@ export default function RCDKeepsTrippingPage() {
               </div>
               <p>
                 Also check the{' '}
-                <SEOInternalLink href="/guides/earth-fault-loop-impedance">
+                <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
                   earth fault loop impedance (Zs)
                 </SEOInternalLink>{' '}
                 on each circuit. An abnormally low Zs reading can indicate an earth fault, as the
@@ -500,7 +500,7 @@ export default function RCDKeepsTrippingPage() {
                   <span className="text-white">
                     The property has old wiring (rubber-insulated cable, rewirable fuses, no earth
                     wire) — an{' '}
-                    <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is
+                    <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is
                     recommended to assess the overall condition
                   </span>
                 </li>
@@ -516,7 +516,7 @@ export default function RCDKeepsTrippingPage() {
                 A competent electrician will carry out insulation resistance tests, earth fault loop
                 impedance measurements, and RCD testing to identify the exact cause and location of
                 the fault. If a periodic inspection is needed, the electrician will produce an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">
+                <SEOInternalLink href="/tools/eicr-certificate">
                   Electrical Installation Condition Report (EICR)
                 </SEOInternalLink>{' '}
                 documenting all findings and recommendations.
@@ -653,7 +653,7 @@ export default function RCDKeepsTrippingPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/earth-fault-loop-impedance',
+          href: '/guides/earth-fault-loop-impedance-explained',
           title: 'Earth Fault Loop Impedance',
           description: 'Understanding Zs measurements and their role in fault protection.',
           icon: Activity,
@@ -674,14 +674,14 @@ export default function RCDKeepsTrippingPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'Complete guide to Electrical Installation Condition Reports.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests for inspection and testing.',
           icon: ClipboardCheck,

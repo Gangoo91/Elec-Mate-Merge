@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
@@ -401,7 +401,7 @@ const sections = [
           notifiable under Part P in England — use a registered competent person scheme. Document
           the completed installation on an{' '}
           <SEOInternalLink
-            href="/tools/eic-certificate"
+            href="/eic-certificate"
             label="Electrical Installation Certificate"
           />
           .
@@ -475,7 +475,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <SEOAppBridge
-                  href="/tools/eic-certificate"
+                  href="/eic-certificate"
                   label="Electrical Installation Certificate"
                 />{' '}
                 — record UFH circuit details, RCBO rating, floor sensor type, and all test results
@@ -485,7 +485,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue a
+                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue a
                 minor works certificate when connecting UFH to an existing suitable circuit without
                 consumer unit modifications.
               </span>

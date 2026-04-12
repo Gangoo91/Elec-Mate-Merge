@@ -226,7 +226,7 @@ const sections = [
                 Prefabricated aluminium towers on wheels. Lightweight, quick to assemble, and easy
                 to move. Commonly used by electricians for internal work such as lighting, cable
                 tray, and ceiling access. Requires{' '}
-                <SEOInternalLink href="/training/pasma-training">PASMA training</SEOInternalLink> to
+                <SEOInternalLink href="/pasma-training">PASMA training</SEOInternalLink> to
                 assemble and use safely.
               </p>
             </div>
@@ -508,7 +508,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/pasma-training',
+    href: '/pasma-training',
     title: 'PASMA Training Course',
     description:
       'Mobile scaffold tower training — safe assembly, use, and dismantling of alloy towers.',
@@ -516,7 +516,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/site-safety',
+    href: '/guides/construction-site-safety',
     title: 'Site Safety for Electricians',
     description:
       'Comprehensive site safety training covering all the hazards electricians face on construction sites.',
@@ -532,7 +532,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Safe lifting and carrying techniques — essential when transporting tools and materials onto scaffolding.',

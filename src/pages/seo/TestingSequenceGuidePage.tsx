@@ -245,7 +245,7 @@ export default function TestingSequenceGuidePage() {
                 EICR certificate guide
               </SEOInternalLink>{' '}
               for how test results are recorded and reported, and the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               for verifying that cables meet the correct current-carrying capacity.

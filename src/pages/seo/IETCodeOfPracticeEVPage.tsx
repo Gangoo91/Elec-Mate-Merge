@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ev-charger-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charger Certificate',
     description:
       'Digital EV charger installation certificate with IET CoP checklist, O-PEN verification, and professional PDF export.',
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for EV charger circuits with automatic correction factors and voltage drop verification to BS 7671.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description:
       'TN-C-S, TN-S, and TT earthing systems explained with diagrams and practical guidance for UK electricians.',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering all aspects of BS 7671.',
@@ -216,7 +216,7 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Calculate existing maximum demand</strong> — use the{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 with diversity applied per BS 7671 Appendix 1.
@@ -314,7 +314,7 @@ const sections = [
         <p>
           For TN-S earthing systems (where the earth and neutral are separate throughout), the open
           PEN risk does not exist, and the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangement
           </SEOInternalLink>{' '}
           can be used directly for EV charging without additional measures. However, TN-S supplies
@@ -381,7 +381,7 @@ const sections = [
           Voltage drop is frequently the limiting factor for EV charger cable sizing because of the
           long cable runs involved — the charger is often mounted on the side of a garage or at the
           end of a driveway, 20 to 40 metres from the consumer unit. Use the{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           to verify compliance with the 5% limit (11.5 V on a 230 V single-phase circuit).

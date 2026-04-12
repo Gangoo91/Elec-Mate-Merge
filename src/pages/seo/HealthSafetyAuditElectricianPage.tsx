@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Build professional quotes with materials pricing and instant PDF export.',
     icon: PoundSterling,
@@ -243,7 +243,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
           to produce professional, activity-specific RAMS quickly. Building a library of approved
           RAMS that can be customised for each site and contract is the most time-efficient approach
           for electricians working on multiple commercial sites.

@@ -97,7 +97,7 @@ export default function ElectricianAppForAndroidPage() {
               </p>
               <p>
                 For a comparison on iOS, see our{' '}
-                <SEOInternalLink href="/tools/electrician-app-for-iphone">
+                <SEOInternalLink href="/tools/electrician-app-iphone">
                   electrician app for iPhone guide
                 </SEOInternalLink>
                 .
@@ -309,7 +309,7 @@ export default function ElectricianAppForAndroidPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/electrician-app-for-iphone',
+          href: '/tools/electrician-app-iphone',
           title: 'Electrician App for iPhone',
           description:
             'Full comparison of electrician apps on iOS — features, performance, and recommendations.',

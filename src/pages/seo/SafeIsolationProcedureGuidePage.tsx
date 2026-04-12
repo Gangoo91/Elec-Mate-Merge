@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates on site after safe isolation and testing.',
     icon: FileCheck2,
@@ -567,7 +567,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Record Safe Isolation in Your Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   and{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
                   certificates include sections for recording the test instruments used, including

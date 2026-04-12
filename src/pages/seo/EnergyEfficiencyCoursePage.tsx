@@ -188,7 +188,7 @@ const sections = [
           </SEOInternalLink>
           , and power factor correction — win more work, command premium rates, and build stronger
           client relationships. The{' '}
-          <SEOInternalLink href="/training/bms-building-management-systems">
+          <SEOInternalLink href="/training/bms-course">
             BMS course
           </SEOInternalLink>{' '}
           covers the building automation systems that tie energy efficiency measures together.
@@ -272,16 +272,16 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           and{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           help ensure your LED lighting circuits are correctly designed for both efficiency and
           compliance with{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>.
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>.
         </p>
       </>
     ),
@@ -375,7 +375,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/bms-building-management-systems',
+    href: '/training/bms-course',
     title: 'BMS Course',
     description:
       'Building management systems are the central control platform for energy-efficient buildings.',
@@ -407,7 +407,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Minimising voltage drop reduces energy waste in cable runs across any installation.',

@@ -314,7 +314,7 @@ export default function AIElectricalFaultFindingPage() {
                 Each suggested test includes the expected result if the probable cause is confirmed,
                 what to do next if the result is inconclusive, and the relevant testing procedure
                 from the{' '}
-                <SEOInternalLink href="/guides/testing-sequence">
+                <SEOInternalLink href="/testing-sequence-guide">
                   testing sequence guide
                 </SEOInternalLink>
                 . This systematic approach reduces the time spent on fault finding by eliminating
@@ -535,7 +535,7 @@ export default function AIElectricalFaultFindingPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description:
             'The correct sequence for electrical testing to BS 7671 — continuity, insulation resistance, polarity, earth fault loop impedance, and RCD testing.',
@@ -543,7 +543,7 @@ export default function AIElectricalFaultFindingPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/insulation-resistance-test',
+          href: '/guides/insulation-resistance-testing',
           title: 'Insulation Resistance Testing',
           description:
             'How to carry out insulation resistance tests correctly, interpret results, and identify cable deterioration and moisture ingress.',

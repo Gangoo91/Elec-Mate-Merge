@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ev-charging-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Certificate App',
     description: 'Complete BS 7671 Section 722 certificates on your phone with instant PDF export.',
     icon: FileCheck2,
@@ -299,7 +299,7 @@ const sections = [
               <span>
                 <strong>Section 722 certification</strong> — EV charging installations must be
                 inspected, tested, and certificated in accordance with Part 6 of BS 7671. Use the{' '}
-                <SEOInternalLink href="/tools/ev-charging-certificate">
+                <SEOInternalLink href="/ev-charger-certificate">
                   Elec-Mate EV charging certificate
                 </SEOInternalLink>{' '}
                 to complete the required documentation on site.
@@ -491,7 +491,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/ev-charging-certificate">
+                  <SEOInternalLink href="/ev-charger-certificate">
                     Elec-Mate EV charging certificate app
                   </SEOInternalLink>{' '}
                   to complete a BS 7671-compliant electrical installation certificate for every EV

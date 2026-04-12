@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Business', href: '/guides/starting-electrical-business-uk' },
+  { label: 'Business', href: '/guides/starting-an-electrical-business-uk' },
   { label: 'Pricing Guide', href: '/guides/electrical-work-pricing-guide' },
 ];
 
@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/guides/consumer-unit-change-cost-uk',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Cost',
     description:
       'Detailed breakdown of consumer unit replacement costs, board types, and what the price should include.',
@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ev-charger-installation-guide',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation',
     description:
       'Full guide to EV charger installation including regulations, cable sizing, earthing, and certification.',
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/starting-electrical-business-uk',
+    href: '/guides/starting-an-electrical-business-uk',
     title: 'Starting an Electrical Business',
     description:
       'Complete guide to setting up as a self-employed electrician, from scheme registration to pricing strategy.',
@@ -230,7 +230,7 @@ const sections = [
       <>
         <p>
           A{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change-cost-uk">
+          <SEOInternalLink href="/guides/consumer-unit-change">
             consumer unit upgrade
           </SEOInternalLink>{' '}
           is one of the most commonly quoted electrical jobs. Older properties with rewirable fuse
@@ -260,7 +260,7 @@ const sections = [
               <span>
                 <strong>Consumer unit with AFDD protection:</strong> £900 to £1,300. Includes Arc
                 Fault Detection Devices as recommended by{' '}
-                <SEOInternalLink href="/guides/afdd-guide-bs7671">
+                <SEOInternalLink href="/guides/afdd-arc-fault-detection">
                   BS 7671 Regulation 421.1
                 </SEOInternalLink>
                 . AFDDs detect dangerous arc faults that MCBs and RCDs cannot.
@@ -350,7 +350,7 @@ const sections = [
               <span>
                 <strong>7kW home charger (supply and install):</strong> £800 to £1,500. Includes the
                 charger unit, dedicated 32A circuit, cable run to the charge point, earthing to{' '}
-                <SEOInternalLink href="/guides/ev-charger-installation-guide">
+                <SEOInternalLink href="/guides/ev-charger-installation">
                   BS 7671 requirements
                 </SEOInternalLink>
                 , and Building Control notification.
@@ -378,7 +378,7 @@ const sections = [
           Factors that increase the cost include long cable runs (more than 15 metres), routing
           through multiple walls, the need for SWA (Steel Wire Armoured) cable for external runs,
           and earthing upgrades. Always check that the electrician holds the{' '}
-          <SEOInternalLink href="/guides/ev-charger-installation-guide">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             relevant EV charger installation qualification
           </SEOInternalLink>{' '}
           and is registered with a competent person scheme.
@@ -480,7 +480,7 @@ const sections = [
         </div>
         <p>
           All outdoor electrical work is notifiable under{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations-explained">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This means the electrician must be registered with a competent person scheme to

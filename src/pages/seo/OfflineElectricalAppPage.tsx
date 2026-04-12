@@ -122,7 +122,7 @@ export default function OfflineElectricalAppPage() {
               </ul>
               <p>
                 Whether you are completing an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>,{' '}
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
                 <SEOInternalLink href="/tools/minor-works-certificate">Minor Works</SEOInternalLink>
                 , or any other certificate type in the{' '}
                 <SEOInternalLink href="/tools/digital-certificates-app">
@@ -143,26 +143,26 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Every calculator in Elec-Mate runs entirely on your device. There is no server
                 round-trip, no API call, and no dependency on internet connectivity. All 70+{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   BS 7671 calculators
                 </SEOInternalLink>{' '}
                 work offline with identical performance:
               </p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   — full BS 7671 cable selection with correction factors
                 </li>
                 <li>
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     Voltage drop calculator
                   </SEOInternalLink>{' '}
                   — verify compliance with Regulation 525
                 </li>
                 <li>
-                  <SEOInternalLink href="/tools/max-demand-calculator">
+                  <SEOInternalLink href="/max-demand-calculator">
                     Maximum demand calculator
                   </SEOInternalLink>{' '}
                   — calculate total installation demand with diversity
@@ -202,7 +202,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Mock exams and practice tests also work offline, with results stored locally and
                 synced later. This means you can run through a full{' '}
-                <SEOInternalLink href="/guides/am2-exam-preparation">
+                <SEOInternalLink href="/am2-exam-preparation">
                   AM2 practice exam
                 </SEOInternalLink>{' '}
                 on the train home without worrying about signal.
@@ -290,6 +290,13 @@ export default function OfflineElectricalAppPage() {
                 For the AI features, you can capture the data offline (photograph the board, save
                 voice recordings) and process them when connectivity returns. The core certification
                 workflow never depends on an internet connection.
+              </p>
+              <p>
+                That matters commercially as well as technically. You can keep the job moving in
+                low-signal environments, then feed the completed work into the{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
+                or the <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
+                once connectivity returns, without rebuilding the admin from scratch.
               </p>
             </>
           ),
@@ -418,7 +425,7 @@ export default function OfflineElectricalAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description: '70+ BS 7671 calculators — all work offline with no performance difference.',
           icon: Calculator,
@@ -439,6 +446,14 @@ export default function OfflineElectricalAppPage() {
             'Manage your team, track apprentices, oversee certificates, and monitor compliance.',
           icon: Building,
           category: 'Platform',
+        },
+        {
+          href: '/electrician-invoice-app',
+          title: 'Electrician Invoice App',
+          description:
+            'Turn completed offline jobs into invoices quickly once you are back in signal.',
+          icon: Clock,
+          category: 'Business',
         },
       ]}
       ctaHeading="Try offline mode free for 7 days"

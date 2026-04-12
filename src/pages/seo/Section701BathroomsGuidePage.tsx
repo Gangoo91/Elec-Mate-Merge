@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/ip-rating-guide',
+    href: '/tools/ip-rating-guide',
     title: 'IP Rating Guide',
     description: 'Understand IP codes for selecting equipment in wet locations.',
     icon: Droplets,
@@ -613,7 +613,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          An <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
+          An <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}

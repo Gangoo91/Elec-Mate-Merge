@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/quote-generator',
+    href: '/electrical-quoting-app',
     title: 'AI Cost Engineer',
     description:
       'Generate accurate, profitable quotes using AI-powered cost estimation with real trade pricing data.',
@@ -301,7 +301,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expense-tracker">expenses tracker</SEOInternalLink> captures
+          <SEOInternalLink href="/tools/expenses-manager-electrician">expenses tracker</SEOInternalLink> captures
           every cost automatically. After a few months, you will have exact data on your overheads —
           no guesswork needed.
         </p>
@@ -524,7 +524,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/expense-tracker">business analytics</SEOInternalLink> show
+          <SEOInternalLink href="/tools/expenses-manager-electrician">business analytics</SEOInternalLink> show
           you your actual profit margin, average job value, and effective hourly rate across all
           jobs. Use this data to make pricing decisions based on facts, not feelings.
         </p>

@@ -65,7 +65,7 @@ export default function ElectricalSubcontractingGuidePage() {
             <>
               <p>
                 Electrical subcontracting is an arrangement where a{' '}
-                <SEOInternalLink href="/guides/electrician-self-employed">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed electrician
                 </SEOInternalLink>{' '}
                 works on projects secured by a main contractor, rather than finding and managing
@@ -496,7 +496,7 @@ export default function ElectricalSubcontractingGuidePage() {
                       <strong className="text-yellow-400">Health and safety</strong> — Compliance
                       with the contractor's health and safety policy, RAMS requirements, site
                       induction, PPE standards. See the{' '}
-                      <SEOInternalLink href="/guides/rams-generator">
+                      <SEOInternalLink href="/rams-generator">
                         RAMS generator guide
                       </SEOInternalLink>{' '}
                       for creating compliant method statements.
@@ -555,7 +555,7 @@ export default function ElectricalSubcontractingGuidePage() {
                     material deliveries, and any instructions or variations received from the
                     contractor. If a dispute arises about what was agreed, your contemporaneous
                     records are your best defence. Elec-Mate's{' '}
-                    <SEOInternalLink href="/guides/permit-to-work">
+                    <SEOInternalLink href="/guides/permit-to-work-electrician">
                       site documentation tools
                     </SEOInternalLink>{' '}
                     help you maintain a professional record of all work.
@@ -576,7 +576,7 @@ export default function ElectricalSubcontractingGuidePage() {
                     subcontract arrangement demonstrates genuine self-employment: you provide your
                     own tools, you can send a substitute, you take financial risk, and you work for
                     multiple clients. The{' '}
-                    <SEOInternalLink href="/guides/starting-electrical-business">
+                    <SEOInternalLink href="/guides/starting-an-electrical-business">
                       starting a business guide
                     </SEOInternalLink>{' '}
                     covers employment status in more detail.
@@ -660,7 +660,7 @@ export default function ElectricalSubcontractingGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/electrician-self-employed',
+          href: '/guides/going-self-employed-electrician',
           title: 'Self-Employed Electrician Guide',
           description: 'Setting up as a self-employed electrician.',
           icon: Briefcase,
@@ -681,21 +681,21 @@ export default function ElectricalSubcontractingGuidePage() {
           category: 'Business',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'From sole trader to limited company — business setup guide.',
           icon: Building,
           category: 'Business',
         },
         {
-          href: '/guides/rams-generator',
+          href: '/rams-generator',
           title: 'RAMS Generator',
           description: 'Create compliant risk assessments for main contractors.',
           icon: ClipboardCheck,
           category: 'Safety',
         },
         {
-          href: '/guides/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Professional invoicing from the job site.',
           icon: FileText,

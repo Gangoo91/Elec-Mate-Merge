@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on site with instant PDF export — no evening admin.',
     icon: FileCheck2,
@@ -593,7 +593,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue Certificates That Satisfy CQC</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   direct from your phone with full PDF documentation. Care home operators need

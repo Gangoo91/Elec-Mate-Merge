@@ -351,12 +351,17 @@ const ElectricalHub = () => {
   const showWorkerTools = employeeRecord || isWhitelistedEmail;
 
   useEffect(() => {
-    if (profile && !profile.onboarding_completed) {
-      const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
-      if (!hasSeenWizard) {
-        setShowSetupWizard(true);
-        sessionStorage.setItem('setup_wizard_shown', 'true');
-      }
+    if (!profile || profile.onboarding_completed) return;
+    // Only show the setup wizard once the user actually has access — paying
+    // subscribers, RevenueCat-entitled users, or internal free-access accounts.
+    // This prevents a trial-escape user from being able to complete the wizard
+    // and flip `onboarding_completed = true` before they have paid.
+    const hasAccess = profile.subscribed || profile.free_access_granted;
+    if (!hasAccess) return;
+    const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
+    if (!hasSeenWizard) {
+      setShowSetupWizard(true);
+      sessionStorage.setItem('setup_wizard_shown', 'true');
     }
   }, [profile]);
 

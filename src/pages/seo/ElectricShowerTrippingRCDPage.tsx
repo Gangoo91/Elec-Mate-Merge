@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic fault finding approach for electricians diagnosing RCD tripping issues.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'Insulation Resistance Testing',
     description: 'How to perform insulation resistance tests and interpret the results.',
     icon: ClipboardCheck,
@@ -364,7 +364,7 @@ const sections = [
                 neutral conductors. If the shower circuit shares a neutral with another circuit, the
                 RCD cannot correctly measure the current balance. This is a wiring error that needs
                 correction. See the{' '}
-                <SEOInternalLink href="/guides/borrowed-neutral">
+                <SEOInternalLink href="/guides/borrowed-neutral-explained">
                   borrowed neutral guide
                 </SEOInternalLink>{' '}
                 for more detail.

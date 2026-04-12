@@ -2,34 +2,22 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Loader2,
-  ArrowRight,
-  CheckCircle2,
-  GraduationCap,
-  Zap,
-  Gift,
-  User,
-  Mail,
-  Lock,
-  Shield,
   Check,
+  CheckCircle2,
   ChevronLeft,
   Eye,
   EyeOff,
-  FileCheck,
-  Calculator,
-  Bot,
-  BarChart3,
-  BookOpen,
-  Brain,
-  Award,
-  ClipboardCheck,
+  Gift,
+  GraduationCap,
+  Loader2,
+  Wrench,
 } from 'lucide-react';
 import { storeConsent } from '@/services/consentService';
+import TrialExpiredPaywall from '@/components/auth/TrialExpiredPaywall';
 import { supabase } from '@/integrations/supabase/client';
+import { useUserCount } from '@/hooks/useUserCount';
 import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
@@ -45,39 +33,31 @@ const PASSWORD_REQUIREMENTS = [
 type OnboardingStep = 'account' | 'profile' | 'consent';
 
 const STEPS: OnboardingStep[] = ['account', 'profile', 'consent'];
-const STEP_LABELS = ['Account', 'Role', 'Terms'];
+const STEP_LABELS = ['Account', 'Role', 'Trial'];
 
 const ROLE_OPTIONS = [
   {
     value: 'electrician',
     label: 'Electrician',
-    subtitle: 'Everything you need on and off site',
-    icon: Zap,
+    subtitle: 'Everything you need on and off site.',
+    icon: Wrench,
     features: [
-      { icon: FileCheck, text: 'Certs, RAMS & reports' },
-      { icon: Calculator, text: 'Quotes & invoices' },
-      { icon: Bot, text: 'AI-powered tools' },
-      { icon: BookOpen, text: 'Regs & calculators' },
-      { icon: BarChart3, text: 'Job tracking & diary' },
-      { icon: BookOpen, text: 'Study centre' },
-      { icon: ClipboardCheck, text: 'Site safety tools' },
-      { icon: Brain, text: 'Mental health hub' },
+      'Certificates, RAMS and reports',
+      'Quotes and invoices',
+      'AI tools and calculators',
+      'Job tracking and study tools',
     ],
   },
   {
     value: 'apprentice',
     label: 'Apprentice',
-    subtitle: 'Your complete training companion',
+    subtitle: 'Your complete training companion.',
     icon: GraduationCap,
     features: [
-      { icon: BookOpen, text: 'Level 2 & 3 courses' },
-      { icon: Brain, text: 'AI tutor & quizzes' },
-      { icon: Award, text: 'AM2 exam simulator' },
-      { icon: ClipboardCheck, text: 'Portfolio & logbook' },
-      { icon: Calculator, text: 'Regs & calculators' },
-      { icon: FileCheck, text: 'Progress tracking' },
-      { icon: Brain, text: 'Mental health hub' },
-      { icon: Award, text: 'Study centre' },
+      'Level 2 and 3 courses',
+      'AM2 support and mock exams',
+      'Progress tracking and revision tools',
+      'Calculators and study resources',
     ],
   },
 ];
@@ -85,13 +65,13 @@ const ROLE_OPTIONS = [
 /* ─── Shared sub-components ─── */
 
 const StepBar = ({ currentIndex }: { currentIndex: number }) => (
-  <div className="mb-8">
+  <div className="mb-5 lg:mb-7">
     <div className="flex gap-2">
       {STEPS.map((s, i) => (
         <div key={s} className="flex-1">
-          <div className="h-[2px] rounded-full bg-white/[0.10] overflow-hidden">
+          <div className="h-[3px] overflow-hidden rounded-full bg-white/[0.10]">
             <motion.div
-              className="h-full rounded-full bg-elec-yellow"
+              className="h-full rounded-full bg-yellow-400"
               initial={false}
               animate={{ width: i < currentIndex ? '100%' : i === currentIndex ? '50%' : '0%' }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -99,8 +79,8 @@ const StepBar = ({ currentIndex }: { currentIndex: number }) => (
           </div>
           <span
             className={cn(
-              'text-[10px] font-medium uppercase tracking-wider block text-center mt-1.5 transition-colors',
-              i <= currentIndex ? 'text-white' : 'text-white'
+              'mt-1.5 block text-center text-[12px] font-medium transition-colors lg:text-[13px]',
+              i === currentIndex ? 'text-yellow-400' : 'text-white'
             )}
           >
             {STEP_LABELS[i]}
@@ -117,7 +97,6 @@ const InputField = ({
   value,
   onChange,
   placeholder,
-  icon: Icon,
   field,
   focusedField,
   setFocusedField,
@@ -131,7 +110,6 @@ const InputField = ({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  icon: React.ComponentType<{ className?: string }>;
   field: string;
   focusedField: string | null;
   setFocusedField: (f: string | null) => void;
@@ -139,51 +117,45 @@ const InputField = ({
   isVisible?: boolean;
   onToggle?: () => void;
   showSuccess?: boolean;
-}) => (
-  <div>
-    <label className="block text-[12px] font-medium text-white mb-1.5 ml-0.5 uppercase tracking-wider">
-      {label}
-    </label>
-    <div className="relative">
-      <Icon
-        className={cn(
-          'absolute left-3.5 top-1/2 -translate-y-1/2 h-[18px] w-[18px] transition-colors duration-150',
-          focusedField === field ? 'text-elec-yellow' : 'text-white'
+}) => {
+  const resolvedType = type === 'password' ? (isVisible ? 'text' : 'password') : type;
+  return (
+    <div>
+      <label className="mb-1.5 block text-[13px] font-medium text-white">{label}</label>
+      <div className="relative">
+        <input
+          type={resolvedType}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setFocusedField(field)}
+          onBlur={() => setFocusedField(null)}
+          placeholder={placeholder}
+          autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
+          autoCapitalize={type === 'email' || type === 'password' ? 'none' : 'words'}
+          className={cn(
+            'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
+            focusedField === field
+              ? 'border-yellow-400/70 bg-white/[0.06] ring-2 ring-yellow-400/20'
+              : 'border-white/[0.12] hover:border-white/[0.22]'
+          )}
+        />
+        {showToggle && (
+          <button
+            type="button"
+            onClick={onToggle}
+            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 touch-manipulation items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.06]"
+            aria-label={isVisible ? 'Hide password' : 'Show password'}
+          >
+            {isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
         )}
-      />
-      <input
-        type={type === 'password' ? 'text' : type}
-        value={value}
-        onChange={onChange}
-        onFocus={() => setFocusedField(field)}
-        onBlur={() => setFocusedField(null)}
-        placeholder={placeholder}
-        autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
-        autoCapitalize={type === 'email' || type === 'password' ? 'none' : 'words'}
-        className={cn(
-          'w-full h-12 pl-11 pr-10 rounded-xl text-[15px] text-white placeholder:text-white',
-          'bg-white/[0.10] outline-none transition-all duration-150 [color-scheme:dark]',
-          type === 'password' && !isVisible && 'pw-masked',
-          focusedField === field
-            ? 'ring-1 ring-elec-yellow/40 bg-white/[0.10]'
-            : 'ring-1 ring-white/20 hover:ring-white/30'
+        {showSuccess && !showToggle && (
+          <CheckCircle2 className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-green-400" />
         )}
-      />
-      {showToggle && (
-        <button
-          type="button"
-          onClick={onToggle}
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-lg text-white hover:text-white transition-colors touch-manipulation"
-        >
-          {isVisible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        </button>
-      )}
-      {showSuccess && !showToggle && (
-        <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-green-400/70" />
-      )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 /* ─── Main component ─── */
 
@@ -198,17 +170,16 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [profile, setProfile] = useState({ role: '' as string });
+  const [profileForm, setProfileForm] = useState({ role: '' as string });
   const [consent, setConsent] = useState({
     termsAccepted: false,
     privacyAccepted: false,
     marketingOptIn: false,
     dataProcessingAccepted: false,
   });
-  const [userCount, setUserCount] = useState('500+');
-  const [checkingEmail, setCheckingEmail] = useState(false);
+  const userCount = useUserCount();
 
-  const { signUp } = useAuth();
+  const { signUp, user, profile } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [offerCode, setOfferCode] = useState<string | null>(null);
@@ -221,14 +192,13 @@ const SignUp = () => {
   const allRequiredAccepted =
     consent.termsAccepted && consent.privacyAccepted && consent.dataProcessingAccepted;
 
+  // If a logged-in subscribed user lands here, send them straight to the app.
   useEffect(() => {
-    supabase
-      .from('profiles')
-      .select('*', { count: 'exact', head: true })
-      .then(({ count }) => {
-        if (count && count > 0) setUserCount(`${Math.floor(count / 10) * 10}+`);
-      });
-  }, []);
+    if (!user || !profile) return;
+    if (profile.subscribed || profile.free_access_granted) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [user, profile, navigate]);
 
   useEffect(() => {
     const code = searchParams.get('offer');
@@ -265,37 +235,22 @@ const SignUp = () => {
       setError('Passwords do not match');
       return;
     }
-    setCheckingEmail(true);
-    setError(null);
-    try {
-      const { data: existing, error: checkErr } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('email', email.toLowerCase().trim())
-        .maybeSingle();
-      if (checkErr && checkErr.code !== 'PGRST116') {
-        /* ignore */
-      } else if (existing) {
-        setError('An account with this email already exists. Please sign in instead.');
-        setCheckingEmail(false);
-        return;
-      }
-    } catch {
-      /* ignore */
-    }
-    setCheckingEmail(false);
+    // Note: we intentionally do NOT pre-check for a duplicate email here.
+    // `profiles.email` is not a public column (RLS + schema), so that query
+    // always returned a 400. Supabase's `signUp()` call on the final step
+    // surfaces duplicate-email errors correctly anyway.
     setError(null);
     addBreadcrumb('Signup step: account completed', 'signup', { email });
     setStep('profile');
   };
 
   const handleProfileSubmit = () => {
-    if (!profile.role) {
+    if (!profileForm.role) {
       setError('Please select your role');
       return;
     }
     setError(null);
-    addBreadcrumb('Signup step: profile completed', 'signup', { role: profile.role });
+    addBreadcrumb('Signup step: profile completed', 'signup', { role: profileForm.role });
     setStep('consent');
   };
 
@@ -348,10 +303,10 @@ const SignUp = () => {
       const userId = data?.user?.id;
 
       if (userId) {
-        storageSetSync('elec-mate-profile-role', profile.role);
+        storageSetSync('elec-mate-profile-role', profileForm.role);
         const saveRole = async (retries = 3): Promise<boolean> => {
           const payload: Record<string, unknown> = {
-            role: profile.role,
+            role: profileForm.role,
             onboarding_completed: false,
             updated_at: new Date().toISOString(),
           };
@@ -409,7 +364,7 @@ const SignUp = () => {
         .invoke('send-welcome-email', { body: { userId, email, fullName } })
         .catch(() => {});
 
-      const rp = ROLE_TO_PRICE[profile.role];
+      const rp = ROLE_TO_PRICE[profileForm.role];
       if (rp) {
         storageSetSync('elec-mate-checkout-planId', rp.planId);
         storageSetSync('elec-mate-checkout-priceId', rp.priceId);
@@ -432,15 +387,53 @@ const SignUp = () => {
 
   // ─── Render ───
 
+  // Logged-in but not subscribed — they already have an account and abandoned
+  // Stripe checkout (or their trial ended). Show the paywall instead of the
+  // signup form so they can't get stuck with "email already exists" on re-try.
+  // Paywall has Subscribe Now → /subscriptions and Sign Out → clean slate.
+  if (user && profile && !profile.subscribed && !profile.free_access_granted) {
+    return <TrialExpiredPaywall />;
+  }
+
   return (
-    <div className="min-h-[100svh] bg-black flex flex-col">
-      <div className="flex-1 flex flex-col px-6 pt-[calc(env(safe-area-inset-top)+12px)] pb-[calc(env(safe-area-inset-bottom)+24px)]">
-        <div className="w-full max-w-[380px] mx-auto flex-1 flex flex-col">
+    <div className="min-h-[100svh] bg-black">
+      <div className="mx-auto grid min-h-[100svh] max-w-[1120px] items-stretch px-6 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-[env(safe-area-inset-top)] lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-8">
+        <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
+          <div>
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-11 w-11 rounded-xl object-cover" />
+              <span className="text-[22px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </Link>
+
+            <div className="mt-16 max-w-[30rem]">
+              <h1 className="text-[4rem] font-bold leading-[1.02] tracking-[-0.045em] text-white">
+                Three steps.
+                <br />
+                <span className="text-yellow-400">Seven free days.</span>
+              </h1>
+              <p className="mt-6 max-w-[26rem] text-lg leading-[1.65] text-white">
+                Create your account, pick your role, and start running real work through the
+                platform. No charge until day 8.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 text-[14px] leading-[1.7] text-white">
+            <div>{userCount} electricians already live on Elec-Mate.</div>
+            <div>You will not be charged for 7 days.</div>
+            <div>Cancelling before the trial ends takes a couple of clicks.</div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-start py-3 lg:justify-center lg:py-10">
+          <div className="mx-auto flex w-full max-w-[440px] flex-1 flex-col">
           {/* Top bar: back + logo */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex items-center justify-between py-3 mb-2"
+            className="mb-1 flex items-center justify-between py-2"
           >
             {step === 'account' ? (
               <Link
@@ -459,7 +452,7 @@ const SignUp = () => {
                 <span className="text-[13px] font-medium">Back</span>
               </button>
             )}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 lg:hidden">
               <img src="/logo.jpg" alt="" className="w-7 h-7 rounded-lg object-cover" />
               <span className="text-[14px] font-bold tracking-tight">
                 <span className="text-elec-yellow">Elec-</span>
@@ -483,40 +476,39 @@ const SignUp = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col"
-                >
+                className="flex-1 flex flex-col"
+              >
                   {/* Banners */}
                   {referralCode && !offerCode && (
-                    <div className="mb-4 p-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/15 flex items-center gap-3">
-                      <Gift className="h-4.5 w-4.5 text-elec-yellow flex-shrink-0" />
+                    <div className="mb-5 flex items-center gap-3 rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.08] px-4 py-3">
+                      <Gift className="h-5 w-5 flex-shrink-0 text-yellow-400" />
                       <div>
-                        <p className="text-[12px] font-semibold text-elec-yellow">
+                        <p className="text-[13px] font-semibold text-yellow-400">
                           Referred by a Mate
                         </p>
-                        <p className="text-[11px] text-white">Your first month's on us</p>
+                        <p className="text-[12px] text-white">Your first month's on us.</p>
                       </div>
                     </div>
                   )}
                   {offerCode && (
-                    <div className="mb-4 p-3 rounded-xl bg-green-500/[0.06] border border-green-500/15 flex items-center gap-3">
-                      <Gift className="h-4.5 w-4.5 text-green-400 flex-shrink-0" />
+                    <div className="mb-5 flex items-center gap-3 rounded-2xl border border-green-500/25 bg-green-500/[0.08] px-4 py-3">
+                      <Gift className="h-5 w-5 flex-shrink-0 text-green-400" />
                       <div>
-                        <p className="text-[12px] font-semibold text-green-400">Offer applied</p>
-                        <p className="text-[11px] text-white">Discount applied at checkout</p>
+                        <p className="text-[13px] font-semibold text-green-400">Offer applied</p>
+                        <p className="text-[12px] text-white">Discount applied at checkout.</p>
                       </div>
                     </div>
                   )}
-
-                  <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
-                    Create your account
+                  <h1 className="mb-2 text-[2rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.25rem] lg:text-[2.5rem]">
+                    Create your <span className="text-yellow-400">account.</span>
                   </h1>
-                  <div className="flex items-center gap-2 mb-6">
-                    <p className="text-[13px] text-white">7-day free trial</p>
-                    <span className="text-[11px] text-white">·</span>
-                    <span className="text-[11px] text-white flex items-center gap-1">
-                      <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500/50" />
-                      {userCount} members
-                    </span>
+                  <p className="mb-3 text-[14px] leading-[1.6] text-white lg:text-[15px]">
+                    Name, email, password — that's it. No charge for 7 days.
+                  </p>
+                  <div className="mb-5 flex items-center gap-2 text-[12px] text-white lg:mb-6 lg:text-[13px]">
+                    <span>No charge for 7 days</span>
+                    <span className="h-1 w-1 rounded-full bg-white/30" />
+                    <span>{userCount} electricians live</span>
                   </div>
 
                   {/* Error */}
@@ -528,20 +520,19 @@ const SignUp = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="mb-4 overflow-hidden"
                       >
-                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                        <p className="rounded-2xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3 text-[13px] text-red-400">
                           {error}
                         </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  <form onSubmit={handleAccountSubmit} className="space-y-3.5 flex-1">
+                  <form onSubmit={handleAccountSubmit} className="flex-1 space-y-3">
                     <InputField
                       label="Full name"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="John Smith"
-                      icon={User}
                       field="name"
                       focusedField={focusedField}
                       setFocusedField={setFocusedField}
@@ -552,7 +543,6 @@ const SignUp = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@example.com"
-                      icon={Mail}
                       field="email"
                       focusedField={focusedField}
                       setFocusedField={setFocusedField}
@@ -565,7 +555,6 @@ const SignUp = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Create password"
-                        icon={Lock}
                         field="password"
                         focusedField={focusedField}
                         setFocusedField={setFocusedField}
@@ -605,7 +594,6 @@ const SignUp = () => {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Confirm password"
-                      icon={Lock}
                       field="confirmPassword"
                       focusedField={focusedField}
                       setFocusedField={setFocusedField}
@@ -618,27 +606,18 @@ const SignUp = () => {
                     <div className="pt-3">
                       <Button
                         type="submit"
-                        disabled={checkingEmail}
-                        className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-50 transition-all duration-150"
+                        className="h-12 w-full touch-manipulation rounded-2xl text-[15px] font-semibold bg-yellow-500 hover:bg-yellow-400 text-black active:scale-[0.98] lg:h-14 disabled:opacity-50 transition-all duration-150"
                       >
-                        {checkingEmail ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking...
-                          </>
-                        ) : (
-                          <>
-                            Continue <ArrowRight className="ml-1.5 h-4 w-4" />
-                          </>
-                        )}
+                        Continue
                       </Button>
                     </div>
                   </form>
 
-                  <p className="text-[11px] text-white text-center mt-5">
+                  <p className="mt-4 text-center text-[13px] text-white lg:mt-5">
                     Already have an account?{' '}
                     <Link
                       to="/auth/signin"
-                      className="text-elec-yellow/70 hover:text-elec-yellow font-medium"
+                      className="font-semibold text-yellow-400 hover:text-yellow-300"
                     >
                       Sign in
                     </Link>
@@ -656,12 +635,12 @@ const SignUp = () => {
                   transition={{ duration: 0.2 }}
                   className="flex-1 flex flex-col"
                 >
-                  <div className="text-center mb-6">
-                    <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
-                      I am an...
+                  <div className="mb-7">
+                    <h1 className="mb-3 text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.5rem]">
+                      Which one <span className="text-yellow-400">sounds like you?</span>
                     </h1>
-                    <p className="text-[13px] text-white">
-                      Select your role to personalise your experience
+                    <p className="text-[15px] leading-[1.7] text-white">
+                      This tunes the first version of the platform you land in.
                     </p>
                   </div>
 
@@ -673,16 +652,17 @@ const SignUp = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="mb-4 overflow-hidden"
                       >
-                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                        <p className="rounded-2xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3 text-[13px] text-red-400">
                           {error}
                         </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  <div className="space-y-4 flex-1">
+                  <div className="flex-1 space-y-4">
                     {ROLE_OPTIONS.map((option, index) => {
-                      const selected = profile.role === option.value;
+                      const selected = profileForm.role === option.value;
+                      const Icon = option.icon;
                       return (
                         <motion.button
                           key={option.value}
@@ -690,68 +670,58 @@ const SignUp = () => {
                           initial={{ opacity: 0, y: 15 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.05 + index * 0.1 }}
-                          onClick={() => setProfile({ ...profile, role: option.value })}
+                          onClick={() => setProfileForm({ ...profileForm, role: option.value })}
                           className={cn(
-                            'w-full rounded-2xl text-left transition-all duration-200 touch-manipulation p-5',
+                            'w-full touch-manipulation rounded-[1.8rem] border p-5 text-left transition-all duration-200 lg:p-6',
                             selected
-                              ? 'bg-gradient-to-br from-elec-yellow/[0.12] to-amber-500/[0.06] border-2 border-elec-yellow shadow-[0_0_30px_rgba(250,204,21,0.12)]'
-                              : 'bg-white/[0.04] border-2 border-white/15 hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.02]'
+                              ? 'border-yellow-400/60 bg-gradient-to-br from-yellow-500/[0.12] via-amber-500/[0.05] to-white/[0.02] shadow-[0_0_40px_rgba(250,204,21,0.1)]'
+                              : 'border-white/[0.12] bg-white/[0.03] hover:border-yellow-400/30 hover:bg-white/[0.04]'
                           )}
                         >
-                          {/* Header row */}
-                          <div className="flex items-center gap-4 mb-4">
+                          <div className="flex items-start gap-4">
                             <div
                               className={cn(
-                                'w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-200',
+                                'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl border transition-colors',
                                 selected
-                                  ? 'bg-elec-yellow/20 ring-2 ring-elec-yellow'
-                                  : 'bg-elec-yellow/[0.08] ring-2 ring-elec-yellow/20'
+                                  ? 'border-yellow-400/40 bg-yellow-500/[0.18]'
+                                  : 'border-yellow-500/25 bg-yellow-500/[0.12]'
                               )}
                             >
-                              <option.icon className="h-7 w-7 text-elec-yellow" />
+                              <Icon className="h-5 w-5 text-yellow-400" />
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <span className="font-bold text-white text-[18px] block">
+                            <div className="min-w-0 flex-1">
+                              <h3 className="text-[18px] font-bold tracking-[-0.01em] text-white">
                                 {option.label}
-                              </span>
-                              <span className="text-[12px] text-elec-yellow block mt-0.5">
-                                {option.subtitle}
-                              </span>
+                              </h3>
+                              <p className="mt-1 text-[13px] text-white">{option.subtitle}</p>
                             </div>
                             <div
                               className={cn(
-                                'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-150',
-                                selected ? 'bg-elec-yellow' : 'border-2 border-elec-yellow/30'
+                                'flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full transition-all duration-150',
+                                selected
+                                  ? 'bg-yellow-400 shadow-[0_0_16px_rgba(250,204,21,0.4)]'
+                                  : 'border-2 border-white/25'
                               )}
                             >
-                              {selected && <Check className="h-3.5 w-3.5 text-black" />}
+                              {selected && <Check className="h-4 w-4 text-black" strokeWidth={3} />}
                             </div>
                           </div>
 
-                          {/* Features grid */}
                           <div
                             className={cn(
-                              'border-t pt-4',
-                              selected ? 'border-elec-yellow/20' : 'border-white/10'
+                              'mt-5 space-y-2.5 border-t pt-4',
+                              selected ? 'border-yellow-400/20' : 'border-white/[0.08]'
                             )}
                           >
-                            <div className="grid grid-cols-2 gap-3">
-                              {option.features.map((f) => (
-                                <div key={f.text} className="flex items-center gap-2.5">
-                                  <div
-                                    className={cn(
-                                      'w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0',
-                                      selected ? 'bg-elec-yellow/15' : 'bg-elec-yellow/[0.06]'
-                                    )}
-                                  >
-                                    <f.icon className="h-3.5 w-3.5 text-elec-yellow" />
-                                  </div>
-                                  <span className="text-[12px] text-white leading-tight">
-                                    {f.text}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
+                            {option.features.map((feature) => (
+                              <div
+                                key={feature}
+                                className="flex items-start gap-2.5 text-[13px] leading-[1.55] text-white"
+                              >
+                                <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
+                                <span>{feature}</span>
+                              </div>
+                            ))}
                           </div>
                         </motion.button>
                       );
@@ -761,18 +731,15 @@ const SignUp = () => {
                   <div className="pt-5">
                     <Button
                       onClick={handleProfileSubmit}
-                      disabled={!profile.role}
-                      className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-30 transition-all duration-150"
+                      disabled={!profileForm.role}
+                      className="h-12 w-full touch-manipulation rounded-2xl text-[15px] font-semibold bg-yellow-500 hover:bg-yellow-400 text-black active:scale-[0.98] lg:h-14 disabled:opacity-30 transition-all duration-150"
                     >
-                      Continue <ArrowRight className="ml-1.5 h-4 w-4" />
+                      Continue
                     </Button>
 
                     {/* Trial note */}
-                    <div className="flex items-center justify-center gap-2 mt-4">
-                      <Shield className="h-3.5 w-3.5 text-elec-yellow" />
-                      <span className="text-[11px] text-white">
-                        7-day free trial · No charge today · Cancel anytime
-                      </span>
+                    <div className="mt-4 text-center text-[11px] text-white">
+                      No charge for 7 days · Cancel in a couple of clicks
                     </div>
                   </div>
                 </motion.div>
@@ -788,20 +755,13 @@ const SignUp = () => {
                   transition={{ duration: 0.2 }}
                   className="flex-1 flex flex-col"
                 >
-                  {/* Header with icon */}
-                  <div className="text-center mb-6">
-                    <motion.div
-                      initial={{ scale: 0.8 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                      className="w-14 h-14 rounded-2xl bg-elec-yellow/10 ring-2 ring-elec-yellow/20 flex items-center justify-center mx-auto mb-4"
-                    >
-                      <Shield className="h-7 w-7 text-elec-yellow" />
-                    </motion.div>
-                    <h1 className="text-[22px] font-semibold text-white tracking-tight mb-1">
-                      One last step
+                  <div className="mb-7">
+                    <h1 className="mb-3 text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[2.5rem]">
+                      One last <span className="text-yellow-400">thing.</span>
                     </h1>
-                    <p className="text-[13px] text-white">We take your privacy seriously</p>
+                    <p className="text-[15px] leading-[1.7] text-white">
+                      Confirm the essentials, then we'll take you to checkout.
+                    </p>
                   </div>
 
                   <AnimatePresence>
@@ -812,7 +772,7 @@ const SignUp = () => {
                         exit={{ opacity: 0, height: 0 }}
                         className="mb-4 overflow-hidden"
                       >
-                        <p className="text-[13px] text-red-400 bg-red-500/8 border border-red-500/15 rounded-lg px-3.5 py-2.5 text-center">
+                        <p className="rounded-2xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3 text-[13px] text-red-400">
                           {error}
                         </p>
                       </motion.div>
@@ -833,9 +793,9 @@ const SignUp = () => {
                           dataProcessingAccepted: true,
                         }))
                       }
-                      className="w-full mb-5 py-3 rounded-xl bg-elec-yellow/[0.08] border-2 border-elec-yellow/20 text-[14px] font-semibold text-elec-yellow flex items-center justify-center gap-2 touch-manipulation hover:bg-elec-yellow/[0.12] transition-colors"
+                      className="mb-5 h-12 w-full touch-manipulation rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.08] text-[14px] font-semibold text-yellow-400 transition-colors hover:bg-yellow-500/[0.12]"
                     >
-                      <Check className="h-4 w-4" /> Accept all required
+                      Accept all required
                     </motion.button>
                   )}
 
@@ -882,10 +842,17 @@ const SignUp = () => {
                               : 'bg-white/[0.03] border-white/15 hover:border-elec-yellow/20'
                           )}
                         >
-                          <Checkbox
-                            checked={checked}
-                            className="h-5 w-5 rounded border-white/25 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 flex-shrink-0"
-                          />
+                          <div
+                            aria-hidden
+                            className={cn(
+                              'flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-colors',
+                              checked
+                                ? 'border-green-500 bg-green-500'
+                                : 'border-white/25 bg-transparent'
+                            )}
+                          >
+                            {checked && <Check className="h-3.5 w-3.5 text-black" strokeWidth={3} />}
+                          </div>
                           <div className="flex-1 min-w-0">
                             <span className="text-[14px] text-white font-medium block">
                               {item.label}
@@ -913,25 +880,20 @@ const SignUp = () => {
                     <Button
                       onClick={handleFinalSubmit}
                       disabled={isSubmitting || !allRequiredAccepted}
-                      className="w-full h-12 rounded-xl text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_1px_20px_rgba(250,204,21,0.15)] active:scale-[0.98] disabled:opacity-30 transition-all duration-150"
+                      className="h-12 w-full touch-manipulation rounded-2xl text-[15px] font-semibold bg-yellow-500 hover:bg-yellow-400 text-black active:scale-[0.98] lg:h-14 disabled:opacity-30 transition-all duration-150"
                     >
                       {isSubmitting ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating account...
                         </>
                       ) : (
-                        <>
-                          Create account <ArrowRight className="ml-1.5 h-4 w-4" />
-                        </>
+                        'Create account'
                       )}
                     </Button>
 
                     {/* Trial + trust note */}
-                    <div className="flex items-center justify-center gap-2 mt-4">
-                      <Shield className="h-3.5 w-3.5 text-elec-yellow" />
-                      <span className="text-[11px] text-white">
-                        7-day free trial · No charge today · Cancel anytime
-                      </span>
+                    <div className="mt-4 text-center text-[11px] text-white">
+                      7-day free trial · No charge for 7 days · Cancel in a couple of clicks
                     </div>
                   </div>
                 </motion.div>
@@ -939,6 +901,7 @@ const SignUp = () => {
             </AnimatePresence>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

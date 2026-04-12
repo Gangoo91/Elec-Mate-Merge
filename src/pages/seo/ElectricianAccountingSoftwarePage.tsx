@@ -64,7 +64,7 @@ export default function ElectricianAccountingSoftwarePage() {
             <>
               <p>
                 Many{' '}
-                <SEOInternalLink href="/guides/electrician-self-employed">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed electricians
                 </SEOInternalLink>{' '}
                 start out managing their finances with spreadsheets, a folder of receipts, and a
@@ -491,7 +491,7 @@ export default function ElectricianAccountingSoftwarePage() {
                       quoting and pricing tools
                     </SEOInternalLink>{' '}
                     calculate material costs, labour, and margins for every job. The{' '}
-                    <SEOInternalLink href="/guides/electrician-invoice-app">
+                    <SEOInternalLink href="/electrician-invoice-app">
                       invoicing features
                     </SEOInternalLink>{' '}
                     generate professional invoices on site. This data feeds into your accounting
@@ -506,7 +506,7 @@ export default function ElectricianAccountingSoftwarePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     Your accounting software shows overall business profit, but Elec-Mate's{' '}
-                    <SEOInternalLink href="/guides/job-profitability-calculator">
+                    <SEOInternalLink href="/job-profitability-calculator">
                       job profitability calculator
                     </SEOInternalLink>{' '}
                     shows profit at the individual job level. This granular view helps you identify
@@ -559,7 +559,7 @@ export default function ElectricianAccountingSoftwarePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/electrician-self-employed',
+          href: '/guides/going-self-employed-electrician',
           title: 'Self-Employed Electrician Guide',
           description: 'Complete guide to setting up as a self-employed electrician.',
           icon: Briefcase,
@@ -573,14 +573,14 @@ export default function ElectricianAccountingSoftwarePage() {
           category: 'Business',
         },
         {
-          href: '/guides/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Generate professional invoices from the job site.',
           icon: FileText,
           category: 'Business',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description: 'Everything you need to start your own electrical company.',
           icon: Building,
@@ -594,7 +594,7 @@ export default function ElectricianAccountingSoftwarePage() {
           category: 'Business',
         },
         {
-          href: '/guides/job-profitability-calculator',
+          href: '/job-profitability-calculator',
           title: 'Job Profitability Calculator',
           description: 'Track profit margins on every electrical job.',
           icon: TrendingUp,

@@ -575,7 +575,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Every consumer unit replacement or new circuit installation requires an Electrical
                   Installation Certificate (EIC) with a Schedule of Test Results. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certification on site and export a compliant PDF instantly.
                 </p>
               </div>

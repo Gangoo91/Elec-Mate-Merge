@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/eicr-explained',
+    href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
       'Complete guide to the Electrical Installation Condition Report -- what it covers, the process, and when it is needed.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Consumer unit replacement guide covering specification, installation, testing, and certification.',
@@ -145,7 +145,7 @@ const sections = [
       <>
         <p>
           Visual inspection is the foundation of every electrical assessment, whether you are
-          carrying out an <SEOInternalLink href="/guides/eicr-explained">EICR</SEOInternalLink> on
+          carrying out an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> on
           an existing installation or certifying new work with an EIC. It is not a formality or a
           tick-box exercise -- it is the stage where many of the most significant safety defects are
           identified.
@@ -296,7 +296,7 @@ const sections = [
         </div>
         <p>
           When inspecting a{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change-guide">consumer unit</SEOInternalLink>
+          <SEOInternalLink href="/guides/consumer-unit-change">consumer unit</SEOInternalLink>
           , also note its age and type. Older rewirable fuse boards, early MCB boards without RCD
           protection, and plastic consumer units in domestic premises are all common observations
           that may require recommendations for upgrade.

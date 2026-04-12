@@ -85,17 +85,17 @@ export default function SolarPanelSizingCalculatorPage() {
                 electrical installation must comply with BS 7671 Part 712 (Solar Photovoltaic Power
                 Supply Systems), and the grid connection must meet Engineering Recommendation G98 or
                 G99. The{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink> for
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for
                 the solar installation must record the system details, inverter specifications, and
                 AC/DC isolation arrangements.
               </p>
               <p>
                 The Elec-Mate solar sizing calculator handles the design calculations, while the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 verify the AC and DC cabling for the installation.
@@ -314,7 +314,7 @@ export default function SolarPanelSizingCalculatorPage() {
                 Battery installations require specific electrical design considerations under BS
                 7671 Part 712 and the battery manufacturer's installation requirements. Isolation,
                 ventilation, and fire safety must be considered. The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 in Elec-Mate include tests specific to battery energy storage systems.
@@ -368,7 +368,7 @@ export default function SolarPanelSizingCalculatorPage() {
                 It is important to note that the G98/G99 limit applies to the inverter AC output
                 power, not the panel DC capacity. A 4kWp panel array with a 3.6kW inverter would
                 qualify under G98 because the AC export is limited to 3.6kW. The{' '}
-                <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                   BS 7671 eighteenth edition
                 </SEOInternalLink>{' '}
                 provides the regulatory framework for the electrical installation side.
@@ -483,7 +483,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size AC and DC cables for solar PV installations to BS 7671 with voltage drop checks.',
@@ -499,7 +499,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total installation demand including solar PV export and battery storage.',
@@ -507,7 +507,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description:
             'Issue an Electrical Installation Certificate for solar PV installations with BS 7671 Part 712 compliance.',
@@ -515,7 +515,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Certificates',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

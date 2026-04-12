@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional PDF quotes with itemised pricing. Built for electricians.',
     icon: PoundSterling,
@@ -126,7 +126,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete electrical certificates on site. Professional PDFs for your customers.',
     icon: FileCheck2,
@@ -556,7 +556,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Use a Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   The{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   builds your per-point rates, material markup, and contingency into professional

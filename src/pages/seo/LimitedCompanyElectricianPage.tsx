@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/contractor-vs-employee-electrician',
+    href: '/guides/contractor-vs-employee-electrician-electrician',
     title: 'Contractor vs Employee',
     description:
       'Full financial comparison of self-employed contractor versus employed electrician.',

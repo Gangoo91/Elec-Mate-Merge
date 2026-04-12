@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate conductor sizes for single and three phase circuits with all BS 7671 correction factors applied automatically.',
@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Check voltage drop for three phase circuits against BS 7671 limits — 3% for lighting, 5% for other circuits.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description:
       'Calculate total maximum demand with diversity factors to determine whether three phase is required.',
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for three phase installations directly from your phone.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/correction-factors-guide',
+    href: '/guides/correction-factors-bs-7671',
     title: 'Correction Factors Guide',
     description:
       'Complete guide to Ca, Cg, Ci, and Cc correction factors with worked examples for cable sizing.',
@@ -178,7 +178,7 @@ const sections = [
           The decision to install a three phase supply depends on the total electrical demand of the
           premises. A single phase supply in the UK is typically rated at 60A or 100A (depending on
           the service fuse), providing a maximum of approximately 14kW to 23kW. When the{' '}
-          <SEOInternalLink href="/guides/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             calculated maximum demand
           </SEOInternalLink>{' '}
           exceeds this, three phase becomes necessary.
@@ -227,7 +227,7 @@ const sections = [
           To determine whether three phase is needed, calculate the maximum demand using diversity
           factors from BS 7671 and the IET On-Site Guide. If the total demand after diversity
           exceeds the single phase supply capacity, three phase is required. Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           applies the correct diversity factors automatically and tells you whether single or three
@@ -394,7 +394,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing process
           </SEOInternalLink>{' '}
           then applies the standard correction factors from BS 7671 Appendix 4:
@@ -497,7 +497,7 @@ const sections = [
         </p>
         <p>
           Record all test results on the Schedule of Test Results form. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC certificate app</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eic-certificate">EIC certificate app</SEOInternalLink>{' '}
           includes the full schedule of test results and supports three phase circuit entries with
           per-phase readings.
         </p>
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <p>
           For detailed guidance on{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements
           </SEOInternalLink>{' '}
           including TN-S, TN-C-S, and TT systems, see our dedicated guide.

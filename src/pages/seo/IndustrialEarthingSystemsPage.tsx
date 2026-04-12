@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description:
       'Complete EICs on your phone and export PDF instantly for industrial installations.',
@@ -590,7 +590,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs and EICRs on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to record earth fault loop impedance test results, electrode resistance values,

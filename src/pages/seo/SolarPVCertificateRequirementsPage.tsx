@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Certificates', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Solar PV Certificate Requirements', href: '/guides/solar-pv-certificate-requirements' },
+  { label: 'Solar PV Certificate Requirements', href: '/solar-pv-certificate-requirements' },
 ];
 
 const tocItems = [

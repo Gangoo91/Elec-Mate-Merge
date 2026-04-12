@@ -106,7 +106,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks integration, automatic payment reminders, VAT and CIS compliance, expense tracking.',
-  url: 'https://elec-mate.com/tools/electrician-invoice-app',
+  url: 'https://elec-mate.com/electrician-invoice-app',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -138,6 +138,12 @@ export default function ElectricianInvoiceAppPage() {
     title: 'Electrician Invoice App UK | Digital Invoicing & Payments',
     description:
       'Digital invoicing app for UK electricians. Stripe card payments, Xero and QuickBooks sync, automatic payment chasing, VAT and CIS compliance, expense tracking.',
+    breadcrumbs: [
+      { name: 'Home', url: '/' },
+      { name: 'Electrician Invoice App', url: '/electrician-invoice-app' },
+    ],
+    dateModified: '2026-04-12',
+    author: 'Elec-Mate Technical Team',
   });
 
   return (
@@ -490,7 +496,7 @@ export default function ElectricianInvoiceAppPage() {
             <p>
               Elec-Mate is not just an invoicing app — it is the complete platform for running an
               electrical business. Your subscription includes 70+ calculators (56 technical + 14
-              business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with 8 certificate
+              business), 8 Elec-AI agents and 12 AI tools, 46+ training courses with 16 certificate
               types, digital EICR and EIC certification, quoting with AI cost estimation, invoicing
               with Stripe payments, and accounting integration.
             </p>
@@ -499,7 +505,7 @@ export default function ElectricianInvoiceAppPage() {
               complement the 56 technical calculators. Together with the AI tools and training
               courses, Elec-Mate covers every aspect of electrical work — from design and
               calculation, through installation and testing, to{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">
+              <SEOInternalLink href="/tools/eicr-certificate">
                 EICR certification
               </SEOInternalLink>
               , <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>,
@@ -520,6 +526,32 @@ export default function ElectricianInvoiceAppPage() {
             your accounts in order.
           </p>
           <SEOFeatureGrid features={features} columns={3} />
+        </div>
+      </section>
+
+      <section className="py-12 px-5 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">
+            Connect Invoicing to the Rest of the Job
+          </h2>
+          <div className="space-y-4 text-white leading-relaxed">
+            <p>
+              Faster payment is valuable, but the bigger win is continuity. If the job started in
+              the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>,
+              was priced in the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>,
+              and carried a sensible floor price from the{' '}
+              <SEOInternalLink href="/tools/minimum-charge-calculator">
+                minimum charge calculator
+              </SEOInternalLink>
+              , the invoice becomes the final clean step rather than another admin task to rebuild
+              from scratch.
+            </p>
+            <p>
+              That is also where profitability improves. Link invoices back to the quote and the
+              certificate trail, then compare billed value against actual outcome instead of just
+              hoping the job made money.
+            </p>
+          </div>
         </div>
       </section>
 

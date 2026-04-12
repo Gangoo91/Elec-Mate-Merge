@@ -580,11 +580,11 @@ const sections = [
         />
         <p>
           For notifiable work, Elec-Mate generates full{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificates
           </SEOInternalLink>{' '}
           with complete schedules of test results. The{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             70+ electrical calculators
           </SEOInternalLink>{' '}
           help you verify cable sizes, voltage drop, and Zs values for every circuit. The 8 Elec-AI
@@ -621,7 +621,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Full Electrical Installation Certificates for notifiable work. Auto-validated schedules of test results.',
@@ -637,7 +637,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Cable sizing, voltage drop, Zs verification, PFC, and dozens more. Verify your work to BS 7671.',

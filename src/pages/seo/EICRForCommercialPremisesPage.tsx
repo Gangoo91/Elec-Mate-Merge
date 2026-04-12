@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'BS 5839-1 compliance, system categories, design standards, and digital fire alarm certification.',
@@ -533,7 +533,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-phase testing</strong> —{' '}
-                <SEOInternalLink href="/guides/earth-fault-loop-explained">
+                <SEOInternalLink href="/guides/earth-fault-loop-impedance-explained">
                   earth fault loop impedance
                 </SEOInternalLink>{' '}
                 on all three phases at each board, prospective fault current measurements, phase
@@ -586,11 +586,11 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Dead testing</strong> —{' '}
-                <SEOInternalLink href="/guides/continuity-testing-r1r2">
+                <SEOInternalLink href="/guides/continuity-testing-r1-r2">
                   continuity of protective conductors
                 </SEOInternalLink>{' '}
                 (R1+R2 and R2 for ring circuits),{' '}
-                <SEOInternalLink href="/guides/insulation-resistance-test">
+                <SEOInternalLink href="/guides/insulation-resistance-testing">
                   insulation resistance
                 </SEOInternalLink>{' '}
                 (phase-to-neutral, phase-to-earth, neutral-to-earth), and polarity. Dead testing
@@ -604,7 +604,7 @@ const sections = [
                 <strong>Live testing</strong> — earth fault loop impedance (Zs) at the most remote
                 point of each circuit, prospective fault current (Ipf) at each distribution board
                 and at the origin, and{' '}
-                <SEOInternalLink href="/guides/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
                 (trip time and trip current for all RCDs). Live testing can generally be carried out
                 without disrupting the supply.
               </span>

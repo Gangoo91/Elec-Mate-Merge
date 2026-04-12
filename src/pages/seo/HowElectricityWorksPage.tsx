@@ -215,7 +215,7 @@ const sections = [
                   extremely high resistance (good insulator). The resistance of a cable depends on
                   its material, length, and cross-sectional area. Longer cables and thinner cables
                   have more resistance — which is why{' '}
-                  <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">
+                  <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                     cable sizing
                   </SEOInternalLink>{' '}
                   matters.
@@ -273,7 +273,7 @@ const sections = [
           On site, you use Ohm's Law constantly — even if you do not realise it. When you measure
           earth fault loop impedance (Zs) and calculate prospective fault current (PFC), you are
           using I = V / Zs. When you check{' '}
-          <SEOInternalLink href="/guides/voltage-drop-guide-bs7671">voltage drop</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/voltage-drop-limits-bs-7671">voltage drop</SEOInternalLink>{' '}
           across a cable run, you are using V = I x R. When you size a cable for a given load, the
           resistance per metre of the conductor matters because of Ohm's Law.
         </p>
@@ -322,15 +322,15 @@ const sections = [
         <p>
           As an electrician, you need to understand both. Most of your installation work involves AC
           circuits, but{' '}
-          <SEOInternalLink href="/guides/solar-panel-installation-guide">
+          <SEOInternalLink href="/guides/solar-panel-installation">
             solar PV installations
           </SEOInternalLink>
           ,{' '}
-          <SEOInternalLink href="/guides/ev-charger-installation-guide">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger installations
           </SEOInternalLink>
           , and{' '}
-          <SEOInternalLink href="/guides/battery-storage-guide">
+          <SEOInternalLink href="/guides/battery-storage-installation">
             battery storage systems
           </SEOInternalLink>{' '}
           all involve DC components. The testing and safety procedures differ between AC and DC, and
@@ -379,7 +379,7 @@ const sections = [
         </div>
         <p>
           When you calculate{' '}
-          <SEOInternalLink href="/guides/max-demand-guide">maximum demand</SEOInternalLink> for an
+          <SEOInternalLink href="/guides/max-demand-calculation-guide">maximum demand</SEOInternalLink> for an
           installation, you are working out the total power (in kW or kVA) that all the connected
           loads could draw at the same time. This determines the size of the main incoming cable,
           the main switch, and the supply fuse. Get it wrong and the supply trips under load.
@@ -508,7 +508,7 @@ const sections = [
         <p>
           Whether you are a first-year apprentice learning the basics or a qualified electrician
           preparing for{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391-exam-tips">C&G 2391</SEOInternalLink>,
+          <SEOInternalLink href="/guides/2391-exam-tips">C&G 2391</SEOInternalLink>,
           strong electrical theory makes everything else easier. It is the difference between
           following procedures by rote and genuinely understanding what you are doing and why.
         </p>

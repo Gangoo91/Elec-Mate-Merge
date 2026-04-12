@@ -82,7 +82,7 @@ export default function CableDeratingCalculatorPage() {
                 carrying capacity of the cable. The combined effect of all applicable factors
                 determines the minimum tabulated current (It) that the selected cable must have.
                 This directly affects the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculation
                 </SEOInternalLink>{' '}
                 and can mean the difference between a cable that runs safely within its thermal
@@ -92,7 +92,7 @@ export default function CableDeratingCalculatorPage() {
               <p>
                 Understanding and correctly applying these correction factors is one of the
                 fundamental skills in electrical design. It is tested extensively in the{' '}
-                <SEOInternalLink href="/courses/2391-inspection-testing">
+                <SEOInternalLink href="/training/city-guilds-2391">
                   City and Guilds 2391
                 </SEOInternalLink>{' '}
                 examination and is a daily requirement for any electrician designing or verifying
@@ -155,7 +155,7 @@ export default function CableDeratingCalculatorPage() {
                 does not significantly affect the cable size. However, in plant rooms, boiler
                 cupboards, roof spaces in summer, and commercial kitchens, temperatures of 35-45°C
                 are common and Ca becomes a significant factor. The{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 can also apply a temperature correction to the mV/A/m values for more accurate
@@ -216,7 +216,7 @@ export default function CableDeratingCalculatorPage() {
                   conduit fill calculator
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/tools/trunking-fill-calculator">
+                <SEOInternalLink href="/trunking-fill-calculator">
                   trunking fill calculator
                 </SEOInternalLink>{' '}
                 work alongside the derating calculator to ensure both physical space and thermal
@@ -368,7 +368,7 @@ export default function CableDeratingCalculatorPage() {
               </div>
               <p>
                 The Elec-Mate{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 links the derating calculator directly to the cable sizing tables, so once you have
@@ -480,7 +480,7 @@ export default function CableDeratingCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Full cable sizing to BS 7671 with automatic correction factors, voltage drop, and fault withstand.',
@@ -488,7 +488,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/voltage-drop-calculator',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description:
             'Calculate voltage drop and check compliance with 3% lighting and 5% power limits.',
@@ -504,7 +504,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/trunking-fill-calculator',
+          href: '/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description:
             'Verify trunking cable capacity to BS 7671 with automatic cable factor summation.',
@@ -512,7 +512,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for cable sizing, testing, and design.',

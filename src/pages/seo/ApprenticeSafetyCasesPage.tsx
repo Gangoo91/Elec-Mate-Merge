@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description:
       'Step-by-step prove-test-prove method for confirming circuits are dead before work begins.',
@@ -189,7 +189,7 @@ const sections = [
           the faceplate and touched the terminals, he received a 230V shock. The supervisor had
           isolated the wrong circuit. The apprentice suffered burns to his hand and was taken to
           hospital. The lesson: always verify isolation yourself using the{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+          <SEOInternalLink href="/how-to-do-safe-isolation">
             prove-test-prove method
           </SEOInternalLink>
           . Never rely on someone else telling you a circuit is dead.
@@ -200,7 +200,7 @@ const sections = [
           floor noticed the lights were off and switched the circuit breaker back on, assuming it
           had tripped. The electrician working on the ceiling rose received a shock. The lesson:
           always lock off the circuit breaker and attach a warning label. A{' '}
-          <SEOInternalLink href="/guides/lock-off-loto">lock-off/LOTO procedure</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/lock-off-loto-procedure">lock-off/LOTO procedure</SEOInternalLink>{' '}
           prevents anyone from re-energising a circuit while you are working on it.
         </p>
         <p>
@@ -313,11 +313,11 @@ const sections = [
           breaker or isolator with a personal lock and attach a warning label. This prevents anyone
           from re-energising the circuit while you are working on it. Only you should have the key
           to your lock. For full detail on lock-off procedures, see our{' '}
-          <SEOInternalLink href="/guides/lock-off-loto">LOTO guide</SEOInternalLink>.
+          <SEOInternalLink href="/guides/lock-off-loto-procedure">LOTO guide</SEOInternalLink>.
         </p>
         <p>
           <strong>GS38 compliance:</strong> Your voltage indicator and test leads must comply with
-          HSE Guidance Note <SEOInternalLink href="/guides/gs38-proving-dead">GS38</SEOInternalLink>
+          HSE Guidance Note <SEOInternalLink href="/guides/gs-38-proving-dead">GS38</SEOInternalLink>
           . This means finger guards on the probes, fused test leads, and a maximum 4mm tip
           exposure. Do not use makeshift test leads, damaged probes, or non-compliant equipment.
         </p>
@@ -370,7 +370,7 @@ const sections = [
         <p>
           <strong>Your rights:</strong> You cannot be disciplined, dismissed, or disadvantaged for
           reporting a safety incident or concern in good faith. This protection is enshrined in the{' '}
-          <SEOInternalLink href="/guides/apprentice-rights-pay">
+          <SEOInternalLink href="/guides/apprentice-rights-pay-uk">
             Employment Rights Act 1996
           </SEOInternalLink>{' '}
           (whistleblowing provisions) and the Health and Safety at Work Act 1974. If you believe you
@@ -501,7 +501,7 @@ const sections = [
         <p>
           <strong>Risk assessment guidance:</strong> Learn to identify hazards, assess risks, and
           select appropriate controls. The AI Health and Safety Agent can generate{' '}
-          <SEOInternalLink href="/tools/rams-generator">RAMS documents</SEOInternalLink> for
+          <SEOInternalLink href="/rams-generator">RAMS documents</SEOInternalLink> for
           specific tasks, helping you understand what a thorough risk assessment looks like in
           practice.
         </p>

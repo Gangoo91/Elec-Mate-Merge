@@ -95,7 +95,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'AI-powered Risk Assessment and Method Statement generator for electrical work on construction sites.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/permit-to-work',
+    href: '/guides/permit-to-work-electrician',
     title: 'Permit to Work',
     description:
       'Electrical permit-to-work systems for construction sites and high-risk environments.',
@@ -135,7 +135,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description:
       'Online training for manual handling on construction sites — a common requirement for site induction.',
@@ -431,7 +431,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+        <SEOInternalLink href="/how-to-do-safe-isolation">
           See also: Safe Isolation Procedure — essential for working on construction site circuits
         </SEOInternalLink>
       </>

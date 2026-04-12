@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/what-to-expect-as-apprentice',
+    href: '/guides/what-to-expect-electrical-apprentice',
     title: 'What to Expect as an Apprentice',
     description: 'Day-to-day reality of life as an electrical apprentice — from first day to EPA.',
     icon: Wrench,
@@ -176,7 +176,7 @@ const sections = [
                 <strong>Variety.</strong> No two days are the same. You might be wiring a new
                 kitchen extension on Monday, fault-finding on a commercial installation on Tuesday,
                 and installing an{' '}
-                <SEOInternalLink href="/guides/ev-charger-installation-guide">
+                <SEOInternalLink href="/guides/ev-charger-installation">
                   EV charger
                 </SEOInternalLink>{' '}
                 on Wednesday. The work is physical, mental, and hands-on.
@@ -376,7 +376,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Thursday: EV Charger Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Install a 7kW home{' '}
-                  <SEOInternalLink href="/guides/ev-charger-installation-guide">
+                  <SEOInternalLink href="/guides/ev-charger-installation">
                     EV charger
                   </SEOInternalLink>
                   . Run a dedicated circuit from the consumer unit to the garage, fit an isolator

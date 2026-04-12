@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { symbolRegistry } from './symbols/symbolRegistry';
 import {
   Sheet,
   SheetContent,
@@ -18,6 +19,18 @@ interface PropertiesPanelProps {
 
 export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: PropertiesPanelProps) => {
   if (!selectedObject) return null;
+
+  const symbolMeta = selectedObject.symbolId
+    ? symbolRegistry.find((symbol) => symbol.id === selectedObject.symbolId)
+    : null;
+  const objectLength =
+    selectedObject.points && selectedObject.points.length >= 2
+      ? Math.hypot(
+          selectedObject.points[1].x - selectedObject.points[0].x,
+          selectedObject.points[1].y - selectedObject.points[0].y
+        ) / 52
+      : null;
+  const nudge = (dx: number, dy: number) => onUpdate({ x: (selectedObject.x || 0) + dx, y: (selectedObject.y || 0) + dy });
 
   return (
     <Sheet open={!!selectedObject} onOpenChange={(open) => { if (!open) onClose(); }}>
@@ -35,6 +48,13 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
         </SheetHeader>
 
         <div className="px-4 pb-6 overflow-y-auto flex-1 space-y-4">
+          {objectLength !== null && (
+            <div className="space-y-1 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
+              <Label className="text-white/60 text-[11px] uppercase tracking-wide">Length</Label>
+              <p className="text-sm font-semibold text-white">{objectLength.toFixed(2)}m</p>
+            </div>
+          )}
+
           {/* Rotation */}
           <div className="space-y-2">
             <Label className="text-white text-xs">Rotation</Label>
@@ -64,6 +84,46 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
             </div>
           </div>
 
+          <div className="space-y-2">
+            <Label className="text-white text-xs">Nudge</Label>
+            <div className="grid grid-cols-3 gap-2">
+              <div />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => nudge(0, -10)}
+                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+              >
+                Up
+              </Button>
+              <div />
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => nudge(-10, 0)}
+                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+              >
+                Left
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => nudge(0, 10)}
+                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+              >
+                Down
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => nudge(10, 0)}
+                className="h-9 border-white/10 text-white hover:bg-white/10 touch-manipulation"
+              >
+                Right
+              </Button>
+            </div>
+          </div>
+
           {/* Position */}
           <div className="space-y-2">
             <Label className="text-white text-xs">Position</Label>
@@ -89,8 +149,8 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
             </div>
           </div>
 
-          {/* Size (for rectangles and symbols) */}
-          {(selectedObject.type === 'rectangle' || selectedObject.type === 'symbol') && (
+          {/* Size */}
+          {selectedObject.type === 'rectangle' && (
             <div className="space-y-2">
               <Label className="text-white text-xs">Size</Label>
               <div className="grid grid-cols-2 gap-2">
@@ -121,7 +181,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
             <>
               <Separator className="bg-white/10" />
               <div className="space-y-2">
-                <Label className="text-white text-xs">Text Content</Label>
+                <Label className="text-white text-xs">Label Text</Label>
                 <Input
                   type="text"
                   value={selectedObject.text || ''}
@@ -138,8 +198,11 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
             <>
               <Separator className="bg-white/10" />
               <div className="space-y-1">
-                <Label className="text-white text-xs">Symbol</Label>
-                <p className="text-sm text-white">{selectedObject.symbolId}</p>
+                <Label className="text-white text-xs">Item</Label>
+                <p className="text-sm text-white">{symbolMeta?.name || selectedObject.symbolId}</p>
+                {selectedObject.circuitRef && (
+                  <p className="text-xs text-white/60">Circuit: {selectedObject.circuitRef}</p>
+                )}
               </div>
             </>
           )}

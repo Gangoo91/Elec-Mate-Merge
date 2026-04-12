@@ -445,7 +445,7 @@ const sections = [
           (harness in boom lifts, hard hat, hi-vis), report defects immediately, and never operate a
           machine you have not been trained on. Your employer is responsible for providing training,
           selecting suitable equipment, maintaining the machine, and developing a{' '}
-          <SEOInternalLink href="/training/site-safety">
+          <SEOInternalLink href="/guides/construction-site-safety">
             site-specific risk assessment
           </SEOInternalLink>{' '}
           and rescue plan.
@@ -473,7 +473,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/pasma-training',
+    href: '/pasma-training',
     title: 'PASMA Training Course',
     description:
       'Mobile scaffold tower training — when a tower is more suitable than a MEWP for your task.',
@@ -489,7 +489,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/site-safety',
+    href: '/guides/construction-site-safety',
     title: 'Site Safety for Electricians',
     description:
       'Comprehensive site safety training covering all the hazards electricians face on construction sites.',

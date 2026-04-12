@@ -113,14 +113,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description: 'How to build an evidence portfolio that impresses your EPA assessor.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-hub',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description:
       'Level 2 and Level 3 courses, revision tools, and study resources for electrical apprentices.',
@@ -238,7 +238,7 @@ const sections = [
                   You are doing productive work on site with minimal supervision. You may be running
                   small jobs on your own. You are studying for your Level 3 qualification and
                   preparing for the{' '}
-                  <SEOInternalLink href="/guides/am2-exam-preparation">
+                  <SEOInternalLink href="/am2-exam-preparation">
                     AM2 assessment
                   </SEOInternalLink>
                   . Your productivity is close to a qualified electrician, and your pay is stepping
@@ -553,7 +553,7 @@ const sections = [
               <span>
                 <strong>Study hard and pass first time.</strong> Failing exams costs time and money.
                 Use the{' '}
-                <SEOInternalLink href="/training/apprentice-hub">
+                <SEOInternalLink href="/apprentice-training">
                   Elec-Mate apprentice training hub
                 </SEOInternalLink>{' '}
                 to revise between college sessions. Passing first time gets you to qualified status
@@ -564,7 +564,7 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keep records of everything you learn.</strong> Build your{' '}
-                <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+                <SEOInternalLink href="/apprentice-portfolio-guide">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 as you go. A strong portfolio makes the EPA easier and demonstrates your competence
@@ -597,7 +597,7 @@ const sections = [
       <>
         <p>
           Completing your apprenticeship and passing the{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">AM2 assessment</SEOInternalLink> is
+          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> is
           the gateway to significantly higher earnings. Here is what typically happens to your
           income after you qualify:
         </p>

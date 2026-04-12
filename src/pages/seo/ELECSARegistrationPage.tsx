@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician',
     description:
       'Complete guide to setting up as self-employed — scheme registration, insurance, tax, and marketing.',
@@ -420,7 +420,7 @@ const sections = [
               <li>Assessment focuses on domestic standards</li>
               <li>
                 Ideal for{' '}
-                <SEOInternalLink href="/guides/electrician-self-employed">
+                <SEOInternalLink href="/guides/going-self-employed-electrician">
                   self-employed domestic electricians
                 </SEOInternalLink>
               </li>

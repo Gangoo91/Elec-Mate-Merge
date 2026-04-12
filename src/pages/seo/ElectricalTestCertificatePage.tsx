@@ -115,7 +115,7 @@ export default function ElectricalTestCertificatePage() {
                     The EIC is the most comprehensive certificate and is required for all new
                     installations and major alterations. It has three sections — Design,
                     Construction, and Inspection & Testing — each of which must be signed. A full{' '}
-                    <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> is
+                    <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is
                     required for rewires, new circuits, consumer unit changes, and all work
                     notifiable under Part P. The EIC includes a complete schedule of test results
                     for every circuit in the installation.
@@ -129,7 +129,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     The{' '}
-                    <SEOInternalLink href="/guides/minor-works-certificate">
+                    <SEOInternalLink href="/minor-works-certificate">
                       Minor Works Certificate
                     </SEOInternalLink>{' '}
                     is a simplified certificate for small additions or alterations to an existing
@@ -148,7 +148,7 @@ export default function ElectricalTestCertificatePage() {
                     </h3>
                   </div>
                   <p className="text-white text-sm leading-relaxed">
-                    The <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is
+                    The <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is
                     not issued after new work — it is a periodic inspection report on the condition
                     of an existing installation. It assigns observation codes (C1, C2, C3, FI) to
                     any defects found and gives an overall assessment of whether the installation is
@@ -432,7 +432,7 @@ export default function ElectricalTestCertificatePage() {
                     Leaving boxes blank, writing "N/A" where a test should have been done, or
                     recording unrealistic values (e.g., insulation resistance of 999 MO on every
                     circuit) are all red flags. The{' '}
-                    <SEOInternalLink href="/guides/testing-sequence">
+                    <SEOInternalLink href="/testing-sequence-guide">
                       correct testing sequence
                     </SEOInternalLink>{' '}
                     must be followed and genuine readings recorded.
@@ -566,21 +566,21 @@ export default function ElectricalTestCertificatePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'How to complete the Electrical Installation Certificate.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'Complete guide to the Electrical Installation Condition Report.',
           icon: ClipboardCheck,
           category: 'Certification',
         },
         {
-          href: '/guides/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'When and how to issue a Minor Works Certificate.',
           icon: FileCheck2,
@@ -594,7 +594,7 @@ export default function ElectricalTestCertificatePage() {
           category: 'Guide',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests for certification.',
           icon: Zap,

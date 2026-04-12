@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-safety-at-home',
+    href: '/guides/guides/electrical-safety-at-home',
     title: 'Electrical Safety at Home',
     description: 'When to call an electrician, DIY limits, danger signs, and EICR for homeowners.',
     icon: Home,
@@ -495,7 +495,7 @@ const sections = [
               <span>
                 <strong>Ask about certificates</strong> — ensure the electrician will provide the
                 correct certificate (EIC, Minor Works, or{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>) on
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>) on
                 completion, with Building Control notification if the work is notifiable.
               </span>
             </li>

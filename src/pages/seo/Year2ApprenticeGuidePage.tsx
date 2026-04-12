@@ -84,14 +84,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/year-1-electrical-apprentice',
+    href: '/guides/year-1-apprentice-guide',
     title: 'Year 1 Apprentice Guide',
     description: 'What to expect in your first year — the foundations of your apprenticeship.',
     icon: Calendar,
     category: 'Guide',
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Everything you need to know about the AM2 practical assessment.',
     icon: Award,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking and AI-powered criteria mapping.',
     icon: FolderOpen,
@@ -152,7 +152,7 @@ const sections = [
         </p>
         <p>
           Year 2 is also when many apprentices begin thinking seriously about the{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">AM2 assessment</SEOInternalLink> and
+          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> and
           the{' '}
           <SEOInternalLink href="/guides/epa-what-to-expect">End Point Assessment</SEOInternalLink>.
           Both are still a year or more away, but the skills tested in those assessments are
@@ -254,7 +254,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/insulation-resistance-test">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing">
                     Insulation resistance
                   </SEOInternalLink>
                   :
@@ -288,7 +288,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/guides/rcd-testing-guide">RCD operation</SEOInternalLink>:
+                  <SEOInternalLink href="/rcd-testing-guide">RCD operation</SEOInternalLink>:
                 </strong>{' '}
                 Testing that RCDs trip within the required time at the rated residual current. Both
                 general RCDs and RCBOs are tested.
@@ -362,7 +362,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 Installing mains-powered, interconnected smoke and heat alarm systems. Understanding
                 the{' '}
-                <SEOInternalLink href="/guides/smoke-alarm-regulations">
+                <SEOInternalLink href="/guides/smoke-alarm-regulations-uk">
                   current regulations
                 </SEOInternalLink>{' '}
                 for domestic alarm systems and the requirements for new builds versus existing
@@ -397,7 +397,7 @@ const sections = [
                 <strong>Advanced circuit design:</strong> Designing circuits from scratch —
                 selecting cable sizes based on current-carrying capacity, applying correction
                 factors, and verifying volt drop and earth fault loop impedance.{' '}
-                <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">
+                <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                   Cable sizing
                 </SEOInternalLink>{' '}
                 becomes a core skill.
@@ -448,7 +448,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/guides/am2-exam-preparation">AM2</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink>{' '}
           (Achievement Measurement 2) is the practical assessment that demonstrates your competence
           as an installation electrician. It is typically sat at the end of Year 3 or during Year 4,
           but the skills it tests are developed throughout Years 2 and 3.
@@ -489,7 +489,7 @@ const sections = [
       <>
         <p>
           By the end of Year 2, you should have a substantial body of evidence in your{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio">portfolio</SEOInternalLink> and be
+          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink> and be
           well on your way to meeting the{' '}
           <SEOInternalLink href="/guides/off-job-training-hours">
             off-the-job training hours

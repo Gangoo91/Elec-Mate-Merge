@@ -123,7 +123,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate trunking fill to the 45% rule from BS 7671. Check cable CSA against trunking capacity for all standard sizes, mixed cable types, and compartmentalised trunking.',
-  url: 'https://elec-mate.com/tools/trunking-fill-calculator',
+  url: 'https://elec-mate.com/trunking-fill-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -262,11 +262,11 @@ export default function TrunkingFillCalculatorPage() {
               existing services. A trunking system designed to 45% fill on day one has no spare
               capacity; designing to 30 to 35% fill on day one leaves room for growth. When planning
               containment, use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to determine the required cable cross-section before checking trunking fill, and the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify the circuit meets BS 7671 limits.

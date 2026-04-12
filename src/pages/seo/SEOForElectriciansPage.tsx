@@ -571,7 +571,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   A professional, itemised quote sent within the hour of an enquiry dramatically
                   improves your conversion rate. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send branded quotes from your phone in under two minutes.

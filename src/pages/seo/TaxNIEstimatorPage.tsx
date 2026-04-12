@@ -90,7 +90,7 @@ export default function TaxNIEstimatorPage() {
                 The solution is simple: estimate your tax throughout the year and set aside the
                 right amount each month. Elec-Mate's Tax and NI Estimator does this automatically.
                 As you log income through the{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   invoice tool
                 </SEOInternalLink>{' '}
                 and expenses through the expense tracker, the estimator recalculates your projected
@@ -143,7 +143,7 @@ export default function TaxNIEstimatorPage() {
               </p>
               <p>
                 Use Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/electrician-tax-guide">tax guide</SEOInternalLink> for
+                <SEOInternalLink href="/guides/electrician-tax-guide-uk">tax guide</SEOInternalLink> for
                 detailed guidance on all aspects of tax as a self-employed electrician, including
                 how to register for self-assessment, what records to keep, and when to consider
                 incorporating as a limited company.
@@ -184,7 +184,7 @@ export default function TaxNIEstimatorPage() {
               </p>
               <p>
                 For electricians working under the{' '}
-                <SEOInternalLink href="/tools/cis-for-electricians">
+                <SEOInternalLink href="/guides/cis-for-electricians">
                   Construction Industry Scheme (CIS)
                 </SEOInternalLink>
                 , tax is deducted at source by the contractor at 20% (or 30% if you are not
@@ -407,7 +407,7 @@ export default function TaxNIEstimatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/electrician-tax-guide',
+          href: '/guides/electrician-tax-guide-uk',
           title: 'Electrician Tax Guide',
           description:
             'Complete guide to tax for self-employed electricians — self-assessment, expenses, and tax planning.',
@@ -415,7 +415,7 @@ export default function TaxNIEstimatorPage() {
           category: 'Business Guides',
         },
         {
-          href: '/tools/cis-for-electricians',
+          href: '/guides/cis-for-electricians',
           title: 'CIS for Electricians',
           description:
             'Construction Industry Scheme explained — registration, deductions, and how CIS affects your tax return.',

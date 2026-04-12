@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -429,7 +429,7 @@ const sections = [
                   Factor in Glasgow day rates (£300 to £400), cable routing challenges in tenement
                   and stone-built properties, earthing requirements on PME supplies, and factor
                   consent requirements for tenement flats. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes on site.
@@ -444,7 +444,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Scottish Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , SPEN G98 notification, and Building Standards notification under Scottish

@@ -106,14 +106,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/data-cabling-installation',
+    href: '/guides/data-cabling-installation',
     title: 'Data Cabling Installation',
     description: 'CAT5e, CAT6, CAT6A — testing, patch panels, and structured cabling standards.',
     icon: Wifi,
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote CCTV and security system jobs with the Elec-Mate quoting tool.',
     icon: PoundSterling,
@@ -542,7 +542,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote CCTV Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build accurate quotes for CCTV installations. Include CAT6 cable and

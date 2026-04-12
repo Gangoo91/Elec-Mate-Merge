@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for bathroom electrical work on your phone.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote bathroom electrical work with itemised materials, labour, and professional PDF output.',
@@ -493,7 +493,7 @@ const sections = [
                   Quote each fitting separately — downlights, fan, shaver socket, towel rail
                   connection, underfloor heating, shower circuit. This makes the quote transparent
                   and allows the customer to adjust scope. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   for professional PDF quotes.
@@ -509,7 +509,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Always include Part P notification and the EIC or MEIWC in your quote. Complete
                   the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC on your phone</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC on your phone</SEOInternalLink>{' '}
                   on site and email it to the customer before you leave.
                 </p>
               </div>

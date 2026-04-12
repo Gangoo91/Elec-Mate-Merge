@@ -239,19 +239,19 @@ export default function HowToTestInsulationResistancePage() {
               Insulation deteriorates over time due to heat, moisture, UV exposure, mechanical
               damage, chemical contamination, and simple ageing of the PVC or XLPE material. Regular
               testing during{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">
+              <SEOInternalLink href="/tools/eicr-certificate">
                 periodic inspections (EICRs)
               </SEOInternalLink>{' '}
               catches deterioration before it reaches a dangerous level. For new installations, the
               insulation resistance test on the{' '}
-              <SEOInternalLink href="/electrical-certification/eic">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate (EIC)
               </SEOInternalLink>{' '}
               confirms that cables have not been damaged during installation — which is particularly
               important given that cables may have been pulled through tight spaces, bent around
               corners, or clipped to surfaces where nails or screws could have penetrated the
               sheathing. Always perform{' '}
-              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+              <SEOInternalLink href="/how-to-do-safe-isolation">
                 safe isolation
               </SEOInternalLink>{' '}
               before commencing any insulation resistance test.

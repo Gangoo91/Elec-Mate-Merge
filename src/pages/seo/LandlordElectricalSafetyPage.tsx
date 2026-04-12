@@ -437,7 +437,7 @@ export default function LandlordElectricalSafetyPage() {
                 remedial work. Being able to quickly turn the defect observations into a clear,
                 itemised quote for the landlord is valuable — it demonstrates professionalism and
                 speeds up the decision-making process. The{' '}
-                <SEOInternalLink href="/guides/unsatisfactory-eicr">
+                <SEOInternalLink href="/guides/unsatisfactory-eicr-what-next">
                   unsatisfactory EICR guide
                 </SEOInternalLink>{' '}
                 covers the observation codes and remedial requirements in detail.
@@ -737,14 +737,14 @@ export default function LandlordElectricalSafetyPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate Guide',
           description: 'How to complete an Electrical Installation Condition Report.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/unsatisfactory-eicr',
+          href: '/guides/unsatisfactory-eicr-what-next',
           title: 'Unsatisfactory EICR Guide',
           description: 'What to do when the EICR comes back unsatisfactory.',
           icon: AlertTriangle,
@@ -758,7 +758,7 @@ export default function LandlordElectricalSafetyPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-observation-codes',
+          href: '/guides/eicr-observation-codes-explained',
           title: 'EICR Observation Codes',
           description: 'C1, C2, C3, and FI codes explained in detail.',
           icon: ClipboardCheck,
@@ -772,7 +772,7 @@ export default function LandlordElectricalSafetyPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Complete guide to the current Wiring Regulations.',
           icon: BookOpen,

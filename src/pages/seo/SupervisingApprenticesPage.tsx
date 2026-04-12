@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/apprentice-portfolio-building-tips',
+    href: '/apprentice-portfolio-guide-building-tips',
     title: 'Apprentice Portfolio Building Tips',
     description: 'NVQ evidence requirements, observation records, and portfolio organisation.',
     icon: BookOpen,
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-hub',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,
@@ -465,7 +465,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC and EICR Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Apprentices can complete{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   under supervision, generating professional portfolio evidence and learning the

@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Build professional quotes and tenders with materials pricing built in.',
     icon: PoundSterling,
@@ -491,7 +491,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+          <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
           to produce professional RAMS documents that meet commercial tender requirements. Having
           well-structured RAMS ready to customise saves hours per tender.
         </p>
@@ -625,7 +625,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Tender Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build structured price submissions with materials and labour breakdown. Export

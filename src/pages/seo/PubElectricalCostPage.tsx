@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on site with instant PDF export.',
     icon: FileCheck2,
@@ -161,7 +161,7 @@ const sections = [
               <Beer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Life-safety systems</strong> — emergency lighting to{' '}
-                <SEOInternalLink href="/guides/emergency-lighting-bs5266">
+                <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
                   BS 5266-1
                 </SEOInternalLink>
                 , fire alarm wiring to BS 5839-1, and CO₂ gas detection alarm systems.
@@ -578,7 +578,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from

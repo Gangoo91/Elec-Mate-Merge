@@ -78,7 +78,7 @@ export default function PowerConsumptionCalculatorPage() {
                 For electricians, understanding power consumption is essential for several reasons.
                 When designing circuits, you need to know the load each appliance draws to calculate
                 the{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand
                 </SEOInternalLink>{' '}
                 of an installation. When advising customers, you can explain the running cost of
@@ -374,7 +374,7 @@ export default function PowerConsumptionCalculatorPage() {
               </ul>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 in Elec-Mate includes energy efficiency calculations alongside the standard BS 7671
@@ -483,7 +483,7 @@ export default function PowerConsumptionCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate the total maximum demand for an electrical installation with diversity factors.',
@@ -515,7 +515,7 @@ export default function PowerConsumptionCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 based on the design current derived from power consumption calculations.',
@@ -523,7 +523,7 @@ export default function PowerConsumptionCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

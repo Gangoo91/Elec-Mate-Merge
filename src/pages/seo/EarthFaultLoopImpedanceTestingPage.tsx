@@ -101,14 +101,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates with test results on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly and check that Zs will comply before installation.',
     icon: Calculator,
@@ -340,7 +340,7 @@ const sections = [
         </div>
         <p>
           These tables are incorporated into the schedule of test results on an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           or <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. The measured Zs

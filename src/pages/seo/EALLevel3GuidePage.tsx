@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/city-guilds-level-3-guide',
+    href: '/city-guilds-level3-guide',
     title: 'City & Guilds Level 3 Guide',
     description: 'The C&G 2365 qualification — structure, units, assessment, and achieving distinction.',
     icon: BookOpen,
@@ -315,7 +315,7 @@ const sections = [
                 verification and periodic inspection procedures — continuity testing, insulation
                 resistance, earth fault loop impedance, RCD testing, and completion of
                 documentation (EIC and EICR). See the{' '}
-                <SEOInternalLink href="/city-guilds-level-3-guide">
+                <SEOInternalLink href="/city-guilds-level3-guide">
                   C&G Level 3 guide
                 </SEOInternalLink>{' '}
                 for detailed test procedure descriptions applicable to both qualifications.

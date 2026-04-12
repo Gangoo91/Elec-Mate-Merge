@@ -91,7 +91,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs5266-emergency-lighting-standard',
+    href: '/guides/bs-5266-emergency-lighting-standard',
     title: 'BS 5266 Emergency Lighting Standard',
     description:
       'Complete guide to BS 5266 including design, installation, testing, and maintenance requirements.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/bs5839-fire-alarm-standard',
+    href: '/guides/bs-5839-fire-alarm-standard',
     title: 'BS 5839 Fire Alarm Standard',
     description:
       'Fire alarm and emergency lighting are often installed together — understand both standards.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote emergency lighting installations with itemised luminaires, cable, and labour.',
@@ -165,7 +165,7 @@ const sections = [
         <p>
           This guide covers the real costs of emergency lighting installation in the UK in 2026, the
           different system types, the requirements of{' '}
-          <SEOInternalLink href="/guides/bs5266-emergency-lighting-standard">
+          <SEOInternalLink href="/guides/bs-5266-emergency-lighting-standard">
             BS 5266
           </SEOInternalLink>
           , and the testing and certification obligations that come with every installation.
@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for emergency lighting. Luminaires, exit signs, cable,

@@ -552,7 +552,7 @@ const sections = [
                   Every consumer unit replacement requires an Electrical Installation Certificate
                   (EIC) and a complete Schedule of Test Results including PFC measurement, Zs
                   measurements for each circuit, and RCD test results where applicable. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certification on site with no evening admin.
                 </p>
               </div>

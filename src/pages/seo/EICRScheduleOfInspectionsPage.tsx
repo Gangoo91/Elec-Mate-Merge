@@ -381,7 +381,7 @@ const sections = [
           periodic inspection. It is almost always classified as C2 (Potentially Dangerous) because
           the absence of bonding means that metallic services could become live in the event of a
           fault, creating a shock risk. For guidance on earthing systems, see the{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangements guide
           </SEOInternalLink>
           .

@@ -106,14 +106,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic fault finding approach for diagnosing consumer unit issues.',
     icon: Search,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an EICR involves and when you need one for your property.',
     icon: ClipboardCheck,
@@ -528,7 +528,7 @@ const sections = [
         <p>
           The electrician will carry out a visual inspection with the cover removed, tightness
           checks on all connections, thermal imaging (if available) to identify hot spots, and may
-          recommend a full <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
+          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
           if the consumer unit shows signs of ageing or the installation has not been inspected
           recently. If the consumer unit is an older plastic type, the electrician may recommend an
           upgrade to a modern metal-enclosed unit with RCBO protection.

@@ -540,9 +540,9 @@ const sections = [
         <p>
           Elec-Mate offers a range of training courses through the study centre, including first
           aid,{' '}
-          <SEOInternalLink href="/guides/manual-handling-course">manual handling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/pasma-training">PASMA</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/ipaf-training">IPAF</SEOInternalLink>, working at height,
+          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink>, working at height,
           and asbestos awareness. All courses are designed for electricians and can be completed on
           your phone between jobs.
         </p>

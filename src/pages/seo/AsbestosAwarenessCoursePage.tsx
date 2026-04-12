@@ -171,7 +171,7 @@ const sections = [
           your feet.
         </p>
         <p>
-          The <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           wiring regulations deal with electrical safety, but your physical safety on site depends
           equally on understanding the non-electrical hazards you face. Asbestos awareness training
           is not optional — it is a legal requirement under the Control of Asbestos Regulations 2012

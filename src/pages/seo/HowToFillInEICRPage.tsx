@@ -291,15 +291,15 @@ export default function HowToFillInEICRPage() {
               This guide walks through every section of the EICR form in the order you should
               complete it on site, with practical tips for avoiding the most common mistakes. Before
               you start the inspection, ensure you have carried out{' '}
-              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+              <SEOInternalLink href="/how-to-do-safe-isolation">
                 safe isolation
               </SEOInternalLink>{' '}
               and understand how to carry out{' '}
-              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+              <SEOInternalLink href="/how-to-test-insulation-resistance">
                 insulation resistance testing
               </SEOInternalLink>{' '}
               and interpret the results against{' '}
-              <SEOInternalLink href="/tools/bs7671-observation-codes">
+              <SEOInternalLink href="/bs7671-observation-codes">
                 BS 7671 observation codes
               </SEOInternalLink>
               .

@@ -498,7 +498,7 @@ const sections = [
           For self-employed electricians and business owners, understanding market rates is only
           half the story — your effective hourly rate depends on how efficiently you quote, invoice,
           and recover costs. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> help
+          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help
           you price jobs correctly from day one.
         </p>
         <div className="space-y-4 my-4">
@@ -509,7 +509,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Your True Hourly Rate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build quotes that reflect your actual costs — materials, labour at your target

@@ -123,7 +123,7 @@ const softwareAppSchema = {
   operatingSystem: 'Web, iOS, Android',
   description:
     'Calculate maximum demand to BS 7671 Appendix 12 with diversity factors from Table 1B. Covers domestic, commercial, cooker, shower, EV charger, and heating loads.',
-  url: 'https://elec-mate.com/tools/max-demand-calculator',
+  url: 'https://elec-mate.com/max-demand-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -265,11 +265,11 @@ export default function MaxDemandCalculatorPage() {
               charger), heat pumps (3 to 12 kW), and battery storage systems. These new loads can
               significantly increase the maximum demand beyond what the existing supply was designed
               to handle, and electricians must assess the impact before adding them. Use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size meter tails once maximum demand is confirmed, and the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               to verify long submain runs.

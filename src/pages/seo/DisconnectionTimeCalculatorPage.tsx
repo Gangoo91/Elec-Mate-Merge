@@ -76,7 +76,7 @@ export default function DisconnectionTimeCalculatorPage() {
               <p>
                 BS 7671:2018+A3:2024 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing system
                 </SEOInternalLink>{' '}
                 in use. The fundamental requirement comes from Regulation 411.3.2, which states that
@@ -154,7 +154,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 These disconnection times apply to circuits where the protection against electric
                 shock is provided by automatic disconnection of supply (ADS), which is the most
                 common protective measure in UK installations. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and disconnection time calculator work together to ensure both thermal protection
@@ -188,7 +188,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 quickly enough and the circuit fails the disconnection time test. You would need to
                 either reduce the circuit impedance (shorter cables, larger CPC) or add
                 supplementary protection such as an{' '}
-                <SEOInternalLink href="/guides/rcd-testing">RCD</SEOInternalLink>.
+                <SEOInternalLink href="/rcd-testing-guide">RCD</SEOInternalLink>.
               </p>
               <p>
                 It is important to note that BS 7671 now requires 30mA RCD protection for all socket
@@ -216,7 +216,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 Because the earth fault loop impedance is so much higher in TT systems, the fault
                 current is correspondingly lower. In most cases, the fault current in a TT system is
                 insufficient to operate an MCB or fuse within the required disconnection time. This
-                is why <SEOInternalLink href="/guides/rcd-testing">RCD protection</SEOInternalLink>{' '}
+                is why <SEOInternalLink href="/rcd-testing-guide">RCD protection</SEOInternalLink>{' '}
                 is essential in TT installations — the RCD detects the imbalance between live and
                 neutral caused by the earth fault current, and disconnects even when that current is
                 relatively small.
@@ -230,7 +230,7 @@ export default function DisconnectionTimeCalculatorPage() {
               </p>
               <p>
                 The Elec-Mate{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 include specific TT system verification, checking the earth electrode resistance
@@ -308,7 +308,7 @@ export default function DisconnectionTimeCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/prospective-fault-current-calculator">
+                <SEOInternalLink href="/prospective-fault-current-calculator">
                   prospective fault current calculator
                 </SEOInternalLink>{' '}
                 complements this tool by verifying that the prospective fault current does not
@@ -425,7 +425,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/prospective-fault-current-calculator',
+          href: '/prospective-fault-current-calculator',
           title: 'Prospective Fault Current Calculator',
           description:
             'Verify PSCC does not exceed the breaking capacity of your protective devices.',
@@ -433,7 +433,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault withstand checks.',
@@ -441,7 +441,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/guides/rcd-testing',
+          href: '/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description:
             'How to test RCDs on site including trip times, ramp tests, and BS 7671 pass criteria.',
@@ -449,7 +449,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements Explained',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault loop paths.',

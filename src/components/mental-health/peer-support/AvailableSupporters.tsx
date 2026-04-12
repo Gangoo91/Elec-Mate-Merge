@@ -171,7 +171,6 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2.5 w-2.5">
@@ -183,14 +182,13 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         <Button
           variant="ghost"
           onClick={() => refetch()}
-          className="h-11 gap-1.5 text-white hover:text-white touch-manipulation active:scale-[0.98] transition-all"
+          className="h-11 gap-1.5 px-0 text-white/75 hover:text-white touch-manipulation active:scale-[0.98] transition-all"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh
         </Button>
       </div>
 
-      {/* Vertical List */}
       <div className="space-y-3">
         {supporters.map((supporter) => (
           <SupporterListItem

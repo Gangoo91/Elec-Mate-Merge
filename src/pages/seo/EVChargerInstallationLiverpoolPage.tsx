@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size the cable for your EV charger circuit with automatic derating and voltage drop checks.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for EV charger installations on your phone.',
@@ -217,7 +217,7 @@ const sections = [
         <p>
           Prices include supply and installation of a smart charger, all cabling and containment,
           DNO G98 notification, and the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>
           .
@@ -340,7 +340,7 @@ const sections = [
               <span>
                 <strong>Cable sizing</strong> — long cable runs in Victorian Liverpool terraces
                 require careful{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing
                 </SEOInternalLink>{' '}
                 for voltage drop. 10mm² cable may be needed on runs over 15 metres.
@@ -452,7 +452,7 @@ const sections = [
                   Factor in Liverpool day rates (£280 to £380), cable run lengths in Victorian
                   terraces, PME earthing requirements, and board upgrades on pre-RCD consumer units.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes on site.
@@ -467,7 +467,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certification and Compliance</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every installation requires an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>
                   , Electricity North West G98/G99 notification, and Part P Building Regulations

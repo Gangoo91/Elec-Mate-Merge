@@ -354,7 +354,7 @@ const sections = [
         </p>
         <p>
           Electricians can use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           to assess the total load on each circuit and the overall installation, identifying where
@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Step 3: Insulation Resistance Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If the fault is on a specific circuit (MCB or RCD tripping), carry out{' '}
-                  <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/how-to-test-insulation-resistance">
                     insulation resistance testing
                   </SEOInternalLink>{' '}
                   on the affected circuit. A reading below 1M ohm indicates insulation breakdown.

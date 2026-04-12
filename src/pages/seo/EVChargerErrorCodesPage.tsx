@@ -94,7 +94,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'How an EICR can identify issues with EV charger circuits and earthing arrangements.',
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description:
       'Systematic approach to diagnosing electrical faults including EV charger circuits.',

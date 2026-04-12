@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'AI-powered quoting with material pricing, labour estimation, and professional PDF output.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/electrician-invoice-app',
+    href: '/electrician-invoice-app',
     title: 'Electrician Invoice App',
     description:
       'Generate and send invoices from site. Convert accepted quotes to invoices with a single tap.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/job-profitability-calculator',
+    href: '/job-profitability-calculator',
     title: 'Job Profitability Calculator',
     description: 'Track costs, revenue, and profit on every job to understand your true margins.',
     icon: BarChart3,

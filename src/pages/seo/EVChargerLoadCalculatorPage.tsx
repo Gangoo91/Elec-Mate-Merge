@@ -72,7 +72,7 @@ export default function EVChargerLoadCalculatorPage() {
                 supply. Unlike most domestic appliances that cycle on and off or draw variable
                 power, an EV charger draws a near-constant current for several hours — often
                 overnight. Understanding these loads is essential for correct{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand assessment
                 </SEOInternalLink>{' '}
                 and supply capacity verification.
@@ -93,7 +93,7 @@ export default function EVChargerLoadCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 in Elec-Mate includes specific EV charger presets that account for the sustained
@@ -200,7 +200,7 @@ export default function EVChargerLoadCalculatorPage() {
                 Dynamic load management is the preferred approach because it maximises charging
                 speed while preventing supply overload. The Elec-Mate calculator models both
                 approaches and can determine whether load management is needed based on the existing{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand
                 </SEOInternalLink>{' '}
                 and the supply capacity.
@@ -317,7 +317,7 @@ export default function EVChargerLoadCalculatorPage() {
                 The Elec-Mate calculator flags PME earthing requirements automatically when you
                 specify a TN-C-S earthing system and an EV charger installation. For more
                 information on{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">
+                <SEOInternalLink href="/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>
                 , see our dedicated guide.
@@ -359,13 +359,13 @@ export default function EVChargerLoadCalculatorPage() {
               </ul>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 helps you assess the existing installation demand, and the EV charger load
                 calculator determines whether there is sufficient headroom for the charger. The
                 results can be documented on the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">EIC certificate</SEOInternalLink> for
+                <SEOInternalLink href="/eic-certificate">EIC certificate</SEOInternalLink> for
                 the charger installation.
               </p>
             </>
@@ -470,7 +470,7 @@ export default function EVChargerLoadCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate the total maximum demand for an installation including EV charger loads.',
@@ -478,7 +478,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors and voltage drop checks.',
@@ -502,7 +502,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements Guide',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with PME considerations for EV charging.',
@@ -510,7 +510,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/tools/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description:
             'Issue an Electrical Installation Certificate for EV charger installations with full BS 7671 compliance.',

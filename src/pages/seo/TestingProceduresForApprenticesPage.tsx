@@ -87,14 +87,14 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/testing-sequence',
+    href: '/testing-sequence-guide',
     title: 'BS 7671 Testing Sequence',
     description: 'The complete testing sequence for initial verification and periodic inspection.',
     icon: ClipboardCheck,
     category: 'Guide' as const,
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'The prove-test-prove method you must complete before any dead testing.',
     icon: ShieldCheck,
@@ -108,14 +108,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/insulation-resistance-test',
+    href: '/guides/insulation-resistance-testing',
     title: 'Insulation Resistance Testing',
     description: 'How to carry out insulation resistance tests and interpret the results.',
     icon: Gauge,
     category: 'Guide' as const,
   },
   {
-    href: '/guides/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Complete guide to preparing for the AM2 practical assessment including testing.',
     icon: Target,
@@ -153,7 +153,7 @@ const sections = [
         <p>
           Testing reveals these hidden problems. It is the verification stage that proves your
           installation work meets the requirements of{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition">BS 7671</SEOInternalLink> and provides
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> and provides
           the evidence base for the certificates you issue. Without valid test results, no
           certificate can be issued, no installation can be signed off, and no building can be
           occupied.
@@ -183,7 +183,7 @@ const sections = [
         <p>
           <strong>Dead tests (supply disconnected):</strong> All dead tests are carried out with the
           supply isolated using the{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+          <SEOInternalLink href="/how-to-do-safe-isolation">
             safe isolation procedure
           </SEOInternalLink>
           . The dead test sequence is:
@@ -291,7 +291,7 @@ const sections = [
         </div>
         <p>
           For the full{' '}
-          <SEOInternalLink href="/guides/testing-sequence">testing sequence</SEOInternalLink> with
+          <SEOInternalLink href="/testing-sequence-guide">testing sequence</SEOInternalLink> with
           detailed procedures for each test, see our dedicated guide.
         </p>
       </>
@@ -339,7 +339,7 @@ const sections = [
           maximum exposed probe tip of 4mm. Non-compliant test leads are dangerous and must not be
           used. Check your leads before every testing session for damage, wear, and compliance. For
           full details, see our{' '}
-          <SEOInternalLink href="/guides/gs38-proving-dead">GS38 guide</SEOInternalLink>.
+          <SEOInternalLink href="/guides/gs-38-proving-dead">GS38 guide</SEOInternalLink>.
         </p>
       </>
     ),
@@ -404,7 +404,7 @@ const sections = [
           that no unwanted current path exists between live conductors or between live conductors
           and earth. Degraded insulation can cause leakage current, earth faults, short circuits,
           and fire. For a comprehensive explanation, see our{' '}
-          <SEOInternalLink href="/guides/insulation-resistance-test">
+          <SEOInternalLink href="/guides/insulation-resistance-testing">
             insulation resistance testing guide
           </SEOInternalLink>
           .
@@ -491,7 +491,7 @@ const sections = [
         <p>
           Accurate recording of test results is as important as the testing itself. Your test
           results form the evidence base for the certificate you issue — whether that is an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           for new work or an{' '}
@@ -625,7 +625,7 @@ const sections = [
         </p>
         <p>
           <strong>AM2 preparation:</strong> The{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
+          <SEOInternalLink href="/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
           you to carry out the complete testing sequence within a time limit. Elec-Mate's AM2
           preparation content includes testing practice scenarios, timing guidance, and step-by-step
           procedures for every test you will need to perform.

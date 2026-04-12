@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for EV charger circuits with automatic voltage drop checking.',
     icon: Calculator,
@@ -109,14 +109,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EV charger Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/ev-charger-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charger Certificate',
     description: 'Purpose-built certificate for EV charging equipment installation.',
     icon: Plug,
@@ -422,7 +422,7 @@ const sections = [
                 <strong>Voltage drop</strong>: BS 7671 limits voltage drop to 5% for lighting and 5%
                 for other uses (from the origin of the installation). For a 32A circuit, voltage
                 drop must be checked carefully on longer runs. Use the{' '}
-                <SEOInternalLink href="/tools/voltage-drop-calculator">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -526,11 +526,11 @@ const sections = [
           </ul>
         </div>
         <p>
-          An <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> must be issued.
+          An <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> must be issued.
           The certificate should note the earthing arrangement used for the EV circuit (particularly
           if a local earth electrode is installed on a PME supply), the RCD type, and the earth
           electrode resistance. Many installers also complete a specific{' '}
-          <SEOInternalLink href="/tools/ev-charger-certificate">
+          <SEOInternalLink href="/ev-charger-certificate">
             EV charger certificate
           </SEOInternalLink>{' '}
           alongside the EIC.
@@ -558,7 +558,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for EV Circuits</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size SWA and twin-and-earth cables for EV charger circuits with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Automatic voltage drop check and derating for burial depth and ambient

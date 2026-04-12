@@ -418,8 +418,8 @@ export default function JobProfitabilityCalculatorPage() {
               electricians. The Job Profitability Calculator is one of 14 business calculators in
               the Business Hub, sitting alongside 56 technical calculators (cable sizing, voltage
               drop, fault current, Zs values, and more), 16 certificate types ({' '}
-              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>,{' '}
-              <SEOInternalLink href="/electrical-certification/eic">EIC</SEOInternalLink>, Minor
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works, EV charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training
               courses. Everything works together in one platform. Quotes from the{' '}
               <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink> feed

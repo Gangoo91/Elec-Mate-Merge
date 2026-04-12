@@ -527,7 +527,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Instant Quote for Remediation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     integrated quoting tool
                   </SEOInternalLink>{' '}
                   to produce a remediation quote on site. The landlord gets the EICR and the

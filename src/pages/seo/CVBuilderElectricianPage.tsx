@@ -252,7 +252,7 @@ const sections = [
           training, college work, and early practical experience. The experienced electrician
           template focuses on project diversity, specialist skills, and professional certifications.
           The{' '}
-          <SEOInternalLink href="/guides/electrician-self-employed">
+          <SEOInternalLink href="/guides/going-self-employed-electrician">
             self-employed electrician
           </SEOInternalLink>{' '}
           template highlights client-facing skills, business capabilities, and the breadth of work
@@ -285,7 +285,7 @@ const sections = [
         </p>
         <p>
           The section is divided into categories: core electrical qualifications (C&G 2365, 2357,{' '}
-          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink>,{' '}
           <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>),
           practical assessments (AM2), industry card details (ECS/JIB card type, number, and
           expiry), Part P registration and scheme membership, and specialist certifications (EV

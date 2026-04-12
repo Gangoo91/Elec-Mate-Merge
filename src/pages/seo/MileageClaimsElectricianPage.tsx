@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Include travel costs in your quotes. Professional PDF quotes with itemised pricing.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete certificates on site and reduce unnecessary return trips. Saves time and mileage.',
@@ -562,7 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Include Travel in Your Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Factor travel time and costs into your job pricing. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build travel into your quotes transparently.
@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on Site, Save Trips</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Completing{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     certificates on site
                   </SEOInternalLink>{' '}
                   means fewer return trips to hand over paperwork. Every trip saved is mileage saved

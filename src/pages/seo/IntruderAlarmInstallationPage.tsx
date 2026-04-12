@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote security system jobs accurately with the Elec-Mate quoting tool.',
     icon: PoundSterling,
@@ -569,7 +569,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Security System Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to generate accurate quotes for intruder alarm cabling, conduit installation,

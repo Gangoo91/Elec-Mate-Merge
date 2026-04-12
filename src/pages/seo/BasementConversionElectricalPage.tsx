@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates on your phone with instant PDF export.',
@@ -423,7 +423,7 @@ const sections = [
               <span>
                 <strong>EIC on completion</strong> — an Electrical Installation Certificate (EIC)
                 must be issued covering all new circuits in the basement conversion. Use the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                 to complete and issue the certificate on site.
               </span>
             </li>
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Document Everything</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC certificate app
                   </SEOInternalLink>{' '}
                   to produce comprehensive documentation on site. For basement installations, the IP
@@ -468,7 +468,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Basement projects have higher material costs due to IP-rated accessories, conduit,
                   emergency luminaires, and sump pump circuits. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise all elements so clients understand exactly what they are paying for.

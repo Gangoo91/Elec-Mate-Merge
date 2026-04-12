@@ -282,7 +282,7 @@ const sections = [
           months; other equipment may safely go 48 months between tests. The key is to assess the
           risk for each category of equipment in each environment and set the testing interval
           accordingly. For fixed electrical installations, a separate{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
+          <SEOInternalLink href="/tools/eicr-certificate">
             EICR (periodic inspection)
           </SEOInternalLink>{' '}
           is required — PAT testing covers only portable and movable equipment.

@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Professional electrical certification — build your portfolio before going abroad.',
     icon: FileCheck2,

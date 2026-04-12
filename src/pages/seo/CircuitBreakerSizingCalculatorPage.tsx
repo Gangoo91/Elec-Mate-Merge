@@ -90,7 +90,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                 and the equipment it supplies. If the MCB is too large, it will fail to protect the
                 cable from overload, allowing sustained currents that exceed the cable's thermal
                 rating — leading to insulation degradation, overheating, and potentially fire. The{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 and circuit breaker sizing calculator work together to ensure both components are
@@ -243,7 +243,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
                 4mm², 6mm², 10mm²) easily satisfy the adiabatic equation when protected by standard
                 MCB ratings. The check becomes more critical on long cable runs, circuits with high
                 prospective fault current, or where the cable CSA has been minimised. The{' '}
-                <SEOInternalLink href="/tools/adiabatic-equation-calculator">
+                <SEOInternalLink href="/adiabatic-equation-calculator">
                   adiabatic equation calculator
                 </SEOInternalLink>{' '}
                 in Elec-Mate performs this verification automatically.
@@ -422,7 +422,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault withstand checks.',
@@ -446,7 +446,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/adiabatic-equation-calculator',
+          href: '/adiabatic-equation-calculator',
           title: 'Adiabatic Equation Calculator',
           description: 'Verify cable fault current withstand using the BS 7671 adiabatic equation.',
           icon: BarChart3,

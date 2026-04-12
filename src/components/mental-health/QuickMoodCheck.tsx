@@ -7,9 +7,11 @@ import { useMentalHealth } from '@/contexts/MentalHealthContext';
 
 interface QuickMoodCheckProps {
   onClose: () => void;
+  onOpenSupport?: () => void;
+  onOpenCrisis?: () => void;
 }
 
-const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
+const QuickMoodCheck = ({ onClose, onOpenSupport, onOpenCrisis }: QuickMoodCheckProps) => {
   const { moodHistory, addMoodEntry } = useMentalHealth();
   const [step, setStep] = useState<'select' | 'note' | 'complete'>('select');
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
@@ -241,11 +243,33 @@ const QuickMoodCheck = ({ onClose }: QuickMoodCheckProps) => {
             {/* Supportive Message */}
             {selectedMood && selectedMood <= 2 && (
               <Card className="border-amber-500/20 bg-amber-500/5">
-                <CardContent className="p-4">
-                  <p className="text-sm text-amber-200">
-                    It's okay to not be okay. Consider reaching out to someone you trust, or explore
-                    our support resources.
-                  </p>
+                <CardContent className="p-4 space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-amber-200 mb-1">You do not need to sit with this alone.</p>
+                    <p className="text-sm text-amber-100/90">
+                      If today feels heavy, the next best step is to talk to someone or open your support options now.
+                    </p>
+                  </div>
+                  <div className="grid gap-2">
+                    {onOpenSupport && (
+                      <Button
+                        onClick={onOpenSupport}
+                        variant="outline"
+                        className="w-full border-amber-400/30 text-amber-100 hover:bg-amber-500/10"
+                      >
+                        Talk To Someone
+                      </Button>
+                    )}
+                    {onOpenCrisis && (
+                      <Button
+                        onClick={onOpenCrisis}
+                        variant="outline"
+                        className="w-full border-red-400/30 text-red-200 hover:bg-red-500/10"
+                      >
+                        Open Crisis Help
+                      </Button>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
             )}

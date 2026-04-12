@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Create Electrical Installation Certificates on your phone for notifiable work, with AI-assisted completion.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured modules covering Part P, BS 7671, and certification.',
@@ -351,7 +351,7 @@ const sections = [
         <p>
           Even though non-notifiable work does not require formal notification, it must still comply
           with BS 7671 and should be documented. For additions and alterations, a{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate-guide">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           should be issued. For like-for-like replacements, a certificate is not legally required
@@ -536,7 +536,7 @@ const sections = [
         </div>
         <p>
           For electricians, the special location rules are examined in the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition qualification
           </SEOInternalLink>{' '}
           and the{' '}

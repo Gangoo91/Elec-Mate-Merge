@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Professional EIC certification on site from your phone.',
     icon: FileCheck2,

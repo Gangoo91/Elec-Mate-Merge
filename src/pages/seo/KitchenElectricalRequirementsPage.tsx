@@ -688,7 +688,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Kitchen enquiries often expand from a single cooker circuit to a full consumer
                   unit upgrade, new socket layouts, and appliance spurs. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to quickly price the full scope and present a professional written quote that wins

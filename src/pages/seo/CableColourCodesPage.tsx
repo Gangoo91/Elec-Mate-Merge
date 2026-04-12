@@ -116,7 +116,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/bs7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition',
     description: 'Complete guide to the current Wiring Regulations.',
     icon: BookOpen,
@@ -181,7 +181,7 @@ const sections = [
           The old UK cable colour code was used for decades before the harmonised colours were
           introduced. Many existing installations still use these colours, and every electrician
           must be able to identify them correctly during{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">inspection and testing</SEOInternalLink>.
+          <SEOInternalLink href="/tools/eicr-certificate">inspection and testing</SEOInternalLink>.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">Old UK Single-Phase Colours</h3>
@@ -389,7 +389,7 @@ const sections = [
           </li>
         </ul>
         <p>
-          During an <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>, missing
+          During an <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, missing
           or incorrect conductor identification is recorded as an observation. Missing earth
           sleeving is typically C3. Missing switch wire sleeving where it creates a{' '}
           <SEOInternalLink href="/guides/polarity-testing-guide">polarity</SEOInternalLink>{' '}

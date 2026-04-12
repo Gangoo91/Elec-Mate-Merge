@@ -494,9 +494,9 @@ export default function HowToPriceElectricalJobsPage() {
                 <SEOInternalLink href="/tools/cash-flow-planner">Cash Flow Planner</SEOInternalLink>{' '}
                 forecasts incoming payments and outgoing costs so you can see potential cash flow
                 gaps before they become crises. Combined with the{' '}
-                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/tools/electrician-invoice-app">
+                <SEOInternalLink href="/electrician-invoice-app">
                   invoice builder
                 </SEOInternalLink>
                 , you have a complete financial management system built specifically for electrical
@@ -551,7 +551,7 @@ export default function HowToPriceElectricalJobsPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/electrical-quoting-app',
+          href: '/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, material pricing, and one-tap send. Win more work with faster, better quotes.',
@@ -559,7 +559,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/electrician-invoice-app',
+          href: '/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Create and send professional invoices from site. Track payments, chase overdue invoices, and sync with Xero or QuickBooks.',
@@ -591,7 +591,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/best-electrician-app-uk',
+          href: '/best-electrician-app-uk',
           title: 'Best Electrician App UK',
           description:
             'Compare electrician apps for certificates, quoting, invoicing, AI tools, and business management.',

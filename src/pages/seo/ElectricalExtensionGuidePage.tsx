@@ -106,7 +106,7 @@ export default function ElectricalExtensionGuidePage() {
                     existing installation has significant deficiencies, these should be discussed
                     with the homeowner before adding new circuits to it. Consider whether the
                     incoming supply and main fuse are adequate for the additional demand. An{' '}
-                    <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> on the
+                    <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> on the
                     existing installation before starting extension work is strongly recommended.
                   </p>
                 </div>
@@ -172,7 +172,7 @@ export default function ElectricalExtensionGuidePage() {
                       <strong className="text-yellow-400">Cooker circuit</strong> — 6.0mm²
                       twin-and-earth, 32A RCBO, if the extension includes a kitchen with an electric
                       cooker or hob. Use{' '}
-                      <SEOInternalLink href="/calculators/cable-sizing">
+                      <SEOInternalLink href="/cable-sizing-calculator">
                         cable sizing calculations
                       </SEOInternalLink>{' '}
                       to confirm the correct size based on the cooker's rated current.
@@ -229,7 +229,7 @@ export default function ElectricalExtensionGuidePage() {
                     circuit gets its own RCBO. This is the simplest and most cost-effective
                     approach. However, adding circuits to an existing consumer unit still requires a
                     full{' '}
-                    <SEOInternalLink href="/guides/eic-certificate">
+                    <SEOInternalLink href="/eic-certificate">
                       Electrical Installation Certificate (EIC)
                     </SEOInternalLink>{' '}
                     for the new work, not just a Minor Works Certificate, because new circuits are
@@ -519,7 +519,7 @@ export default function ElectricalExtensionGuidePage() {
               <p className="mt-4">
                 The EIC for extension work must cover the design, construction, and testing of all
                 new circuits. Use{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Elec-Mate's digital EIC form
                 </SEOInternalLink>{' '}
                 to complete the certificate on site with all test results validated automatically.
@@ -608,14 +608,14 @@ export default function ElectricalExtensionGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for extension circuits.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'How to complete the EIC for new installation work.',
           icon: ClipboardCheck,

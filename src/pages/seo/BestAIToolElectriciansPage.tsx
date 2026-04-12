@@ -307,7 +307,7 @@ export default function BestAIToolElectriciansPage() {
           category: 'Comparison',
         },
         {
-          href: '/tools/rams-generator',
+          href: '/rams-generator',
           title: 'RAMS Generator',
           description:
             'AI-powered risk assessments and method statements tailored to electrical work.',

@@ -150,7 +150,7 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 3,
       name: '2391 Inspection and Testing',
-      item: 'https://elec-mate.com/training/city-guilds-2391',
+      item: 'https://elec-mate.com/city-guilds2391',
     },
   ],
 };
@@ -248,7 +248,7 @@ export default function CityGuilds2391Page() {
             </p>
             <p>
               The 2391-52 also underpins your ability to issue{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificates (EICs)
               </SEOInternalLink>{' '}
               for new work and Electrical Installation Condition Reports (EICRs) for periodic
@@ -258,7 +258,7 @@ export default function CityGuilds2391Page() {
               significantly. Holding the 2391-52 opens a lucrative revenue stream for self-employed
               electricians and small contractors. Before sitting the 2391-52, ensure you have
               completed the{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition wiring regulations course
               </SEOInternalLink>
               .

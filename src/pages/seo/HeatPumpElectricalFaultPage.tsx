@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Fault Finding', href: '/guides/electrical-fault-finding' },
+  { label: 'Fault Finding', href: '/guides/electrical-fault-finding-guide' },
   { label: 'Heat Pump Electrical Fault', href: '/heat-pump-electrical-fault' },
 ];
 
@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description: 'Systematic fault finding for domestic and commercial electrical installations.',
     icon: Search,
@@ -441,7 +441,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Heat pump supply circuit work requires an Electrical Installation Certificate
                   (EIC) or Minor Works Certificate depending on scope. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete certificates on site with test results, circuit details, and instant
                   PDF export.
                 </p>

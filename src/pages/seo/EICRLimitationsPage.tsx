@@ -339,7 +339,7 @@ const sections = [
               <span>
                 <strong>Portable appliances.</strong> Anything that plugs into a socket is not
                 covered. Fridges, washing machines, kettles, lamps — these require separate{' '}
-                <SEOInternalLink href="/guides/pat-testing-guide">PAT testing</SEOInternalLink>.
+                <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink>.
               </span>
             </li>
             <li className="flex items-start gap-3">

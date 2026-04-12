@@ -24,7 +24,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Data Cabling Installation Cost', href: '/guides/data-cabling-installation-cost' },
+  { label: 'Data Cabling Installation Cost', href: '/guides/guides/data-cabling-installation-cost' },
 ];
 
 const tocItems = [
@@ -98,14 +98,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for data cabling power circuits.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote data cabling projects with itemised per-point pricing and professional PDF output.',

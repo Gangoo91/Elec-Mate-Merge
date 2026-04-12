@@ -21,7 +21,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Stoke-on-Trent', href: '/eicr-stoke-on-trent' },
 ];
 
@@ -517,7 +517,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are recorded, quote the remedial work on the day using
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Stoke landlords must act within 28 days — quoting on the inspection day

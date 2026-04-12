@@ -597,7 +597,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs lookup, R1+R2, cable sizing, voltage drop, PFC, and dozens more built-in calculators.',

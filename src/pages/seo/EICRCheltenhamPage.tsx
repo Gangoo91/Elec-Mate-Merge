@@ -21,7 +21,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Cheltenham', href: '/eicr-cheltenham' },
 ];
 
@@ -528,7 +528,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work Immediately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, raise a remedial quote on the day using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Cheltenham landlords must complete remedial work within 28 days — quoting on the

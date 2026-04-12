@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Electrical Installation Certificates for all notifiable work in Colchester and Essex.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables accurately for Colchester rewires, EV charger circuits, and listed building installations.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Colchester electrical jobs at accurate South East rates — send professional quotes on site.',
@@ -410,7 +410,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Efficient On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
-                  and <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> on your
+                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> on your
                   phone using AI-assisted board scanning. Process high volumes of Colchester
                   landlord EICRs efficiently and issue certificates on site.
                 </p>
@@ -426,7 +426,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to send professional PDF quotes from Colchester surveys. Accurate South East rates

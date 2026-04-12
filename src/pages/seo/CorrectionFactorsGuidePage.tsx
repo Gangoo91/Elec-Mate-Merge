@@ -606,7 +606,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/reference-methods-bs-7671',
+    href: '/guides/reference-methods-cable-installation',
     title: 'Cable Reference Methods',
     description:
       'Reference Methods A to G from Table 4A2 — how installation method affects current carrying capacity.',
@@ -622,7 +622,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Automatic cable sizing with all correction factors, voltage drop, and adiabatic equation verification.',
@@ -630,7 +630,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop using mV/A/m values from Appendix 4 for single-phase and three-phase circuits.',

@@ -107,14 +107,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'When an EICR reveals your property needs a rewire — what to expect.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site after a rewire.',
     icon: FileCheck2,
@@ -180,7 +180,7 @@ const sections = [
         <p>
           These prices include all materials, labour, a new consumer unit with RCBOs and SPD,
           initial verification testing, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Building Standards completion certificate submission. Making good (plastering and
@@ -318,7 +318,7 @@ const sections = [
     content: (
       <>
         <p>
-          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is the
           definitive method to confirm rewire need. These warning signs indicate an inspection is
           urgent:
         </p>

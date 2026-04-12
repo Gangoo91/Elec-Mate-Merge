@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EICs for bungalow rewires on your phone.',
     icon: FileCheck2,
@@ -138,7 +138,7 @@ const sections = [
           with degraded insulation, rewirable fuse boards with no RCD protection, inadequate
           earthing (particularly TT systems with old earth rods), and insufficient socket outlets
           leading to overloaded extension leads. An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> on a 1960s
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> on a 1960s
           bungalow commonly returns multiple C2 (potentially dangerous) observations.
         </p>
         <p>
@@ -444,10 +444,10 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   on your phone using Elec-Mate. Voice-entry for test results and PDF export before
                   you leave. Quote and invoice with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   .

@@ -699,7 +699,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   HMO remedial works — consumer unit upgrades, fire alarm installations, emergency
                   lighting — are high-value jobs. Quote on site using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords under a 28-day remedial deadline will instruct the electrician who

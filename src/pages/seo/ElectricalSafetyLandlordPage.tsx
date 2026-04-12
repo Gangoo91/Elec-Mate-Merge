@@ -121,14 +121,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description: 'Guide to fire alarm certification requirements including BS 5839 compliance.',
     icon: Flame,
     category: 'Guide',
   },
   {
-    href: '/guides/pat-testing-guide',
+    href: '/guides/pat-testing-guide-uk',
     title: 'PAT Testing Guide',
     description: 'Complete guide to portable appliance testing for landlords and electricians.',
     icon: ClipboardCheck,
@@ -308,7 +308,7 @@ const sections = [
           The practical approach: if you supply it, test it. PAT testing is quick and inexpensive —
           an electrician can test a typical property's appliances in 30 minutes to an hour. Many
           electricians offer{' '}
-          <SEOInternalLink href="/guides/pat-testing-guide">PAT testing</SEOInternalLink> as an
+          <SEOInternalLink href="/guides/pat-testing-guide-uk">PAT testing</SEOInternalLink> as an
           add-on when conducting the EICR, which saves the landlord a second visit.
         </p>
       </>

@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for cooker circuits, hob circuits, and kitchen radials with all BS 7671 correction factors.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue EIC certificates for kitchen installations with the full schedule of test results.',
@@ -239,7 +239,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/max-demand-calculator">
+          <SEOInternalLink href="/max-demand-calculator">
             max demand calculator
           </SEOInternalLink>{' '}
           to calculate the total kitchen demand with diversity factors applied. This helps determine

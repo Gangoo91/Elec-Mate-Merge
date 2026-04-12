@@ -21,7 +21,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Swansea', href: '/eicr-swansea' },
 ];
 
@@ -523,7 +523,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, raise a remedial work quote on the day using
                   the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Swansea landlords must act promptly under the Renting Homes (Wales) Act 2016 —

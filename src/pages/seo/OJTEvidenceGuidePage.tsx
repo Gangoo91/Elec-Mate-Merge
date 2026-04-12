@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Apprentice', href: '/study-centre/apprentice' },
+  { label: 'Apprentice', href: '/study-centre' },
   { label: 'OJT Evidence', href: '/guides/ojt-evidence-guide' },
 ];
 
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Apprentice',
   },
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Complete guide to building your apprentice evidence portfolio. Organisation, formatting, and what assessors look for.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Apprentice',
   },
   {
-    href: '/study-centre/apprentice',
+    href: '/study-centre',
     title: 'Apprentice Study Centre',
     description:
       'Structured training courses for Level 2 and Level 3 electrical apprentices. Theory, practical, and exam preparation.',
@@ -309,7 +309,7 @@ const sections = [
           Take photos on every job, every day. It only takes 30 seconds to photograph your work, but
           trying to reconstruct evidence months later when you realise you have a gap in your
           portfolio is nearly impossible. For more on building a complete portfolio, see our{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio guide
           </SEOInternalLink>
           .

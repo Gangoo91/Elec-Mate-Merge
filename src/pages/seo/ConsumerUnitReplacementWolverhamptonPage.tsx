@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Replacement', href: '/guides/consumer-unit-replacement-cost' },
   {
     label: 'Consumer Unit Replacement Wolverhampton',
     href: '/consumer-unit-replacement-wolverhampton',
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete guide to consumer unit replacement — costs, process, and regulations.',
     icon: Wrench,
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description:
       'Issue EICs on site for consumer unit replacements. Instant PDF, fully BS 7671 compliant.',
@@ -492,7 +492,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate and schedule of test results
@@ -510,7 +510,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR identifies C2 observations requiring a consumer unit replacement,
                   quote the work immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords must act within 28 days — the electrician who quotes on the day of the

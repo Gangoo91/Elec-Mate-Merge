@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'Apprentice Training App', href: '/tools/apprentice-training-app' },
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description:
       'Step-by-step guide to building an apprenticeship portfolio that meets the KSB requirements for your EPA gateway.',
@@ -213,7 +213,7 @@ const sections = [
         </p>
         <p>
           The app covers the full scope of the Level 3{' '}
-          <SEOInternalLink href="/training/apprentice">electrical apprenticeship</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-training">electrical apprenticeship</SEOInternalLink>{' '}
           standard, including all knowledge, skills, and behaviours (KSBs). Content is aligned with{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A3:2024
@@ -250,7 +250,7 @@ const sections = [
         </p>
         <p>
           Mock exams replicate the exact format and conditions of real{' '}
-          <SEOInternalLink href="/training/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             City & Guilds examinations
           </SEOInternalLink>
           . You sit the exam under timed conditions with the same number of questions, the same
@@ -366,7 +366,7 @@ const sections = [
         <p>
           When your portfolio is complete, you can export it as a professional PDF or share a
           digital link with your training provider and EPA organisation. The{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             apprentice portfolio guide
           </SEOInternalLink>{' '}
           provides detailed advice on what makes strong evidence for each KSB.

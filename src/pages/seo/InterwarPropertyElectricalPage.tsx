@@ -537,7 +537,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR on an interwar property produces C1 or C2 observations, quote the
                   full rewire immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A clear, professional quote on the day of the inspection converts a £200 EICR

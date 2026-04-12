@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-explained',
+    href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
       'Complete guide to the EICR -- what it covers, the testing process, and when it is needed.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Consumer unit replacement -- specification, installation, testing, and certification.',
@@ -149,7 +149,7 @@ const sections = [
         <p>
           Every measurement your test instruments take is the basis for a safety decision. When you
           measure earth fault loop impedance on a circuit and record the result on an{' '}
-          <SEOInternalLink href="/guides/eicr-explained">EICR</SEOInternalLink>, you are certifying
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, you are certifying
           that the circuit will disconnect safely under fault conditions. When you measure
           insulation resistance, you are confirming that the cables are not leaking current that
           could cause electric shock or fire. These measurements must be accurate.

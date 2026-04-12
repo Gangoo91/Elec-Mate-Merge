@@ -48,33 +48,51 @@ export function useSetupWizard() {
         }
       }
 
-      // Upsert company profile
-      const { error } = await supabase.from('company_profiles').upsert(
-        {
-          user_id: user.id,
-          company_name: data.companyName || null,
-          company_email: data.email || null,
-          company_phone: data.phone || null,
-          company_address: data.address || null,
-          bank_details:
-            data.bankName || data.accountNumber
-              ? {
-                  bankName: data.bankName,
-                  accountName: data.accountName,
-                  accountNumber: data.accountNumber,
-                  sortCode: data.sortCode,
-                }
-              : null,
-          payment_terms: data.paymentTerms,
-          logo_url: logoUrl,
-          primary_color: data.primaryColor,
-          secondary_color: data.accentColor,
-          updated_at: new Date().toISOString(),
-        },
-        { onConflict: 'user_id' }
-      );
+      // Save company profile. We select first then insert or update because
+      // `company_profiles.user_id` does not currently have a UNIQUE constraint,
+      // so `.upsert({ onConflict: 'user_id' })` fails with Postgres 42P10.
+      const payload = {
+        user_id: user.id,
+        company_name: data.companyName || null,
+        company_email: data.email || null,
+        company_phone: data.phone || null,
+        company_address: data.address || null,
+        bank_details:
+          data.bankName || data.accountNumber
+            ? {
+                bankName: data.bankName,
+                accountName: data.accountName,
+                accountNumber: data.accountNumber,
+                sortCode: data.sortCode,
+              }
+            : null,
+        payment_terms: data.paymentTerms,
+        logo_url: logoUrl,
+        primary_color: data.primaryColor,
+        secondary_color: data.accentColor,
+        updated_at: new Date().toISOString(),
+      };
 
-      if (error) throw error;
+      const { data: existing, error: selectError } = await supabase
+        .from('company_profiles')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (selectError && selectError.code !== 'PGRST116') throw selectError;
+
+      if (existing?.id) {
+        const { error: updateError } = await supabase
+          .from('company_profiles')
+          .update(payload)
+          .eq('id', existing.id);
+        if (updateError) throw updateError;
+      } else {
+        const { error: insertError } = await supabase
+          .from('company_profiles')
+          .insert(payload);
+        if (insertError) throw insertError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['company-profile'] });

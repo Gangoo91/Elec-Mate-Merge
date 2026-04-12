@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/cable-sizing-calculator-bs-7671',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA cable for outdoor runs with voltage drop and thermal checks built in.',
     icon: Calculator,
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — critical for outdoor circuits where PME restrictions may apply.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Adding a new circuit for garden lighting — RCBO selection, circuit protection, and labelling.',
@@ -270,7 +270,7 @@ const sections = [
           For long SWA runs, voltage drop must be checked. BS 7671 allows a maximum voltage drop of
           3% for lighting circuits (6.9 V on a 230 V supply). On a 50 m run of 1.5 mm squared SWA,
           voltage drop can become an issue — use the{' '}
-          <SEOInternalLink href="/guides/voltage-drop-calculator-bs-7671">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           to verify compliance.
@@ -295,7 +295,7 @@ const sections = [
               <span>
                 <strong>Dedicated RCBO</strong> — the preferred approach is to protect the outdoor
                 lighting circuit with its own RCBO at the{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit
                 </SEOInternalLink>
                 . This provides both overcurrent and RCD protection on a single device and prevents
@@ -565,7 +565,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable for the outdoor run with the Elec-Mate{' '}
-                  <SEOInternalLink href="/guides/cable-sizing-calculator-bs-7671">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Enter the load, cable length, installation method, and ambient temperature. Get
@@ -595,7 +595,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   for the new outdoor circuit on your phone. AI board scanner reads the consumer

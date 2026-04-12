@@ -160,7 +160,7 @@ export default function BreakEvenCalculatorPage() {
               </p>
               <p>
                 The{' '}
-                <SEOInternalLink href="/tools/hourly-rate-calculator">
+                <SEOInternalLink href="/electrician-hourly-rate">
                   hourly rate calculator
                 </SEOInternalLink>{' '}
                 uses this fixed/variable split to calculate the overhead component that must be
@@ -285,7 +285,7 @@ export default function BreakEvenCalculatorPage() {
                   minimum charge calculator
                 </SEOInternalLink>{' '}
                 to ensure you never price a job below your cost floor, and the{' '}
-                <SEOInternalLink href="/tools/hourly-rate-calculator">
+                <SEOInternalLink href="/electrician-hourly-rate">
                   hourly rate calculator
                 </SEOInternalLink>{' '}
                 to set rates that guarantee profitability on every billable hour.
@@ -425,7 +425,7 @@ export default function BreakEvenCalculatorPage() {
           category: 'Business Tools',
         },
         {
-          href: '/tools/hourly-rate-calculator',
+          href: '/electrician-hourly-rate',
           title: 'Hourly Rate Calculator',
           description:
             'Calculate your true hourly rate including all overheads, tax, and profit margin.',

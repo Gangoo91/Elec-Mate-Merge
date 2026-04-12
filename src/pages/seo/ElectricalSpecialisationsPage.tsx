@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician',
     description:
       'Set up your specialist business — insurance, marketing, pricing, and scheme registration.',
@@ -528,7 +528,7 @@ const sections = [
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong>{' '}
-                <SEOInternalLink href="/guides/city-guilds-2391">C&G 2391</SEOInternalLink>{' '}
+                <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink>{' '}
                 (Inspection and Testing) is the essential qualification, plus 18th Edition and
                 competent person scheme registration. Experience and a thorough understanding of GN3
                 (Guidance Note 3) are critical.

@@ -325,11 +325,11 @@ export default function RAMSGeneratorPage() {
               expectation now exceeds the legal minimum, and any electrician who cannot produce
               professional RAMS will struggle to win work on commercial and managed residential
               sites. Pair RAMS with your{' '}
-              <SEOInternalLink href="/training/manual-handling">
+              <SEOInternalLink href="/manual-handling-course">
                 manual handling training
               </SEOInternalLink>{' '}
               and{' '}
-              <SEOInternalLink href="/training/pasma-training">PASMA certification</SEOInternalLink>{' '}
+              <SEOInternalLink href="/pasma-training">PASMA certification</SEOInternalLink>{' '}
               for a complete health and safety package.
             </p>
           </div>

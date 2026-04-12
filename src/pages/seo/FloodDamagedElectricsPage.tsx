@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/insulation-resistance-test',
+    href: '/guides/insulation-resistance-testing',
     title: 'Insulation Resistance Testing',
     description: 'How to test insulation resistance and interpret the results.',
     icon: ClipboardCheck,
@@ -468,7 +468,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Complete post-flood{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> for repair
+                  <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> for repair
                   work on site. Send certificates directly to the customer and their insurance
                   company.
                 </p>
@@ -482,7 +482,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Rewires</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   for replacement circuits. Get the right cable sizes on the assessment visit and

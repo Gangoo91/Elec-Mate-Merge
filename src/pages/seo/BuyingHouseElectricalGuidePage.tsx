@@ -632,7 +632,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work while still on site
                   using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting tool
                   </SEOInternalLink>
                   . The buyer needs this quote to negotiate with the vendor — they will use

@@ -591,7 +591,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit replacements are one of the most common remedial jobs following
                   EICRs in Derby's older housing. Quote immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   while the landlord is still on-site and focused on the 28-day deadline. The

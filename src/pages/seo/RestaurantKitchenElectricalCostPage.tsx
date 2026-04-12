@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for commercial kitchen installations.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote restaurant electrical work with equipment schedules and itemised pricing.',
     icon: Calculator,
@@ -475,7 +475,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Document Everything</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Commercial kitchen installations are subject to Environmental Health inspection.
-                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   thoroughly, photograph interlock wiring and emergency stop positions, and provide
                   a clear hand-over document to the client. This protects you and demonstrates
                   professionalism.

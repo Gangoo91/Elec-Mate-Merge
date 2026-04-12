@@ -533,7 +533,7 @@ const sections = [
                   Written quotes and invoices protect you in any payment dispute. A signed quote is
                   also evidence of the scope of work agreed — essential if a client later claims you
                   caused damage outside the agreed scope. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce professional documentation on every job.

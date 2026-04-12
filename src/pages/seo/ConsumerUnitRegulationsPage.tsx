@@ -619,7 +619,7 @@ export default function ConsumerUnitRegulationsPage() {
             </p>
             <p>
               A consumer unit replacement requires a full{' '}
-              <SEOInternalLink href="/tools/eic-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate (EIC)
               </SEOInternalLink>{' '}
               — not a Minor Works Certificate. The EIC must include the design, construction, and
@@ -630,7 +630,7 @@ export default function ConsumerUnitRegulationsPage() {
               these forms digitally, validates test results against BS 7671 limits, and produces
               professional PDF output ready to hand to the client. For a full understanding of
               Amendment 3 requirements, see the{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition training course
               </SEOInternalLink>
               .

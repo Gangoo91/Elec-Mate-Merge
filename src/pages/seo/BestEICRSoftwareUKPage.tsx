@@ -135,7 +135,7 @@ export default function BestEICRSoftwareUKPage() {
                 <strong>Beyond EICRs:</strong> Elec-Mate includes 7 additional certificate types
                 (EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT), 70+
                 BS 7671{' '}
-                <SEOInternalLink href="/tools/electrical-testing-calculators">
+                <SEOInternalLink href="/electrical-testing-calculators">
                   electrical calculators
                 </SEOInternalLink>
                 , and business tools for quoting, invoicing, and payment collection. Training
@@ -536,7 +536,7 @@ export default function BestEICRSoftwareUKPage() {
           category: 'Tools',
         },
         {
-          href: '/guides/eicr-observation-codes',
+          href: '/guides/eicr-observation-codes-explained',
           title: 'EICR Observation Codes Guide',
           description:
             'Complete guide to C1, C2, C3, and FI observation codes with BS 7671 regulation references.',
@@ -552,7 +552,7 @@ export default function BestEICRSoftwareUKPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/electrician-app-for-iphone',
+          href: '/tools/electrician-app-iphone',
           title: 'Electrician App for iPhone',
           description:
             'Full feature set on iPhone — certificates, calculators, AI tools, training, and offline support.',

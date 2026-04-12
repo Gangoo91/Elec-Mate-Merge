@@ -22,7 +22,7 @@ import {
 const breadcrumbs = [
   { label: 'Training', href: '/guides/electrical-qualifications-pathway' },
   { label: 'Apprentice Guides', href: '/guides/city-guilds-2365-electrical' },
-  { label: 'Portfolio Building Tips', href: '/guides/apprentice-portfolio-building-tips' },
+  { label: 'Portfolio Building Tips', href: '/apprentice-portfolio-guide-building-tips' },
 ];
 
 const tocItems = [
@@ -114,14 +114,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-hub',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,
     category: 'Training',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Generate professional EIC certificates for portfolio product evidence.',
     icon: FileCheck2,

@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/data-cabling-installation-cost',
+    href: '/guides/guides/data-cabling-installation-cost',
     title: 'Data Cabling Installation Cost',
     description: 'Cat6 cabling costs — the same infrastructure used for PoE CCTV installations.',
     icon: Network,
@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for new CCTV power circuits.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote CCTV installations with itemised cameras, cabling, and labour costs.',
     icon: Calculator,

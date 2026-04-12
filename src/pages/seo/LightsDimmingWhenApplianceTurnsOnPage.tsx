@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Calculate voltage drop on cable runs to check if cables are correctly sized for the load.',
@@ -96,14 +96,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for current-carrying capacity and voltage drop limits.',
     icon: Cable,
     category: 'Tool',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic approach to diagnosing electrical faults including voltage drop issues.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an Electrical Installation Condition Report involves and when you need one.',
     icon: FileCheck2,
@@ -402,7 +402,7 @@ const sections = [
         <p>
           BS 7671 Regulation 528.3 requires that voltage drop is calculated and limited to ensure
           equipment operates correctly. The{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           can help determine whether the existing cables are adequate for the current load. If they
@@ -529,7 +529,7 @@ const sections = [
           A qualified electrician will carry out a systematic investigation, typically starting with
           visual inspection and tightness checks at the consumer unit, then measuring supply voltage
           under load, earth fault loop impedance, and insulation resistance on affected circuits. An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the most
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> is the most
           thorough approach and will identify all defects in the installation, not just the one
           causing the dimming.
         </p>
@@ -584,7 +584,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">3. Calculate Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>{' '}
                   to check that existing cable sizes meet the BS 7671 voltage drop limits for the

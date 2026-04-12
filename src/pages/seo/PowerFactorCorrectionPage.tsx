@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-installation-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate',
     description: 'Complete EICs on your phone and export PDF instantly for PFC installations.',
     icon: FileCheck2,
@@ -608,7 +608,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete the EIC on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Elec-Mate EIC app
                   </SEOInternalLink>{' '}
                   to complete the Electrical Installation Certificate for the PFC installation on
@@ -630,7 +630,7 @@ const sections = [
                   When completing an EICR or motor installation at an industrial site, check the
                   power factor using your power quality analyser and calculate the savings
                   potential. Quote the PFC bank immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A well-presented 2–3 year payback calculation makes PFC an easy decision for a

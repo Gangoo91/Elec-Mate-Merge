@@ -29,7 +29,7 @@ const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
   {
     label: 'Earth Fault Loop Impedance Too High',
-    href: '/guides/earth-fault-loop-impedance-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained-too-high',
   },
 ];
 
@@ -382,7 +382,7 @@ const sections = [
         </ul>
         <p>
           Record the Ze value on the{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> and note it as a
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> and note it as a
           Code C2 observation with a recommendation to contact the DNO. The DNO contact details for
           the region can be found on the Energy Networks Association website. Do not attempt to
           modify the DNO's equipment — this is illegal and dangerous.
@@ -410,7 +410,7 @@ const sections = [
           icon={Activity}
         />
         <p>
-          The <SEOInternalLink href="/guides/eicr-certificate">schedule of tests</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/tools/eicr-certificate">schedule of tests</SEOInternalLink>{' '}
           auto-validates every Zs measurement against the maximum for the protective device recorded
           on the circuit schedule. Non-compliant readings are flagged immediately and the app
           suggests the appropriate EICR observation code.
@@ -444,14 +444,14 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained — how they affect Zs values.',
     icon: Globe,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate',
     description:
       'Recording and reporting Zs values on the Electrical Installation Condition Report.',

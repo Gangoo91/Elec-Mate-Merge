@@ -84,11 +84,11 @@ export default function BatteryBackupCalculatorPage() {
                 critical care areas, retail point-of-sale systems, security installations, emergency
                 lighting central battery systems, and increasingly in domestic settings for home
                 offices and network equipment. The{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 helps determine the total load that the UPS needs to support, while the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 ensures the cables feeding the UPS are correctly rated.
@@ -361,7 +361,7 @@ export default function BatteryBackupCalculatorPage() {
       ]}
       relatedPages={[
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Maximum Demand Calculator',
           description:
             'Calculate total maximum demand with IET diversity allowances for sizing supply and UPS systems.',
@@ -377,7 +377,7 @@ export default function BatteryBackupCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables for UPS input and output circuits to BS 7671 current-carrying capacity tables.',
@@ -401,7 +401,7 @@ export default function BatteryBackupCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/tools/electrical-testing-calculators',
+          href: '/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

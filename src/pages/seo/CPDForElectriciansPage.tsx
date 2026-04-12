@@ -77,35 +77,35 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description: 'BS 7671:2018+A3:2024 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
   {
-    href: '/training/inspection-testing-course',
+    href: '/inspection-testing-course',
     title: 'Inspection and Testing',
     description: 'C&G 2391 preparation with testing sequence guides and practice questions.',
     icon: ClipboardCheck,
     category: 'Course',
   },
   {
-    href: '/guides/ev-charger-certificate',
+    href: '/ev-charger-certificate',
     title: 'EV Charging Course',
     description: 'EV charger installation training covering OZEV grant requirements.',
     icon: Zap,
     category: 'Course',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Course',
     description: 'BS 5839 fire alarm design, installation, and commissioning.',
     icon: Flame,
     category: 'Course',
   },
   {
-    href: '/guides/solar-pv-certificate',
+    href: '/solar-pv-certificate',
     title: 'Solar PV Course',
     description: 'Solar PV installation and commissioning for domestic and commercial systems.',
     icon: Sun,
@@ -164,7 +164,7 @@ const sections = [
         </p>
         <p>
           <strong>Regulatory changes:</strong>{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">BS 7671</SEOInternalLink> is
+          <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is
           amended regularly. Amendment 3 was issued in July 2024, adding requirements for
           bidirectional and unidirectional devices (Section 530, A3:2024 addition). Amendment 4 is
           expected in 2026. Each amendment changes how installations must be designed, installed,
@@ -310,7 +310,7 @@ const sections = [
           <strong>BS 7671:2018+A3:2024 Update:</strong> If you qualified before Amendment 3 was
           issued in July 2024, you need to understand the changes — including the new requirements
           for bidirectional and unidirectional devices. The{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course on Elec-Mate
           </SEOInternalLink>{' '}
           covers the full regulations including all amendments.
@@ -334,7 +334,7 @@ const sections = [
         </p>
         <p>
           <strong>Inspection and Testing Update:</strong> If you hold the{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">C&G 2391</SEOInternalLink> and want to
+          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to
           stay current with testing practices, a refresher course covers the latest requirements,
           common EICR issues, and changes introduced by Amendment 3.
         </p>

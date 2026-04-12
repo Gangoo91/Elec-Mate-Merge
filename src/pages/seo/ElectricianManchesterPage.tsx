@@ -116,14 +116,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for domestic and commercial installations with automatic derating.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Manchester customers.',
     icon: PoundSterling,
@@ -530,7 +530,7 @@ const sections = [
                   Manchester letting agents and property management companies increasingly require
                   digital certificates delivered promptly. An{' '}
                   <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed on
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed on
                   your phone and emailed as a PDF on the day of the job gives you a significant
                   advantage over competitors who post paper certificates days later.
                 </p>

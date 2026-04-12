@@ -23,7 +23,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Apprentice', href: '/study-centre' },
-  { label: 'Employer Guide', href: '/guides/electrical-apprenticeship-employer-guide' },
+  { label: 'Employer Guide', href: '/guides/electrical-apprenticeship-guide-employer-guide' },
 ];
 
 const tocItems = [
@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/courses/level-2-electrical',
+    href: '/training/level-2-electrical',
     title: 'Level 2 Electrical Course',
     description:
       'Study materials for the Level 2 Diploma in Electrical Installations covering all core units.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study',
   },
   {
-    href: '/courses/am2-exam-preparation',
+    href: '/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'AM2 practical assessment preparation with simulated tasks, time management, and marking scheme guidance.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'Setting up and growing your electrical business, including taking on your first employee or apprentice.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business Tool',
   },
   {
-    href: '/courses/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671:2018+A2:2022 study materials -- the regulations your apprentice needs to know.',
@@ -175,7 +175,7 @@ const sections = [
           This guide covers everything an employer needs to know about taking on an electrical
           apprentice: funding, training providers, supervision requirements, EPA preparation, and
           how{' '}
-          <SEOInternalLink href="/courses/level-2-electrical">
+          <SEOInternalLink href="/training/level-2-electrical">
             Elec-Mate study centre
           </SEOInternalLink>{' '}
           supports apprentice learning alongside on-the-job training.
@@ -473,7 +473,7 @@ const sections = [
                 under controlled conditions. The apprentice must demonstrate competence in
                 installation, wiring, termination, and testing within a set time. This is similar in
                 format to the{' '}
-                <SEOInternalLink href="/courses/am2-exam-preparation">
+                <SEOInternalLink href="/am2-exam-preparation">
                   AM2 assessment
                 </SEOInternalLink>{' '}
                 and tests the same core practical skills.
@@ -676,7 +676,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AM2 Preparation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  <SEOInternalLink href="/courses/am2-exam-preparation">
+                  <SEOInternalLink href="/am2-exam-preparation">
                     AM2 preparation modules
                   </SEOInternalLink>{' '}
                   with simulated tasks, time management guidance, marking scheme breakdowns, and

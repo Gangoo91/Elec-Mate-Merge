@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Create Electrical Installation Certificates digitally with AI assistance and voice test entry.',
@@ -613,7 +613,7 @@ const sections = [
           </div>
         </div>
         <p>
-          The finished <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> exports
+          The finished <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> exports
           as a professional PDF — ready to email or WhatsApp to the client, upload to your scheme
           provider, and file with building control. All before you leave site.
         </p>

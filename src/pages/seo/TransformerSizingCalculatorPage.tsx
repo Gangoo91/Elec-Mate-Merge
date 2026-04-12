@@ -518,7 +518,7 @@ export default function TransformerSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/max-demand-calculator',
+          href: '/max-demand-calculator',
           title: 'Max Demand Calculator',
           description:
             'Calculate the maximum demand for an electrical installation using IET On-Site Guide diversity factors.',
@@ -534,7 +534,7 @@ export default function TransformerSizingCalculatorPage() {
           category: 'Tool',
         },
         {
-          href: '/tools/cable-sizing-calculator',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description:
             'Size cables to BS 7671 with automatic correction factors, voltage drop, and fault current verification.',

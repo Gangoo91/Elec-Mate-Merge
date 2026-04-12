@@ -155,7 +155,7 @@ const sections = [
           Accurate cost estimating starts with knowing your numbers: your true labour cost per hour,
           your overhead rate, your materials procurement costs, and your target profit margin. Once
           you know these, pricing any job becomes a methodical process rather than a guess. The{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">
+          <SEOInternalLink href="/electrical-quoting-app">
             Elec-Mate quoting tool
           </SEOInternalLink>{' '}
           automates this process, but understanding the underlying methodology is essential for
@@ -411,7 +411,7 @@ const sections = [
               <span>
                 <strong>High risk (15 to 20 percent)</strong> -- older properties where the
                 condition of existing wiring is unknown, extensive remedial work following an
-                unsatisfactory <SEOInternalLink href="/guides/eicr-explained">EICR</SEOInternalLink>
+                unsatisfactory <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>
                 , work in listed buildings or properties with unusual construction, and any job
                 where a full survey is not possible before quoting.
               </span>
@@ -535,7 +535,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">
+          <SEOInternalLink href="/electrical-quoting-app">
             Elec-Mate AI quoting tool
           </SEOInternalLink>{' '}
           streamlines this entire process. Enter the job details and it calculates the estimated
@@ -555,7 +555,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'AI-powered quoting tool that calculates labour, materials, and profit for any electrical job.',
@@ -594,7 +594,7 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'From sole trader to employer -- setting up and growing a profitable electrical contracting business.',

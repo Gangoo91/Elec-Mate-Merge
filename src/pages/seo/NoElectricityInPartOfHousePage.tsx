@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic approach to diagnosing electrical faults in domestic installations.',
     icon: Search,
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an EICR involves and how it detects faults causing power loss.',
     icon: FileCheck2,
@@ -150,7 +150,7 @@ const sections = [
           involved (shared neutral faults in older properties). It tells you what you can check
           yourself and when you need a qualified electrician. For electricians, the later sections
           cover{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             fault finding techniques
           </SEOInternalLink>{' '}
           for partial power loss scenarios.
@@ -459,7 +459,7 @@ const sections = [
         <p>
           A broken ring is not always obvious because many sockets may continue to work. It is
           typically discovered during an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR inspection</SEOInternalLink> when
+          <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink> when
           the electrician performs a ring continuity test, or when an investigation is triggered by
           tripping or partial power loss.
         </p>
@@ -550,7 +550,7 @@ const sections = [
         <p>
           An electrician will perform continuity testing, insulation resistance testing, and load
           measurements to identify the fault. For recurring issues, a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> will identify all
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> will identify all
           defects across the entire installation and prioritise them by severity.
         </p>
       </>

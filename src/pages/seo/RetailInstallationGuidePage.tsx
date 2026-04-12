@@ -89,7 +89,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete digital Electrical Installation Certificates on your phone. AI board scanner, voice test entry, and professional PDF export.',
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'Guide to emergency lighting testing, certification, and BS 5266 compliance for commercial premises.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'Guide to fire alarm system testing, BS 5839-1 compliance, and commissioning certificates.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Maximum Demand Calculator',
     description:
       'Calculate maximum demand for retail and commercial premises with diversity factors and load assessment.',
@@ -129,7 +129,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules on the Elec-Mate platform.',
@@ -302,7 +302,7 @@ const sections = [
           Emergency lighting must be tested monthly (short functional test) and annually (full
           3-hour duration test). All test results must be recorded and available for inspection by
           the fire authority. Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/emergency-lighting-certificate">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             emergency lighting certificate
           </SEOInternalLink>{' '}
           template is designed for exactly this purpose.
@@ -379,7 +379,7 @@ const sections = [
                 <strong>Lighting load.</strong> Retail lighting loads can be substantial — 20 to 50
                 W/m² for high-end fashion retail, 10 to 20 W/m² for general retail. For a 500 m²
                 store, lighting alone can be 10 to 25 kW. Use the{' '}
-                <SEOInternalLink href="/tools/max-demand-calculator">
+                <SEOInternalLink href="/max-demand-calculator">
                   maximum demand calculator
                 </SEOInternalLink>{' '}
                 to assess the total lighting load with appropriate diversity.
@@ -611,11 +611,11 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Multiple Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete EIC, EICR,{' '}
-                  <SEOInternalLink href="/guides/emergency-lighting-certificate">
+                  <SEOInternalLink href="/emergency-lighting-certificate">
                     emergency lighting
                   </SEOInternalLink>
                   , and{' '}
-                  <SEOInternalLink href="/guides/fire-alarm-certificate">
+                  <SEOInternalLink href="/fire-alarm-certificate">
                     fire alarm certificates
                   </SEOInternalLink>{' '}
                   all within the same app. One platform for every certificate type you need on a

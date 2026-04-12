@@ -23,7 +23,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Apprentice', href: '/study-centre/apprentice' },
+  { label: 'Apprentice', href: '/study-centre' },
   { label: 'AM2 Simulator', href: '/guides/am2-simulator-guide' },
 ];
 
@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'Complete guide to the End-Point Assessment for electrical apprentices.',
     icon: ClipboardCheck,
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/level-3-electrical',
+    href: '/level3-electrical',
     title: 'Level 3 Electrical Course',
     description: 'Study for Level 3 NVQ with structured course content on the Elec-Mate platform.',
     icon: GraduationCap,

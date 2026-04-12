@@ -106,14 +106,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/apprentice-hub',
+    href: '/apprentice-training',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,
     category: 'Training',
   },
   {
-    href: '/guides/apprentice-portfolio-building-tips',
+    href: '/apprentice-portfolio-guide-building-tips',
     title: 'Apprentice Portfolio Building Tips',
     description: 'NVQ evidence requirements, observation records, and portfolio organisation.',
     icon: BookOpen,

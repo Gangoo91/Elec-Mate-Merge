@@ -556,7 +556,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Quickly, Win the Job</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When diagnosing a fault, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional quote on site while the customer is present. Customers

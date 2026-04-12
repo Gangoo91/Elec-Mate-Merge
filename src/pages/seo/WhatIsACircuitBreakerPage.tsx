@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/mcb-types-b-c-d',
+    href: '/guides/mcb-types-b-c-d-explained',
     title: 'MCB Types B, C, and D',
     description: 'Detailed breakdown of MCB trip curves and when to use each type.',
     icon: Activity,
@@ -343,7 +343,7 @@ const sections = [
         <p>
           The critical point: as you move from Type B to C to D, the MCB needs progressively higher
           fault currents for instantaneous disconnection. This means the maximum permitted{' '}
-          <SEOInternalLink href="/guides/maximum-zs-values">Zs values</SEOInternalLink> are
+          <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">Zs values</SEOInternalLink> are
           progressively lower. A circuit that complies with a Type B MCB might not comply with a
           Type C, because the Zs is too high for the Type C to trip fast enough. Always check the
           tables in BS 7671 Appendix 3.
@@ -490,7 +490,7 @@ const sections = [
               <span>
                 <strong>Earth Fault Loop Impedance (Zs).</strong> Measured at the furthest point of
                 each circuit. The measured Zs must be below the{' '}
-                <SEOInternalLink href="/guides/maximum-zs-values">maximum value</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/maximum-zs-values-bs-7671">maximum value</SEOInternalLink>{' '}
                 tabulated in BS 7671 for the MCB type and rating. This ensures the MCB will
                 disconnect within the required time (0.4s for socket circuits, 5s for fixed
                 equipment) under earth fault conditions.

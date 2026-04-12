@@ -104,7 +104,7 @@ const sections = [
           The most common reason electricians fail their exams is not lack of knowledge — it is poor
           exam technique, particularly time management. Mock exams under timed conditions are the
           only way to develop the speed you need. If you are preparing for the{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition exam
           </SEOInternalLink>{' '}
           or the{' '}
@@ -203,7 +203,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate mock exams for the{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-exam-tips">
+          <SEOInternalLink href="/guides/18th-edition-exam-tips">
             18th Edition
           </SEOInternalLink>{' '}
           are designed around the actual exam syllabus, with questions weighted to match the real
@@ -261,7 +261,7 @@ const sections = [
           <strong>What the AM2 covers.</strong> You will be assessed on: installing a consumer unit
           and circuits to a specification, carrying out initial verification (testing sequence),
           completing an{' '}
-          <SEOInternalLink href="/guides/electrical-installation-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , diagnosing and correcting faults, and demonstrating safe working practices throughout.
@@ -372,7 +372,7 @@ const sections = [
         </p>
         <p>
           <strong>Study groups.</strong> If you are studying with others — whether on a{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             training course
           </SEOInternalLink>{' '}
           or informally — test each other with mock questions. Explaining why an answer is wrong is
@@ -455,7 +455,7 @@ const sections = [
           Mock exams expose these mistakes in a low-stakes environment. If you run out of time in a
           mock, you learn the lesson without failing a real exam. Practise until you consistently
           finish with time to spare. Use the{' '}
-          <SEOInternalLink href="/training/study-tips-electrician">
+          <SEOInternalLink href="/guides/electrician-study-tips">
             Elec-Mate study tips guide
           </SEOInternalLink>{' '}
           for more detailed revision advice.
@@ -467,7 +467,7 @@ const sections = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/training/eighteenth-edition-exam-tips',
+    href: '/guides/18th-edition-exam-tips',
     title: '18th Edition Exam Tips',
     description:
       'Specific advice for the C&G 2382 exam — question analysis, time management, and what to revise.',
@@ -498,7 +498,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Structured study course for the C&G 2382 exam with interactive quizzes and AI tutor support.',
@@ -506,7 +506,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/study-tips-electrician',
+    href: '/guides/electrician-study-tips',
     title: 'Study Tips for Electricians',
     description:
       'Evidence-based revision strategies, memory techniques, and study planning advice for working electricians.',

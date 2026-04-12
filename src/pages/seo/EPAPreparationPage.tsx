@@ -249,11 +249,11 @@ export default function EPAPreparationPage() {
             <p>
               You cannot attempt the EPA until you have passed through the gateway, which requires
               completion of all mandatory qualifications (including the{' '}
-              <SEOInternalLink href="/training/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition wiring regulations
               </SEOInternalLink>{' '}
               and{' '}
-              <SEOInternalLink href="/training/city-guilds-2391">
+              <SEOInternalLink href="/city-guilds2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>
               ), a comprehensive portfolio of evidence, and agreement from both your employer and

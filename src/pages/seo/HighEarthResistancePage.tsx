@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/earth-electrode-test',
+    href: '/guides/earth-electrode-testing',
     title: 'Earth Electrode Test Guide',
     description: 'Fall-of-potential method step-by-step procedure.',
     icon: Gauge,
@@ -97,7 +97,7 @@ const relatedPages = [
     category: 'Calculator' as const,
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: ShieldCheck,
@@ -118,7 +118,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/bs7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition',
     description: 'Complete guide to the current Wiring Regulations.',
     icon: BookOpen,
@@ -159,7 +159,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangement
           </SEOInternalLink>{' '}
           of an installation directly determines the significance of earth electrode resistance. For
@@ -463,7 +463,7 @@ const sections = [
         </p>
         <p>
           For a detailed step-by-step procedure, see the{' '}
-          <SEOInternalLink href="/guides/earth-electrode-test">
+          <SEOInternalLink href="/guides/earth-electrode-testing">
             earth electrode test guide
           </SEOInternalLink>
           . The key principles are:

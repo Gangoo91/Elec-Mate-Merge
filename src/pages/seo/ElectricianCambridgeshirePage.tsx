@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Issue compliant MWCs instantly on your phone.',
     icon: FileCheck2,
@@ -160,7 +160,7 @@ const sections = [
         </div>
         <p>
           Whether you need a{' '}
-          <SEOInternalLink href="/consumer-unit-replacement">
+          <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
             consumer unit replacement
           </SEOInternalLink>{' '}
           in Cambridge or a three-phase agricultural supply connection near Wisbech, Elec-Mate

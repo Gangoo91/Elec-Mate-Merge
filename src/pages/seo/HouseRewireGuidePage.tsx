@@ -138,7 +138,7 @@ export default function HouseRewireGuidePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     An{' '}
-                    <SEOInternalLink href="/guides/eicr-certificate">
+                    <SEOInternalLink href="/tools/eicr-certificate">
                       Electrical Installation Condition Report (EICR)
                     </SEOInternalLink>{' '}
                     that returns multiple C1 (Danger Present) or C2 (Potentially Dangerous)
@@ -374,7 +374,7 @@ export default function HouseRewireGuidePage() {
                     <h4 className="font-bold text-white mb-1">Testing and Commissioning</h4>
                     <p className="text-white text-sm leading-relaxed">
                       The full{' '}
-                      <SEOInternalLink href="/guides/testing-sequence">
+                      <SEOInternalLink href="/testing-sequence-guide">
                         testing sequence
                       </SEOInternalLink>{' '}
                       is carried out on every circuit: continuity of protective conductors (R1+R2),
@@ -746,14 +746,14 @@ export default function HouseRewireGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Calculate correct cable sizes for every circuit in the rewire.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate',
           description: 'How to complete the Electrical Installation Certificate.',
           icon: FileText,

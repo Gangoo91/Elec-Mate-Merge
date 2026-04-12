@@ -218,7 +218,7 @@ export default function SWACableInstallationPage() {
                 replacement without excavation. The duct should extend at least 300 mm beyond the
                 edge of the hard surface on each side.
               </p>
-              <SEOInternalLink href="/guides/earthing-arrangements">
+              <SEOInternalLink href="/earthing-arrangements">
                 Earthing arrangements for outdoor installations
               </SEOInternalLink>{' '}
               — check PME restrictions for supplies extending outside the main equipotential zone.
@@ -388,7 +388,7 @@ export default function SWACableInstallationPage() {
                 consumer unit or distribution board enclosure. At the load end, if the cable
                 terminates at a non-metallic enclosure (such as a plastic isolator or junction box),
                 an{' '}
-                <SEOInternalLink href="/guides/earthing-arrangements">earth tail</SEOInternalLink>{' '}
+                <SEOInternalLink href="/earthing-arrangements">earth tail</SEOInternalLink>{' '}
                 must be connected from the gland earth tag to the circuit earth terminal.
               </p>
             </>
@@ -478,7 +478,7 @@ export default function SWACableInstallationPage() {
             <>
               <p>
                 Testing an SWA cable installation follows the standard{' '}
-                <SEOInternalLink href="/guides/testing-sequence">
+                <SEOInternalLink href="/testing-sequence-guide">
                   BS 7671 testing sequence
                 </SEOInternalLink>
                 , but with specific attention to the armour continuity, insulation resistance
@@ -530,7 +530,7 @@ export default function SWACableInstallationPage() {
               </div>
               <p>
                 Record all test results on the{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 schedule of test results. For SWA circuits, note the armour resistance separately as
@@ -592,7 +592,7 @@ export default function SWACableInstallationPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT systems and PME restrictions.',
           icon: ShieldCheck,
@@ -613,14 +613,14 @@ export default function SWACableInstallationPage() {
           category: 'Installation',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'BS 7671 initial verification testing procedures.',
           icon: ClipboardCheck,
           category: 'Guide',
         },
         {
-          href: '/guides/voltage-drop-bs7671',
+          href: '/guides/voltage-drop-limits-bs-7671',
           title: 'Voltage Drop Guide',
           description: 'Voltage drop calculations for longer cable runs.',
           icon: Wrench,

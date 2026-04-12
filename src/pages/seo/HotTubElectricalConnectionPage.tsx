@@ -93,14 +93,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for hot tub circuits with automatic voltage drop and Zs checks.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Verify voltage drop on long cable runs to outdoor hot tub locations.',
     icon: Zap,
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for hot tub installations on your phone.',
@@ -295,7 +295,7 @@ const sections = [
                 <strong>Voltage drop</strong> — check the voltage drop for the total cable run. BS
                 7671 allows 5% total; aim for 3% on the final circuit. For a 40A load on 10.0mm²
                 cable, the maximum run for 3% voltage drop is approximately 40 metres. Use the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify.
@@ -446,7 +446,7 @@ const sections = [
         </div>
         <p>
           An{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
           must be issued. A Minor Works Certificate is not appropriate because the work involves a
@@ -527,7 +527,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately with Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise materials (SWA cable per metre, RCBO, isolator, glands, clips, warning
@@ -543,7 +543,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certify on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete the EIC on your phone before you leave using the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     EIC certificate app
                   </SEOInternalLink>
                   . Note the BS 7671 Section 702 reference in the remarks. Send the PDF to the

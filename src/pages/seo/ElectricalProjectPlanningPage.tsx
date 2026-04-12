@@ -469,7 +469,7 @@ const sections = [
         </p>
         <p>
           The testing phase requires qualified testers (holding{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">City & Guilds 2391</SEOInternalLink> or
+          <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink> or
           equivalent), calibrated test instruments, completed installation work (testing incomplete
           circuits is pointless), and adequate time in the programme. On larger projects, a
           dedicated testing team is engaged, and their access must be coordinated so they can test
@@ -477,7 +477,7 @@ const sections = [
         </p>
         <p>
           The testing sequence follows the requirements of{' '}
-          <SEOInternalLink href="/guides/testing-sequence">BS 7671 Chapter 64</SEOInternalLink>:
+          <SEOInternalLink href="/testing-sequence-guide">BS 7671 Chapter 64</SEOInternalLink>:
           continuity of protective conductors, continuity of ring final circuit conductors,
           insulation resistance, polarity, earth fault loop impedance, prospective fault current,
           and RCD operation. Every test result must be recorded on the schedule of test results and
@@ -522,7 +522,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 or equivalent certification for all installations
@@ -574,21 +574,21 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description: 'Setting up your own electrical contracting company in the UK.',
     icon: Briefcase,
     category: 'Guide',
   },
   {
-    href: '/guides/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate Guide',
     description: 'How to complete an Electrical Installation Certificate correctly.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/testing-sequence',
+    href: '/testing-sequence-guide',
     title: 'Testing Sequence Guide',
     description: 'The correct BS 7671 testing sequence from continuity to RCD testing.',
     icon: ClipboardCheck,
@@ -602,7 +602,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate CDM-compliant risk assessments and method statements.',
     icon: Brain,

@@ -495,7 +495,7 @@ export default function ElectricalSiteInductionPage() {
           category: 'Guide',
         },
         {
-          href: '/tools/rams-generator',
+          href: '/rams-generator',
           title: 'AI RAMS Generator',
           description: 'Generate site-specific risk assessments and method statements with AI.',
           icon: Brain,

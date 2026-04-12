@@ -225,7 +225,7 @@ const sections = [
           GBP 14,000-18,000 per year, which is a significant pay cut for most career changers.
           However, this increases each year, and upon qualification you immediately earn GBP
           28,000-35,000 with rapid progression beyond that. For a full breakdown, see our{' '}
-          <SEOInternalLink href="/guides/electrician-apprentice-salary">
+          <SEOInternalLink href="/guides/apprentice-electrician-salary-uk">
             apprentice salary guide
           </SEOInternalLink>
           .
@@ -258,7 +258,7 @@ const sections = [
           "Part P courses") are designed specifically for career changers who want to qualify for
           domestic electrical work in a shorter timeframe than an apprenticeship. These courses
           typically cover the qualifications needed to join a{' '}
-          <SEOInternalLink href="/guides/competent-person-scheme">
+          <SEOInternalLink href="/guides/competent-person-scheme-guide">
             competent person scheme
           </SEOInternalLink>{' '}
           and work on domestic installations.
@@ -287,7 +287,7 @@ const sections = [
               <span className="flex-1 text-left">
                 <strong>C&G 2391 (Inspection & Testing):</strong> How to inspect and test electrical
                 installations and complete certificates. See our{' '}
-                <SEOInternalLink href="/guides/city-guilds-2391">2391 guide</SEOInternalLink> for
+                <SEOInternalLink href="/city-guilds2391">2391 guide</SEOInternalLink> for
                 exam tips.
               </span>
             </li>

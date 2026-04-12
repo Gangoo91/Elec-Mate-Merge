@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for long vertical runs from consumer unit to loft, including voltage drop check.',
@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for loft conversion circuits on site.',
@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Price loft conversion electrical packages with consumer unit upgrade options.',
     icon: Wrench,
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long vertical cable runs from consumer unit to loft level.',
     icon: Zap,
@@ -358,7 +358,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/tools/voltage-drop-calculator">
+          <SEOInternalLink href="/voltage-drop-calculator">
             voltage drop calculator
           </SEOInternalLink>{' '}
           to verify that the cable run from the consumer unit to the loft lighting and socket
@@ -444,7 +444,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Complete Paperwork on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  Complete the <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   after testing and submit to your competent person scheme before leaving site. The
                   homeowner and builder both need the Part P certificate to sign off the Building
                   Regulations application — delays cost them money and damage your reputation.
@@ -459,7 +459,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Long vertical cable runs to the loft can have significant voltage drop. Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   on the survey to specify the correct cable size — upgrading from 2.5mm to 4mm on a

@@ -88,7 +88,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Complete guide to consumer unit replacement. Part P notification, testing, certification, and BS 7671 compliance.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/permit-to-work-electrical',
+    href: '/guides/permit-to-work-electrician',
     title: 'Permit to Work Guide',
     description:
       'When a permit to work is required for electrical work, what it covers, and how it links to your RAMS.',
@@ -207,7 +207,7 @@ const sections = [
                 <strong>Work requiring a permit to work</strong> — hot work, confined space entry,
                 work at height, and certain electrical tasks (such as work on or near live
                 equipment) may require a{' '}
-                <SEOInternalLink href="/guides/permit-to-work-electrical">
+                <SEOInternalLink href="/guides/permit-to-work-electrician">
                   permit to work
                 </SEOInternalLink>
                 . The permit references the method statement.
@@ -370,7 +370,7 @@ const sections = [
       <>
         <p>
           A{' '}
-          <SEOInternalLink href="/guides/consumer-unit-change-guide">
+          <SEOInternalLink href="/guides/consumer-unit-change">
             consumer unit replacement
           </SEOInternalLink>{' '}
           is one of the most common tasks requiring a method statement. Here is a simplified example
@@ -606,7 +606,7 @@ const sections = [
           work than sitting at a desk writing safety documents.
         </p>
         <p>
-          Elec-Mate's <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink>{' '}
           solves this problem. The AI Health and Safety agent creates complete, site-specific method
           statements in minutes. You describe the job — the task, the site, the equipment, the
           personnel — and the AI produces a professional method statement covering all steps, safety
@@ -617,9 +617,9 @@ const sections = [
         <p>
           The training courses on the Elec-Mate platform — including{' '}
           <SEOInternalLink href="/training/asbestos-awareness">asbestos awareness</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/pasma">PASMA</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/ipaf">IPAF</SEOInternalLink>, and{' '}
-          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink> —
+          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink>, and{' '}
+          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink> —
           ensure your team has the knowledge to implement the safe systems of work described in the
           method statement.
         </p>

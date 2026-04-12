@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'Guide to emergency lighting testing, certification, and compliance for healthcare facilities.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/prospective-fault-current-calculator',
+    href: '/prospective-fault-current-calculator',
     title: 'Prospective Fault Current Calculator',
     description:
       'Calculate Ipf values for distribution systems and verify protective device coordination.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'Guide to fire alarm system testing, commissioning certificates, and compliance documentation.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules including Section 710 (Medical Locations).',

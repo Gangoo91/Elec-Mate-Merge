@@ -108,14 +108,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop calculations.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates for EV charger installations on your phone.',
     icon: FileCheck2,
@@ -371,7 +371,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — use{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to confirm voltage drop is within 5% for longer cable runs in Cardiff Victorian
@@ -489,7 +489,7 @@ const sections = [
                   Factor in Welsh labour rates (£38 to £52/hour), site survey time for Victorian
                   terrace properties, earth rod costs, SP Manweb G98 notification, and EIC
                   certification costs. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised, professional quotes that cover all job-specific variables.
@@ -505,7 +505,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Building Regulations in Wales are administered separately from England. NICEIC and
                   NAPIT members can self-certify under the Welsh Part P equivalent. Issue the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   from your phone before leaving site — every Cardiff EV installation requires a

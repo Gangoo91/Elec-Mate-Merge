@@ -25,7 +25,7 @@ export default function OutdoorElectricsPage() {
         { label: 'Guides', href: '/guides' },
         {
           label: 'Outdoor Electrical Installations',
-          href: '/guides/outdoor-electrical-installations',
+          href: '/guides/outdoor-electrical-installations-installations',
         },
       ]}
       tocItems={[
@@ -484,7 +484,7 @@ export default function OutdoorElectricsPage() {
                 Regardless of the voltage, the mains supply to the transformer or the mains-voltage
                 lighting circuit requires 30mA RCD protection and appropriate cable sizing. For SWA
                 cable runs to garden lighting positions, the{' '}
-                <SEOInternalLink href="/calculators/cable-sizing">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 should be used to verify that the cable size is adequate for the load and the cable
@@ -661,7 +661,7 @@ export default function OutdoorElectricsPage() {
                 For EV chargers mounted on freestanding posts or on detached garages, the SWA cable
                 run and earth rod installation represent significant additional work compared to a
                 simple wall-mounted installation on the house. The{' '}
-                <SEOInternalLink href="/calculators/voltage-drop">
+                <SEOInternalLink href="/voltage-drop-calculator">
                   voltage drop calculation
                 </SEOInternalLink>{' '}
                 is critical for longer cable runs — a 32A EV charger on a long SWA cable run can
@@ -793,21 +793,21 @@ export default function OutdoorElectricsPage() {
           category: 'Guide',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size SWA cables for outdoor circuits with correct derating.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/calculators/voltage-drop',
+          href: '/voltage-drop-calculator',
           title: 'Voltage Drop Calculator',
           description: 'Verify voltage drop on long outdoor SWA cable runs.',
           icon: Activity,
           category: 'Calculator',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'PME vs TT earthing — essential for outdoor installations.',
           icon: Cable,

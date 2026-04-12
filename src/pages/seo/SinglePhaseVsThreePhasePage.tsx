@@ -19,7 +19,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides/electrical-certificate-types-uk' },
-  { label: 'Single Phase vs Three Phase', href: '/guides/single-phase-vs-three-phase' },
+  { label: 'Single Phase vs Three Phase', href: '/guides/guides/single-phase-vs-three-phase' },
 ];
 
 const tocItems = [
@@ -83,14 +83,14 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for single phase and three phase circuits with voltage drop calculation.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates for single and three phase installations on your phone.',
     icon: FileCheck2,

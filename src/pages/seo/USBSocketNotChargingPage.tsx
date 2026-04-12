@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic fault finding approach for diagnosing socket and circuit faults.',
     icon: Search,
@@ -110,14 +110,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'How an EICR assesses socket outlets and identifies defective equipment.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Documentation for socket replacement and minor electrical works.',
     icon: FileCheck2,

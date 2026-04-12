@@ -149,7 +149,7 @@ export default function ElecMateVsElectricalOMPage() {
                 PAT Testing certificates. As the industry expands into EV charging, renewable
                 energy, and fire safety, these specialist certificates are increasingly important.
                 Having them in the same app saves time and eliminates paper forms. See our{' '}
-                <SEOInternalLink href="/guides/electrical-certificate-types">
+                <SEOInternalLink href="/guides/electrical-certificate-types-uk">
                   guide to electrical certificate types
                 </SEOInternalLink>{' '}
                 for more detail.

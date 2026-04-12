@@ -98,21 +98,21 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates on site from your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for any circuit — domestic, commercial, or industrial.',
     icon: Calculator,
@@ -526,7 +526,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Schedule of Test Results</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Enter voltage, continuity, and insulation resistance readings directly into the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     EIC schedule of test results
                   </SEOInternalLink>{' '}
                   on your phone. Voice entry lets you read out measurements while holding the meter
@@ -555,7 +555,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing from Measured Values</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use measured Ze and Zs values in the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to verify disconnection time compliance and confirm maximum permitted Zs for the

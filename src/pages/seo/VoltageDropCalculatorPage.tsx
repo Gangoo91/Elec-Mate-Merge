@@ -257,12 +257,12 @@ export default function VoltageDropCalculatorPage() {
               lower resistance than aluminium for the same cross-sectional area, and larger cables
               have lower resistance than smaller ones. This is why increasing the cable size is one
               of the primary methods of reducing voltage drop. Use the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               alongside this tool to ensure the selected cable meets both current-carrying capacity
               and voltage drop requirements. The{' '}
-              <SEOInternalLink href="/tools/trunking-fill-calculator">
+              <SEOInternalLink href="/trunking-fill-calculator">
                 trunking fill calculator
               </SEOInternalLink>{' '}
               helps plan containment for the sized cables.

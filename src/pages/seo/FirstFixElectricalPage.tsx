@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables correctly for every circuit before ordering materials for first fix.',
     icon: Calculator,
@@ -320,7 +320,7 @@ const sections = [
               Mini-trunking and dado trunking are used for surface-mounted cable management,
               commonly in commercial offices and retail premises. Available in various sizes from
               16x16mm to 100x50mm and larger. Use Elec-Mate's{' '}
-              <SEOInternalLink href="/guides/trunking-fill-calculator">
+              <SEOInternalLink href="/trunking-fill-calculator">
                 trunking fill calculator
               </SEOInternalLink>{' '}
               to check the cable count does not exceed the 45% fill rate.
@@ -338,7 +338,7 @@ const sections = [
         </div>
         <p>
           When calculating containment fill rates, use Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/conduit-fill-calculator">
+          <SEOInternalLink href="/conduit-fill-calculator">
             conduit fill calculator
           </SEOInternalLink>{' '}
           to verify the cables fit within the maximum permitted fill percentage. Overfilled
@@ -398,7 +398,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          Use Elec-Mate's <SEOInternalLink href="/tools/quoting-app">quoting app</SEOInternalLink>{' '}
+          Use Elec-Mate's <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
           to produce a clear first fix specification and quote that details every accessory
           position, circuit allocation, and containment requirement. Sharing this with the builder
           and other trades at the start of the project prevents misunderstandings and keeps the
@@ -463,7 +463,7 @@ const sections = [
           If you are registered with NICEIC, NAPIT, ELECSA, or another competent person scheme, you
           can self-certify the work. You complete the installation, carry out initial verification
           testing, issue the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>
           , and notify Building Control through your scheme. The scheme issues a Building

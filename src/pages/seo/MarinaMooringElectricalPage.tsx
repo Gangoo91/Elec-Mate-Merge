@@ -85,7 +85,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/caravan-park-electrical',
+    href: '/guides/caravan-park-electrical',
     title: 'Caravan Park Electrical (Section 708)',
     description:
       'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
@@ -520,7 +520,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Annual inspection is the recommended interval for marina installations. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to offer multi-year maintenance packages to marina operators, covering annual

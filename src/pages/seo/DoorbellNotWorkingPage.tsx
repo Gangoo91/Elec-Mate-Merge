@@ -97,14 +97,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an EICR inspection covers including extra-low voltage circuits.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description: 'Systematic fault finding for electricians investigating doorbell circuit issues.',
     icon: Search,

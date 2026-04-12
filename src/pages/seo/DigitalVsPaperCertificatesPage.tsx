@@ -241,15 +241,15 @@ const sections = [
         </p>
         <p>
           BS 7671:2018+A3:2024 sets out model forms in Appendix 6 for the{' '}
-          <SEOInternalLink href="/guides/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , the{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">
+          <SEOInternalLink href="/tools/eicr-certificate">
             Electrical Installation Condition Report (EICR)
           </SEOInternalLink>
           , and the{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>
           . These model forms specify the information that must be included — they do not specify

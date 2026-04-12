@@ -94,7 +94,7 @@ const sections = [
           testing report on the electrical installation of a commercial or industrial premises. It
           assesses the condition and safety of the fixed wiring, distribution equipment, and
           earthing and bonding arrangements against the requirements of{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">BS 7671</SEOInternalLink> (the
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> (the
           IET Wiring Regulations), recording any defects, deterioration, or non-compliances as coded
           observations.
         </p>
@@ -308,7 +308,7 @@ const sections = [
               earth. The measured PFC must not exceed the rated breaking capacity of the protective
               devices installed in the board. PFC values in commercial installations can be very
               high (10 kA, 16 kA, or more at the intake), so{' '}
-              <SEOInternalLink href="/guides/prospective-fault-current-calculator">
+              <SEOInternalLink href="/prospective-fault-current-calculator">
                 accurate measurement
               </SEOInternalLink>{' '}
               is essential for verifying that protective device ratings are adequate.
@@ -378,7 +378,7 @@ const sections = [
         <p>
           The EICR for a larger installation may cover multiple pages of schedule of test results,
           with separate schedules for each distribution board.{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes">Observation codes</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">Observation codes</SEOInternalLink>{' '}
           must be applied consistently across the entire installation, and the overall assessment
           (satisfactory or unsatisfactory) must reflect the worst findings across all parts of the
           installation.
@@ -451,7 +451,7 @@ const sections = [
           The overall assessment — satisfactory or unsatisfactory — must be clearly stated. An
           installation is assessed as unsatisfactory if any C1 (danger present) or C2 (potentially
           dangerous) observations are recorded. The{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes">observation codes</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">observation codes</SEOInternalLink>{' '}
           must be applied correctly and consistently, as incorrect coding can lead to legal
           challenges and professional liability issues.
         </p>
@@ -597,21 +597,21 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'Complete guide to completing EICRs including the schedule of test results.',
     icon: FileCheck2,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-observation-codes',
+    href: '/guides/eicr-observation-codes-explained',
     title: 'EICR Observation Codes',
     description: 'C1, C2, C3, and FI observation codes explained with examples.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Complete guide to the current UK wiring regulations and amendments.',
     icon: BookOpen,
@@ -625,7 +625,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/inspection-testing-course',
+    href: '/inspection-testing-course',
     title: '2391 Inspection & Testing Course',
     description: 'Guide to the City & Guilds 2391 qualification for inspection and testing.',
     icon: Award,

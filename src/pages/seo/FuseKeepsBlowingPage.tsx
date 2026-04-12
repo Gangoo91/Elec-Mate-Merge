@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/tripped-mcb-wont-reset',
+    href: '/guides/circuit-breaker-keeps-tripping',
     title: "Tripped MCB Won't Reset",
     description:
       'What to do when your circuit breaker trips and refuses to reset — causes and solutions.',
@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic fault finding for electricians investigating repeated fuse failures.',
     icon: Search,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'What an EICR involves and how it detects faults that cause fuses to blow.',
     icon: FileCheck2,
@@ -157,7 +157,7 @@ const sections = [
           This guide covers why fuses blow, the most common causes, what you can safely check
           yourself, and when you need to call a qualified electrician. If you are an electrician,
           the later sections cover systematic{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             fault finding approaches
           </SEOInternalLink>{' '}
           for repeated fuse failures.
@@ -208,7 +208,7 @@ const sections = [
                 <strong>MCBs (miniature circuit breakers)</strong> — the modern replacement for
                 fuses in consumer units. They trip (disconnect) on overcurrent and can be reset.
                 MCBs do not blow — they trip. If your consumer unit has MCBs, see our{' '}
-                <SEOInternalLink href="/guides/tripped-mcb-wont-reset">
+                <SEOInternalLink href="/guides/circuit-breaker-keeps-tripping">
                   tripped MCB guide
                 </SEOInternalLink>{' '}
                 instead.
@@ -522,7 +522,7 @@ const sections = [
           An electrician investigating repeated fuse failures will carry out insulation resistance
           tests, check for short circuits, measure circuit loads, and inspect all accessible
           connections. They may recommend a full{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> if the
+          <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> if the
           installation has not been inspected recently.
         </p>
       </>

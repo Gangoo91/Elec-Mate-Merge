@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/apprentice-portfolio-guide',
+    href: '/apprentice-portfolio-guide',
     title: 'Portfolio Building Guide',
     description: 'How to turn your OJT evidence into a portfolio that impresses the EPAO assessor.',
     icon: FolderOpen,
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'Strategies for preparing for every component of the End Point Assessment.',
     icon: Target,
@@ -159,7 +159,7 @@ const sections = [
           </SEOInternalLink>
           . Every task you carry out on site is an opportunity to develop competence, and the
           evidence you collect during OJT forms the foundation of your{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio-guide">portfolio</SEOInternalLink>.
+          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink>.
         </p>
       </>
     ),
@@ -559,7 +559,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Portfolio Builder</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Your OJT evidence feeds directly into the{' '}
-                  <SEOInternalLink href="/guides/apprentice-portfolio-guide">
+                  <SEOInternalLink href="/apprentice-portfolio-guide">
                     portfolio builder
                   </SEOInternalLink>
                   . Photos, work logs, and reflective accounts are automatically organised and

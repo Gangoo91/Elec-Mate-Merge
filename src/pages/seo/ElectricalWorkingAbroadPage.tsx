@@ -100,7 +100,7 @@ const sections = [
           Middle East, infrastructure investment in Australia and Canada, and the worldwide push
           towards renewable energy and electric vehicle charging networks all create demand for
           skilled electrical workers. UK training is well-regarded internationally because{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">BS 7671</SEOInternalLink> is one
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> is one
           of the most rigorous wiring standards in the world, and the UK apprenticeship system
           produces electricians with a strong foundation in both theory and practice.
         </p>
@@ -133,7 +133,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Australia has a formal skills assessment process through Trades Recognition Australia
               (TRA). You submit your UK qualifications (typically{' '}
-              <SEOInternalLink href="/guides/level-3-electrical">
+              <SEOInternalLink href="/level3-electrical">
                 Level 3 NVQ/Diploma
               </SEOInternalLink>
               , City & Guilds 2365/2357, and BS 7671) along with evidence of work experience. TRA
@@ -184,7 +184,7 @@ const sections = [
               recognition assessments, particularly for positions with international contractors on
               large projects. Employers typically verify your qualifications directly and may
               require{' '}
-              <SEOInternalLink href="/guides/city-guilds-2391">City & Guilds 2391</SEOInternalLink>{' '}
+              <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink>{' '}
               or equivalent inspection and testing qualifications. The JIB grading (approved
               electrician or technician) is well-understood by Middle Eastern employers. Local
               municipality regulations (such as DEWA in Dubai or Kahramaa in Qatar) apply on site
@@ -537,7 +537,7 @@ const sections = [
         <p>
           If you maintained your UK registrations while abroad, re-entering the market is relatively
           straightforward. You will need to ensure your{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 knowledge
           </SEOInternalLink>{' '}
           is current — if amendments have been published while you were away, you should complete
@@ -555,13 +555,13 @@ const sections = [
         <p>
           If you let your registrations lapse while abroad, the return process is more involved. You
           may need to re-sit the{' '}
-          <SEOInternalLink href="/guides/18th-edition-course">18th Edition course</SEOInternalLink>{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">18th Edition course</SEOInternalLink>{' '}
           and potentially the{' '}
-          <SEOInternalLink href="/guides/inspection-testing-course">
+          <SEOInternalLink href="/inspection-testing-course">
             2391 inspection and testing examination
           </SEOInternalLink>
           . Elec-Mate's study tools and{' '}
-          <SEOInternalLink href="/guides/am2-exam-preparation">
+          <SEOInternalLink href="/am2-exam-preparation">
             AM2 preparation resources
           </SEOInternalLink>{' '}
           help you get back up to speed quickly.
@@ -595,7 +595,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/starting-electrical-business',
+    href: '/guides/starting-an-electrical-business',
     title: 'Starting an Electrical Business',
     description:
       'How to set up as a self-employed electrician or start your own electrical company.',
@@ -603,14 +603,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Complete guide to the current UK wiring regulations and amendments.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description: 'Tax, insurance, pricing, and business management for self-employed sparkies.',
     icon: Scale,

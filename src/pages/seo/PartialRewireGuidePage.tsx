@@ -351,7 +351,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/how-to-test-insulation-resistance">
                   Insulation resistance
                 </SEOInternalLink>
               </strong>{' '}

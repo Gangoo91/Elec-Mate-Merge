@@ -294,7 +294,7 @@ const sections = [
         <p>
           The value is recorded in the R1+R2 column of the schedule of test results on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. It is used alongside
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. It is used alongside
           the Ze measurement to calculate the expected Zs: Zs = Ze + (R1+R2). This calculated value
           is compared against the measured Zs obtained during live testing — the two should be
           approximately equal. Any significant discrepancy indicates a problem that requires
@@ -598,7 +598,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'R1+R2 calculator, Zs lookup, cable sizing, voltage drop, PFC, and dozens more.',
     icon: Calculator,

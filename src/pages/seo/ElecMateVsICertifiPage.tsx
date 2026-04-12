@@ -233,8 +233,8 @@ export default function ElecMateVsICertifiPage() {
             </p>
             <p>
               The platform includes 16 certificate types (EICR,{' '}
-              <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
-              <SEOInternalLink href="/tools/ev-charger-certificate">EV Charger</SEOInternalLink>,
+              <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works,{' '}
+              <SEOInternalLink href="/ev-charger-certificate">EV Charger</SEOInternalLink>,
               Solar PV, Fire Alarm, Emergency Lighting, and PAT Testing), over 70 specialist
               electrical calculators, 8 Elec-AI tools (Circuit Designer, Cost Engineer, Installation
               Guide, Commissioning Specialist, Maintenance Agent, Health & Safety, Fault Finder, and

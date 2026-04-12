@@ -99,14 +99,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote storage heater replacement jobs accurately.',
     icon: PoundSterling,
     category: 'Tool',
   },
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement',
     description: 'When and how consumer units are replaced for storage heater upgrades.',
     icon: Settings,
@@ -482,7 +482,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-certificates">
+                  <SEOInternalLink href="/tools/digital-certificates-app">
                     Elec-Mate certificates app
                   </SEOInternalLink>{' '}
                   to complete Minor Works Certificates or Electrical Installation Certificates for
@@ -500,7 +500,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Storage heater replacement often reveals inadequate consumer units with
                   insufficient spare ways or no RCD protection. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to present a combined storage heater and consumer unit upgrade quote that secures

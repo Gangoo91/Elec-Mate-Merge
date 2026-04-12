@@ -430,7 +430,7 @@ const sections = [
         <p>
           Insulation resistance results are recorded on the schedule of test results on the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. For each circuit,
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each circuit,
           record the IR value in megohms, the test voltage used (250V, 500V, or 1000V), and the
           conductor combination tested.
         </p>
@@ -470,7 +470,7 @@ const sections = [
         />
         <p>
           The app records the test voltage alongside each IR value and includes the{' '}
-          <SEOInternalLink href="/tools/electrical-testing-calculators">
+          <SEOInternalLink href="/electrical-testing-calculators">
             complete schedule of tests
           </SEOInternalLink>{' '}
           with auto-validated IR, R1+R2, Zs, and RCD results — all cross-referenced against BS 7671
@@ -522,7 +522,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',

@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — critical knowledge for pool installations.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/training/18th-edition',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study Section 702 in detail with structured training modules and practice exam questions.',
@@ -221,7 +221,7 @@ const sections = [
           access from the pool area to adjacent rooms, the zones do not extend through the barriers
           — but only if the barriers are permanent and provide effective separation.
         </p>
-        <SEOInternalLink href="/guides/consumer-unit-regulations-uk">
+        <SEOInternalLink href="/consumer-unit-regulations">
           Consumer unit regulations
         </SEOInternalLink>{' '}
         require that circuits serving swimming pool zones are properly identified and protected at
@@ -711,7 +711,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size the SWA cable for a hot tub or pool pump circuit with the Elec-Mate{' '}
-                  <SEOInternalLink href="/guides/cable-sizing-calculator-bs-7671">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Enter the load, cable length, installation method, and get the correct cable

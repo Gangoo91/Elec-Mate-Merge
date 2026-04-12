@@ -532,7 +532,7 @@ const sections = [
             inspection and testing training courses
           </SEOInternalLink>{' '}
           cover GS 38 compliance, test equipment requirements, and the prove-test-prove procedure in
-          detail. The <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink>{' '}
+          detail. The <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink>{' '}
           includes GS 38 references in every risk assessment and method statement it produces.
         </p>
         <SEOAppBridge

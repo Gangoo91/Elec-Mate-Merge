@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/electrical-testing-calculators' },
   { label: 'Three Phase Voltage Drop', href: '/tools/cable-volt-drop-three-phase' },
 ];
 
@@ -90,7 +90,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Single-phase voltage drop calculator with built-in BS 7671 tables and instant pass/fail indication.',
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables to BS 7671 with automatic correction factors, voltage drop check, and protective device coordination.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/voltage-drop-guide-bs-7671',
+    href: '/guides/voltage-drop-limits-bs-7671',
     title: 'Voltage Drop Guide BS 7671',
     description:
       'Complete guide to voltage drop requirements under BS 7671 including tables, formulas, and worked examples.',
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: 'All Electrical Calculators',
     description:
       '70+ BS 7671 compliant calculators for UK electricians. Voltage drop, cable sizing, fault current, and more.',
@@ -231,7 +231,7 @@ const sections = [
         </p>
         <p>
           Three-phase voltage drop is a critical design consideration for{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">cable sizing</SEOInternalLink> on
+          <SEOInternalLink href="/cable-sizing-calculator">cable sizing</SEOInternalLink> on
           commercial and industrial installations. Sub-main cables feeding distribution boards,
           motor circuits, three-phase EV chargers, and large power supplies all require accurate
           voltage drop calculations to ensure compliance with{' '}
@@ -604,7 +604,7 @@ const sections = [
           (3-core or 4-core cable, three-phase a.c.). Copper conductors. Always verify against the
           current edition for your specific installation method.
         </p>
-        <SEOInternalLink href="/guides/correction-factors-guide">
+        <SEOInternalLink href="/guides/correction-factors-bs-7671">
           See also: Correction Factors Guide for derating and grouping factors
         </SEOInternalLink>
       </>

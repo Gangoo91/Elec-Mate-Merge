@@ -99,14 +99,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ev-charging-installation',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation',
     description: 'Home EV charger installation costs, grants, and regulations.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote solar PV and EV charger jobs on your phone with instant PDF.',
     icon: PoundSterling,
@@ -474,7 +474,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Solar Jobs with Better Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce detailed solar PV quotes on site, complete with generation estimates

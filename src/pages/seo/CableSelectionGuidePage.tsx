@@ -655,7 +655,7 @@ const sections = [
       <>
         <p>
           Cable selection decisions must be documented on the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           (EIC) and its Schedule of Test Results. The conductor size, insulation type, and
@@ -673,7 +673,7 @@ const sections = [
                   applied. This information is essential for future EICR inspections to verify that
                   the cable is correctly sized for its protective device and installation
                   conditions. Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete all circuit details on site.
                 </p>
               </div>

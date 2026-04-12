@@ -505,7 +505,7 @@ const sections = [
         <p>
           RCD test results are recorded on the schedule of test results attached to the{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>. For each RCD, you
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. For each RCD, you
           must record the type (RCCB, RCBO, socket-outlet), the rated residual operating current
           (typically 30 mA), and the trip times at each test level.
         </p>
@@ -645,7 +645,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-testing-calculators',
+    href: '/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'RCD discrimination calculator, Zs lookup, R1+R2, cable sizing, and dozens more.',
     icon: Calculator,

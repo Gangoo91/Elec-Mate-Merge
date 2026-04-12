@@ -100,28 +100,28 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description: 'BS 7671:2018+A3:2024 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
   {
-    href: '/guides/city-guilds-2391',
+    href: '/city-guilds2391',
     title: 'C&G 2391 Guide',
     description: 'Inspection and Testing qualification — what it covers and how to prepare.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/guides/level-2-electrical',
+    href: '/level2-electrical',
     title: 'Level 2 Electrical',
     description: 'Level 2 Diploma in Electrical Installation — content and exam preparation.',
     icon: BookOpen,
     category: 'Training',
   },
   {
-    href: '/guides/level-3-electrical',
+    href: '/level3-electrical',
     title: 'Level 3 Electrical',
     description: 'Level 3 Diploma — advanced electrical theory, design, and testing.',
     icon: Award,
@@ -206,7 +206,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/level-2-electrical">
+          <SEOInternalLink href="/level2-electrical">
             Level 2 Diploma in Electrical Installation
           </SEOInternalLink>{' '}
           (C&G 2365-02 or equivalent) covers the core knowledge and practical skills of electrical
@@ -249,7 +249,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/level-3-electrical">
+          <SEOInternalLink href="/level3-electrical">
             Level 3 Diploma in Electrical Installation
           </SEOInternalLink>{' '}
           (C&G 2365-03 or equivalent) is the advanced qualification that takes your knowledge to the
@@ -330,7 +330,7 @@ const sections = [
         </p>
         <p>
           <strong>What it covers:</strong> The{' '}
-          <SEOInternalLink href="/training/eighteenth-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course
           </SEOInternalLink>{' '}
           covers the scope, objectives, and fundamental principles of BS 7671:2018 including all
@@ -365,7 +365,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/guides/city-guilds-2391">
+          <SEOInternalLink href="/city-guilds2391">
             C&G 2391 (Inspection and Testing of Electrical Installations)
           </SEOInternalLink>{' '}
           is the qualification that enables you to carry out periodic inspection and testing of
@@ -628,7 +628,7 @@ const sections = [
         <p>
           <strong>Newly qualified stage:</strong> The 18th Edition course covers BS 7671:2018
           including all amendments. The{' '}
-          <SEOInternalLink href="/training/inspection-testing-course">
+          <SEOInternalLink href="/inspection-testing-course">
             Inspection and Testing course
           </SEOInternalLink>{' '}
           prepares you for the C&G 2391 exam. The BS 7671 run-through provides guided regulation

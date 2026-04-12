@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'BS 5839-1 compliance, system categories, design standards, and digital fire alarm certification.',
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/emergency-lighting-certificate',
+    href: '/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'BS 5266 requirements, testing schedules, system design, and emergency lighting certification on your phone.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/rams-generator',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate professional Risk Assessments and Method Statements with AI for commercial projects.',
@@ -170,8 +170,8 @@ const sections = [
         <p>
           Beyond the core electrical installation, commercial electricians often work on specialist
           systems that are rarely found in domestic settings: fire alarm systems to{' '}
-          <SEOInternalLink href="/guides/fire-alarm-certificate">BS 5839-1</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/emergency-lighting-certificate">
+          <SEOInternalLink href="/fire-alarm-certificate">BS 5839-1</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/emergency-lighting-certificate">
             emergency lighting systems
           </SEOInternalLink>{' '}
           to BS 5266, data and communications cabling, access control, CCTV, intruder alarms, and
@@ -717,11 +717,11 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
-                  <SEOInternalLink href="/guides/fire-alarm-certificate">
+                  <SEOInternalLink href="/fire-alarm-certificate">
                     fire alarm certificates
                   </SEOInternalLink>{' '}
                   to BS 5839 and{' '}
-                  <SEOInternalLink href="/guides/emergency-lighting-certificate">
+                  <SEOInternalLink href="/emergency-lighting-certificate">
                     emergency lighting certificates
                   </SEOInternalLink>{' '}
                   to BS 5266 on your phone. Record system details, zone plans, device schedules, and

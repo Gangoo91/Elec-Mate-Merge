@@ -674,7 +674,7 @@ const sections = [
                     Elec-Mate Minor Works Certificate app
                   </SEOInternalLink>{' '}
                   or the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate app
                   </SEOInternalLink>{' '}
                   to complete the certificate on site, record test results, and send a PDF to the
@@ -690,7 +690,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Wiring Upgrades On the Spot</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Garages frequently have substandard or aged wiring. When you find a fault, use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional quote for any upgrade work on the spot. Customers who

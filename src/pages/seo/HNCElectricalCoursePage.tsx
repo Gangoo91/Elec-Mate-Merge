@@ -317,14 +317,14 @@ const sections = [
           depth — Kirchhoff's laws, mesh and nodal analysis, Thevenin and Norton equivalents,
           superposition, AC power (real, reactive, apparent), power factor, three-phase systems,
           transformers, and semiconductor devices (diodes, transistors, op-amps). This extends the{' '}
-          <SEOInternalLink href="/training/electrical-science">electrical science</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/electrical-science-fundamentals">electrical science</SEOInternalLink>{' '}
           you studied at Level 3 to a much deeper analytical level.
         </p>
         <p>
           <strong>Engineering Design</strong> applies engineering principles to practical design
           problems. For electrical students, this often involves designing an electrical
           installation or system, including calculations, drawings, specification, and compliance
-          with <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>.
+          with <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>.
         </p>
         <p>
           <strong>Managing a Professional Engineering Project</strong> is the capstone module where
@@ -468,14 +468,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/training/electrical-science',
+    href: '/training/electrical-science-fundamentals',
     title: 'Electrical Science Course',
     description: 'Refresh your Level 3 electrical science knowledge before starting HNC study.',
     icon: Calculator,
     category: 'Training' as const,
   },
   {
-    href: '/training/eighteenth-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671 training — the wiring regulations you will apply in your HNC design modules.',

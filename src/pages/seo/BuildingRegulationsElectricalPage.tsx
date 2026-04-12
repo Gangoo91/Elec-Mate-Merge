@@ -90,14 +90,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/notifiable-work-guide',
+    href: '/guides/notifiable-electrical-work',
     title: 'Notifiable Work Guide',
     description: 'Complete list of work that requires notification.',
     icon: Gavel,
     category: 'Guide' as const,
   },
   {
-    href: '/guides/competent-person-scheme',
+    href: '/guides/competent-person-scheme-guide',
     title: 'Competent Person Scheme',
     description: 'NICEIC, NAPIT, ELECSA — registration and benefits.',
     icon: Award,
@@ -111,14 +111,14 @@ const relatedPages = [
     category: 'Regulations' as const,
   },
   {
-    href: '/guides/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate Guide',
     description: 'How to issue an Electrical Installation Certificate for notifiable work.',
     icon: FileCheck2,
     category: 'Certificate' as const,
   },
   {
-    href: '/guides/minor-works-certificate',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'When and how to issue a Minor Works Certificate.',
     icon: FileCheck2,
@@ -158,7 +158,7 @@ const sections = [
         </p>
         <p>
           The key principle: all electrical installation work in dwellings must comply with{' '}
-          <SEOInternalLink href="/guides/bs7671-eighteenth-edition">BS 7671</SEOInternalLink> (the
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink> (the
           IET Wiring Regulations). Most work must also be notified to building control or
           self-certified by a registered competent person. Some lower-risk work is exempt from
           notification but must still comply with BS 7671.
@@ -175,7 +175,7 @@ const sections = [
           Self-certification is the process by which a registered electrician certifies that their
           own work complies with the Building Regulations and notifies building control
           electronically. Only persons registered with an approved{' '}
-          <SEOInternalLink href="/guides/competent-person-scheme">
+          <SEOInternalLink href="/guides/competent-person-scheme-guide">
             competent person scheme
           </SEOInternalLink>{' '}
           can self-certify.
@@ -226,8 +226,8 @@ const sections = [
         </ul>
         <p>
           When a registered person completes notifiable work, they issue the appropriate certificate
-          ( <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> or{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate">Minor Works</SEOInternalLink>),
+          ( <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/minor-works-certificate">Minor Works</SEOInternalLink>),
           notify the scheme electronically, and the scheme notifies building control on their
           behalf. A Building Regulations Compliance Certificate is then issued to the homeowner.
         </p>
@@ -372,7 +372,7 @@ const sections = [
                 <strong className="text-yellow-400">Rooms containing a bath or shower</strong> —
                 includes bathrooms, en-suites, shower rooms, and any room with a bath or shower
                 regardless of its primary purpose. The zones defined in{' '}
-                <SEOInternalLink href="/guides/bathroom-electrical-regs">
+                <SEOInternalLink href="/guides/bathroom-electrical-regulations">
                   BS 7671 Section 701
                 </SEOInternalLink>{' '}
                 apply.
@@ -521,7 +521,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">Notifiable new work:</strong>{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 with schedule of inspections and schedule of test results. Building Regulations
@@ -532,7 +532,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">Notifiable minor work:</strong>{' '}
-                <SEOInternalLink href="/guides/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 for small notifiable jobs. Building Regulations Compliance Certificate via the
@@ -555,7 +555,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
               <span>
                 <strong className="text-yellow-400">Periodic inspection:</strong>{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> for
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> for
                 condition reports on existing installations.
               </span>
             </li>

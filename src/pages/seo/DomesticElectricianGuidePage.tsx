@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Going Self-Employed',
     description:
       'Complete guide to setting up as a self-employed electrician — CIS, insurance, accounting, and finding work.',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-change-guide',
+    href: '/guides/consumer-unit-change',
     title: 'Consumer Unit Change Guide',
     description:
       'Step-by-step guide to replacing a consumer unit including AFDD, SPD, and current Part P requirements.',
@@ -210,7 +210,7 @@ const sections = [
               <span>
                 <strong>Consumer unit changes</strong> — replacing an old fuse board with a modern
                 consumer unit with MCBs, RCBOs, AFDDs, and SPDs.{' '}
-                <SEOInternalLink href="/guides/consumer-unit-change-guide">
+                <SEOInternalLink href="/guides/consumer-unit-change">
                   Consumer unit replacements
                 </SEOInternalLink>{' '}
                 are notifiable under Part P and require an EIC.
@@ -272,7 +272,7 @@ const sections = [
         <p>
           Every one of these jobs requires certification. The type of certificate depends on the
           work: an EIC for new installations and rewires, a{' '}
-          <SEOInternalLink href="/guides/minor-works-certificate-explained">
+          <SEOInternalLink href="/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>{' '}
           for smaller alterations, and an EICR for periodic inspections. Elec-Mate handles all 8
@@ -611,7 +611,7 @@ const sections = [
                 sizing, testing calculators, quote builder, invoice app, and AI-powered board
                 scanner — all in your pocket. One subscription replaces a stack of paper
                 certificates, a{' '}
-                <SEOInternalLink href="/guides/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing app
                 </SEOInternalLink>
                 , a separate quoting tool, and a separate invoicing tool.
@@ -804,7 +804,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Calculators</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  <SEOInternalLink href="/guides/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     Cable sizing calculator
                   </SEOInternalLink>{' '}
                   for every domestic circuit type — ring circuits, radials, showers, cookers, EV

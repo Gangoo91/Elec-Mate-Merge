@@ -457,9 +457,9 @@ export default function ElectricalNoiseAndInterferencePage() {
                 the design phase — not as an afterthought when problems arise. Correct cable
                 routing, separation, and the specification of CE/UKCA-compliant equipment are all
                 part of the{' '}
-                <SEOInternalLink href="/guides/bs7671-eighteenth-edition">BS 7671</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
                 compliance requirements recorded on the{' '}
-                <SEOInternalLink href="/guides/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>
                 .
@@ -575,7 +575,7 @@ export default function ElectricalNoiseAndInterferencePage() {
           category: 'Installation',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 Guide',
           description: 'Full guide to the 18th Edition Wiring Regulations.',
           icon: ShieldCheck,
@@ -589,21 +589,21 @@ export default function ElectricalNoiseAndInterferencePage() {
           category: 'Installation',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate',
           description: 'How to carry out and report an EICR.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/calculators/cable-sizing',
+          href: '/cable-sizing-calculator',
           title: 'Cable Sizing Calculator',
           description: 'Size cables correctly for all circuit types.',
           icon: Calculator,
           category: 'Calculator',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,

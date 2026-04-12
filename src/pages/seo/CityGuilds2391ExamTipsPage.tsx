@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-test-insulation-resistance',
+    href: '/how-to-test-insulation-resistance',
     title: 'Insulation Resistance Testing',
     description: 'Step-by-step guide to performing insulation resistance tests correctly.',
     icon: Zap,

@@ -286,12 +286,12 @@ export default function MinorWorksCertificatePage() {
             <p>
               The choice between issuing a Minor Electrical Installation Works Certificate and a
               full{' '}
-              <SEOInternalLink href="/guides/electrical-installation-certificate">
+              <SEOInternalLink href="/eic-certificate">
                 Electrical Installation Certificate (EIC)
               </SEOInternalLink>{' '}
               depends on whether new circuits are being installed. Understanding the distinction is
               essential for compliance and avoiding potential liability issues. For condition
-              reporting, <SEOInternalLink href="/guides/eicr-guide">EICRs</SEOInternalLink> are the
+              reporting, <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> are the
               appropriate document.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 my-6">

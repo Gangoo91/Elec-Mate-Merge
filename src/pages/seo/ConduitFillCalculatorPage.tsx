@@ -276,7 +276,7 @@ export default function ConduitFillCalculatorPage() {
                 cable derating calculator
               </SEOInternalLink>{' '}
               to account for grouping factors, and the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to confirm your conductor sizes before pulling.

@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote solar and EV installations on-site with instant PDF generation.',
     icon: FileCheck2,
@@ -524,7 +524,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional, itemised solar quotes using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include panels, inverter, mounting, scaffolding, electrical connection, and MCS

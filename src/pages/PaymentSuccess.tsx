@@ -1,127 +1,95 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
-  CheckCircle,
   ArrowRight,
-  Zap,
-  Shield,
   BookOpen,
-  Wrench,
-  Sparkles,
+  CheckCircle,
   Loader2,
   MessageSquare,
+  Shield,
+  Sparkles,
   Users,
+  Wrench,
+  Zap,
 } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-// Plan display info
 const planInfo: Record<
   string,
-  { name: string; icon: React.ElementType; color: string; features: string[] }
+  { name: string; icon: React.ElementType; features: string[]; nextSteps: string[] }
 > = {
   'electrician-monthly': {
     name: 'Electrician Pro',
     icon: Zap,
-    color: 'from-yellow-500 to-amber-500',
     features: [
-      'Unlimited certificates',
-      '8 AI specialist agents',
-      'Quote & invoice builder',
-      'Inspection & testing suite',
+      'Certificates, quotes and invoices',
+      'AI tools, design tools and RAMS workflows',
+      'Calculators and regs support on demand',
     ],
+    nextSteps: ['Open your dashboard', 'Start a job flow', 'Use the platform on real work this week'],
   },
   'electrician-annual': {
     name: 'Electrician Pro',
     icon: Zap,
-    color: 'from-yellow-500 to-amber-500',
     features: [
-      'Unlimited certificates',
-      '8 AI specialist agents',
-      'Quote & invoice builder',
-      'Inspection & testing suite',
+      'Certificates, quotes and invoices',
+      'AI tools, design tools and RAMS workflows',
+      'Calculators and regs support on demand',
     ],
+    nextSteps: ['Open your dashboard', 'Start a job flow', 'Use the platform on real work this week'],
   },
   'apprentice-monthly': {
     name: 'Apprentice',
     icon: BookOpen,
-    color: 'from-blue-500 to-cyan-500',
-    features: [
-      '2,000+ practice questions',
-      'AM2 & City & Guilds exam prep',
-      'BS 7671 study guides',
-      '50+ electrical calculators',
-    ],
+    features: ['Study Centre and mock exams', 'AM2 and BS 7671 support', 'Calculators and revision tools'],
+    nextSteps: ['Open your dashboard', 'Pick up your study plan', 'Start using the platform every day'],
   },
   'apprentice-annual': {
     name: 'Apprentice',
     icon: BookOpen,
-    color: 'from-blue-500 to-cyan-500',
-    features: [
-      '2,000+ practice questions',
-      'AM2 & City & Guilds exam prep',
-      'BS 7671 study guides',
-      '50+ electrical calculators',
-    ],
+    features: ['Study Centre and mock exams', 'AM2 and BS 7671 support', 'Calculators and revision tools'],
+    nextSteps: ['Open your dashboard', 'Pick up your study plan', 'Start using the platform every day'],
   },
   'business-ai-monthly': {
     name: 'Business AI',
     icon: MessageSquare,
-    color: 'from-amber-500 to-orange-500',
-    features: [
-      'Mate — your WhatsApp AI assistant',
-      'Morning briefings & day planner',
-      'Automated invoice chasing',
-      'Email lead monitoring',
-    ],
+    features: ['Mate on WhatsApp', 'Automated follow-up workflows', 'Business-side AI support'],
+    nextSteps: ['Open Business AI', 'Connect your workflow', 'Start using Mate daily'],
   },
   'business-ai-yearly': {
     name: 'Business AI',
     icon: MessageSquare,
-    color: 'from-amber-500 to-orange-500',
-    features: [
-      'Mate — your WhatsApp AI assistant',
-      'Morning briefings & day planner',
-      'Automated invoice chasing',
-      'Email lead monitoring',
-    ],
+    features: ['Mate on WhatsApp', 'Automated follow-up workflows', 'Business-side AI support'],
+    nextSteps: ['Open Business AI', 'Connect your workflow', 'Start using Mate daily'],
   },
   'employer-monthly': {
     name: 'Employer',
     icon: Users,
-    color: 'from-violet-500 to-purple-500',
-    features: [
-      'Team GPS & job tracking',
-      'Job packs & assignments',
-      'Timesheets & scheduling',
-      'Everything in Business AI',
-    ],
+    features: ['Team and compliance visibility', 'Scheduling and shared workflows', 'Employer-wide oversight'],
+    nextSteps: ['Open your dashboard', 'Review team activity', 'Set up your first workflow'],
   },
   'employer-yearly': {
     name: 'Employer',
     icon: Users,
-    color: 'from-violet-500 to-purple-500',
-    features: [
-      'Team GPS & job tracking',
-      'Job packs & assignments',
-      'Timesheets & scheduling',
-      'Everything in Business AI',
-    ],
+    features: ['Team and compliance visibility', 'Scheduling and shared workflows', 'Employer-wide oversight'],
+    nextSteps: ['Open your dashboard', 'Review team activity', 'Set up your first workflow'],
   },
   'contractor-monthly': {
     name: 'Contractor',
     icon: Wrench,
-    color: 'from-purple-500 to-pink-500',
-    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support'],
+    features: ['Team access', 'Advanced reporting', 'Priority support'],
+    nextSteps: ['Open your dashboard', 'Set up your workflow', 'Bring the team in'],
   },
   'contractor-annual': {
     name: 'Contractor',
     icon: Wrench,
-    color: 'from-purple-500 to-pink-500',
-    features: ['Team management', 'Multi-user access', 'Advanced reporting', 'Priority support'],
+    features: ['Team access', 'Advanced reporting', 'Priority support'],
+    nextSteps: ['Open your dashboard', 'Set up your workflow', 'Bring the team in'],
   },
 };
 
@@ -139,41 +107,33 @@ const PaymentSuccess = () => {
 
   const plan = planInfo[planId] || planInfo['electrician-monthly'];
   const PlanIcon = plan.icon;
-
-  // Calculate trial end date (7 days from now)
   const trialEndDate = new Date(Date.now() + 7 * 86400000).toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
 
-  // Derive role from planId so Dashboard doesn't redirect to complete-profile
   const roleFromPlan = planId.startsWith('apprentice')
     ? 'apprentice'
     : planId.startsWith('employer')
       ? 'employer'
       : 'electrician';
 
-  // Ensure profile has a role set — fills the gap if webhook didn't set one
   const ensureRole = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (freshProfile: any) => {
-      if (!user?.id || freshProfile?.role) return;
+    async (freshProfile: unknown) => {
+      const typedProfile = freshProfile as { role?: string } | null;
+      if (!user?.id || typedProfile?.role) return;
       try {
         await supabase
           .from('profiles')
-          .update({
-            role: roleFromPlan,
-            updated_at: new Date().toISOString(),
-          })
+          .update({ role: roleFromPlan, updated_at: new Date().toISOString() })
           .eq('id', user.id);
-        // Re-fetch so AuthContext has the updated role
         await fetchProfile(user.id);
       } catch {
-        // Non-fatal — Dashboard complete-profile page is the fallback
+        return;
       }
     },
-    [user?.id, roleFromPlan, fetchProfile]
+    [fetchProfile, roleFromPlan, user?.id]
   );
 
   const isBusinessAIPlan = planId.startsWith('business-ai') || planId.startsWith('employer');
@@ -181,58 +141,44 @@ const PaymentSuccess = () => {
   const handleGoToDashboard = useCallback(() => {
     if (autoNavRef.current) clearTimeout(autoNavRef.current);
     navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
-  }, [navigate, isBusinessAIPlan]);
+  }, [isBusinessAIPlan, navigate]);
 
-  // Poll fetchProfile until subscription is confirmed, then auto-navigate
   useEffect(() => {
     if (!user?.id) return;
 
     let attempts = 0;
-    const MAX_ATTEMPTS = 30;
+    const maxAttempts = 30;
 
-    const poll = () => {
-      pollRef.current = setInterval(async () => {
-        attempts++;
-        const freshProfile = await fetchProfile(user.id);
+    pollRef.current = setInterval(async () => {
+      attempts++;
+      const freshProfile = await fetchProfile(user.id);
 
-        if (freshProfile?.subscribed) {
-          // Subscription confirmed — stop polling
-          if (pollRef.current) clearInterval(pollRef.current);
+      if (freshProfile?.subscribed) {
+        if (pollRef.current) clearInterval(pollRef.current);
+        await ensureRole(freshProfile);
+        setActivationSlow(false);
+        setIsReady(true);
+        autoNavRef.current = setTimeout(() => {
+          navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
+        }, 2200);
+        return;
+      }
 
-          // Ensure role is set before navigating to dashboard
-          await ensureRole(freshProfile);
-          setActivationSlow(false);
-          setIsReady(true);
+      if (attempts >= maxAttempts) {
+        if (pollRef.current) clearInterval(pollRef.current);
+        await ensureRole(freshProfile);
+        setActivationSlow(true);
+        setIsReady(true);
+      }
+    }, 2000);
 
-          // Auto-navigate after 2s so user sees the success screen
-          autoNavRef.current = setTimeout(() => {
-            navigate(isBusinessAIPlan ? '/electrician/business-ai' : '/dashboard');
-          }, 2000);
-          return;
-        }
-
-        if (attempts >= MAX_ATTEMPTS) {
-          // Timed out — enable button but warn user activation is slow
-          if (pollRef.current) clearInterval(pollRef.current);
-          await ensureRole(freshProfile);
-          setActivationSlow(true);
-          setIsReady(true);
-        }
-      }, 2000);
-    };
-
-    // Start polling immediately (no delay — webhook may already be done)
-    poll();
-
-    // Enable button after 10s regardless of polling state
     const earlyReadyTimer = setTimeout(() => {
       setIsReady(true);
     }, 10000);
 
-    // Delay content reveal for animation
     const contentTimer = setTimeout(() => {
       setShowContent(true);
-    }, 300);
+    }, 250);
 
     return () => {
       clearTimeout(earlyReadyTimer);
@@ -240,141 +186,174 @@ const PaymentSuccess = () => {
       if (pollRef.current) clearInterval(pollRef.current);
       if (autoNavRef.current) clearTimeout(autoNavRef.current);
     };
-  }, [user?.id, fetchProfile, navigate, ensureRole, isBusinessAIPlan]);
+  }, [ensureRole, fetchProfile, isBusinessAIPlan, navigate, user?.id]);
 
-  // If profile already shows subscribed (e.g. fast webhook), mark ready immediately
   useEffect(() => {
     if (profile?.subscribed && !isReady) {
       setIsReady(true);
       if (pollRef.current) clearInterval(pollRef.current);
     }
-  }, [profile?.subscribed, isReady]);
+  }, [isReady, profile?.subscribed]);
 
   return (
     <div
-      className="min-h-screen flex flex-col pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
+      className="min-h-[100svh] bg-[#0a0a0a]"
       style={{
         background:
-          'radial-gradient(ellipse 90% 60% at 50% 20%, rgba(250,204,21,0.07) 0%, transparent 50%), #0a0a0a',
+          'radial-gradient(ellipse 90% 60% at 50% 18%, rgba(250,204,21,0.07) 0%, transparent 50%), #0a0a0a',
       }}
     >
-      <div className="flex-1 flex items-center justify-center p-5 relative z-10">
-        <div className="w-full max-w-[400px]">
-          {/* Success icon */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', duration: 0.6, bounce: 0.4 }}
-            className="flex justify-center mb-8"
-          >
-            <div className="w-20 h-20 rounded-full bg-elec-yellow/15 ring-1 ring-elec-yellow/30 flex items-center justify-center">
-              <CheckCircle className="h-10 w-10 text-elec-yellow" strokeWidth={2} />
-            </div>
-          </motion.div>
+      <div className="mx-auto grid min-h-[100svh] max-w-[1100px] items-stretch px-5 pb-[calc(env(safe-area-inset-bottom)+24px)] pt-[calc(env(safe-area-inset-top)+24px)] lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:px-8">
+        <div className="hidden lg:flex lg:flex-col lg:justify-between lg:py-10">
+          <div>
+            <Link to="/" className="flex items-center gap-3">
+              <img src="/logo.jpg" alt="Elec-Mate" className="h-11 w-11 rounded-xl object-cover" />
+              <span className="text-[22px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </Link>
 
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-8"
-          >
-            <h1 className="text-[26px] font-bold text-white tracking-tight mb-2">
-              {isTrial ? 'Welcome to Elec-Mate' : `${plan.name} is live`}
-            </h1>
-            <p className="text-[15px] text-white/70">
-              {isTrial ? (
-                <>
-                  Your 7-day free trial starts now. No charge until{' '}
-                  <span className="text-white font-medium">{trialEndDate}</span>.
-                </>
-              ) : (
-                <>Your {plan.name} subscription is active</>
-              )}
-            </p>
-          </motion.div>
-
-          {/* Plan card */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="rounded-2xl border border-elec-yellow/20 bg-white/[0.03] p-5 mb-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-                <PlanIcon className="h-5 w-5 text-elec-yellow" />
+            <div className="mt-14 max-w-[30rem]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-500/20 bg-yellow-500/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-yellow-300">
+                <Sparkles className="h-3.5 w-3.5" />
+                You are in
               </div>
-              <div>
-                <h3 className="text-[15px] font-semibold text-white">{plan.name}</h3>
-                <p className="text-[12px] text-elec-yellow flex items-center gap-1">
-                  <Shield className="h-3 w-3" />
-                  {isTrial ? '7-day free trial active' : 'Subscription active'}
+              <h1 className="mt-6 text-[4rem] font-bold leading-[0.95] tracking-[-0.05em] text-white">
+                The platform is ready for your first real week.
+              </h1>
+              <p className="mt-5 max-w-[26rem] text-base leading-8 text-white/72">
+                The next job of this screen is simple: confirm the trial, show what is live, and
+                move you into the dashboard fast.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 border-t border-white/10 pt-6 text-sm leading-7 text-white/72">
+            <div>{plan.name} is active</div>
+            <div>{isTrial ? `No charge until ${trialEndDate}` : 'Subscription active'}</div>
+            <div>Next stop: {isBusinessAIPlan ? 'Business AI' : 'Dashboard'}</div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center py-8 lg:py-10">
+          <div className="mx-auto w-full max-w-[440px]">
+            <div className="mb-10 flex items-center justify-center gap-3 lg:hidden">
+              <img src="/logo.jpg" alt="" className="h-10 w-10 rounded-xl object-cover" />
+              <span className="text-[20px] font-bold tracking-tight text-white">
+                Elec-<span className="text-yellow-400">Mate</span>
+              </span>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
+              transition={{ duration: 0.35 }}
+              className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:p-8"
+            >
+              <div className="flex justify-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-elec-yellow/15 ring-1 ring-elec-yellow/30">
+                  <CheckCircle className="h-10 w-10 text-elec-yellow" strokeWidth={2} />
+                </div>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-yellow-300/78">
+                  Success
+                </p>
+                <h1 className="mt-3 text-[30px] font-bold tracking-[-0.04em] text-white">
+                  {isTrial ? 'Your free trial is live' : `${plan.name} is live`}
+                </h1>
+                <p className="mt-3 text-[15px] leading-7 text-white/70">
+                  {isTrial ? (
+                    <>
+                      You will not be charged until <span className="font-medium text-white">{trialEndDate}</span>.
+                    </>
+                  ) : (
+                    <>Your subscription is active and ready to use.</>
+                  )}
                 </p>
               </div>
-            </div>
 
-            <div className="space-y-2.5">
-              {plan.features.map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-2.5 text-[13px] text-white">
-                  <div className="w-5 h-5 rounded-full bg-elec-yellow/15 flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-3 w-3 text-elec-yellow" />
+              <div className="mt-6 rounded-2xl border border-elec-yellow/20 bg-white/[0.03] p-5">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-elec-yellow/15">
+                    <PlanIcon className="h-5 w-5 text-elec-yellow" />
                   </div>
-                  {feature}
+                  <div>
+                    <h3 className="text-[15px] font-semibold text-white">{plan.name}</h3>
+                    <p className="flex items-center gap-1 text-[12px] text-elec-yellow">
+                      <Shield className="h-3 w-3" />
+                      {isTrial ? '7-day free trial active' : 'Subscription active'}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </motion.div>
 
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 12 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-          >
-            <Button
-              onClick={handleGoToDashboard}
-              disabled={!isReady}
-              className={cn(
-                'w-full h-14 rounded-2xl text-[16px] font-bold touch-manipulation transition-all',
-                isReady
-                  ? 'bg-[#FFD700] hover:bg-[#FFD700]/90 text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] active:scale-[0.98]'
-                  : 'bg-white/10 text-white/60'
-              )}
-            >
-              {!isReady ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Setting up your account...
-                </>
-              ) : (
-                <>
-                  {isBusinessAIPlan ? 'Set Up Mate' : 'Go to Dashboard'}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </>
-              )}
-            </Button>
-          </motion.div>
+                <div className="space-y-2.5">
+                  {plan.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2.5 text-[13px] text-white">
+                      <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-elec-yellow/15">
+                        <CheckCircle className="h-3 w-3 text-elec-yellow" />
+                      </div>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          {/* Status + help */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: showContent ? 1 : 0 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            className="mt-6 text-center space-y-3"
-          >
-            {activationSlow && (
-              <p className="text-[12px] text-amber-400">
-                Taking longer than usual — you can still proceed
-              </p>
-            )}
-            <p className="text-[11px] text-white">
-              Cancel anytime in Settings. Need help?{' '}
-              <a href="mailto:support@elec-mate.com" className="text-white/50 underline">
-                support@elec-mate.com
-              </a>
-            </p>
-          </motion.div>
+              <div className="mt-6 rounded-2xl border border-white/8 bg-black/20 p-4">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-white/52">
+                  What happens next
+                </p>
+                <div className="mt-3 space-y-3">
+                  {plan.nextSteps.map((step, index) => (
+                    <div key={step} className="flex items-start gap-3 text-[14px] text-white/82">
+                      <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/[0.06] text-[12px] font-semibold text-yellow-300">
+                        {index + 1}
+                      </div>
+                      <span>{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                onClick={handleGoToDashboard}
+                disabled={!isReady}
+                className={cn(
+                  'mt-8 h-14 w-full rounded-2xl text-[16px] font-bold transition-all',
+                  isReady
+                    ? 'bg-[#FFD700] text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] hover:bg-[#FFD700]/90'
+                    : 'bg-white/10 text-white/60'
+                )}
+              >
+                {!isReady ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Finishing setup...
+                  </>
+                ) : (
+                  <>
+                    {isBusinessAIPlan ? 'Open Business AI' : 'Go to Dashboard'}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </>
+                )}
+              </Button>
+
+              <div className="mt-6 text-center">
+                {activationSlow && (
+                  <p className="mb-2 text-[12px] text-amber-400">
+                    Activation is taking longer than usual, but you can still proceed.
+                  </p>
+                )}
+                <p className="text-[11px] text-white/58">
+                  Cancel anytime in Settings. Need help?{' '}
+                  <a href="mailto:support@elec-mate.com" className="underline">
+                    support@elec-mate.com
+                  </a>
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>

@@ -84,21 +84,21 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for smart lighting circuits, DALI bus wiring, and dimmer feeds.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for smart lighting installations on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote smart lighting installations with per-point costs, commissioning, and programming.',
     icon: Wrench,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long lighting circuit runs for DALI bus and 12V SELV circuits.',
     icon: Zap,
@@ -431,7 +431,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Where smart lighting installation involves new circuits or new cable runs (not just
                   replacing fittings on existing circuits), an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   or Minor Works Certificate is required. Part P notification applies where new

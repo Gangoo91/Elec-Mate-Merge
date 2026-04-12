@@ -118,7 +118,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrician-self-employed',
+    href: '/guides/going-self-employed-electrician',
     title: 'Self-Employed Electrician Guide',
     description: 'How to go self-employed after qualifying and maximise your earning potential.',
     icon: Briefcase,
@@ -451,7 +451,7 @@ const sections = [
         </p>
         <p>
           <strong>Portfolio builder:</strong> The{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio">portfolio builder</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio builder</SEOInternalLink>{' '}
           with AC (assessment criteria) mapping helps you demonstrate competence to your employer
           and training provider, supporting timely progression through the apprenticeship stages and
           pay grades. A strong portfolio also supports your{' '}

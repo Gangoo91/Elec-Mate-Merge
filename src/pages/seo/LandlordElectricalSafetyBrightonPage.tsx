@@ -630,7 +630,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C2 observations are found in a Brighton Victorian conversion, quote the
                   consumer unit upgrade or RCD installation immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Brighton landlords must act within 28 days — and the electrician who quotes on

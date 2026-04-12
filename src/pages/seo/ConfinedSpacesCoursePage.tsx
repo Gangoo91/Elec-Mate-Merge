@@ -167,7 +167,7 @@ const sections = [
           rooms with limited ventilation, lift motor rooms, ceiling voids and crawl spaces above
           suspended ceilings, switchroom basements, and trenches where cables are being laid are all
           potentially confined spaces. Each time you enter one of these environments to carry out{' '}
-          <SEOInternalLink href="/training/inspection-testing">
+          <SEOInternalLink href="/inspection-testing-course">
             inspection and testing
           </SEOInternalLink>{' '}
           or installation work, you need to assess whether confined space hazards are present.
@@ -254,7 +254,7 @@ const sections = [
           arrangements for the rescue of persons in the event of an emergency must be in place
           before any entry. These arrangements must include a trained rescue team or appropriate
           rescue equipment, and must not rely on the emergency services as the primary rescue plan.
-          The <SEOInternalLink href="/training/first-aid">first aid course</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/training/first-aid-electrical">first aid course</SEOInternalLink>{' '}
           complements confined space training by covering emergency response for gas exposure
           casualties.
         </p>
@@ -301,7 +301,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/training/manual-handling">manual handling course</SEOInternalLink>{' '}
+          <SEOInternalLink href="/manual-handling-course">manual handling course</SEOInternalLink>{' '}
           covers the additional challenges of handling heavy equipment in restricted spaces where
           normal lifting postures may not be achievable.
         </p>
@@ -370,7 +370,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/first-aid',
+    href: '/training/first-aid-electrical',
     title: 'First Aid Course',
     description:
       'Emergency first aid for gas exposure, oxygen depletion, and confined space casualties.',

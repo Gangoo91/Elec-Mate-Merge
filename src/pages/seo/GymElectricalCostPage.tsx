@@ -105,14 +105,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates for gym installations.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote gym electrical work with equipment schedules and zone pricing.',
     icon: Calculator,
@@ -459,7 +459,7 @@ const sections = [
                   Request the gym equipment layout showing every piece of equipment that needs
                   power. Treadmills, cross trainers, bikes, cable machines, and display screens all
                   need socket outlets in specific positions. Use{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate's quoting app
                   </SEOInternalLink>{' '}
                   to build per-zone pricing based on the equipment layout.

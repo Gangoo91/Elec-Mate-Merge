@@ -353,7 +353,7 @@ export default function WiringColoursUKPage() {
               </div>
               <p>
                 The absence of this warning notice is an observation on an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>. It would
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>. It would
                 typically be classified as C3 (Improvement Recommended) because the lack of a
                 warning does not create an immediate danger but could lead to a dangerous mistake by
                 a future electrician who does not realise both colour schemes are present.
@@ -543,7 +543,7 @@ export default function WiringColoursUKPage() {
                 The lesson is clear: never assume a conductor's function based on colour alone
                 without first establishing which colour scheme is in use. Check the installation
                 age, look for warning notices, and always prove circuits dead with a{' '}
-                <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+                <SEOInternalLink href="/how-to-do-safe-isolation">
                   safe isolation procedure
                 </SEOInternalLink>{' '}
                 before working on them.
@@ -599,21 +599,21 @@ export default function WiringColoursUKPage() {
           category: 'Regulations',
         },
         {
-          href: '/guides/earthing-arrangements',
+          href: '/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate Guide',
           description: 'How to complete an Electrical Installation Condition Report.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/how-to-do-safe-isolation',
+          href: '/how-to-do-safe-isolation',
           title: 'Safe Isolation Procedure',
           description: 'GS38 prove-test-prove method step by step.',
           icon: Zap,
@@ -627,7 +627,7 @@ export default function WiringColoursUKPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition Guide',
           description: 'Complete guide to the current Wiring Regulations.',
           icon: BookOpen,

@@ -146,7 +146,7 @@ const sections = [
           metric: how long it takes for the investment to pay for itself. A GBP 900 multifunction
           tester that enables GBP 150 per day of testing work has a payback period of 6 days. After
           that, every day of testing work is pure profit contribution. A GBP 1,200{' '}
-          <SEOInternalLink href="/courses/city-guilds-2391">C&G 2391 course</SEOInternalLink> that
+          <SEOInternalLink href="/city-guilds2391">C&G 2391 course</SEOInternalLink> that
           unlocks GBP 18,000 per year of inspection work has a payback period of about 3 weeks.
         </p>
         <p>

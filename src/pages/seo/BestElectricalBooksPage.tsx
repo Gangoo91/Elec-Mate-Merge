@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/bs7671-18th-edition-guide',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description:
       'Complete guide to BS 7671:2018+A3:2024 — structure, key regulations, and amendment changes.',
@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course Guide',
     description:
       'Everything about the City and Guilds 2382 18th Edition course — content, cost, and preparation.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Course',
   },
   {
-    href: '/guides/2391-course',
+    href: '/city-guilds2391',
     title: '2391 Inspection and Testing',
     description:
       'Guide to the City and Guilds 2391 qualification — what it covers, exam tips, and career benefits.',
@@ -148,7 +148,7 @@ const sections = [
         <p>
           In an age of apps, AI, and instant search, physical books remain essential for
           electricians. The{' '}
-          <SEOInternalLink href="/guides/bs7671-18th-edition-guide">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             18th Edition wiring regulations
           </SEOInternalLink>{' '}
           are the legal foundation of your work. The IET Guidance Notes provide the practical
@@ -208,10 +208,10 @@ const sections = [
           Every electrician must own the current edition. It is referenced on every{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, every EIC, and
           every Minor Works Certificate. It is required for{' '}
-          <SEOInternalLink href="/guides/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             the 18th Edition course
           </SEOInternalLink>{' '}
-          and the <SEOInternalLink href="/guides/2391-course">2391 exam</SEOInternalLink>. When a
+          and the <SEOInternalLink href="/city-guilds2391">2391 exam</SEOInternalLink>. When a
           competent person scheme auditor visits, BS 7671 should be on your shelf.
         </p>
         <p>
@@ -324,7 +324,7 @@ const sections = [
         </p>
         <p>
           GN3 is essential reading for the{' '}
-          <SEOInternalLink href="/guides/2391-course">2391 qualification</SEOInternalLink> and is
+          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and is
           permitted in the exam. It provides worked examples of test procedures, guidance on
           interpreting marginal results, and advice on the professional judgement required when
           assigning observation codes. Even experienced inspectors refer to GN3 when they encounter
@@ -461,11 +461,11 @@ const sections = [
       <>
         <p>
           Whether you are preparing for the{' '}
-          <SEOInternalLink href="/guides/18th-edition-course">
+          <SEOInternalLink href="/eighteenth-edition-course">
             18th Edition course (2382)
           </SEOInternalLink>
           , the{' '}
-          <SEOInternalLink href="/guides/2391-course">
+          <SEOInternalLink href="/city-guilds2391">
             2391 inspection and testing exam
           </SEOInternalLink>
           , or the{' '}

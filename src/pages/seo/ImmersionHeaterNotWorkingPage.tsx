@@ -102,14 +102,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/tripped-mcb-wont-reset',
+    href: '/guides/circuit-breaker-keeps-tripping',
     title: "Tripped MCB Won't Reset",
     description: 'What to do when the MCB for your immersion heater will not stay on.',
     icon: Zap,
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'How an EICR checks dedicated circuits including immersion heater supplies.',
     icon: FileCheck2,

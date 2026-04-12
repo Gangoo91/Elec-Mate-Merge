@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates on site from your phone.',
     icon: FileCheck2,
@@ -114,14 +114,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for new circuits requiring Part P notification.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/guides/competent-person-scheme-electricians',
+    href: '/guides/competent-person-scheme-guide-electricians',
     title: 'Competent Person Scheme Guide',
     description: 'NICEIC, NAPIT, ELECSA — which scheme to join and the benefits of membership.',
     icon: ShieldCheck,
@@ -473,7 +473,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           or{' '}
@@ -559,7 +559,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue Certificates on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Elec-Mate lets you complete your{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   or{' '}
                   <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate

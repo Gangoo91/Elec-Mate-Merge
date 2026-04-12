@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/permit-to-work',
+    href: '/guides/permit-to-work-electrician',
     title: 'Permit to Work Systems',
     description: 'How to implement and manage a permit to work system for electrical work on site.',
     icon: FileText,
@@ -407,9 +407,9 @@ const sections = [
         <p>
           For detailed guidance on permit to work systems, including templates and implementation
           advice, see our dedicated{' '}
-          <SEOInternalLink href="/guides/permit-to-work">permit to work guide</SEOInternalLink>.
+          <SEOInternalLink href="/guides/permit-to-work-electrician">permit to work guide</SEOInternalLink>.
           Elec-Mate can generate permit to work documents as part of the{' '}
-          <SEOInternalLink href="/guides/rams-generator">RAMS package</SEOInternalLink>,
+          <SEOInternalLink href="/rams-generator">RAMS package</SEOInternalLink>,
           pre-populated with the site details and the specific hazards identified in your{' '}
           <SEOInternalLink href="/guides/risk-assessment-electricians">
             risk assessment

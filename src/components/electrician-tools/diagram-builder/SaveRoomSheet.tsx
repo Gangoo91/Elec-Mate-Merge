@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -18,6 +18,12 @@ interface SaveRoomSheetProps {
 
 export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: SaveRoomSheetProps) => {
   const [name, setName] = useState(defaultName);
+
+  useEffect(() => {
+    if (open) {
+      setName(defaultName);
+    }
+  }, [defaultName, open]);
 
   const handleSave = () => {
     const trimmed = name.trim();
@@ -51,6 +57,7 @@ export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: 
                 placeholder="e.g. Kitchen"
                 className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 autoFocus
+                aria-label="Room name"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleSave();
                 }}

@@ -166,7 +166,7 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 3,
       name: 'How to Do Safe Isolation',
-      item: 'https://elec-mate.com/guides/how-to-do-safe-isolation',
+      item: 'https://elec-mate.com/how-to-do-safe-isolation',
     },
   ],
 };
@@ -253,15 +253,15 @@ export default function HowToDoSafeIsolationPage() {
               (Regulation 462, which covers isolation and switching). HSE Guidance Note GS38 sets
               out the requirements for the test equipment used during safe isolation. After
               completing the work, you will need to carry out{' '}
-              <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+              <SEOInternalLink href="/how-to-test-insulation-resistance">
                 insulation resistance testing
               </SEOInternalLink>{' '}
               and issue the appropriate certificate — whether that is a{' '}
-              <SEOInternalLink href="/electrical-certification/minor-works">
+              <SEOInternalLink href="/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>{' '}
               or a full{' '}
-              <SEOInternalLink href="/electrical-certification/eicr">EICR</SEOInternalLink>.
+              <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>.
             </p>
             <p>
               The core principle is simple: never trust a circuit to be dead until you have

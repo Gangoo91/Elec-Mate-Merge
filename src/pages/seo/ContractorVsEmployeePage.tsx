@@ -25,7 +25,7 @@ import {
 
 const breadcrumbs = [
   { label: 'Career', href: '/guides/electrician-career-progression' },
-  { label: 'Contractor vs Employee', href: '/guides/contractor-vs-employee-electrician' },
+  { label: 'Contractor vs Employee', href: '/guides/contractor-vs-employee-electrician-electrician' },
 ];
 
 const tocItems = [
@@ -579,7 +579,7 @@ const sections = [
               <span>
                 <strong>Set up your business systems.</strong> Accounting software, quoting and
                 invoicing tools, expense tracking, and a professional online presence.{' '}
-                <SEOInternalLink href="/guides/starting-electrical-business">
+                <SEOInternalLink href="/guides/starting-an-electrical-business">
                   Elec-Mate provides all the business tools
                 </SEOInternalLink>{' '}
                 you need in one app.

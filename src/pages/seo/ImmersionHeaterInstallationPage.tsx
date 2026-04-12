@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/rcd-protection-explained',
+    href: '/guides/rcd-types-explained',
     title: 'RCD Protection Explained',
     description: 'How RCDs work, where they are required, and how to test them.',
     icon: ShieldCheck,

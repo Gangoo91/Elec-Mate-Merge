@@ -102,14 +102,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop checks.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates for EV charger installations on your phone.',
     icon: FileCheck2,
@@ -309,7 +309,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing and voltage drop</strong> — on longer Sheffield cable runs, use{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   Elec-Mate's cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify voltage drop stays within the 5% limit. 6mm² cable is typically suitable
@@ -473,7 +473,7 @@ const sections = [
                   Factor in Yorkshire labour rates (£38 to £52/hour), site survey time for complex
                   terrain, earth rod costs, Northern Powergrid notification, and certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     electrical quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes that account for all job-specific variables.
@@ -488,7 +488,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certification on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   from your phone before leaving site. Every EV charger installation requires a full

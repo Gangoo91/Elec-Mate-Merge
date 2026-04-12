@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Elec-Mate Quoting App',
     description: 'Convert ad leads into booked jobs with professional quotes sent in under two minutes.',
     icon: PoundSterling,
@@ -534,7 +534,7 @@ const sections = [
                   Customers who enquire via a Google Ad have often already visited two or three
                   competitor websites and may have submitted multiple enquiry forms. The first
                   electrician with a professional, detailed quote typically wins the job. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a branded quote from your phone within minutes of receiving the enquiry.

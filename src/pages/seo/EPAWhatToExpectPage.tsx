@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/guides/apprentice-portfolio',
+    href: '/apprentice-portfolio-guide',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking, AI criteria mapping, and EPAO-ready export.',
     icon: FolderOpen,
@@ -158,7 +158,7 @@ const sections = [
         <p>
           You cannot attempt the EPA until you have passed through the gateway, which requires
           completion of all mandatory qualifications, a comprehensive{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             portfolio of evidence
           </SEOInternalLink>
           , meeting the{' '}
@@ -334,7 +334,7 @@ const sections = [
         </p>
         <p>
           <strong>How it works:</strong> The EPAO assessor reviews your{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio">
+          <SEOInternalLink href="/apprentice-portfolio-guide">
             portfolio of evidence
           </SEOInternalLink>{' '}
           before the discussion. During the discussion (approximately 45 to 60 minutes), the
@@ -478,7 +478,7 @@ const sections = [
           organisation, or weak criteria mapping. The assessor cannot have a meaningful professional
           discussion if there is nothing substantive in the portfolio to discuss. Start building
           your portfolio from day one using Elec-Mate's{' '}
-          <SEOInternalLink href="/guides/apprentice-portfolio">portfolio builder</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio builder</SEOInternalLink>{' '}
           with automatic AC mapping.
         </p>
         <p>

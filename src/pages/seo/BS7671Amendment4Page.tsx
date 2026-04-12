@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/ev-charger-installation-guide',
+    href: '/guides/ev-charger-installation',
     title: 'EV Charger Installation Guide',
     description:
       'Complete guide to EV charger installation including cable sizing, earthing, protective devices, and certification.',
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/solar-panel-installation-guide',
+    href: '/guides/solar-panel-installation',
     title: 'Solar PV Installation Guide',
     description:
       'Solar panel installation, G98/G99 applications, inverter selection, and certification requirements.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules, flashcards, and mock exams on the Elec-Mate platform.',
@@ -271,7 +271,7 @@ const sections = [
               <span>
                 <strong>AFDD requirements</strong> — potential expansion of Arc Fault Detection
                 Device requirements beyond the current recommendations in{' '}
-                <SEOInternalLink href="/guides/afdd-guide-uk">BS 7671 Section 421</SEOInternalLink>,
+                <SEOInternalLink href="/guides/afdd-arc-fault-detection">BS 7671 Section 421</SEOInternalLink>,
                 possibly making AFDDs mandatory in more installation types.
               </span>
             </li>
@@ -381,7 +381,7 @@ const sections = [
         </p>
         <p>
           Current{' '}
-          <SEOInternalLink href="/guides/ev-charger-installation-guide">
+          <SEOInternalLink href="/guides/ev-charger-installation">
             EV charger installations
           </SEOInternalLink>{' '}
           are covered by BS 7671 Section 722, which was introduced in the 18th Edition. Amendment 4
@@ -524,7 +524,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your qualifications current.</strong> If your{' '}
-                <SEOInternalLink href="/guides/city-guilds-2391-guide">C&G 2391</SEOInternalLink> or
+                <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> or
                 C&G 2382 qualification is more than a few years old, consider refresher training.
                 When A4 is published, the awarding bodies will update their exam content, and recent
                 study will help you stay ahead.

@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/calculators',
+    href: '/electrical-testing-calculators',
     title: 'Electrical Testing Calculators',
     description:
       'Cable sizing, maximum demand, voltage drop, and earth loop impedance calculators.',
@@ -309,7 +309,7 @@ const sections = [
           A simple clamp meter test on individual circuits can identify which circuit is drawing
           unexpectedly high current. Compare the measured load with the expected load based on the
           appliances connected, and the offending item will stand out. Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/calculators/max-demand">
+          <SEOInternalLink href="/max-demand-calculator">
             maximum demand calculator
           </SEOInternalLink>{' '}
           helps you establish what the expected consumption should be for a given installation.
@@ -595,7 +595,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/training/18th-edition">training courses</SEOInternalLink> cover
+          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink> cover
           energy efficiency guidance and the relevant{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 requirements

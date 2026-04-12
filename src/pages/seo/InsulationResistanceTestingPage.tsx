@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete Electrical Installation Certificates with test schedules on site.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/guides/rcd-testing-procedure-bs7671',
+    href: '/guides/rcd-testing-procedure',
     title: 'RCD Testing Procedure',
     description: 'The 50%, 100%, and 5× RCD tests explained with BS 7671 Regulation 643.8.',
     icon: ShieldCheck,

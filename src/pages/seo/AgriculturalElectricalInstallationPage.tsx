@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/caravan-park-electrical',
+    href: '/guides/caravan-park-electrical',
     title: 'Caravan Park Electrical (Section 708)',
     description:
       'BS 7671 Section 708 requirements for caravan parks — CEE connectors, RCD protection, and earthing.',
@@ -523,7 +523,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Three-Year Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Agricultural installations require inspection every 3 years. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to offer 3-year maintenance and inspection packages to farm operators. A large

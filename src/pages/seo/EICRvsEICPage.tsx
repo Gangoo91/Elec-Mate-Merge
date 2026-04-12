@@ -80,7 +80,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Digital Electrical Installation Certificates for new work and alterations.',
     icon: FileText,
@@ -94,7 +94,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/unsatisfactory-eicr-what-next',
+    href: '/guides/unsatisfactory-eicr-what-next-what-next',
     title: 'Unsatisfactory EICR — What Next?',
     description:
       'What happens when an EICR comes back unsatisfactory. Landlord duties and remedial steps.',

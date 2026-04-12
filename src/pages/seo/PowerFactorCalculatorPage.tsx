@@ -258,13 +258,13 @@ export default function PowerFactorCalculatorPage() {
               Understanding power factor matters because it directly affects installation sizing,
               energy costs, and equipment lifespan. A poor power factor means the installation draws
               more current than necessary, which requires larger cables (see the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>
               ), larger switchgear, and a larger transformer — all of which cost more to install and
               maintain. It also means higher losses in the distribution system and, for commercial
               and industrial customers, additional charges from the electricity supplier. The{' '}
-              <SEOInternalLink href="/tools/max-demand-calculator">
+              <SEOInternalLink href="/max-demand-calculator">
                 maximum demand calculator
               </SEOInternalLink>{' '}
               accounts for power factor when sizing supplies.

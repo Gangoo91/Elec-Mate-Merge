@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate cable sizes for all circuits in the distribution board with correction factors and voltage drop.',
@@ -172,7 +172,7 @@ const sections = [
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           and requires an{' '}
-          <SEOInternalLink href="/guides/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           .
@@ -626,7 +626,7 @@ const sections = [
               <span>
                 <strong>Inadequate prospective fault current rating.</strong> The consumer unit and
                 its protective devices must be rated for the{' '}
-                <SEOInternalLink href="/guides/prospective-fault-current-calculator">
+                <SEOInternalLink href="/prospective-fault-current-calculator">
                   prospective fault current (PSCC)
                 </SEOInternalLink>{' '}
                 at the origin. If the PSCC exceeds the rated short-circuit capacity of the devices,

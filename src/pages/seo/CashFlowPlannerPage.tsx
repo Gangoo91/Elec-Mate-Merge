@@ -230,7 +230,7 @@ export default function CashFlowPlannerPage() {
                 business analytics dashboard
               </SEOInternalLink>{' '}
               to track profitability alongside cash position, and use the{' '}
-              <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
+              <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>{' '}
               to reduce debtor days with automatic payment reminders.
             </p>
           </div>

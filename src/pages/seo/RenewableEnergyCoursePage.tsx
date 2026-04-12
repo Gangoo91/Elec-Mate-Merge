@@ -197,7 +197,7 @@ const sections = [
         <p>
           This Elec-Mate course covers everything from the fundamentals of photovoltaic technology
           through to advanced system design, battery storage integration, and the{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>{' '}
           requirements for PV installations. Whether you are looking to gain{' '}
           <SEOInternalLink href="/guides/cpd-for-electricians">CPD points</SEOInternalLink> or
           preparing for MCS certification, this course provides the knowledge foundation you need.
@@ -334,7 +334,7 @@ const sections = [
         </p>
         <p>
           {' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671:2018+A2:2022 Section 558
           </SEOInternalLink>{' '}
           covers the wiring regulations for electrical energy storage systems, including
@@ -406,7 +406,7 @@ const sections = [
           backing sheets that could be disturbed during mounting rail installation.
         </p>
         <p>
-          <SEOInternalLink href="/tools/cable-sizing-calculator">Cable sizing</SEOInternalLink> for
+          <SEOInternalLink href="/cable-sizing-calculator">Cable sizing</SEOInternalLink> for
           DC circuits follows the same principles as AC circuits but uses DC voltage for the voltage
           drop calculation. BS 7671 Section 712 contains the specific requirements for solar PV
           installations, including isolation, protection, and marking requirements.
@@ -437,7 +437,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate DC and AC cable sizes for solar PV installations with voltage drop verification.',
@@ -445,7 +445,7 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/guides/bs-7671-eighteenth-edition',
+    href: '/guides/bs-7671-18th-edition-guide',
     title: 'BS 7671 18th Edition Guide',
     description: 'Section 712 covers the wiring regulations for solar PV installations.',
     icon: BookOpen,

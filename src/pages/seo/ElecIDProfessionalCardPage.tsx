@@ -244,7 +244,7 @@ const sections = [
           (C&G 2365/2357, C&G 2382, C&G 2391, AM2), your ECS/JIB card details (card type, grade,
           number, and expiry date), specialist certifications (EV charger installation, solar PV,
           battery storage, fire alarm,{' '}
-          <SEOInternalLink href="/certificates/emergency-lighting">
+          <SEOInternalLink href="/emergency-lighting-certificate">
             emergency lighting
           </SEOInternalLink>
           , data cabling), Part P registration and competent person scheme membership, and health
@@ -261,7 +261,7 @@ const sections = [
           You choose which qualifications to display on your card. You might show everything, or you
           might create a streamlined card showing only the qualifications most relevant to the type
           of work you do. For example, a domestic installer might display{' '}
-          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink>,{' '}
           <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>, AM2,
           Part P, and ECS Approved Electrician — the qualifications most relevant to domestic
           clients.

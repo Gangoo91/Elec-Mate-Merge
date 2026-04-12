@@ -87,7 +87,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit including underfloor heating radial feeds with voltage drop verification.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete the Electrical Installation Certificate for new UFH circuits on your phone with AI assistance.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description:
       'Verify voltage drop on long radial feeds to underfloor heating thermostats and mats.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A3:2024 with structured training modules on the Elec-Mate platform.',
@@ -409,7 +409,7 @@ const sections = [
         <p>
           The supply cable from the consumer unit to the thermostat must be correctly sized for the
           heating load. This is a standard{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculation
           </SEOInternalLink>{' '}
           using the methods in Appendix 4 of BS 7671, but with some important considerations
@@ -498,7 +498,7 @@ const sections = [
               <span>
                 <strong>Test 3 — After covering:</strong> Once the screed or adhesive has been
                 applied, test again as part of the final circuit{' '}
-                <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/how-to-test-insulation-resistance">
                   insulation resistance test
                 </SEOInternalLink>
                 . This is the last chance to identify a problem before the floor finish goes down.

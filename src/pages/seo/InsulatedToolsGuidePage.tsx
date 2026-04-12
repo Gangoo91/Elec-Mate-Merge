@@ -18,7 +18,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Tools & Equipment', href: '/guides/electrical-safety-guide' },
+  { label: 'Tools & Equipment', href: '/guides/electrical-safety-at-home' },
   { label: 'Insulated Tools Guide', href: '/insulated-tools-guide' },
 ];
 
@@ -97,14 +97,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/guides/electrical-safety-guide',
+    href: '/guides/electrical-safety-at-home',
     title: 'Electrical Safety Guide',
     description: 'Complete UK electrical safety reference for qualified electricians.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
-    href: '/tools/rams',
+    href: '/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments and method statements instantly.',
     icon: FileCheck2,
@@ -553,7 +553,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/tools/rams">Elec-Mate RAMS generator</SEOInternalLink> to
+                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
                 create comprehensive risk assessments and method statements for live electrical
                 work, including IEC 60900 tool requirements, PPE specifications, and rescue plan
                 documentation. Ready to share with clients and principal contractors.

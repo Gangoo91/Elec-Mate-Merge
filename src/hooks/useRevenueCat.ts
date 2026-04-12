@@ -223,14 +223,19 @@ export function useRevenueCat(userId?: string) {
 
         return isEntitled;
       } catch (err: unknown) {
-        // User cancelled — not an error
+        // User cancelled — not an error, but surface a friendly message so
+        // the UI can let them retry instead of sitting silently.
         if (
           err &&
           typeof err === 'object' &&
           'userCancelled' in err &&
           (err as Record<string, unknown>).userCancelled
         ) {
-          setState((prev) => ({ ...prev, isPurchasing: false }));
+          setState((prev) => ({
+            ...prev,
+            isPurchasing: false,
+            error: 'Purchase was cancelled. Tap the button to try again.',
+          }));
           return false;
         }
 

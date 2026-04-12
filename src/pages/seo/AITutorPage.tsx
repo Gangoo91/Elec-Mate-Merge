@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/tools/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/ai-electrician-tools' },
   { label: 'AI Tutor', href: '/tools/ai-tutor' },
 ];
 
@@ -351,7 +351,7 @@ const sections = [
               = disconnection time), why the equation matters (it verifies the cable can withstand
               fault current without the insulation being damaged), and how to apply it in practice
               with a worked example using real values from the{' '}
-              <SEOInternalLink href="/calculators/adiabatic-equation">
+              <SEOInternalLink href="/adiabatic-equation-calculator">
                 adiabatic equation calculator
               </SEOInternalLink>
               .
@@ -415,7 +415,7 @@ const sections = [
           For apprentices, this "study while you earn" approach is particularly effective. It
           connects classroom learning to real-world application — when you encounter a regulation on
           site, you understand it more deeply than if you had only read it in a textbook. Many{' '}
-          <SEOInternalLink href="/training/apprentice">electrical apprentices</SEOInternalLink>{' '}
+          <SEOInternalLink href="/apprentice-training">electrical apprentices</SEOInternalLink>{' '}
           using Elec-Mate report that the AI Tutor helped them understand regulations they had
           struggled with in college, because the AI explains them in the context of actual
           installation work.

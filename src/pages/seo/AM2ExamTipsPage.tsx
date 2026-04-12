@@ -88,14 +88,14 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/apprentice-training',
+    href: '/apprentice-training-training',
     title: 'Apprentice Training Hub',
     description: 'Level 2 and Level 3 courses, flashcards, and 2,000+ practice questions.',
     icon: GraduationCap,
     category: 'Training',
   },
   {
-    href: '/guides/how-to-do-safe-isolation',
+    href: '/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'Step-by-step prove-test-prove method following HSE GS38 guidance.',
     icon: ShieldCheck,
@@ -109,14 +109,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/level-3-electrical',
+    href: '/level3-electrical',
     title: 'Level 3 Electrical',
     description: 'Level 3 diploma content, circuit design, and inspection and testing.',
     icon: BookOpen,
     category: 'Training',
   },
   {
-    href: '/guides/epa-preparation',
+    href: '/epa-preparation',
     title: 'EPA Preparation',
     description: 'End Point Assessment simulator for all three EPA components.',
     icon: Award,
@@ -241,7 +241,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   You are presented with a pre-built circuit containing one or more faults. You must
                   perform{' '}
-                  <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+                  <SEOInternalLink href="/how-to-do-safe-isolation">
                     safe isolation
                   </SEOInternalLink>{' '}
                   following the correct GS 38 procedure, then systematically test the circuit to
@@ -394,7 +394,7 @@ const sections = [
         </p>
         <p>
           <strong>Step 3 — Drill safe isolation until automatic:</strong> The{' '}
-          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
+          <SEOInternalLink href="/how-to-do-safe-isolation">
             safe isolation procedure
           </SEOInternalLink>{' '}
           must be completely automatic. Prove the voltage indicator on a known source. Test between

@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/earthing-arrangements',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, TT, and IT earthing systems explained with practical testing guidance.',
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/rcd-testing-guide',
+    href: '/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'How to test RCDs correctly including trip times, test currents, and recording results.',
@@ -245,7 +245,7 @@ const sections = [
                 or semi-permanent runs. Use H07RN-F (heavy-duty rubber-sheathed flexible cable) for
                 above-ground runs that may be subject to foot traffic or mechanical damage. All
                 cables must be adequately rated for the current they will carry, taking into account{' '}
-                <SEOInternalLink href="/guides/cable-sizing-guide-bs7671">
+                <SEOInternalLink href="/guides/cable-sizing-guide-bs-7671">
                   cable sizing factors
                 </SEOInternalLink>{' '}
                 including ambient temperature and grouping.
@@ -305,7 +305,7 @@ const sections = [
           configuration. A generator with an earthed star point typically operates as a TN-S system.
           An unearthed generator operates as an IT system, which requires an insulation monitoring
           device to detect first faults. The{' '}
-          <SEOInternalLink href="/guides/earthing-arrangements">
+          <SEOInternalLink href="/earthing-arrangements">
             earthing arrangement
           </SEOInternalLink>{' '}
           must be documented on the single-line diagram and verified by testing before the
@@ -397,7 +397,7 @@ const sections = [
             <li>
               <strong>Live tests:</strong> Earth fault loop impedance at the furthest point of each
               circuit (to verify disconnection times); prospective fault current at the origin;{' '}
-              <SEOInternalLink href="/guides/rcd-testing-guide">RCD testing</SEOInternalLink> (trip
+              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (trip
               time at rated current, 5x rated current, and ramp test); voltage and frequency at the
               origin.
             </li>

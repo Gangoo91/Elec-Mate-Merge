@@ -101,14 +101,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size ring and radial circuits with automatic voltage drop and Zs verification.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Record circuit details, protective devices, and test results on EIC certificates.',
@@ -332,7 +332,7 @@ const sections = [
           <p className="text-white text-xs mt-3">
             Cable sizes assume standard installation method (clipped direct or enclosed in conduit).
             Always verify using the{' '}
-            <SEOInternalLink href="/tools/cable-sizing-calculator">
+            <SEOInternalLink href="/cable-sizing-calculator">
               cable sizing calculator
             </SEOInternalLink>{' '}
             with the actual installation method, cable run length, and derating factors.
@@ -642,7 +642,7 @@ const sections = [
           (applying diversity factors from BS 7671 Appendix 4), then circuit allocation (deciding
           which loads go on which circuits), and finally cable sizing and protective device
           selection for each circuit. The{' '}
-          <SEOInternalLink href="/tools/cable-sizing-calculator">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculator
           </SEOInternalLink>{' '}
           handles the cable sizing and protective device verification for each individual circuit.

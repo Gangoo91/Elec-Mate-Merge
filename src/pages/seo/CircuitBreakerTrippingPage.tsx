@@ -464,7 +464,7 @@ const sections = [
             <span className="text-white">
               The property has old wiring (rewirable fuses, no earth wire, fabric-insulated cables)
               — a full{' '}
-              <SEOInternalLink href="/guides/eicr-certificate">
+              <SEOInternalLink href="/tools/eicr-certificate">
                 Electrical Installation Condition Report (EICR)
               </SEOInternalLink>{' '}
               is recommended
@@ -586,21 +586,21 @@ const relatedPages = [
     category: 'Testing',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate',
     description: 'Full guide to Electrical Installation Condition Reports and what they cover.',
     icon: FileText,
     category: 'Certification',
   },
   {
-    href: '/tools/max-demand-calculator',
+    href: '/max-demand-calculator',
     title: 'Max Demand Calculator',
     description: 'Calculate total circuit load with BS 7671 diversity factors.',
     icon: Calculator,
     category: 'Calculator',
   },
   {
-    href: '/guides/earth-fault-loop-impedance-too-high',
+    href: '/guides/earth-fault-loop-impedance-explained-too-high',
     title: 'Earth Fault Loop Impedance Too High',
     description: 'When Zs exceeds the maximum for the protective device — causes and solutions.',
     icon: Activity,

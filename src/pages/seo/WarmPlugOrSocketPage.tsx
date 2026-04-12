@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic fault finding approach for electricians investigating overheating sockets.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'What an EICR involves and how it detects overheating connections and overloaded circuits.',
@@ -542,7 +542,7 @@ const sections = [
               <span>
                 <strong>Documentation</strong> — thermal images provide objective, visual evidence
                 of a fault and its severity. They are excellent for including in{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR reports</SEOInternalLink> to
+                <SEOInternalLink href="/tools/eicr-certificate">EICR reports</SEOInternalLink> to
                 show customers exactly what the problem is and why remedial work is necessary.
               </span>
             </li>

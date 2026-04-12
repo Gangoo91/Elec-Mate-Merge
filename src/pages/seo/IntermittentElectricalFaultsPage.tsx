@@ -510,7 +510,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/calculators">testing calculators</SEOInternalLink> help you
+          <SEOInternalLink href="/electrical-testing-calculators">testing calculators</SEOInternalLink> help you
           compare measured values against expected values for each circuit type, making it easier to
           spot abnormal readings that point to a developing fault.
         </p>

@@ -20,7 +20,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement' },
+  { label: 'Consumer Unit Guides', href: '/guides/consumer-unit-replacement-cost' },
   { label: 'Consumer Unit Replacement Liverpool', href: '/consumer-unit-replacement-liverpool' },
 ];
 
@@ -90,7 +90,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-replacement',
+    href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
       'Complete UK guide to fuse box and consumer unit replacement costs, regulations, and process.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'Electrical Installation Certificate App',
     description: 'Complete EICs on your phone with AI assistance and instant PDF export.',
     icon: FileCheck2,
@@ -304,7 +304,7 @@ const sections = [
               <span>
                 <strong>Electrical Installation Certificate</strong> — the electrician must issue a
                 completed{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 with a Schedule of Test Results. This is separate from the Building Regulations
@@ -487,7 +487,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site in Liverpool</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete the full Electrical Installation Certificate and Schedule of Test
                   Results while still at the Liverpool property. Record insulation resistance, earth
                   fault loop impedance, and RCD test values directly. Generate and send the PDF
@@ -504,7 +504,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you discover old wiring, bonding deficiencies, or additional circuits needed,
                   use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote the additional work on site. Liverpool landlords are far more likely to

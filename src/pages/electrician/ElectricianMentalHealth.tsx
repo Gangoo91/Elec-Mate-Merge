@@ -45,8 +45,8 @@ const ElectricianMentalHealth = () => {
   const quickActions = [
     {
       id: 'breathing',
-      title: 'Calm Breathing',
-      description: '2-min guided exercise',
+      title: 'Breathe',
+      description: '2 minute reset',
       icon: Wind,
       color: 'from-blue-500/20 to-cyan-500/20',
       borderColor: 'border-blue-500/30',
@@ -55,7 +55,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'mood',
       title: 'Check In',
-      description: 'How are you feeling?',
+      description: 'Log how today feels',
       icon: Heart,
       color: 'from-pink-500/20 to-rose-500/20',
       borderColor: 'border-pink-500/30',
@@ -63,8 +63,8 @@ const ElectricianMentalHealth = () => {
     },
     {
       id: 'gratitude',
-      title: 'Gratitude',
-      description: "What's good today?",
+      title: 'Journal',
+      description: 'Note one good thing',
       icon: Sparkles,
       color: 'from-amber-500/20 to-yellow-500/20',
       borderColor: 'border-amber-500/30',
@@ -72,8 +72,8 @@ const ElectricianMentalHealth = () => {
     },
     {
       id: 'talk',
-      title: 'Talk to Someone',
-      description: 'AI or peer support',
+      title: 'Talk Now',
+      description: 'Peer or guided support',
       icon: MessageCircle,
       color: 'from-purple-500/20 to-violet-500/20',
       borderColor: 'border-purple-500/30',
@@ -85,7 +85,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'tools',
       title: 'Interactive Tools',
-      description: 'Mood tracking, stress relief, goal setting',
+      description: 'Breathing, grounding, focus and reset tools',
       icon: Zap,
       color: 'bg-gradient-to-br from-yellow-500/10 to-orange-500/10',
       borderColor: 'border-yellow-500/20',
@@ -95,7 +95,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'resources',
       title: 'Resources Library',
-      description: 'Guides, videos, and self-help materials',
+      description: 'Trusted guides and practical support links',
       icon: BookOpen,
       color: 'bg-gradient-to-br from-blue-500/10 to-indigo-500/10',
       borderColor: 'border-blue-500/20',
@@ -105,7 +105,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'support',
       title: 'Support Network',
-      description: 'Connect with peers and professionals',
+      description: 'Talk to charities, peer groups and services',
       icon: Users,
       color: 'bg-gradient-to-br from-purple-500/10 to-pink-500/10',
       borderColor: 'border-purple-500/20',
@@ -115,7 +115,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'crisis',
       title: 'Crisis Support',
-      description: '24/7 helplines and emergency resources',
+      description: 'Urgent help, helplines and immediate next steps',
       icon: Shield,
       color: 'bg-gradient-to-br from-red-500/10 to-rose-500/10',
       borderColor: 'border-red-500/20',
@@ -125,7 +125,7 @@ const ElectricianMentalHealth = () => {
     {
       id: 'podcasts',
       title: 'Podcasts',
-      description: 'Mental health podcasts for tradespeople',
+      description: 'Longer-form support and perspective from the trade',
       icon: Headphones,
       color: 'bg-gradient-to-br from-orange-500/10 to-amber-500/10',
       borderColor: 'border-orange-500/20',
@@ -139,7 +139,13 @@ const ElectricianMentalHealth = () => {
       case 'breathing':
         return <BreathingExercise onClose={() => setActiveSection(null)} />;
       case 'mood':
-        return <QuickMoodCheck onClose={() => setActiveSection(null)} />;
+        return (
+          <QuickMoodCheck
+            onClose={() => setActiveSection(null)}
+            onOpenSupport={() => setActiveSection('talk')}
+            onOpenCrisis={() => setActiveSection('crisis')}
+          />
+        );
       case 'gratitude':
         return <GratitudeJournal onClose={() => setActiveSection(null)} />;
       case 'talk':
@@ -204,8 +210,7 @@ const ElectricianMentalHealth = () => {
 
   return (
     <MentalHealthProvider>
-      <div className="max-w-4xl mx-auto px-4 pb-8 space-y-6 animate-fade-in">
-        {/* Back Button */}
+      <div className="max-w-5xl mx-auto px-4 pb-10 sm:pb-16 space-y-6 animate-fade-in">
         <div className="pt-2">
           <SmartBackButton
             label="Back to Dashboard"
@@ -214,161 +219,160 @@ const ElectricianMentalHealth = () => {
           />
         </div>
 
-        {/* Header */}
-        <div className="text-center pb-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 mb-4">
-            <Heart className="h-8 w-8 text-pink-400" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Mental Health Hub</h1>
-          <p className="text-white text-sm sm:text-base max-w-md mx-auto">
-            Your wellbeing matters. Take a moment for yourself.
-          </p>
-        </div>
-
-        {/* Emergency Banner - Always Visible */}
-        <Card className="border-red-500/40 bg-gradient-to-r from-red-500/10 to-red-600/5 shadow-lg shadow-red-500/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-4">
-              <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center">
-                <Phone className="h-6 w-6 text-red-400" />
+        <section className="relative overflow-hidden px-1 py-3 sm:py-4">
+          <div className="absolute -right-20 top-0 h-44 w-44 rounded-full bg-pink-500/10 blur-3xl" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="relative grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div className="py-4">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/[0.04] px-3 py-1 text-xs uppercase tracking-[0.22em] text-white/55">
+                <Heart className="h-3.5 w-3.5 text-pink-400" />
+                Wellbeing For Electricians
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-red-400 text-sm sm:text-base">
-                  Need immediate help?
-                </h3>
-                <p className="text-xs sm:text-sm text-white">
-                  Call{' '}
-                  <a href="tel:116123" className="font-bold text-red-400 hover:underline">
-                    116 123
-                  </a>{' '}
-                  (Samaritans, free 24/7) or text SHOUT to <span className="font-bold">85258</span>
-                </p>
+              <h1 className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+                Clear your head. Get help faster. Keep your footing.
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-white/76 sm:text-base">
+                This space is built for the real pressure around site work, workload, money,
+                fatigue and isolation. Start with what you need right now, then go deeper only if it
+                helps.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <a
+                  href="tel:116123"
+                  className="inline-flex items-center rounded-full border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm font-medium text-red-200 transition-colors hover:bg-red-500/15"
+                >
+                  Call 116 123
+                </a>
+                <a
+                  href="sms:85258?body=SHOUT"
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-white/84 transition-colors hover:bg-white/[0.08]"
+                >
+                  Text SHOUT to 85258
+                </a>
+                <button
+                  onClick={() => setActiveSection('crisis')}
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-white/84 transition-colors hover:bg-white/[0.08]"
+                >
+                  Open Crisis Help
+                </button>
               </div>
-              <Button
-                size="sm"
-                className="bg-red-500 hover:bg-red-600 text-white flex-shrink-0"
-                onClick={() => setActiveSection('crisis')}
-              >
-                <Shield className="h-4 w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Help</span>
-              </Button>
             </div>
-          </CardContent>
-        </Card>
 
-        {/* Daily Affirmation */}
-        <DailyAffirmation />
+            <div className="border-l border-white/10 pl-5 lg:pl-6">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/45">
+                Right Now
+              </p>
+              <h2 className="mt-2 text-xl font-medium text-white">What do you need most?</h2>
+              <div className="mt-4 space-y-3">
+                <button
+                  onClick={() => setActiveSection('crisis')}
+                  className="w-full border-b border-red-500/20 pb-3 text-left transition-opacity hover:opacity-100"
+                >
+                  <div className="text-sm font-medium text-red-200">Need help now</div>
+                  <div className="mt-1 text-sm text-white/72">Urgent support, helplines and immediate next steps.</div>
+                </button>
+                <button
+                  onClick={() => setActiveSection('breathing')}
+                  className="w-full border-b border-white/10 pb-3 text-left transition-opacity hover:opacity-100"
+                >
+                  <div className="text-sm font-medium text-white">Need a reset</div>
+                  <div className="mt-1 text-sm text-white/72">Use a fast breathing or grounding tool and take the edge off.</div>
+                </button>
+                <button
+                  onClick={() => setActiveSection('mood')}
+                  className="w-full text-left transition-opacity hover:opacity-100"
+                >
+                  <div className="text-sm font-medium text-white">Need to check in</div>
+                  <div className="mt-1 text-sm text-white/72">Track how today feels and get a clearer next step.</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        {/* Quick Actions - Mobile Optimized Grid */}
-        <div>
-          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-amber-400" />
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-2 gap-3">
+        <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-amber-400" />
+              <h2 className="text-lg font-medium text-white">Fast tools</h2>
+            </div>
+            <p className="mt-2 text-sm leading-6 text-white/72">
+              These are the quickest ways to feel a little more steady without working through the whole library.
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-4 border-t border-white/10 pt-4">
             {quickActions.map((action) => (
               <button
                 key={action.id}
                 onClick={() => setActiveSection(action.id)}
-                className={`p-4 rounded-xl border ${action.borderColor} bg-gradient-to-br ${action.color}
-                  hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 text-left
-                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-primary`}
+                  className="text-left transition-opacity hover:opacity-100"
               >
-                <action.icon className={`h-8 w-8 ${action.iconColor} mb-2`} />
+                <action.icon className={`mb-3 h-7 w-7 ${action.iconColor}`} />
                 <h3 className="font-semibold text-sm text-white">{action.title}</h3>
-                <p className="text-xs text-white mt-0.5">{action.description}</p>
+                  <p className="mt-1 text-xs leading-5 text-white/74">{action.description}</p>
               </button>
             ))}
+            </div>
           </div>
-        </div>
 
-        {/* Main Sections */}
-        <div>
-          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+          <div className="space-y-4">
+            <DailyAffirmation />
+            <div className="border-t border-amber-500/20 pt-4">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-amber-300/80">
+                Trade Support
+              </p>
+              <h3 className="mt-2 text-lg font-medium text-white">Made for electrical work, not generic wellness talk.</h3>
+              <p className="mt-2 text-sm leading-6 text-white/72">
+                Long days, physical fatigue, pricing pressure and working alone all show up differently. Use the trade-specific support links if you want something closer to your world.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a
+                  href="tel:08003032200"
+                  className="rounded-full border border-amber-400/20 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-200"
+                >
+                  Electrical Industries Charity
+                </a>
+                <button
+                  onClick={() => setActiveSection('support')}
+                  className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-sm font-medium text-white/84"
+                >
+                  Open support network
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-purple-400" />
-            Explore
-          </h2>
-          <div className="space-y-3">
+            <h2 className="text-lg font-medium text-white">Everything else, when you want it</h2>
+          </div>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72">
+            The full toolkit is still here. The difference is you do not have to digest all of it before you find the bit that helps.
+          </p>
+          <div className="mt-5 grid gap-3 border-t border-white/10 pt-4 lg:grid-cols-2">
             {mainSections.map((section) => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                className={`w-full p-4 rounded-xl border ${section.borderColor} ${section.color}
-                  hover:scale-[1.01] active:scale-[0.99] transition-all duration-200
-                  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-primary`}
+                  className="w-full border-b border-white/10 pb-4 text-left transition-opacity hover:opacity-100"
               >
                 <div className="flex items-center gap-4">
                   <div
-                    className={`flex-shrink-0 w-12 h-12 rounded-xl ${section.iconBg} flex items-center justify-center`}
+                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl ${section.iconBg}`}
                   >
                     <section.icon className={`h-6 w-6 ${section.iconColor}`} />
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <h3 className="font-semibold text-white text-base">{section.title}</h3>
-                    <p className="text-sm text-white truncate">{section.description}</p>
+                      <p className="mt-1 text-sm leading-6 text-white/72">{section.description}</p>
                   </div>
                   <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </div>
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Wellbeing Tips */}
-        <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-emerald-500/5">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-                <BookHeart className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-green-400 text-sm mb-1">Daily Tip</h3>
-                <p className="text-sm text-white">
-                  Taking just 5 minutes for yourself each day can significantly reduce stress. Your
-                  mental health is just as important as physical safety on site.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Industry-Specific Support */}
-        <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
-                <AlertTriangle className="h-5 w-5 text-amber-400" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-amber-400 text-sm mb-1">
-                  For Electrical Professionals
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Construction and electrical workers face unique pressures. The{' '}
-                  <strong>Electrical Industries Charity</strong> and <strong>Mates in Mind</strong>{' '}
-                  offer industry-specific support.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <a
-                    href="tel:08003032200"
-                    className="inline-flex items-center text-xs bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-full hover:bg-amber-500/30 transition-colors"
-                  >
-                    <Phone className="h-3 w-3 mr-1.5" />
-                    0800 303 2200
-                  </a>
-                  <a
-                    href="https://www.electricalcharity.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-xs bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-full hover:bg-amber-500/30 transition-colors"
-                  >
-                    electricalcharity.org
-                  </a>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        </section>
       </div>
     </MentalHealthProvider>
   );

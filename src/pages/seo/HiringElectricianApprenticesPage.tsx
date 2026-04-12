@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/job-scheduling',
+    href: '/tools/schedule-manager-electrician',
     title: 'Job Scheduling App',
     description:
       'Schedule your apprentice alongside your regular jobs with drag-and-drop planning.',
@@ -507,7 +507,7 @@ const sections = [
           Once your apprentice is on board, the practical challenge is keeping your business running
           smoothly while delivering the varied work experience and supervision they need.
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/job-scheduling">job scheduling tools</SEOInternalLink> make
+          <SEOInternalLink href="/tools/schedule-manager-electrician">job scheduling tools</SEOInternalLink> make
           it easier to plan apprentice-appropriate work alongside your regular jobs.
         </p>
         <div className="space-y-4 my-4">
@@ -518,7 +518,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Schedule College Days Automatically</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Block out your apprentice's college day in the{' '}
-                  <SEOInternalLink href="/tools/job-scheduling">
+                  <SEOInternalLink href="/tools/schedule-manager-electrician">
                     Elec-Mate scheduler
                   </SEOInternalLink>{' '}
                   so jobs are never booked that require them on their training day. Fewer scheduling

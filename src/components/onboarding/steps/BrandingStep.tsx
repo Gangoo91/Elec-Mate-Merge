@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Sparkles, Upload, X } from 'lucide-react';
 
 interface StepProps {
-  formData: any;
-  onChange: (data: any) => void;
+  formData: {
+    primaryColor: string;
+    accentColor: string;
+    logoFile: File | null;
+    [key: string]: unknown;
+  };
+  onChange: (data: Record<string, unknown>) => void;
 }
 
 export function BrandingStep({ formData, onChange }: StepProps) {
@@ -18,7 +18,7 @@ export function BrandingStep({ formData, onChange }: StepProps) {
     if (file) {
       onChange({ ...formData, logoFile: file });
       const reader = new FileReader();
-      reader.onload = (e) => setLogoPreview(e.target?.result as string);
+      reader.onload = (ev) => setLogoPreview(ev.target?.result as string);
       reader.readAsDataURL(file);
     }
   };
@@ -28,106 +28,97 @@ export function BrandingStep({ formData, onChange }: StepProps) {
     setLogoPreview(null);
   };
 
+  const hexInputClass =
+    'h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20';
+
   return (
     <div className="space-y-6">
-      <div className="text-center mb-6">
-        <div className="inline-flex p-4 rounded-2xl bg-purple-500/10 border border-purple-500/30 mb-4">
-          <Sparkles className="h-10 w-10 text-purple-500" />
-        </div>
-        <h3 className="text-xl font-bold mb-2">Make it yours</h3>
-        <p className="text-muted-foreground">
-          Add your logo and brand colors (completely optional)
+      <div>
+        <h3 className="text-[1.5rem] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:text-[1.75rem]">
+          Make it <span className="text-yellow-400">yours.</span>
+        </h3>
+        <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">
+          Add your logo and brand colours so your quotes and invoices feel like you. Optional.
         </p>
       </div>
 
-      <Card className="bg-elec-yellow/5 border-elec-yellow/20 p-4">
-        <div className="flex items-start gap-3">
-          <Sparkles className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-          <div className="text-sm">
-            <p className="font-medium mb-1">Stand out with professional branding</p>
-            <p className="text-muted-foreground">
-              Adding your logo and brand colors makes quotes look more professional. You can always
-              add these later in Settings.
-            </p>
-          </div>
-        </div>
-      </Card>
-
-      <div className="space-y-6">
-        <div>
-          <Label className="text-base mb-3 block">Company Logo (Optional)</Label>
-          {logoPreview ? (
-            <div className="relative">
+      {/* Logo upload */}
+      <div>
+        <label className="mb-2 block text-[13px] font-medium text-white">
+          Company logo (optional)
+        </label>
+        {logoPreview ? (
+          <div className="relative">
+            <div className="flex h-44 w-full items-center justify-center rounded-2xl border border-white/[0.12] bg-white/[0.04] p-4">
               <img
                 src={logoPreview}
                 alt="Logo preview"
-                className="w-full h-48 object-contain rounded-lg border-2 border-dashed border-border bg-muted/30"
+                className="max-h-full max-w-full object-contain"
               />
-              <Button
-                variant="destructive"
-                size="icon"
-                className="absolute top-2 right-2 touch-manipulation h-11 w-11"
-                onClick={removeLogo}
-              >
-                <X className="h-4 w-4" />
-              </Button>
             </div>
-          ) : (
-            <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/30 active:bg-muted/40 transition-all touch-manipulation">
-              <div className="flex flex-col items-center gap-2">
-                <Upload className="h-8 w-8 text-muted-foreground" />
-                <span className="text-sm font-medium">Click to upload logo</span>
-                <span className="text-xs text-muted-foreground">PNG, JPG up to 5MB</span>
-              </div>
-              <input
-                type="file"
-                className="hidden"
-                accept="image/png,image/jpeg,image/jpg"
-                onChange={handleLogoUpload}
-              />
-            </label>
-          )}
+            <button
+              type="button"
+              onClick={removeLogo}
+              className="absolute right-3 top-3 h-9 touch-manipulation rounded-xl border border-white/[0.12] bg-black/70 px-3 text-[12px] font-medium text-white transition-colors hover:bg-black/90 hover:text-yellow-400"
+            >
+              Remove
+            </button>
+          </div>
+        ) : (
+          <label className="flex h-44 w-full cursor-pointer touch-manipulation flex-col items-center justify-center rounded-2xl border border-white/[0.12] bg-white/[0.04] text-center transition-colors hover:border-yellow-400/40 hover:bg-white/[0.06]">
+            <span className="text-[14px] font-semibold text-white">Click to upload logo</span>
+            <span className="mt-1 text-[12px] text-white">PNG or JPG, up to 5MB</span>
+            <input
+              type="file"
+              className="hidden"
+              accept="image/png,image/jpeg,image/jpg"
+              onChange={handleLogoUpload}
+            />
+          </label>
+        )}
+      </div>
+
+      {/* Colours */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="primary-color" className="mb-2 block text-[13px] font-medium text-white">
+            Primary colour
+          </label>
+          <div className="flex items-center gap-3">
+            <input
+              id="primary-color"
+              type="color"
+              value={formData.primaryColor}
+              onChange={(e) => onChange({ ...formData, primaryColor: e.target.value })}
+              className="h-12 w-14 cursor-pointer touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04]"
+            />
+            <input
+              type="text"
+              value={formData.primaryColor}
+              onChange={(e) => onChange({ ...formData, primaryColor: e.target.value })}
+              className={hexInputClass}
+            />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="primary-color" className="text-base">
-              Primary Color
-            </Label>
-            <div className="flex items-center gap-2 mt-2">
-              <input
-                id="primary-color"
-                type="color"
-                value={formData.primaryColor}
-                onChange={(e) => onChange({ ...formData, primaryColor: e.target.value })}
-                className="h-11 w-14 rounded border border-border cursor-pointer touch-manipulation"
-              />
-              <Input
-                value={formData.primaryColor}
-                onChange={(e) => onChange({ ...formData, primaryColor: e.target.value })}
-                className="h-11 touch-manipulation"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="accent-color" className="text-base">
-              Accent Color
-            </Label>
-            <div className="flex items-center gap-2 mt-2">
-              <input
-                id="accent-color"
-                type="color"
-                value={formData.accentColor}
-                onChange={(e) => onChange({ ...formData, accentColor: e.target.value })}
-                className="h-11 w-14 rounded border border-border cursor-pointer touch-manipulation"
-              />
-              <Input
-                value={formData.accentColor}
-                onChange={(e) => onChange({ ...formData, accentColor: e.target.value })}
-                className="h-11 touch-manipulation"
-              />
-            </div>
+        <div>
+          <label htmlFor="accent-color" className="mb-2 block text-[13px] font-medium text-white">
+            Accent colour
+          </label>
+          <div className="flex items-center gap-3">
+            <input
+              id="accent-color"
+              type="color"
+              value={formData.accentColor}
+              onChange={(e) => onChange({ ...formData, accentColor: e.target.value })}
+              className="h-12 w-14 cursor-pointer touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04]"
+            />
+            <input
+              type="text"
+              value={formData.accentColor}
+              onChange={(e) => onChange({ ...formData, accentColor: e.target.value })}
+              className={hexInputClass}
+            />
           </div>
         </div>
       </div>

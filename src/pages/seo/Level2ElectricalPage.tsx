@@ -249,14 +249,14 @@ export default function Level2ElectricalPage() {
               to select the correct cable for a given application, and how to carry out basic
               installation work competently and safely. This foundation is essential because
               everything you learn at{' '}
-              <SEOInternalLink href="/study/level-3-electrical">Level 3</SEOInternalLink> and beyond
+              <SEOInternalLink href="/level3-electrical">Level 3</SEOInternalLink> and beyond
               assumes you have mastered these concepts. Once qualified, you will progress to
               qualifications like the{' '}
-              <SEOInternalLink href="/study/inspection-testing-course">
+              <SEOInternalLink href="/inspection-testing-course">
                 C&G 2391 Inspection and Testing
               </SEOInternalLink>{' '}
               and the{' '}
-              <SEOInternalLink href="/study/18th-edition-course">
+              <SEOInternalLink href="/eighteenth-edition-course">
                 18th Edition (C&G 2382)
               </SEOInternalLink>
               .

@@ -346,7 +346,7 @@ export default function AIToolsForElectriciansPage() {
                 </SEOInternalLink>{' '}
                 generates risk assessments, method statements, COSHH assessments, and toolbox talk
                 documents. The{' '}
-                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink>{' '}
                 exports professional PDF documents ready for submission. Documents reference the
                 Health and Safety at Work Act 1974, the Management of Health and Safety at Work
                 Regulations 1999, the CDM Regulations 2015, and the Electricity at Work Regulations
@@ -533,8 +533,8 @@ export default function AIToolsForElectriciansPage() {
                 will outperform those who do not.
               </p>
               <SEOAppBridge
-                title="Elec-Mate — 5 AI Agents, 12 AI Tools, Zero Extra Cost"
-                description="Circuit Designer, Cost Engineer, Installation Specialist, Maintenance Specialist, Health and Safety agent — plus Board Scanner, Defect Code AI, Voice to Test Results, Remedial Estimator, Component Identifier, Fault Diagnosis, Regulations Lookup, Client Explainer, Diagram Builder, and Report Writer. All included in your subscription."
+                title="Elec-Mate — 8 AI Agents, 12 AI Tools, Zero Extra Cost"
+                description="Elec-Mate's AI stack spans estimating, design, installation guidance, maintenance, health and safety, and more — plus Board Scanner, Defect Code AI, Voice to Test Results, Remedial Estimator, Component Identifier, Fault Diagnosis, Regulations Lookup, Client Explainer, Diagram Builder, and Report Writer. All included in your subscription."
                 icon={Sparkles}
               />
             </>
@@ -555,7 +555,7 @@ export default function AIToolsForElectriciansPage() {
         {
           question: "What does Elec-Mate's AI actually include?",
           answer:
-            'Elec-Mate includes 5 specialist AI agents (Circuit Designer, Cost Engineer, Installation Specialist, Maintenance Specialist, and Health and Safety) plus 12 additional AI-powered tools: AI Board Scanner (photograph a consumer unit to extract circuit data), Defect Code AI (plain-English defect to C1/C2/C3/FI classification with BS 7671 regulation), Voice to Test Results (speak your readings and they appear in the schedule), AI Remedial Cost Estimator (EICR defects to a priced remedial works quote), Component Identifier (photograph an electrical component for identification), Fault Diagnosis (symptom description to probable causes), Client Explainer (technical language to plain English for homeowners), Diagram Builder (AI-assisted wiring diagrams), Regulations Lookup (plain-English questions answered with BS 7671 references), and Report Writer (AI-assisted certificate and report drafting). All features are included in the standard subscription at no extra cost.',
+            'Elec-Mate includes 8 specialist AI agents plus 12 additional AI-powered tools. The platform covers circuit design, cost estimation, installation guidance, maintenance and fault finding, health and safety documentation, and other electrician-specific workflows. The toolset includes AI Board Scanner, Defect Code AI, Voice to Test Results, AI Remedial Cost Estimator, Component Identifier, Fault Diagnosis, Client Explainer, Diagram Builder, Regulations Lookup, and Report Writer. All features are included in the standard subscription at no extra cost.',
         },
         {
           question: 'Can I trust AI-generated quotes and cost estimates?',
@@ -583,7 +583,7 @@ export default function AIToolsForElectriciansPage() {
           href: '/tools/ai-electrician',
           title: 'AI Electrician Hub',
           description:
-            '5 specialist AI agents and 12 AI tools built for UK electricians. Board scanner, defect classification, cost estimation, and more.',
+            '8 specialist AI agents and 12 AI tools built for UK electricians. Board scanner, defect classification, cost estimation, and more.',
           icon: Brain,
           category: 'AI Tools',
         },
@@ -612,7 +612,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/rams-generator',
+          href: '/rams-generator',
           title: 'RAMS Generator',
           description:
             'Professional risk assessment and method statement documents with all relevant hazards, control measures, and legal references.',
@@ -620,7 +620,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'Health & Safety',
         },
         {
-          href: '/tools/best-electrician-app-uk',
+          href: '/best-electrician-app',
           title: 'Best Electrician App UK',
           description:
             'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',
@@ -629,7 +629,7 @@ export default function AIToolsForElectriciansPage() {
         },
       ]}
       ctaHeading="Try Elec-Mate's AI Tools Free for 7 Days"
-      ctaSubheading="5 AI agents, 12 AI tools, certificates, calculators, quoting, invoicing — everything an electrician needs in one app. No card required to start."
+      ctaSubheading="8 AI agents, 12 AI tools, certificates, calculators, quoting, invoicing — everything an electrician needs in one app. No card required to start."
     />
   );
 }

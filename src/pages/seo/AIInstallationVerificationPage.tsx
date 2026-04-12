@@ -99,8 +99,8 @@ export default function AIInstallationVerificationPage() {
                   AI Circuit Designer
                 </SEOInternalLink>{' '}
                 for design verification, and the certificate forms for{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> and{' '}
-                <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> documentation.
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> and{' '}
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> documentation.
               </p>
             </>
           ),
@@ -257,7 +257,7 @@ export default function AIInstallationVerificationPage() {
                 Each observation includes a professionally worded description suitable for the
                 certificate, citing the specific BS 7671 regulation contravened. This saves
                 significant time during{' '}
-                <SEOInternalLink href="/guides/eicr-observation-codes">
+                <SEOInternalLink href="/guides/eicr-observation-codes-explained">
                   EICR observation recording
                 </SEOInternalLink>{' '}
                 and ensures consistency in the language used across all your certificates.
@@ -420,7 +420,7 @@ export default function AIInstallationVerificationPage() {
       faqHeading="Installation Verification FAQs"
       relatedPages={[
         {
-          href: '/guides/eicr-certificate',
+          href: '/tools/eicr-certificate',
           title: 'EICR Certificate Guide',
           description:
             'How to complete an Electrical Installation Condition Report correctly, including observations, classifications, and recommendations.',
@@ -428,7 +428,7 @@ export default function AIInstallationVerificationPage() {
           category: 'Certificates',
         },
         {
-          href: '/guides/eic-certificate',
+          href: '/eic-certificate',
           title: 'EIC Certificate Guide',
           description:
             'Complete guide to the Electrical Installation Certificate for new installations and alterations.',

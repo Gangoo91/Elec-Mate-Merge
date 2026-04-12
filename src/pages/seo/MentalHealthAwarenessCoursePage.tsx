@@ -167,7 +167,7 @@ const sections = [
         <p>
           Electricians face specific pressures. The technical complexity of the work, the constant
           need to stay current with changing regulations like{' '}
-          <SEOInternalLink href="/guides/bs-7671-eighteenth-edition">BS 7671</SEOInternalLink>, the
+          <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">BS 7671</SEOInternalLink>, the
           physical demands of the job, irregular hours, and the financial uncertainty that comes
           with self-employment or sub-contracting all take their toll. Add in the responsibility of
           working with potentially lethal electrical systems, and the background stress levels can
@@ -220,7 +220,7 @@ const sections = [
           working alone on domestic jobs or in isolated parts of large commercial sites may find it
           easier to withdraw without anyone noticing — which makes it even more important to stay
           connected with your{' '}
-          <SEOInternalLink href="/training/first-aid">first aid trained</SEOInternalLink> colleagues
+          <SEOInternalLink href="/training/first-aid-electrical">first aid trained</SEOInternalLink> colleagues
           and your wider team.
         </p>
         <SEOAppBridge
@@ -270,7 +270,7 @@ const sections = [
         </p>
         <p>
           Whether you are a{' '}
-          <SEOInternalLink href="/guides/electrical-apprenticeship">
+          <SEOInternalLink href="/guides/electrical-apprenticeship-guide">
             first-year apprentice
           </SEOInternalLink>{' '}
           or a veteran electrician, you have the power to make a difference. Site supervisors
@@ -340,7 +340,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/first-aid',
+    href: '/training/first-aid-electrical',
     title: 'First Aid Course',
     description:
       'First aid training includes mental health first aid awareness and crisis response skills.',
@@ -348,7 +348,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/training/manual-handling',
+    href: '/manual-handling-course',
     title: 'Manual Handling Course',
     description: 'Physical wellbeing and injury prevention contribute to overall mental health.',
     icon: GraduationCap,
@@ -362,7 +362,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/electrical-apprenticeship',
+    href: '/guides/electrical-apprenticeship-guide',
     title: 'Electrical Apprenticeship Guide',
     description:
       'Apprentices face unique mental health challenges including exam stress and workplace pressure.',

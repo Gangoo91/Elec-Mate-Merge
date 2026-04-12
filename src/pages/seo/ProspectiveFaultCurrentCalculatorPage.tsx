@@ -149,7 +149,7 @@ const softwareAppSchema = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'iOS, Android, Web',
   description: PAGE_DESCRIPTION,
-  url: 'https://elec-mate.com/tools/prospective-fault-current-calculator',
+  url: 'https://elec-mate.com/prospective-fault-current-calculator',
   offers: {
     '@type': 'Offer',
     price: '0',
@@ -284,11 +284,11 @@ export default function ProspectiveFaultCurrentCalculatorPage() {
               This measurement or calculation is a mandatory part of initial verification and
               periodic inspection, and the values must be recorded on the electrical installation
               certificate or condition report. Use the{' '}
-              <SEOInternalLink href="/tools/voltage-drop-calculator">
+              <SEOInternalLink href="/voltage-drop-calculator">
                 voltage drop calculator
               </SEOInternalLink>{' '}
               alongside PFC calculations for a complete circuit assessment, and the{' '}
-              <SEOInternalLink href="/tools/cable-sizing-calculator">
+              <SEOInternalLink href="/cable-sizing-calculator">
                 cable sizing calculator
               </SEOInternalLink>{' '}
               to size conductors correctly.

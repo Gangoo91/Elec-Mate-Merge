@@ -604,7 +604,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Spot</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote immediately with the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords have 28 days to act — the electrician who quotes on the day wins the

@@ -738,7 +738,7 @@ const relatedPages = [
     category: 'Regulations',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Calculate the correct cable size for any circuit — load, method, grouping, and temperature.',
@@ -746,7 +746,7 @@ const relatedPages = [
     category: 'Calculator',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate',
     description:
       'Create the Electrical Installation Certificate required on completion of a rewire.',
@@ -761,7 +761,7 @@ const relatedPages = [
     category: 'Regulations',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Generate professional, detailed quotes for rewires and other electrical work.',
     icon: Receipt,

@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description: 'How an EICR checks your fixed wiring including smoke detector circuits.',
     icon: FileCheck2,
@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding',
     description:
       'Systematic fault finding guide for electricians diagnosing detector circuit issues.',
@@ -539,7 +539,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Installation of a new fire detection system is notifiable work under Part P of the
                   Building Regulations. Issue the appropriate certificate — an{' '}
-                  <SEOInternalLink href="/guides/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   for new installations or a{' '}

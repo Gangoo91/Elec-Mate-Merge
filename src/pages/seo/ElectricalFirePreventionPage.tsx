@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue EICs for consumer unit upgrades and AFDD installations on your phone.',
     icon: FileCheck2,
@@ -586,7 +586,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit replacements (to metal enclosures with RCD protection and AFDDs)
                   require an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink>.{' '}
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>.{' '}
                   Complete it on site with AI board scanning and send the PDF to the homeowner
                   immediately.
                 </p>

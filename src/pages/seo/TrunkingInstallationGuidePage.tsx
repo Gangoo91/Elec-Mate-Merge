@@ -470,7 +470,7 @@ export default function TrunkingInstallationGuidePage() {
                 significantly more cost-effective than running separate trunking systems for each
                 cable category.
               </p>
-              <SEOInternalLink href="/guides/bs7671-eighteenth-edition">
+              <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
                 BS 7671 18th Edition guide
               </SEOInternalLink>{' '}
               covers the full segregation requirements in detail.
@@ -614,7 +614,7 @@ export default function TrunkingInstallationGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/tools/trunking-fill-calculator',
+          href: '/trunking-fill-calculator',
           title: 'Trunking Fill Calculator',
           description: 'Instant trunking fill calculation for all sizes.',
           icon: Calculator,
@@ -635,7 +635,7 @@ export default function TrunkingInstallationGuidePage() {
           category: 'Installation',
         },
         {
-          href: '/guides/bs7671-eighteenth-edition',
+          href: '/guides/bs-7671-18th-edition-guide',
           title: 'BS 7671 18th Edition',
           description: 'Full wiring regulations including segregation rules.',
           icon: ShieldCheck,

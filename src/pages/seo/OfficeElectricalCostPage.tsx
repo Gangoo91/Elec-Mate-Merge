@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional commercial electrical fit-out quotes from your phone.',
     icon: FileCheck2,
@@ -453,7 +453,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC on completion</strong> — an{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate
                 </SEOInternalLink>{' '}
                 must be issued for all new commercial electrical installations.
@@ -485,7 +485,7 @@ const sections = [
                   Data cabling is often underquoted in commercial fit-outs. Count every data point,
                   measure every cable run, and price the patch panel, comms cabinet, and termination
                   time separately. Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build an itemised BOM that captures every element.
@@ -501,7 +501,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Commercial clients expect full documentation — EIC, emergency lighting
                   commissioning certificate, and fire alarm commissioning certificate. Issue the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> on site after
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> on site after
                   testing. Follow up with the emergency lighting and fire alarm certificates within
                   48 hours. This is the professional standard that wins repeat business.
                 </p>

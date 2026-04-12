@@ -16,7 +16,7 @@ export interface SavedRoom {
 
 export interface UseFloorPlanRoomsReturn {
   rooms: SavedRoom[];
-  saveRoom: (room: Omit<SavedRoom, 'id' | 'createdAt'>) => void;
+  saveRoom: (room: Omit<SavedRoom, 'id' | 'createdAt'>) => SavedRoom;
   deleteRoom: (id: string) => void;
   updateRoom: (id: string, updates: Partial<SavedRoom>) => void;
   clearAllRooms: () => void;
@@ -44,6 +44,7 @@ export function useFloorPlanRooms(): UseFloorPlanRoomsReturn {
       persistRooms(next);
       return next;
     });
+    return newRoom;
   }, []);
 
   const deleteRoom = useCallback((id: string) => {

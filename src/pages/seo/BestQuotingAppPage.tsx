@@ -303,7 +303,7 @@ export default function BestQuotingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/starting-electrical-business',
+          href: '/guides/starting-an-electrical-business',
           title: 'Starting an Electrical Business',
           description:
             'Step-by-step guide to setting up as a self-employed electrician or starting an electrical contracting business.',

@@ -447,12 +447,12 @@ export default function HowToSizeCablesPage() {
                 <h3 className="text-xl font-bold text-white mb-3">Verify Voltage Drop</h3>
                 <p className="text-white leading-relaxed mb-4">
                   Check the cable selection meets BS 7671{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop
                   </SEOInternalLink>{' '}
                   limits: <strong>3% for lighting</strong> (6.9V from 230V) and{' '}
                   <strong>5% for power</strong> (11.5V from 230V). Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to automate these checks.

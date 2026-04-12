@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate App',
     description: 'Complete EICRs on your phone with AI board scanning and instant PDF export.',
     icon: FileCheck2,

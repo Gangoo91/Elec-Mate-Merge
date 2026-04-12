@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/afdd-guide-bs7671',
+    href: '/guides/afdd-arc-fault-detection',
     title: 'AFDD Guide',
     description:
       'Arc Fault Detection Devices explained — what they do, when they are recommended, and how BS 7671 addresses them.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/part-p-building-regulations-explained',
+    href: '/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P covers, what work is notifiable, and how competent person schemes work.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations-uk',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current consumer unit requirements including metal enclosure rules and amendment 3 changes.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/training/18th-edition-course',
+    href: '/eighteenth-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 qualification covering BS 7671:2018+A3:2024 on the Elec-Mate platform.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/guides/earthing-arrangements-explained',
+    href: '/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault path analysis.',
@@ -331,7 +331,7 @@ const sections = [
         </div>
         <p>
           The introduction of{' '}
-          <SEOInternalLink href="/guides/part-p-building-regulations-explained">
+          <SEOInternalLink href="/part-p-building-regulations">
             Part P
           </SEOInternalLink>{' '}
           in 2005 was the most significant regulatory change in the modern era. It transformed
@@ -405,7 +405,7 @@ const sections = [
               <span>
                 <strong>July 2018 — 18th Edition published.</strong> BS 7671:2018. Effective from 1
                 January 2019. Key changes included: recommendation for{' '}
-                <SEOInternalLink href="/guides/afdd-guide-bs7671">AFDDs</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/afdd-arc-fault-detection">AFDDs</SEOInternalLink>{' '}
                 (Regulation 421.1), expanded surge protection requirements (Section 534), new
                 requirements for EV charging installations, and updated prosumer (solar PV)
                 guidance.

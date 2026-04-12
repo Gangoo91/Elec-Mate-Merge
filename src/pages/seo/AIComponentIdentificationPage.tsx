@@ -267,7 +267,7 @@ export default function AIComponentIdentificationPage() {
                   distribution board and need to record every device for the schedule of circuits.
                   Instead of squinting at faded labels and manually looking up specifications, you
                   photograph each device and the data populates your{' '}
-                  <SEOInternalLink href="/guides/eicr-certificate">EICR form</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eicr-certificate">EICR form</SEOInternalLink>{' '}
                   automatically.
                 </li>
                 <li>

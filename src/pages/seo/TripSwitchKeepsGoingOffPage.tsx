@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/electrical-fault-finding',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description: 'Systematic approach to diagnosing electrical faults including tripping circuits.',
     icon: Search,
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'How an EICR identifies faults causing repeated tripping and other installation defects.',
@@ -152,7 +152,7 @@ const sections = [
           This guide explains the difference clearly, covers every common cause, shows you how to
           isolate a faulty appliance yourself, and tells you when you need a qualified electrician.
           If you are an electrician, the later sections cover{' '}
-          <SEOInternalLink href="/guides/electrical-fault-finding">
+          <SEOInternalLink href="/guides/electrical-fault-finding-guide">
             systematic fault finding
           </SEOInternalLink>{' '}
           for tripping circuits.
@@ -523,7 +523,7 @@ const sections = [
         <p>
           When the electrician visits, they will use insulation resistance testing, earth fault loop
           impedance testing, and circuit-by-circuit isolation to identify the fault. They may
-          recommend a full <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>{' '}
+          recommend a full <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>{' '}
           if the installation has not been inspected recently, as repeated tripping can be
           symptomatic of wider installation problems.
         </p>
@@ -595,7 +595,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Record your test results and remedial actions. If the work involves replacing a
                   consumer unit or adding circuits, a full{' '}
-                  <SEOInternalLink href="/guides/electrical-installation-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   is required. For repairs to existing circuits, issue a{' '}

@@ -103,14 +103,14 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/initial-verification-guide',
+    href: '/guides/initial-verification',
     title: 'Initial Verification Guide',
     description: 'Complete guide to initial verification for new installations.',
     icon: FileCheck2,
     category: 'Guide' as const,
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description: 'How to complete an EICR with correct observations and codes.',
     icon: FileCheck2,
@@ -153,7 +153,7 @@ const sections = [
           Polarity faults are more common than many electricians realise. They can occur through
           simple wiring errors during installation, through modifications by unqualified persons, or
           through deterioration of connections over time. During an{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR inspection</SEOInternalLink>,
+          <SEOInternalLink href="/tools/eicr-certificate">EICR inspection</SEOInternalLink>,
           finding reversed polarity is one of the most serious defects that can be identified. It is
           typically classified as C1 (danger present) or C2 (potentially dangerous) depending on the
           specific circumstances.
@@ -259,7 +259,7 @@ const sections = [
         </div>
         <p>
           For{' '}
-          <SEOInternalLink href="/guides/initial-verification-guide">
+          <SEOInternalLink href="/guides/initial-verification">
             initial verification
           </SEOInternalLink>{' '}
           of a new installation, the continuity method is mandatory. Visual inspection and
@@ -441,7 +441,7 @@ const sections = [
               <span>
                 <strong className="text-yellow-400">Initial verification</strong> — every circuit in
                 a new installation must have polarity verified before the{' '}
-                <SEOInternalLink href="/guides/eic-certificate">EIC</SEOInternalLink> is issued.
+                <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> is issued.
                 This includes every socket outlet, every switch, every light fitting, and every
                 fixed appliance connection.
               </span>
@@ -452,7 +452,7 @@ const sections = [
                 <strong className="text-yellow-400">Additions and alterations</strong> — any new
                 circuit or modification to an existing circuit must have polarity verified. This
                 applies to{' '}
-                <SEOInternalLink href="/guides/minor-works-certificate">
+                <SEOInternalLink href="/minor-works-certificate">
                   minor works
                 </SEOInternalLink>{' '}
                 as well as full EIC work.

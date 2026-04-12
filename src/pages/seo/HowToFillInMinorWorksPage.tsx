@@ -75,7 +75,7 @@ export default function HowToFillInMinorWorksPage() {
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>
                 , which is used for new circuits and major installation work, and the{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink>, which is
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, which is
                 used for periodic inspection and testing of existing installations.
               </p>
               <p>
@@ -274,7 +274,7 @@ export default function HowToFillInMinorWorksPage() {
                     circuits read well above 100 megohms. Record the result in megohms. Ensure all
                     loads are disconnected and all switches are in the on position during the test.
                     For more detail, see the{' '}
-                    <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                    <SEOInternalLink href="/how-to-test-insulation-resistance">
                       insulation resistance testing guide
                     </SEOInternalLink>
                     .
@@ -387,7 +387,7 @@ export default function HowToFillInMinorWorksPage() {
               </div>
               <p>
                 If the existing installation already has an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> with a
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> with a
                 recommended next inspection date, you should reference that date rather than setting
                 a new one. The minor works you have carried out does not change the overall
                 inspection interval for the installation.
@@ -615,7 +615,7 @@ export default function HowToFillInMinorWorksPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/minor-works-certificate',
+          href: '/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Complete guide to the Minor Works Certificate format.',
           icon: FileText,
@@ -636,14 +636,14 @@ export default function HowToFillInMinorWorksPage() {
           category: 'Certification',
         },
         {
-          href: '/guides/how-to-test-insulation-resistance',
+          href: '/how-to-test-insulation-resistance',
           title: 'Insulation Resistance Testing',
           description: 'How to test insulation resistance correctly.',
           icon: Zap,
           category: 'Testing',
         },
         {
-          href: '/guides/testing-sequence',
+          href: '/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ListOrdered,

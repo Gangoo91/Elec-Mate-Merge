@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/eicr-certificate',
+    href: '/tools/eicr-certificate',
     title: 'EICR Certificate Guide',
     description:
       'Everything about Electrical Installation Condition Reports — when you need one and what to expect.',
@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Complete Electrical Installation Certificates for consumer unit replacements on your phone.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote consumer unit replacements with itemised materials, labour, and professional PDF output.',
@@ -273,7 +273,7 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR C2 observation</strong> — if an{' '}
-                <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> has
+                <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> has
                 identified a C2 (potentially dangerous) observation at the consumer unit,
                 replacement is strongly recommended. London landlords are legally required to have a
                 valid EICR.
@@ -369,7 +369,7 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Step 5: Certification</strong> — the electrician completes the{' '}
-                <SEOInternalLink href="/tools/eic-certificate">
+                <SEOInternalLink href="/eic-certificate">
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>{' '}
                 and submits Part P notification through their competent person scheme.

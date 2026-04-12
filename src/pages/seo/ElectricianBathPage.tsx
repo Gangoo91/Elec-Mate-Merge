@@ -90,14 +90,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size cables for Georgian townhouse rewires and underfloor heating installations.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for rewires and new circuits in listed properties.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/eicr-guide',
+    href: '/tools/eicr-certificate',
     title: 'EICR Guide',
     description:
       'Complete guide to EICRs — inspection intervals, coding, and commercial requirements.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote heritage rewires and commercial maintenance with professional itemised PDFs.',
@@ -524,7 +524,7 @@ const sections = [
           discount. The Royal Crescent and Lansdown Crescent areas command the highest rates.
           Properties outside the conservation areas (Twerton, Odd Down, Weston) are priced closer to
           national averages. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           produce accurate, itemised quotes that reflect the true cost of Bath heritage work.
         </p>
       </>
@@ -564,7 +564,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing Calculator</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Size cables for Georgian rewires and underfloor heating installations with the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>
                   . Factor in derating for routes through insulated voids in period properties.
@@ -580,7 +580,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote Georgian rewires, UFH installations, and commercial maintenance with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Itemised PDF quotes with heritage-specific line items, sent from the survey.

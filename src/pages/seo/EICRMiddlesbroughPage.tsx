@@ -21,7 +21,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'EICR Guides', href: '/guides/eicr-explained' },
+  { label: 'EICR Guides', href: '/tools/eicr-certificate' },
   { label: 'EICR Middlesbrough', href: '/eicr-middlesbrough' },
 ];
 
@@ -519,7 +519,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, raise a remedial quote immediately using the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Middlesbrough landlords must act within 28 days — the electrician who quotes on

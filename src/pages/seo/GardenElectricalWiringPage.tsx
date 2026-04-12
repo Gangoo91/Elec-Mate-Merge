@@ -93,7 +93,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size SWA cables for garden circuits and outdoor supplies correctly.',
     icon: Calculator,
@@ -107,14 +107,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Issue Electrical Installation Certificates for garden and outdoor work.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/voltage-drop-calculator',
+    href: '/voltage-drop-calculator',
     title: 'Voltage Drop Calculator',
     description: 'Check voltage drop on long garden cable runs to sheds and outbuildings.',
     icon: Zap,
@@ -252,7 +252,7 @@ const sections = [
                   (which reduces the cable's ability to dissipate heat). SWA cable buried in the
                   ground can carry more current than the same cable installed in thermal insulation.
                   Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   and check voltage drop for the cable run length.
@@ -521,7 +521,7 @@ const sections = [
         <p>
           Register with an approved competent person scheme to self-certify garden electrical work
           and issue the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
           on site. This satisfies Part P without building control involvement.
@@ -548,12 +548,12 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing and Voltage Drop</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Long garden cable runs can cause significant voltage drop. Use the{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   to confirm the SWA cable size is adequate for the run length, and check voltage
                   drop with the{' '}
-                  <SEOInternalLink href="/tools/voltage-drop-calculator">
+                  <SEOInternalLink href="/voltage-drop-calculator">
                     voltage drop calculator
                   </SEOInternalLink>
                   .
@@ -568,7 +568,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Issue the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   on site before you leave. Include the cable route description, burial depth, and

@@ -165,7 +165,7 @@ const sections = [
         </div>
         <p>
           Whether you need a{' '}
-          <SEOInternalLink href="/consumer-unit-replacement">
+          <SEOInternalLink href="/guides/consumer-unit-replacement-cost">
             consumer unit replacement
           </SEOInternalLink>{' '}
           in Norwich or an{' '}

@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Electrical Installation Certificates for all notifiable work in Maidstone and Kent.',
@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for Maidstone rewires, EV charger circuits, and rural Kent property installations.',
@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Maidstone electrical jobs at South East rates — send professional quotes on site.',
@@ -400,7 +400,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">On-Site Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink>{' '}
-                  and <SEOInternalLink href="/tools/eic-certificate">EICs</SEOInternalLink> from
+                  and <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> from
                   your phone on Maidstone and Kent jobs. Issue certificates on site — no delays,
                   professional documentation every time.
                 </p>
@@ -414,7 +414,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win Kent Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce professional PDF quotes for Maidstone and surrounding Kent customers at

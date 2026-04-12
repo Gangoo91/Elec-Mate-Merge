@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/data-cabling-installation',
+    href: '/guides/data-cabling-installation',
     title: 'Data Cabling Installation',
     description: 'CAT6, structured cabling standards, and network infrastructure for smart buildings.',
     icon: Wifi,
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote smart lighting control jobs with the Elec-Mate quoting tool.',
     icon: PoundSterling,
@@ -561,7 +561,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Smart Lighting Projects Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build detailed quotes for DALI, KNX, and scene control installations.

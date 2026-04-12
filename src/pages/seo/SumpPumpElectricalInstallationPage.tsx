@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-fault-finding-guide',
+    href: '/guides/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
     description:
       'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
@@ -119,14 +119,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/minor-works',
+    href: '/minor-works-certificate',
     title: 'Minor Works Certificate App',
     description: 'Issue compliant MWCs instantly on your phone.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Generate Electrical Installation Certificates on your phone.',
     icon: FileCheck2,
@@ -212,7 +212,7 @@ const sections = [
         <p>
           This new circuit is notifiable under Part P Building Regulations and requires an
           Electrical Installation Certificate. See our{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC certificate guide</SEOInternalLink> for
+          <SEOInternalLink href="/eic-certificate">EIC certificate guide</SEOInternalLink> for
           what test results must be recorded.
         </p>
       </>

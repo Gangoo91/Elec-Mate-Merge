@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description:
       'Size cables for long runs in industrial conversion projects, accounting for voltage drop.',
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description:
       'Issue Electrical Installation Certificates for new-build flats and conversion projects.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/electrical-quoting-app',
+    href: '/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Sheffield customers with accurate local pricing.',
     icon: PoundSterling,
@@ -276,7 +276,7 @@ const sections = [
         <p>
           These prices are indicative and vary based on property condition, access, and
           specification. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
+          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
           build accurate, itemised quotes on site and send professional PDFs to customers instantly.
         </p>
       </>
@@ -330,7 +330,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          When completing an <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or{' '}
+          When completing an <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> in Sheffield,
           reference Northern Powergrid as the DNO. The earthing arrangement in most Sheffield
           properties is TN-C-S (PME), though some older properties towards the Peak District may be
@@ -367,7 +367,7 @@ const sections = [
                 <strong>Long cable runs and thick masonry:</strong> Industrial buildings have cable
                 runs of 30 metres or more and walls of 450mm to 600mm solid stone or brick. Voltage
                 drop calculations are critical — use the{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   cable sizing calculator
                 </SEOInternalLink>{' '}
                 to verify compliance before ordering. Core drilling for penetrations requires
@@ -639,7 +639,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build professional, itemised quotes during the survey. Sheffield landlords with
@@ -657,7 +657,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Complete EICRs, EICs, and Minor Works Certificates on your phone during the job.
                   An <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink> or{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> completed and
+                  <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> completed and
                   sent as a PDF before you leave demonstrates professionalism and saves hours of
                   admin.
                 </p>
@@ -671,7 +671,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Cable Sizing for Conversions</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Industrial conversion cable runs can exceed 30 metres. The{' '}
-                  <SEOInternalLink href="/tools/cable-sizing-calculator">
+                  <SEOInternalLink href="/cable-sizing-calculator">
                     cable sizing calculator
                   </SEOInternalLink>{' '}
                   verifies the cable size is correct before you order materials. Avoid costly

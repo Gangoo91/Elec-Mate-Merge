@@ -103,14 +103,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/cable-sizing-calculator',
+    href: '/cable-sizing-calculator',
     title: 'Cable Sizing Calculator',
     description: 'Size the cable for your EV charger circuit with voltage drop calculations.',
     icon: Calculator,
     category: 'Tool',
   },
   {
-    href: '/tools/eic-certificate',
+    href: '/eic-certificate',
     title: 'EIC Certificate App',
     description: 'Complete EIC certificates for EV charger installations on your phone.',
     icon: FileCheck2,
@@ -310,7 +310,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cable sizing</strong> — verify cable selection against{' '}
-                <SEOInternalLink href="/tools/cable-sizing-calculator">
+                <SEOInternalLink href="/cable-sizing-calculator">
                   voltage drop calculations
                 </SEOInternalLink>{' '}
                 for the actual cable run length. 6mm² is adequate for runs up to 15 metres; 10mm²
@@ -470,7 +470,7 @@ const sections = [
                   Factor in South Coast labour rates (£42 to £55/hour), earth rod costs, SSEN G98
                   notification, EIC certification, and coastal corrosion-resistant components where
                   relevant. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/tools/electrical-quoting-app">
+                  <SEOInternalLink href="/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised, professional quotes that cover all job-specific variables.
@@ -485,7 +485,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">EIC Certification on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Every EV charger installation requires a full{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   under BS 7671 Section 722. Issue it from your phone before leaving site and email

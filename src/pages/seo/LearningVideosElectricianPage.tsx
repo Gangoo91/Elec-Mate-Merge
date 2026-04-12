@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/training/apprentice' },
+  { label: 'Training', href: '/apprentice-training' },
   { label: 'Learning Videos', href: '/tools/learning-videos-electrician' },
 ];
 
@@ -271,7 +271,7 @@ const sections = [
                 <strong>Testing sequences</strong> — each test in the BS 7671 initial verification
                 sequence demonstrated with the correct instrument, settings, connections, and result
                 interpretation. Includes{' '}
-                <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/how-to-test-insulation-resistance">
                   insulation resistance testing
                 </SEOInternalLink>
                 , earth fault loop impedance, and RCD testing.
@@ -323,12 +323,12 @@ const sections = [
         <p>
           Topics include the structure and key requirements of each chapter of BS 7671, electrical
           science principles (Ohm's Law, power, energy, magnetic fields, AC theory),{' '}
-          <SEOInternalLink href="/calculators/cable-sizing">
+          <SEOInternalLink href="/cable-sizing-calculator">
             cable sizing calculations
           </SEOInternalLink>{' '}
           using the tabulated method and the step-by-step process for selecting the correct cable,
           earth fault loop impedance and its relationship to disconnection times,{' '}
-          <SEOInternalLink href="/calculators/adiabatic-equation">
+          <SEOInternalLink href="/adiabatic-equation-calculator">
             adiabatic equation
           </SEOInternalLink>{' '}
           verification of protective conductor sizing, and discrimination between protective
@@ -359,7 +359,7 @@ const sections = [
         <p>
           The exam preparation videos are designed for electricians preparing for City & Guilds
           examinations, particularly the{' '}
-          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink> (18th
+          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink> (18th
           Edition),{' '}
           <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>{' '}
           (Inspection and Testing), and the{' '}
