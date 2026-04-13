@@ -177,7 +177,169 @@ Deno.serve(async (req) => {
     const rcApiKey = Deno.env.get('REVENUECAT_API_V2_KEY');
     if (!rcApiKey) throw new Error('REVENUECAT_API_V2_KEY not set');
 
-    // Fetch all mobile subscribers
+    // ========================================================================
+    // Phase 1 — RC → DB reconciliation
+    // List all RC customers for the project (paginated), pick the ones with
+    // active or trialing subscriptions, and upsert matching Supabase profiles.
+    // This catches brand-new mobile subscribers whose profile hasn't been
+    // flagged as subscribed yet.
+    // ========================================================================
+    const rcHeaders = {
+      Authorization: `Bearer ${rcApiKey}`,
+      'Content-Type': 'application/json',
+    };
+    const PROJECT_ID = 'proj5dd5e597';
+
+    interface RCCustomer {
+      id: string;
+      object: string;
+    }
+    interface RCCustomerPage {
+      items?: RCCustomer[];
+      next_page?: string | null;
+    }
+
+    // Pull every customer in the project
+    const rcCustomers: RCCustomer[] = [];
+    let nextCursor: string | null = null;
+    let pageCount = 0;
+    const MAX_PAGES = 20; // hard cap — 20 × 100 = 2k customers, plenty for now
+
+    do {
+      const url = new URL(`https://api.revenuecat.com/v2/projects/${PROJECT_ID}/customers`);
+      url.searchParams.set('limit', '100');
+      if (nextCursor) url.searchParams.set('starting_after', nextCursor);
+
+      const res = await fetch(url.toString(), { headers: rcHeaders });
+      if (!res.ok) {
+        console.warn(`RC customers page ${pageCount} failed: ${res.status} ${await res.text()}`);
+        break;
+      }
+      const page: RCCustomerPage = await res.json();
+      rcCustomers.push(...(page.items || []));
+      nextCursor = page.next_page
+        ? new URL(page.next_page).searchParams.get('starting_after')
+        : null;
+      pageCount++;
+    } while (nextCursor && pageCount < MAX_PAGES);
+
+    console.log(`Pulled ${rcCustomers.length} RC customers across ${pageCount} page(s)`);
+
+    // For each RC customer, fetch subs and reconcile if they have an active or trialing one
+    interface ReconcileDetail {
+      user: string;
+      change: string;
+    }
+    const reconcileDetails: ReconcileDetail[] = [];
+    let reconcileUpdated = 0;
+    let reconcileAdded = 0;
+
+    // Process in batches of 5
+    const RECONCILE_BATCH = 5;
+    for (let i = 0; i < rcCustomers.length; i += RECONCILE_BATCH) {
+      const batch = rcCustomers.slice(i, i + RECONCILE_BATCH);
+
+      await Promise.allSettled(
+        batch.map(async (customer) => {
+          const customerId = customer.id;
+          // app_user_id (in RC) is the Supabase auth user UUID — skip anonymous
+          if (!customerId || customerId.startsWith('$RCAnonymousID')) return;
+
+          const subsRes = await fetchRCSubscriptions(customerId, rcApiKey);
+          if (!subsRes || !subsRes.items || subsRes.items.length === 0) return;
+
+          // Find the most relevant subscription
+          const sorted = [...subsRes.items].sort((a, b) => {
+            const priority: Record<string, number> = { active: 0, trialing: 1, expired: 2 };
+            return (priority[a.status] ?? 3) - (priority[b.status] ?? 3);
+          });
+          const rcSub = sorted[0];
+          if (!['active', 'trialing'].includes(rcSub.status)) return;
+
+          // Look up profile
+          const { data: existingProfile } = await supabaseAdmin
+            .from('profiles')
+            .select(
+              'id, full_name, subscribed, is_trial, trial_end, subscription_source, is_trial_cancelled, free_access_granted'
+            )
+            .eq('id', customerId)
+            .maybeSingle();
+
+          if (!existingProfile) {
+            // RC customer has no matching Supabase profile — nothing to update
+            return;
+          }
+
+          // Never touch free-access comp accounts — they stay on free forever
+          if (existingProfile.free_access_granted) return;
+
+          const userName = existingProfile.full_name || customerId.slice(0, 8);
+          const isTrialing = rcSub.status === 'trialing';
+          const updates: Record<string, unknown> = {};
+
+          // Ensure subscribed=true
+          if (!existingProfile.subscribed) {
+            updates.subscribed = true;
+          }
+          // Set subscription source to app_store if not already mobile
+          if (
+            existingProfile.subscription_source !== 'app_store' &&
+            existingProfile.subscription_source !== 'play_store'
+          ) {
+            updates.subscription_source = 'app_store';
+          }
+          // Reconcile trial flags
+          if (isTrialing && !existingProfile.is_trial) {
+            updates.is_trial = true;
+            if (rcSub.current_period_ends_at) {
+              updates.trial_end = rcSub.current_period_ends_at;
+            }
+          }
+          if (!isTrialing && existingProfile.is_trial) {
+            updates.is_trial = false;
+            updates.trial_end = null;
+          }
+          // Clear stale cancelled flag
+          if (existingProfile.is_trial_cancelled) {
+            updates.is_trial_cancelled = false;
+          }
+
+          if (Object.keys(updates).length === 0) return;
+
+          const { error } = await supabaseAdmin
+            .from('profiles')
+            .update(updates)
+            .eq('id', customerId);
+
+          if (error) {
+            console.warn(`Failed to reconcile ${customerId}:`, error.message);
+            return;
+          }
+
+          const wasSubscribed = existingProfile.subscribed;
+          if (!wasSubscribed) {
+            reconcileAdded++;
+            reconcileDetails.push({
+              user: userName,
+              change: `NEW mobile sub (${rcSub.status}) → marked subscribed`,
+            });
+          } else {
+            reconcileUpdated++;
+            reconcileDetails.push({
+              user: userName,
+              change: `${rcSub.status} → updated ${Object.keys(updates).join(', ')}`,
+            });
+          }
+        })
+      );
+    }
+
+    // ========================================================================
+    // Phase 2 — DB-side sweep
+    // For users already flagged as mobile subscribers, double-check their
+    // current RC state and apply the legacy transitions (trial→active,
+    // active→expired, etc.)
+    // ========================================================================
     const { data: subscribers, error: subErr } = await supabaseAdmin
       .from('profiles')
       .select(
@@ -192,7 +354,6 @@ Deno.serve(async (req) => {
     let totalUpdated = 0;
     const allDetails: SyncDetail[] = [];
 
-    // Process in batches of 5 to avoid RC rate limits
     const BATCH_SIZE = 5;
     for (let i = 0; i < allSubscribers.length; i += BATCH_SIZE) {
       const batch = allSubscribers.slice(i, i + BATCH_SIZE);
@@ -201,12 +362,66 @@ Deno.serve(async (req) => {
       allDetails.push(...details);
     }
 
+    // ========================================================================
+    // Phase 3 — Stale profile downgrade
+    // For every profile currently flagged as a paying/trialing mobile sub,
+    // check if RC still has an active/trialing subscription for them. If not,
+    // flip subscribed=false and clear trial flags. Skips free-access comps.
+    // ========================================================================
+    const { data: staleCandidates } = await supabaseAdmin
+      .from('profiles')
+      .select('id, full_name, subscribed, is_trial, trial_end, free_access_granted')
+      .or('subscription_source.eq.app_store,subscription_source.eq.play_store')
+      .eq('subscribed', true);
+
+    let downgraded = 0;
+    const downgradeDetails: SyncDetail[] = [];
+    const STALE_BATCH = 5;
+
+    if (staleCandidates && staleCandidates.length > 0) {
+      for (let i = 0; i < staleCandidates.length; i += STALE_BATCH) {
+        const batch = staleCandidates.slice(i, i + STALE_BATCH);
+        await Promise.allSettled(
+          batch.map(async (sub) => {
+            if (sub.free_access_granted) return;
+
+            const subsRes = await fetchRCSubscriptions(sub.id, rcApiKey);
+            const items = subsRes?.items || [];
+            const hasActive = items.some((s) => s.status === 'active' || s.status === 'trialing');
+
+            if (hasActive) return;
+
+            // RC says not active — downgrade
+            const { error } = await supabaseAdmin
+              .from('profiles')
+              .update({ subscribed: false, is_trial: false, trial_end: null })
+              .eq('id', sub.id);
+
+            if (!error) {
+              downgraded++;
+              downgradeDetails.push({
+                user: sub.full_name || sub.id.slice(0, 8),
+                change: 'no active RC sub → downgraded',
+              });
+            }
+          })
+        );
+      }
+    }
+
+    const combinedUpdated = totalUpdated + reconcileUpdated + reconcileAdded + downgraded;
+    const combinedDetails = [...reconcileDetails, ...allDetails, ...downgradeDetails];
+
     return new Response(
       JSON.stringify({
+        rcCustomersScanned: rcCustomers.length,
+        rcReconcileAdded: reconcileAdded,
+        rcReconcileUpdated: reconcileUpdated,
+        staleDowngraded: downgraded,
         synced: allSubscribers.length,
-        updated: totalUpdated,
-        details: allDetails,
-        message: `Synced ${allSubscribers.length} subscribers, updated ${totalUpdated}`,
+        updated: combinedUpdated,
+        details: combinedDetails,
+        message: `Scanned ${rcCustomers.length} RC customers · +${reconcileAdded} new · ~${reconcileUpdated} updated · −${downgraded} downgraded · ${totalUpdated} transitioned`,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

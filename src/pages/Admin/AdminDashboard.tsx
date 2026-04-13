@@ -21,6 +21,7 @@ import {
   XCircle,
   ChevronDown,
   UserX,
+  AlertTriangle,
 } from 'lucide-react';
 import { formatDistanceToNow, differenceInDays, parseISO } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
@@ -203,6 +204,7 @@ export default function AdminDashboard() {
   const [showCancelled, setShowCancelled] = useState(false);
   const [showChurned, setShowChurned] = useState(false);
   const [showAllSignups, setShowAllSignups] = useState(false);
+  const [showAllOnline, setShowAllOnline] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
   // Fetch RevenueCat stats (App Store + Play Store data)
@@ -505,11 +507,26 @@ export default function AdminDashboard() {
   const mrr = stripeMrr + rcMrr;
   const arr = mrr * 12;
   const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
-  const appStoreSubs = rcStats?.subscribersBySource?.app_store || 0;
+  // RevenueCat API — authoritative live counts (falls back to DB-derived if API fails)
+  const rcLivePaid = rcStats?.revenuecat?.activeSubscriptions || 0;
+  const rcLiveTrials = rcStats?.revenuecat?.activeTrials || 0;
+  const appStoreSubsDb = rcStats?.subscribersBySource?.app_store || 0;
   const playStoreSubs = rcStats?.subscribersBySource?.play_store || 0;
+  // Prefer RC live total. Any surplus over the DB Play Store count is
+  // attributed to App Store. This keeps the headline accurate even when
+  // profiles haven't been reconciled yet.
+  const appStoreSubs =
+    rcLivePaid > 0 ? Math.max(rcLivePaid - playStoreSubs, appStoreSubsDb) : appStoreSubsDb;
   // Only count genuinely active trials (not cancelled ones)
   const rcActiveTrials = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled).length;
   const rcCancelledTrials = (rcStats?.trialUsers || []).filter((t) => t.is_cancelled).length;
+  const rcDbPaid = appStoreSubsDb + playStoreSubs;
+  const rcDbTrials = rcActiveTrials;
+  const rcPaidDelta = rcLivePaid - rcDbPaid;
+  const rcTrialDelta = rcLiveTrials - rcDbTrials;
+  const rcPaidDivergence = (rcLivePaid > 0 || rcDbPaid > 0) && rcPaidDelta !== 0;
+  const rcTrialDivergence = (rcLiveTrials > 0 || rcDbTrials > 0) && rcTrialDelta !== 0;
+  const rcHasDivergence = rcPaidDivergence || rcTrialDivergence;
   const stripeTrials = stripeStats?.stripe.trialingSubscriptions || 0;
   const totalTrials = rcActiveTrials + stripeTrials;
 
@@ -607,18 +624,24 @@ export default function AdminDashboard() {
     );
   };
 
-  // ── Sort mobile subscribers by engagement score DESC ──
+  // ── Sort mobile subscribers ──
+  // Paid: by engagement score DESC (most engaged = most valuable insight)
   const sortedPaidUsers = [...(rcStats?.paidUsers || [])]
     .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
     .reverse();
+  // Trials: by trial_end ASC (ending soonest first = most urgent). Nulls last.
+  const trialEndSort = (a: { trial_end: string | null }, b: { trial_end: string | null }) => {
+    if (!a.trial_end && !b.trial_end) return 0;
+    if (!a.trial_end) return 1;
+    if (!b.trial_end) return -1;
+    return new Date(a.trial_end).getTime() - new Date(b.trial_end).getTime();
+  };
   const sortedActiveTrials = [...(rcStats?.trialUsers || [])]
     .filter((t) => !t.is_cancelled)
-    .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
-    .reverse();
+    .sort(trialEndSort);
   const sortedCancelledTrials = [...(rcStats?.trialUsers || [])]
     .filter((t) => t.is_cancelled)
-    .sort((a, b) => calculateEngagementScore(a.engagement) - calculateEngagementScore(b.engagement))
-    .reverse();
+    .sort(trialEndSort);
 
   return (
     <PullToRefresh
@@ -894,15 +917,6 @@ export default function AdminDashboard() {
                   {liveUserCount} online
                 </span>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-xs h-11 px-3 touch-manipulation text-white hover:text-white"
-                onClick={() => navigate('/admin/users')}
-              >
-                All
-                <ChevronRight className="h-3 w-3 ml-0.5" />
-              </Button>
             </div>
             <motion.div
               variants={containerVariants}
@@ -910,7 +924,7 @@ export default function AdminDashboard() {
               animate="visible"
               className="divide-y divide-white/[0.04]"
             >
-              {onlineUsers?.slice(0, 5).map((activity) => {
+              {onlineUsers?.slice(0, showAllOnline ? onlineUsers.length : 5).map((activity) => {
                 const lastSeenMs = new Date(activity.last_seen).getTime();
                 const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
                 const isOnline = diffMins < 5;
@@ -963,6 +977,14 @@ export default function AdminDashboard() {
                 </div>
               )}
             </motion.div>
+            {(onlineUsers?.length || 0) > 5 && (
+              <button
+                onClick={() => setShowAllOnline(!showAllOnline)}
+                className="w-full py-2.5 border-t border-white/[0.04] text-xs font-medium text-green-400 touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                {showAllOnline ? 'Show Less' : `Show All ${onlineUsers?.length}`}
+              </button>
+            )}
           </div>
         </motion.section>
 
@@ -1047,7 +1069,10 @@ export default function AdminDashboard() {
         </motion.section>
 
         {/* ── Mobile Subscribers (App Store / Play Store) ──── */}
-        {rcStats?.trialUsers?.length || rcStats?.paidUsers?.length ? (
+        {rcLivePaid > 0 ||
+        rcLiveTrials > 0 ||
+        rcStats?.trialUsers?.length ||
+        rcStats?.paidUsers?.length ? (
           <motion.section
             custom={2.5}
             variants={sectionVariants}
@@ -1056,51 +1081,86 @@ export default function AdminDashboard() {
           >
             <div
               ref={mobileSubsRef}
-              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden"
+              className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden"
             >
-              {/* Header with accent line */}
-              <div className="relative">
-                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500" />
-                <div className="p-4 flex items-center justify-between">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                      <Smartphone className="h-4 w-4 text-blue-400" />
-                    </div>
-                    <div>
-                      <span className="font-semibold text-sm text-white">Mobile Subscribers</span>
-                      <p className="text-[10px] text-white">App Store &amp; Play Store</p>
-                    </div>
+              {/* Gradient accent line */}
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500" />
+
+              {/* Header */}
+              <div className="p-4 pb-3 flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                    <Smartphone className="h-4 w-4 text-blue-400" />
                   </div>
-                  <div className="flex items-center gap-1">
-                    {(rcStats?.paidUsers?.length || 0) > 0 && (
-                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-emerald-500/15 text-emerald-400 text-[10px] font-bold">
-                        {rcStats?.paidUsers?.length}
-                      </span>
-                    )}
-                    {rcActiveTrials > 0 && (
-                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-blue-500/15 text-blue-400 text-[10px] font-bold">
-                        {rcActiveTrials}
-                      </span>
-                    )}
-                    {rcCancelledTrials > 0 && (
-                      <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-red-500/15 text-red-400 text-[10px] font-bold">
-                        {rcCancelledTrials}
-                      </span>
-                    )}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        syncRC();
-                      }}
-                      disabled={syncing}
-                      className="h-7 px-2 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[10px] font-medium flex items-center gap-1 touch-manipulation active:scale-[0.97] transition-transform disabled:opacity-50"
-                    >
-                      <RefreshCw className={cn('h-3 w-3', syncing && 'animate-spin')} />
-                      Sync RC
-                    </button>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm text-white truncate">Mobile Subscribers</p>
+                    <p className="text-[10px] text-white/60 flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
+                      Live from RevenueCat
+                    </p>
                   </div>
                 </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    syncRC();
+                  }}
+                  disabled={syncing}
+                  className="h-9 px-3 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[11px] font-medium flex items-center gap-1.5 touch-manipulation active:scale-[0.97] transition-transform disabled:opacity-50 shrink-0"
+                >
+                  <RefreshCw className={cn('h-3.5 w-3.5', syncing && 'animate-spin')} />
+                  Sync RC
+                </button>
               </div>
+
+              {/* Live stat tiles */}
+              <div className="px-4 pb-3 grid grid-cols-3 gap-2">
+                <div className="rounded-xl bg-emerald-500/[0.06] ring-1 ring-emerald-500/20 p-3 text-center">
+                  <p className="text-2xl font-bold text-emerald-400 tabular-nums leading-none">
+                    {rcLivePaid}
+                  </p>
+                  <p className="text-[10px] text-white/70 uppercase tracking-wider mt-1.5 font-semibold">
+                    Paid
+                  </p>
+                </div>
+                <div className="rounded-xl bg-blue-500/[0.06] ring-1 ring-blue-500/20 p-3 text-center">
+                  <p className="text-2xl font-bold text-blue-400 tabular-nums leading-none">
+                    {rcLiveTrials}
+                  </p>
+                  <p className="text-[10px] text-white/70 uppercase tracking-wider mt-1.5 font-semibold">
+                    Trials
+                  </p>
+                </div>
+                <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] p-3 text-center">
+                  <p className="text-2xl font-bold text-white tabular-nums leading-none">
+                    £{Math.round(rcMrr)}
+                  </p>
+                  <p className="text-[10px] text-white/70 uppercase tracking-wider mt-1.5 font-semibold">
+                    MRR
+                  </p>
+                </div>
+              </div>
+
+              {/* Divergence warning */}
+              {rcHasDivergence && (
+                <div className="mx-4 mb-3 rounded-lg bg-amber-500/[0.08] ring-1 ring-amber-500/30 px-3 py-2 flex items-start gap-2">
+                  <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] text-amber-300 font-semibold leading-tight">
+                      {rcPaidDivergence &&
+                        (rcPaidDelta > 0
+                          ? `${rcPaidDelta} paid sub${rcPaidDelta === 1 ? '' : 's'} in RC not matched in DB`
+                          : `${Math.abs(rcPaidDelta)} stale paid sub${Math.abs(rcPaidDelta) === 1 ? '' : 's'} in DB`)}
+                      {rcPaidDivergence && rcTrialDivergence && ' · '}
+                      {rcTrialDivergence &&
+                        (rcTrialDelta > 0
+                          ? `${rcTrialDelta} trial${rcTrialDelta === 1 ? '' : 's'} in RC not matched`
+                          : `${Math.abs(rcTrialDelta)} stale trial${Math.abs(rcTrialDelta) === 1 ? '' : 's'} in DB`)}
+                    </p>
+                    <p className="text-[10px] text-amber-300/70 mt-0.5">Tap Sync RC to reconcile</p>
+                  </div>
+                </div>
+              )}
 
               {/* User list — collapsible groups */}
               <div className="px-2 pb-2 space-y-2">

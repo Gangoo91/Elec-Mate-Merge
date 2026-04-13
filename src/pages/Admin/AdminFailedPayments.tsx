@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import {
   AlertTriangle,
   Mail,
@@ -18,6 +20,8 @@ import {
   Send,
   ArrowRight,
   XCircle,
+  MessageCircle,
+  Ban,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -46,6 +50,8 @@ interface FailedPaymentRow {
   email_1_sent_at: string | null;
   email_2_sent_at: string | null;
   email_3_sent_at: string | null;
+  personal_message_sent_at: string | null;
+  personal_message_body: string | null;
 }
 
 interface FailedPaymentRecord extends FailedPaymentRow {
@@ -119,8 +125,35 @@ export default function AdminFailedPayments() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>(null);
   const [search, setSearch] = useState('');
   const [selectedRecord, setSelectedRecord] = useState<FailedPaymentRecord | null>(null);
+  const [messageSheetOpen, setMessageSheetOpen] = useState(false);
+  const [messageSubject, setMessageSubject] = useState('');
+  const [messageBody, setMessageBody] = useState('');
+  const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
   const queryClient = useQueryClient();
   const haptic = useHaptic();
+
+  // Prefill message template when opening the dialog
+  const openMessageSheet = (template: 'cancel_or_pay' | 'custom') => {
+    if (!selectedRecord) return;
+    haptic.medium();
+    const firstName = (selectedRecord.full_name || 'there').split(' ')[0];
+    if (template === 'cancel_or_pay') {
+      setMessageSubject('A quick question about your Elec-Mate subscription');
+      setMessageBody(
+        `Hi ${firstName},\n\n` +
+          `Andrew here from Elec-Mate — I noticed we've had a few failed payment attempts on your subscription. No hard feelings, just wanted to check in personally.\n\n` +
+          `Two options:\n` +
+          `1. Pay the invoice — use the button below and you're sorted in 30 seconds.\n` +
+          `2. Cancel your subscription — just reply to this email with "cancel" and I'll sort it straight away, no questions.\n\n` +
+          `Either way, no worries. Just let me know what works for you.\n\n` +
+          `Cheers,\nAndrew`
+      );
+    } else {
+      setMessageSubject('');
+      setMessageBody('');
+    }
+    setMessageSheetOpen(true);
+  };
 
   // ── Data fetching ────────────────────────────────────────────────────────
 
@@ -233,6 +266,90 @@ export default function AdminFailedPayments() {
       haptic.success();
       toast.success(`Backfill complete: ${data.inserted} imported, ${data.skipped} skipped`);
       queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+    },
+    onError: (err: Error) => {
+      haptic.error();
+      toast.error(err.message);
+    },
+  });
+
+  const sendPersonalMessageMutation = useMutation({
+    mutationFn: async ({
+      recordId,
+      subject,
+      body,
+    }: {
+      recordId: string;
+      subject: string;
+      body: string;
+    }) => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-send-personal-message`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ recordId, subject, body }),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to send personal message');
+      }
+
+      return res.json();
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(`Personal message sent to ${data.sentTo}`);
+      queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+      if (data.record) setSelectedRecord(data.record);
+      setMessageSheetOpen(false);
+    },
+    onError: (err: Error) => {
+      haptic.error();
+      toast.error(err.message);
+    },
+  });
+
+  const cancelSubMutation = useMutation({
+    mutationFn: async (recordId: string) => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-cancel-failed-subscription`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+          },
+          body: JSON.stringify({ recordId }),
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to cancel subscription');
+      }
+
+      return res.json();
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(`Subscription cancelled (${data.stripeStatus})`);
+      queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+      if (data.record) setSelectedRecord(data.record);
+      setCancelConfirmOpen(false);
     },
     onError: (err: Error) => {
       haptic.error();
@@ -608,9 +725,7 @@ export default function AdminFailedPayments() {
                         {stage.label}
                       </span>
                     </div>
-                    {idx < arr.length - 1 && (
-                      <ArrowRight className="h-3 w-3 text-white shrink-0" />
-                    )}
+                    {idx < arr.length - 1 && <ArrowRight className="h-3 w-3 text-white shrink-0" />}
                   </div>
                 ))}
               </div>
@@ -959,6 +1074,61 @@ export default function AdminFailedPayments() {
                   </Card>
                 )}
 
+                {/* Final Stage Card — visible at 3/3 */}
+                {selectedRecord && !selectedRecord.resolved && selectedRecord.emails_sent === 3 && (
+                  <Card className="border-pink-500/30 bg-gradient-to-br from-pink-500/[0.04] to-purple-500/[0.04]">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm flex items-center gap-2 text-white">
+                        <MailWarning className="h-4 w-4 text-pink-400" />
+                        Final Stage — Decision Time
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <p className="text-xs text-white/70 leading-relaxed">
+                        All three automated emails have gone out. Send a personal note asking them
+                        to either pay or cancel — or pull the plug yourself.
+                      </p>
+
+                      {selectedRecord.personal_message_sent_at && (
+                        <div className="rounded-lg bg-emerald-500/[0.08] ring-1 ring-emerald-500/20 px-3 py-2 flex items-center gap-2">
+                          <CheckCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                          <p className="text-[11px] text-emerald-300">
+                            Personal message sent{' '}
+                            {formatDistanceToNow(
+                              new Date(selectedRecord.personal_message_sent_at),
+                              {
+                                addSuffix: true,
+                              }
+                            )}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button
+                          className="h-12 touch-manipulation bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold"
+                          onClick={() => openMessageSheet('cancel_or_pay')}
+                        >
+                          <MessageCircle className="h-4 w-4 mr-1.5" />
+                          Personal Msg
+                        </Button>
+                        <Button
+                          variant="outline"
+                          className="h-12 touch-manipulation border-red-500/40 text-red-400 hover:bg-red-500/10"
+                          disabled={!selectedRecord.stripe_subscription_id}
+                          onClick={() => {
+                            haptic.medium();
+                            setCancelConfirmOpen(true);
+                          }}
+                        >
+                          <Ban className="h-4 w-4 mr-1.5" />
+                          Cancel Sub
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
                 {/* Action Buttons (if not resolved) */}
                 {selectedRecord && !selectedRecord.resolved && (
                   <div className="space-y-3 pt-2">
@@ -997,6 +1167,162 @@ export default function AdminFailedPayments() {
                     </Button>
                   </div>
                 )}
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* ── Personal Message Sheet ───────────────────────────────────────── */}
+        <Sheet open={messageSheetOpen} onOpenChange={setMessageSheetOpen}>
+          <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl p-0">
+            <div className="flex flex-col h-full">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              </div>
+              <SheetHeader className="px-4 pb-4 border-b border-border">
+                <SheetTitle className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500/20 to-purple-500/20">
+                    <MessageCircle className="h-6 w-6 text-pink-400" />
+                  </div>
+                  <div>
+                    <p className="text-left text-white">Send Personal Message</p>
+                    <p className="text-sm font-normal text-white/60">
+                      From founder@elec-mate.com → {selectedRecord?.full_name || 'user'}
+                    </p>
+                  </div>
+                </SheetTitle>
+              </SheetHeader>
+
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {/* Template toggles */}
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => openMessageSheet('cancel_or_pay')}
+                    className="h-11 rounded-lg bg-pink-500/10 ring-1 ring-pink-500/30 text-pink-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    Cancel or Pay?
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => openMessageSheet('custom')}
+                    className="h-11 rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-white text-xs font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    Custom
+                  </button>
+                </div>
+
+                {/* Subject */}
+                <div>
+                  <label className="text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5 block">
+                    Subject
+                  </label>
+                  <Input
+                    value={messageSubject}
+                    onChange={(e) => setMessageSubject(e.target.value)}
+                    placeholder="A quick question about your subscription"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-pink-500 focus:ring-pink-500"
+                  />
+                </div>
+
+                {/* Body */}
+                <div>
+                  <label className="text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5 block">
+                    Message
+                  </label>
+                  <Textarea
+                    value={messageBody}
+                    onChange={(e) => setMessageBody(e.target.value)}
+                    placeholder="Type your personal message..."
+                    className="touch-manipulation text-base min-h-[260px] focus:ring-2 focus:ring-pink-500/20 border-white/30 focus:border-pink-500"
+                  />
+                  <p className="mt-2 text-[10px] text-white/50 leading-relaxed">
+                    Invoice pay button will be added automatically below the message. Replies go
+                    straight to founder@elec-mate.com.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-4 border-t border-border space-y-2">
+                <Button
+                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold"
+                  disabled={
+                    sendPersonalMessageMutation.isPending ||
+                    !messageSubject.trim() ||
+                    !messageBody.trim()
+                  }
+                  onClick={() => {
+                    if (!selectedRecord) return;
+                    sendPersonalMessageMutation.mutate({
+                      recordId: selectedRecord.id,
+                      subject: messageSubject.trim(),
+                      body: messageBody.trim(),
+                    });
+                  }}
+                >
+                  {sendPersonalMessageMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Send className="h-4 w-4 mr-2" />
+                  )}
+                  Send Message
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="w-full h-11 text-white/60"
+                  onClick={() => setMessageSheetOpen(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* ── Cancel Subscription Confirm Sheet ────────────────────────────── */}
+        <Sheet open={cancelConfirmOpen} onOpenChange={setCancelConfirmOpen}>
+          <SheetContent side="bottom" className="rounded-t-2xl p-0">
+            <div className="flex flex-col">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              </div>
+              <div className="px-6 pt-4 pb-6 space-y-4">
+                <div className="w-14 h-14 rounded-2xl bg-red-500/15 ring-1 ring-red-500/30 flex items-center justify-center mx-auto">
+                  <Ban className="h-7 w-7 text-red-400" />
+                </div>
+                <div className="text-center space-y-1">
+                  <h3 className="text-lg font-bold text-white">
+                    Cancel {selectedRecord?.full_name || 'user'}'s subscription?
+                  </h3>
+                  <p className="text-sm text-white/60">
+                    This cancels immediately in Stripe and clears their subscribed flag. It can't be
+                    undone from here — they'd need to re-subscribe.
+                  </p>
+                </div>
+                <div className="space-y-2 pt-2">
+                  <Button
+                    className="w-full h-12 touch-manipulation bg-red-500 hover:bg-red-600 text-white font-semibold"
+                    disabled={cancelSubMutation.isPending}
+                    onClick={() => {
+                      if (!selectedRecord) return;
+                      cancelSubMutation.mutate(selectedRecord.id);
+                    }}
+                  >
+                    {cancelSubMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Ban className="h-4 w-4 mr-2" />
+                    )}
+                    Yes, cancel their subscription
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full h-11 text-white/60"
+                    onClick={() => setCancelConfirmOpen(false)}
+                  >
+                    Keep it active
+                  </Button>
+                </div>
               </div>
             </div>
           </SheetContent>

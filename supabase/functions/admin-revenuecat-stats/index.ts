@@ -137,7 +137,10 @@ Deno.serve(async (req) => {
     }
 
     for (const sub of subscribers || []) {
-      if (sub.free_access_granted && !sub.subscribed) {
+      // Free-access comp accounts never count as paid, regardless of the
+      // subscribed flag. They're compensation, not revenue — always bucket
+      // them under "free" so they don't pollute mobile subscriber counts.
+      if (sub.free_access_granted) {
         bySource.free++;
         continue;
       }
