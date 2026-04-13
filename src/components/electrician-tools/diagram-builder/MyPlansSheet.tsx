@@ -110,7 +110,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl overflow-hidden bg-background border-t border-white/10 flex flex-col">
+      <SheetContent side="bottom" className="h-[75vh] p-0 rounded-t-2xl overflow-hidden bg-background border-t border-white/10 flex flex-col lg:left-0">
         <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/10 shrink-0">
           <SheetTitle className="text-white text-lg font-semibold flex items-center gap-2">
             My Floor Plans

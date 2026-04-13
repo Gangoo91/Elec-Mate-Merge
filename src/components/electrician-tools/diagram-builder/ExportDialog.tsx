@@ -132,7 +132,7 @@ export const ExportDialog = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl overflow-hidden lg:left-0">
         <div className="flex flex-col h-full bg-background">
           <SheetHeader className="px-5 pt-4 pb-3 border-b border-white/10 shrink-0">
             <SheetTitle className="text-white text-lg font-semibold">

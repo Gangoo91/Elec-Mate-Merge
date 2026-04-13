@@ -26,15 +26,22 @@ const ToastViewport = React.forwardRef<
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-2xl px-4 py-3.5 min-h-[64px] transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-top-full data-[state=open]:slide-in-from-top-full bg-zinc-900/95 backdrop-blur-xl border border-white/[0.07] border-l-[3px] text-white',
+  // Solid opaque background — previously `bg-zinc-900/95 backdrop-blur-xl`
+  // which blended into dark full-screen overlays (e.g. the SignIn "Welcome back"
+  // flash at z-50) and looked washed out. Fully opaque zinc-900 + a stronger
+  // border reads clearly against any page background.
+  'group pointer-events-auto relative flex w-full items-center gap-3 overflow-hidden rounded-2xl px-4 py-3.5 min-h-[64px] transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-top-full data-[state=open]:slide-in-from-top-full bg-zinc-900 border border-white/[0.14] border-l-[3px] text-white',
   {
     variants: {
       variant: {
-        default: 'border-l-zinc-400 shadow-[0_8px_32px_rgba(0,0,0,0.5)]',
-        success: 'border-l-emerald-400 shadow-[0_8px_32px_rgba(16,185,129,0.18)]',
-        destructive: 'border-l-red-400 shadow-[0_8px_32px_rgba(239,68,68,0.18)]',
-        warning: 'border-l-amber-400 shadow-[0_8px_32px_rgba(245,158,11,0.18)]',
-        info: 'border-l-blue-400 shadow-[0_8px_32px_rgba(59,130,246,0.18)]',
+        default: 'border-l-zinc-400 shadow-[0_12px_40px_rgba(0,0,0,0.7)]',
+        success:
+          'border-l-emerald-400 shadow-[0_12px_40px_rgba(16,185,129,0.28)]',
+        destructive:
+          'border-l-red-400 shadow-[0_12px_40px_rgba(239,68,68,0.28)]',
+        warning:
+          'border-l-amber-400 shadow-[0_12px_40px_rgba(245,158,11,0.28)]',
+        info: 'border-l-blue-400 shadow-[0_12px_40px_rgba(59,130,246,0.28)]',
       },
     },
     defaultVariants: {

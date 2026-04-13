@@ -723,7 +723,10 @@ const DiagramBuilderPage = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#1a1a1a] flex flex-col">
+    <div
+      className="fixed inset-0 z-50 bg-[#1a1a1a] flex flex-col"
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+    >
       {/* Minimal sticky header */}
       <div
         className="flex items-center justify-between px-3 bg-elec-dark border-b border-white/10 shrink-0"

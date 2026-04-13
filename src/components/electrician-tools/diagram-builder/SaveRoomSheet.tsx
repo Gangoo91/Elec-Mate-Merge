@@ -34,7 +34,7 @@ export const SaveRoomSheet = ({ open, onOpenChange, onSave, defaultName = '' }: 
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[50vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent side="bottom" className="h-[50vh] p-0 rounded-t-2xl overflow-hidden lg:left-0">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <SheetHeader className="flex flex-row items-center justify-between px-4 py-3 border-b border-white/10">

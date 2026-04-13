@@ -610,7 +610,7 @@ export const AIRoomBuilderDialog = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden lg:left-0">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">

@@ -179,7 +179,9 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                     <div key={workerKey} className="space-y-1.5">
                       <Label className="text-[11px] text-white font-medium">{worker.name}</Label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white text-[14px]">£</span>
+                        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[15px] font-medium text-white md:left-3 md:text-[14px]">
+                          £
+                        </span>
                         <Input
                           type="number"
                           step="0.50"
@@ -190,7 +192,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                               [workerKey]: parseFloat(e.target.value) || 0,
                             });
                           }}
-                          className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white pl-7 focus:border-amber-500 focus:ring-amber-500"
+                          className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] pl-9 text-white focus:border-amber-500 focus:ring-amber-500 md:pl-8"
                         />
                       </div>
                     </div>

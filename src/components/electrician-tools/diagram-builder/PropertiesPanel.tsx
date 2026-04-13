@@ -36,7 +36,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
     <Sheet open={!!selectedObject} onOpenChange={(open) => { if (!open) onClose(); }}>
       <SheetContent
         side="bottom"
-        className="h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10"
+        className="h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 lg:left-0"
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-2 pb-1">
