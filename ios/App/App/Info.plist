@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.3</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>26</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,6 +44,10 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Elec-Mate uses Face ID so you can sign in quickly and securely without typing your password.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Elec-Mate uses your microphone for the voice assistant feature.</string>

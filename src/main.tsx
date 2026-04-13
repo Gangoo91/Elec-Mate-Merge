@@ -109,6 +109,7 @@ const bootstrap = async () => {
       <App />
     </ErrorBoundary>
   );
+  rootElement.setAttribute('data-react-mounted', '1');
 
   // Hide loading state and error fallback once React has mounted
   const initialLoading = document.getElementById('initial-loading');
@@ -122,4 +123,53 @@ const bootstrap = async () => {
   console.log('[Elec-Mate] Render complete');
 };
 
-bootstrap();
+// Visible boot error reporter — if bootstrap() throws on native, the user
+// otherwise sees a black screen because the splash never hides. Painting the
+// error stack to the page lets us actually diagnose what's wrong on TestFlight.
+function showBootError(err: unknown) {
+  try {
+    const e = err instanceof Error ? err : new Error(String(err));
+    const msg = `${e.name}: ${e.message}\n\n${e.stack || '(no stack)'}`;
+    console.error('[Elec-Mate] BOOT FAILED', msg);
+    const el = document.getElementById('root');
+    if (el) {
+      const escape = (c: string) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' })[c] || c;
+      el.innerHTML =
+        '<div style="position:fixed;inset:0;background:#0a0a0a;color:#facc15;font-family:system-ui,-apple-system,sans-serif;padding:24px;padding-top:env(safe-area-inset-top,24px);overflow:auto;-webkit-overflow-scrolling:touch;">' +
+        '<h1 style="font-size:18px;font-weight:700;margin:0 0 12px">App failed to start</h1>' +
+        '<p style="font-size:13px;color:#e5e7eb;margin:0 0 16px">Send this screen to support so we can fix it.</p>' +
+        '<pre style="font-size:11px;color:#fff;background:#111;padding:12px;border-radius:8px;border:1px solid #333;white-space:pre-wrap;word-break:break-word;line-height:1.5">' +
+        msg.replace(/[<>&]/g, escape) +
+        '</pre>' +
+        '<button onclick="window.location.reload()" style="margin-top:16px;background:#facc15;color:#000;border:0;padding:14px 24px;border-radius:10px;font-weight:700;font-size:14px;width:100%">Retry</button>' +
+        '</div>';
+    }
+  } catch {
+    /* swallow — we're already in the error path */
+  }
+}
+
+window.addEventListener('error', (e) => {
+  if (!document.getElementById('root')?.getAttribute('data-react-mounted')) {
+    showBootError((e as ErrorEvent).error || (e as ErrorEvent).message);
+  }
+});
+window.addEventListener('unhandledrejection', (e) => {
+  if (!document.getElementById('root')?.getAttribute('data-react-mounted')) {
+    showBootError((e as PromiseRejectionEvent).reason);
+  }
+});
+
+// 8s safety net — if React still hasn't rendered, surface whatever's left.
+setTimeout(() => {
+  const root = document.getElementById('root');
+  if (root && !root.getAttribute('data-react-mounted')) {
+    showBootError(
+      new Error(
+        'Bootstrap timeout: React did not mount within 8 seconds. Native plugin init may be blocking.'
+      )
+    );
+  }
+}, 8000);
+
+bootstrap().catch(showBootError);
