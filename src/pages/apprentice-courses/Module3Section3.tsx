@@ -59,7 +59,7 @@ const Section3 = () => {
             className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Module 3
             </Link>

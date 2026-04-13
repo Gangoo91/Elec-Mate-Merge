@@ -120,7 +120,7 @@ const Module3Section4_4 = () => {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.4
             </Link>
@@ -1234,9 +1234,15 @@ const Module3Section4_4 = () => {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4/4-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3.4
+              Previous: Cable Terminations
+            </Link>
+          </Button>
+          <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
+            <Link to="/study-centre/apprentice/level2/module3/section4/4-5">
+              Next: Cable Support and Securing
+              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>
         </div>

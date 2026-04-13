@@ -155,7 +155,7 @@ export default function Module3Section6_1() {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.6
             </Link>
@@ -892,13 +892,13 @@ export default function Module3Section6_1() {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.6
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../6-2">
+            <Link to="/study-centre/apprentice/level2/module3/section6/6-2">
               Next: Cable Routing Zones
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

@@ -229,7 +229,7 @@ const Module3Section1_2: React.FC = () => {
             className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.1
             </Link>
@@ -1148,7 +1148,7 @@ const Module3Section1_2: React.FC = () => {
               className="min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="../1-1">
+              <Link to="/study-centre/apprentice/level2/module3/section1/1-1">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous: Wiring Systems Overview
               </Link>
@@ -1157,7 +1157,7 @@ const Module3Section1_2: React.FC = () => {
               className="min-h-[48px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="../1-3">
+              <Link to="/study-centre/apprentice/level2/module3/section1/1-3">
                 Next: Single Core Cables
                 <CheckCircle2 className="w-4 h-4 ml-2" />
               </Link>

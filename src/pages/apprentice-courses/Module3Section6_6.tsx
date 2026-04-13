@@ -167,7 +167,7 @@ export default function Module3Section6_6() {
             className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.6
             </Link>
@@ -1101,13 +1101,13 @@ export default function Module3Section6_6() {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../6-5">
+            <Link to="/study-centre/apprentice/level2/module3/section6/6-5">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../module3">
+            <Link to="/study-centre/apprentice/level2/module3">
               Back to Module 3
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

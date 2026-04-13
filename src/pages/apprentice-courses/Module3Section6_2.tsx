@@ -135,7 +135,7 @@ export default function Module3Section6_2() {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.6
             </Link>
@@ -949,13 +949,13 @@ export default function Module3Section6_2() {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../6-1">
+            <Link to="/study-centre/apprentice/level2/module3/section6/6-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Cable Support Distances
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../6-3">
+            <Link to="/study-centre/apprentice/level2/module3/section6/6-3">
               Next: Fire Stopping
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

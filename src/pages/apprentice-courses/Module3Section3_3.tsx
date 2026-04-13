@@ -188,7 +188,7 @@ const Module3Section3_3: React.FC = () => {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.3
             </Link>
@@ -835,13 +835,13 @@ const Module3Section3_3: React.FC = () => {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../3-2">
+            <Link to="/study-centre/apprentice/level2/module3/section3/3-2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous: Common Power Tools
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="../3-4">
+            <Link to="/study-centre/apprentice/level2/module3/section3/3-4">
               Next: Tool Inspection
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

@@ -172,7 +172,7 @@ const Module3Section4_2: React.FC = () => {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.4
             </Link>
@@ -848,14 +848,14 @@ const Module3Section4_2: React.FC = () => {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.4
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
-              Next: Section 3.5
+            <Link to="/study-centre/apprentice/level2/module3/section4/4-3">
+              Next: Cable Terminations
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </Button>

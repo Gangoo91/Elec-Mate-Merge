@@ -169,7 +169,7 @@ const Module3Section2_6 = () => {
             className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.2
             </Link>
@@ -850,7 +850,7 @@ const Module3Section2_6 = () => {
               className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="../2-5">
+              <Link to="/study-centre/apprentice/level2/module3/section2/2-5">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous: Underfloor and Dado Trunking
               </Link>
@@ -859,7 +859,7 @@ const Module3Section2_6 = () => {
               className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="../2-7">
+              <Link to="/study-centre/apprentice/level2/module3/section2/2-7">
                 Next: Good Practice for Installing Containment
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>

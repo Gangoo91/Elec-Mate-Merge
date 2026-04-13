@@ -176,7 +176,7 @@ const Module3Section2_7 = () => {
             className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section2">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.2
             </Link>
@@ -788,7 +788,7 @@ const Module3Section2_7 = () => {
               className="border-white/20 hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="../2-6">
+              <Link to="/study-centre/apprentice/level2/module3/section2/2-6">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous: Fixings, Clips and Cable Ties
               </Link>
@@ -797,8 +797,8 @@ const Module3Section2_7 = () => {
               className="bg-elec-yellow hover:bg-elec-yellow/90 text-black min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
-              <Link to="..">
-                Back to Section 3.2
+              <Link to="/study-centre/apprentice/level2/module3/section3/3-1">
+                Next: Section 3.3
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </Button>

@@ -153,7 +153,7 @@ export default function Module3Section4_5() {
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Section 3.4
             </Link>
@@ -490,14 +490,14 @@ export default function Module3Section4_5() {
             className="min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="..">
+            <Link to="/study-centre/apprentice/level2/module3/section4/4-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Previous: Section 4.4
+              Previous: Jointing and Glanding
             </Link>
           </Button>
           <Button className="min-h-[44px] touch-manipulation active:scale-[0.98]" asChild>
-            <Link to="..">
-              Next: Section 4.6
+            <Link to="/study-centre/apprentice/level2/module3/section4/4-6">
+              Next: Installing Accessories
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>
