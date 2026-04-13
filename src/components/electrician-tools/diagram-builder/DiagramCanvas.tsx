@@ -1581,25 +1581,92 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         return; // Already added manually
       } else if (obj.type === 'cable' && obj.points && obj.points.length >= 2) {
-        // Cable route — dashed line in circuit colour
-        const p1 = obj.points[0];
-        const p2 = obj.points[1];
-        const COLOURS: Record<string, string> = {
+        // Cable route — visible line in circuit colour with length label at midpoint.
+        // Default fallback is elec-yellow so an unassigned cable is ALWAYS visible
+        // on the dark canvas (previous default was grey #6B7280 which disappeared).
+        const CIRCUIT_PALETTE: Record<string, string> = {
           L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
           C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
         };
-        const cableColour = COLOURS[obj.circuitRef || ''] || '#6B7280';
+        const cableColour = CIRCUIT_PALETTE[obj.circuitRef || ''] || '#EAB308';
 
-        const cableLine = new Line([p1.x, p1.y, p2.x, p2.y], {
+        // Walk all waypoints so Phase-5 multi-segment cable routes render
+        // correctly without another touch to this block.
+        const pts = obj.points;
+        const segments: FabricObject[] = [];
+        let totalLen = 0;
+        for (let i = 0; i < pts.length - 1; i++) {
+          const a = pts[i];
+          const b = pts[i + 1];
+          totalLen += Math.hypot(b.x - a.x, b.y - a.y);
+          segments.push(
+            new Line([a.x, a.y, b.x, b.y], {
+              stroke: cableColour,
+              strokeWidth: 3,
+              strokeDashArray: [8, 5],
+              strokeLineCap: 'round',
+              selectable: false,
+              evented: false,
+            }) as unknown as FabricObject,
+          );
+        }
+
+        // Length label at the geometric midpoint of the FIRST segment.
+        const p1 = pts[0];
+        const p2 = pts[1];
+        const midX = (p1.x + p2.x) / 2;
+        const midY = (p1.y + p2.y) / 2;
+        const cableLabel = pxToMetres(totalLen);
+        const circuitTag = obj.circuitRef ? `${obj.circuitRef} · ` : '';
+        const labelText = `${circuitTag}${cableLabel}`;
+
+        // Background pill behind label so it reads against any background
+        const labelBg = new Rect({
+          left: midX,
+          top: midY,
+          width: labelText.length * 6.8 + 14,
+          height: 18,
+          fill: 'rgba(10,10,10,0.85)',
           stroke: cableColour,
-          strokeWidth: 2,
-          strokeDashArray: [6, 4],
+          strokeWidth: 1,
+          rx: 9,
+          ry: 9,
+          originX: 'center',
+          originY: 'center',
+          selectable: false,
+          evented: false,
+        });
+        const label = new FabricText(labelText, {
+          left: midX,
+          top: midY,
+          fontSize: 11,
+          fontWeight: '600',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          fill: '#ffffff',
+          originX: 'center',
+          originY: 'center',
+          selectable: false,
+          evented: false,
+        });
+
+        const cableGroup = new Group([...segments, labelBg as unknown as FabricObject, label as unknown as FabricObject], {
           selectable: true,
           hasControls: false,
           evented: true,
+          lockScalingX: true,
+          lockScalingY: true,
+          lockRotation: true,
+          lockMovementX: true,
+          lockMovementY: true,
+          perPixelTargetFind: true,
+          hoverCursor: 'pointer',
         });
-        (cableLine as any).customData = { id: obj.id, type: 'cable', stateHash: serialiseCanvasObject(obj) };
-        canvas.add(cableLine);
+        (cableGroup as any).customData = {
+          id: obj.id,
+          type: 'cable',
+          stateHash: serialiseCanvasObject(obj),
+        };
+        canvas.add(cableGroup);
         return;
       } else if (obj.type === 'dimension' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];

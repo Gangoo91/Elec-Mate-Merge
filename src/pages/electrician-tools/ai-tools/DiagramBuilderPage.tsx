@@ -894,6 +894,20 @@ const DiagramBuilderPage = () => {
 
       {/* Full-viewport canvas with dark surround */}
       <div className="flex-1 overflow-hidden relative bg-[#1a1a1a] p-1">
+        {/* Cable tool status banner — drops from top of canvas when active */}
+        {activeTool === 'cable' && (
+          <div className="pointer-events-none absolute inset-x-0 top-2 z-20 flex justify-center px-4">
+            <div className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-yellow-500/40 bg-black/85 px-4 py-2 text-[12px] font-medium text-white backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-yellow-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400" />
+              </span>
+              <span className="text-yellow-400">Cable tool</span>
+              <span className="text-white/60">·</span>
+              <span>Tap a symbol, then tap the next to route</span>
+            </div>
+          </div>
+        )}
         <DiagramCanvas
           ref={canvasRef}
           activeTool={activeTool}
