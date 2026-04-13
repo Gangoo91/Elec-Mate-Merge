@@ -284,6 +284,10 @@ const DiagramBuilderPage = () => {
   // exportDialogOpen removed — using ExportReviewSheet only
   const [placingSymbolName, setPlacingSymbolName] = useState<string | null>(null);
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
+  // Captured at the moment the user taps "Save Room" — before the sheet
+  // covers the canvas — so the thumbnail is always generated from a clean,
+  // fully-rendered fabric canvas.
+  const [pendingSave, setPendingSave] = useState<{ thumbnail: string; fullImage: string } | null>(null);
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [exportReviewOpen, setExportReviewOpen] = useState(false);
   const [myPlansOpen, setMyPlansOpen] = useState(false);
@@ -548,25 +552,18 @@ const DiagramBuilderPage = () => {
   };
 
   const handleSaveRoom = (name: string) => {
-    const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
-    let thumbnail = '';
-    let fullImage = '';
-    if (fabricCanvas) {
-      const bounds = getObjectBounds(canvasObjects);
-      fullImage = renderCenteredRoomImage(
-        fabricCanvas,
-        bounds,
-        ROOM_EXPORT_SIZE,
-        ROOM_IMAGE_PADDING,
-        1
-      );
-      thumbnail = renderCenteredRoomImage(
-        fabricCanvas,
-        bounds,
-        ROOM_THUMBNAIL_SIZE,
-        18,
-        0.8
-      );
+    // Prefer the thumbnail captured when the user tapped "Save Room" (canvas
+    // was clean then). Fall back to re-rendering now only if it's missing.
+    let thumbnail = pendingSave?.thumbnail ?? '';
+    let fullImage = pendingSave?.fullImage ?? '';
+    if (!thumbnail) {
+      const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+      if (fabricCanvas) {
+        fabricCanvas.renderAll?.();
+        const bounds = getObjectBounds(canvasObjects);
+        fullImage = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1);
+        thumbnail = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_THUMBNAIL_SIZE, 18, 0.8);
+      }
     }
 
     const symbolIds = canvasObjects
@@ -589,6 +586,7 @@ const DiagramBuilderPage = () => {
     }
 
     setSaveSheetOpen(false);
+    setPendingSave(null);
     haptic.success();
     toast({
       title: `${name} saved`,
@@ -771,6 +769,24 @@ const DiagramBuilderPage = () => {
                 return;
               }
               haptic.light();
+              // Capture the thumbnail NOW while the canvas is clean and
+              // unobstructed — before the SaveRoomSheet covers half of it.
+              // This is critical: if we wait until after the sheet is open,
+              // the fabric canvas can be in a resized/stale state and
+              // toCanvasElement returns a blank image (the "blank second
+              // room" bug).
+              const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+              if (fabricCanvas) {
+                fabricCanvas.renderAll?.();
+                const bounds = getObjectBounds(canvasObjects);
+                const fullImage = renderCenteredRoomImage(
+                  fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1,
+                );
+                const thumbnail = renderCenteredRoomImage(
+                  fabricCanvas, bounds, ROOM_THUMBNAIL_SIZE, 18, 0.8,
+                );
+                setPendingSave({ thumbnail, fullImage });
+              }
               setSaveSheetOpen(true);
             }}
             aria-label="Save Room"
@@ -1223,7 +1239,10 @@ const DiagramBuilderPage = () => {
       {/* Save Room Sheet */}
       <SaveRoomSheet
         open={saveSheetOpen}
-        onOpenChange={setSaveSheetOpen}
+        onOpenChange={(open) => {
+          setSaveSheetOpen(open);
+          if (!open) setPendingSave(null);
+        }}
         onSave={handleSaveRoom}
         defaultName={activeRoom?.name || `Room ${rooms.length + 1}`}
       />
