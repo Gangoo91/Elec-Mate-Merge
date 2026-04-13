@@ -24,9 +24,45 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
-import { generateFloorPlanPdf, FloorPlanPdfOptions } from '@/utils/floor-plan-pdf';
+import {
+  generateFloorPlanPdf,
+  FloorPlanPdfOptions,
+  CableScheduleEntry,
+} from '@/utils/floor-plan-pdf';
 import { symbolRegistry } from '@/components/electrician-tools/diagram-builder/symbols/symbolRegistry';
 import { getSymbolSvgSync, loadSymbolSvg } from '@/components/electrician-tools/diagram-builder/symbols/svgLoader';
+
+/**
+ * Infer a sensible cable type from the circuit reference.
+ * UK convention: lighting = 1.5mm² T&E, ring finals = 2.5mm² T&E,
+ * cooker = 6mm² T&E, EV = 10mm² T&E, fire alarm = 1.5mm² FP200,
+ * immersion = 2.5mm² T&E, AC = 2.5mm² T&E.
+ */
+function inferCableTypeFromCircuit(circuitRef?: string): string {
+  if (!circuitRef) return '2.5mm² T&E';
+  const prefix = circuitRef.toUpperCase().replace(/[0-9]/g, '');
+  switch (prefix) {
+    case 'L':
+      return '1.5mm² T&E';
+    case 'S':
+      return '2.5mm² T&E';
+    case 'C':
+      return '6mm² T&E';
+    case 'EV':
+      return '10mm² T&E';
+    case 'FA':
+      return '1.5mm² FP200';
+    case 'IH':
+      return '2.5mm² T&E';
+    case 'AC':
+      return '2.5mm² T&E';
+    default:
+      return '2.5mm² T&E';
+  }
+}
+
+/** Scale from DiagramCanvas — keep in sync. */
+const PX_PER_METRE = 52;
 
 interface ExportDialogProps {
   open: boolean;
@@ -61,6 +97,58 @@ export const ExportDialog = ({
         counts.set(id, (counts.get(id) || 0) + 1);
       });
     return counts;
+  }, [canvasObjects]);
+
+  /**
+   * Build the Cable Schedule for the PDF. Each cable object holds two points
+   * (source + target) and an optional circuitRef. We look up the source/target
+   * symbols by proximity (their x/y matches the cable's first/last point since
+   * cables are created at symbol centres) and label each end with the symbol's
+   * human name from the registry.
+   */
+  const cableSchedule = useMemo<CableScheduleEntry[]>(() => {
+    const cables = canvasObjects.filter(
+      (obj) => obj.type === 'cable' && obj.points && obj.points.length >= 2,
+    );
+    if (cables.length === 0) return [];
+
+    // Build a lookup of symbol name by id
+    const symbolNameById = new Map<string, string>();
+    canvasObjects
+      .filter((obj) => obj.type === 'symbol' && obj.symbolId)
+      .forEach((obj) => {
+        const meta = symbolRegistry.find((s) => s.id === obj.symbolId);
+        if (meta) symbolNameById.set(obj.id, meta.name);
+      });
+
+    // Helper — find the symbol whose centre is closest to a given point
+    const nearestSymbolLabel = (pt: { x: number; y: number }): string => {
+      let best: { id: string; dist: number } | null = null;
+      for (const sym of canvasObjects) {
+        if (sym.type !== 'symbol') continue;
+        const d = Math.hypot(sym.x - pt.x, sym.y - pt.y);
+        if (d < 40 && (!best || d < best.dist)) {
+          best = { id: sym.id, dist: d };
+        }
+      }
+      return best ? symbolNameById.get(best.id) || 'Symbol' : 'Point';
+    };
+
+    return cables.map((cable, idx) => {
+      const pts = cable.points!;
+      let totalPx = 0;
+      for (let i = 0; i < pts.length - 1; i++) {
+        totalPx += Math.hypot(pts[i + 1].x - pts[i].x, pts[i + 1].y - pts[i].y);
+      }
+      return {
+        ref: `C${idx + 1}`,
+        circuitRef: cable.circuitRef,
+        fromLabel: nearestSymbolLabel(pts[0]),
+        toLabel: nearestSymbolLabel(pts[pts.length - 1]),
+        cableType: inferCableTypeFromCircuit(cable.circuitRef),
+        lengthMetres: totalPx / PX_PER_METRE,
+      };
+    });
   }, [canvasObjects]);
 
   const handleGenerate = async () => {
@@ -109,6 +197,7 @@ export const ExportDialog = ({
         includeLegend,
         includeTitleBlock,
         usedSymbols,
+        cables: cableSchedule,
         scale: '1:50',
       });
 

@@ -7,6 +7,16 @@
 
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 
+export interface CableScheduleEntry {
+  ref: string;         // C1, C2 — cable reference for the schedule
+  circuitRef?: string; // L1, S1 — parent circuit
+  circuitName?: string; // "Upstairs lighting" etc.
+  fromLabel: string;   // symbol name at source ("Consumer Unit", "Socket C1")
+  toLabel: string;     // symbol name at target
+  cableType: string;   // "2.5mm² T&E" inferred from circuit
+  lengthMetres: number;
+}
+
 export interface FloorPlanPdfOptions {
   canvasElement: HTMLCanvasElement;
   projectName: string;
@@ -19,6 +29,8 @@ export interface FloorPlanPdfOptions {
   includeLegend: boolean;
   includeTitleBlock: boolean;
   usedSymbols: { id: string; name: string; category: string; count: number; svgXml: string }[];
+  /** Optional — when present, a Cable Schedule page is appended. */
+  cables?: CableScheduleEntry[];
   scale: string;
 }
 
@@ -84,6 +96,7 @@ export async function generateFloorPlanPdf(options: FloorPlanPdfOptions): Promis
     includeLegend,
     includeTitleBlock,
     usedSymbols,
+    cables,
     scale,
   } = options;
 
@@ -313,7 +326,148 @@ export async function generateFloorPlanPdf(options: FloorPlanPdfOptions): Promis
   pdf.setLineWidth(0.15);
   pdf.rect(imgX, imgY, imgW, imgH);
 
-  /* ── 5. Save / share ───────────────────────────────── */
+  /* ── 5. Cable Schedule page (Phase 5) ────────────────── */
+  if (cables && cables.length > 0) {
+    pdf.addPage(paperSize, orientation);
+
+    // Outer border
+    pdf.setDrawColor(0, 0, 0);
+    pdf.setLineWidth(0.6);
+    pdf.rect(margin, margin, innerW, innerH);
+    pdf.setLineWidth(0.2);
+    pdf.rect(margin + 1.5, margin + 1.5, innerW - 3, innerH - 3);
+
+    // Header
+    pdf.setFontSize(16);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(0, 0, 0);
+    pdf.text('Cable Schedule', margin + 5, margin + 10);
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(80, 80, 80);
+    pdf.text(
+      `${projectName || 'Project'} \u00B7 Drawing ${drawingNumber || 'EL-001'} \u00B7 ${dateStr}`,
+      margin + 5,
+      margin + 15,
+    );
+
+    // Column layout
+    const tableTop = margin + 22;
+    const tableLeft = margin + 5;
+    const tableRight = margin + innerW - 5;
+    const tableWidth = tableRight - tableLeft;
+
+    const cols = [
+      { label: 'Ref', width: 14 },
+      { label: 'Circuit', width: 22 },
+      { label: 'From', width: tableWidth * 0.24 - 18 },
+      { label: 'To', width: tableWidth * 0.24 - 18 },
+      { label: 'Cable', width: 36 },
+      { label: 'Length', width: 20 },
+    ];
+    // Stretch "From" and "To" to fill remaining width
+    const fixedW = 14 + 22 + 36 + 20;
+    const flexW = (tableWidth - fixedW) / 2;
+    cols[2].width = flexW;
+    cols[3].width = flexW;
+
+    // Header row
+    const rowH = 7;
+    pdf.setFillColor(240, 240, 240);
+    pdf.rect(tableLeft, tableTop, tableWidth, rowH, 'F');
+    pdf.setDrawColor(100, 100, 100);
+    pdf.setLineWidth(0.25);
+    pdf.rect(tableLeft, tableTop, tableWidth, rowH);
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(8.5);
+    pdf.setTextColor(30, 30, 30);
+    let cx = tableLeft + 2;
+    cols.forEach((col) => {
+      pdf.text(col.label, cx, tableTop + 4.8);
+      cx += col.width;
+    });
+
+    // Vertical dividers between columns (header + body)
+    let dividerX = tableLeft;
+    for (let i = 0; i < cols.length - 1; i++) {
+      dividerX += cols[i].width;
+      pdf.setLineWidth(0.1);
+      pdf.line(dividerX, tableTop, dividerX, tableTop + rowH * (cables.length + 1));
+    }
+
+    // Body rows
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(8);
+    pdf.setTextColor(10, 10, 10);
+
+    cables.forEach((cable, idx) => {
+      const ry = tableTop + rowH * (idx + 1);
+
+      // Alternating row fill for readability
+      if (idx % 2 === 1) {
+        pdf.setFillColor(250, 250, 250);
+        pdf.rect(tableLeft, ry, tableWidth, rowH, 'F');
+      }
+      pdf.setDrawColor(220, 220, 220);
+      pdf.setLineWidth(0.1);
+      pdf.line(tableLeft, ry, tableRight, ry);
+
+      let rx = tableLeft + 2;
+      const values = [
+        cable.ref,
+        cable.circuitRef || '—',
+        cable.fromLabel,
+        cable.toLabel,
+        cable.cableType,
+        `${cable.lengthMetres.toFixed(2)}m`,
+      ];
+      values.forEach((val, colIdx) => {
+        const col = cols[colIdx];
+        const maxW = col.width - 4;
+        let text = val;
+        if (pdf.getTextWidth(text) > maxW) {
+          // Truncate with ellipsis
+          while (text.length > 3 && pdf.getTextWidth(text + '…') > maxW) {
+            text = text.slice(0, -1);
+          }
+          text += '…';
+        }
+        pdf.text(text, rx, ry + 4.8);
+        rx += col.width;
+      });
+    });
+
+    // Outer table border
+    pdf.setDrawColor(100, 100, 100);
+    pdf.setLineWidth(0.25);
+    pdf.rect(tableLeft, tableTop, tableWidth, rowH * (cables.length + 1));
+
+    // Totals row
+    const totalLength = cables.reduce((sum, c) => sum + c.lengthMetres, 0);
+    const totalRowY = tableTop + rowH * (cables.length + 1) + 4;
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(9);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text(
+      `Total cable length: ${totalLength.toFixed(2)} m across ${cables.length} run${cables.length === 1 ? '' : 's'}`,
+      tableLeft,
+      totalRowY + 4,
+    );
+
+    // Footer strip on this page too
+    pdf.setLineWidth(0.2);
+    pdf.line(margin + 1.5, footerY, margin + innerW - 1.5, footerY);
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(80, 80, 80);
+    pdf.text('Elec-Mate \u00B7 Cable Schedule', margin + 4, footerY + 4);
+    pdf.text('BS 7671:2018+A3:2024', margin + innerW - 4, footerY + 4, {
+      align: 'right',
+    });
+  }
+
+  /* ── 6. Save / share ───────────────────────────────── */
   const safeName = (projectName || 'floor-plan').replace(/\s+/g, '-').toLowerCase();
   await saveOrSharePdf(pdf, `${safeName}-${drawingNumber || 'EL-001'}.pdf`);
 }

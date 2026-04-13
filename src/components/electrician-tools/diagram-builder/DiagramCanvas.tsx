@@ -4,6 +4,7 @@ import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBui
 import { symbolRegistry } from './symbols/symbolRegistry';
 import { electricalSymbols } from './symbols/electricalSymbols';
 import { loadSymbolSvg } from './symbols/svgLoader';
+import { extractWalls, orthogonalRoute } from './cableRouter';
 import { ZoomIn, ZoomOut, Maximize2, RotateCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -83,12 +84,38 @@ const WALL_THICKNESS = 3;
 const SNAP_DISTANCE = 10; // px for wall endpoint snapping
 const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
 
+/**
+ * Phase 4: door / window symbols cut walls at render time. Width in px
+ * using the 52px = 1m scale. Realistic UK domestic door widths:
+ *   - single internal door ≈ 0.8m  →  42px
+ *   - double door           ≈ 1.6m →  84px
+ *   - window                ≈ 1.0m →  52px
+ * Symbols in the registry use `architectural` category; the IDs below
+ * are what the user drags onto a wall.
+ */
+const FEATURE_WIDTH_PX: Record<string, number> = {
+  'door-left': 42,
+  'door-right': 42,
+  'door-double': 84,
+  'door-entry': 42,
+  'door-release': 42,
+  'window': 52,
+};
+const isWallFeature = (symbolId?: string | null): boolean =>
+  !!symbolId && symbolId in FEATURE_WIDTH_PX;
+
 interface DiagramCanvasProps {
   activeTool: string;
   selectedSymbolId: string | null;
   objects: CanvasObject[];
   onObjectsChange: (objects: CanvasObject[]) => void;
   onSelectionChange?: (object: CanvasObject | null) => void;
+  /**
+   * Fires when the user explicitly requests the PropertiesPanel for an
+   * object. Driven by long-press (500ms) or double-tap. Single-tap is
+   * selection only — it does NOT open the properties panel.
+   */
+  onRequestProperties?: (object: CanvasObject) => void;
   gridEnabled: boolean;
   snapEnabled: boolean;
   headerHeight?: number;
@@ -145,7 +172,7 @@ const pointsMatch = (
 ) => Math.abs(a.x - b.x) <= tolerance && Math.abs(a.y - b.y) <= tolerance;
 
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
-  ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
+  ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, onRequestProperties, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvasRef = useRef<FabricCanvas | null>(null);
     // Drawing state as refs — avoids stale closures in event handlers and prevents
@@ -165,6 +192,11 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const aiRenderActiveRef = useRef(false);
     // Block single-finger handlers during multi-touch pinch/pan (ELE-712)
     const isTouchGestureRef = useRef(false);
+    // Long-press + double-tap detection for PropertiesPanel gesture.
+    // Single tap = select only. Long-press (500ms) or double-tap = open props.
+    const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const lastTapRef = useRef<{ id: string; time: number } | null>(null);
+    const mouseDownAtRef = useRef<{ x: number; y: number } | null>(null);
 
     // Ref mirrors for props — event handlers read current values without
     // needing to be in useEffect dependency arrays (register once, always fresh)
@@ -176,6 +208,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const onToolChangeRef = useRef(onToolChange);
     const onObjectsChangeRef = useRef(onObjectsChange);
     const onSelectionChangeRef = useRef(onSelectionChange);
+    const onRequestPropertiesRef = useRef(onRequestProperties);
     const gridEnabledRef = useRef(gridEnabled);
 
     // Sync refs on every render (synchronous, before effects fire)
@@ -187,6 +220,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     onToolChangeRef.current = onToolChange;
     onObjectsChangeRef.current = onObjectsChange;
     onSelectionChangeRef.current = onSelectionChange;
+    onRequestPropertiesRef.current = onRequestProperties;
     gridEnabledRef.current = gridEnabled;
 
     const getRenderableObjects = () => wallDragPreviewRef.current ?? objectsRef.current;
@@ -1528,40 +1562,116 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const isVertical = Math.abs(dy) > Math.abs(dx);
         const dist = Math.hypot(dx, dy);
 
-        // Wall as a filled rect
-        if (isVertical) {
-          const wallRect = new Rect({
-            left: p1.x - WALL_THICKNESS / 2,
-            top: Math.min(p1.y, p2.y),
-            width: WALL_THICKNESS,
-            height: Math.abs(dy),
-            fill: '#000000',
-            stroke: '#000000',
-            strokeWidth: 1,
-            selectable: false,
-            hasControls: false,
-            evented: true,
-          });
-          (wallRect as any).customData = { id: obj.id, type: 'wall', stateHash: serialiseCanvasObject(obj) };
-          canvas.add(wallRect);
-        } else {
-          const wallRect = new Rect({
-            left: Math.min(p1.x, p2.x),
-            top: p1.y - WALL_THICKNESS / 2,
-            width: Math.abs(dx),
-            height: WALL_THICKNESS,
-            fill: '#000000',
-            stroke: '#000000',
-            strokeWidth: 1,
-            selectable: false,
-            hasControls: false,
-            evented: true,
-          });
-          (wallRect as any).customData = { id: obj.id, type: 'wall', stateHash: serialiseCanvasObject(obj) };
-          canvas.add(wallRect);
+        // Phase 4: find door/window features attached to this wall, compute
+        // their parametric ranges [0..1] along the wall, and render the wall
+        // as a set of segments that skip those ranges. When no features are
+        // attached, this falls through to a single full-length segment
+        // (identical to the pre-Phase-4 render).
+        type FeatureRange = [number, number];
+        const featureRanges: FeatureRange[] = [];
+        if (dist > 0) {
+          for (const other of objectsRef.current) {
+            if (other.type !== 'symbol' || !isWallFeature(other.symbolId)) continue;
+            // Project the feature's centre onto the wall line (parameter t).
+            const relX = other.x - p1.x;
+            const relY = other.y - p1.y;
+            const tRaw = (relX * dx + relY * dy) / (dist * dist);
+            const projX = p1.x + tRaw * dx;
+            const projY = p1.y + tRaw * dy;
+            const perpDist = Math.hypot(other.x - projX, other.y - projY);
+            // Feature is attached to this wall if its projection is within
+            // the wall's length AND it's within WALL_MOUNT_OFFSET+slack of
+            // the wall line (same threshold used by getWallSnapPlacement).
+            if (tRaw < 0 || tRaw > 1) continue;
+            if (perpDist > WALL_MOUNT_OFFSET + 8) continue;
+            const featureWidth = FEATURE_WIDTH_PX[other.symbolId!] || 40;
+            const halfT = (featureWidth / 2) / dist;
+            featureRanges.push([
+              Math.max(0, tRaw - halfT),
+              Math.min(1, tRaw + halfT),
+            ]);
+          }
+        }
+        // Sort + merge overlapping ranges
+        featureRanges.sort((a, b) => a[0] - b[0]);
+        const merged: FeatureRange[] = [];
+        for (const range of featureRanges) {
+          const last = merged[merged.length - 1];
+          if (last && range[0] <= last[1]) {
+            last[1] = Math.max(last[1], range[1]);
+          } else {
+            merged.push([range[0], range[1]]);
+          }
+        }
+        // Build the visible segments (complement of the feature ranges)
+        const segments: FeatureRange[] = [];
+        let cursor = 0;
+        for (const [fStart, fEnd] of merged) {
+          if (fStart > cursor) segments.push([cursor, fStart]);
+          cursor = Math.max(cursor, fEnd);
+        }
+        if (cursor < 1) segments.push([cursor, 1]);
+
+        // Render each visible segment as its own rect.
+        for (let segIdx = 0; segIdx < segments.length; segIdx++) {
+          const [segStart, segEnd] = segments[segIdx];
+          const sx = p1.x + segStart * dx;
+          const sy = p1.y + segStart * dy;
+          const ex = p1.x + segEnd * dx;
+          const ey = p1.y + segEnd * dy;
+          const segDx = ex - sx;
+          const segDy = ey - sy;
+          // Skip 0-length segments (feature covers entire wall edge)
+          if (Math.abs(segDx) < 0.5 && Math.abs(segDy) < 0.5) continue;
+
+          if (isVertical) {
+            const segRect = new Rect({
+              left: sx - WALL_THICKNESS / 2,
+              top: Math.min(sy, ey),
+              width: WALL_THICKNESS,
+              height: Math.abs(segDy),
+              fill: '#000000',
+              stroke: '#000000',
+              strokeWidth: 1,
+              selectable: false,
+              hasControls: false,
+              evented: true,
+            });
+            (segRect as any).customData = {
+              id: obj.id,
+              type: 'wall',
+              parentId: obj.id,
+              segmentIndex: segIdx,
+              stateHash: serialiseCanvasObject(obj),
+            };
+            canvas.add(segRect);
+          } else {
+            const segRect = new Rect({
+              left: Math.min(sx, ex),
+              top: sy - WALL_THICKNESS / 2,
+              width: Math.abs(segDx),
+              height: WALL_THICKNESS,
+              fill: '#000000',
+              stroke: '#000000',
+              strokeWidth: 1,
+              selectable: false,
+              hasControls: false,
+              evented: true,
+            });
+            (segRect as any).customData = {
+              id: obj.id,
+              type: 'wall',
+              parentId: obj.id,
+              segmentIndex: segIdx,
+              stateHash: serialiseCanvasObject(obj),
+            };
+            canvas.add(segRect);
+          }
         }
 
-        // Auto dimension label
+        // Auto dimension label — always the FULL wall length, placed at the
+        // midpoint of the original line (not per-segment). This gives the
+        // correct total length even when the wall is split by features.
         const midX = (p1.x + p2.x) / 2;
         const midY = (p1.y + p2.y) / 2;
         const labelText = pxToMetres(dist);
@@ -1582,13 +1692,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         return; // Already added manually
       } else if (obj.type === 'cable' && obj.points && obj.points.length >= 2) {
         // Cable route — visible line in circuit colour with length label at midpoint.
-        // Default fallback is elec-yellow so an unassigned cable is ALWAYS visible
-        // on the dark canvas (previous default was grey #6B7280 which disappeared).
+        // The canvas background is white, so the fallback uses a dark grey (#404040)
+        // which is visible against white yet distinct from black walls. Previously
+        // the fallback was #6B7280 which rendered as invisible washed-out grey.
         const CIRCUIT_PALETTE: Record<string, string> = {
-          L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
-          C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+          L1: '#2563eb', L2: '#60A5FA', S1: '#dc2626', S2: '#F87171',
+          C1: '#D97706', EV1: '#059669', FA1: '#DB2777', IH1: '#7C3AED', AC1: '#0891b2',
         };
-        const cableColour = CIRCUIT_PALETTE[obj.circuitRef || ''] || '#EAB308';
+        const cableColour = CIRCUIT_PALETTE[obj.circuitRef || ''] || '#404040';
 
         // Walk all waypoints so Phase-5 multi-segment cable routes render
         // correctly without another touch to this block.
@@ -1611,19 +1722,29 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           );
         }
 
-        // Length label at the geometric midpoint of the FIRST segment.
-        const p1 = pts[0];
-        const p2 = pts[1];
-        const midX = (p1.x + p2.x) / 2;
-        const midY = (p1.y + p2.y) / 2;
+        // Length label at the midpoint of the LONGEST segment so it sits on
+        // the main cable run, not on a short perpendicular exit near a symbol.
+        let labelX = (pts[0].x + pts[1].x) / 2;
+        let labelY = (pts[0].y + pts[1].y) / 2;
+        let bestSegLen = 0;
+        for (let i = 0; i < pts.length - 1; i++) {
+          const a = pts[i];
+          const b = pts[i + 1];
+          const segLen = Math.hypot(b.x - a.x, b.y - a.y);
+          if (segLen > bestSegLen) {
+            bestSegLen = segLen;
+            labelX = (a.x + b.x) / 2;
+            labelY = (a.y + b.y) / 2;
+          }
+        }
         const cableLabel = pxToMetres(totalLen);
         const circuitTag = obj.circuitRef ? `${obj.circuitRef} · ` : '';
         const labelText = `${circuitTag}${cableLabel}`;
 
         // Background pill behind label so it reads against any background
         const labelBg = new Rect({
-          left: midX,
-          top: midY,
+          left: labelX,
+          top: labelY,
           width: labelText.length * 6.8 + 14,
           height: 18,
           fill: 'rgba(10,10,10,0.85)',
@@ -1637,8 +1758,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           evented: false,
         });
         const label = new FabricText(labelText, {
-          left: midX,
-          top: midY,
+          left: labelX,
+          top: labelY,
           fontSize: 11,
           fontWeight: '600',
           fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -1806,6 +1927,54 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         const tool = activeToolRef.current;
 
+        // Record press location for move-threshold cancellation of long-press
+        const downPointer = fabricCanvasRef.current?.getPointer(e.e);
+        if (downPointer) {
+          mouseDownAtRef.current = { x: downPointer.x, y: downPointer.y };
+        }
+
+        // Long-press + double-tap → open PropertiesPanel.
+        // Applies when the user taps a selectable object (symbol/cable) in
+        // select mode. Cleared on mouse:up, mouse:move beyond threshold,
+        // or tool change. See Phase 2 of the Room Planner refactor.
+        if (tool === 'select' && e.target) {
+          const tappedData = (e.target as any).customData;
+          const isPropsCandidate =
+            tappedData?.type === 'symbol' ||
+            tappedData?.type === 'cable' ||
+            tappedData?.type === 'text' ||
+            tappedData?.type === 'rectangle' ||
+            tappedData?.type === 'line';
+
+          if (isPropsCandidate && tappedData.id) {
+            const tappedId: string = tappedData.id;
+            const now = Date.now();
+            const lastTap = lastTapRef.current;
+
+            // Double-tap (same object within 300ms) → open properties now
+            if (lastTap && lastTap.id === tappedId && now - lastTap.time < 300) {
+              const obj = objectsRef.current.find((o) => o.id === tappedId);
+              if (obj) onRequestPropertiesRef.current?.(obj);
+              lastTapRef.current = null;
+              if (longPressTimerRef.current) {
+                clearTimeout(longPressTimerRef.current);
+                longPressTimerRef.current = null;
+              }
+              return;
+            }
+
+            lastTapRef.current = { id: tappedId, time: now };
+
+            // Long-press (500ms without release/move) → open properties
+            if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+            longPressTimerRef.current = setTimeout(() => {
+              const obj = objectsRef.current.find((o) => o.id === tappedId);
+              if (obj) onRequestPropertiesRef.current?.(obj);
+              longPressTimerRef.current = null;
+            }, 500);
+          }
+        }
+
         if (tool === 'select') {
           if (e.target) {
             const tapped = e.target as any;
@@ -1879,7 +2048,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           return;
         }
 
-        // Cable tool — click on symbol to start/end a cable route
+        // Cable tool — click on symbol to start/end a cable route.
+        // Phase 5: circuitRef is inferred from the source symbol's category
+        // so a fresh cable has the correct colour even when no circuit has
+        // been manually assigned yet.
         if (tool === 'cable' && e.target && (e.target as any).customData?.type === 'symbol') {
           const targetData = (e.target as any).customData;
           const targetObj = objectsRef.current.find((o) => o.id === targetData.id);
@@ -1893,17 +2065,39 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             saveState();
             const startObj = objectsRef.current.find((o) => o.id === cableStartIdRef.current);
             if (startObj) {
-              const circuitRef = startObj.circuitRef || targetObj.circuitRef || 'S1';
+              // Infer circuit from symbol type if neither end has one
+              const inferCircuit = (symId?: string): string => {
+                if (!symId) return 'S1';
+                if (symId.startsWith('light-') || symId === 'extractor-fan') return 'L1';
+                if (symId === 'socket-cooker-45a') return 'C1';
+                if (symId === 'socket-ev-charger') return 'EV1';
+                if (
+                  symId.startsWith('smoke-') ||
+                  symId.startsWith('heat-') ||
+                  symId.startsWith('co-')
+                ) return 'FA1';
+                if (symId.startsWith('socket-')) return 'S1';
+                return 'S1';
+              };
+              const circuitRef =
+                startObj.circuitRef ||
+                targetObj.circuitRef ||
+                inferCircuit(startObj.symbolId);
+
+              const startPt = { x: startObj.x, y: startObj.y };
+              const endPt = { x: targetObj.x, y: targetObj.y };
+              const routedPoints = orthogonalRoute(
+                startPt,
+                endPt,
+                extractWalls(objectsRef.current)
+              );
 
               const newCable: CanvasObject = {
                 id: `cable-${Date.now()}`,
                 type: 'cable',
                 x: startObj.x,
                 y: startObj.y,
-                points: [
-                  { x: startObj.x, y: startObj.y },
-                  { x: targetObj.x, y: targetObj.y },
-                ],
+                points: routedPoints,
                 circuitRef,
               };
               onObjectsChangeRef.current([...objectsRef.current, newCable]);
@@ -2007,7 +2201,6 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               symbolId: symId,
             };
             onObjectsChangeRef.current([...objectsRef.current, newObj]);
-            setTimeout(() => focusOnPoint(placeX, placeY), 80);
           }
           isDrawingRef.current = false;
         } else if (tool === 'text') {
@@ -2032,6 +2225,17 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         const pointer = canvas.getPointer(e.e);
         const x = snapToGrid(pointer.x);
         const y = snapToGrid(pointer.y);
+
+        // Cancel long-press timer if user moves more than ~6px — they're
+        // dragging, not trying to open properties.
+        if (longPressTimerRef.current && mouseDownAtRef.current) {
+          const dx = pointer.x - mouseDownAtRef.current.x;
+          const dy = pointer.y - mouseDownAtRef.current.y;
+          if (Math.hypot(dx, dy) > 6) {
+            clearTimeout(longPressTimerRef.current);
+            longPressTimerRef.current = null;
+          }
+        }
 
         if (tool === 'symbol') {
           const snappedPlacement = getWallSnapPlacement(x, y, selectedSymbolIdRef.current);
@@ -2201,6 +2405,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       };
 
       const handleMouseUp = (e: any) => {
+        // Cancel any pending long-press on release — a quick tap-and-release
+        // should never open the PropertiesPanel.
+        if (longPressTimerRef.current) {
+          clearTimeout(longPressTimerRef.current);
+          longPressTimerRef.current = null;
+        }
+        mouseDownAtRef.current = null;
+
         // Block if gesture was multi-touch
         if (isTouchGestureRef.current) return;
 

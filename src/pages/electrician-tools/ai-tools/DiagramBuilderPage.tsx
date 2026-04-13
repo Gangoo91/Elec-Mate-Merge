@@ -239,10 +239,28 @@ const DiagramBuilderPage = () => {
 
   const [activeTool, setActiveTool] = useState<DrawingTool>('select');
   const [selectedSymbolId, setSelectedSymbolId] = useState<string | null>(null);
-  const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>([]);
-  const [gridEnabled, setGridEnabled] = useState(true);
-  const [snapEnabled, setSnapEnabled] = useState(true);
+  // Hydrate from autosave on first mount so users never lose unsaved progress.
+  const restoredProject = useRef(
+    storageGetJSONSync<{
+      objects?: CanvasObject[];
+      settings?: { gridEnabled?: boolean; snapEnabled?: boolean };
+    } | null>('diagram-builder-project', null)
+  ).current;
+  const [canvasObjects, setCanvasObjects] = useState<CanvasObject[]>(
+    () => restoredProject?.objects ?? []
+  );
+  const [gridEnabled, setGridEnabled] = useState<boolean>(
+    () => restoredProject?.settings?.gridEnabled ?? true
+  );
+  const [snapEnabled, setSnapEnabled] = useState<boolean>(
+    () => restoredProject?.settings?.snapEnabled ?? true
+  );
   const [selectedObject, setSelectedObject] = useState<CanvasObject | null>(null);
+  // Phase 2: PropertiesPanel only opens on an explicit gesture (long-press or
+  // double-tap), not on every single-tap selection. `selectedObject` still
+  // tracks the internally-selected object for other flows (rotate-all, delete),
+  // but `propertiesTarget` is the state that controls the panel sheet.
+  const [propertiesTarget, setPropertiesTarget] = useState<CanvasObject | null>(null);
   const [aiDialogOpen, setAiDialogOpen] = useState(false);
   const [symbolSheetOpen, setSymbolSheetOpen] = useState(false);
   const [shapesSheetOpen, setShapesSheetOpen] = useState(false);
@@ -264,7 +282,7 @@ const DiagramBuilderPage = () => {
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const haptic = useHaptic();
-  const autoSaveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Auto-assign circuitRef to symbols that don't have one
   useEffect(() => {
@@ -362,19 +380,20 @@ const DiagramBuilderPage = () => {
     };
   }, []);
 
-  // Auto-save every 30 seconds when canvas has objects
+  // Debounced autosave on every change so progress is never lost.
+  // 300ms means at most a third of a second of work can disappear if the
+  // page is killed mid-edit; in practice almost nothing.
   useEffect(() => {
-    if (canvasObjects.length === 0) return;
-    autoSaveTimerRef.current = setInterval(() => {
-      const projectData = {
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    autoSaveTimerRef.current = setTimeout(() => {
+      storageSetJSONSync('diagram-builder-project', {
         objects: canvasObjects,
         settings: { gridEnabled, snapEnabled },
         timestamp: new Date().toISOString(),
-      };
-      storageSetJSONSync('diagram-builder-project', projectData);
-    }, 30000);
+      });
+    }, 300);
     return () => {
-      if (autoSaveTimerRef.current) clearInterval(autoSaveTimerRef.current);
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
     };
   }, [canvasObjects, gridEnabled, snapEnabled]);
 
@@ -741,7 +760,7 @@ const DiagramBuilderPage = () => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <h1 className="text-sm font-semibold text-white">Room Planner</h1>
+          <h1 className="hidden sm:block text-sm font-semibold text-white">Room Planner</h1>
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -793,6 +812,25 @@ const DiagramBuilderPage = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
+              {/* Export PDF — mobile only (tablet+ shows the visible button) */}
+              {rooms.length > 0 && (
+                <>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+                        toast({ title: 'Save this room first', description: 'Tap Save before exporting' });
+                        return;
+                      }
+                      setExportReviewOpen(true);
+                    }}
+                    className="sm:hidden text-white hover:bg-white/10 touch-manipulation"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Export PDF
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="sm:hidden bg-white/10" />
+                </>
+              )}
               <DropdownMenuItem
                 onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
@@ -945,6 +983,11 @@ const DiagramBuilderPage = () => {
               setTimeout(() => canvasRef.current?.focusOnObject?.(object.id), 90);
             }
           }}
+          onRequestProperties={(object) => {
+            // Only fires on long-press or double-tap — opens the sheet.
+            setPropertiesTarget(object);
+            haptic.light();
+          }}
           showMinimap={!isMobileViewport && canvasObjects.length > 0}
         />
         {/* Empty canvas hint */}
@@ -1050,7 +1093,7 @@ const DiagramBuilderPage = () => {
         circuits={circuitSummary}
         mobile={isMobileViewport}
         bottomOffset={overlayBottom}
-        hidden={isMobileViewport && (!!selectedObject || !!wallEditState || saveSheetOpen || symbolSheetOpen || shapesSheetOpen)}
+        hidden={isMobileViewport && (!!propertiesTarget || !!wallEditState || saveSheetOpen || symbolSheetOpen || shapesSheetOpen)}
       />
 
       {/* Scale bar is rendered by DiagramCanvas — no duplicate needed */}
@@ -1101,7 +1144,6 @@ const DiagramBuilderPage = () => {
               });
             }
             setCanvasObjects((prev) => [...prev, ...newObjects]);
-            setTimeout(() => canvasRef.current?.focusOnPoint?.(centreX, centreY), 120);
             setSymbolSheetOpen(false);
             setPlacingSymbolName(null);
             setSelectedSymbolId(null);
@@ -1122,11 +1164,19 @@ const DiagramBuilderPage = () => {
         selectedSymbolId={selectedSymbolId}
       />
 
-      {/* Properties Panel Sheet */}
+      {/* Properties Panel Sheet — driven by `propertiesTarget`, which is
+          only set via long-press or double-tap (Phase 2 gesture refactor).
+          A single-tap still selects objects for the floating action bar
+          above, but no longer auto-opens this sheet. */}
       <PropertiesPanel
-        selectedObject={selectedObject}
-        onUpdate={handleObjectUpdate}
-        onClose={() => setSelectedObject(null)}
+        selectedObject={propertiesTarget}
+        onUpdate={(updates) => {
+          handleObjectUpdate(updates);
+          // Mirror the update into the live target so the sheet reflects
+          // the change immediately.
+          setPropertiesTarget((prev) => (prev ? { ...prev, ...updates } : prev));
+        }}
+        onClose={() => setPropertiesTarget(null)}
       />
 
       {/* My Floor Plans Sheet */}
