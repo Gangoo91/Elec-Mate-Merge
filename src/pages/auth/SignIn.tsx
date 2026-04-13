@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CheckCircle2, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Check, CheckCircle2, Eye, EyeOff, Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import BiometricPromptSheet from '@/components/auth/BiometricPromptSheet';
@@ -117,19 +117,37 @@ const SignIn = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/96"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black"
+            style={{
+              paddingTop: 'env(safe-area-inset-top, 0px)',
+              paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+            }}
           >
-            <motion.div
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 280, damping: 20 }}
-              className="flex flex-col items-center gap-3"
-            >
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-500/15">
-                <CheckCircle2 className="h-8 w-8 text-green-400" />
-              </div>
-              <p className="text-[17px] font-semibold text-white">Welcome back</p>
-            </motion.div>
+            <div className="flex flex-col items-center gap-7">
+              <motion.div
+                initial={{ scale: 0.4, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+                className="relative"
+              >
+                <div className="absolute inset-0 rounded-full bg-green-500/40 blur-3xl" />
+                <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-green-500 shadow-[0_0_40px_rgba(34,197,94,0.5)]">
+                  <Check className="h-12 w-12 text-white" strokeWidth={3} />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ y: 14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.18, duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                className="text-center"
+              >
+                <p className="text-[26px] font-bold tracking-tight text-white">Welcome back</p>
+                <p className="mt-1.5 text-sm text-white/55">Loading your dashboard…</p>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

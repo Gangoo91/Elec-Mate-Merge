@@ -142,10 +142,8 @@ export default function AdminFailedPayments() {
       setMessageBody(
         `Hi ${firstName},\n\n` +
           `Andrew here from Elec-Mate — I noticed we've had a few failed payment attempts on your subscription. No hard feelings, just wanted to check in personally.\n\n` +
-          `Two options:\n` +
-          `1. Pay the invoice — use the button below and you're sorted in 30 seconds.\n` +
-          `2. Cancel your subscription — just reply to this email with "cancel" and I'll sort it straight away, no questions.\n\n` +
-          `Either way, no worries. Just let me know what works for you.\n\n` +
+          `If you don't want your subscription anymore, just say the word and I'll initiate the cancellation straight away — no questions, no hassle.\n\n` +
+          `If you do want to stay on, there's a link below to pay the invoice and you'll be sorted in 30 seconds.\n\n` +
           `Cheers,\nAndrew`
       );
     } else {

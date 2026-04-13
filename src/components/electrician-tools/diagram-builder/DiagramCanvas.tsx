@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
-import { Canvas as FabricCanvas, Rect, Line, FabricText, FabricObject, Group, Circle, Point, loadSVGFromString, util } from 'fabric';
+import { Canvas as FabricCanvas, Rect, Line, FabricText, FabricObject, Group, Circle, Path, Point, loadSVGFromString, util } from 'fabric';
 import type { CanvasObject } from '@/pages/electrician-tools/ai-tools/DiagramBuilderPage';
 import { symbolRegistry } from './symbols/symbolRegistry';
 import { electricalSymbols } from './symbols/electricalSymbols';
@@ -1454,6 +1454,147 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return group;
     };
 
+    /**
+     * Build certain symbols natively in Fabric instead of parsing SVG.
+     * Doors/windows/stairs/north-arrow have shapes (arcs, markers, text)
+     * that Fabric v6's SVG parser handles unreliably — so they were silently
+     * not rendering. Drawing them as native primitives is bulletproof.
+     *
+     * Returns null if the symbolId isn't one of the natively-handled set.
+     */
+    const buildNativeSymbol = (symbolId: string): FabricObject | null => {
+      const stroke = '#000000';
+      const sw = 1.5;
+      const common = { stroke, strokeWidth: sw, selectable: false, evented: false } as const;
+
+      switch (symbolId) {
+        case 'door-left': {
+          // Frame on top, jamb on left, swing arc opening to the right/bottom
+          const jamb = new Line([10, 10, 10, 30], common);
+          const top = new Line([10, 10, 30, 10], common);
+          const arc = new Path('M 30 10 A 20 20 0 0 1 10 30', {
+            ...common,
+            fill: '',
+            strokeDashArray: [3, 2],
+          });
+          return new Group([jamb, top, arc], { originX: 'center', originY: 'center' });
+        }
+        case 'door-right': {
+          const jamb = new Line([30, 10, 30, 30], common);
+          const top = new Line([10, 10, 30, 10], common);
+          const arc = new Path('M 10 10 A 20 20 0 0 0 30 30', {
+            ...common,
+            fill: '',
+            strokeDashArray: [3, 2],
+          });
+          return new Group([jamb, top, arc], { originX: 'center', originY: 'center' });
+        }
+        case 'door-double': {
+          const jambL = new Line([6, 10, 6, 30], common);
+          const jambR = new Line([34, 10, 34, 30], common);
+          const topL = new Line([6, 10, 20, 10], common);
+          const topR = new Line([20, 10, 34, 10], common);
+          const arcL = new Path('M 20 10 A 14 14 0 0 0 6 24', {
+            ...common,
+            fill: '',
+            strokeDashArray: [3, 2],
+          });
+          const arcR = new Path('M 20 10 A 14 14 0 0 1 34 24', {
+            ...common,
+            fill: '',
+            strokeDashArray: [3, 2],
+          });
+          return new Group([jambL, jambR, topL, topR, arcL, arcR], {
+            originX: 'center',
+            originY: 'center',
+          });
+        }
+        case 'window': {
+          const top = new Line([6, 17, 34, 17], common);
+          const bot = new Line([6, 23, 34, 23], common);
+          const left = new Line([6, 17, 6, 23], common);
+          const right = new Line([34, 17, 34, 23], common);
+          return new Group([top, bot, left, right], {
+            originX: 'center',
+            originY: 'center',
+          });
+        }
+        case 'stairs': {
+          const frame = new Rect({
+            left: 8, top: 6, width: 24, height: 28,
+            fill: '', stroke, strokeWidth: sw,
+            selectable: false, evented: false,
+          });
+          const lines: FabricObject[] = [];
+          for (let i = 1; i <= 5; i++) {
+            lines.push(new Line([8, 6 + i * 5, 32, 6 + i * 5], { ...common, strokeWidth: 1 }));
+          }
+          const arrow = new Line([20, 30, 20, 8], common);
+          const head = new Path('M 17 11 L 20 6 L 23 11 Z', {
+            fill: stroke,
+            stroke,
+            strokeWidth: 0.5,
+            selectable: false,
+            evented: false,
+          });
+          return new Group([frame, ...lines, arrow, head], {
+            originX: 'center',
+            originY: 'center',
+          });
+        }
+        case 'north-arrow': {
+          const arrow = new Path('M 20 4 L 14 24 L 20 20 L 26 24 Z', {
+            fill: stroke,
+            stroke,
+            strokeWidth: sw,
+            selectable: false,
+            evented: false,
+          });
+          const label = new FabricText('N', {
+            left: 20,
+            top: 32,
+            fontSize: 11,
+            fontWeight: '700',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fill: stroke,
+            originX: 'center',
+            originY: 'center',
+            selectable: false,
+            evented: false,
+          });
+          return new Group([arrow, label as unknown as FabricObject], {
+            originX: 'center',
+            originY: 'center',
+          });
+        }
+        default:
+          return null;
+      }
+    };
+
+    /** Yellow labeled placeholder so a failed symbol is visible, not silent. */
+    const buildPlaceholderSymbol = (label: string): FabricObject => {
+      const box = new Rect({
+        left: 0, top: 0, width: 48, height: 48,
+        fill: '#FEF3C7', stroke: '#D97706', strokeWidth: 1.5,
+        rx: 6, ry: 6,
+        selectable: false, evented: false,
+        originX: 'center', originY: 'center',
+      });
+      const txt = new FabricText(label.slice(0, 6), {
+        left: 0, top: 0,
+        fontSize: 9,
+        fontWeight: '700',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        fill: '#92400E',
+        originX: 'center', originY: 'center',
+        selectable: false, evented: false,
+      });
+      return new Group([box, txt as unknown as FabricObject], {
+        originX: 'center', originY: 'center',
+      });
+    };
+
     // Add object to canvas (async for SVG symbol loading)
     const addObjectToCanvas = async (obj: CanvasObject) => {
       const canvas = fabricCanvasRef.current;
@@ -1462,59 +1603,124 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       let fabricObj: FabricObject | null = null;
 
       if (obj.type === 'symbol' && obj.symbolId) {
-        try {
-          const svgString = await loadSymbolSvg(obj.symbolId);
-          const result = await loadSVGFromString(svgString);
-          const svgObjects = result.objects;
-          const validObjects = (svgObjects || []).filter((o): o is FabricObject => o !== null);
-          if (validObjects.length > 0) {
-            fabricObj = util.groupSVGElements(validObjects, {
+        // Try native render first for symbols that Fabric's SVG parser
+        // mishandles. Falls through to SVG loading for everything else.
+        const native = buildNativeSymbol(obj.symbolId);
+        if (native) {
+          native.set({
+            left: obj.x,
+            top: obj.y,
+            scaleX: 1.2,
+            scaleY: 1.2,
+            angle: obj.rotation || 0,
+            selectable: true,
+            hasControls: false,
+            lockScalingX: true,
+            lockScalingY: true,
+            lockRotation: true,
+            originX: 'center',
+            originY: 'center',
+          });
+          fabricObj = native;
+          (fabricObj as any).customData = {
+            id: obj.id,
+            type: 'symbol',
+            symbolId: obj.symbolId,
+            stateHash: serialiseCanvasObject(obj),
+          };
+        } else {
+          try {
+            const svgString = await loadSymbolSvg(obj.symbolId);
+            const result = await loadSVGFromString(svgString);
+            const svgObjects = result.objects;
+            const validObjects = (svgObjects || []).filter((o): o is FabricObject => o !== null);
+            if (validObjects.length > 0) {
+              fabricObj = util.groupSVGElements(validObjects, {
+                left: obj.x,
+                top: obj.y,
+                scaleX: 1.2,
+                scaleY: 1.2,
+                angle: obj.rotation || 0,
+                selectable: true,
+                hasControls: false,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockRotation: true,
+                originX: 'center',
+                originY: 'center',
+              });
+              (fabricObj as any).customData = {
+                id: obj.id,
+                type: 'symbol',
+                symbolId: obj.symbolId,
+                stateHash: serialiseCanvasObject(obj),
+              };
+            } else {
+              // SVG parsed but yielded nothing — show a visible placeholder
+              // so the user knows the symbol exists and can move/delete it.
+              console.warn('[Symbol] SVG yielded 0 objects, using placeholder:', obj.symbolId);
+              fabricObj = buildPlaceholderSymbol(obj.symbolId);
+              fabricObj.set({
+                left: obj.x,
+                top: obj.y,
+                angle: obj.rotation || 0,
+                selectable: true,
+                hasControls: false,
+                lockScalingX: true,
+                lockScalingY: true,
+                lockRotation: true,
+              });
+              (fabricObj as any).customData = {
+                id: obj.id,
+                type: 'symbol',
+                symbolId: obj.symbolId,
+                stateHash: serialiseCanvasObject(obj),
+              };
+            }
+          } catch (err) {
+            console.error('[Symbol] FAILED to load SVG for:', obj.symbolId, err);
+            // Fallback placeholder so the symbol is at least visible
+            fabricObj = buildPlaceholderSymbol(obj.symbolId);
+            fabricObj.set({
               left: obj.x,
               top: obj.y,
-              scaleX: 1.2,
-              scaleY: 1.2,
               angle: obj.rotation || 0,
               selectable: true,
               hasControls: false,
               lockScalingX: true,
               lockScalingY: true,
               lockRotation: true,
-              originX: 'center',
-              originY: 'center',
             });
-            // SVG elements already have correct fill/stroke from resolveCurrentColor
             (fabricObj as any).customData = {
               id: obj.id,
               type: 'symbol',
               symbolId: obj.symbolId,
               stateHash: serialiseCanvasObject(obj),
             };
-
-            // Circuit colour dot — small indicator showing which circuit this symbol is on
-            if (obj.circuitRef && fabricObj) {
-              const COLOURS: Record<string, string> = {
-                L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
-                C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
-              };
-              const dotColour = COLOURS[obj.circuitRef] || '#6B7280';
-              const dot = new Circle({
-                radius: 4,
-                fill: dotColour,
-                stroke: '#000000',
-                strokeWidth: 0.5,
-                left: (fabricObj.left || 0) + 16,
-                top: (fabricObj.top || 0) - 16,
-                selectable: false,
-                evented: false,
-                originX: 'center',
-                originY: 'center',
-              });
-              (dot as any).customData = { type: 'circuit-dot', parentId: obj.id };
-              canvas.add(dot);
-            }
           }
-        } catch (err) {
-          console.error('[Symbol] FAILED to load SVG for:', obj.symbolId, err);
+        }
+
+        // Circuit colour dot — small indicator showing which circuit this symbol is on
+        if (obj.circuitRef && fabricObj) {
+          const COLOURS: Record<string, string> = {
+            L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
+            C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+          };
+          const dotColour = COLOURS[obj.circuitRef] || '#6B7280';
+          const dot = new Circle({
+            radius: 4,
+            fill: dotColour,
+            stroke: '#000000',
+            strokeWidth: 0.5,
+            left: (fabricObj.left || 0) + 16,
+            top: (fabricObj.top || 0) - 16,
+            selectable: false,
+            evented: false,
+            originX: 'center',
+            originY: 'center',
+          });
+          (dot as any).customData = { type: 'circuit-dot', parentId: obj.id };
+          canvas.add(dot);
         }
       } else if (obj.type === 'rectangle') {
         fabricObj = new Rect({

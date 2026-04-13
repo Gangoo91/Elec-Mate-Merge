@@ -112,11 +112,8 @@ export function useAuthentication() {
         trackMilestone('User Logged In', { userId: data.user.id });
       }
 
-      // Success toast
-      toast({
-        title: 'Login Successful',
-        description: 'Welcome back!',
-      });
+      // No success toast — SignIn.tsx renders a full-screen welcome overlay
+      // for the celebration moment, the toast was a duplicate.
 
       return { error: null, user: data?.user };
     } catch (error: unknown) {

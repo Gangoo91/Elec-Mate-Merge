@@ -87,84 +87,99 @@ serve(async (req) => {
     return new Response('ok', { headers: corsHeaders });
   }
 
+  let step = 'init';
+
   try {
-    const authHeader = req.headers.get('Authorization');
+    step = 'read_auth_header';
+    const authHeader = req.headers.get('Authorization') || req.headers.get('authorization');
     if (!authHeader) throw new Error('No authorization header');
 
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    step = 'create_anon_client';
+    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    if (!supabaseUrl) throw new Error('SUPABASE_URL not set');
+    if (!anonKey) throw new Error('SUPABASE_ANON_KEY not set');
+    if (!serviceKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY not set');
 
+    const supabaseAnon = createClient(supabaseUrl, anonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+
+    step = 'get_user';
     const {
       data: { user },
       error: userError,
-    } = await supabase.auth.getUser();
-    if (userError || !user) throw new Error('Unauthorised');
+    } = await supabaseAnon.auth.getUser();
+    if (userError) throw new Error(`getUser failed: ${userError.message}`);
+    if (!user) throw new Error('No user from JWT');
 
-    const { data: profile } = await supabase
+    step = 'service_client';
+    const supabaseAdmin = createClient(supabaseUrl, serviceKey);
+
+    step = 'check_admin_role';
+    const { data: profile, error: profileErr } = await supabaseAdmin
       .from('profiles')
       .select('admin_role')
       .eq('id', user.id)
       .single();
+    if (profileErr) throw new Error(`Profile load failed: ${profileErr.message}`);
+    if (!profile?.admin_role) throw new Error(`User ${user.id} has no admin_role`);
 
-    if (!profile || !['super_admin', 'admin'].includes(profile.admin_role)) {
-      throw new Error('Admin access required');
-    }
+    step = 'parse_body';
+    const bodyJson = await req.json();
+    const { recordId, subject, body } = bodyJson;
+    if (!recordId) throw new Error('recordId is required');
+    if (!subject) throw new Error('subject is required');
+    if (!body) throw new Error('body is required');
 
-    const { recordId, subject, body } = await req.json();
-    if (!recordId || !subject || !body) {
-      throw new Error('recordId, subject, and body are required');
-    }
-
-    // Service role for writes + cross-user reads
-    const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    );
-
-    // Load the failed payment record
+    step = 'load_record';
     const { data: record, error: recordErr } = await supabaseAdmin
       .from('failed_payment_emails')
       .select('*')
       .eq('id', recordId)
       .single();
+    if (recordErr) throw new Error(`Record lookup failed: ${recordErr.message}`);
+    if (!record) throw new Error(`Record ${recordId} not found`);
 
-    if (recordErr || !record) throw new Error('Failed payment record not found');
-
-    // Look up the user's email
+    step = 'load_target_user';
     const { data: targetUser, error: targetErr } = await supabaseAdmin.auth.admin.getUserById(
       record.user_id
     );
-    if (targetErr || !targetUser?.user?.email) {
-      throw new Error('Could not resolve target user email');
+    if (targetErr) throw new Error(`Target user lookup failed: ${targetErr.message}`);
+    if (!targetUser?.user?.email) {
+      throw new Error(`Target user ${record.user_id} has no email`);
     }
 
     const toEmail = targetUser.user.email;
 
-    // Send via Resend
+    step = 'resend_init';
     const resendKey = Deno.env.get('RESEND_API_KEY');
     if (!resendKey) throw new Error('RESEND_API_KEY not set');
     const resend = new Resend(resendKey);
 
+    step = 'resend_send';
     const html = buildHtml(body, record.hosted_invoice_url);
 
-    const { data: sendResult, error: sendErr } = await resend.emails.send({
+    const sendPayload = {
       from: FROM_EMAIL,
       to: [toEmail],
       reply_to: REPLY_TO,
       subject,
       html,
-      text: body,
-    });
+    };
+    console.log('About to send', { to: toEmail, from: FROM_EMAIL });
 
-    if (sendErr) {
-      console.error('Resend error', sendErr);
-      throw new Error(`Email send failed: ${sendErr.message || 'unknown'}`);
+    const sendResponse = await resend.emails.send(sendPayload);
+    console.log('Resend response', JSON.stringify(sendResponse));
+
+    if (sendResponse.error) {
+      throw new Error(
+        `Resend rejected: ${sendResponse.error.message || JSON.stringify(sendResponse.error)}`
+      );
     }
 
-    // Log to audit columns
+    step = 'log_audit';
     const { data: updatedRecord, error: updErr } = await supabaseAdmin
       .from('failed_payment_emails')
       .update({
@@ -174,24 +189,27 @@ serve(async (req) => {
       .eq('id', recordId)
       .select('*')
       .single();
-
-    if (updErr) {
-      console.warn('Failed to log personal message send', updErr);
-    }
+    if (updErr) console.warn('Audit log update failed (non-fatal)', updErr.message);
 
     return new Response(
       JSON.stringify({
         success: true,
         sentTo: toEmail,
-        messageId: sendResult?.id,
+        messageId: sendResponse.data?.id,
         record: updatedRecord,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    return new Response(JSON.stringify({ error: (error as Error).message }), {
-      status: 400,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    const err = error as Error;
+    const detail = `[${step}] ${err.message}`;
+    console.error('admin-send-personal-message FAILED', detail, err.stack);
+    return new Response(
+      JSON.stringify({ error: detail, step, stack: err.stack?.slice(0, 400) }),
+      {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

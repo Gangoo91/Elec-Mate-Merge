@@ -288,3 +288,13 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Admin — send personal message to failed-payment user (handles auth internally)
+[functions.admin-send-personal-message]
+verify_jwt = false
+
+
+# Admin — cancel failed subscription from dunning flow (handles auth internally)
+[functions.admin-cancel-failed-subscription]
+verify_jwt = false
+
+

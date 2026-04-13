@@ -181,8 +181,17 @@ const duplicateCanvasObject = (obj: CanvasObject, offset = 24): CanvasObject => 
   })),
 });
 
+/**
+ * Render the room to a centred image at `targetSize` with `padding` margin.
+ *
+ * Uses Fabric's `toCanvasElement(multiplier, { left, top, width, height })`
+ * which renders objects at their NATIVE coordinates regardless of the current
+ * viewport pan/zoom. The previous implementation cropped pixels off the
+ * displayed HTML canvas, which produced blank images whenever the user had
+ * panned/zoomed so the room sat outside the visible canvas pixel bounds.
+ */
 const renderCenteredRoomImage = (
-  sourceCanvas: HTMLCanvasElement,
+  fabricCanvas: { toCanvasElement: (multiplier: number, options?: { left: number; top: number; width: number; height: number }) => HTMLCanvasElement } | null | undefined,
   bounds: ReturnType<typeof getObjectBounds>,
   targetSize: { width: number; height: number },
   padding: number,
@@ -197,39 +206,41 @@ const renderCenteredRoomImage = (
   ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
 
-  if (!bounds || bounds.width <= 0 || bounds.height <= 0) {
-    ctx.drawImage(sourceCanvas, 0, 0, outputCanvas.width, outputCanvas.height);
+  if (!fabricCanvas || !bounds || bounds.width <= 0 || bounds.height <= 0) {
     return outputCanvas.toDataURL('image/png', quality);
   }
 
-  const cropX = Math.max(0, bounds.minX - padding);
-  const cropY = Math.max(0, bounds.minY - padding);
-  const cropWidth = Math.min(sourceCanvas.width - cropX, bounds.width + padding * 2);
-  const cropHeight = Math.min(sourceCanvas.height - cropY, bounds.height + padding * 2);
+  const cropPad = 24;
+  const cropL = bounds.minX - cropPad;
+  const cropT = bounds.minY - cropPad;
+  const cropW = bounds.width + cropPad * 2;
+  const cropH = bounds.height + cropPad * 2;
+  const multiplier = 2;
+
+  let tightCanvas: HTMLCanvasElement;
+  try {
+    tightCanvas = fabricCanvas.toCanvasElement(multiplier, {
+      left: cropL,
+      top: cropT,
+      width: cropW,
+      height: cropH,
+    });
+  } catch {
+    return outputCanvas.toDataURL('image/png', quality);
+  }
 
   const scale = Math.min(
-    (outputCanvas.width - padding * 2) / cropWidth,
-    (outputCanvas.height - padding * 2) / cropHeight
+    (outputCanvas.width - padding * 2) / tightCanvas.width,
+    (outputCanvas.height - padding * 2) / tightCanvas.height
   );
-
-  const drawWidth = cropWidth * scale;
-  const drawHeight = cropHeight * scale;
+  const drawWidth = tightCanvas.width * scale;
+  const drawHeight = tightCanvas.height * scale;
   const drawX = (outputCanvas.width - drawWidth) / 2;
   const drawY = (outputCanvas.height - drawHeight) / 2;
 
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
-  ctx.drawImage(
-    sourceCanvas,
-    cropX,
-    cropY,
-    cropWidth,
-    cropHeight,
-    drawX,
-    drawY,
-    drawWidth,
-    drawHeight
-  );
+  ctx.drawImage(tightCanvas, drawX, drawY, drawWidth, drawHeight);
 
   return outputCanvas.toDataURL('image/png', quality);
 };
@@ -538,36 +549,24 @@ const DiagramBuilderPage = () => {
 
   const handleSaveRoom = (name: string) => {
     const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
-    const previousViewport = fabricCanvas?.viewportTransform ? [...fabricCanvas.viewportTransform] : null;
-    if (fabricCanvas) {
-      fabricCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
-      fabricCanvas.renderAll();
-    }
-
-    const canvasEl = canvasRef.current?.getCanvasElement();
     let thumbnail = '';
     let fullImage = '';
-    if (canvasEl) {
+    if (fabricCanvas) {
       const bounds = getObjectBounds(canvasObjects);
       fullImage = renderCenteredRoomImage(
-        canvasEl,
+        fabricCanvas,
         bounds,
         ROOM_EXPORT_SIZE,
         ROOM_IMAGE_PADDING,
         1
       );
       thumbnail = renderCenteredRoomImage(
-        canvasEl,
+        fabricCanvas,
         bounds,
         ROOM_THUMBNAIL_SIZE,
         18,
         0.8
       );
-    }
-
-    if (fabricCanvas && previousViewport) {
-      fabricCanvas.setViewportTransform(previousViewport as [number, number, number, number, number, number]);
-      fabricCanvas.renderAll();
     }
 
     const symbolIds = canvasObjects
