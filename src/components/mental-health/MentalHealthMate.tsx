@@ -600,7 +600,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                             <button
                               key={i}
                               onClick={() => handleSuggestionClick(suggestion)}
-                              className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-foreground/70
+                              className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-white/90
                                 hover:bg-white/10 active:scale-95 transition-all border border-white/10"
                             >
                               {suggestion}

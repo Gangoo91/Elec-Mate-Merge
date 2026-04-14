@@ -517,7 +517,7 @@ const GroundingExercises = () => {
                       ? 'bg-green-500 text-foreground'
                       : i === senseCount
                         ? `${colors.bg} ${colors.text} ring-2 ring-white/50 animate-pulse`
-                        : 'bg-white/10 text-foreground/30'
+                        : 'bg-white/10 text-white/70'
                   }`}
                 >
                   {i + 1}

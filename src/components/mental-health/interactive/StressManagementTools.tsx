@@ -1,266 +1,107 @@
 import { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { Brain, Play, Pause, RotateCcw } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const StressManagementTools = () => {
-  const [activeExercise, setActiveExercise] = useState<string | null>(null);
-  const [totalElapsed, setTotalElapsed] = useState(0);
+  const [active, setActive] = useState<string | null>(null);
   const [isRunning, setIsRunning] = useState(false);
-  const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'hold' | 'exhale' | 'pause'>(
-    'inhale'
-  );
-  const [phaseTimeLeft, setPhaseTimeLeft] = useState(4);
-  const [cycleCount, setCycleCount] = useState(0);
-
+  const [phase, setPhase] = useState<'inhale' | 'hold' | 'exhale' | 'pause'>('inhale');
+  const [timeLeft, setTimeLeft] = useState(4);
+  const [cycles, setCycles] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const exercises = [
-    {
-      id: 'box-breathing',
-      name: 'Box Breathing',
-      description: '4-4-4-4 breathing pattern for instant calm',
-      duration: 240, // 4 minutes
-      phases: [
-        { name: 'inhale' as const, duration: 4, instruction: 'Breathe in slowly' },
-        { name: 'hold' as const, duration: 4, instruction: 'Hold your breath' },
-        { name: 'exhale' as const, duration: 4, instruction: 'Breathe out slowly' },
-        { name: 'pause' as const, duration: 4, instruction: 'Pause briefly' },
-      ],
-    },
-    {
-      id: 'quick-calm',
-      name: 'Quick Calm',
-      description: '2-minute rapid stress relief technique',
-      duration: 120,
-      phases: [
-        { name: 'inhale' as const, duration: 3, instruction: 'Deep breath in' },
-        { name: 'exhale' as const, duration: 6, instruction: 'Slow breath out' },
-      ],
-    },
-    {
-      id: 'progressive-relaxation',
-      name: 'Progressive Muscle Relaxation',
-      description: '5-minute full body tension release',
-      duration: 300,
-      phases: [
-        { name: 'inhale' as const, duration: 5, instruction: 'Tense muscle group' },
-        { name: 'exhale' as const, duration: 10, instruction: 'Release and relax' },
-      ],
-    },
+    { id: 'box', title: 'Box Breathing', sub: '4-4-4-4 pattern for instant calm', dur: '4 min', phases: { inhale: 4, hold: 4, exhale: 4, pause: 4 }, totalCycles: 15 },
+    { id: 'quick', title: 'Quick Calm', sub: 'Longer exhale for rapid relief', dur: '2 min', phases: { inhale: 3, hold: 0, exhale: 6, pause: 0 }, totalCycles: 13 },
+    { id: 'relax', title: 'Deep Relax', sub: 'Slow breathing to unwind', dur: '3 min', phases: { inhale: 5, hold: 3, exhale: 7, pause: 0 }, totalCycles: 12 },
   ];
 
-  const currentExercise = exercises.find((e) => e.id === activeExercise);
-  const currentPhase = currentExercise?.phases.find((p) => p.name === breathingPhase);
+  const activeEx = exercises.find((e) => e.id === active);
 
   useEffect(() => {
-    if (isRunning && activeExercise) {
-      intervalRef.current = setInterval(() => {
-        setTotalElapsed((prev) => {
-          const newTotal = prev + 1;
-          // Check if exercise is complete
-          if (currentExercise && newTotal >= currentExercise.duration) {
-            setIsRunning(false);
-            return newTotal;
+    if (!isRunning || !activeEx) return;
+    intervalRef.current = setInterval(() => {
+      setTimeLeft((t) => {
+        if (t <= 1) {
+          const phaseOrder: Array<'inhale' | 'hold' | 'exhale' | 'pause'> = ['inhale', 'hold', 'exhale', 'pause'];
+          const nextIdx = (phaseOrder.indexOf(phase) + 1) % 4;
+          let nextPhase = phaseOrder[nextIdx];
+          // Skip phases with 0 duration
+          while (activeEx.phases[nextPhase] === 0) {
+            const skipIdx = (phaseOrder.indexOf(nextPhase) + 1) % 4;
+            nextPhase = phaseOrder[skipIdx];
           }
-          return newTotal;
-        });
-
-        setPhaseTimeLeft((prev) => {
-          const newTime = prev - 1;
-          if (newTime <= 0) {
-            // Move to next phase
-            if (currentExercise) {
-              const currentPhaseIndex = currentExercise.phases.findIndex(
-                (p) => p.name === breathingPhase
-              );
-              const nextPhaseIndex = (currentPhaseIndex + 1) % currentExercise.phases.length;
-              const nextPhase = currentExercise.phases[nextPhaseIndex];
-
-              setBreathingPhase(nextPhase.name);
-
-              // If we completed a full cycle (back to first phase)
-              if (nextPhaseIndex === 0) {
-                setCycleCount((prev) => prev + 1);
-              }
-
-              return nextPhase.duration;
-            }
+          if (nextPhase === 'inhale') {
+            setCycles((c) => {
+              if (c + 1 >= activeEx.totalCycles) { setIsRunning(false); return 0; }
+              return c + 1;
+            });
           }
-          return newTime;
-        });
-      }, 1000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    }
+          setPhase(nextPhase);
+          return activeEx.phases[nextPhase];
+        }
+        return t - 1;
+      });
+    }, 1000);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [isRunning, phase, activeEx]);
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isRunning, activeExercise, breathingPhase, currentExercise]);
-
-  const startExercise = (exerciseId: string) => {
-    const exercise = exercises.find((e) => e.id === exerciseId);
-    if (exercise) {
-      setActiveExercise(exerciseId);
-      setTotalElapsed(0);
-      setBreathingPhase(exercise.phases[0].name);
-      setPhaseTimeLeft(exercise.phases[0].duration);
-      setCycleCount(0);
-      setIsRunning(true);
-    }
+  const start = (id: string) => {
+    const ex = exercises.find((e) => e.id === id)!;
+    setActive(id);
+    setPhase('inhale');
+    setTimeLeft(ex.phases.inhale);
+    setCycles(0);
+    setIsRunning(true);
   };
 
-  const togglePause = () => {
-    setIsRunning(!isRunning);
-  };
+  const stop = () => { setIsRunning(false); setActive(null); };
 
-  const stopExercise = () => {
-    setIsRunning(false);
-    setActiveExercise(null);
-    setTotalElapsed(0);
-    setPhaseTimeLeft(4);
-    setCycleCount(0);
-  };
+  const phaseLabels = { inhale: 'Breathe in', hold: 'Hold', exhale: 'Breathe out', pause: 'Pause' };
+  const phaseColors = { inhale: 'text-blue-400', hold: 'text-amber-400', exhale: 'text-emerald-400', pause: 'text-white/80' };
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const getProgressPercentage = () => {
-    if (!currentExercise) return 0;
-    return (totalElapsed / currentExercise.duration) * 100;
-  };
-
-  const getPhaseProgress = () => {
-    if (!currentPhase) return 0;
-    return ((currentPhase.duration - phaseTimeLeft) / currentPhase.duration) * 100;
-  };
-
-  const getCircleScale = () => {
-    if (breathingPhase === 'inhale') return 1 + (getPhaseProgress() / 100) * 0.5;
-    if (breathingPhase === 'exhale') return 1.5 - (getPhaseProgress() / 100) * 0.5;
-    return breathingPhase === 'hold' ? 1.5 : 1;
-  };
-
-  const getRemainingTime = () => {
-    if (!currentExercise) return 0;
-    return currentExercise.duration - totalElapsed;
-  };
+  if (active && isRunning) {
+    return (
+      <div className="flex flex-col items-center py-8 space-y-6">
+        <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">{activeEx?.title}</p>
+        <div className={cn(
+          'w-36 h-36 rounded-full border-2 flex items-center justify-center transition-all duration-1000 ease-in-out',
+          phase === 'inhale' ? 'border-blue-400/50 bg-blue-500/10 scale-110' :
+          phase === 'hold' ? 'border-amber-400/50 bg-amber-500/10 scale-105' :
+          phase === 'exhale' ? 'border-emerald-400/50 bg-emerald-500/10 scale-90' :
+          'border-white/20 bg-white/[0.03] scale-95'
+        )}>
+          <div className="text-center">
+            <p className={cn('text-base font-semibold', phaseColors[phase])}>{phaseLabels[phase]}</p>
+            <p className="text-3xl font-bold text-white mt-1">{timeLeft}</p>
+          </div>
+        </div>
+        <p className="text-xs text-white/70">Cycle {cycles + 1}</p>
+        <button onClick={stop} className="h-11 px-8 rounded-2xl bg-white/[0.06] border border-white/[0.1] text-white text-sm font-medium touch-manipulation active:scale-[0.98]">
+          Stop
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <Card className="border-blue-500/50 bg-blue-500/10">
-      <CardHeader>
-        <CardTitle className="text-blue-300 flex items-center gap-2">
-          <Brain className="h-5 w-5" />
-          Stress Management Tools
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {!activeExercise ? (
-          <div className="grid gap-3">
-            {exercises.map((exercise) => (
-              <div
-                key={exercise.id}
-                className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="font-medium text-foreground mb-1">{exercise.name}</h4>
-                    <p className="text-sm text-white mb-2">{exercise.description}</p>
-                    <Badge variant="outline" className="text-blue-300 border-blue-400/30">
-                      {Math.floor(exercise.duration / 60)} min
-                    </Badge>
-                  </div>
-                  <Button
-                    onClick={() => startExercise(exercise.id)}
-                    size="sm"
-                    className="bg-blue-600 hover:bg-blue-700"
-                  >
-                    <Play className="h-3 w-3 mr-1" />
-                    Start
-                  </Button>
-                </div>
-              </div>
-            ))}
+    <div className="space-y-3 pt-3">
+      <p className="text-xs text-white/60 mb-1">Choose a breathing exercise:</p>
+      {exercises.map((ex) => (
+        <button
+          key={ex.id}
+          onClick={() => start(ex.id)}
+          className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all text-left"
+        >
+          <div className="w-9 h-9 rounded-lg bg-blue-500/15 flex items-center justify-center flex-shrink-0">
+            <span className="text-blue-400 text-xs font-bold">{ex.dur}</span>
           </div>
-        ) : (
-          <div className="text-center space-y-6">
-            <div>
-              <h3 className="text-lg font-medium text-foreground mb-2">{currentExercise?.name}</h3>
-              <div className="text-3xl font-bold text-blue-300 mb-1">
-                {formatTime(getRemainingTime())}
-              </div>
-              <div className="text-sm text-white mb-3">Time remaining • Cycle {cycleCount + 1}</div>
-              <Progress value={getProgressPercentage()} className="h-2 mb-4" />
-            </div>
-
-            {activeExercise === 'box-breathing' && (
-              <div className="space-y-4">
-                <div className="w-32 h-32 mx-auto relative">
-                  <div
-                    className={`w-full h-full rounded-full border-4 transition-all duration-1000 ease-in-out flex items-center justify-center ${
-                      breathingPhase === 'inhale'
-                        ? 'border-green-400'
-                        : breathingPhase === 'hold'
-                          ? 'border-yellow-400'
-                          : breathingPhase === 'exhale'
-                            ? 'border-blue-400'
-                            : 'border-purple-400'
-                    }`}
-                    style={{ transform: `scale(${getCircleScale()})` }}
-                  >
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-foreground">{phaseTimeLeft}</div>
-                      <div className="text-xs text-white">seconds</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-lg font-medium text-foreground mb-2 capitalize">
-                    {currentPhase?.instruction}
-                  </div>
-                  <Progress value={getPhaseProgress()} className="h-2" />
-                </div>
-              </div>
-            )}
-
-            <div className="flex gap-2 justify-center">
-              <Button
-                onClick={togglePause}
-                variant="outline"
-                size="sm"
-                className="border-blue-500/20 hover:bg-blue-500/10"
-              >
-                {isRunning ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
-              </Button>
-              <Button
-                onClick={stopExercise}
-                variant="outline"
-                size="sm"
-                className="border-blue-500/20 hover:bg-blue-500/10"
-              >
-                <RotateCcw className="h-3 w-3" />
-              </Button>
-            </div>
-
-            <div className="text-xs text-white">
-              Find a quiet space and follow the breathing guide
-            </div>
+          <div className="flex-1 min-w-0">
+            <h4 className="text-sm font-semibold text-white">{ex.title}</h4>
+            <p className="text-[11px] text-white/80">{ex.sub}</p>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </button>
+      ))}
+    </div>
   );
 };
 

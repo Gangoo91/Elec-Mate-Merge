@@ -1,336 +1,122 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { Target, Plus, CheckCircle, Calendar, TrendingUp, Trash2 } from 'lucide-react';
+import { Target, Plus, Check, Trash2 } from 'lucide-react';
 import { useMentalHealth } from '@/contexts/MentalHealthContext';
+import { cn } from '@/lib/utils';
 
 interface Goal {
   id: string;
   title: string;
-  description: string;
-  category: 'wellbeing' | 'work' | 'learning' | 'personal';
-  targetDate: string;
+  category: string;
   progress: number;
-  status: 'active' | 'completed' | 'paused';
-  createdAt: string;
-  milestones: string[];
+  status: 'active' | 'completed';
 }
 
+const categories = [
+  { value: 'wellbeing', label: 'Wellbeing', color: 'text-pink-400 bg-pink-500/15' },
+  { value: 'work', label: 'Work', color: 'text-amber-400 bg-amber-500/15' },
+  { value: 'learning', label: 'Learning', color: 'text-blue-400 bg-blue-500/15' },
+  { value: 'personal', label: 'Personal', color: 'text-emerald-400 bg-emerald-500/15' },
+];
+
 const GoalSettingTracker = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newGoal, setNewGoal] = useState({
-    title: '',
-    description: '',
-    category: 'wellbeing' as const,
-    targetDate: '',
-    milestones: [''],
-  });
+  const { goals = [], addGoal, updateGoal, deleteGoal } = useMentalHealth() as any;
+  const [showAdd, setShowAdd] = useState(false);
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('wellbeing');
 
-  const categories = [
-    { value: 'wellbeing', label: 'Mental Wellbeing', color: 'bg-green-500/20 text-green-400' },
-    { value: 'work', label: 'Work/Career', color: 'bg-blue-500/20 text-blue-400' },
-    { value: 'learning', label: 'Learning & Skills', color: 'bg-purple-500/20 text-purple-400' },
-    { value: 'personal', label: 'Personal Growth', color: 'bg-orange-500/20 text-orange-400' },
-  ];
-
-  const addGoal = () => {
-    if (newGoal.title.trim() && newGoal.targetDate) {
-      const goal: Goal = {
-        id: Date.now().toString(),
-        title: newGoal.title.trim(),
-        description: newGoal.description.trim(),
-        category: newGoal.category,
-        targetDate: newGoal.targetDate,
-        progress: 0,
-        status: 'active',
-        createdAt: new Date().toISOString(),
-        milestones: newGoal.milestones.filter((m) => m.trim()),
-      };
-
-      setGoals((prev) => [...prev, goal]);
-      setNewGoal({
-        title: '',
-        description: '',
-        category: 'wellbeing',
-        targetDate: '',
-        milestones: [''],
-      });
-      setShowAddForm(false);
-    }
+  const handleAdd = () => {
+    if (!title.trim()) return;
+    const goal: Goal = { id: crypto.randomUUID(), title: title.trim(), category, progress: 0, status: 'active' };
+    if (addGoal) addGoal(goal);
+    setTitle('');
+    setShowAdd(false);
   };
 
-  const updateProgress = (id: string, progress: number) => {
-    setGoals((prev) =>
-      prev.map((goal) =>
-        goal.id === id
-          ? {
-              ...goal,
-              progress,
-              status: progress >= 100 ? 'completed' : goal.status,
-            }
-          : goal
-      )
-    );
+  const handleProgress = (goal: Goal) => {
+    const newProgress = Math.min(100, goal.progress + 25);
+    if (updateGoal) updateGoal(goal.id, { progress: newProgress, status: newProgress >= 100 ? 'completed' : 'active' });
   };
 
-  const deleteGoal = (id: string) => {
-    setGoals((prev) => prev.filter((goal) => goal.id !== id));
-  };
-
-  const addMilestone = () => {
-    setNewGoal((prev) => ({ ...prev, milestones: [...prev.milestones, ''] }));
-  };
-
-  const updateMilestone = (index: number, value: string) => {
-    setNewGoal((prev) => ({
-      ...prev,
-      milestones: prev.milestones.map((m, i) => (i === index ? value : m)),
-    }));
-  };
-
-  const getDaysRemaining = (targetDate: string) => {
-    const target = new Date(targetDate);
-    const today = new Date();
-    const diffTime = target.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
+  const activeGoals = (goals || []).filter((g: Goal) => g.status === 'active');
+  const completedGoals = (goals || []).filter((g: Goal) => g.status === 'completed');
 
   return (
-    <Card className="border-purple-500/50 bg-purple-500/10">
-      <CardHeader>
-        <CardTitle className="text-purple-300 flex items-center gap-2">
-          <Target className="h-5 w-5" />
-          Goal Setting & Progress Tracking
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {goals.length === 0 && !showAddForm ? (
-          <div className="text-center py-8">
-            <Target className="h-12 w-12 text-white mx-auto mb-4" />
-            <p className="text-white mb-4">
-              Set personal mental health goals and track your progress over time.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <Target className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-foreground">Set Goals</div>
-                <div className="text-xs text-white">Define your targets</div>
-              </div>
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-foreground">Track Progress</div>
-                <div className="text-xs text-white">Monitor improvements</div>
-              </div>
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <CheckCircle className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-foreground">Get Insights</div>
-                <div className="text-xs text-white">Understand patterns</div>
-              </div>
-            </div>
-            <Button
-              onClick={() => setShowAddForm(true)}
-              className="bg-purple-600 hover:bg-purple-700"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Create Your First Goal
-            </Button>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {goals.map((goal) => {
-              const categoryInfo = categories.find((c) => c.value === goal.category);
-              const daysRemaining = getDaysRemaining(goal.targetDate);
-
-              return (
-                <div
-                  key={goal.id}
-                  className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h4 className="font-medium text-foreground">{goal.title}</h4>
-                        <Badge className={categoryInfo?.color}>{categoryInfo?.label}</Badge>
-                        {goal.status === 'completed' && (
-                          <CheckCircle className="h-4 w-4 text-green-400" />
-                        )}
-                      </div>
-                      {goal.description && (
-                        <p className="text-sm text-white mb-2">{goal.description}</p>
-                      )}
-                      <div className="flex items-center gap-4 text-xs text-white mb-3">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          <span>{new Date(goal.targetDate).toLocaleDateString()}</span>
-                        </div>
-                        <span
-                          className={
-                            daysRemaining < 0
-                              ? 'text-red-400'
-                              : daysRemaining < 7
-                                ? 'text-orange-400'
-                                : ''
-                          }
-                        >
-                          {daysRemaining < 0 ? 'Overdue' : `${daysRemaining} days remaining`}
-                        </span>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span>Progress</span>
-                          <span className="font-medium">{goal.progress}%</span>
-                        </div>
-                        <Progress value={goal.progress} className="h-2" />
-
-                        {goal.status !== 'completed' && (
-                          <div className="flex gap-2 mt-2">
-                            {[25, 50, 75, 100].map((value) => (
-                              <Button
-                                key={value}
-                                size="sm"
-                                variant="outline"
-                                onClick={() => updateProgress(goal.id, value)}
-                                className="text-xs"
-                                disabled={goal.progress >= value}
-                              >
-                                {value}%
-                              </Button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => deleteGoal(goal.id)}
-                      className="text-red-400 border-red-400/30 hover:bg-red-400/10"
-                    >
-                      <Trash2 className="h-3 w-3" />
-                    </Button>
+    <div className="space-y-4 pt-3">
+      {/* Active goals */}
+      {activeGoals.length > 0 && (
+        <div className="space-y-2">
+          {activeGoals.map((goal: Goal) => {
+            const cat = categories.find((c) => c.value === goal.category);
+            return (
+              <div key={goal.id} className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                <button onClick={() => handleProgress(goal)} className="touch-manipulation active:scale-[0.95]">
+                  <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center flex-shrink-0 relative">
+                    <span className="text-[10px] font-bold text-green-400">{goal.progress}%</span>
                   </div>
+                </button>
+                <div className="flex-1 min-w-0">
+                  <h4 className="text-sm font-medium text-white truncate">{goal.title}</h4>
+                  {cat && <span className={cn('text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 inline-block', cat.color)}>{cat.label}</span>}
                 </div>
-              );
-            })}
-
-            {!showAddForm && (
-              <Button onClick={() => setShowAddForm(true)} variant="outline" className="w-full">
-                <Plus className="h-4 w-4 mr-2" />
-                Add New Goal
-              </Button>
-            )}
-          </div>
-        )}
-
-        {showAddForm && (
-          <div className="space-y-4 p-4 border border-purple-500/20 rounded-lg bg-purple-500/5">
-            <h4 className="font-medium text-purple-300">Create New Goal</h4>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label className="text-sm">Goal Title *</Label>
-                <Input
-                  value={newGoal.title}
-                  onChange={(e) => setNewGoal((prev) => ({ ...prev, title: e.target.value }))}
-                  placeholder="e.g., Practice daily mindfulness"
-                  className="mt-1"
-                />
+                <button onClick={() => deleteGoal?.(goal.id)} className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-red-500/15 touch-manipulation">
+                  <Trash2 className="h-3.5 w-3.5 text-white/60 hover:text-red-400" />
+                </button>
               </div>
-              <div>
-                <Label className="text-sm">Category</Label>
-                <Select
-                  value={newGoal.category}
-                  onValueChange={(value: any) =>
-                    setNewGoal((prev) => ({ ...prev, category: value }))
-                  }
-                >
-                  <SelectTrigger className="mt-1">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={cat.value} value={cat.value}>
-                        {cat.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            );
+          })}
+          <p className="text-[10px] text-white/70 text-center">Tap the percentage to add progress</p>
+        </div>
+      )}
 
-            <div>
-              <Label className="text-sm">Description</Label>
-              <Textarea
-                value={newGoal.description}
-                onChange={(e) => setNewGoal((prev) => ({ ...prev, description: e.target.value }))}
-                placeholder="Describe your goal and why it's important to you"
-                className="mt-1"
-                rows={2}
-              />
+      {/* Completed */}
+      {completedGoals.length > 0 && (
+        <div className="space-y-1">
+          <p className="text-[10px] text-white/70 uppercase tracking-wider font-bold">Completed</p>
+          {completedGoals.slice(0, 3).map((goal: Goal) => (
+            <div key={goal.id} className="flex items-center gap-2 py-2">
+              <Check className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+              <span className="text-xs text-white/80 line-through truncate">{goal.title}</span>
             </div>
+          ))}
+        </div>
+      )}
 
-            <div>
-              <Label className="text-sm">Target Date *</Label>
-              <Input
-                type="date"
-                value={newGoal.targetDate}
-                onChange={(e) => setNewGoal((prev) => ({ ...prev, targetDate: e.target.value }))}
-                className="mt-1"
-                min={new Date().toISOString().split('T')[0]}
-              />
-            </div>
-
-            <div>
-              <Label className="text-sm">Milestones (optional)</Label>
-              {newGoal.milestones.map((milestone, index) => (
-                <Input
-                  key={index}
-                  value={milestone}
-                  onChange={(e) => updateMilestone(index, e.target.value)}
-                  placeholder={`Milestone ${index + 1}`}
-                  className="mt-1"
-                />
-              ))}
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={addMilestone}
-                className="mt-2"
-              >
-                <Plus className="h-3 w-3 mr-1" />
-                Add Milestone
-              </Button>
-            </div>
-
-            <div className="flex gap-2">
-              <Button onClick={addGoal} disabled={!newGoal.title || !newGoal.targetDate}>
-                Create Goal
-              </Button>
-              <Button onClick={() => setShowAddForm(false)} variant="outline">
-                Cancel
-              </Button>
-            </div>
+      {/* Add goal */}
+      {showAdd ? (
+        <div className="space-y-3">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="What's your goal?"
+            className="w-full h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/60 focus:border-white/20 focus:outline-none touch-manipulation"
+            style={{ fontSize: '16px' }}
+            autoFocus
+          />
+          <div className="flex gap-1.5">
+            {categories.map((c) => (
+              <button key={c.value} onClick={() => setCategory(c.value)} className={cn('flex-1 h-9 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
+                category === c.value ? c.color + ' border border-current/20' : 'bg-white/[0.03] border border-white/[0.06] text-white/70'
+              )}>{c.label}</button>
+            ))}
           </div>
-        )}
-      </CardContent>
-    </Card>
+          <div className="flex gap-2">
+            <button onClick={handleAdd} disabled={!title.trim()} className="flex-1 h-11 rounded-xl bg-green-500/20 border border-green-500/30 text-green-300 text-xs font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-30">Save Goal</button>
+            <button onClick={() => setShowAdd(false)} className="h-11 px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/80 text-xs touch-manipulation active:scale-[0.98]">Cancel</button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setShowAdd(true)}
+          className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.1] text-white/70 text-xs font-medium touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
+        >
+          <Plus className="h-3.5 w-3.5" /> Add a Goal
+        </button>
+      )}
+
+      {activeGoals.length === 0 && completedGoals.length === 0 && !showAdd && (
+        <p className="text-xs text-white/70 text-center py-2">Set small, achievable goals for your wellbeing</p>
+      )}
+    </div>
   );
 };
 

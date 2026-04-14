@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { LazyRoute } from '@/components/LazyRoute';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
+import { useAuth } from '@/contexts/AuthContext';
 import { getSEORoutes } from '@/routes/SEORoutes';
 import { SentryErrorBoundary } from '@/components/common/SentryErrorBoundary';
 
@@ -32,6 +33,7 @@ const PaymentSuccess = lazyWithRetry(() => import('@/pages/PaymentSuccess'));
 const InvoicePaymentSuccess = lazyWithRetry(() => import('@/pages/InvoicePaymentSuccess'));
 const NotFound = lazyWithRetry(() => import('@/pages/NotFound'));
 const ApprenticeMentalHealth = lazy(() => import('@/pages/apprentice/ApprenticeMentalHealth'));
+const ElectricianMentalHealth = lazy(() => import('@/pages/electrician/ElectricianMentalHealth'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
@@ -239,6 +241,14 @@ const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   const suffix = location.pathname.startsWith(from) ? location.pathname.slice(from.length) : '';
   const newPath = `${to}${suffix}${location.search}${location.hash}`;
   return <Navigate to={newPath} replace />;
+};
+
+/** Routes to the correct mental health page based on user role */
+const MentalHealthRouter = () => {
+  const { profile } = useAuth();
+  const role = profile?.role;
+  if (role === 'electrician' || role === 'employer') return <ElectricianMentalHealth />;
+  return <ApprenticeMentalHealth />;
 };
 
 const AppRouter = () => {
@@ -1630,7 +1640,7 @@ const AppRouter = () => {
             path="mental-health"
             element={
               <LazyRoute>
-                <ApprenticeMentalHealth />
+                <MentalHealthRouter />
               </LazyRoute>
             }
           />

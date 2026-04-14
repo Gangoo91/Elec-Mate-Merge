@@ -87,7 +87,7 @@ export function BlockUserDialog({
             checked={alsoReport}
             onCheckedChange={(checked) => setAlsoReport(checked === true)}
           />
-          <Label htmlFor="also-report" className="text-sm text-muted-foreground cursor-pointer">
+          <Label htmlFor="also-report" className="text-sm text-white/80 cursor-pointer">
             Also report this user to admins
           </Label>
         </div>
