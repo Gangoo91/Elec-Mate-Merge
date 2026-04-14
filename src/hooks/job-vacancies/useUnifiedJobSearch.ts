@@ -198,36 +198,90 @@ export const useUnifiedJobSearch = () => {
     isSearching: false,
   });
 
-  // Fetch initial jobs on mount - filtered to electrical industry only
+  // Fetch initial jobs on mount - filtered to electrical industry only.
+  // Sorted by created_at DESC (scrape time) then posted_date DESC so the
+  // freshest scraper output always surfaces first.
   const fetchInitialJobs = async () => {
     try {
       setLoading(true);
       console.log('📋 Fetching electrical jobs from job_listings...');
 
-      // Fetch more jobs initially since we'll filter client-side
-      // Use database-level filter for common electrical terms to reduce data transfer
+      // Fetch up to 2000 rows so the DB's ~6,300 cached listings can properly
+      // flow through the client-side electrical filter. The previous 500 cap
+      // was clipping the feed before the keyword match even ran.
       const { data, error } = await supabase
         .from('job_listings')
         .select('*')
         .or(
           'title.ilike.%electric%,title.ilike.%sparky%,title.ilike.%wiring%,title.ilike.%solar%,title.ilike.%ev %,title.ilike.%commissioning%,title.ilike.%fire alarm%,title.ilike.%cable%,title.ilike.%testing%,description.ilike.%electrician%,description.ilike.%electrical%'
         )
+        .order('created_at', { ascending: false, nullsFirst: false })
         .order('posted_date', { ascending: false })
-        .limit(500);
+        .limit(2000);
 
       if (error) throw error;
 
-      // Apply additional client-side filtering for precision
-      const electricalJobs = (data || [])
+      // Apply additional client-side filtering for precision. No hard cap —
+      // show every electrical job we can find.
+      const rawJobs = (data || [])
         .map((job) => ({
           ...job,
           is_fresh: isJobFresh(job.updated_at),
         }))
-        .filter(isElectricalJob)
-        .slice(0, 150); // Limit final results
+        .filter(isElectricalJob);
+
+      // Deduplicate: the same job often appears from reed, adzuna, gumtree
+      // and indeed scrapers. Reed/Gumtree frequently have empty descriptions
+      // while Adzuna pulls the full posting. Group by a stable key and keep
+      // the version with the richest data (longest real description, then
+      // freshest scrape).
+      const descLen = (d: string | null | undefined) =>
+        d ? d.trim().length : 0;
+      const makeKey = (job: UnifiedJob): string => {
+        const title = (job.title || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        const company = (job.company || '').toLowerCase().replace(/\s+/g, ' ').trim();
+        const locPart = (job.location || '')
+          .toLowerCase()
+          .split(/,|-|\//)[0]
+          .trim();
+        return `${title}|${company}|${locPart}`;
+      };
+      const byKey = new Map<string, UnifiedJob>();
+      for (const job of rawJobs) {
+        const key = makeKey(job);
+        const existing = byKey.get(key);
+        if (!existing) {
+          byKey.set(key, job);
+          continue;
+        }
+        // Pick the better version:
+        //   1) longer real description wins
+        //   2) otherwise the one with more data fields populated
+        //   3) otherwise the fresher updated_at
+        const existingScore =
+          descLen(existing.description) * 100 +
+          (existing.salary ? 10 : 0) +
+          (existing.image_url ? 5 : 0);
+        const newScore =
+          descLen(job.description) * 100 +
+          (job.salary ? 10 : 0) +
+          (job.image_url ? 5 : 0);
+        if (newScore > existingScore) {
+          byKey.set(key, job);
+        } else if (newScore === existingScore) {
+          const existingT = new Date(existing.updated_at || 0).getTime();
+          const newT = new Date(job.updated_at || 0).getTime();
+          if (newT > existingT) byKey.set(key, job);
+        }
+      }
+      const electricalJobs = Array.from(byKey.values()).sort((a, b) => {
+        const ta = new Date(a.updated_at || 0).getTime();
+        const tb = new Date(b.updated_at || 0).getTime();
+        return tb - ta;
+      });
 
       console.log(
-        `✅ Loaded ${electricalJobs.length} electrical jobs (filtered from ${data?.length || 0})`
+        `✅ Loaded ${electricalJobs.length} electrical jobs (deduped from ${rawJobs.length}, pre-filter ${data?.length || 0})`
       );
       setJobs(electricalJobs);
 

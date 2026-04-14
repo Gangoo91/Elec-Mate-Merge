@@ -82,6 +82,14 @@ serve(async (req: Request) => {
     // Exclude expired products (keep products with no expiry set for backwards compatibility)
     productsQuery = productsQuery.or(`expires_at.gte.${nowISO},expires_at.is.null`);
 
+    // Junk product name filter — the scraper occasionally grabs category
+    // labels like "brands" instead of the actual product name. These should
+    // never reach the UI.
+    productsQuery = productsQuery
+      .not('name', 'ilike', 'brands')
+      .not('name', 'ilike', 'categories')
+      .not('name', 'ilike', 'all products');
+
     // Apply filters — use full-text search when available, fall back to ilike
     if (query && query.length > 0) {
       // Convert search query to tsquery format (space-separated words become AND)
@@ -150,8 +158,12 @@ serve(async (req: Request) => {
       .from('marketplace_products')
       .select('*', { count: 'exact', head: true });
 
-    // Apply same filters to count query (including expiry filter)
-    countQuery = countQuery.or(`expires_at.gte.${nowISO},expires_at.is.null`);
+    // Apply same filters to count query (including expiry + junk name filters)
+    countQuery = countQuery
+      .or(`expires_at.gte.${nowISO},expires_at.is.null`)
+      .not('name', 'ilike', 'brands')
+      .not('name', 'ilike', 'categories')
+      .not('name', 'ilike', 'all products');
     if (query && query.length > 0) {
       const tsQueryCount = query.trim().split(/\s+/).join(' & ');
       countQuery = countQuery.or(`search_vector.fts.${tsQueryCount},name.ilike.%${query}%`);
@@ -336,27 +348,54 @@ serve(async (req: Request) => {
       }));
     }
 
-    // Pick deal of the day — highest discount product that's on sale with an image
+    // Pick deal of the day — prefer a product scraped in the last 24h with high
+    // discount, an image, a real name, and respecting the current productType.
+    // Falls back to last 7 days if nothing fresh is on sale.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
     let dealOfTheDay: any = null;
     if (page === 1 && !query && !dealsOnly) {
-      const { data: dotdData } = await supabase
-        .from('marketplace_products')
-        .select(
-          `
-          id, sku, name, brand, category, current_price, regular_price,
-          is_on_sale, discount_percentage, image_url, product_url, stock_status,
-          supplier_id,
-          marketplace_suppliers ( name, slug )
-        `
-        )
-        .eq('is_on_sale', true)
-        .not('discount_percentage', 'is', null)
-        .not('image_url', 'is', null)
-        .or(`expires_at.gte.${nowISO},expires_at.is.null`)
-        .order('discount_percentage', { ascending: false })
-        .limit(1)
-        .single();
+      const DOTD_SELECT = `
+        id, sku, name, brand, category, current_price, regular_price,
+        is_on_sale, discount_percentage, image_url, product_url, stock_status,
+        supplier_id, scraped_at,
+        marketplace_suppliers ( name, slug )
+      `;
+      const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+      // Shared filter builder — reused across the three attempts
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const buildDotdQuery = (scrapedSince: string | null) => {
+        let q = supabase
+          .from('marketplace_products')
+          .select(DOTD_SELECT)
+          .eq('is_on_sale', true)
+          .not('discount_percentage', 'is', null)
+          .not('image_url', 'is', null)
+          // Reject junk product names (the scraper occasionally grabs category
+          // labels like "brands" instead of the actual product name).
+          .not('name', 'ilike', 'brands')
+          .not('name', 'ilike', 'categories')
+          .not('name', 'ilike', 'all products')
+          .gte('current_price', 0.5)
+          .or(`expires_at.gte.${nowISO},expires_at.is.null`);
+
+        if (productType === 'tools') q = q.in('product_type', ['tool', 'ppe']);
+        else if (productType === 'materials') q = q.eq('product_type', 'material');
+
+        if (scrapedSince) q = q.gte('scraped_at', scrapedSince);
+
+        return q.order('discount_percentage', { ascending: false }).limit(1).maybeSingle();
+      };
+
+      // Try 24h first, then 7d, then all-time
+      let { data: dotdData } = await buildDotdQuery(oneDayAgo);
+      if (!dotdData) {
+        ({ data: dotdData } = await buildDotdQuery(sevenDaysAgo));
+      }
+      if (!dotdData) {
+        ({ data: dotdData } = await buildDotdQuery(null));
+      }
 
       if (dotdData) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query

@@ -2,8 +2,9 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Newspaper, AlertTriangle, RefreshCw, Search, X, Zap } from 'lucide-react';
-import { useIndustryNews } from '@/hooks/useIndustryNews';
+import { Newspaper, AlertTriangle, RefreshCw, Search, X, Clock } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
+import { useIndustryNews, type NewsArticle } from '@/hooks/useIndustryNews';
 import { useToast } from '@/hooks/use-toast';
 import { isValidUrl } from '@/utils/urlUtils';
 import NewsGrid from './NewsGrid';
@@ -64,11 +65,30 @@ const NewIndustryNewsCard = () => {
         return matchesSearch && matchesCategory && isValidUrl(article.external_url);
       })
       .sort((a, b) => {
-        const dateA = new Date(a.date_published);
-        const dateB = new Date(b.date_published);
+        // Prefer published_date (populated on fresh scraper output), fall back
+        // to date_published (legacy rows), then created_at (scrape time).
+        const pickDate = (a: NewsArticle) =>
+          a.published_date || a.date_published || a.created_at;
+        const dateA = new Date(pickDate(a));
+        const dateB = new Date(pickDate(b));
         return dateB.getTime() - dateA.getTime();
       });
   }, [articles, searchTerm, selectedCategory]);
+
+  // Most recent scrape timestamp — for the "Updated X ago" badge.
+  // Uses created_at (TIMESTAMPTZ = when we actually ingested the row)
+  // rather than published_date (a DATE column that parses to midnight UTC
+  // and makes freshly scraped articles look a day older than they are).
+  const lastUpdatedAt = useMemo(() => {
+    if (!articles || articles.length === 0) return null;
+    const timestamps = articles
+      .map((a) => a.created_at)
+      .filter(Boolean)
+      .map((t) => new Date(t).getTime())
+      .filter((t) => !Number.isNaN(t));
+    if (timestamps.length === 0) return null;
+    return new Date(Math.max(...timestamps));
+  }, [articles]);
 
   // Reset page on search or category change
   useEffect(() => {
@@ -173,25 +193,77 @@ const NewIndustryNewsCard = () => {
         className="space-y-6"
       >
         {/* ═══════════════════════════════════════════════════════════════
-            HEADER - Stats, search, filters
+            HEADER CARD — stats, refresh, search, filters
         ═══════════════════════════════════════════════════════════════ */}
-        <motion.div variants={itemVariants} className="space-y-4">
-          {/* Stats row */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5 text-elec-yellow">
-              <Zap className="h-4 w-4" />
-              <span className="text-xs font-medium tracking-wide uppercase">Live Feed</span>
+        <motion.div variants={itemVariants} className="space-y-3">
+          {/* Hero card — gradient accent, stats + refresh */}
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-cyan-400 to-elec-yellow opacity-60" />
+            <div className="relative p-4 sm:p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3 min-w-0 flex-1">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                    <Newspaper className="h-5 w-5 text-blue-400" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      <span className="text-[10px] font-bold text-green-400 uppercase tracking-[0.15em]">
+                        Live Feed
+                      </span>
+                    </div>
+                    <div className="mt-1 flex items-baseline gap-2 flex-wrap">
+                      <span className="text-2xl sm:text-3xl font-bold text-white tabular-nums leading-none">
+                        {articles.length.toLocaleString()}
+                      </span>
+                      <span className="text-xs text-white/70 font-medium">articles</span>
+                    </div>
+                    {lastUpdatedAt && (
+                      <p className="mt-1.5 flex items-center gap-1 text-[11px] text-white/60">
+                        <Clock className="h-3 w-3" />
+                        Updated {formatDistanceToNow(lastUpdatedAt, { addSuffix: true })}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <Button
+                  onClick={handleRefresh}
+                  disabled={isRefreshing}
+                  className="h-10 px-3 touch-manipulation bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded-xl shrink-0 active:scale-[0.97] transition-transform disabled:opacity-50"
+                >
+                  <RefreshCw
+                    className={cn('h-4 w-4', isRefreshing && 'animate-spin')}
+                  />
+                  <span className="ml-1.5 text-xs font-semibold hidden sm:inline">
+                    {isRefreshing ? 'Refreshing' : 'Refresh'}
+                  </span>
+                </Button>
+              </div>
+
+              {/* Sources strip */}
+              <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-white/60 flex-wrap">
+                <span className="font-semibold text-white/80 uppercase tracking-wider">
+                  Sources
+                </span>
+                <span>•</span>
+                <span>Electrical Times</span>
+                <span>•</span>
+                <span>Professional Electrician</span>
+                <span>•</span>
+                <span>ECN</span>
+                <span>•</span>
+                <span>IET</span>
+                <span>•</span>
+                <span>HSE</span>
+              </div>
             </div>
-            {articles.length > 0 && (
-              <span className="text-xs text-white">&bull; {articles.length} articles</span>
-            )}
           </div>
 
           {/* Search bar */}
           <div className="relative">
             <div className="relative group">
               {!searchTerm && (
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
               )}
               <Input
                 type="text"
@@ -199,7 +271,7 @@ const NewIndustryNewsCard = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={cn(
-                  'w-full h-12 pr-4 bg-input border-white/[0.08] rounded-xl text-white placeholder:text-white focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
+                  'w-full h-12 pr-4 bg-input border-white/[0.08] rounded-xl text-white placeholder:text-white/50 focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
                   !searchTerm && 'pl-11'
                 )}
               />
@@ -238,10 +310,10 @@ const NewIndustryNewsCard = () => {
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={cn(
-                  'px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation',
+                  'px-3.5 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]',
                   selectedCategory === cat
-                    ? 'bg-elec-yellow text-black font-medium'
-                    : 'bg-white/10 text-white hover:bg-white/15'
+                    ? 'bg-elec-yellow text-black font-semibold shadow-[0_0_20px_rgba(250,204,21,0.2)]'
+                    : 'bg-white/[0.04] text-white hover:bg-white/[0.08] border border-white/[0.06]'
                 )}
               >
                 {cat}

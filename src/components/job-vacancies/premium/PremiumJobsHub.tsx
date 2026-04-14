@@ -140,6 +140,7 @@ const PremiumJobsHub = () => {
     externalError,
     searchExternalJobs,
     refetchEmployerJobs,
+    refetchAll,
   } = useUnifiedJobFeed({
     searchQuery: searchQuery || undefined,
     location: searchLocation || undefined,
@@ -171,9 +172,25 @@ const PremiumJobsHub = () => {
       return posted.toDateString() === today.toDateString();
     }).length;
 
+    // Most recent created_at/updated_at across the feed. External jobs carry
+    // a scraper timestamp in updated_at; employer vacancies use posted_date.
+    const timestamps = allJobs
+      .map((j) => {
+        const raw =
+          (j as { updated_at?: string | null }).updated_at ||
+          (j as { scraped_at?: string | null }).scraped_at ||
+          j.posted_date;
+        if (!raw) return 0;
+        const t = new Date(raw).getTime();
+        return Number.isNaN(t) ? 0 : t;
+      })
+      .filter((t) => t > 0);
+    const lastUpdatedAt = timestamps.length ? new Date(Math.max(...timestamps)) : null;
+
     return {
       totalJobs,
       newToday,
+      lastUpdatedAt,
       employerJobCount,
       externalJobCount,
     };
@@ -282,7 +299,10 @@ const PremiumJobsHub = () => {
   const handleRefresh = async () => {
     setIsRefreshing(true);
     try {
-      await refetchEmployerJobs();
+      // refetchAll re-fetches employer vacancies AND the cached external
+      // job_listings table, and fires the comprehensive-job-scraper edge
+      // function in the background so the DB gets topped up.
+      await refetchAll();
       if (hasSearched && searchQuery) {
         await searchExternalJobs(searchQuery, searchLocation);
       }
@@ -429,7 +449,10 @@ const PremiumJobsHub = () => {
               <JobsHeroCard
                 totalJobs={stats.totalJobs}
                 newJobsToday={stats.newToday}
+                lastUpdatedAt={stats.lastUpdatedAt}
                 isSearching={isLoading}
+                isRefreshing={isRefreshing}
+                onRefresh={handleRefresh}
                 onSmartSearch={handleSmartSearch}
               />
 

@@ -4,6 +4,7 @@
  */
 
 import { useState, useMemo, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { useInternalVacancies, type VacancyFilters } from '@/hooks/useInternalVacancies';
 import { useUnifiedJobSearch, type SearchProgress } from './useUnifiedJobSearch';
 import {
@@ -44,6 +45,8 @@ export interface UnifiedJobFeedResult {
   // Actions
   searchExternalJobs: (keywords: string, location?: string) => Promise<void>;
   refetchEmployerJobs: () => void;
+  refetchExternalJobs: () => Promise<void>;
+  refetchAll: () => Promise<void>;
 
   // Pagination for external jobs
   currentPage: number;
@@ -76,6 +79,7 @@ export function useUnifiedJobFeed(filters?: UnifiedFeedFilters): UnifiedJobFeedR
     error: externalError,
     searchProgress,
     searchAllJobs,
+    refetch: refetchExternalJobs,
     currentPage,
     jobsPerPage,
     paginate,
@@ -123,6 +127,24 @@ export function useUnifiedJobFeed(filters?: UnifiedFeedFilters): UnifiedJobFeedR
     [searchAllJobs]
   );
 
+  // Refetch both sources and also kick the background scraper.
+  const refetchAll = useCallback(async () => {
+    // Fire the scraper in the background (non-blocking) — it takes ~60s+ to
+    // complete a full pull. We refetch the DB immediately to show whatever
+    // the last cron run already wrote, then invalidate again after a delay
+    // to pick up new rows from the in-flight scrape.
+    supabase.functions
+      .invoke('comprehensive-job-scraper', { body: { mergeAll: true } })
+      .catch((e) => {
+        console.warn('comprehensive-job-scraper trigger failed (non-fatal)', e);
+      });
+
+    await Promise.allSettled([
+      Promise.resolve(refetchEmployerJobs()),
+      refetchExternalJobs(),
+    ]);
+  }, [refetchEmployerJobs, refetchExternalJobs]);
+
   return {
     jobs,
     employerJobs,
@@ -143,6 +165,8 @@ export function useUnifiedJobFeed(filters?: UnifiedFeedFilters): UnifiedJobFeedR
 
     searchExternalJobs,
     refetchEmployerJobs,
+    refetchExternalJobs,
+    refetchAll,
 
     currentPage,
     jobsPerPage,

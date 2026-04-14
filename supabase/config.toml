@@ -298,3 +298,8 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Scraper health check (runs via cron, handles auth internally)
+[functions.scraper-health-check]
+verify_jwt = false
+
+

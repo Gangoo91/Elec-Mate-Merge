@@ -408,7 +408,14 @@ export default function UnifiedMarketplace({
           {/* ── Product count + refresh ── */}
           <motion.div variants={itemVariants} className="flex items-center justify-between">
             <p className="text-xs text-white">
-              {data?.total?.toLocaleString() || '...'} products from {supplierLabel}
+              {data?.total?.toLocaleString() || '...'} products from{' '}
+              {(() => {
+                const liveCount = data?.facets?.suppliers?.length || 0;
+                if (liveCount > 0) {
+                  return `${liveCount} UK ${liveCount === 1 ? 'supplier' : 'suppliers'}`;
+                }
+                return supplierLabel;
+              })()}
               {data?.lastUpdated && (
                 <span className="ml-2 inline-flex items-center gap-1">
                   <Clock className="h-3 w-3 inline" />
