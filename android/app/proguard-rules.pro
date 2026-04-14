@@ -53,3 +53,12 @@
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.**
 -dontwarn org.jetbrains.annotations.**
+
+# ============================================================================
+# Firebase Installations KTX references the legacy `firebase-ktx` artifact,
+# which Google removed but a transitive dependency still points at. R8 can't
+# find com.google.firebase.ktx.Firebase so ignore the missing reference — it's
+# only touched by a KTX extension function we don't call from our code.
+# ============================================================================
+-dontwarn com.google.firebase.ktx.**
+-dontwarn com.google.firebase.installations.ktx.**
