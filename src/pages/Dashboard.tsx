@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { DashboardContainer } from '@/components/dashboard/DashboardContainer';
 import { PremiumHero } from '@/components/dashboard/PremiumHero';
@@ -54,9 +54,14 @@ const Dashboard = () => {
           cta: 'Open Study Centre',
           href: '/study-centre/apprentice',
         }
+      : profile?.role === 'employer'
+      ? {
+          cta: 'Open Employer Hub',
+          href: '/employer',
+        }
       : {
           cta: 'Open Certificates',
-          href: '/tools/eicr-certificate',
+          href: '/electrician/inspection-testing',
         };
 
   const dismissFirstStop = () => {
@@ -118,12 +123,12 @@ const Dashboard = () => {
                     from there.
                   </p>
                 </div>
-                <a
-                  href={quickStart.href}
+                <Link
+                  to={quickStart.href}
                   className="inline-flex h-11 flex-shrink-0 touch-manipulation items-center justify-center rounded-2xl bg-yellow-500 px-5 text-[14px] font-semibold text-black transition-colors hover:bg-yellow-400"
                 >
                   {quickStart.cta}
-                </a>
+                </Link>
               </div>
             </div>
           </motion.section>
