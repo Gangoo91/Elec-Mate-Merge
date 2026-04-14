@@ -79,7 +79,9 @@ serve(async (req) => {
       .maybeSingle();
 
     if (!referralRow) {
-      console.log('[process-referral-reward] No eligible referral row found (already rewarded or missing)');
+      console.log(
+        '[process-referral-reward] No eligible referral row found (already rewarded or missing)'
+      );
       return new Response(
         JSON.stringify({ success: true, reward_applied: false, reason: 'no_eligible_referral' }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -117,17 +119,24 @@ serve(async (req) => {
         .eq('id', profile.referred_by);
 
       return new Response(
-        JSON.stringify({ success: true, reward_applied: false, reason: 'referrer_no_stripe', pending: true }),
+        JSON.stringify({
+          success: true,
+          reward_applied: false,
+          reason: 'referrer_no_stripe',
+          pending: true,
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // 4. Calculate reward — 1 free month, one-time only
+    // 4. Calculate reward — 1 free month per successful referral, capped at 2
     const successfulReferrals = (referrerProfile.successful_referrals || 0) + 1;
 
-    // Cap: max 1 free month total
-    if (successfulReferrals > 1) {
-      console.log('[process-referral-reward] Referrer already claimed free month, no more credit');
+    // Cap: max 2 free months total per referrer
+    if (successfulReferrals > 2) {
+      console.log(
+        '[process-referral-reward] Referrer already claimed 2 free months, no more credit'
+      );
 
       // Still update stats and mark as rewarded (for social proof)
       await supabase
@@ -176,7 +185,11 @@ serve(async (req) => {
         }
       );
 
-      console.log('[process-referral-reward] Stripe balance credit applied:', balanceTx.id, creditPence);
+      console.log(
+        '[process-referral-reward] Stripe balance credit applied:',
+        balanceTx.id,
+        creditPence
+      );
 
       // 6. Create referral_rewards audit row
       await supabase.from('referral_rewards').insert({
@@ -232,7 +245,10 @@ serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (stripeErr: unknown) {
-      console.error('[process-referral-reward] Stripe credit failed:', (stripeErr as Error)?.message);
+      console.error(
+        '[process-referral-reward] Stripe credit failed:',
+        (stripeErr as Error)?.message
+      );
 
       // Store as pending so it can be retried
       await supabase.from('referral_rewards').insert({
@@ -243,16 +259,16 @@ serve(async (req) => {
         status: 'failed',
       });
 
-      return new Response(
-        JSON.stringify({ success: false, error: 'stripe_credit_failed' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'stripe_credit_failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
   } catch (err: unknown) {
     console.error('[process-referral-reward] Error:', (err as Error)?.message);
-    return new Response(
-      JSON.stringify({ error: (err as Error)?.message || 'Internal error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: (err as Error)?.message || 'Internal error' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

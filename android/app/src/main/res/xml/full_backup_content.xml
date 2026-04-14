@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pre-Android 12 (API < 31) backup rules. Mirrors data_extraction_rules.xml:
+  nothing sensitive leaves the device. Required because allowBackup=true
+  without restriction rules exposes Supabase auth tokens on restore.
+-->
+<full-backup-content>
+    <exclude domain="root" />
+    <exclude domain="database" />
+    <exclude domain="sharedpref" />
+    <exclude domain="file" />
+    <exclude domain="external" />
+</full-backup-content>

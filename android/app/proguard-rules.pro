@@ -1,21 +1,55 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Preserve stack traces so Play Console crash reports remain useful.
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# ============================================================================
+# Capacitor core — reflection-based plugin loading
+# ============================================================================
+-keep class com.getcapacitor.** { *; }
+-keep class com.getcapacitor.plugin.** { *; }
+-keep @com.getcapacitor.annotation.CapacitorPlugin class * { *; }
+-keepclassmembers class * {
+    @com.getcapacitor.PluginMethod public *;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Capacitor plugins installed in this project
+-keep class com.capacitorjs.plugins.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# ============================================================================
+# RevenueCat (in-app purchases / subscriptions)
+# ============================================================================
+-keep class com.revenuecat.purchases.** { *; }
+-keepclassmembers class com.revenuecat.purchases.** { *; }
+
+# Google Play Billing
+-keep class com.android.vending.billing.** { *; }
+-keep class com.android.billingclient.api.** { *; }
+
+# ============================================================================
+# Firebase / Google Services (FCM push notifications)
+# ============================================================================
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }
+
+# ============================================================================
+# WebView JavaScript bridge — anything called from JS must survive minification
+# ============================================================================
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# Capacitor uses reflection for the Bridge
+-keep public class * extends com.getcapacitor.Plugin
+-keep public class * extends com.getcapacitor.BridgeActivity
+
+# ============================================================================
+# Cordova plugins (pulled in via capacitor-cordova-android-plugins)
+# ============================================================================
+-keep class org.apache.cordova.** { *; }
+
+# ============================================================================
+# AndroidX / Kotlin metadata (rarely needed but cheap to keep)
+# ============================================================================
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-dontwarn org.jetbrains.annotations.**

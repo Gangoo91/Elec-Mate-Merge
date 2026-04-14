@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/full_backup_content"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -47,6 +49,9 @@
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Voice input / audio recording — required by dictation features -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <!-- Push notifications — required for Android 13+ (API 33) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -64,4 +69,14 @@
 
     <!-- Google Play Billing — required for RevenueCat in-app purchases / subscriptions -->
     <uses-permission android:name="com.android.vending.BILLING" />
+
+    <!--
+      Hardware features declared as optional so Play Store does NOT filter the
+      app out from devices without them. Without required=false the app would
+      be hidden from Chromebooks and tablets that lack a microphone or camera.
+    -->
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 </manifest>

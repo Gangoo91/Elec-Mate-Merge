@@ -47,30 +47,37 @@ export function compareVersions(a: string, b: string): number {
 }
 
 /**
- * Fetch version config from Supabase `app_config` table.
- * Expects rows with keys: `minimum_app_version` and `latest_app_version`.
+ * Fetch version config from the `app_versions` table (per-platform). Each
+ * row is tagged with `is_current = true` for the latest approved build.
+ * `min_supported_version` forces an update when the installed version is
+ * lower than it.
  */
-async function fetchVersionConfig(): Promise<{ minimumVersion: string; latestVersion: string } | null> {
-  const { data, error } = await supabase
-    .from('app_config')
-    .select('key, value')
-    .in('key', ['minimum_app_version', 'latest_app_version']);
+async function fetchVersionConfig(): Promise<{
+  minimumVersion: string;
+  latestVersion: string;
+} | null> {
+  const platform = Capacitor.getPlatform() as 'ios' | 'android';
 
-  if (error || !data || data.length === 0) {
-    console.warn('[app-version] Failed to fetch app config:', error?.message);
+  const { data, error } = await supabase
+    .from('app_versions')
+    .select('version, min_supported_version')
+    .eq('platform', platform)
+    .eq('is_current', true)
+    .maybeSingle();
+
+  if (error || !data) {
+    console.warn('[app-version] Failed to fetch app version row:', error?.message);
     return null;
   }
 
-  const config: Record<string, string> = {};
-  for (const row of data) {
-    config[row.key] = row.value;
-  }
+  const row = data as { version: string; min_supported_version?: string };
+  const latestVersion = row.version;
+  // If min_supported_version isn't set, default to the current version so
+  // we never accidentally force-update everyone.
+  const minimumVersion = row.min_supported_version || row.version;
 
-  const minimumVersion = config['minimum_app_version'];
-  const latestVersion = config['latest_app_version'];
-
-  if (!minimumVersion || !latestVersion) {
-    console.warn('[app-version] Missing version config keys in app_config table');
+  if (!latestVersion) {
+    console.warn('[app-version] Missing version value on app_versions row');
     return null;
   }
 
@@ -90,10 +97,7 @@ export async function checkAppVersion(): Promise<VersionCheckResult | null> {
   }
 
   try {
-    const [appInfo, versionConfig] = await Promise.all([
-      App.getInfo(),
-      fetchVersionConfig(),
-    ]);
+    const [appInfo, versionConfig] = await Promise.all([App.getInfo(), fetchVersionConfig()]);
 
     if (!versionConfig) return null;
 

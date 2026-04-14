@@ -9,6 +9,59 @@ import { PushNotifications } from '@capacitor/push-notifications';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { openExternalUrl } from '@/utils/open-external-url';
+import { shareContent } from '@/utils/share';
+
+// localStorage key used to remember a "share the referral link" intent when a
+// push is tapped while the user is logged out. Consumed after next successful
+// sign-in so the moment isn't lost to the auth redirect.
+const PENDING_SHARE_INTENT_KEY = 'pending_share_intent';
+
+/**
+ * Fire the system share sheet for a logged-in user's referral link. Uses the
+ * same copy as `useReferralShare` in /settings?tab=referrals so the message
+ * is identical regardless of whether the user is sharing from settings or
+ * from a push tap.
+ */
+async function fireReferralShareIntent(userId: string, src: string): Promise<void> {
+  const { data } = await supabase
+    .from('referral_codes')
+    .select('code')
+    .eq('user_id', userId)
+    .eq('is_active', true)
+    .maybeSingle();
+
+  const code = (data as { code?: string } | null)?.code;
+  if (!code) {
+    console.warn('[referral-share] No referral code found for user', userId);
+    return;
+  }
+
+  const referralUrl = `https://elec-mate.com/auth/signup?ref=${code}&src=${src}`;
+  const message =
+    `Alright mate, check out Elec-Mate — does all your certs, quotes, invoices, and even has an AI agent for regs and admin.\n\n` +
+    `I use it daily. Sign up with my link and your first month's free:\n${referralUrl}\n\n` +
+    `Proper game changer for the paperwork.`;
+
+  await shareContent({
+    title: 'Try Elec-Mate — Free Month',
+    text: message,
+    url: referralUrl,
+  });
+
+  // Fire-and-forget analytics — never block the share on this
+  supabase
+    .from('referral_share_events')
+    .insert({
+      user_id: userId,
+      channel: 'native_share',
+      context: `push_tap_${src}`,
+      referral_code: code,
+    })
+    .then(
+      () => {},
+      () => {}
+    );
+}
 
 /**
  * Hook to initialize native app features when running in Capacitor
@@ -200,6 +253,36 @@ export function useNativePushNotifications() {
   const navigateFromNotification = useCallback((data: Record<string, string>) => {
     const nav = navigateRef.current;
     const role = data?.role || '';
+
+    // Referral pushes — tap fires the native share sheet directly instead of
+    // dumping the user in Settings. If logged out, store an intent flag so
+    // the share fires as soon as auth completes. Category arrives qualified
+    // from the engine (e.g. "referral_push__cert_completed"), so we prefix
+    // match and also look at `action` as a fallback.
+    const isReferralPush =
+      (typeof data?.category === 'string' && data.category.startsWith('referral_push')) ||
+      data?.action === 'open_referral';
+    if (isReferralPush) {
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (user?.id) {
+          fireReferralShareIntent(user.id, 'push').catch((err) =>
+            console.warn('[referral-share] Share from push tap failed:', err)
+          );
+        } else {
+          try {
+            localStorage.setItem(
+              PENDING_SHARE_INTENT_KEY,
+              JSON.stringify({ kind: 'referral', src: 'push', ts: Date.now() })
+            );
+          } catch {
+            /* ignore — fallback to settings nav below */
+          }
+          nav('/auth/signin');
+        }
+      });
+      return;
+    }
+
     if (data?.action === 'open_tasks' || data?.type === 'task') {
       nav('/electrician/tasks');
     } else if (data?.type === 'study') {
@@ -217,10 +300,73 @@ export function useNativePushNotifications() {
     } else if (data?.conversationId) {
       nav(`/electrician/messages?conversation=${data.conversationId}`);
     } else if (data?.quoteId) {
-      nav(role === 'employer' ? '/employer?section=quotes' : `/electrician/quotes/view/${data.quoteId}`);
+      nav(
+        role === 'employer'
+          ? '/employer?section=quotes'
+          : `/electrician/quotes/view/${data.quoteId}`
+      );
     } else if (data?.invoiceId) {
-      nav(role === 'employer' ? '/employer?section=quotes' : `/electrician/invoices/${data.invoiceId}/view`);
+      nav(
+        role === 'employer'
+          ? '/employer?section=quotes'
+          : `/electrician/invoices/${data.invoiceId}/view`
+      );
+    } else if (data?.deep_link) {
+      // Generic fallback — any push that sets a `deep_link` in its data
+      // payload will be routed to that path even if no specific `type`
+      // matches above.
+      nav(data.deep_link);
     }
+  }, []);
+
+  // Consume any pending "share the referral link" intent saved when the user
+  // tapped a referral push while logged out. Watches auth state so the share
+  // sheet opens immediately after a successful sign-in, bridging the gap
+  // between push tap → login → share-the-link moment.
+  useEffect(() => {
+    const consumePendingIntent = async (userId: string) => {
+      let raw: string | null = null;
+      try {
+        raw = localStorage.getItem(PENDING_SHARE_INTENT_KEY);
+      } catch {
+        return;
+      }
+      if (!raw) return;
+
+      try {
+        const intent = JSON.parse(raw) as { kind: string; src?: string; ts?: number };
+        // Guard against stale intents more than 15 minutes old
+        if (intent.ts && Date.now() - intent.ts > 15 * 60 * 1000) {
+          localStorage.removeItem(PENDING_SHARE_INTENT_KEY);
+          return;
+        }
+        if (intent.kind === 'referral') {
+          // Clear first so a failure doesn't cause an infinite retry loop
+          localStorage.removeItem(PENDING_SHARE_INTENT_KEY);
+          await fireReferralShareIntent(userId, intent.src || 'push_post_login');
+        }
+      } catch {
+        localStorage.removeItem(PENDING_SHARE_INTENT_KEY);
+      }
+    };
+
+    // Fire once on mount if a session is already live (user taps push while
+    // already signed in but some other effect races the auth state).
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.id) consumePendingIntent(user.id);
+    });
+
+    // Also watch future auth state changes — this handles the logged-out →
+    // signed-in transition after tapping a push.
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session?.user?.id) {
+        consumePendingIntent(session.user.id);
+      }
+    });
+
+    return () => {
+      sub.subscription.unsubscribe();
+    };
   }, []);
 
   // Auto-register on mount when running natively

@@ -23,8 +23,12 @@ android {
         applicationId "com.elecmate.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 23
-        versionName "1.0.1"
+        // versionCode is derived from the ANDROID_VERSION_CODE env var (set by CI
+        // from the GitHub Actions run number) and falls back to the baseline below
+        // for local builds. Play Store requires a strictly increasing versionCode
+        // on every upload — CI bumps this automatically so no manual edits needed.
+        versionCode System.getenv('ANDROID_VERSION_CODE') ? System.getenv('ANDROID_VERSION_CODE').toInteger() : 23
+        versionName System.getenv('ANDROID_VERSION_NAME') ?: '1.0.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -35,8 +39,11 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // R8 minification + resource shrinking — smaller AAB, obfuscated code.
+            // ProGuard rules in proguard-rules.pro keep Capacitor/RevenueCat/FCM.
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }

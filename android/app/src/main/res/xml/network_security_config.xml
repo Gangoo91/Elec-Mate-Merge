@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Locks the release build to HTTPS only. Debug builds keep cleartext so local
+  dev servers and on-device debugging still work. Certificate pinning is
+  intentionally NOT enabled here — pinning a WebView is fragile (breaks on
+  Supabase cert rotation) and Google Play already trusts the system CA store.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

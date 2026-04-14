@@ -35,7 +35,7 @@ import { storageGetSync } from '@/utils/storage';
 type LucideIcon = typeof GraduationCap;
 
 const statsBar = [
-  { value: '8', label: 'Certificate types' },
+  { value: '17+', label: 'Certificate types' },
   { value: '50+', label: 'Calculators' },
   { value: '46+', label: 'Courses' },
   { value: '5', label: 'AI specialists' },
@@ -69,7 +69,7 @@ const audienceCards: {
     painPoint: 'Paperwork, pricing and compliance eat into your billable hours.',
     tagline: 'Your complete site companion.',
     features: [
-      '8 digital certificate types',
+      '17+ digital certificate types',
       '5 AI specialists (BS 7671)',
       'Voice quote → invoice → paid',
       'Pre & post site visit reports',
@@ -344,7 +344,7 @@ const getPricingPlans = (isNative: boolean) => [
       'Everything in Apprentice',
       '5 AI specialists',
       'Voice quotes & invoices',
-      '8 certificate types',
+      '17+ certificate types',
       'Pre & post site visit reports',
       'Photo documentation per job',
       'Expenses & materials tracking',
@@ -437,7 +437,7 @@ const LandingPage = () => {
             featureList: [
               '46+ Electrical & Upskilling Courses',
               'BS 7671 AI Assistants',
-              '8 Certificate Types',
+              '17+ Certificate Types',
               'Voice Quotes & Invoices',
               'Stripe Payment Integration',
               '50+ Electrical Calculators',
@@ -694,17 +694,21 @@ const LandingPage = () => {
       {/* ========== STATS BAND ========== */}
       <section className="px-5 pb-10 sm:pb-14 lg:px-8 lg:pb-16">
         <div className="mx-auto max-w-[80rem]">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.06] bg-black p-8 sm:p-12 lg:rounded-[2.5rem] lg:p-16">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.015] p-8 shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] sm:p-12 lg:rounded-[2.5rem] lg:p-16">
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute -left-24 top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.08),transparent_60%)] blur-3xl" />
+              <div className="absolute -left-24 top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.12),transparent_60%)] blur-3xl" />
+              <div className="absolute -right-24 top-1/2 h-[22rem] w-[22rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(250,204,21,0.06),transparent_60%)] blur-3xl" />
             </div>
-            <div className="relative grid grid-cols-2 gap-10 text-center sm:grid-cols-4 sm:gap-8 lg:text-left">
-              {statsBar.map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-[2.5rem] font-bold leading-none tracking-[-0.04em] text-white sm:text-[3rem] lg:text-[4rem]">
+            <div className="relative grid grid-cols-2 gap-y-10 text-center sm:grid-cols-4 sm:gap-y-8 sm:divide-x sm:divide-white/[0.08] lg:text-left">
+              {statsBar.map((stat, idx) => (
+                <div
+                  key={stat.label}
+                  className={`${idx > 0 ? 'sm:pl-8 lg:pl-12' : ''} ${idx < statsBar.length - 1 ? 'sm:pr-8 lg:pr-12' : ''}`}
+                >
+                  <div className="bg-gradient-to-b from-yellow-300 to-yellow-500 bg-clip-text text-[2.75rem] font-bold leading-none tracking-[-0.04em] text-transparent sm:text-[3rem] lg:text-[4rem]">
                     {stat.value}
                   </div>
-                  <div className="mt-3 text-[13px] leading-[1.5] text-white sm:text-sm lg:text-[15px]">
+                  <div className="mt-3 text-[13px] font-medium leading-[1.5] text-white/75 sm:text-sm lg:text-[15px]">
                     {stat.label}
                   </div>
                 </div>
@@ -898,14 +902,19 @@ const LandingPage = () => {
             })}
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 opacity-60">
-            <img src="/logos/stripe.svg" alt="Stripe" loading="lazy" className="h-6 w-auto" />
-            <img src="/logos/xero.svg" alt="Xero" loading="lazy" className="h-6 w-auto" />
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-90">
+            <img
+              src="/logos/stripe.svg"
+              alt="Stripe"
+              loading="lazy"
+              className="h-7 w-auto lg:h-8"
+            />
+            <img src="/logos/xero.svg" alt="Xero" loading="lazy" className="h-7 w-auto lg:h-8" />
             <img
               src="/logos/quickbooks.svg"
               alt="QuickBooks"
               loading="lazy"
-              className="h-6 w-auto"
+              className="h-7 w-auto lg:h-8"
             />
           </div>
         </div>
@@ -1210,7 +1219,6 @@ const LandingPage = () => {
 // ============================================================
 
 const AudienceCard = ({
-  icon: Icon,
   title,
   painPoint,
   tagline,
@@ -1232,21 +1240,21 @@ const AudienceCard = ({
     }`}
   >
     {featured && (
-      <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-yellow-500 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-black">
-        Most popular
-      </span>
+      <div className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-yellow-500/30 bg-yellow-500/[0.12] px-3 py-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+        <span className="text-[10px] font-bold uppercase tracking-[0.12em] text-yellow-300">
+          Most popular
+        </span>
+      </div>
     )}
 
-    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-      <Icon className="h-6 w-6 text-yellow-400" />
-    </div>
-    <h3 className="mt-6 text-xl font-semibold tracking-[-0.02em] text-white lg:text-[1.4rem]">
+    <h3 className="text-[1.6rem] font-semibold tracking-[-0.02em] text-white lg:text-[1.75rem]">
       {title}
     </h3>
-    <p className="mt-2 text-[15px] text-white">{tagline}</p>
+    <p className="mt-2 text-[15px] leading-[1.55] text-white/80">{tagline}</p>
 
-    <div className="mt-5 rounded-[1rem] border border-white/[0.06] bg-white/[0.02] px-4 py-3">
-      <p className="text-[13px] italic leading-[1.6] text-white">&ldquo;{painPoint}&rdquo;</p>
+    <div className="mt-6 rounded-[1rem] border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+      <p className="text-[13px] italic leading-[1.6] text-white/75">&ldquo;{painPoint}&rdquo;</p>
     </div>
 
     <div className="mt-6 space-y-2.5">
@@ -1264,7 +1272,6 @@ const AudienceCard = ({
 );
 
 const AIAgentCard = ({
-  icon: Icon,
   name,
   tagline,
   features,
@@ -1277,24 +1284,24 @@ const AIAgentCard = ({
   featured?: boolean;
 }) => (
   <div
-    className={`relative flex w-[82%] flex-shrink-0 snap-start flex-col rounded-[1.8rem] border p-6 sm:w-auto sm:flex-shrink lg:p-7 ${
+    className={`relative flex w-[82%] flex-shrink-0 snap-start flex-col rounded-[1.8rem] border p-6 text-left sm:w-auto sm:flex-shrink lg:p-7 ${
       featured
         ? 'border-yellow-500/30 bg-gradient-to-br from-yellow-500/[0.1] via-amber-500/[0.04] to-white/[0.02]'
         : 'border-white/[0.08] bg-white/[0.03]'
     }`}
   >
-    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-yellow-500/25 bg-yellow-500/[0.12]">
-      <Icon className="h-5 w-5 text-yellow-400" />
-    </div>
-    <h3 className="mt-5 text-[17px] font-semibold tracking-[-0.01em] text-white lg:text-lg">
+    <h3 className="text-[1.15rem] font-semibold tracking-[-0.01em] text-white lg:text-[1.25rem]">
       {name}
     </h3>
-    <p className="mt-2 text-[13px] text-white">{tagline}</p>
-    <div className="mt-5 space-y-2 border-t border-white/[0.06] pt-4">
+    <p className="mt-2 text-[13px] leading-[1.55] text-white/75">{tagline}</p>
+    <div className="mt-5 space-y-2.5 border-t border-white/[0.06] pt-4">
       {features.map((feature) => (
-        <div key={feature} className="flex items-start gap-2 text-[13px] leading-[1.55] text-white">
+        <div
+          key={feature}
+          className="flex items-start gap-2.5 text-[13px] leading-[1.55] text-white"
+        >
           <div className="mt-[7px] h-1 w-1 flex-shrink-0 rounded-full bg-yellow-400" />
-          <span>{feature}</span>
+          <span className="flex-1">{feature}</span>
         </div>
       ))}
     </div>
