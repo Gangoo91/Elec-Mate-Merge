@@ -379,6 +379,36 @@ async function handleBookSlot(req: Request, supabase: ReturnType<typeof createCl
     /* non-critical */
   }
 
+  // Push notification for the electrician — fires immediately, bypasses quiet hours
+  // because a new booking is time-sensitive (client is waiting for confirmation).
+  try {
+    const jobLine = job_description ? `\n${job_description}` : '';
+    await fetch(
+      `${Deno.env.get('SUPABASE_URL')}/functions/v1/send-push-notification`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+        },
+        body: JSON.stringify({
+          userId: electrician_id,
+          title: `📅 New booking — ${client_name}`,
+          body: `${formattedDate} at ${start_time}${jobLine}`,
+          type: 'default',
+          data: {
+            deep_link: '/electrician?tab=calendar',
+            category: 'booking_received',
+            event_id: event.id,
+          },
+          skipQuietHours: true,
+        }),
+      }
+    );
+  } catch {
+    /* non-critical — booking is confirmed regardless */
+  }
+
   return new Response(
     JSON.stringify({
       booking_id: event.id,
