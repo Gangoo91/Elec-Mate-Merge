@@ -128,6 +128,9 @@ verify_jwt = false
 [functions.generate-maintenance-method-pdf]
 verify_jwt = false
 
+[functions.maintenance-pdf-proxy]
+verify_jwt = false
+
 
 # Unified Circuit Design V2 (parallel agents - mirrors AI RAMS architecture)
 [functions.process-circuit-design-v2]
