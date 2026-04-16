@@ -97,7 +97,7 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion] = useState<'v8'>('v8');
+  const [emailVersion] = useState<'v9'>('v9');
   const [showPreview, setShowPreview] = useState(false);
 
   // Fetch campaign stats
@@ -425,7 +425,7 @@ export default function AdminWinback() {
               </span>
               <div className="flex items-center gap-2">
                 <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
-                  V8
+                  V9
                 </Badge>
                 <Button
                   variant="outline"
@@ -445,9 +445,9 @@ export default function AdminWinback() {
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0">
-                    V8 App Store
+                    V9 Win Back
                   </Badge>
-                  <span className="text-xs text-white font-medium">Launch announcement</span>
+                  <span className="text-xs text-white font-medium">We've been building. You should see it.</span>
                 </div>
                 <Button
                   variant="ghost"
@@ -460,7 +460,7 @@ export default function AdminWinback() {
                 </Button>
               </div>
               <p className="text-[11px] text-white leading-relaxed">
-                "We're on the App Store." — Apprentice £6.99/mo, Electrician £14.99/mo
+                "We've been building. You should see it." — £9.99/mo via web, saves £5/mo vs App Store
               </p>
             </div>
 
@@ -483,7 +483,7 @@ export default function AdminWinback() {
             {/* Test email section */}
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V8)</p>
+                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V9)</p>
                 <div className="flex gap-2">
                   <Input
                     type="email"
@@ -568,10 +568,10 @@ export default function AdminWinback() {
                   ) : (
                     <Send className="h-4 w-4" />
                   )}
-                  Send V8 to All Users ({allUsers?.length || 0})
+                  Send V9 to All Users ({allUsers?.length || 0})
                 </Button>
                 <p className="text-[10px] text-white text-center">
-                  Resets all sent users then sends the App Store launch email to everyone in batches of {BATCH_SIZE}
+                  Resets all sent users then sends the V9 win-back email to everyone in batches of {BATCH_SIZE}
                 </p>
               </div>
             )}
@@ -905,7 +905,7 @@ export default function AdminWinback() {
                   ) : (
                     <>
                       <Mail className="h-4 w-4 mr-2" />
-                      Send App Store Launch Email
+                      Send Win Back Email (V9)
                     </>
                   )}
                 </Button>
@@ -919,16 +919,16 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send V8 App Store launch to all users?
+                Send V9 Win Back to all users?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
                   <p className="text-white">
-                    Resets all previously sent users then sends the App Store launch email
+                    Resets all previously sent users then sends the V9 win-back email
                     to every user with an account, in batches of {BATCH_SIZE}.
                   </p>
                   <p className="text-white font-bold">
-                    ~{allUsers?.length || 0} emails via V8
+                    ~{allUsers?.length || 0} emails via V9
                   </p>
                 </div>
               </AlertDialogDescription>
@@ -950,7 +950,7 @@ export default function AdminWinback() {
 
                     haptic.success();
                     toast({
-                      title: `${data.reset} users reset — now sending V8 to all users...`,
+                      title: `${data.reset} users reset — now sending V9 to all users...`,
                       variant: 'success',
                     });
 
@@ -986,7 +986,7 @@ export default function AdminWinback() {
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Reset &amp; Send V8 to All
+                Reset &amp; Send V9 to All
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -1000,7 +1000,7 @@ export default function AdminWinback() {
                 Send to all {eligibleUsers?.length || 0} eligible users?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-sm leading-relaxed">
-                Sends the App Store launch email in batches of {BATCH_SIZE}. This cannot be undone.
+                Sends the V9 win-back email in batches of {BATCH_SIZE}. This cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
@@ -1031,9 +1031,9 @@ export default function AdminWinback() {
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-amber-400" />
-                  Preview: App Store Launch
+                  Preview: Win Back V9
                   <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
-                    V8
+                    V9
                   </Badge>
                 </SheetTitle>
               </SheetHeader>
@@ -1042,7 +1042,7 @@ export default function AdminWinback() {
                   title="Email Preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#86868b;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V8 — App Store Launch</div><h2>We're on the App Store.</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#48484a;font-size:12px;margin-top:4px">Email templates are rendered server-side. Use the test send button above.</p></body></html>`}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#86868b;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V9 — Win Back</div><h2>We've been building.</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#48484a;font-size:12px;margin-top:4px">Email templates are rendered server-side. Use the test send button above.</p></body></html>`}
                 />
               </div>
             </div>
