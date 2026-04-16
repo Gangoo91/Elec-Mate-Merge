@@ -98,22 +98,26 @@ const EICRInspectionChecklist = ({
     return formData.defectObservations || [];
   };
 
+  // Scroll-safe onUpdate wrapper — prevents scroll jump on state changes
+  const scrollSafeUpdate = React.useCallback((field: string, value: any) => {
+    const scrollY = window.scrollY;
+    onUpdate(field, value);
+    // Restore scroll after React re-render (multiple attempts to catch async updates)
+    const restore = () => window.scrollTo(0, scrollY);
+    requestAnimationFrame(restore);
+    setTimeout(restore, 50);
+    setTimeout(restore, 100);
+    setTimeout(restore, 200);
+  }, [onUpdate]);
+
   const updateInspectionItem = (
     id: string,
     field: keyof InspectionItem | '__BULK_UPDATE__',
     value: any
   ) => {
-    console.log(`[EICRInspectionChecklist] updateInspectionItem called:`, {
-      id,
-      field,
-      value,
-      timestamp: new Date().toISOString(),
-    });
-
     // Handle bulk update for atomic operations
     if (id === '__BULK_UPDATE__' && field === '__BULK_UPDATE__') {
-      console.log(`[EICRInspectionChecklist] Processing bulk update with ${value.length} items`);
-      onUpdate('inspectionItems', value);
+      scrollSafeUpdate('inspectionItems', value);
       return;
     }
 
@@ -150,7 +154,7 @@ const EICRInspectionChecklist = ({
     console.log(`[EICRInspectionChecklist] Updated item:`, updatedItem);
 
     // Update the form data with all changes at once
-    onUpdate('inspectionItems', updatedItems);
+    scrollSafeUpdate('inspectionItems', updatedItems);
 
     // If updating notes and there's a linked observation with a critical outcome, sync notes to observation
     if (
@@ -164,7 +168,7 @@ const EICRInspectionChecklist = ({
         const updatedObservations = existingObservations.map((obs) =>
           obs.id === linkedObservation.id ? { ...obs, description: value } : obs
         );
-        onUpdate('defectObservations', updatedObservations);
+        scrollSafeUpdate('defectObservations', updatedObservations);
       }
     }
   };
@@ -189,11 +193,7 @@ const EICRInspectionChecklist = ({
         const updatedObservations = existingObservations.filter(
           (obs) => obs.id !== linkedObservation.id
         );
-        console.log(
-          `[EICRInspectionChecklist] Removed observation for non-defect outcome:`,
-          linkedObservation
-        );
-        onUpdate('defectObservations', updatedObservations);
+        scrollSafeUpdate('defectObservations', updatedObservations);
       }
 
       return;
@@ -223,24 +223,19 @@ const EICRInspectionChecklist = ({
             }
           : obs
       );
-      console.log(
-        `[EICRInspectionChecklist] Updated existing observation for item ${inspectionItem.id}:`,
-        updatedObservations
-      );
-      onUpdate('defectObservations', updatedObservations);
+      scrollSafeUpdate('defectObservations', updatedObservations);
     } else {
       observationId = Date.now().toString();
       const newObservation: DefectObservation = {
         id: observationId,
         item: inspectionItem.item,
         defectCode: inspectionItem.outcome as 'C1' | 'C2' | 'C3',
-        description: description, // Use notes as description
+        description: description,
         recommendation: 'Investigate and rectify as required to comply with BS 7671',
         rectified: false,
         inspectionItemId: inspectionItem.id,
       };
-      console.log(`[EICRInspectionChecklist] Created new observation:`, newObservation);
-      onUpdate('defectObservations', [...existingObservations, newObservation]);
+      scrollSafeUpdate('defectObservations', [...existingObservations, newObservation]);
     }
 
     // Link all photos from this inspection item to the observation
@@ -420,36 +415,6 @@ const EICRInspectionChecklist = ({
 
   // Quick mark mode
   const [quickMarkMode, setQuickMarkMode] = React.useState(false);
-  const [showProfileMenu, setShowProfileMenu] = React.useState(false);
-
-  // Load inspection profile — pre-fills all items based on installation type
-  const loadProfile = (profileType: 'domestic' | 'domestic-lv' | 'commercial' | 'all-sat') => {
-    const items = getInspectionItems();
-    // Items that are typically N/A for domestic without LV
-    const domesticNAItems = new Set([
-      'item_2_0', // Microgenerators
-      'item_7_0', 'item_7_1', 'item_7_2', 'item_7_3', // Special installations (unless applicable)
-      'item_8_0', // Prosumer
-    ]);
-    // Additional N/A items for domestic without LV
-    const noLVItems = new Set([
-      'item_5_17', 'item_5_18', 'item_5_19', // LV items if they exist
-    ]);
-
-    const updatedItems = items.map((item) => {
-      if (profileType === 'all-sat') {
-        return { ...item, outcome: 'satisfactory' as const, inspected: true };
-      }
-      const isDomesticNA = domesticNAItems.has(item.id);
-      const isNoLVNA = profileType === 'domestic' && noLVItems.has(item.id);
-      if (isDomesticNA || isNoLVNA) {
-        return { ...item, outcome: 'not-applicable' as const, inspected: true };
-      }
-      return { ...item, outcome: 'satisfactory' as const, inspected: true };
-    });
-    onUpdate('inspectionItems', updatedItems);
-    setShowProfileMenu(false);
-  };
 
   // Auto-scroll to next incomplete section when one completes
   React.useEffect(() => {
@@ -512,28 +477,6 @@ const EICRInspectionChecklist = ({
         >
           {quickMarkMode ? 'Quick Mark ON — tap item = OK' : 'Quick Mark Mode'}
         </button>
-
-        {/* Load Profile — auto-fill entire checklist */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-            className="w-full h-10 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2 bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow"
-          >
-            Load Profile
-          </button>
-          {showProfileMenu && (
-            <div className="absolute top-12 left-0 right-0 z-50 bg-background border border-white/10 rounded-xl shadow-2xl p-2 space-y-1">
-              <button onClick={() => loadProfile('domestic')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Domestic (no LV)</button>
-              <button onClick={() => loadProfile('domestic-lv')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Domestic (with LV)</button>
-              <button onClick={() => loadProfile('commercial')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Commercial / Industrial</button>
-              <button onClick={() => loadProfile('all-sat')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">All Satisfactory</button>
-              <div className="border-t border-white/[0.06] pt-1 mt-1">
-                <button onClick={() => setShowProfileMenu(false)} className="w-full text-left px-3 py-2 rounded-lg text-[10px] text-white hover:bg-white/[0.06] touch-manipulation">Cancel</button>
-              </div>
-            </div>
-          )}
-        </div>
       </div>
 
       {/* Checklist Sections */}

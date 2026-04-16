@@ -38,6 +38,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
         ipf: board.ipf || '',
         confirmedCorrectPolarity: board.confirmedCorrectPolarity ?? false,
         confirmedPhaseSequence: board.confirmedPhaseSequence ?? false,
+        ringFinalCircuitConfirmed: board.ringFinalCircuitConfirmed ?? false,
         spdOperationalStatus: board.spdOperationalStatus ?? false,
         spdNA: board.spdNA ?? false,
         // Optional fields
@@ -68,6 +69,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
   mainBoard.ipf = formData.ipf || '';
   mainBoard.confirmedCorrectPolarity = formData.confirmedCorrectPolarity || false;
   mainBoard.confirmedPhaseSequence = formData.confirmedPhaseSequence || false;
+  mainBoard.ringFinalCircuitConfirmed = formData.ringFinalCircuitConfirmed || false;
   mainBoard.spdOperationalStatus = formData.spdOperationalStatus || false;
   mainBoard.spdNA = formData.spdNA || false;
 
@@ -241,6 +243,7 @@ export const formatBoardsForFormData = (
     ipf: mainBoard?.ipf || '',
     confirmedCorrectPolarity: mainBoard?.confirmedCorrectPolarity || false,
     confirmedPhaseSequence: mainBoard?.confirmedPhaseSequence || false,
+    ringFinalCircuitConfirmed: mainBoard?.ringFinalCircuitConfirmed || false,
     spdOperationalStatus: mainBoard?.spdOperationalStatus || false,
     spdNA: mainBoard?.spdNA || false,
   };

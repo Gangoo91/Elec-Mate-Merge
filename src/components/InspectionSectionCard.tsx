@@ -53,50 +53,34 @@ const InspectionSectionCard = ({
   quickMarkMode,
 }: InspectionSectionCardProps) => {
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
-    console.log(`[InspectionSectionCard] handleOutcomeChange called:`, {
-      itemId,
-      newOutcome: outcome,
-      timestamp: new Date().toISOString(),
-    });
-
-    // Find the current inspection item
     const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
-    console.log(`[InspectionSectionCard] Current inspection item:`, currentInspectionItem);
 
     if (!currentInspectionItem) {
-      console.warn(`[InspectionSectionCard] Could not find inspection item ${itemId}`);
       return;
     }
 
     try {
-      // Create the updated item with all changes atomically
+      // Save scroll position before state update to prevent scroll jump
+      const scrollY = window.scrollY;
+
       const updatedItem: InspectionItem = {
         ...currentInspectionItem,
         outcome,
         inspected: outcome !== '' && outcome !== 'not-applicable',
       };
 
-      console.log(`[InspectionSectionCard] Updated item to be saved:`, updatedItem);
-
-      // Update the entire item atomically using a single call
-      // This ensures both outcome and inspected status are updated together
       const allItems = inspectionItems.map((item) => (item.id === itemId ? updatedItem : item));
-
-      // Use the bulk update mechanism to update the entire items array at once
       onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
 
-      // Trigger observation auto-create/remove for all outcome changes
       if (onAutoCreateObservation) {
-        console.log(
-          `[InspectionSectionCard] Auto-creating/removing observation for ${outcome}:`,
-          updatedItem
-        );
         onAutoCreateObservation(updatedItem);
       }
 
-      console.log(
-        `[InspectionSectionCard] handleOutcomeChange completed successfully for ${itemId}`
-      );
+      // Restore scroll after both re-renders complete
+      const restoreScroll = () => window.scrollTo(0, scrollY);
+      requestAnimationFrame(restoreScroll);
+      setTimeout(restoreScroll, 50);
+      setTimeout(restoreScroll, 150);
     } catch (error) {
       console.error(`[InspectionSectionCard] Error in handleOutcomeChange:`, error);
     }

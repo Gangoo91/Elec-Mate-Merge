@@ -2,13 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Check } from 'lucide-react';
 // Icons removed — clean design
@@ -284,53 +278,42 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
 
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Premises Type" required>
-              <Select
+              <FormSelectSheet
                 value={localValues.description || ''}
                 onValueChange={(value) => {
-                  haptic.light();
                   handleFieldChange('description', value);
                   flush();
                 }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="domestic">Domestic</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-              {localValues.description === 'other' && (
-                <Input
-                  value={localValues.otherPremisesDescription || ''}
-                  onChange={(e) => handleFieldChange('otherPremisesDescription', e.target.value)}
-                  placeholder="Specify type"
-                  className="mt-2 h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                />
-              )}
+                label="Premises Type"
+                placeholder="Select type"
+                options={[
+                  { value: 'domestic', label: 'Domestic' },
+                  { value: 'commercial', label: 'Commercial' },
+                  { value: 'industrial', label: 'Industrial' },
+                ]}
+                allowCustom
+                customLabel="Other (include brief description)"
+              />
             </FormField>
 
             <FormField label="Installation Type">
-              <Select
+              <FormSelectSheet
                 value={localValues.installationType || ''}
                 onValueChange={(value) => {
-                  haptic.light();
                   handleFieldChange('installationType', value);
                   flush();
                 }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new-installation">New Installation</SelectItem>
-                  <SelectItem value="existing-installation">Existing Installation</SelectItem>
-                  <SelectItem value="extended-installation">Extended Installation</SelectItem>
-                  <SelectItem value="altered-installation">Altered Installation</SelectItem>
-                </SelectContent>
-              </Select>
+                label="Installation Type"
+                placeholder="Select type"
+                options={[
+                  { value: 'new-installation', label: 'New Installation' },
+                  { value: 'existing-installation', label: 'Existing Installation' },
+                  { value: 'extended-installation', label: 'Extended Installation' },
+                  { value: 'altered-installation', label: 'Altered Installation' },
+                ]}
+                allowCustom
+                customLabel="Other (specify)"
+              />
             </FormField>
           </div>
         </div>

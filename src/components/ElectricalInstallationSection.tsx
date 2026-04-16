@@ -1,13 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Cable, Gauge, CircuitBoard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -196,24 +190,23 @@ const ElectricalInstallationSectionInner = ({
           ))}
 
           <FormField label="Intake Cable Type" required>
-            <Select
+            <FormSelectSheet
               value={formData.intakeCableType || ''}
               onValueChange={(value) => {
                 haptic.light();
                 onUpdate('intakeCableType', value);
               }}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                <SelectValue placeholder="Select cable type" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                {cableTypes.map((type) => (
-                  <SelectItem key={type.value} value={type.value}>
-                    {type.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              placeholder="Select cable type"
+              label="Intake Cable Type"
+              allowCustom
+              customLabel="Other (specify)"
+              options={cableTypes
+                .filter((t) => t.value !== 'other')
+                .map((type) => ({
+                  value: type.value,
+                  label: type.label,
+                }))}
+            />
           </FormField>
         </div>
       </div>

@@ -60,6 +60,7 @@ export interface DistributionBoard {
   ipf: string; // Prospective fault current (kA)
   confirmedCorrectPolarity: boolean;
   confirmedPhaseSequence: boolean;
+  ringFinalCircuitConfirmed: boolean; // A4:2026 — Ring final circuit: Confirmed
   spdOperationalStatus: boolean;
   spdNA: boolean;
 
@@ -122,6 +123,7 @@ export const createDefaultBoard = (
   ipf: '',
   confirmedCorrectPolarity: false,
   confirmedPhaseSequence: false,
+  ringFinalCircuitConfirmed: false,
   spdOperationalStatus: false,
   spdNA: false,
   spdT1: false,

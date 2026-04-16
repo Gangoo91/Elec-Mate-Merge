@@ -1,14 +1,8 @@
 import React, { useMemo, useState, useEffect, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
+import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Zap, Info, Link2, Cable, CircuitBoard, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -20,6 +14,8 @@ const EARTHING_SECTION_FIELDS = [
   'earthElectrodeType',
   'earthElectrodeResistance',
   'earthElectrodeLocation',
+  'maximumDemand',
+  'maximumDemandUnit',
   'meansOfEarthingDistributor',
   'meansOfEarthingElectrode',
   'mainEarthingConductorType',
@@ -187,7 +183,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
           <div className={cn('space-y-4 py-4', '')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
-                label="Earth Electrode Resistance (Ω)"
+                label="Electrode Resistance/Impedance, RA/Ze (Ω)"
                 required
                 hint="Typical values: TT systems <200Ω"
               >
@@ -216,6 +212,52 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
           </div>
         </div>
       )}
+
+      {/* Maximum Demand (Section J — BS 7671:2018+A4:2026) */}
+      <div>
+        <SectionTitle title="Maximum Demand" />
+        <div className="py-3">
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Maximum Demand (load)">
+              <Input
+                type="number"
+                min="0"
+                step="0.1"
+                value={formData.maximumDemand || ''}
+                onChange={(e) => onUpdate('maximumDemand', e.target.value)}
+                placeholder="e.g., 100"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                inputMode="decimal"
+              />
+            </FormField>
+            <FormField label="Unit">
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: 'kva', label: 'kVA' },
+                  { value: 'amps', label: 'A' },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('maximumDemandUnit', opt.value);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
+                      (formData.maximumDemandUnit || 'amps') === opt.value
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+          </div>
+        </div>
+      </div>
 
       {/* Means of Earthing Section */}
       <div>
@@ -290,25 +332,23 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               </div>
             </FormField>
             <FormField label="Size *">
-              <Select
+              <FormSelectSheet
                 value={formData.mainEarthingConductorSize || ''}
                 onValueChange={(value) => {
                   haptic.light();
-                  onUpdate('mainEarthingConductorSize', value === '__clear__' ? '' : value);
+                  onUpdate('mainEarthingConductorSize', value);
                 }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="mm²" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__clear__">Clear</SelectItem>
-                  {conductorSizes.map((size) => (
-                    <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Custom' : size === 'none' ? 'None' : `${size}mm²`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                placeholder="mm²"
+                label="Earthing Conductor Size"
+                allowCustom
+                customLabel="Custom size"
+                options={conductorSizes
+                  .filter((s) => s !== 'custom')
+                  .map((size) => ({
+                    value: size,
+                    label: size === 'none' ? 'None' : `${size}mm²`,
+                  }))}
+              />
             </FormField>
             <FormField label="Verified">
               <button
@@ -375,25 +415,23 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               </div>
             </FormField>
             <FormField label="Size *">
-              <Select
+              <FormSelectSheet
                 value={formData.mainBondingSize || ''}
                 onValueChange={(value) => {
                   haptic.light();
-                  onUpdate('mainBondingSize', value === '__clear__' ? '' : value);
+                  onUpdate('mainBondingSize', value);
                 }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select size" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__clear__">Clear</SelectItem>
-                  {conductorSizes.map((size) => (
-                    <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Custom' : size === 'none' ? 'None' : `${size}mm²`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                placeholder="Select size"
+                label="Main Bonding Size"
+                allowCustom
+                customLabel="Custom size"
+                options={conductorSizes
+                  .filter((s) => s !== 'custom')
+                  .map((size) => ({
+                    value: size,
+                    label: size === 'none' ? 'None' : `${size}mm²`,
+                  }))}
+              />
             </FormField>
           </div>
 
@@ -500,25 +538,23 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         <SectionTitle title="Supplementary Bonding" />
         <div className="space-y-3 py-3">
           <FormField label="Conductor Size">
-            <Select
+            <FormSelectSheet
               value={formData.supplementaryBondingSize || ''}
               onValueChange={(value) => {
                 haptic.light();
-                onUpdate('supplementaryBondingSize', value === '__clear__' ? '' : value);
+                onUpdate('supplementaryBondingSize', value);
               }}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                <SelectValue placeholder="Select size" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__clear__">Clear</SelectItem>
-                {supplementarySizes.map((size) => (
-                  <SelectItem key={size} value={size}>
-                    {size === 'custom' ? 'Custom' : size === 'not-required' ? 'Not Required' : `${size}mm²`}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              placeholder="Select size"
+              label="Supplementary Bonding Size"
+              allowCustom
+              customLabel="Custom size"
+              options={supplementarySizes
+                .filter((s) => s !== 'custom')
+                .map((size) => ({
+                  value: size,
+                  label: size === 'not-required' ? 'Not Required' : `${size}mm²`,
+                }))}
+            />
           </FormField>
 
           <FormField label="Equipotential Bonding">

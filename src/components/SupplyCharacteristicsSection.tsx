@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, Info, Zap, Building2, Plug, Shield, Globe, Check } from 'lucide-react';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
@@ -48,6 +49,7 @@ const SUPPLY_SECTION_FIELDS = [
   'rcdType',
   'rcdTimeDelay',
   'rcdMeasuredTime',
+  'rcdBreakingCapacity',
 ] as const;
 
 interface SupplyCharacteristicsSectionProps {
@@ -116,13 +118,15 @@ const SupplyCharacteristicsSectionInner = ({
     }
   };
 
+  const isTNCSSsystem = formData.earthingArrangement === 'TN-C-S' || formData.earthingArrangement === 'TN-C-S-PNB';
+
   // Auto-set PME based on earthing arrangement
   React.useEffect(() => {
-    if (formData.earthingArrangement === 'TN-C-S' && formData.supplyPME !== 'yes') {
+    if (isTNCSSsystem && formData.supplyPME !== 'yes') {
       onUpdate('supplyPME', 'yes');
     } else if (
       formData.earthingArrangement &&
-      formData.earthingArrangement !== 'TN-C-S' &&
+      !isTNCSSsystem &&
       formData.supplyPME === 'yes'
     ) {
       onUpdate('supplyPME', 'no');
@@ -130,7 +134,7 @@ const SupplyCharacteristicsSectionInner = ({
 
     // Auto-set earth electrode type to N/A for TN systems
     if (
-      (formData.earthingArrangement === 'TN-S' || formData.earthingArrangement === 'TN-C-S') &&
+      (formData.earthingArrangement === 'TN-S' || isTNCSSsystem) &&
       formData.earthElectrodeType !== 'n/a'
     ) {
       onUpdate('earthElectrodeType', 'n/a');
@@ -152,7 +156,7 @@ const SupplyCharacteristicsSectionInner = ({
       return;
     }
     onUpdate('supplyPME', value);
-    if (value === 'yes' && formData.earthingArrangement !== 'TN-C-S') {
+    if (value === 'yes' && !isTNCSSsystem) {
       onUpdate('earthingArrangement', 'TN-C-S');
     }
   };
@@ -180,7 +184,8 @@ const SupplyCharacteristicsSectionInner = ({
     const info: { [key: string]: string } = {
       'TN-C': 'Combined neutral and protective conductor throughout',
       'TN-S': 'Separate neutral and protective conductors',
-      'TN-C-S': 'Combined neutral and protective conductor (PME)',
+      'TN-C-S': 'Protective Multiple Earthing (PME)',
+      'TN-C-S-PNB': 'Protective Neutral Bonding (PNB)',
       TT: 'Installation earth electrode independent of supply',
       IT: 'Isolated or impedance earthed supply',
     };
@@ -282,6 +287,7 @@ const SupplyCharacteristicsSectionInner = ({
     { value: 'TN-C', label: 'TN-C' },
     { value: 'TN-S', label: 'TN-S' },
     { value: 'TN-C-S', label: 'TN-C-S (PME)' },
+    { value: 'TN-C-S-PNB', label: 'TN-C-S (PNB)' },
     { value: 'TT', label: 'TT' },
     { value: 'IT', label: 'IT' },
   ];
@@ -295,24 +301,15 @@ const SupplyCharacteristicsSectionInner = ({
           {/* Row 1: DNO + MPAN */}
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="DNO">
-              <Select
+              <FormSelectSheet
                 value={formData.dnoName || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('dnoName', value === '__clear__' ? '' : value);
-                }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  <SelectItem value="__clear__">Clear</SelectItem>
-                  {dnoOptions.map((dno) => (
-                    <SelectItem key={dno} value={dno}>{dno}</SelectItem>
-                  ))}
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
+                onValueChange={(value) => onUpdate('dnoName', value)}
+                label="Distribution Network Operator"
+                placeholder="Select DNO"
+                options={dnoOptions.map((dno) => ({ value: dno, label: dno }))}
+                allowCustom
+                customLabel="Other DNO"
+              />
             </FormField>
             <FormField label="MPAN">
               <Input
@@ -448,23 +445,17 @@ const SupplyCharacteristicsSectionInner = ({
               </div>
             </FormField>
             <FormField label="Wires">
-              <Select
+              <FormSelectSheet
                 value={formData.conductorConfiguration || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('conductorConfiguration', value === '__clear__' ? '' : value);
-                }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] text-xs">
-                  <SelectValue placeholder="—" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__clear__">Clear</SelectItem>
-                  <SelectItem value="2-wire">2-wire</SelectItem>
-                  <SelectItem value="3-wire">3-wire</SelectItem>
-                  <SelectItem value="4-wire">4-wire</SelectItem>
-                </SelectContent>
-              </Select>
+                onValueChange={(value) => onUpdate('conductorConfiguration', value)}
+                label="Conductor Configuration"
+                placeholder="—"
+                options={[
+                  { value: '2-wire', label: '2-wire', description: '1-phase, 2-wire' },
+                  { value: '3-wire', label: '3-wire', description: '2-phase or 3-phase, 3-wire' },
+                  { value: '4-wire', label: '4-wire', description: '3-phase, 4-wire' },
+                ]}
+              />
             </FormField>
             <FormField label="Hz">
               <Input
@@ -595,38 +586,17 @@ const SupplyCharacteristicsSectionInner = ({
         <div className="space-y-3 py-3">
           <div className="grid grid-cols-2 gap-3 items-end">
           <FormField label="Device *">
-            <Select
+            <FormSelectSheet
               value={showCustomProtectiveDevice ? 'other' : formData.mainProtectiveDevice || ''}
               onValueChange={handleMainProtectiveDeviceChange}
               disabled={formData.mainSwitchRating === 'LIM'}
-            >
-              <SelectTrigger className={cn('h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
-                <SelectValue placeholder="Select device" />
-              </SelectTrigger>
-              <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] max-h-[60vh]">
-                <SelectItem value="__clear__">
-                  <span className="text-white">Clear selection</span>
-                </SelectItem>
-                <SelectItem value="other">Other (specify)</SelectItem>
-                {(() => {
-                  let lastGroup = '';
-                  return mainProtectiveDeviceOptions.map((option) => {
-                    const showHeader = option.group !== lastGroup;
-                    lastGroup = option.group;
-                    return (
-                      <React.Fragment key={option.value}>
-                        {showHeader && (
-                          <div className="px-2 py-1.5 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1 first:mt-0 first:border-t-0">
-                            {option.group}
-                          </div>
-                        )}
-                        <SelectItem value={option.value}>{option.label}</SelectItem>
-                      </React.Fragment>
-                    );
-                  });
-                })()}
-              </SelectContent>
-            </Select>
+              label="Main Protective Device"
+              placeholder="Select device"
+              allowCustom
+              customLabel="Other (specify)"
+              options={mainProtectiveDeviceOptions}
+              className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+            />
           </FormField>
           <FormField label="Rating (A)">
               {formData.mainSwitchRating === 'LIM' ? (
@@ -636,30 +606,19 @@ const SupplyCharacteristicsSectionInner = ({
                   className="h-11 text-base touch-manipulation opacity-40"
                 />
               ) : currentRatings.length > 0 ? (
-                <Select
+                <FormSelectSheet
                   value={formData.mainSwitchRating || ''}
                   onValueChange={(value) => {
                     haptic.light();
-                    if (value === '__clear__') { onUpdate('mainSwitchRating', ''); }
-                    else if (value === '__custom__') { onUpdate('mainSwitchRating', '__custom__'); }
+                    if (value === '__custom__') { onUpdate('mainSwitchRating', '__custom__'); }
                     else { onUpdate('mainSwitchRating', value); }
                   }}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select rating" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="__clear__">
-                      <span className="text-white">Clear</span>
-                    </SelectItem>
-                    <SelectItem value="__custom__">Other (specify)</SelectItem>
-                    {currentRatings.map((r) => (
-                      <SelectItem key={r} value={r}>
-                        {r}A
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  label="Rating (A)"
+                  placeholder="Select rating"
+                  allowCustom
+                  customLabel="Other (specify)"
+                  options={currentRatings.map((r) => ({ value: r, label: `${r}A` }))}
+                />
               ) : (
                 <Input
                   value={formData.mainSwitchRating || ''}
@@ -690,28 +649,23 @@ const SupplyCharacteristicsSectionInner = ({
           {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}
           {formData.mainProtectiveDevice === 'BS 88 HRC Fuse' && (
             <FormField label="Fuse Type">
-              <Select
+              <FormSelectSheet
                 value={formData.fuseSubType || ''}
                 onValueChange={(value) => {
                   haptic.light();
-                  onUpdate('fuseSubType', value === '__clear__' ? '' : value);
+                  onUpdate('fuseSubType', value);
                 }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue placeholder="Select fuse type" />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  <SelectItem value="__clear__"><span className="text-white">Clear</span></SelectItem>
-                  <div className="px-2 py-1 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1">Application</div>
-                  <SelectItem value="gG">gG — General Purpose</SelectItem>
-                  <SelectItem value="gM">gM — Motor Circuit</SelectItem>
-                  <SelectItem value="aM">aM — Motor Starter</SelectItem>
-                  <div className="px-2 py-1 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1">Utilisation Category</div>
-                  <SelectItem value="Type 2">Type 2</SelectItem>
-                  <SelectItem value="Type 3">Type 3</SelectItem>
-                  <SelectItem value="Type 4">Type 4</SelectItem>
-                </SelectContent>
-              </Select>
+                label="Fuse Type"
+                placeholder="Select fuse type"
+                options={[
+                  { value: 'gG', label: 'gG — General Purpose', group: 'Application' },
+                  { value: 'gM', label: 'gM — Motor Circuit', group: 'Application' },
+                  { value: 'aM', label: 'aM — Motor Starter', group: 'Application' },
+                  { value: 'Type 2', label: 'Type 2', group: 'Utilisation Category' },
+                  { value: 'Type 3', label: 'Type 3', group: 'Utilisation Category' },
+                  { value: 'Type 4', label: 'Type 4', group: 'Utilisation Category' },
+                ]}
+              />
             </FormField>
           )}
 
@@ -730,29 +684,21 @@ const SupplyCharacteristicsSectionInner = ({
           <div className="grid grid-cols-4 gap-2">
             <FormField label="kA">
               {currentBreakingCapacities.length > 0 ? (
-                <Select
+                <FormSelectSheet
                   value={formData.breakingCapacity || ''}
                   onValueChange={(value) => {
                     haptic.light();
-                    if (value === '__clear__') { onUpdate('breakingCapacity', ''); }
-                    else if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
+                    if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
                     else { onUpdate('breakingCapacity', value); }
                   }}
                   disabled={formData.mainSwitchRating === 'LIM'}
-                >
-                  <SelectTrigger className={cn('h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
-                    <SelectValue placeholder="Select kA" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="__clear__"><span className="text-white">Clear</span></SelectItem>
-                    <SelectItem value="__custom__">Other (specify)</SelectItem>
-                    {currentBreakingCapacities.map((kA) => (
-                      <SelectItem key={kA} value={kA}>
-                        {kA} kA
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  label="Breaking Capacity (kA)"
+                  placeholder="Select kA"
+                  allowCustom
+                  customLabel="Other (specify)"
+                  options={currentBreakingCapacities.map((kA) => ({ value: kA, label: `${kA} kA` }))}
+                  className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                />
               ) : (
                 <Input
                   value={formData.breakingCapacity || ''}
@@ -771,25 +717,23 @@ const SupplyCharacteristicsSectionInner = ({
               )}
             </FormField>
             <FormField label="Poles">
-              <Select
+              <FormSelectSheet
                 value={formData.mainSwitchPoles || ''}
                 onValueChange={(value) => {
                   haptic.light();
-                  onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value);
+                  onUpdate('mainSwitchPoles', value);
                 }}
                 disabled={formData.mainSwitchRating === 'LIM'}
-              >
-                <SelectTrigger className={cn('h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}>
-                  <SelectValue placeholder="—" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="__clear__">Clear</SelectItem>
-                  <SelectItem value="1">1P</SelectItem>
-                  <SelectItem value="2">2P</SelectItem>
-                  <SelectItem value="3">3P</SelectItem>
-                  <SelectItem value="4">4P</SelectItem>
-                </SelectContent>
-              </Select>
+                label="Poles"
+                placeholder="—"
+                options={[
+                  { value: '1', label: '1P' },
+                  { value: '2', label: '2P' },
+                  { value: '3', label: '3P' },
+                  { value: '4', label: '4P' },
+                ]}
+                className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+              />
             </FormField>
             <FormField label="Fuse (A)">
               <Input
@@ -861,27 +805,25 @@ const SupplyCharacteristicsSectionInner = ({
             </div>
           </FormField>
           <FormField label="Electrode Type">
-            <Select
+            <FormSelectSheet
               value={formData.earthElectrodeType || ''}
               onValueChange={(value) => {
                 haptic.light();
-                onUpdate('earthElectrodeType', value === '__clear__' ? '' : value);
+                onUpdate('earthElectrodeType', value);
               }}
-            >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__clear__">Clear</SelectItem>
-                <SelectItem value="rod">Rod</SelectItem>
-                <SelectItem value="tape">Tape</SelectItem>
-                <SelectItem value="plate">Plate</SelectItem>
-                <SelectItem value="structural">Steel</SelectItem>
-                <SelectItem value="water-pipe">Water Pipe</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-                <SelectItem value="n/a">N/A</SelectItem>
-              </SelectContent>
-            </Select>
+              label="Earth Electrode Type"
+              placeholder="Select"
+              allowCustom
+              customLabel="Other"
+              options={[
+                { value: 'rod', label: 'Rod' },
+                { value: 'tape', label: 'Tape' },
+                { value: 'plate', label: 'Plate' },
+                { value: 'structural', label: 'Steel' },
+                { value: 'water-pipe', label: 'Water Pipe' },
+                { value: 'n/a', label: 'N/A' },
+              ]}
+            />
           </FormField>
         </div>
       </div>
@@ -977,26 +919,23 @@ const SupplyCharacteristicsSectionInner = ({
           {showRCDFields && (
             <div className="grid grid-cols-2 gap-3 items-end">
               <FormField label="Time Delay (ms)">
-                <Select
+                <FormSelectSheet
                   value={formData.rcdTimeDelay || ''}
                   onValueChange={(value) => {
                     haptic.light();
-                    onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value);
+                    onUpdate('rcdTimeDelay', value);
                   }}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="__clear__">Clear</SelectItem>
-                    <SelectItem value="0">0ms (Instantaneous)</SelectItem>
-                    <SelectItem value="40">40ms</SelectItem>
-                    <SelectItem value="150">150ms</SelectItem>
-                    <SelectItem value="200">200ms</SelectItem>
-                    <SelectItem value="300">300ms</SelectItem>
-                    <SelectItem value="500">500ms</SelectItem>
-                  </SelectContent>
-                </Select>
+                  label="RCD Time Delay"
+                  placeholder="Select"
+                  options={[
+                    { value: '0', label: '0ms (Instantaneous)' },
+                    { value: '40', label: '40ms' },
+                    { value: '150', label: '150ms' },
+                    { value: '200', label: '200ms' },
+                    { value: '300', label: '300ms' },
+                    { value: '500', label: '500ms' },
+                  ]}
+                />
               </FormField>
               <FormField label="Measured (ms)">
                 <Input
@@ -1011,6 +950,22 @@ const SupplyCharacteristicsSectionInner = ({
                 />
               </FormField>
             </div>
+          )}
+
+          {/* Row 4: RCD Breaking Capacity (A4:2026 Section J) */}
+          {showRCDFields && (
+            <FormField label="RCD Breaking Capacity (kA)">
+              <Input
+                type="number"
+                min="0"
+                step="0.1"
+                value={formData.rcdBreakingCapacity || ''}
+                onChange={(e) => onUpdate('rcdBreakingCapacity', e.target.value)}
+                placeholder="e.g., 6"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                inputMode="decimal"
+              />
+            </FormField>
           )}
 
           {formData.rcdMainSwitch === 'no' && (

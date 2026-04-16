@@ -2355,6 +2355,39 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             </div>
                             <span className="pointer-events-none">Phase Seq</span>
                           </button>
+                          {/* Ring Final Circuit Confirmed (A4:2026) */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleUpdateBoard(
+                                board.id,
+                                'ringFinalCircuitConfirmed',
+                                !board.ringFinalCircuitConfirmed
+                              );
+                            }}
+                            className={cn(
+                              'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                              board.ringFinalCircuitConfirmed
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                            )}
+                          >
+                            <div
+                              className={cn(
+                                'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
+                                board.ringFinalCircuitConfirmed
+                                  ? 'bg-green-500 border-green-500'
+                                  : 'border-white/40'
+                              )}
+                            >
+                              {board.ringFinalCircuitConfirmed && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
+                            </div>
+                            <span className="pointer-events-none">Ring Final</span>
+                          </button>
                           {/* SPD OK */}
                           <button
                             type="button"
@@ -2814,6 +2847,37 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             Test Method & Notes
           </h3>
           <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+        </div>
+
+        {/* Tested By (A4:2026 — Schedule of Test Results) */}
+        <div className={useMobileView ? 'px-4 py-5' : 'p-4'}>
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
+          <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">
+            Tested By
+          </h3>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-white text-xs mb-1.5 block">Name (Capitals)</label>
+                <input
+                  type="text"
+                  value={formData.scheduleTestedByName || ''}
+                  onChange={(e) => onUpdate('scheduleTestedByName', e.target.value.toUpperCase())}
+                  placeholder="FULL NAME"
+                  className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+                />
+              </div>
+              <div>
+                <label className="text-white text-xs mb-1.5 block">Date</label>
+                <input
+                  type="date"
+                  value={formData.scheduleTestedByDate || ''}
+                  onChange={(e) => onUpdate('scheduleTestedByDate', e.target.value)}
+                  className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

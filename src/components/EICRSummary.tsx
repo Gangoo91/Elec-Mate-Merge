@@ -996,6 +996,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 </div>
               </button>
 
+              {/* General Condition (Section E — BS 7671:2018+A4:2026) */}
+              <div className="space-y-2">
+                <Label className="text-xs text-white">
+                  General Condition of the Installation (in terms of electrical safety)
+                </Label>
+                <textarea
+                  className="w-full p-3 border border-white/[0.06] bg-white/[0.03] rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
+                  style={{ fontSize: '16px' }}
+                  rows={2}
+                  placeholder="e.g., Installation is in a generally satisfactory condition for its age..."
+                  value={formData.generalCondition || ''}
+                  onChange={(e) => onUpdate('generalCondition', e.target.value)}
+                />
+              </div>
+
               {/* Additional Comments */}
               <div className="space-y-2">
                 <Label className="text-xs text-white">
@@ -1032,6 +1047,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
               onUpdate('inspectedByForOnBehalfOf', formData.companyName);
               onUpdate('inspectedByPosition', 'Inspector');
               onUpdate('inspectedByAddress', formData.companyAddress);
+              onUpdate('inspectedByDate', formData.inspectionDate || new Date().toISOString().split('T')[0]);
               onUpdate('inspectedByCpScheme', formData.registrationScheme);
               haptic.success();
               toast({
@@ -1152,6 +1168,16 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     N/A
                   </button>
                 </div>
+              </div>
+              {/* Date (A4:2026 Section G — Inspected and tested by) */}
+              <div className="space-y-1.5">
+                <Label className="text-xs text-white">Date</Label>
+                <Input
+                  type="date"
+                  value={formData.inspectedByDate || ''}
+                  onChange={(e) => onUpdate('inspectedByDate', e.target.value)}
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                />
               </div>
             </div>
           </CollapsibleContent>

@@ -3,15 +3,9 @@ import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Button } from '@/components/ui/button';
-import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope } from 'lucide-react';
+import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -282,22 +276,18 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               />
             </FormField>
             <FormField label="BS 7671 Edition">
-              <Select
-                value={formData.bsAmendment || 'amd3-2024'}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('bsAmendment', value);
-                }}
-              >
-                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="amd1-2020">Amendment 1 (2020)</SelectItem>
-                  <SelectItem value="amd2-2022">Amendment 2 (2022)</SelectItem>
-                  <SelectItem value="amd3-2024">Amendment 3 (2024)</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormSelectSheet
+                value={formData.bsAmendment || 'amd4-2026'}
+                onValueChange={(value) => onUpdate('bsAmendment', value)}
+                label="BS 7671 Edition"
+                placeholder="Select"
+                options={[
+                  { value: 'amd1-2020', label: 'Amendment 1 (2020)' },
+                  { value: 'amd2-2022', label: 'Amendment 2 (2022)' },
+                  { value: 'amd3-2024', label: 'Amendment 3 (2024)' },
+                  { value: 'amd4-2026', label: 'Amendment 4 (2026)' },
+                ]}
+              />
             </FormField>
           </div>
 
@@ -327,6 +317,36 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                 className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
               />
             </FormField>
+          </div>
+
+          {/* A4:2026 Standard Disclaimers (Section D) */}
+          <div className="rounded-lg border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/[0.08] to-amber-600/[0.04] overflow-hidden">
+            <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border-b border-elec-yellow/30 px-4 py-2.5 flex items-center gap-2">
+              <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <h4 className="text-sm font-semibold text-white tracking-wide">
+                Standard Limitations <span className="text-white/60 font-normal">(BS 7671:2018+A4:2026)</span>
+              </h4>
+            </div>
+            <div className="p-4 space-y-3">
+              <p className="text-sm text-white leading-relaxed">
+                Unless specifically agreed between the client and inspector prior to the inspection:
+              </p>
+              <ul className="text-sm text-white leading-relaxed space-y-2 pl-1">
+                <li className="flex gap-2.5">
+                  <span className="text-elec-yellow mt-1 flex-shrink-0 font-bold">•</span>
+                  <span>Cables concealed within trunking and conduits, under floors, in roof spaces, and generally within the fabric of the building or underground, have not been inspected.</span>
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="text-elec-yellow mt-1 flex-shrink-0 font-bold">•</span>
+                  <span>No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made.</span>
+                </li>
+              </ul>
+              <div className="pt-3 border-t border-white/10">
+                <p className="text-sm text-white/90 leading-relaxed italic">
+                  An inspection should be made of other electrical equipment housed within an accessible roof space.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

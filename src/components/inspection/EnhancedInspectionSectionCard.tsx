@@ -62,11 +62,15 @@ const EnhancedInspectionSectionCard = ({
     const currentInspectionItem = inspectionItems.find((item) => item.id === itemId);
 
     if (!currentInspectionItem) {
-      console.warn(`[EnhancedInspectionSectionCard] Could not find inspection item ${itemId}`);
       return;
     }
 
     try {
+      // Save scroll position before state update to prevent scroll jump
+      // Two onUpdate calls fire (items + observations), each triggers re-render
+      const scrollY = window.scrollY;
+      const restoreScroll = () => window.scrollTo(0, scrollY);
+
       const updatedItem: InspectionItem = {
         ...currentInspectionItem,
         outcome,
@@ -80,6 +84,11 @@ const EnhancedInspectionSectionCard = ({
       if (onAutoCreateObservation) {
         onAutoCreateObservation(updatedItem);
       }
+
+      // Restore scroll after both re-renders complete
+      requestAnimationFrame(restoreScroll);
+      setTimeout(restoreScroll, 50);
+      setTimeout(restoreScroll, 150);
     } catch (error) {
       console.error('Error updating outcome:', error);
     }

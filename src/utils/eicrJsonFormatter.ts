@@ -304,6 +304,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         ipf: board.ipf || '',
         polarity_confirmed: board.confirmedCorrectPolarity ?? false,
         phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
+        ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
         spd_operational: board.spdOperationalStatus ?? false,
         spd_na: board.spdNA ?? false,
         spd_type: board.spdType || '',
@@ -575,6 +576,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
             incoming_device_rating: '',
             polarity_confirmed: formData['confirmedCorrectPolarity'] ?? false,
             phase_sequence_confirmed: formData['confirmedPhaseSequence'] ?? false,
+            ring_final_circuit_confirmed: formData['ringFinalCircuitConfirmed'] ?? false,
             spd_operational: formData['spdOperationalStatus'] ?? false,
             spd_na: formData['spdNA'] ?? false,
             spd_type: formData['spdType'] || '',
@@ -895,6 +897,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       rcd_type: get('rcdType'),
       rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
       rcd_measured_time: get('rcdMeasuredTime'),
+      rcd_breaking_capacity: get('rcdBreakingCapacity'),
     },
 
     distribution_board: (() => {
@@ -1081,6 +1084,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         for_on_behalf_of: get('inspectedByForOnBehalfOf'),
         position: get('inspectedByPosition'),
         address: get('inspectedByAddress'),
+        date: get('inspectedByDate'),
         cp_scheme: get('inspectedByCpScheme'),
         cp_scheme_na: getBool('inspectedByCpSchemeNA'),
       },
@@ -1282,6 +1286,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     inspected_by_for_on_behalf_of: get('inspectedByForOnBehalfOf'),
     inspected_by_position: get('inspectedByPosition'),
     inspected_by_address: get('inspectedByAddress'),
+    inspected_by_date: get('inspectedByDate'),
     inspected_by_cp_scheme: get('inspectedByCpScheme'),
 
     // Report Authorised By (flat)
@@ -1393,6 +1398,18 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // RCD details (flat)
     rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
     rcd_measured_time: get('rcdMeasuredTime'),
+    rcd_breaking_capacity: get('rcdBreakingCapacity'),
+
+    // Section E — General condition (A4:2026)
+    general_condition: get('generalCondition'),
+
+    // Maximum demand (A4:2026 Section J)
+    maximum_demand: get('maximumDemand'),
+    maximum_demand_unit: get('maximumDemandUnit') || 'amps',
+
+    // Schedule tested by (A4:2026)
+    schedule_tested_by_name: get('scheduleTestedByName'),
+    schedule_tested_by_date: get('scheduleTestedByDate'),
 
     // Section K - Observations
     no_remedial_action: getBool('noRemedialAction'),

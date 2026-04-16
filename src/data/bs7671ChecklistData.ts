@@ -18,13 +18,19 @@ export interface InspectionSection {
 }
 
 /**
- * IET Model Forms - BS 7671:2018+A2:2022 EICR Inspection Checklist
+ * IET Model Forms - BS 7671:2018+A4:2026 EICR Inspection Checklist
  * FOR RESIDENTIAL AND SIMILAR PREMISES WITH UP TO 100 A SUPPLY
  *
  * This checklist aligns with the IET (Institution of Engineering and Technology)
  * model forms for Electrical Installation Condition Reports.
  *
- * Total: 8 Sections, 65 Inspection Items
+ * Updated for Amendment 4:2026 — key changes:
+ * - Section 1: Renumbered 1.1/1.2/1.3, "Means of isolation" wording, person notified Y/N/A
+ * - Section 4: New item 4.23 AFDD operational check
+ * - Section 5: Item 5.7 reg ref updated, 5.12 luminaire bullet added
+ * - Section 3 header updated with (411.3; Chap 54)
+ *
+ * Total: 8 Sections, 66 Inspection Items
  */
 export const bs7671InspectionSections: InspectionSection[] = [
   {
@@ -34,25 +40,25 @@ export const bs7671InspectionSections: InspectionSection[] = [
     description:
       'An outcome against an item in this section, other than access to live parts, should not be used to determine the overall outcome.',
     specialNote:
-      'NOTE 1: Where inadequacies in the intake equipment are encountered, which may result in a dangerous or potentially dangerous situation, the person ordering the work and/or dutyholder must be informed. It is strongly recommended that the person ordering the work informs the appropriate authority.\n\nNOTE 2: For this section only, where inadequacies are found, an "X" should be put against the appropriate item and a comment made in Section K.\n\nPerson ordering work/dutyholder notified (Delete as appropriate): Y / N/A',
+      'NOTE 1: For this section only, where inadequacies are found, an \'X\' should be put against the appropriate item and a comment made in Section K.\n\nNOTE 2: Where an inadequacy in the intake equipment is encountered, and where this might result in a dangerous or potentially dangerous situation, the person ordering the inspection and testing and/or dutyholder must be informed. It is strongly recommended that the person ordering the work informs the appropriate authority.\n\nThe person ordering the inspection and testing notified of any dangerous or potentially dangerous situations. (Tick as appropriate.)\n\nY ☐  N/A ☐',
     items: [
-      {
-        id: 'item_1_0',
-        number: '1.0',
-        item: 'Service cable, Service head, Earthing arrangement, Meter tails, Metering equipment, Isolator (where present)',
-        clause: '132.12',
-        description:
-          '• Service cable\n• Service head\n• Earthing arrangement\n• Meter tails\n• Metering equipment\n• Isolator (where present)',
-      },
       {
         id: 'item_1_1',
         number: '1.1',
-        item: "Consumer's isolator (where present)",
-        clause: '537.2.1.1',
+        item: 'Distributor/supplier intake equipment',
+        clause: '132.12',
+        description:
+          '• Service cable\n• Service head\n• Earthing arrangement\n• Meter tails\n• Metering equipment\n• Means of isolation (where present)',
       },
       {
         id: 'item_1_2',
         number: '1.2',
+        item: "Consumer's means of isolation (where present)",
+        clause: '537.2.1.1',
+      },
+      {
+        id: 'item_1_3',
+        number: '1.3',
         item: "Consumer's meter tails",
         clause: '521.10.1',
       },
@@ -75,8 +81,8 @@ export const bs7671InspectionSections: InspectionSection[] = [
   {
     id: 'earthing_bonding',
     sectionNumber: '3',
-    title: 'EARTHING / BONDING ARRANGEMENTS',
-    description: 'Inspection of earthing and bonding arrangements in accordance with Chapter 54',
+    title: 'EARTHING / BONDING ARRANGEMENTS (411.3; Chap 54)',
+    description: 'Inspection of earthing and bonding arrangements in accordance with 411.3 and Chapter 54',
     items: [
       {
         id: 'item_3_1',
@@ -268,13 +274,19 @@ export const bs7671InspectionSections: InspectionSection[] = [
         item: 'Adequate arrangements where a generating set operates in parallel with the public supply',
         clause: '551.7',
       },
+      {
+        id: 'item_4_23',
+        number: '4.23',
+        item: 'Confirmation of indication that AFDD(s) are operational',
+        clause: '421.1.7; 532.6; 651.2(e)',
+      },
     ],
   },
   {
     id: 'final_circuits',
     sectionNumber: '5',
-    title: 'FINAL CIRCUITS',
-    description: 'Inspection of final circuits and associated equipment',
+    title: 'DISTRIBUTION/FINAL CIRCUITS',
+    description: 'Inspection of distribution and final circuits and associated equipment',
     items: [
       {
         id: 'item_5_1',
@@ -318,7 +330,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
         id: 'item_5_7',
         number: '5.7',
         item: 'Adequacy of protective devices: type and rated current for fault protection',
-        clause: '411.3',
+        clause: '411.3; 530.3.201',
       },
       {
         id: 'item_5_8',
@@ -348,9 +360,9 @@ export const bs7671InspectionSections: InspectionSection[] = [
         id: 'item_5_12',
         number: '5.12',
         item: 'Provision of additional requirements for protection by RCD not exceeding 30 mA',
-        clause: '411.3.3; 522.6.202; 522.6.203; 411.3.4',
+        clause: '411.3.3; 522.6.202; Table 52.1; 411.3.4',
         description:
-          '• for all socket-outlets of rating 32 A or less, unless an exception is permitted (411.3.3)\n• for the supply of mobile equipment not exceeding 32 A rating for use outdoors (411.3.3)\n• for cables concealed in walls at a depth of less than 50 mm (522.6.202; 522.6.203)\n• for cables concealed in walls/partitions containing metal parts regardless of depth (522.6.203)\n• final circuits supplying luminaires within domestic (household) premises (411.3.4)',
+          '• for all socket-outlets of rating not exceeding 32 A, unless an exception is permitted (411.3.3)\n• for the supply of mobile equipment not exceeding 32 A rating for use outdoors (411.3.3)\n• for cables concealed in walls at a depth of less than 50 mm (522.6.202; Table 52.1)\n• for cables concealed in walls/partitions containing metal parts regardless of depth (Table 52.1)\n• Final circuits supplying luminaires within domestic (household) premises (411.3.4)',
       },
       {
         id: 'item_5_13',
@@ -388,7 +400,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
         id: 'item_5_18',
         number: '5.18',
         item: 'Condition of accessories including socket-outlets, switches and joint boxes',
-        clause: '651.2(v)',
+        clause: '651.2(e)',
       },
       {
         id: 'item_5_19',
@@ -439,7 +451,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_6_3',
         number: '6.4',
-        item: 'Presence of supplementary bonding conductors, unless not required by BS 7671:2018',
+        item: 'Presence of supplementary bonding conductors, where required',
         clause: '701.415.2',
       },
       {
@@ -491,7 +503,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_8_0',
         number: '8.1',
-        item: 'Where the installation includes additional requirements and recommendations relating to Chapter 82, additional inspection items should be added to the checklist.',
+        item: 'List all inspection items relating to Chapter 82. (Record separately the results of the particular inspections carried out and attach to the report.)',
         clause: 'Chapter 82',
       },
     ],

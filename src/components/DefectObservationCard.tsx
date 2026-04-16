@@ -61,34 +61,38 @@ interface DefectObservationCardProps {
 const defectCodeConfig = {
   C1: {
     label: 'C1 - DANGER',
-    description: 'Immediate action required',
-    bgClass: 'bg-red-500/15',
-    borderClass: 'border-red-500/40',
+    description: 'Danger present — immediate action required',
+    bgClass: 'bg-red-500/20',
+    borderClass: 'border-red-500',
     textClass: 'text-red-400',
+    cardBg: '',
     icon: XCircle,
   },
   C2: {
     label: 'C2 - POTENTIALLY DANGEROUS',
-    description: 'Urgent remedial action required',
-    bgClass: 'bg-orange-500/15',
-    borderClass: 'border-orange-500/40',
+    description: 'Potentially dangerous — urgent action required',
+    bgClass: 'bg-orange-500/20',
+    borderClass: 'border-orange-500',
     textClass: 'text-orange-400',
+    cardBg: '',
     icon: AlertTriangle,
   },
   C3: {
     label: 'C3 - IMPROVEMENT',
     description: 'Improvement recommended',
-    bgClass: 'bg-yellow-500/15',
-    borderClass: 'border-yellow-500/40',
+    bgClass: 'bg-yellow-500/20',
+    borderClass: 'border-yellow-500/60',
     textClass: 'text-yellow-400',
+    cardBg: '',
     icon: CheckCircle,
   },
   FI: {
     label: 'FI - FURTHER INVESTIGATION',
-    description: 'Further investigation required',
-    bgClass: 'bg-blue-500/15',
-    borderClass: 'border-blue-500/40',
+    description: 'Further investigation advised',
+    bgClass: 'bg-blue-500/20',
+    borderClass: 'border-blue-500/60',
     textClass: 'text-blue-400',
+    cardBg: '',
     icon: FileText,
   },
   'N/A': {
@@ -96,15 +100,17 @@ const defectCodeConfig = {
     description: 'Not applicable',
     bgClass: 'bg-white/10',
     borderClass: 'border-white/20',
-    textClass: 'text-white',
+    textClass: 'text-white/60',
+    cardBg: '',
     icon: Minus,
   },
   LIM: {
     label: 'LIM - LIMITATION',
     description: 'Limitation noted',
-    bgClass: 'bg-purple-500/15',
-    borderClass: 'border-purple-500/40',
+    bgClass: 'bg-purple-500/20',
+    borderClass: 'border-purple-500/60',
     textClass: 'text-purple-400',
+    cardBg: '',
     icon: Info,
   },
 };
@@ -138,58 +144,63 @@ const DefectObservationCard = ({
   const IconComponent = config.icon;
 
   const handleCodeChange = (code: DefectObservation['defectCode']) => {
+    // Save scroll position before state update to prevent scroll jump
+    const scrollY = window.scrollY;
     onUpdate(defect.id, 'defectCode', code);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY);
+    });
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] overflow-hidden">
-      {/* Header — compact */}
-      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/[0.06]">
-        <div className="flex items-center gap-2">
-          <span className={cn('text-xs font-bold', config.textClass)}>
-            #{index + 1} — {defect.defectCode}
+    <div className={cn('rounded-xl overflow-hidden border-l-[3px]', config.borderClass, 'border border-white/[0.06]', config.cardBg)}>
+      {/* Header — item number + current code badge + delete */}
+      <div className="flex items-center justify-between px-3.5 py-2.5 bg-white/[0.02] border-b border-white/[0.04]">
+        <div className="flex items-center gap-2.5">
+          <span className="text-sm font-bold text-white/80">#{index + 1}</span>
+          <span className={cn('text-[11px] font-bold px-2.5 py-1 rounded-md border', config.bgClass, config.borderClass, config.textClass)}>
+            {defect.defectCode}
           </span>
+          <span className="text-[10px] text-white/30 hidden sm:inline">{config.description}</span>
         </div>
         <button
           onClick={() => onRemove(defect.id)}
-          className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-[0.98]"
+          className="w-8 h-8 rounded-lg flex items-center justify-center text-red-400/50 hover:text-red-400 hover:bg-red-500/10 touch-manipulation active:scale-[0.95] transition-colors"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
       </div>
 
-      {/* Content */}
-      <div className="p-4 space-y-4">
-        {/* Classification Chips */}
-        <div>
-          <Label className="text-xs text-white mb-2 block">Classification</Label>
-          <div className="flex flex-wrap gap-1.5">
-            {(Object.keys(defectCodeConfig) as DefectObservation['defectCode'][]).map((code) => {
-              const codeConfig = defectCodeConfig[code];
-              const isActive = defect.defectCode === code;
-
-              return (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => handleCodeChange(code)}
-                  className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border touch-manipulation active:scale-[0.98]',
-                    isActive
-                      ? cn(codeConfig.bgClass, codeConfig.borderClass, codeConfig.textClass)
-                      : 'bg-white/[0.03] border-white/[0.06] text-white/50'
-                  )}
-                >
-                  {code}
-                </button>
-              );
-            })}
-          </div>
+      {/* Classification selector — full-width row of tappable buttons */}
+      <div className="px-3.5 py-2.5 border-b border-white/[0.04] bg-white/[0.01]">
+        <div className="grid grid-cols-6 gap-1.5">
+          {(Object.keys(defectCodeConfig) as DefectObservation['defectCode'][]).map((code) => {
+            const codeConfig = defectCodeConfig[code];
+            const isActive = defect.defectCode === code;
+            return (
+              <button
+                key={code}
+                type="button"
+                onClick={() => handleCodeChange(code)}
+                className={cn(
+                  'h-9 rounded-lg text-xs font-bold transition-all touch-manipulation active:scale-[0.96]',
+                  isActive
+                    ? cn(codeConfig.bgClass, codeConfig.borderClass, codeConfig.textClass, 'border')
+                    : 'bg-white/[0.03] border border-white/[0.06] text-white/30'
+                )}
+              >
+                {code}
+              </button>
+            );
+          })}
         </div>
+      </div>
 
-        {/* Item/Location */}
+      {/* Content */}
+      <div className="px-3.5 py-3 space-y-3">
+        {/* Item / Location */}
         <div>
-          <Label className="text-xs text-white mb-1.5 block">Item / Location</Label>
+          <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">Item / Location</Label>
           <Input
             placeholder="e.g., Consumer unit, Kitchen socket"
             value={defect.item}
@@ -198,19 +209,18 @@ const DefectObservationCard = ({
               const { sanitizeTextInput } = await import('@/utils/inputSanitization');
               onUpdate(defect.id, 'item', sanitizeTextInput(value));
             }}
-            className="h-10 text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
-                       placeholder:text-white"
+            className="h-11 text-sm bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500 placeholder:text-white/25 touch-manipulation"
           />
         </div>
 
-        {/* Description */}
+        {/* Observation description */}
         <div>
-          <Label className="text-xs text-white mb-1.5 block">
+          <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">
             {defect.defectCode === 'N/A'
               ? 'Reason for Not Applicable'
               : defect.defectCode === 'LIM'
-                ? 'Description of Limitation'
-                : 'Description of Defect'}
+                ? 'Limitation Description'
+                : 'Observation'}
           </Label>
           <Textarea
             placeholder={
@@ -218,7 +228,7 @@ const DefectObservationCard = ({
                 ? 'Explain why this item is not applicable...'
                 : defect.defectCode === 'LIM'
                   ? 'Describe the limitation encountered...'
-                  : 'Detailed description of the defect found...'
+                  : 'Include the relevant schedule reference(s), as appropriate...'
             }
             value={defect.description}
             onChange={async (e) => {
@@ -226,16 +236,16 @@ const DefectObservationCard = ({
               const { sanitizeTextInput } = await import('@/utils/inputSanitization');
               onUpdate(defect.id, 'description', sanitizeTextInput(value));
             }}
-            rows={3}
-            className="text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
-                       placeholder:text-white resize-none"
+            rows={2}
+            className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
+                       placeholder:text-white/25 resize-none min-h-[70px] touch-manipulation"
           />
         </div>
 
         {/* Recommendation */}
         {defect.defectCode !== 'N/A' && (
           <div>
-            <Label className="text-xs text-white mb-1.5 block">
+            <Label className="text-[10px] text-white/50 uppercase tracking-wider mb-1 block">
               {defect.defectCode === 'LIM' ? 'Further Action Required' : 'Recommendation'}
             </Label>
             <Textarea
@@ -251,8 +261,8 @@ const DefectObservationCard = ({
                 onUpdate(defect.id, 'recommendation', sanitizeTextInput(value));
               }}
               rows={2}
-              className="text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
-                         placeholder:text-white resize-none"
+              className="text-base bg-white/[0.04] border-white/[0.06] focus:border-yellow-500 focus:ring-yellow-500
+                         placeholder:text-white/25 resize-none min-h-[60px] touch-manipulation"
             />
           </div>
         )}
