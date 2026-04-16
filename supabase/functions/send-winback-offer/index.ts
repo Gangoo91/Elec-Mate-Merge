@@ -912,7 +912,7 @@ function generateV9WinbackHTML(firstName: string): string {
   const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
   const logoUrl = 'https://elec-mate.com/logo.jpg';
 
-  return \`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000000">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td style="padding:0">
 <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">
@@ -1051,7 +1051,7 @@ function generateV9WinbackHTML(firstName: string): string {
 </td></tr>
 
 </table></td></tr></table>
-</body></html>\`;
+</body></html>`;
 }
 
 function generateV8AppStoreLaunchHTML(firstName: string): string {
