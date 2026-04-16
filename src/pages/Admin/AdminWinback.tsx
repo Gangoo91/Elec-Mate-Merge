@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -16,20 +16,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Skeleton } from '@/components/ui/skeleton';
 import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
 import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
-  RefreshCw,
   RotateCcw,
   Send,
   Users,
-  CheckCircle,
   Mail,
-  Calendar,
   ChevronRight,
+  ChevronDown,
   Loader2,
   Clock,
   Eye,
@@ -40,20 +39,30 @@ import {
   MousePointerClick,
   MailOpen,
   FileText,
-  Smartphone,
+  Flame,
+  HeartCrack,
+  Settings,
+  MailCheck,
+  Sparkles,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 
-interface EligibleUser {
+interface SegmentUser {
   id: string;
   full_name: string | null;
   username: string;
   email: string;
   created_at: string;
   trial_ended_at: string;
+  stripe_customer_id: string | null;
+}
+
+interface Segments {
+  neverSubscribed: SegmentUser[];
+  cancelled: SegmentUser[];
 }
 
 interface SentUser {
@@ -74,19 +83,25 @@ interface WinbackStats {
   conversionRate: string;
 }
 
+type SegmentKey = 'all' | 'never' | 'cancelled';
+const BATCH_SIZE = 40;
+const EMAIL_VERSION = 'v9';
+
 export default function AdminWinback() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
-  const [search, setSearch] = useState('');
-  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
-  const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
-  const [confirmSendAll, setConfirmSendAll] = useState(false);
-  const [testEmail, setTestEmail] = useState('');
-  const [showTestEmail, setShowTestEmail] = useState(false);
-  const [manualEmail, setManualEmail] = useState('');
-  const [activeTab, setActiveTab] = useState<'eligible' | 'sent'>('eligible');
 
-  // Auto-batch state
+  const [search, setSearch] = useState('');
+  const [activeSegment, setActiveSegment] = useState<SegmentKey>('all');
+  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
+  const [selectedUser, setSelectedUser] = useState<SegmentUser | null>(null);
+  const [testEmail, setTestEmail] = useState('');
+  const [manualEmail, setManualEmail] = useState('');
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<'target' | 'sent'>('target');
+  const [showPreview, setShowPreview] = useState(false);
+  const [confirmSegmentSend, setConfirmSegmentSend] = useState<SegmentKey | null>(null);
+
   const [batchSending, setBatchSending] = useState(false);
   const [batchProgress, setBatchProgress] = useState({
     sent: 0,
@@ -95,17 +110,27 @@ export default function AdminWinback() {
     batch: 0,
     totalBatches: 0,
   });
-  const [confirmResend, setConfirmResend] = useState(false);
-  const [resetting, setResetting] = useState(false);
-  const [emailVersion] = useState<'v9'>('v9');
-  const [showPreview, setShowPreview] = useState(false);
 
-  // Fetch campaign stats
   const {
-    data: stats,
-    isLoading: statsLoading,
-    error: statsError,
-  } = useQuery<WinbackStats>({
+    data: segments,
+    isLoading: segmentsLoading,
+    isFetching,
+    refetch,
+  } = useQuery<Segments>({
+    queryKey: ['admin-winback-segments'],
+    queryFn: async () => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'get_segments' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data as Segments;
+    },
+    staleTime: 30 * 1000,
+    refetchInterval: 60 * 1000,
+  });
+
+  const { data: stats } = useQuery<WinbackStats>({
     queryKey: ['admin-winback-stats'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('send-winback-offer', {
@@ -120,26 +145,6 @@ export default function AdminWinback() {
     retry: false,
   });
 
-  // Fetch eligible users
-  const {
-    data: eligibleUsers,
-    isLoading: usersLoading,
-    isFetching,
-    refetch,
-  } = useQuery<EligibleUser[]>({
-    queryKey: ['admin-winback-eligible'],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'get_eligible' },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return (data?.users || []) as EligibleUser[];
-    },
-    staleTime: 30 * 1000,
-  });
-
-  // Fetch sent history
   const { data: sentUsers, isLoading: sentLoading } = useQuery<SentUser[]>({
     queryKey: ['admin-winback-sent'],
     queryFn: async () => {
@@ -153,21 +158,6 @@ export default function AdminWinback() {
     staleTime: 30 * 1000,
   });
 
-  // Fetch all users (for App Store blast)
-  const { data: allUsers } = useQuery<EligibleUser[]>({
-    queryKey: ['admin-winback-all-users'],
-    queryFn: async () => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'get_all_users' },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return (data?.users || []) as EligibleUser[];
-    },
-    staleTime: 60 * 1000,
-  });
-
-  // Fetch email tracking events
   const { data: trackingEvents } = useQuery({
     queryKey: ['admin-winback-tracking'],
     queryFn: async () => {
@@ -190,7 +180,6 @@ export default function AdminWinback() {
     refetchInterval: 30 * 1000,
   });
 
-  // Compute tracking stats (per-email for sent list badges)
   const trackingByEmail = useMemo(() => {
     const byEmail = new Map<string, Set<string>>();
     if (!trackingEvents) return byEmail;
@@ -204,11 +193,42 @@ export default function AdminWinback() {
     return byEmail;
   }, [trackingEvents]);
 
-  // Send single email mutation
+  const performanceStats = useMemo(() => {
+    if (!sentUsers) return { opened: 0, clicked: 0 };
+    let opened = 0;
+    let clicked = 0;
+    sentUsers.forEach((u) => {
+      if (!u.email) return;
+      const events = trackingByEmail.get(u.email.toLowerCase());
+      if (events?.has('email.opened')) opened++;
+      if (events?.has('email.clicked')) clicked++;
+    });
+    return { opened, clicked };
+  }, [sentUsers, trackingByEmail]);
+
+  const neverSubscribed = useMemo(() => segments?.neverSubscribed || [], [segments]);
+  const cancelled = useMemo(() => segments?.cancelled || [], [segments]);
+  const totalEligible = neverSubscribed.length + cancelled.length;
+
+  const visibleUsers = useMemo(() => {
+    let list: SegmentUser[] = [];
+    if (activeSegment === 'never') list = neverSubscribed;
+    else if (activeSegment === 'cancelled') list = cancelled;
+    else list = [...neverSubscribed, ...cancelled];
+    if (!search) return list;
+    const s = search.toLowerCase();
+    return list.filter(
+      (u) =>
+        u.full_name?.toLowerCase().includes(s) ||
+        u.username?.toLowerCase().includes(s) ||
+        u.email?.toLowerCase().includes(s)
+    );
+  }, [neverSubscribed, cancelled, activeSegment, search]);
+
   const sendSingleMutation = useMutation({
     mutationFn: async (userId: string) => {
       const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'send_single', userId, email_version: emailVersion },
+        body: { action: 'send_single', userId, email_version: EMAIL_VERSION },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -216,27 +236,87 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'Win-back offer sent successfully', variant: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+      toast({ title: 'V9 sent', variant: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-segments'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
       setSelectedUser(null);
-      setSelectedUsers((prev) => {
-        const next = new Set(prev);
-        next.delete(selectedUser?.id || '');
-        return next;
-      });
     },
     onError: (error) => {
       haptic.error();
-      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
+      toast({ title: `Send failed: ${error.message}`, variant: 'destructive' });
     },
   });
 
-  // Auto-batched bulk send
-  const BATCH_SIZE = 40;
+  const sendTestMutation = useMutation({
+    mutationFn: async (email: string) => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'send_test', testEmail: email, email_version: EMAIL_VERSION },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: () => {
+      haptic.success();
+      toast({ title: 'Test email sent — check your inbox', variant: 'success' });
+      setTestEmail('');
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: `Test send failed: ${error.message}`, variant: 'destructive' });
+    },
+  });
+
+  const sendManualMutation = useMutation({
+    mutationFn: async (email: string) => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'send_manual', manualEmail: email, email_version: EMAIL_VERSION },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: () => {
+      haptic.success();
+      toast({ title: 'V9 sent to that address', variant: 'success' });
+      setManualEmail('');
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: `Send failed: ${error.message}`, variant: 'destructive' });
+    },
+  });
+
+  const resetSentMutation = useMutation({
+    mutationFn: async (userIds: string[]) => {
+      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
+        body: { action: 'reset_sent', userIds },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      return data;
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast({
+        title: `Reset ${data.resetCount ?? data.reset ?? 0} users — ready to re-send`,
+        variant: 'success',
+      });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-segments'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+    },
+    onError: (error) => {
+      haptic.error();
+      toast({ title: `Reset failed: ${error.message}`, variant: 'destructive' });
+    },
+  });
 
   const sendBatchedEmails = async (userIds: string[]) => {
+    if (userIds.length === 0) return;
     const batches: string[][] = [];
     for (let i = 0; i < userIds.length; i += BATCH_SIZE) {
       batches.push(userIds.slice(i, i + BATCH_SIZE));
@@ -259,15 +339,23 @@ export default function AdminWinback() {
 
       try {
         const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-          body: { action: 'send_bulk', userIds: batches[i], email_version: emailVersion },
+          body: {
+            action: 'send_bulk',
+            userIds: batches[i],
+            email_version: EMAIL_VERSION,
+          },
         });
         if (error) throw error;
         if (data?.error) throw new Error(data.error);
 
         totalSent += data.sent || 0;
         totalFailed += data.failed || 0;
-        setBatchProgress((prev) => ({ ...prev, sent: totalSent, failed: totalFailed }));
-      } catch (err: unknown) {
+        setBatchProgress((prev) => ({
+          ...prev,
+          sent: totalSent,
+          failed: totalFailed,
+        }));
+      } catch {
         totalFailed += batches[i].length;
         setBatchProgress((prev) => ({ ...prev, failed: totalFailed }));
       }
@@ -280,96 +368,24 @@ export default function AdminWinback() {
       title:
         totalFailed === 0
           ? `Sent ${totalSent} of ${userIds.length} emails`
-          : `Sent ${totalSent} of ${userIds.length} emails (${totalFailed} failed)`,
+          : `Sent ${totalSent} of ${userIds.length} (${totalFailed} failed)`,
       variant: totalFailed === 0 ? 'success' : 'warning',
     });
     setBatchSending(false);
     setBatchProgress({ sent: 0, failed: 0, total: 0, batch: 0, totalBatches: 0 });
     setSelectedUsers(new Set());
-    setConfirmSendAll(false);
-    queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-segments'] });
     queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
     queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
   };
 
-  // Send test email mutation
-  const sendTestMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'send_test', testEmail: email, email_version: emailVersion },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
-      haptic.success();
-      toast({ title: 'Test email sent! Check your inbox.', variant: 'success' });
-      setTestEmail('');
-      setShowTestEmail(false);
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Failed to send test email: ${error.message}`, variant: 'destructive' });
-    },
-  });
-
-  // Send manual email mutation
-  const sendManualMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'send_manual', manualEmail: email, email_version: emailVersion },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
-      haptic.success();
-      toast({ title: 'Win-back offer sent!', variant: 'success' });
-      setManualEmail('');
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
-    },
-  });
-
-  const resetSentMutation = useMutation({
-    mutationFn: async (userIds: string[]) => {
-      const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-        body: { action: 'reset_sent', userIds },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: (data) => {
-      haptic.success();
-      toast({ title: `Reset ${data.resetCount} users — ready to re-send`, variant: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
-    },
-    onError: (error) => {
-      haptic.error();
-      toast({ title: `Reset failed: ${error.message}`, variant: 'destructive' });
-    },
-  });
-
-  // Filter users based on search
-  const filteredUsers = useMemo(() => {
-    if (!eligibleUsers) return [];
-    if (!search) return eligibleUsers;
-    const searchLower = search.toLowerCase();
-    return eligibleUsers.filter(
-      (u) =>
-        u.full_name?.toLowerCase().includes(searchLower) ||
-        u.username?.toLowerCase().includes(searchLower) ||
-        u.email?.toLowerCase().includes(searchLower)
-    );
-  }, [eligibleUsers, search]);
+  const handleSendSegment = (seg: SegmentKey) => {
+    let ids: string[] = [];
+    if (seg === 'never') ids = neverSubscribed.map((u) => u.id);
+    else if (seg === 'cancelled') ids = cancelled.map((u) => u.id);
+    else ids = [...neverSubscribed, ...cancelled].map((u) => u.id);
+    sendBatchedEmails(ids);
+  };
 
   const toggleUserSelection = (userId: string) => {
     setSelectedUsers((prev) => {
@@ -381,16 +397,29 @@ export default function AdminWinback() {
   };
 
   const toggleSelectAll = () => {
-    if (selectedUsers.size === filteredUsers.length) setSelectedUsers(new Set());
-    else setSelectedUsers(new Set(filteredUsers.map((u) => u.id)));
-  };
-
-  const handleSendSelected = () => {
-    if (selectedUsers.size === 0) return;
-    sendBatchedEmails(Array.from(selectedUsers));
+    if (selectedUsers.size === visibleUsers.length) setSelectedUsers(new Set());
+    else setSelectedUsers(new Set(visibleUsers.map((u) => u.id)));
   };
 
   const totalSent = stats?.offersSent || 0;
+  const converted = stats?.conversions || 0;
+  const openRate = totalSent > 0 ? Math.round((performanceStats.opened / totalSent) * 100) : 0;
+  const clickRate = totalSent > 0 ? Math.round((performanceStats.clicked / totalSent) * 100) : 0;
+  const convRate = totalSent > 0 ? Math.round((converted / totalSent) * 100) : 0;
+
+  const confirmCount =
+    confirmSegmentSend === 'never'
+      ? neverSubscribed.length
+      : confirmSegmentSend === 'cancelled'
+        ? cancelled.length
+        : totalEligible;
+
+  const confirmLabel =
+    confirmSegmentSend === 'never'
+      ? 'never-subscribed'
+      : confirmSegmentSend === 'cancelled'
+        ? 'cancelled'
+        : 'eligible';
 
   return (
     <PullToRefresh
@@ -398,10 +427,10 @@ export default function AdminWinback() {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
+      <div className="space-y-4 pb-24">
         <AdminPageHeader
-          title="App Store Launch"
-          subtitle="Announce the App Store launch to lapsed users"
+          title="Win-Back Campaign"
+          subtitle="V9 — We've been building. You should see it."
           icon={RotateCcw}
           iconColor="text-amber-400"
           iconBg="bg-amber-500/10 border-amber-500/20"
@@ -415,179 +444,154 @@ export default function AdminWinback() {
           isRefreshing={isFetching}
         />
 
-        {/* Campaign Controls */}
-        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Send className="h-4 w-4 text-amber-400" />
-                Send Controls
-              </span>
-              <div className="flex items-center gap-2">
-                <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
+        {/* Campaign hero */}
+        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5 overflow-hidden">
+          <CardContent className="pt-4 pb-4 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0 shrink-0 font-bold">
                   V9
                 </Badge>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowTestEmail(!showTestEmail)}
-                  className="gap-1.5 h-9 touch-manipulation text-yellow-400 border-yellow-400/30 hover:bg-yellow-500/10"
-                >
-                  <TestTube className="h-3.5 w-3.5" />
-                  Test
-                </Button>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Campaign info */}
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0">
-                    V9 Win Back
-                  </Badge>
-                  <span className="text-xs text-white font-medium">We've been building. You should see it.</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowPreview(true)}
-                  className="h-7 touch-manipulation text-xs gap-1 text-amber-400 hover:text-amber-300"
-                >
-                  <Eye className="h-3 w-3" />
-                  Preview
-                </Button>
-              </div>
-              <p className="text-[11px] text-white leading-relaxed">
-                "We've been building. You should see it." — £9.99/mo via web, saves £5/mo vs App Store
-              </p>
-            </div>
-
-            {/* Quick stats */}
-            <div className="grid grid-cols-3 gap-2">
-              <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-center">
-                <p className="text-lg font-bold text-blue-400">{totalSent}</p>
-                <p className="text-[10px] text-white">Sent</p>
-              </div>
-              <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-center">
-                <p className="text-lg font-bold text-emerald-400">{stats?.conversions || 0}</p>
-                <p className="text-[10px] text-white">Converted</p>
-              </div>
-              <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
-                <p className="text-lg font-bold text-amber-400">{allUsers?.length || 0}</p>
-                <p className="text-[10px] text-white">All Users</p>
-              </div>
-            </div>
-
-            {/* Test email section */}
-            {showTestEmail && (
-              <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
-                <p className="text-xs text-yellow-400 font-semibold">Send Test Email (V9)</p>
-                <div className="flex gap-2">
-                  <Input
-                    type="email"
-                    value={testEmail}
-                    onChange={(e) => setTestEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="h-11 text-base touch-manipulation flex-1"
-                  />
-                  <Button
-                    onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
-                    disabled={!testEmail || sendTestMutation.isPending}
-                    className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600"
-                  >
-                    {sendTestMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Send className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {/* Manual email */}
-            <div className="flex items-center gap-2">
-              <Input
-                type="email"
-                value={manualEmail}
-                onChange={(e) => setManualEmail(e.target.value)}
-                placeholder="Send to any email..."
-                className="h-11 text-base touch-manipulation flex-1"
-              />
-              <Button
-                onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
-                disabled={!manualEmail || sendManualMutation.isPending}
-                className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black shrink-0"
-              >
-                {sendManualMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-
-            {/* Batch progress */}
-            {batchSending && (
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="flex items-center gap-2 text-amber-400 font-semibold">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
-                  </span>
-                  <span className="text-white">
-                    {batchProgress.sent}/{batchProgress.total}
-                  </span>
-                </div>
-                <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
-                    style={{
-                      width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%`,
-                    }}
-                  />
-                </div>
-                {batchProgress.failed > 0 && (
-                  <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
-                )}
-              </div>
-            )}
-
-            {/* Big action buttons */}
-            {!batchSending && (
-              <div className="grid grid-cols-1 gap-2 pt-1">
-                <Button
-                  onClick={() => setConfirmResend(true)}
-                  disabled={resetting || batchSending}
-                  className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
-                >
-                  {resetting ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                  Send V9 to All Users ({allUsers?.length || 0})
-                </Button>
-                <p className="text-[10px] text-white text-center">
-                  Resets all sent users then sends the V9 win-back email to everyone in batches of {BATCH_SIZE}
+                <p className="text-sm font-semibold text-white truncate">
+                  We&apos;ve been building.
                 </p>
               </div>
-            )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowPreview(true)}
+                className="h-9 gap-1.5 text-amber-400 hover:text-amber-300 shrink-0 touch-manipulation"
+              >
+                <Eye className="h-3.5 w-3.5" />
+                Preview
+              </Button>
+            </div>
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-black/40 border border-white/5">
+              <Sparkles className="h-4 w-4 text-amber-400 shrink-0" />
+              <p className="text-[11px] text-white/80 leading-relaxed">
+                Electricians only · £9.99/mo via Stripe · saves £5 vs App Store
+              </p>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Tab switcher: Eligible / Sent */}
+        {/* Performance strip */}
+        <div className="grid grid-cols-4 gap-2">
+          <StatTile
+            label="Sent"
+            value={totalSent}
+            sub={null}
+            colorClass="text-blue-400 bg-blue-500/10 border-blue-500/20"
+          />
+          <StatTile
+            label="Opened"
+            value={performanceStats.opened}
+            sub={totalSent > 0 ? `${openRate}%` : null}
+            colorClass="text-green-400 bg-green-500/10 border-green-500/20"
+          />
+          <StatTile
+            label="Clicked"
+            value={performanceStats.clicked}
+            sub={totalSent > 0 ? `${clickRate}%` : null}
+            colorClass="text-violet-400 bg-violet-500/10 border-violet-500/20"
+          />
+          <StatTile
+            label="Converted"
+            value={converted}
+            sub={totalSent > 0 ? `${convRate}%` : null}
+            colorClass="text-amber-400 bg-amber-500/10 border-amber-500/20"
+          />
+        </div>
+
+        {/* Segment tiles */}
+        <div className="grid grid-cols-2 gap-3">
+          <SegmentTile
+            title="Never subscribed"
+            subtitle="Trial expired, never paid"
+            count={neverSubscribed.length}
+            loading={segmentsLoading}
+            active={activeSegment === 'never'}
+            onFocus={() => {
+              setActiveSegment('never');
+              setActiveTab('target');
+              setSelectedUsers(new Set());
+            }}
+            onSend={() => setConfirmSegmentSend('never')}
+            icon={Flame}
+            colorClass="from-rose-500/10 to-orange-500/5 border-rose-500/30"
+            iconBgClass="bg-rose-500/15 text-rose-400"
+            disabledSend={batchSending || neverSubscribed.length === 0}
+          />
+          <SegmentTile
+            title="Cancelled"
+            subtitle="Subscribed, then cancelled"
+            count={cancelled.length}
+            loading={segmentsLoading}
+            active={activeSegment === 'cancelled'}
+            onFocus={() => {
+              setActiveSegment('cancelled');
+              setActiveTab('target');
+              setSelectedUsers(new Set());
+            }}
+            onSend={() => setConfirmSegmentSend('cancelled')}
+            icon={HeartCrack}
+            colorClass="from-violet-500/10 to-fuchsia-500/5 border-violet-500/30"
+            iconBgClass="bg-violet-500/15 text-violet-400"
+            disabledSend={batchSending || cancelled.length === 0}
+          />
+        </div>
+
+        {/* Combined send */}
+        {totalEligible > 0 && !batchSending && (
+          <Button
+            onClick={() => setConfirmSegmentSend('all')}
+            className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
+          >
+            <Send className="h-4 w-4" />
+            Send V9 to all {totalEligible} eligible electricians
+          </Button>
+        )}
+
+        {/* Batch progress */}
+        {batchSending && (
+          <Card className="border-amber-500/30 bg-amber-500/5">
+            <CardContent className="pt-4 pb-4 space-y-2">
+              <div className="flex items-center justify-between text-sm">
+                <span className="flex items-center gap-2 text-amber-400 font-semibold">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending batch {batchProgress.batch}/{batchProgress.totalBatches}
+                </span>
+                <span className="text-white">
+                  {batchProgress.sent}/{batchProgress.total}
+                </span>
+              </div>
+              <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
+                  style={{
+                    width: `${
+                      batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0
+                    }%`,
+                  }}
+                />
+              </div>
+              {batchProgress.failed > 0 && (
+                <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Tabs */}
         <div className="flex gap-1 p-1 bg-muted/50 rounded-xl border border-border">
           <Button
-            variant={activeTab === 'eligible' ? 'default' : 'ghost'}
+            variant={activeTab === 'target' ? 'default' : 'ghost'}
             size="sm"
-            onClick={() => setActiveTab('eligible')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'eligible' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
+            onClick={() => setActiveTab('target')}
+            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'target' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
           >
             <Target className="h-3.5 w-3.5" />
-            Eligible ({filteredUsers.length})
+            Target ({totalEligible})
           </Button>
           <Button
             variant={activeTab === 'sent' ? 'default' : 'ghost'}
@@ -600,118 +604,127 @@ export default function AdminWinback() {
           </Button>
         </div>
 
-        {/* Eligible Users Tab */}
-        {activeTab === 'eligible' && (
+        {/* Target tab */}
+        {activeTab === 'target' && (
           <Card>
-            <CardContent className="pt-4 pb-4 px-3 sm:px-4">
-              <div className="space-y-3">
-                <AdminSearchInput
-                  value={search}
-                  onChange={setSearch}
-                  placeholder="Search eligible users..."
+            <CardContent className="pt-4 pb-4 px-3 sm:px-4 space-y-3">
+              {/* Segment pills */}
+              <div
+                className="flex gap-1.5 overflow-x-auto -mx-1 px-1"
+                style={{ scrollbarWidth: 'none' }}
+              >
+                <SegmentPill
+                  active={activeSegment === 'all'}
+                  onClick={() => {
+                    setActiveSegment('all');
+                    setSelectedUsers(new Set());
+                  }}
+                  label="All"
+                  count={totalEligible}
+                  colorClass="bg-amber-500 text-black"
                 />
-
-                {filteredUsers.length > 0 && (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Checkbox
-                        checked={
-                          filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
-                        }
-                        onCheckedChange={toggleSelectAll}
-                        disabled={batchSending}
-                        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                      />
-                      <span className="text-sm text-white">
-                        {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
-                      </span>
-                    </div>
-                    {selectedUsers.size > 0 && !batchSending && (
-                      <Button
-                        size="sm"
-                        onClick={handleSendSelected}
-                        className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
-                      >
-                        <Send className="h-4 w-4" />
-                        Send to {selectedUsers.size}
-                      </Button>
-                    )}
-                  </div>
-                )}
-
-                {usersLoading ? (
-                  <div className="space-y-3 animate-pulse">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                        <div className="flex items-center gap-3">
-                          <Skeleton className="w-9 h-9 rounded-lg" />
-                          <div className="space-y-1.5 flex-1">
-                            <Skeleton className="h-4 w-32" />
-                            <Skeleton className="h-3 w-48" />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : filteredUsers.length === 0 ? (
-                  <AdminEmptyState
-                    icon={Users}
-                    title="No eligible users"
-                    description={
-                      search
-                        ? 'No users match your search.'
-                        : 'All eligible users have been sent the offer.'
-                    }
-                  />
-                ) : (
-                  <div className="space-y-1.5">
-                    {filteredUsers.map((user) => (
-                      <div
-                        key={user.id}
-                        className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform"
-                      >
-                        <Checkbox
-                          checked={selectedUsers.has(user.id)}
-                          onCheckedChange={() => toggleUserSelection(user.id)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                        />
-                        <div
-                          className="flex-1 min-w-0 cursor-pointer"
-                          onClick={() => setSelectedUser(user)}
-                        >
-                          <p className="font-medium text-sm text-white truncate">
-                            {user.full_name || 'Unknown'}
-                          </p>
-                          <div className="flex items-center gap-2 text-xs text-white">
-                            <span className="truncate max-w-[140px]">{user.email}</span>
-                            <span>·</span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {formatDistanceToNow(parseISO(user.trial_ended_at), {
-                                addSuffix: true,
-                              })}
-                            </span>
-                          </div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setSelectedUser(user)}
-                          className="h-11 px-2 touch-manipulation"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <SegmentPill
+                  active={activeSegment === 'never'}
+                  onClick={() => {
+                    setActiveSegment('never');
+                    setSelectedUsers(new Set());
+                  }}
+                  label="Never"
+                  count={neverSubscribed.length}
+                  colorClass="bg-rose-500/90 text-white"
+                />
+                <SegmentPill
+                  active={activeSegment === 'cancelled'}
+                  onClick={() => {
+                    setActiveSegment('cancelled');
+                    setSelectedUsers(new Set());
+                  }}
+                  label="Cancelled"
+                  count={cancelled.length}
+                  colorClass="bg-violet-500/90 text-white"
+                />
               </div>
+
+              <AdminSearchInput
+                value={search}
+                onChange={setSearch}
+                placeholder="Search name or email..."
+              />
+
+              {visibleUsers.length > 0 && (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      checked={
+                        visibleUsers.length > 0 && selectedUsers.size === visibleUsers.length
+                      }
+                      onCheckedChange={toggleSelectAll}
+                      disabled={batchSending}
+                      className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                    />
+                    <span className="text-sm text-white">
+                      {selectedUsers.size > 0
+                        ? `${selectedUsers.size} selected`
+                        : 'Select all visible'}
+                    </span>
+                  </div>
+                  {selectedUsers.size > 0 && !batchSending && (
+                    <Button
+                      size="sm"
+                      onClick={() => sendBatchedEmails(Array.from(selectedUsers))}
+                      className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
+                    >
+                      <Send className="h-4 w-4" />
+                      Send to {selectedUsers.size}
+                    </Button>
+                  )}
+                </div>
+              )}
+
+              {/* List */}
+              {segmentsLoading ? (
+                <div className="space-y-2 animate-pulse">
+                  {[...Array(4)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3 flex items-center gap-3"
+                    >
+                      <Skeleton className="w-9 h-9 rounded-lg" />
+                      <div className="space-y-1.5 flex-1">
+                        <Skeleton className="h-4 w-32" />
+                        <Skeleton className="h-3 w-48" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : visibleUsers.length === 0 ? (
+                <AdminEmptyState
+                  icon={Users}
+                  title={search ? 'No matches' : 'Segment is empty'}
+                  description={
+                    search
+                      ? 'No users match your search.'
+                      : 'Nothing to send in this segment right now.'
+                  }
+                />
+              ) : (
+                <div className="space-y-1.5">
+                  {visibleUsers.map((user) => (
+                    <UserRow
+                      key={user.id}
+                      user={user}
+                      selected={selectedUsers.has(user.id)}
+                      onToggle={() => toggleUserSelection(user.id)}
+                      onOpen={() => setSelectedUser(user)}
+                    />
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         )}
 
-        {/* Sent Tab */}
+        {/* Sent tab */}
         {activeTab === 'sent' && (
           <Card>
             <CardContent className="pt-4 pb-4 px-3 sm:px-4">
@@ -725,42 +738,15 @@ export default function AdminWinback() {
                 <AdminEmptyState
                   icon={Mail}
                   title="No emails sent yet"
-                  description="Send the App Store launch email to see results here."
+                  description="Send V9 to a segment above to see results here."
                 />
               ) : (
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-white">{sentUsers.length} sent</p>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        const allSentIds = sentUsers.map((u) => u.id);
-                        if (
-                          confirm(
-                            `Reset all ${allSentIds.length} sent users so they can be re-sent?`
-                          )
-                        ) {
-                          resetSentMutation.mutate(allSentIds);
-                        }
-                      }}
-                      disabled={resetSentMutation.isPending}
-                      className="h-8 text-xs touch-manipulation gap-1"
-                    >
-                      {resetSentMutation.isPending ? (
-                        <Loader2 className="h-3 w-3 animate-spin" />
-                      ) : (
-                        <RotateCcw className="h-3 w-3" />
-                      )}
-                      Reset All
-                    </Button>
-                  </div>
+                  <p className="text-xs text-white">{sentUsers.length} sent</p>
                   <div className="space-y-1.5">
                     {sentUsers.map((user) => {
                       const userEmail = user.email?.toLowerCase();
-                      const userEvents = userEmail
-                        ? trackingByEmail.get(userEmail)
-                        : undefined;
+                      const userEvents = userEmail ? trackingByEmail.get(userEmail) : undefined;
                       const wasDelivered = userEvents?.has('email.delivered') || false;
                       const wasOpened = userEvents?.has('email.opened') || false;
                       const wasClicked = userEvents?.has('email.clicked') || false;
@@ -775,6 +761,7 @@ export default function AdminWinback() {
                         v6: 'bg-indigo-500/20 text-indigo-400',
                         v7: 'bg-green-500/20 text-green-400',
                         v8: 'bg-amber-500/20 text-amber-400',
+                        v9: 'bg-amber-500/20 text-amber-400',
                       };
                       const vClass = versionColours[user.email_version] || versionColours.v1;
 
@@ -803,7 +790,7 @@ export default function AdminWinback() {
                             </Badge>
                             {wasDelivered && (
                               <Badge className="bg-blue-500/20 text-blue-400 text-[9px] px-1 border-0">
-                                <CheckCircle className="h-2.5 w-2.5" />
+                                <MailCheck className="h-2.5 w-2.5" />
                               </Badge>
                             )}
                             {wasOpened && (
@@ -812,7 +799,7 @@ export default function AdminWinback() {
                               </Badge>
                             )}
                             {wasClicked && (
-                              <Badge className="bg-amber-500/20 text-amber-400 text-[9px] px-1 border-0">
+                              <Badge className="bg-violet-500/20 text-violet-400 text-[9px] px-1 border-0">
                                 <MousePointerClick className="h-2.5 w-2.5" />
                               </Badge>
                             )}
@@ -837,6 +824,110 @@ export default function AdminWinback() {
           </Card>
         )}
 
+        {/* Advanced */}
+        <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
+          <CollapsibleTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full h-11 justify-between touch-manipulation border-white/10"
+            >
+              <span className="flex items-center gap-2 text-sm text-white">
+                <Settings className="h-4 w-4" />
+                Advanced
+              </span>
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${advancedOpen ? 'rotate-180' : ''}`}
+              />
+            </Button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <Card className="mt-2">
+              <CardContent className="pt-4 pb-4 space-y-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-yellow-400 flex items-center gap-1.5">
+                    <TestTube className="h-3.5 w-3.5" />
+                    Send test email (V9)
+                  </p>
+                  <div className="flex gap-2">
+                    <Input
+                      type="email"
+                      value={testEmail}
+                      onChange={(e) => setTestEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                    <Button
+                      onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
+                      disabled={!testEmail || sendTestMutation.isPending}
+                      className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black"
+                    >
+                      {sendTestMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-white/80">
+                    Send V9 to a specific address
+                  </p>
+                  <div className="flex gap-2">
+                    <Input
+                      type="email"
+                      value={manualEmail}
+                      onChange={(e) => setManualEmail(e.target.value)}
+                      placeholder="recipient@example.com"
+                      className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                    <Button
+                      onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
+                      disabled={!manualEmail || sendManualMutation.isPending}
+                      className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
+                    >
+                      {sendManualMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                {(sentUsers?.length || 0) > 0 && (
+                  <div className="pt-2 border-t border-white/5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const allSentIds = sentUsers?.map((u) => u.id) || [];
+                        if (
+                          confirm(
+                            `Reset all ${allSentIds.length} sent users so they can be re-sent?`
+                          )
+                        ) {
+                          resetSentMutation.mutate(allSentIds);
+                        }
+                      }}
+                      disabled={resetSentMutation.isPending}
+                      className="w-full h-11 text-xs touch-manipulation gap-1.5"
+                    >
+                      {resetSentMutation.isPending ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <RotateCcw className="h-3.5 w-3.5" />
+                      )}
+                      Reset all sent users (allows re-sending)
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </CollapsibleContent>
+        </Collapsible>
+
         {/* User Detail Sheet */}
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
           <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
@@ -849,37 +940,42 @@ export default function AdminWinback() {
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
                     <User className="h-6 w-6 text-amber-400" />
                   </div>
-                  <div>
-                    <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
+                  <div className="text-left">
+                    <p>{selectedUser?.full_name || 'Unknown'}</p>
                     <p className="text-sm font-normal text-white">{selectedUser?.email}</p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Calendar className="h-4 w-4 text-blue-400" />
-                      Trial Information
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+                  <CardContent className="pt-4 pb-4 space-y-3">
+                    <div className="flex items-center gap-2">
+                      {selectedUser?.stripe_customer_id ? (
+                        <Badge className="bg-violet-500/20 text-violet-400 border-0 gap-1">
+                          <HeartCrack className="h-3 w-3" /> Cancelled
+                        </Badge>
+                      ) : (
+                        <Badge className="bg-rose-500/20 text-rose-400 border-0 gap-1">
+                          <Flame className="h-3 w-3" /> Never subscribed
+                        </Badge>
+                      )}
+                    </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Signed Up</span>
+                      <span className="text-sm text-white">Signed up</span>
                       <span className="text-sm">
                         {selectedUser?.created_at &&
                           format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Trial Ended</span>
+                      <span className="text-sm text-white">Trial ended</span>
                       <span className="text-sm">
                         {selectedUser?.trial_ended_at &&
                           format(parseISO(selectedUser.trial_ended_at), 'dd MMM yyyy')}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Days Since Expiry</span>
+                      <span className="text-sm text-white">Days lapsed</span>
                       <Badge variant="outline" className="text-red-400">
                         {selectedUser?.trial_ended_at &&
                           Math.floor(
@@ -905,7 +1001,7 @@ export default function AdminWinback() {
                   ) : (
                     <>
                       <Mail className="h-4 w-4 mr-2" />
-                      Send Win Back Email (V9)
+                      Send V9 to this user
                     </>
                   )}
                 </Button>
@@ -914,114 +1010,48 @@ export default function AdminWinback() {
           </SheetContent>
         </Sheet>
 
-        {/* Confirm Resend Dialog */}
-        <AlertDialog open={confirmResend} onOpenChange={setConfirmResend}>
+        {/* Confirm segment send */}
+        <AlertDialog
+          open={!!confirmSegmentSend}
+          onOpenChange={(open) => !open && setConfirmSegmentSend(null)}
+        >
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send V9 Win Back to all users?
+                Send V9 to {confirmCount} {confirmLabel} electricians?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
                   <p className="text-white">
-                    Resets all previously sent users then sends the V9 win-back email
-                    to every user with an account, in batches of {BATCH_SIZE}.
+                    Sends in batches of {BATCH_SIZE} via Resend with a 2s gap between batches.
                   </p>
-                  <p className="text-white font-bold">
-                    ~{allUsers?.length || 0} emails via V9
+                  <p className="text-white/70 text-xs">
+                    Each recipient gets marked as sent and won&apos;t reappear in this segment
+                    unless reset.
                   </p>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
-              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={async () => {
-                  setConfirmResend(false);
-                  setResetting(true);
-                  try {
-                    const { data, error } = await supabase.functions.invoke('send-winback-offer', {
-                      body: { action: 'reset_sent' },
-                    });
-                    if (error) throw error;
-                    if (data?.error) throw new Error(data.error);
-
-                    haptic.success();
-                    toast({
-                      title: `${data.reset} users reset — now sending V9 to all users...`,
-                      variant: 'success',
-                    });
-
-                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
-                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-                    await queryClient.invalidateQueries({ queryKey: ['admin-winback-all-users'] });
-
-                    // Fetch ALL users (not just eligible)
-                    const { data: allData, error: allError } = await supabase.functions.invoke('send-winback-offer', {
-                      body: { action: 'get_all_users' },
-                    });
-                    const allUsersList = (!allError && allData?.users) ? allData.users as EligibleUser[] : [];
-
-                    setResetting(false);
-
-                    if (allUsersList.length > 0) {
-                      sendBatchedEmails(allUsersList.map((u: EligibleUser) => u.id));
-                    } else {
-                      toast({
-                        title: 'No users found',
-                        variant: 'info',
-                      });
-                    }
-                  } catch (err: unknown) {
-                    setResetting(false);
-                    haptic.error();
-                    toast({
-                      title: `Reset failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
-                      variant: 'destructive',
-                    });
-                  }
-                }}
-                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
-              >
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Reset &amp; Send V9 to All
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-
-        {/* Confirm Send All Dialog */}
-        <AlertDialog open={confirmSendAll} onOpenChange={setConfirmSendAll}>
-          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
-            <AlertDialogHeader className="space-y-3">
-              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send to all {eligibleUsers?.length || 0} eligible users?
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-sm leading-relaxed">
-                Sends the V9 win-back email in batches of {BATCH_SIZE}. This cannot be undone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 sm:gap-2 pt-2">
+            <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 pt-2">
               <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  setConfirmSendAll(false);
-                  sendBatchedEmails(eligibleUsers?.map((u) => u.id) || []);
+                  const seg = confirmSegmentSend;
+                  setConfirmSegmentSend(null);
+                  if (seg) handleSendSegment(seg);
                 }}
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
               >
                 <Send className="h-4 w-4 mr-2" />
-                Send to All ({eligibleUsers?.length || 0})
+                Send {confirmCount}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Email Preview Sheet */}
+        {/* Preview */}
         <Sheet open={showPreview} onOpenChange={setShowPreview}>
           <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
             <div className="flex flex-col h-full">
@@ -1031,18 +1061,16 @@ export default function AdminWinback() {
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-amber-400" />
-                  Preview: Win Back V9
-                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">
-                    V9
-                  </Badge>
+                  V9 Preview
+                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">V9</Badge>
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-hidden bg-slate-900">
+              <div className="flex-1 overflow-hidden bg-black">
                 <iframe
-                  title="Email Preview"
+                  title="V9 email preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin-bottom:8px;font-size:24px}p{color:#86868b;font-size:14px;line-height:1.6;max-width:300px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}</style></head><body><div class="badge">V9 — Win Back</div><h2>We've been building.</h2><p>Send a test email to preview the full rendered template in your inbox.</p><p style="color:#48484a;font-size:12px;margin-top:4px">Email templates are rendered server-side. Use the test send button above.</p></body></html>`}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin:12px 0 8px;font-size:28px;letter-spacing:-0.5px}p{color:#a1a1aa;font-size:14px;line-height:1.6;max-width:320px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}.price{font-size:36px;color:#fff;font-weight:700;margin-top:18px;letter-spacing:-1px}.mut{color:#52525b;font-size:12px;margin-top:8px}</style></head><body><div class="badge">V9 · Win-Back</div><h2>We've been building.</h2><p>Hero card + I&amp;T redesign, Quotes &amp; Invoices, Room Planner, Stock Tracker, founder note.</p><div class="price">£9.99<span style="font-size:14px;color:#a1a1aa;font-weight:400">/mo</span></div><p class="mut">Send a test email (Advanced) to preview the full rendered template.</p></body></html>`}
                 />
               </div>
             </div>
@@ -1050,5 +1078,156 @@ export default function AdminWinback() {
         </Sheet>
       </div>
     </PullToRefresh>
+  );
+}
+
+function StatTile({
+  label,
+  value,
+  sub,
+  colorClass,
+}: {
+  label: string;
+  value: number;
+  sub: string | null;
+  colorClass: string;
+}) {
+  return (
+    <div className={`p-2.5 rounded-xl border text-center ${colorClass}`}>
+      <p className="text-lg font-bold leading-tight">{value}</p>
+      <p className="text-[10px] text-white mt-0.5">{label}</p>
+      {sub && <p className="text-[9px] opacity-70 mt-0.5">{sub}</p>}
+    </div>
+  );
+}
+
+function SegmentTile({
+  title,
+  subtitle,
+  count,
+  loading,
+  active,
+  onFocus,
+  onSend,
+  icon: Icon,
+  colorClass,
+  iconBgClass,
+  disabledSend,
+}: {
+  title: string;
+  subtitle: string;
+  count: number;
+  loading: boolean;
+  active: boolean;
+  onFocus: () => void;
+  onSend: () => void;
+  icon: typeof Flame;
+  colorClass: string;
+  iconBgClass: string;
+  disabledSend: boolean;
+}) {
+  return (
+    <div
+      className={`rounded-2xl border bg-gradient-to-br ${colorClass} p-3 space-y-3 transition-all ${active ? 'ring-1 ring-amber-400/60' : ''}`}
+    >
+      <button
+        type="button"
+        onClick={onFocus}
+        className="w-full text-left space-y-2 touch-manipulation"
+      >
+        <div className="flex items-center gap-2">
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBgClass}`}>
+            <Icon className="h-4 w-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold text-white leading-tight truncate">{title}</p>
+            <p className="text-[10px] text-white/60 truncate">{subtitle}</p>
+          </div>
+        </div>
+        <p className="text-2xl font-bold text-white leading-none">
+          {loading ? <Skeleton className="h-7 w-12" /> : count}
+        </p>
+      </button>
+      <Button
+        size="sm"
+        disabled={disabledSend}
+        onClick={onSend}
+        className="w-full h-10 touch-manipulation text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 gap-1.5"
+      >
+        <Send className="h-3.5 w-3.5" />
+        Send V9
+      </Button>
+    </div>
+  );
+}
+
+function SegmentPill({
+  active,
+  onClick,
+  label,
+  count,
+  colorClass,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+  count: number;
+  colorClass: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`shrink-0 h-9 px-3 rounded-full text-xs font-semibold touch-manipulation transition-all ${active ? colorClass : 'bg-white/5 text-white/70 hover:bg-white/10'}`}
+    >
+      {label} · {count}
+    </button>
+  );
+}
+
+function UserRow({
+  user,
+  selected,
+  onToggle,
+  onOpen,
+}: {
+  user: SegmentUser;
+  selected: boolean;
+  onToggle: () => void;
+  onOpen: () => void;
+}) {
+  const isCancelled = !!user.stripe_customer_id;
+  return (
+    <div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform">
+      <Checkbox
+        checked={selected}
+        onCheckedChange={onToggle}
+        onClick={(e) => e.stopPropagation()}
+        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+      />
+      <button type="button" onClick={onOpen} className="flex-1 min-w-0 text-left">
+        <div className="flex items-center gap-1.5">
+          {isCancelled ? (
+            <HeartCrack className="h-3 w-3 text-violet-400 shrink-0" />
+          ) : (
+            <Flame className="h-3 w-3 text-rose-400 shrink-0" />
+          )}
+          <p className="font-medium text-sm text-white truncate">{user.full_name || 'Unknown'}</p>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-white/70">
+          <span className="truncate max-w-[140px]">{user.email}</span>
+          <span className="shrink-0">·</span>
+          <span className="flex items-center gap-1 shrink-0">
+            <Clock className="h-3 w-3" />
+            {formatDistanceToNow(parseISO(user.trial_ended_at), {
+              addSuffix: true,
+            })}
+          </span>
+        </div>
+      </button>
+      <Button variant="ghost" size="sm" onClick={onOpen} className="h-11 px-2 touch-manipulation">
+        <ChevronRight className="h-4 w-4" />
+      </Button>
+    </div>
   );
 }

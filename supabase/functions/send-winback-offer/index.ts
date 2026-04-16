@@ -1,4 +1,3 @@
- 
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from 'npm:resend@2.0.0';
@@ -901,14 +900,13 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 </body></html>`;
 }
 
-
-
 // V9 "We've been building" win-back — complete rewrite
 // Subject: We've been building. You should see it.
 function generateV9WinbackHTML(firstName: string): string {
   const paymentLink = WINBACK_CONFIG.v9MonthlyPaymentLink;
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
-  const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
+  const appStoreBadge =
+    'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
   const logoUrl = 'https://www.elec-mate.com/pwa-512x512.png';
   const year = new Date().getFullYear();
 
@@ -1051,7 +1049,8 @@ function generateV9WinbackHTML(firstName: string): string {
 }
 function generateV8AppStoreLaunchHTML(firstName: string): string {
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
-  const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
+  const appStoreBadge =
+    'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
   const logoUrl = 'https://elec-mate.com/logo.jpg';
   const heroImg = 'https://elec-mate.com/images/walkthrough/appstore-dashboard.png';
   const heroFallback = 'https://elec-mate.com/pwa-512x512.png';
@@ -2113,7 +2112,9 @@ Deno.serve(async (req) => {
           manualEmailHtml = generateV9WinbackHTML(manualUser.full_name?.split(' ')[0] || 'mate');
           manualSubject = "We've been building. You should see it.";
         } else if (email_version === 'v8') {
-          manualEmailHtml = generateV8AppStoreLaunchHTML(manualUser.full_name?.split(' ')[0] || 'mate');
+          manualEmailHtml = generateV8AppStoreLaunchHTML(
+            manualUser.full_name?.split(' ')[0] || 'mate'
+          );
           manualSubject = "We're on the App Store.";
         } else if (email_version === 'v7') {
           manualEmailHtml = generateV7StatsHTML(manualUser.full_name?.split(' ')[0] || 'mate');
@@ -2189,6 +2190,78 @@ Deno.serve(async (req) => {
 
         console.log(`Win-back offer manually sent to ${manualEmail} by admin ${user.id}`);
         result = { success: true, email: manualEmail };
+        break;
+      }
+
+      case 'get_segments': {
+        // V9 targeting: electricians only, trial expired, not subscribed, not free-access,
+        // not already sent — split into "never subscribed" vs "cancelled" by stripe_customer_id.
+        console.log('get_segments: Starting query');
+
+        const { data: profiles, error: profilesError } = await supabaseAdmin
+          .from('profiles')
+          .select(
+            'id, full_name, username, created_at, subscribed, free_access_granted, stripe_customer_id'
+          )
+          .eq('role', 'electrician')
+          .is('winback_offer_sent_at', null)
+          .order('created_at', { ascending: false });
+
+        if (profilesError) {
+          console.error('get_segments: profiles query error:', profilesError);
+          throw profilesError;
+        }
+
+        const eligibleCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000;
+        const filtered = (profiles || []).filter((p: Record<string, unknown>) => {
+          if (p.subscribed === true) return false;
+          if (p.free_access_granted === true) return false;
+          return new Date(p.created_at as string).getTime() < eligibleCutoff;
+        });
+
+        if (filtered.length === 0) {
+          result = { neverSubscribed: [], cancelled: [] };
+          break;
+        }
+
+        const { data: authUsersSeg, error: authSegError } =
+          await supabaseAdmin.rpc('get_auth_user_emails');
+        if (authSegError) {
+          console.error('get_segments: get_auth_user_emails RPC error:', authSegError);
+          throw authSegError;
+        }
+
+        const emailMapSeg = new Map<string, string>();
+        (authUsersSeg || []).forEach((u: Record<string, unknown>) => {
+          if (u.email) emailMapSeg.set(u.id as string, u.email as string);
+        });
+
+        const neverSubscribed: Record<string, unknown>[] = [];
+        const cancelled: Record<string, unknown>[] = [];
+
+        filtered.forEach((p: Record<string, unknown>) => {
+          const email = emailMapSeg.get(p.id as string);
+          if (!email) return;
+          const user = {
+            id: p.id as string,
+            full_name: p.full_name,
+            username: p.username,
+            email,
+            created_at: p.created_at,
+            trial_ended_at: new Date(
+              new Date(p.created_at as string).getTime() + 7 * 24 * 60 * 60 * 1000
+            ).toISOString(),
+            stripe_customer_id: (p.stripe_customer_id as string) || null,
+          };
+          if (p.stripe_customer_id) cancelled.push(user);
+          else neverSubscribed.push(user);
+        });
+
+        console.log(
+          `get_segments: neverSubscribed=${neverSubscribed.length}, cancelled=${cancelled.length}`
+        );
+
+        result = { neverSubscribed, cancelled };
         break;
       }
 
