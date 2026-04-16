@@ -2,8 +2,23 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
 import { Resend } from 'npm:resend@2.0.0';
+import {
+  generateV10HTML,
+  generateV10PlainText,
+  buildUnsubscribeUrl,
+  buildUnsubscribeHeaders,
+  isSuppressed,
+  sendBatchWithRetry,
+  TokenBucket,
+  FROM_V10,
+  REPLY_TO,
+  RESEND_RPS,
+  BATCH_MAX,
+  type ResendBatchItem,
+} from '../_shared/winback-v10.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+const rateLimiter = new TokenBucket(RESEND_RPS, RESEND_RPS);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -1947,6 +1962,43 @@ Deno.serve(async (req) => {
         // Send a test offer email to a specific address
         if (!testEmail) throw new Error('testEmail is required');
 
+        const testRecipient = testEmail.trim().toLowerCase();
+
+        // V10 test path — best-in-class, with real unsubscribe headers
+        if (!email_version || email_version === 'v10') {
+          const unsubscribeUrl = await buildUnsubscribeUrl(testRecipient);
+          const html = generateV10HTML('early_access', 'Test', unsubscribeUrl);
+          const text = generateV10PlainText('early_access', 'Test', unsubscribeUrl);
+          const subject = "[TEST] We've shipped.";
+
+          await rateLimiter.acquire(1);
+          const { data: v10TestData, error: v10TestErr } = await resend.emails.send({
+            from: FROM_V10,
+            replyTo: REPLY_TO,
+            to: [testRecipient],
+            subject,
+            html,
+            text,
+            headers: buildUnsubscribeHeaders(unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'early_access_offer' },
+              { name: 'version', value: 'v10' },
+              { name: 'type', value: 'test' },
+            ],
+          });
+
+          if (v10TestErr) throw new Error(`Failed to send: ${v10TestErr.message}`);
+
+          console.log(`EA V10 test sent to ${testRecipient} by admin ${user.id}`);
+          result = {
+            success: true,
+            email: testRecipient,
+            version: 'v10',
+            resendId: v10TestData?.id,
+          };
+          break;
+        }
+
         let eaTestHtml: string;
         let eaTestSubject: string;
         let eaTestVersion: string;
@@ -1991,7 +2043,150 @@ Deno.serve(async (req) => {
       }
 
       case 'send_ea_offer_campaign': {
-        // Send a batch of 50, called repeatedly by frontend until complete
+        // V10 path — batch API, suppression check, retries, idempotency
+        if (!email_version || email_version === 'v10') {
+          // Exclude anyone who's already signed up
+          const { data: eaV10AuthData } = await supabaseAdmin.auth.admin.listUsers({
+            perPage: 1000,
+          });
+          const eaV10SignedUp = new Set(
+            eaV10AuthData?.users?.map((u) => u.email?.toLowerCase().trim()).filter(Boolean) || []
+          );
+
+          const { data: eaV10Unsent, error: eaV10Err } = await supabaseAdmin
+            .from('early_access_invites')
+            .select('id, email')
+            .is('offer_sent_at', null)
+            .is('bounced_at', null)
+            .order('created_at', { ascending: true });
+          if (eaV10Err) throw eaV10Err;
+
+          const eaV10Eligible = (eaV10Unsent || []).filter(
+            (i) => !eaV10SignedUp.has(i.email.toLowerCase().trim())
+          );
+
+          if (eaV10Eligible.length === 0) {
+            result = { sent: 0, remaining: 0, complete: true, message: 'All done.' };
+            break;
+          }
+
+          // Pre-check suppression list for the whole batch
+          const allEaEmails = eaV10Eligible.map((i) => i.email.toLowerCase().trim());
+          const { data: eaSuppressed } = await supabaseAdmin
+            .from('email_suppressions')
+            .select('email')
+            .in('email', allEaEmails);
+          const eaSuppressedSet = new Set<string>(
+            (eaSuppressed || []).map((r: any) => (r.email as string).toLowerCase())
+          );
+
+          const eaQueue = eaV10Eligible.filter(
+            (i) => !eaSuppressedSet.has(i.email.toLowerCase().trim())
+          );
+          const eaSkipped = eaV10Eligible.length - eaQueue.length;
+
+          // Take ONE batch up to BATCH_MAX (100) — frontend loops until complete
+          const eaBatchV10 = eaQueue.slice(0, BATCH_MAX);
+
+          if (eaBatchV10.length === 0) {
+            result = {
+              sent: 0,
+              skipped: eaSkipped,
+              remaining: 0,
+              complete: true,
+              message: 'All eligible recipients are in suppression list.',
+            };
+            break;
+          }
+
+          // Build unsubscribe URLs per recipient
+          const eaWithUnsub = await Promise.all(
+            eaBatchV10.map(async (i) => ({
+              ...i,
+              email: i.email.trim().toLowerCase(),
+              unsubscribeUrl: await buildUnsubscribeUrl(i.email),
+            }))
+          );
+
+          const eaSubject = "We've shipped.";
+          const eaBatchItems: ResendBatchItem[] = eaWithUnsub.map((r) => ({
+            from: FROM_V10,
+            replyTo: REPLY_TO,
+            to: [r.email],
+            subject: eaSubject,
+            html: generateV10HTML('early_access', 'mate', r.unsubscribeUrl),
+            text: generateV10PlainText('early_access', 'mate', r.unsubscribeUrl),
+            headers: buildUnsubscribeHeaders(r.unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'early_access_offer' },
+              { name: 'version', value: 'v10' },
+            ],
+          }));
+
+          const dateStr = new Date().toISOString().slice(0, 10);
+          const idHash = eaWithUnsub
+            .map((r) => r.id)
+            .sort()
+            .join('')
+            .slice(0, 40);
+          const idempotencyKey = `ea-v10-${dateStr}-${idHash}`;
+
+          const { ids, error: batchErr } = await sendBatchWithRetry(
+            resend,
+            rateLimiter,
+            eaBatchItems,
+            idempotencyKey
+          );
+
+          const eaV10Errors: string[] = [];
+          let eaV10Sent = 0;
+          const sentNow = new Date().toISOString();
+
+          for (let i = 0; i < eaWithUnsub.length; i++) {
+            const recipient = eaWithUnsub[i];
+            const resendId = ids[i];
+            if (resendId) {
+              await supabaseAdmin
+                .from('early_access_invites')
+                .update({ offer_sent_at: sentNow, offer_email_id: resendId })
+                .eq('id', recipient.id);
+              eaV10Sent++;
+            } else {
+              eaV10Errors.push(`${recipient.email}: ${batchErr || 'no resend id'}`);
+            }
+          }
+
+          // Count remaining for next round
+          const { data: eaV10RemRows } = await supabaseAdmin
+            .from('early_access_invites')
+            .select('email')
+            .is('offer_sent_at', null)
+            .is('bounced_at', null);
+          const eaV10RemCount = (eaV10RemRows || []).filter(
+            (r) =>
+              !eaV10SignedUp.has(r.email.toLowerCase().trim()) &&
+              !eaSuppressedSet.has(r.email.toLowerCase().trim())
+          ).length;
+
+          console.log(
+            `EA V10 campaign: sent ${eaV10Sent}, skipped ${eaSkipped}, ${eaV10RemCount} remaining`
+          );
+
+          result = {
+            sent: eaV10Sent,
+            skipped: eaSkipped,
+            remaining: eaV10RemCount,
+            complete: eaV10RemCount === 0,
+            errors: eaV10Errors.length ? eaV10Errors : undefined,
+            message:
+              eaV10RemCount === 0
+                ? `All done! Sent ${eaV10Sent} emails.`
+                : `Sent ${eaV10Sent}. ${eaV10RemCount} remaining.`,
+          };
+          break;
+        }
+
+        // Legacy V8 path — batch of 50 with 300ms delay
         const EA_BATCH_SIZE = 50;
         const EA_SEND_DELAY_MS = 300;
 
@@ -2081,9 +2276,10 @@ Deno.serve(async (req) => {
           remaining: eaRemCount,
           complete: eaRemCount === 0,
           errors: eaErrors.length > 0 ? eaErrors : undefined,
-          message: eaRemCount === 0
-            ? `All done! Sent ${eaSentCount} emails.`
-            : `Sent ${eaSentCount}. ${eaRemCount} remaining.`,
+          message:
+            eaRemCount === 0
+              ? `All done! Sent ${eaSentCount} emails.`
+              : `Sent ${eaSentCount}. ${eaRemCount} remaining.`,
         };
         break;
       }
