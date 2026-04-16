@@ -902,7 +902,7 @@ function generateV5WinbackHTML(user: EligibleUser): string {
 }
 
 
-// V9 "We've been building" win-back email
+// V9 'We've been building' win-back email
 // Subject: We've been building. You should see it.
 // Lead: I&T redesign, then Q&I, Room Planner, Stock Tracker
 // Offer: £9.99/mo web (saves £5 vs £14.99 App Store)
@@ -910,148 +910,145 @@ function generateV9WinbackHTML(firstName: string): string {
   const paymentLink = WINBACK_CONFIG.v9MonthlyPaymentLink;
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
   const appStoreBadge = 'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=250x83';
-  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  const logoUrl = 'https://www.elec-mate.com/pwa-512x512.png';
+  const year = new Date().getFullYear();
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
-<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000000">
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td style="padding:0">
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">
+  // Build HTML without template literal escaping issues
+  return [
+    '<!DOCTYPE html><html lang="en"><head>',
+    '<meta charset="UTF-8">',
+    '<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+    '<meta name="color-scheme" content="dark">',
+    '<!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]-->',
+    '</head>',
+    '<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;background:#000000">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td>',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">',
 
-<!-- Spacer -->
-<tr><td style="height:48px"></td></tr>
+    // Spacer
+    '<tr><td style="height:48px"></td></tr>',
 
-<!-- Logo -->
-<tr><td style="text-align:center;padding:0 32px">
-<img src="\${logoUrl}" alt="Elec-Mate" width="80" height="80" style="display:block;border-radius:18px;margin:0 auto">
-</td></tr>
+    // Logo
+    '<tr><td style="text-align:center;padding:0 32px">',
+    '<img src="' + logoUrl + '" alt="Elec-Mate" width="72" height="72" style="display:block;border-radius:16px;margin:0 auto">',
+    '</td></tr>',
+    '<tr><td style="height:32px"></td></tr>',
 
-<tr><td style="height:32px"></td></tr>
+    // Headline
+    '<tr><td style="text-align:center;padding:0 32px">',
+    '<h1 style="margin:0;font-size:36px;font-weight:700;color:#ffffff;line-height:1.1;letter-spacing:-0.5px">We\'ve been building.</h1>',
+    '</td></tr>',
+    '<tr><td style="height:12px"></td></tr>',
 
-<!-- Headline -->
-<tr><td style="text-align:center;padding:0 32px">
-<h1 style="margin:0;font-size:36px;font-weight:700;color:#ffffff;line-height:1.1;letter-spacing:-0.5px">We've been building.</h1>
-</td></tr>
+    // Subhead
+    '<tr><td style="text-align:center;padding:0 40px">',
+    '<p style="margin:0;font-size:17px;color:#ffffff;line-height:1.5">A lot has changed since your trial. Here\'s the short version.</p>',
+    '</td></tr>',
+    '<tr><td style="height:40px"></td></tr>',
 
-<tr><td style="height:12px"></td></tr>
+    // Divider
+    '<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>',
+    '<tr><td style="height:40px"></td></tr>',
 
-<!-- Subhead -->
-<tr><td style="text-align:center;padding:0 40px">
-<p style="margin:0;font-size:17px;color:#ffffff;line-height:1.5;font-weight:400">A lot has changed since your trial. Here's the short version.</p>
-</td></tr>
+    // Hero feature: I&T
+    '<tr><td style="padding:0 32px">',
+    '<div style="background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.25);border-radius:16px;padding:22px">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>',
+    '<td width="48" valign="top" style="padding-top:2px">',
+    '<div style="width:40px;height:40px;background:rgba(251,191,36,0.18);border-radius:10px;text-align:center;line-height:40px;font-size:20px">&#x26A1;</div>',
+    '</td>',
+    '<td style="padding-left:14px">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>',
+    '<td><p style="margin:0 0 6px;font-size:17px;font-weight:700;color:#ffffff">Inspection &amp; Testing</p></td>',
+    '<td style="padding-left:10px"><span style="display:inline-block;padding:3px 10px;background:#fbbf24;border-radius:20px;font-size:11px;font-weight:700;color:#000000;white-space:nowrap">Redesigned</span></td>',
+    '</tr></table>',
+    '<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6">Every form rebuilt. EICR, EIC, Minor Works, and a new Testing Only cert &#8212; all redesigned for mobile with smarter workflows. The PDF pipeline is solid end to end.</p>',
+    '</td>',
+    '</tr></table>',
+    '</div>',
+    '</td></tr>',
+    '<tr><td style="height:16px"></td></tr>',
 
-<tr><td style="height:40px"></td></tr>
+    // Feature 2: Q&I
+    '<tr><td style="padding:0 32px">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">',
+    '<tr><td width="44" valign="top" style="padding-top:2px">',
+    '<div style="width:36px;height:36px;background:rgba(34,197,94,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4C4;</div>',
+    '</td><td style="padding-left:14px">',
+    '<p style="margin:0;font-size:15px;font-weight:700;color:#ffffff">Quotes &amp; Invoices</p>',
+    '<p style="margin:4px 0 0;font-size:13px;color:#ffffff;line-height:1.5">Single-page quote builder with live totals. Completely redesigned invoice views and PDF output. Send professional documents straight from your phone.</p>',
+    '</td></tr></table>',
+    '</td></tr>',
+    '<tr><td style="height:20px"></td></tr>',
 
-<!-- Divider -->
-<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+    // Feature 3: Room Planner
+    '<tr><td style="padding:0 32px">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">',
+    '<tr><td width="44" valign="top" style="padding-top:2px">',
+    '<div style="width:36px;height:36px;background:rgba(99,102,241,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4D0;</div>',
+    '</td><td style="padding-left:14px">',
+    '<p style="margin:0;font-size:15px;font-weight:700;color:#ffffff">Room Planner</p>',
+    '<p style="margin:4px 0 0;font-size:13px;color:#ffffff;line-height:1.5">Draw cable runs with real circuit colours and measurements. Fixed from the ground up for mobile touch. Autosaves and links to your jobs.</p>',
+    '</td></tr></table>',
+    '</td></tr>',
+    '<tr><td style="height:20px"></td></tr>',
 
-<tr><td style="height:40px"></td></tr>
+    // Feature 4: Stock Tracker
+    '<tr><td style="padding:0 32px">',
+    '<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">',
+    '<tr><td width="44" valign="top" style="padding-top:2px">',
+    '<div style="width:36px;height:36px;background:rgba(59,130,246,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4E6;</div>',
+    '</td><td style="padding-left:14px">',
+    '<p style="margin:0;font-size:15px;font-weight:700;color:#ffffff">Stock Tracker</p>',
+    '<p style="margin:4px 0 0;font-size:13px;color:#ffffff;line-height:1.5">Completely rebuilt. Track stock by location, set reorder alerts, know what you\'ve got before you leave the van.</p>',
+    '</td></tr></table>',
+    '</td></tr>',
+    '<tr><td style="height:40px"></td></tr>',
 
-<!-- Hero feature: Inspection & Testing — bigger treatment -->
-<tr><td style="padding:0 32px">
-<div style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);border-radius:16px;padding:24px">
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
-<td width="48" valign="top" style="padding-top:2px">
-<div style="width:40px;height:40px;background:rgba(251,191,36,0.15);border-radius:10px;text-align:center;line-height:40px;font-size:20px">&#x26A1;</div>
-</td>
-<td style="padding-left:14px">
-<table role="presentation" cellspacing="0" cellpadding="0" border="0"><tr>
-<td><p style="margin:0 0 6px;font-size:17px;font-weight:700;color:#ffffff">Inspection &amp; Testing</p></td>
-<td style="padding-left:10px"><span style="display:inline-block;padding:2px 10px;background:#fbbf24;border-radius:20px;font-size:11px;font-weight:700;color:#000000;white-space:nowrap">Redesigned</span></td>
-</tr></table>
-<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6">The whole thing. Forms, workflow, how you move through a job — rebuilt from scratch. It's faster, cleaner, and it works the way you actually work on site.</p>
-</td>
-</tr></table>
-</div>
-</td></tr>
+    // Divider
+    '<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>',
+    '<tr><td style="height:36px"></td></tr>',
 
-<tr><td style="height:16px"></td></tr>
+    // Offer block
+    '<tr><td style="text-align:center;padding:0 32px">',
+    '<p style="margin:0 0 6px;font-size:12px;color:#ffffff;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">Limited web offer</p>',
+    '<p style="margin:0;font-size:44px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-1px">&pound;9.99<span style="font-size:18px;font-weight:400">/mo</span></p>',
+    '<p style="margin:10px 0 0;font-size:14px;color:#ffffff;line-height:1.5">Subscribe via the link below &mdash; saves you <strong style="color:#fbbf24">&pound;5/mo</strong> vs the App Store price of &pound;14.99</p>',
+    '</td></tr>',
+    '<tr><td style="height:24px"></td></tr>',
 
-<!-- Features -->
-<tr><td style="padding:0 32px">
+    // CTA button
+    '<tr><td style="text-align:center;padding:0 32px">',
+    '<a href="' + paymentLink + '" style="display:inline-block;padding:18px 44px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:14px;font-size:17px;font-weight:700;color:#000000;text-decoration:none">Get back in &mdash; &pound;9.99/mo</a>',
+    '</td></tr>',
+    '<tr><td style="height:24px"></td></tr>',
 
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:20px">
-<tr>
-<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(34,197,94,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4C4;</div></td>
-<td style="padding-left:14px">
-<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Quotes &amp; Invoices</p>
-<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.5">Completely redesigned. Professional output, send straight from your phone, get paid faster.</p>
-</td>
-</tr>
-</table>
+    // App Store secondary
+    '<tr><td style="text-align:center;padding:0 32px">',
+    '<p style="margin:0 0 14px;font-size:14px;color:#ffffff">Then download the app and you\'re straight in.</p>',
+    '<a href="' + appStoreUrl + '"><img src="' + appStoreBadge + '" alt="Download on the App Store" width="160" style="display:block;margin:0 auto"></a>',
+    '</td></tr>',
+    '<tr><td style="height:48px"></td></tr>',
 
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:20px">
-<tr>
-<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(99,102,241,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4D0;</div></td>
-<td style="padding-left:14px">
-<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Room Planner</p>
-<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.5">Draw electrical layouts directly in the app. Plan your install before you're on site.</p>
-</td>
-</tr>
-</table>
+    // Divider
+    '<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>',
+    '<tr><td style="height:32px"></td></tr>',
 
-<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-<tr>
-<td width="44" valign="top" style="padding-top:2px"><div style="width:36px;height:36px;background:rgba(59,130,246,0.12);border-radius:10px;text-align:center;line-height:36px;font-size:18px">&#x1F4E6;</div></td>
-<td style="padding-left:14px">
-<p style="margin:0;font-size:16px;font-weight:600;color:#ffffff">Stock Tracker</p>
-<p style="margin:4px 0 0;font-size:14px;color:#ffffff;line-height:1.5">Track your materials. Know what you've got before you leave the van.</p>
-</td>
-</tr>
-</table>
+    // Personal note
+    '<tr><td style="padding:0 32px">',
+    '<p style="margin:0 0 12px;font-size:14px;color:#ffffff;line-height:1.6">Hey ' + firstName + ' &mdash; it\'s Andrew. I wanted to reach out personally because a lot has genuinely changed. If you\'ve got any questions just reply here, it comes straight to me.</p>',
+    '<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6">Cheers,<br><span style="color:#fbbf24;font-weight:600">Andrew</span> &middot; Founder, Elec-Mate</p>',
+    '</td></tr>',
+    '<tr><td style="height:40px"></td></tr>',
 
-</td></tr>
+    // Footer
+    '<tr><td style="text-align:center;padding:0 32px 40px">',
+    '<p style="margin:0;font-size:12px;color:#ffffff">&copy; ' + year + ' Elec-Mate Ltd &middot; Built in the UK for UK electricians</p>',
+    '</td></tr>',
 
-<tr><td style="height:40px"></td></tr>
-
-<!-- Divider -->
-<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
-
-<tr><td style="height:36px"></td></tr>
-
-<!-- Offer block -->
-<tr><td style="text-align:center;padding:0 32px">
-<p style="margin:0 0 6px;font-size:13px;color:#ffffff;text-transform:uppercase;letter-spacing:0.5px;font-weight:600">Limited web offer</p>
-<p style="margin:0;font-size:42px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-1px">&pound;9.99<span style="font-size:18px;font-weight:400;color:#ffffff">/mo</span></p>
-<p style="margin:8px 0 0;font-size:14px;color:#ffffff;line-height:1.5">Subscribe via the link below &mdash; saves you <strong style="color:#fbbf24">&pound;5/mo</strong> vs the App Store price of &pound;14.99</p>
-</td></tr>
-
-<tr><td style="height:24px"></td></tr>
-
-<!-- Primary CTA -->
-<tr><td style="text-align:center;padding:0 32px">
-<a href="\${paymentLink}" style="display:inline-block;padding:16px 40px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:14px;font-size:17px;font-weight:700;color:#000000;text-decoration:none;letter-spacing:-0.2px">Get back in &mdash; &pound;9.99/mo</a>
-</td></tr>
-
-<tr><td style="height:24px"></td></tr>
-
-<!-- App Store secondary CTA -->
-<tr><td style="text-align:center;padding:0 32px">
-<p style="margin:0 0 14px;font-size:14px;color:#ffffff;line-height:1.5">Then download the app and you're straight in.</p>
-<a href="\${appStoreUrl}" style="display:inline-block"><img src="\${appStoreBadge}" alt="Download on the App Store" width="160" style="display:block;margin:0 auto"></a>
-</td></tr>
-
-<tr><td style="height:48px"></td></tr>
-
-<!-- Divider -->
-<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
-
-<tr><td style="height:32px"></td></tr>
-
-<!-- Personal note from Andrew -->
-<tr><td style="padding:0 32px">
-<p style="margin:0 0 12px;font-size:14px;color:#ffffff;line-height:1.6">Hey \${firstName} &mdash; it's Andrew. I wanted to reach out personally because a lot has genuinely changed. If you've got any questions just reply here, it comes straight to me.</p>
-<p style="margin:0;font-size:14px;color:#ffffff;line-height:1.6">Cheers,<br><span style="color:#fbbf24;font-weight:600">Andrew</span> &middot; Founder, Elec-Mate</p>
-</td></tr>
-
-<tr><td style="height:40px"></td></tr>
-
-<!-- Footer -->
-<tr><td style="text-align:center;padding:0 32px 40px">
-<p style="margin:0;font-size:12px;color:#ffffff">&copy; \${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in the UK for UK electricians</p>
-</td></tr>
-
-</table></td></tr></table>
-</body></html>`;
+    '</table></td></tr></table>',
+    '</body></html>',
+  ].join('\n');
 }
 
 function generateV8AppStoreLaunchHTML(firstName: string): string {
