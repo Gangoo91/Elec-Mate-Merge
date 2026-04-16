@@ -85,7 +85,7 @@ interface WinbackStats {
 
 type SegmentKey = 'all' | 'never' | 'cancelled';
 const BATCH_SIZE = 40;
-const EMAIL_VERSION = 'v9';
+const EMAIL_VERSION = 'v10';
 
 export default function AdminWinback() {
   const queryClient = useQueryClient();
@@ -236,7 +236,7 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'V9 sent', variant: 'success' });
+      toast({ title: 'V10 sent', variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-segments'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
@@ -279,7 +279,7 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'V9 sent to that address', variant: 'success' });
+      toast({ title: 'V10 sent to that address', variant: 'success' });
       setManualEmail('');
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
@@ -430,7 +430,7 @@ export default function AdminWinback() {
       <div className="space-y-4 pb-24">
         <AdminPageHeader
           title="Win-Back Campaign"
-          subtitle="V9 — We've been building. You should see it."
+          subtitle="V10 — We've been building. You should see it."
           icon={RotateCcw}
           iconColor="text-amber-400"
           iconBg="bg-amber-500/10 border-amber-500/20"
@@ -450,7 +450,7 @@ export default function AdminWinback() {
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 min-w-0">
                 <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0 shrink-0 font-bold">
-                  V9
+                  V10
                 </Badge>
                 <p className="text-sm font-semibold text-white truncate">
                   We&apos;ve been building.
@@ -471,6 +471,48 @@ export default function AdminWinback() {
               <p className="text-[11px] text-white/80 leading-relaxed">
                 Electricians only · £9.99/mo via Stripe · saves £5 vs App Store
               </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Test send — always visible, check before bulk */}
+        <Card className="border-yellow-500/20 bg-yellow-500/[0.03]">
+          <CardContent className="pt-4 pb-4 space-y-2.5">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-yellow-500/15 flex items-center justify-center">
+                <TestTube className="h-3.5 w-3.5 text-yellow-400" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-white leading-tight">
+                  Send yourself a test
+                </p>
+                <p className="text-[11px] text-white/60 leading-tight mt-0.5">
+                  Preview V10 end-to-end. Subject prefixed [TEST]. Nobody marked sent.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                value={testEmail}
+                onChange={(e) => setTestEmail(e.target.value)}
+                placeholder="your@email.com or any address"
+                className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              />
+              <Button
+                onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
+                disabled={!testEmail || sendTestMutation.isPending}
+                className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black font-semibold gap-1.5"
+              >
+                {sendTestMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    <Send className="h-4 w-4" />
+                    Test
+                  </>
+                )}
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -548,7 +590,7 @@ export default function AdminWinback() {
             className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
           >
             <Send className="h-4 w-4" />
-            Send V9 to all {totalEligible} eligible electricians
+            Send V10 to all {totalEligible} eligible electricians
           </Button>
         )}
 
@@ -738,7 +780,7 @@ export default function AdminWinback() {
                 <AdminEmptyState
                   icon={Mail}
                   title="No emails sent yet"
-                  description="Send V9 to a segment above to see results here."
+                  description="Send V10 to a segment above to see results here."
                 />
               ) : (
                 <div className="space-y-3">
@@ -762,6 +804,7 @@ export default function AdminWinback() {
                         v7: 'bg-green-500/20 text-green-400',
                         v8: 'bg-amber-500/20 text-amber-400',
                         v9: 'bg-amber-500/20 text-amber-400',
+                        v10: 'bg-emerald-500/20 text-emerald-400',
                       };
                       const vClass = versionColours[user.email_version] || versionColours.v1;
 
@@ -844,35 +887,12 @@ export default function AdminWinback() {
             <Card className="mt-2">
               <CardContent className="pt-4 pb-4 space-y-4">
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-yellow-400 flex items-center gap-1.5">
-                    <TestTube className="h-3.5 w-3.5" />
-                    Send test email (V9)
-                  </p>
-                  <div className="flex gap-2">
-                    <Input
-                      type="email"
-                      value={testEmail}
-                      onChange={(e) => setTestEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                    <Button
-                      onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
-                      disabled={!testEmail || sendTestMutation.isPending}
-                      className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black"
-                    >
-                      {sendTestMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Send className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
                   <p className="text-xs font-semibold text-white/80">
-                    Send V9 to a specific address
+                    Send real V10 to a specific address
+                  </p>
+                  <p className="text-[10px] text-white/50 leading-relaxed">
+                    Full send — goes through suppression check, logged, counts as sent. For testing,
+                    use the Test box at the top.
                   </p>
                   <div className="flex gap-2">
                     <Input
@@ -1001,7 +1021,7 @@ export default function AdminWinback() {
                   ) : (
                     <>
                       <Mail className="h-4 w-4 mr-2" />
-                      Send V9 to this user
+                      Send V10 to this user
                     </>
                   )}
                 </Button>
@@ -1018,7 +1038,7 @@ export default function AdminWinback() {
           <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
             <AlertDialogHeader className="space-y-3">
               <AlertDialogTitle className="text-base sm:text-lg leading-tight">
-                Send V9 to {confirmCount} {confirmLabel} electricians?
+                Send V10 to {confirmCount} {confirmLabel} electricians?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
                 <div className="text-sm leading-relaxed space-y-2">
@@ -1061,16 +1081,16 @@ export default function AdminWinback() {
               <SheetHeader className="px-4 pb-3 border-b border-border">
                 <SheetTitle className="flex items-center gap-2 text-sm">
                   <FileText className="h-4 w-4 text-amber-400" />
-                  V9 Preview
-                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">V9</Badge>
+                  V10 Preview
+                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">V10</Badge>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-hidden bg-black">
                 <iframe
-                  title="V9 email preview"
+                  title="V10 email preview"
                   sandbox="allow-same-origin"
                   className="w-full h-full border-0"
-                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin:12px 0 8px;font-size:28px;letter-spacing:-0.5px}p{color:#a1a1aa;font-size:14px;line-height:1.6;max-width:320px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}.price{font-size:36px;color:#fff;font-weight:700;margin-top:18px;letter-spacing:-1px}.mut{color:#52525b;font-size:12px;margin-top:8px}</style></head><body><div class="badge">V9 · Win-Back</div><h2>We've been building.</h2><p>Hero card + I&amp;T redesign, Quotes &amp; Invoices, Room Planner, Stock Tracker, founder note.</p><div class="price">£9.99<span style="font-size:14px;color:#a1a1aa;font-weight:400">/mo</span></div><p class="mut">Send a test email (Advanced) to preview the full rendered template.</p></body></html>`}
+                  srcDoc={`<!DOCTYPE html><html><head><meta name="color-scheme" content="dark"><style>body{margin:0;padding:40px 20px;font-family:-apple-system,system-ui,sans-serif;background:#000;color:#e2e8f0;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh}h2{color:#fbbf24;margin:12px 0 8px;font-size:28px;letter-spacing:-0.5px}p{color:#a1a1aa;font-size:14px;line-height:1.6;max-width:320px}.badge{display:inline-block;margin-bottom:16px;padding:6px 16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:20px;font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px}.price{font-size:36px;color:#fff;font-weight:700;margin-top:18px;letter-spacing:-1px}.mut{color:#52525b;font-size:12px;margin-top:8px}</style></head><body><div class="badge">V10 · Win-Back</div><h2>We've been building.</h2><p>Hero card + I&amp;T redesign, Quotes &amp; Invoices, Room Planner, Stock Tracker, founder note.</p><div class="price">£9.99<span style="font-size:14px;color:#a1a1aa;font-weight:400">/mo</span></div><p class="mut">Send a test email (Advanced) to preview the full rendered template.</p></body></html>`}
                 />
               </div>
             </div>
@@ -1155,7 +1175,7 @@ function SegmentTile({
         className="w-full h-10 touch-manipulation text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 gap-1.5"
       >
         <Send className="h-3.5 w-3.5" />
-        Send V9
+        Send V10
       </Button>
     </div>
   );

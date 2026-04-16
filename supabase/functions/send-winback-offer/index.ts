@@ -37,6 +37,177 @@ interface EligibleUser {
   trial_ended_at: string;
 }
 
+// ──────────────────────────────────────────────────────────────
+// Send infrastructure — V10 (Resend best practices, 2026-04)
+// ──────────────────────────────────────────────────────────────
+
+const UNSUBSCRIBE_SECRET = Deno.env.get('WINBACK_UNSUBSCRIBE_SECRET');
+const FROM_V10 = 'Andrew from Elec-Mate <founder@elec-mate.com>';
+const REPLY_TO = 'founder@elec-mate.com';
+const UNSUBSCRIBE_MAILTO = 'mailto:info@elec-mate.com?subject=unsubscribe';
+const RESEND_RPS = 5;
+const BATCH_MAX = 100;
+
+// Token bucket — Resend's published limit is 5 req/sec per team (paid + free)
+class TokenBucket {
+  private tokens: number;
+  private lastRefill: number;
+  constructor(
+    private max: number,
+    private refillPerSec: number
+  ) {
+    this.tokens = max;
+    this.lastRefill = Date.now();
+  }
+  private refill() {
+    const now = Date.now();
+    const elapsed = (now - this.lastRefill) / 1000;
+    this.tokens = Math.min(this.max, this.tokens + elapsed * this.refillPerSec);
+    this.lastRefill = now;
+  }
+  async acquire(cost = 1): Promise<void> {
+    for (;;) {
+      this.refill();
+      if (this.tokens >= cost) {
+        this.tokens -= cost;
+        return;
+      }
+      await sleep(Math.ceil(((cost - this.tokens) / this.refillPerSec) * 1000));
+    }
+  }
+}
+const rateLimiter = new TokenBucket(RESEND_RPS, RESEND_RPS);
+
+function b64urlEncode(bytes: Uint8Array): string {
+  let bin = '';
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function hmacSign(payload: string, secret: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  return b64urlEncode(new Uint8Array(sig));
+}
+
+async function buildUnsubscribeUrl(email: string): Promise<string> {
+  if (!UNSUBSCRIBE_SECRET) {
+    console.warn(
+      'WINBACK_UNSUBSCRIBE_SECRET not set — HTTPS unsubscribe disabled, falling back to mailto'
+    );
+    return UNSUBSCRIBE_MAILTO;
+  }
+  const payload = JSON.stringify({
+    email: email.toLowerCase().trim(),
+    issued_at: Math.floor(Date.now() / 1000),
+  });
+  const payloadB64 = b64urlEncode(new TextEncoder().encode(payload));
+  const sig = await hmacSign(payloadB64, UNSUBSCRIBE_SECRET);
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  if (!supabaseUrl) return UNSUBSCRIBE_MAILTO;
+  return `${supabaseUrl}/functions/v1/unsubscribe?token=${payloadB64}.${sig}`;
+}
+
+function buildUnsubscribeHeaders(unsubscribeUrl: string): Record<string, string> {
+  const isHttps = unsubscribeUrl.startsWith('https://');
+  const headers: Record<string, string> = {
+    'List-Unsubscribe': isHttps
+      ? `<${unsubscribeUrl}>, <${UNSUBSCRIBE_MAILTO}>`
+      : `<${UNSUBSCRIBE_MAILTO}>`,
+  };
+  if (isHttps) headers['List-Unsubscribe-Post'] = 'List-Unsubscribe=One-Click';
+  return headers;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function isSuppressed(supabaseAdmin: any, email: string): Promise<boolean> {
+  const { data, error } = await supabaseAdmin
+    .from('email_suppressions')
+    .select('email')
+    .eq('email', email.toLowerCase().trim())
+    .maybeSingle();
+  if (error) {
+    console.error('isSuppressed check failed (failing open):', error);
+    return false;
+  }
+  return !!data;
+}
+
+interface ResendBatchItem {
+  from: string;
+  to: string[];
+  replyTo?: string;
+  subject: string;
+  html: string;
+  text?: string;
+  headers?: Record<string, string>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  tags?: any[];
+}
+
+// Send a batch (up to 100) via Resend batch API with retries.
+async function sendBatchWithRetry(
+  emails: ResendBatchItem[],
+  idempotencyKey: string,
+  maxAttempts = 3
+): Promise<{ ids: (string | null)[]; error: string | null }> {
+  let attempt = 0;
+  let backoff = 1000;
+  while (attempt < maxAttempts) {
+    await rateLimiter.acquire(1);
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (resend as any).batch.send(emails, { idempotencyKey });
+      if (error) {
+        const msg = error.message || String(error);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const statusCode = (error as any).statusCode || (error as any).status || 0;
+        if (statusCode === 429 || (statusCode >= 500 && statusCode < 600)) {
+          console.warn(
+            `batch send attempt ${attempt + 1} retryable (${statusCode}): ${msg} — backoff ${backoff}ms`
+          );
+          await sleep(backoff);
+          backoff *= 4;
+          attempt++;
+          continue;
+        }
+        console.error(`batch send attempt ${attempt + 1} non-retryable (${statusCode}): ${msg}`);
+        return { ids: emails.map(() => null), error: msg };
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const arr = (data as any)?.data;
+      if (Array.isArray(arr) && arr.length === emails.length) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return { ids: arr.map((r: any) => r?.id || null), error: null };
+      }
+      console.warn('Unexpected Resend batch response shape', data);
+      return { ids: emails.map(() => null), error: 'Unexpected response shape' };
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`batch send attempt ${attempt + 1} threw: ${msg} — backoff ${backoff}ms`);
+      await sleep(backoff);
+      backoff *= 4;
+      attempt++;
+    }
+  }
+  return { ids: emails.map(() => null), error: 'Max retries exceeded' };
+}
+
+function escapeHtmlEmail(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 // Generate win-back offer email HTML
 function generateWinbackEmailHTML(user: EligibleUser): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
@@ -1047,6 +1218,289 @@ function generateV9WinbackHTML(firstName: string): string {
 </table></td></tr></table>
 </body></html>`;
 }
+// V10 — best-in-class win-back, 2026-04
+// Text palette: #fff (headlines/CTA/prices) · #f4f4f5 (body) · #d4d4d8 (caps/labels) · #71717a (footer meta)
+// Content: pulls from real shipped features — 16 certs, Invoice rework, Room Planner cable routing, Site Safety
+function generateV10WinbackHTML(firstName: string, unsubscribeUrl: string): string {
+  const paymentLink = WINBACK_CONFIG.v9MonthlyPaymentLink;
+  const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
+  // 3x source (750x249) rendered at 180x60 in HTML — crisp on retina inboxes
+  const appStoreBadge =
+    'https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-gb?size=750x249';
+  // New brand logo with wordmark + tagline
+  const logoUrl = 'https://www.elec-mate.com/images/elec-mate-logo-512.png';
+  const founderPhoto = 'https://www.elec-mate.com/images/andrew-moore.jpeg';
+  const year = new Date().getFullYear();
+  const safeName = escapeHtmlEmail(firstName);
+  const safeUnsub = escapeHtmlEmail(unsubscribeUrl);
+  const preheader =
+    '16 certificates redesigned. Invoices rebuilt. New Room Planner. £9.99/mo — £5 less than the App Store.';
+
+  // Typography palette:
+  //   #ffffff — headlines, CTA, price, stat numbers
+  //   #f4f4f5 — body copy, subheads, supporting text (near-white, high contrast)
+  //   #d4d4d8 — captions, small labels (slightly muted but still readable)
+  //   #a1a1aa — footer unsubscribe link only
+  //   #71717a — footer copyright / meta only
+  return `<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="supported-color-schemes" content="dark light">
+<title>We&#x27;ve been building. You should see it.</title>
+<!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]-->
+</head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000;color:#f4f4f5;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%">
+
+<div style="display:none;max-height:0;overflow:hidden;color:transparent;height:0;width:0;opacity:0">${escapeHtmlEmail(preheader)}</div>
+<div style="display:none;max-height:0;overflow:hidden">&#8202;&#8203;&#847;&zwnj;&nbsp;&#8203;&#8205;&nbsp;&#8203;&#8204;&nbsp;&#8203;&#847;&nbsp;&#8203;&#8205;&nbsp;&#8203;&#8204;&nbsp;&#8203;&#8205;&nbsp;&#8203;</div>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000"><tr><td align="center">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;background:#000">
+
+<tr><td style="height:48px;line-height:48px;font-size:0">&nbsp;</td></tr>
+
+<tr><td align="center" style="padding:0 32px">
+<img src="${logoUrl}" alt="Elec-Mate — Your trade. Your app." width="120" height="120" style="display:block;border-radius:22px">
+</td></tr>
+
+<tr><td style="height:36px;line-height:36px;font-size:0">&nbsp;</td></tr>
+
+<tr><td align="center" style="padding:0 32px">
+<h1 style="margin:0;font-size:38px;font-weight:700;color:#ffffff;line-height:1.08;letter-spacing:-0.7px">We&#x27;ve been building.</h1>
+</td></tr>
+
+<tr><td style="height:14px;line-height:14px;font-size:0">&nbsp;</td></tr>
+
+<tr><td align="center" style="padding:0 40px">
+<p style="margin:0;font-size:17px;color:#f4f4f5;line-height:1.5">Hey ${safeName} &mdash; a lot has shipped since your trial. Here&#x27;s what&#x27;s new.</p>
+</td></tr>
+
+<tr><td style="height:40px;line-height:40px;font-size:0">&nbsp;</td></tr>
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.1);line-height:1px;font-size:0">&nbsp;</div></td></tr>
+<tr><td style="height:32px;line-height:32px;font-size:0">&nbsp;</td></tr>
+
+<!-- Features — all flat, consistent layout. I&T is the first and gets the REDESIGNED badge. -->
+<tr><td style="padding:0 32px">
+
+<!-- Inspection & Testing (hero) — no box, amber icon -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:26px"><tr>
+<td width="52" valign="top" style="width:52px">
+<div style="width:44px;height:44px;background:#fbbf24;border-radius:11px;text-align:center;line-height:44px;font-size:22px">&#x26A1;</div>
+</td>
+<td style="padding-left:14px">
+<div style="margin:0 0 6px">
+<span style="display:inline-block;padding:3px 10px;background:#fbbf24;border-radius:20px;font-size:10px;font-weight:800;color:#000;text-transform:uppercase;letter-spacing:0.8px">Redesigned</span>
+</div>
+<p style="margin:0;font-size:18px;font-weight:700;color:#ffffff;line-height:1.25">Inspection &amp; Testing &mdash; 16 certificates rebuilt</p>
+<p style="margin:8px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">EICR, EIC, Minor Works, Testing Only, Fire Alarm (design / install / commission / modify / inspect), Smoke &amp; CO, Solar PV, EV Charging, Lightning Protection, BESS, G98, G99, Emergency Lighting, PAT. Rebuilt from scratch for mobile &mdash; smart cascading forms, swipe through inspection items, a Schedule of Tests that actually works on site.</p>
+</td></tr></table>
+
+<!-- Quotes & Invoices -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:22px"><tr>
+<td width="48" valign="top" style="padding-top:3px;width:48px">
+<div style="width:40px;height:40px;background:rgba(34,197,94,0.18);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F9FE;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">Quotes &amp; Invoices &mdash; rebuilt</p>
+<p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">New single-page builder with live totals. Invoice timeline from created to paid. Realtime sync when AI creates invoices for you. Chase emails, late-payment interest, and a proper quote-to-invoice flow.</p>
+</td></tr></table>
+
+<!-- Room Planner -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:22px"><tr>
+<td width="48" valign="top" style="padding-top:3px;width:48px">
+<div style="width:40px;height:40px;background:rgba(99,102,241,0.22);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F4D0;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">Room Planner &mdash; smart cable routing</p>
+<p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">Draw the room, drop your accessories, cables route themselves &mdash; wall-aware, colour-coded by circuit, with length labels. Autosaves. Proper touch controls on site.</p>
+</td></tr></table>
+
+<!-- Site Safety & RAMS -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:22px"><tr>
+<td width="48" valign="top" style="padding-top:3px;width:48px">
+<div style="width:40px;height:40px;background:rgba(244,63,94,0.18);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F9BA;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">Site Safety &amp; RAMS</p>
+<p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">AI-generated RAMS. Toolbox briefings with photo evidence. Stats, alerts, analytics. Danger Notices, Limitation Notices, and Permits-to-Work all built in.</p>
+</td></tr></table>
+
+<!-- Price Book -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom:22px"><tr>
+<td width="48" valign="top" style="padding-top:3px;width:48px">
+<div style="width:40px;height:40px;background:rgba(14,165,233,0.22);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F4B7;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">Price Book &mdash; live UK trade prices</p>
+<p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">Search live trade prices from real UK suppliers. Price a job by point, by metre, or by room. Compare suppliers side-by-side. Feeds directly into quotes.</p>
+</td></tr></table>
+
+<!-- Stock Tracker -->
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="48" valign="top" style="padding-top:3px;width:48px">
+<div style="width:40px;height:40px;background:rgba(168,85,247,0.22);border-radius:11px;text-align:center;line-height:40px;font-size:18px">&#x1F4E6;</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0;font-size:17px;font-weight:700;color:#ffffff;line-height:1.25">Stock Tracker</p>
+<p style="margin:6px 0 0;font-size:14px;color:#f4f4f5;line-height:1.65">Colour-coded stock levels, swipe to delete, group by location. Import from text or the Price Book. Export to CSV. Generate a reorder list by supplier in one tap.</p>
+</td></tr></table>
+
+</td></tr>
+
+<tr><td style="height:40px;line-height:40px;font-size:0">&nbsp;</td></tr>
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.1);line-height:1px;font-size:0">&nbsp;</div></td></tr>
+<tr><td style="height:32px;line-height:32px;font-size:0">&nbsp;</td></tr>
+
+<!-- Real testimonial -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px">
+<tr><td style="padding:22px 22px">
+<p style="margin:0 0 10px;font-size:14px;color:#fbbf24;letter-spacing:2px">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+<p style="margin:0;font-size:16px;color:#ffffff;line-height:1.55;font-style:italic">&ldquo;Absolutely superb. I can invoice, complete testing certs and reports as well as track my CPD. Everything in one place is exactly what I need &mdash; worth every penny.&rdquo;</p>
+<p style="margin:12px 0 0;font-size:13px;color:#f4f4f5">&mdash; Jay &middot; App Store review</p>
+</td></tr></table>
+</td></tr>
+
+<tr><td style="height:32px;line-height:32px;font-size:0">&nbsp;</td></tr>
+
+<!-- Real stats — verifiable -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="33%" align="center" valign="top" style="padding:0 8px">
+<p style="margin:0;font-size:28px;font-weight:700;color:#ffffff;line-height:1">750+</p>
+<p style="margin:4px 0 0;font-size:11px;color:#d4d4d8;text-transform:uppercase;letter-spacing:0.6px;font-weight:600">Tradespeople</p>
+</td>
+<td width="33%" align="center" valign="top" style="padding:0 8px">
+<p style="margin:0;font-size:28px;font-weight:700;color:#ffffff;line-height:1">16</p>
+<p style="margin:4px 0 0;font-size:11px;color:#d4d4d8;text-transform:uppercase;letter-spacing:0.6px;font-weight:600">Certificates</p>
+</td>
+<td width="34%" align="center" valign="top" style="padding:0 8px">
+<p style="margin:0;font-size:28px;font-weight:700;color:#fbbf24;line-height:1">5.0&#9733;</p>
+<p style="margin:4px 0 0;font-size:11px;color:#d4d4d8;text-transform:uppercase;letter-spacing:0.6px;font-weight:600">App Store</p>
+</td>
+</tr></table>
+</td></tr>
+
+<tr><td style="height:36px;line-height:36px;font-size:0">&nbsp;</td></tr>
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.1);line-height:1px;font-size:0">&nbsp;</div></td></tr>
+<tr><td style="height:36px;line-height:36px;font-size:0">&nbsp;</td></tr>
+
+<!-- Offer -->
+<tr><td align="center" style="padding:0 32px">
+<p style="margin:0 0 10px;font-size:11px;color:#d4d4d8;text-transform:uppercase;letter-spacing:1.8px;font-weight:700">Limited web offer &mdash; electrician plan</p>
+<p style="margin:0;font-size:60px;font-weight:700;color:#ffffff;line-height:1;letter-spacing:-2.4px">&pound;9.99<span style="font-size:22px;font-weight:500;letter-spacing:0;color:#f4f4f5">/mo</span></p>
+<p style="margin:14px 0 0;font-size:14px;color:#f4f4f5;line-height:1.6">Save <strong style="color:#fbbf24">&pound;5/mo</strong> vs the App Store price of &pound;14.99.</p>
+</td></tr>
+
+<tr><td style="height:30px;line-height:30px;font-size:0">&nbsp;</td></tr>
+
+<!-- Primary CTA -->
+<tr><td align="center" style="padding:0 32px">
+<a href="${paymentLink}" style="display:inline-block;padding:18px 48px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border-radius:14px;font-size:17px;font-weight:700;color:#000;text-decoration:none;letter-spacing:-0.2px;box-shadow:0 4px 20px rgba(251,191,36,0.25)">Get back in &mdash; &pound;9.99/mo</a>
+</td></tr>
+
+<tr><td style="height:22px;line-height:22px;font-size:0">&nbsp;</td></tr>
+
+<!-- Secondary: App Store -->
+<tr><td align="center" style="padding:0 32px">
+<p style="margin:0 0 14px;font-size:14px;color:#f4f4f5">Then download the app &mdash; you&#x27;re straight in.</p>
+<a href="${appStoreUrl}"><img src="${appStoreBadge}" alt="Download on the App Store" width="180" height="60" style="display:block;margin:0 auto;border:0"></a>
+</td></tr>
+
+<tr><td style="height:48px;line-height:48px;font-size:0">&nbsp;</td></tr>
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.1);line-height:1px;font-size:0">&nbsp;</div></td></tr>
+<tr><td style="height:36px;line-height:36px;font-size:0">&nbsp;</td></tr>
+
+<!-- Founder block — bigger photo, thicker amber ring -->
+<tr><td align="center" style="padding:0 32px">
+<img src="${founderPhoto}" alt="Andrew Moore, Founder" width="96" height="96" style="display:block;margin:0 auto;border-radius:50%;border:3px solid #fbbf24">
+</td></tr>
+
+<tr><td style="height:18px;line-height:18px;font-size:0">&nbsp;</td></tr>
+
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 14px;font-size:15px;color:#f4f4f5;line-height:1.7">Hey ${safeName} &mdash; Andrew here. I&#x27;m the founder. I&#x27;m reaching out personally because a lot has genuinely changed since you signed up. If you&#x27;ve got any questions, just reply to this email &mdash; it comes straight to me.</p>
+<p style="margin:0;font-size:15px;color:#f4f4f5;line-height:1.7">Cheers,<br><span style="color:#fbbf24;font-weight:700">Andrew</span> &middot; Founder, Elec-Mate</p>
+</td></tr>
+
+<tr><td style="height:44px;line-height:44px;font-size:0">&nbsp;</td></tr>
+
+<!-- Footer — meta text is the only place grey is OK -->
+<tr><td align="center" style="padding:0 32px 44px">
+<p style="margin:0 0 10px;font-size:12px;color:#71717a;line-height:1.6">&copy; ${year} Elec-Mate Ltd &middot; United Kingdom</p>
+<p style="margin:0 0 14px;font-size:11px;color:#71717a;line-height:1.5">You&#x27;re getting this because you signed up for a free trial of Elec-Mate. Important account emails (receipts, security) are separate.</p>
+<p style="margin:0;font-size:12px;color:#a1a1aa;line-height:1.5"><a href="${safeUnsub}" style="color:#a1a1aa;text-decoration:underline">Unsubscribe</a> &middot; <a href="mailto:info@elec-mate.com" style="color:#a1a1aa;text-decoration:underline">info@elec-mate.com</a></p>
+</td></tr>
+
+</table>
+</td></tr></table>
+</body></html>`;
+}
+
+function generateV10WinbackPlainText(firstName: string, unsubscribeUrl: string): string {
+  const paymentLink = WINBACK_CONFIG.v9MonthlyPaymentLink;
+  const year = new Date().getFullYear();
+  return `Hey ${firstName},
+
+We've been building. A lot has shipped since your trial.
+
+Here's what's new:
+
+⚡ INSPECTION & TESTING — 16 certificates rebuilt
+EICR, EIC, Minor Works, Testing Only, Fire Alarm (design / install /
+commission / modify / inspect), Smoke & CO, Solar PV, EV Charging,
+Lightning Protection, BESS, G98, G99, Emergency Lighting, PAT.
+Rebuilt from scratch for mobile — smart cascading forms, swipe
+through inspection items, Schedule of Tests that works on site.
+
+🧾 QUOTES & INVOICES — rebuilt
+New single-page builder, live totals, timeline from created to paid,
+realtime sync when AI creates invoices, chase emails, late-payment
+interest, proper quote-to-invoice flow.
+
+📐 ROOM PLANNER — smart cable routing
+Draw the room, drop your accessories, cables route themselves —
+wall-aware, colour-coded by circuit, length labels. Autosaves. Proper
+touch controls on site.
+
+🦺 SITE SAFETY & RAMS
+AI-generated RAMS. Toolbox briefings with photo evidence. Stats,
+alerts, analytics. Danger Notices, Limitation Notices, Permits-to-Work.
+
+—
+
+"Absolutely superb. I can invoice, complete testing certs and reports
+as well as track my CPD. Everything in one place is exactly what I
+need — worth every penny."
+— Jay, ★★★★★ App Store review
+
+750+ tradespeople · 16 certificates · ★★★★★ App Store
+
+—
+
+LIMITED WEB OFFER — Electrician plan: £9.99/mo
+Save £5/mo vs the App Store price of £14.99.
+
+Get back in: ${paymentLink}
+Then download the app: https://apps.apple.com/gb/app/elec-mate/id6758948665
+
+—
+
+Andrew Moore, Founder
+Reply to this email — it comes straight to me.
+
+—
+
+You're getting this because you signed up for a free trial. Important
+account emails (receipts, security) are separate.
+
+Unsubscribe: ${unsubscribeUrl}
+Questions: info@elec-mate.com
+
+© ${year} Elec-Mate Ltd · United Kingdom`;
+}
+
 function generateV8AppStoreLaunchHTML(firstName: string): string {
   const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
   const appStoreBadge =
@@ -1672,7 +2126,60 @@ Deno.serve(async (req) => {
           ).toISOString(),
         };
 
-        // Send email — select template by version
+        // V10 path — best-in-class with suppression check + unsubscribe headers + plain text
+        if (!email_version || email_version === 'v10') {
+          const recipient = userWithEmail.email.trim().toLowerCase();
+
+          if (await isSuppressed(supabaseAdmin, recipient)) {
+            throw new Error('Recipient is in the suppression list');
+          }
+
+          const firstName = userWithEmail.full_name?.split(' ')[0] || 'mate';
+          const unsubscribeUrl = await buildUnsubscribeUrl(recipient);
+          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = "We've been building. You should see it.";
+
+          await rateLimiter.acquire(1);
+          const { data: v10Data, error: v10Err } = await resend.emails.send({
+            from: FROM_V10,
+            replyTo: REPLY_TO,
+            to: [recipient],
+            subject,
+            html,
+            text,
+            headers: buildUnsubscribeHeaders(unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'winback' },
+              { name: 'version', value: 'v10' },
+              { name: 'user_id', value: userId },
+            ],
+          });
+
+          if (v10Err) {
+            console.error('V10 send error:', v10Err);
+            throw new Error(`Failed to send: ${v10Err.message}`);
+          }
+
+          await supabaseAdmin
+            .from('profiles')
+            .update({ winback_offer_sent_at: new Date().toISOString() })
+            .eq('id', userId);
+
+          await supabaseAdmin.from('email_logs').insert({
+            to_email: recipient,
+            subject,
+            template: 'winback_offer_v10',
+            status: 'sent',
+            metadata: { user_id: userId, email_version: 'v10', resend_id: v10Data?.id },
+          });
+
+          console.log(`V10 winback sent to ${recipient} by admin ${user.id}`);
+          result = { success: true, email: recipient, version: 'v10', resend_id: v10Data?.id };
+          break;
+        }
+
+        // Legacy path — older versions kept for rollback / history
         let emailHtml, emailSubject;
         if (email_version === 'v9') {
           const fn = userWithEmail.full_name?.split(' ')[0] || 'mate';
@@ -1793,6 +2300,183 @@ Deno.serve(async (req) => {
           throw new Error('User IDs array is required');
         }
 
+        // V10 path — Resend batch API, token-bucket rate limit, idempotency, retries, suppression
+        if (!email_version || email_version === 'v10') {
+          const { data: profiles, error: profilesErr } = await supabaseAdmin
+            .from('profiles')
+            .select(
+              'id, full_name, username, created_at, winback_offer_sent_at, subscribed, free_access_granted'
+            )
+            .in('id', userIds);
+          if (profilesErr) throw profilesErr;
+
+          const { data: authUsers, error: authErr } =
+            await supabaseAdmin.rpc('get_auth_user_emails');
+          if (authErr) throw authErr;
+          const emailMap = new Map<string, string>();
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (authUsers || []).forEach((u: any) => {
+            if (u.email) emailMap.set(u.id, (u.email as string).toLowerCase().trim());
+          });
+
+          // Suppression list — one query, one shot
+          const allEmails = (profiles || [])
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((p: any) => emailMap.get(p.id))
+            .filter((e: string | undefined): e is string => !!e);
+          const { data: suppressedRows } = await supabaseAdmin
+            .from('email_suppressions')
+            .select('email')
+            .in('email', allEmails);
+          const suppressedSet = new Set<string>(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (suppressedRows || []).map((r: any) => (r.email as string).toLowerCase())
+          );
+
+          interface QueuedRecipient {
+            userId: string;
+            email: string;
+            firstName: string;
+          }
+          const queue: QueuedRecipient[] = [];
+          let skippedCount = 0;
+          const errors: string[] = [];
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          for (const p of (profiles || []) as any[]) {
+            if (p.subscribed === true || p.free_access_granted === true) {
+              skippedCount++;
+              continue;
+            }
+            if (p.winback_offer_sent_at) {
+              skippedCount++;
+              continue;
+            }
+            const email = emailMap.get(p.id);
+            if (!email) {
+              errors.push(`${p.id}: missing email`);
+              continue;
+            }
+            if (suppressedSet.has(email)) {
+              skippedCount++;
+              continue;
+            }
+            queue.push({
+              userId: p.id,
+              email,
+              firstName: (p.full_name as string | null)?.split(' ')[0] || 'mate',
+            });
+          }
+
+          if (queue.length === 0) {
+            result = {
+              sent: 0,
+              skipped: skippedCount,
+              failed: errors.length,
+              errors: errors.length ? errors : undefined,
+            };
+            break;
+          }
+
+          // Build unsubscribe URLs upfront (one HMAC per recipient)
+          const withUnsub = await Promise.all(
+            queue.map(async (r) => ({ ...r, unsubscribeUrl: await buildUnsubscribeUrl(r.email) }))
+          );
+
+          // Chunk into batches of BATCH_MAX (100) — frontend may already pre-chunk smaller
+          const chunks: (typeof withUnsub)[] = [];
+          for (let i = 0; i < withUnsub.length; i += BATCH_MAX) {
+            chunks.push(withUnsub.slice(i, i + BATCH_MAX));
+          }
+
+          const subject = "We've been building. You should see it.";
+          const dateStr = new Date().toISOString().slice(0, 10);
+          let sentCount = 0;
+          const sentNow = new Date().toISOString();
+
+          for (let ci = 0; ci < chunks.length; ci++) {
+            const chunk = chunks[ci];
+            const batchItems: ResendBatchItem[] = chunk.map((r) => ({
+              from: FROM_V10,
+              replyTo: REPLY_TO,
+              to: [r.email],
+              subject,
+              html: generateV10WinbackHTML(r.firstName, r.unsubscribeUrl),
+              text: generateV10WinbackPlainText(r.firstName, r.unsubscribeUrl),
+              headers: buildUnsubscribeHeaders(r.unsubscribeUrl),
+              tags: [
+                { name: 'campaign', value: 'winback' },
+                { name: 'version', value: 'v10' },
+                { name: 'user_id', value: r.userId },
+              ],
+            }));
+
+            // Deterministic key so a retry within 24h gets the cached response, never double-sends
+            const uidHash = chunk
+              .map((r) => r.userId)
+              .sort()
+              .join('')
+              .slice(0, 40);
+            const idempotencyKey = `winback-v10-${dateStr}-${ci}-${uidHash}`;
+
+            const { ids, error: batchErr } = await sendBatchWithRetry(batchItems, idempotencyKey);
+
+            if (batchErr && ids.every((id) => id === null)) {
+              // Entire batch failed after retries — record each as failed, don't mark as sent
+              chunk.forEach((r) => errors.push(`${r.email}: ${batchErr}`));
+              continue;
+            }
+
+            // Update profiles + logs for successes
+            const successfulIds: string[] = [];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const logRows: any[] = [];
+            chunk.forEach((r, i) => {
+              const resendId = ids[i];
+              if (resendId) {
+                successfulIds.push(r.userId);
+                logRows.push({
+                  to_email: r.email,
+                  subject,
+                  template: 'winback_offer_v10',
+                  status: 'sent',
+                  metadata: {
+                    user_id: r.userId,
+                    email_version: 'v10',
+                    resend_id: resendId,
+                    batch_index: ci,
+                  },
+                });
+                sentCount++;
+              } else {
+                errors.push(`${r.email}: no resend id returned`);
+              }
+            });
+
+            if (successfulIds.length > 0) {
+              await supabaseAdmin
+                .from('profiles')
+                .update({ winback_offer_sent_at: sentNow })
+                .in('id', successfulIds);
+            }
+            if (logRows.length > 0) {
+              await supabaseAdmin.from('email_logs').insert(logRows);
+            }
+          }
+
+          console.log(
+            `V10 bulk send: ${sentCount} sent, ${skippedCount} skipped, ${errors.length} failed by admin ${user.id}`
+          );
+          result = {
+            sent: sentCount,
+            skipped: skippedCount,
+            failed: errors.length,
+            errors: errors.length ? errors : undefined,
+          };
+          break;
+        }
+
+        // Legacy path — older versions (v1–v9) via single sends
         let sentCount = 0;
         let skippedCount = 0;
         const errors: string[] = [];
@@ -2010,6 +2694,47 @@ Deno.serve(async (req) => {
           throw new Error('Test email address is required');
         }
 
+        const testRecipient = testEmail.trim().toLowerCase();
+
+        // V10 test path — same template + headers as bulk, but with [TEST] prefix
+        if (!email_version || email_version === 'v10') {
+          const firstName = 'Test';
+          const unsubscribeUrl = await buildUnsubscribeUrl(testRecipient);
+          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = "[TEST] We've been building. You should see it.";
+
+          await rateLimiter.acquire(1);
+          const { data: v10TestData, error: v10TestErr } = await resend.emails.send({
+            from: FROM_V10,
+            replyTo: REPLY_TO,
+            to: [testRecipient],
+            subject,
+            html,
+            text,
+            headers: buildUnsubscribeHeaders(unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'winback' },
+              { name: 'version', value: 'v10' },
+              { name: 'type', value: 'test' },
+            ],
+          });
+
+          if (v10TestErr) {
+            console.error('V10 test send error:', v10TestErr);
+            throw new Error(`Failed to send test email: ${v10TestErr.message}`);
+          }
+
+          console.log(`V10 test email sent to ${testRecipient} by admin ${user.id}`);
+          result = {
+            success: true,
+            email: testRecipient,
+            version: 'v10',
+            resend_id: v10TestData?.id,
+          };
+          break;
+        }
+
         // Create a mock user for the test email
         const testUser: EligibleUser = {
           id: 'test-user-id',
@@ -2094,6 +2819,59 @@ Deno.serve(async (req) => {
         // Send a real win-back email to any email address (manual entry)
         if (!manualEmail) {
           throw new Error('Email address is required');
+        }
+
+        const manualRecipient = manualEmail.trim().toLowerCase();
+
+        // V10 manual path — full send with suppression check, unsubscribe headers, plain text
+        if (!email_version || email_version === 'v10') {
+          if (await isSuppressed(supabaseAdmin, manualRecipient)) {
+            throw new Error('Recipient is in the suppression list — unsubscribed previously');
+          }
+
+          const firstName = recipientName?.split(' ')[0] || 'mate';
+          const unsubscribeUrl = await buildUnsubscribeUrl(manualRecipient);
+          const html = generateV10WinbackHTML(firstName, unsubscribeUrl);
+          const text = generateV10WinbackPlainText(firstName, unsubscribeUrl);
+          const subject = "We've been building. You should see it.";
+
+          await rateLimiter.acquire(1);
+          const { data: v10ManualData, error: v10ManualErr } = await resend.emails.send({
+            from: FROM_V10,
+            replyTo: REPLY_TO,
+            to: [manualRecipient],
+            subject,
+            html,
+            text,
+            headers: buildUnsubscribeHeaders(unsubscribeUrl),
+            tags: [
+              { name: 'campaign', value: 'winback' },
+              { name: 'version', value: 'v10' },
+              { name: 'type', value: 'manual' },
+            ],
+          });
+
+          if (v10ManualErr) {
+            console.error('V10 manual send error:', v10ManualErr);
+            throw new Error(`Failed to send email: ${v10ManualErr.message}`);
+          }
+
+          await supabaseAdmin.from('email_logs').insert({
+            to_email: manualRecipient,
+            subject,
+            template: 'winback_offer_v10_manual',
+            status: 'sent',
+            metadata: { email_version: 'v10', resend_id: v10ManualData?.id, type: 'manual' },
+          });
+
+          console.log(`V10 manual winback sent to ${manualRecipient} by admin ${user.id}`);
+          result = {
+            success: true,
+            email: manualRecipient,
+            version: 'v10',
+            resend_id: v10ManualData?.id,
+          };
+          break;
         }
 
         // Create user object for the email
