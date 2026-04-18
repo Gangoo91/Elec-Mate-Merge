@@ -94,6 +94,7 @@ const AdminIncompleteSignup = lazy(() => import('@/pages/Admin/AdminIncompleteSi
 const AdminApprenticeCampaigns = lazy(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
 const AdminOutreach = lazy(() => import('@/pages/Admin/AdminOutreach'));
 const AdminBusinessOutreach = lazy(() => import('@/pages/Admin/AdminBusinessOutreach'));
+const AdminColdOutreach = lazy(() => import('@/pages/Admin/AdminColdOutreach'));
 const AdminIETKnowledge = lazy(() => import('@/pages/Admin/AdminIETKnowledge'));
 const AdminFailedPayments = lazy(() => import('@/pages/Admin/AdminFailedPayments'));
 const TrainingPhotoUpload = lazy(() => import('@/pages/Admin/TrainingPhotoUpload'));
@@ -1616,6 +1617,14 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminBusinessOutreach />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="cold-outreach"
+              element={
+                <LazyRoute>
+                  <AdminColdOutreach />
                 </LazyRoute>
               }
             />
