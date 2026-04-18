@@ -66,6 +66,8 @@ export function useRevenueCat(userId?: string) {
           ...(userId ? { appUserID: userId } : {}),
           // Let SDK auto-select best StoreKit version (SK1 is deprecated on iOS 26+)
           diagnosticsEnabled: true,
+          // Android: surface Google Play prepaid plans alongside auto-renewing ones
+          pendingTransactionsForPrepaidPlansEnabled: true,
         });
 
         if (userId) attachedUserIdRef.current = userId;
@@ -210,6 +212,14 @@ export function useRevenueCat(userId?: string) {
           aPackage: pkg,
         });
 
+        // Force-sync Play Billing / StoreKit → RevenueCat so the webhook fires
+        // against the latest state before the UI declares success
+        try {
+          await Purchases.syncPurchases();
+        } catch (syncErr) {
+          console.warn('[RevenueCat] syncPurchases after purchase failed:', syncErr);
+        }
+
         const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
 
         setState((prev) => ({
@@ -259,6 +269,11 @@ export function useRevenueCat(userId?: string) {
     setState((prev) => ({ ...prev, isPurchasing: true, error: null }));
 
     try {
+      try {
+        await Purchases.syncPurchases();
+      } catch (syncErr) {
+        console.warn('[RevenueCat] syncPurchases during restore failed:', syncErr);
+      }
       const { customerInfo } = await Purchases.restorePurchases();
       const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
 
@@ -294,18 +309,36 @@ export function useRevenueCat(userId?: string) {
         TIER_ALIASES[tierKey] || tierKey
       );
 
-      return (
+      const match =
         // 1. Exact match with underscores (e.g. 'apprentice_monthly')
         state.availablePackages.find((pkg) => pkg.identifier === normalised) ||
         // 2. Exact match with resolved alias (e.g. 'business-ai-monthly' → 'mate_monthly')
         state.availablePackages.find((pkg) => pkg.identifier === resolvedNormalised) ||
         // 3. Match on full plan ID including period (e.g. includes 'apprentice_monthly')
         state.availablePackages.find((pkg) =>
-          pkg.identifier.toLowerCase().includes(resolvedKey.replace(/-/g, '_') + '_' + (planId.includes('yearly') ? 'yearly' : 'monthly'))
+          pkg.identifier
+            .toLowerCase()
+            .includes(
+              resolvedKey.replace(/-/g, '_') +
+                '_' +
+                (planId.includes('yearly') ? 'yearly' : 'monthly')
+            )
         ) ||
         // 4. Last resort: exact match on original plan ID
-        state.availablePackages.find((pkg) => pkg.identifier === planId)
-      );
+        state.availablePackages.find((pkg) => pkg.identifier === planId);
+
+      if (!match) {
+        console.warn(
+          '[RevenueCat] No package matched for plan',
+          planId,
+          '— searched for',
+          { normalised, resolvedNormalised, resolvedKey },
+          'available packages:',
+          state.availablePackages.map((p) => p.identifier)
+        );
+      }
+
+      return match;
     },
     [state.availablePackages]
   );

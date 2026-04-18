@@ -218,6 +218,7 @@ export default function SmokeCOAlarmCertificate() {
     reportType: 'smoke-co-alarm' as any,
     formData: data,
     enabled: !isLoading,
+    isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/smoke-co-alarm/${newId}`);

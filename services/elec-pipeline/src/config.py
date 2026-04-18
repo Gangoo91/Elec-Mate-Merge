@@ -18,6 +18,14 @@ class Settings(BaseSettings):
     # RS Components API (products)
     rs_api_key: str = ""
 
+    # ─── Outreach crawler credentials ────────────────────────────
+    # Companies House — register free at developer.company-information.service.gov.uk
+    companies_house_api_key: str = ""
+    # Hunter.io — domain email discovery + verification
+    hunter_io_api_key: str = ""
+    # Google Maps Places API — already used elsewhere in the project
+    google_maps_api_key: str = ""
+
     # Pipeline settings
     max_concurrent_browsers: int = 2
     batch_size: int = 50

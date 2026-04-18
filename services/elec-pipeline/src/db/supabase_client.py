@@ -545,6 +545,294 @@ def log_pipeline_end(
 
 
 # ---------------------------------------------------------------------------
+# Outreach leads (education_leads + business_leads)
+# ---------------------------------------------------------------------------
+
+
+def start_scrape_run(source: str, target_table: str, metadata: dict | None = None) -> str:
+    """Record the start of a scrape run. Returns row id."""
+    client = get_client()
+    row_id = str(uuid.uuid4())
+    client.table("outreach_scrape_runs").insert(
+        {
+            "id": row_id,
+            "source": source,
+            "target_table": target_table,
+            "status": "running",
+            "initiated_by": "vps_cron",
+            "metadata": metadata or {},
+        }
+    ).execute()
+    return row_id
+
+
+def finish_scrape_run(
+    row_id: str,
+    *,
+    status: str = "completed",
+    records_discovered: int = 0,
+    records_inserted: int = 0,
+    records_updated: int = 0,
+    records_skipped: int = 0,
+    errors_count: int = 0,
+    error_sample: str | None = None,
+) -> None:
+    client = get_client()
+    client.table("outreach_scrape_runs").update(
+        {
+            "status": status,
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+            "records_discovered": records_discovered,
+            "records_inserted": records_inserted,
+            "records_updated": records_updated,
+            "records_skipped": records_skipped,
+            "errors_count": errors_count,
+            "error_sample": error_sample,
+        }
+    ).eq("id", row_id).execute()
+
+
+def _auto_promote_to_contact(
+    *,
+    email: str,
+    name: str | None,
+    organisation: str,
+    role: str | None,
+    contact_type: str,
+    tags: list[str],
+    source_label: str,
+) -> str | None:
+    """Upsert into outreach_contacts so the lead immediately feeds campaigns."""
+    client = get_client()
+    payload = {
+        "email": email.strip().lower(),
+        "name": name,
+        "organisation": organisation,
+        "role": role,
+        "contact_type": contact_type,
+        "tags": list(dict.fromkeys([t for t in tags if t])),
+        "source": source_label,
+    }
+    try:
+        resp = (
+            client.table("outreach_contacts")
+            .upsert(payload, on_conflict="email")
+            .execute()
+        )
+        if resp.data and len(resp.data) > 0:
+            return resp.data[0].get("id")
+    except Exception as exc:
+        log.warning("outreach_contact_upsert_failed", email=email, error=str(exc))
+    return None
+
+
+def upsert_education_lead(lead: dict[str, Any]) -> dict[str, int]:
+    """Upsert one education_leads row and auto-promote to outreach_contacts."""
+    if not lead.get("organisation") or not lead.get("source"):
+        return {"inserted": 0, "updated": 0, "skipped": 1, "auto_promoted": 0}
+
+    client = get_client()
+    row = {
+        "source": lead["source"],
+        "source_url": lead.get("source_url"),
+        "source_id": lead.get("source_id"),
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+        "email": (lead.get("email") or "").lower() or None,
+        "email_type": lead.get("email_type"),
+        "name": lead.get("name"),
+        "role": lead.get("role"),
+        "phone": lead.get("phone"),
+        "organisation": lead["organisation"],
+        "organisation_type": lead.get("organisation_type"),
+        "website": lead.get("website"),
+        "address_line_1": lead.get("address_line_1"),
+        "address_line_2": lead.get("address_line_2"),
+        "city": lead.get("city"),
+        "postcode": lead.get("postcode"),
+        "region": lead.get("region"),
+        "country": lead.get("country") or "england",
+        "offers_electrical_level_2": lead.get("offers_electrical_level_2"),
+        "offers_electrical_level_3": lead.get("offers_electrical_level_3"),
+        "offers_am2": lead.get("offers_am2"),
+        "offers_epa": lead.get("offers_epa"),
+        "specialisms": lead.get("specialisms") or [],
+        "raw_data": lead.get("raw_data") or {},
+        "confidence_score": lead.get("confidence_score", 50),
+    }
+
+    try:
+        resp = (
+            client.table("education_leads")
+            .upsert(row, on_conflict="source,source_id")
+            .execute()
+        )
+    except Exception as exc:
+        log.warning("education_leads_upsert_failed", org=row["organisation"], error=str(exc))
+        return {"inserted": 0, "updated": 0, "skipped": 1, "auto_promoted": 0, "error": str(exc)}
+
+    data = (resp.data or [{}])[0]
+    created = data.get("created_at")
+    updated = data.get("updated_at")
+    is_new = created and updated and abs(
+        (datetime.fromisoformat(created.replace("Z", "+00:00")).timestamp())
+        - (datetime.fromisoformat(updated.replace("Z", "+00:00")).timestamp())
+    ) < 1.0
+
+    auto_promoted = 0
+    if row["email"] and not data.get("promoted_to_contact_id"):
+        contact_type = (
+            "training_provider"
+            if row["organisation_type"] in ("private_training_provider", "apprenticeship_provider")
+            else "trade_body"
+            if row["organisation_type"] == "trade_body"
+            else "college"
+        )
+        tags = [
+            "education_pool",
+            f"source:{row['source']}",
+            row.get("country") or "england",
+        ]
+        if row.get("region"):
+            tags.append(str(row["region"]).lower().replace(" ", "_"))
+        if row.get("organisation_type"):
+            tags.append(row["organisation_type"])
+        contact_id = _auto_promote_to_contact(
+            email=row["email"],
+            name=row.get("name"),
+            organisation=row["organisation"],
+            role=row.get("role"),
+            contact_type=contact_type,
+            tags=tags,
+            source_label=f"lead_education_{row['source']}",
+        )
+        if contact_id:
+            client.table("education_leads").update(
+                {
+                    "status": "promoted",
+                    "promoted_to_contact_id": contact_id,
+                }
+            ).eq("id", data.get("id")).execute()
+            auto_promoted = 1
+
+    return {
+        "inserted": 1 if is_new else 0,
+        "updated": 0 if is_new else 1,
+        "skipped": 0,
+        "auto_promoted": auto_promoted,
+    }
+
+
+def upsert_business_lead(lead: dict[str, Any]) -> dict[str, int]:
+    """Upsert one business_leads row and auto-promote to outreach_contacts."""
+    if not lead.get("company_name") or not lead.get("source"):
+        return {"inserted": 0, "updated": 0, "skipped": 1, "auto_promoted": 0}
+
+    client = get_client()
+    row = {
+        "source": lead["source"],
+        "source_url": lead.get("source_url"),
+        "source_id": lead.get("source_id"),
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+        "company_name": lead["company_name"],
+        "trading_name": lead.get("trading_name"),
+        "company_number": lead.get("company_number"),
+        "sic_codes": lead.get("sic_codes") or [],
+        "company_status": lead.get("company_status"),
+        "incorporation_date": lead.get("incorporation_date"),
+        "email": (lead.get("email") or "").lower() or None,
+        "email_type": lead.get("email_type"),
+        "website": lead.get("website"),
+        "phone": lead.get("phone"),
+        "address_line_1": lead.get("address_line_1"),
+        "address_line_2": lead.get("address_line_2"),
+        "city": lead.get("city"),
+        "postcode": lead.get("postcode"),
+        "region": lead.get("region"),
+        "country": lead.get("country") or "england",
+        "director_names": lead.get("director_names") or [],
+        "director_emails": lead.get("director_emails") or [],
+        "employee_estimate": lead.get("employee_estimate"),
+        "turnover_estimate": lead.get("turnover_estimate"),
+        "offers_apprenticeships": lead.get("offers_apprenticeships"),
+        "accreditations": lead.get("accreditations") or [],
+        "raw_data": lead.get("raw_data") or {},
+        "confidence_score": lead.get("confidence_score", 50),
+    }
+
+    conflict = "company_number" if row["company_number"] else "source,source_id"
+    try:
+        resp = (
+            client.table("business_leads")
+            .upsert(row, on_conflict=conflict)
+            .execute()
+        )
+    except Exception as exc:
+        log.warning("business_leads_upsert_failed", company=row["company_name"], error=str(exc))
+        return {"inserted": 0, "updated": 0, "skipped": 1, "auto_promoted": 0, "error": str(exc)}
+
+    data = (resp.data or [{}])[0]
+    created = data.get("created_at")
+    updated = data.get("updated_at")
+    is_new = created and updated and abs(
+        (datetime.fromisoformat(created.replace("Z", "+00:00")).timestamp())
+        - (datetime.fromisoformat(updated.replace("Z", "+00:00")).timestamp())
+    ) < 1.0
+
+    auto_promoted = 0
+    if row["email"] and not data.get("promoted_to_contact_id"):
+        tags = ["business_pool", f"source:{row['source']}", row["country"]]
+        if row.get("region"):
+            tags.append(str(row["region"]).lower().replace(" ", "_"))
+        for acc in row.get("accreditations") or []:
+            tags.append(str(acc))
+        for sic in row.get("sic_codes") or []:
+            tags.append(f"sic_{sic}")
+        first_director = (row.get("director_names") or [None])[0]
+        contact_id = _auto_promote_to_contact(
+            email=row["email"],
+            name=first_director,
+            organisation=row["company_name"],
+            role="Director",
+            contact_type="employer",
+            tags=tags,
+            source_label=f"lead_business_{row['source']}",
+        )
+        if contact_id:
+            client.table("business_leads").update(
+                {
+                    "status": "promoted",
+                    "promoted_to_contact_id": contact_id,
+                }
+            ).eq("id", data.get("id")).execute()
+            auto_promoted = 1
+
+    return {
+        "inserted": 1 if is_new else 0,
+        "updated": 0 if is_new else 1,
+        "skipped": 0,
+        "auto_promoted": auto_promoted,
+    }
+
+
+def upsert_education_leads(leads: list[dict[str, Any]]) -> dict[str, int]:
+    totals = {"inserted": 0, "updated": 0, "skipped": 0, "auto_promoted": 0}
+    for lead in leads:
+        res = upsert_education_lead(lead)
+        for k in totals:
+            totals[k] += res.get(k, 0)
+    return totals
+
+
+def upsert_business_leads(leads: list[dict[str, Any]]) -> dict[str, int]:
+    totals = {"inserted": 0, "updated": 0, "skipped": 0, "auto_promoted": 0}
+    for lead in leads:
+        res = upsert_business_lead(lead)
+        for k in totals:
+            totals[k] += res.get(k, 0)
+    return totals
+
+
+# ---------------------------------------------------------------------------
 # Cleanup
 # ---------------------------------------------------------------------------
 

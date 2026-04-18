@@ -32,6 +32,13 @@ interface UseReportSyncOptions {
   customerId?: string;
   onConflict?: (conflict: VersionConflict, localData: any) => void;
   onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
+  /**
+   * When true, skip cloud autosave. Use while the report is hydrating from the cloud
+   * to prevent the initial blank React state from being committed before load completes.
+   * Without this gate, a slow cloud fetch can lose the race with the 3s autosave debounce
+   * and overwrite populated drafts with an empty template. (See 2026-04-17 incident.)
+   */
+  isHydrating?: boolean;
 }
 
 // Return type for syncNowImmediate - includes the saved data for PDF generation
@@ -111,6 +118,78 @@ function hasMinimumDataForCloud(reportType: string, data: any): boolean {
   }
 }
 
+/**
+ * "Populated" test used by the blank-overwrite guard. Stronger than hasMinimumDataForCloud —
+ * we only consider a report substantially populated if it has real body content (circuits,
+ * appliances, luminaires, etc.), not just a client name a user typed and then deleted.
+ * When last-known-remote passes this and outgoing data does not, we abort the write.
+ */
+function isSubstantiallyPopulated(reportType: string, data: any): boolean {
+  if (!data) return false;
+  switch (reportType) {
+    case 'pat-testing':
+      return (data.appliances?.length ?? 0) >= 1;
+    case 'emergency-lighting':
+      return (data.luminaires?.length ?? 0) >= 1;
+    case 'fire-alarm':
+    case 'fire-alarm-design':
+    case 'fire-alarm-commissioning':
+    case 'fire-alarm-inspection':
+    case 'fire-alarm-modification':
+      return (
+        (data.devices?.length ?? 0) >= 1 ||
+        (data.zones?.length ?? 0) >= 1 ||
+        (data.testSchedule?.length ?? 0) >= 1
+      );
+    case 'ev-charging':
+      return !!(data.chargerMake && data.chargerModel) || (data.testResults?.length ?? 0) >= 1;
+    case 'solar-pv':
+      return (data.panels?.length ?? 0) >= 1 || (data.inverters?.length ?? 0) >= 1;
+    default:
+      // EICR, EIC, minor-works — consider >=3 circuits/SoT rows OR >=2 distribution boards as "populated"
+      return (
+        (data.circuits?.length ?? 0) >= 3 ||
+        (data.scheduleOfTests?.length ?? 0) >= 3 ||
+        (data.distributionBoards?.length ?? 0) >= 2
+      );
+  }
+}
+
+/**
+ * Near-empty test — the shape the autosave race emits: arrays are empty or contain a single
+ * default template row. If incoming data looks like this AND the last known remote state was
+ * populated, block the write.
+ */
+function isNearEmpty(reportType: string, data: any): boolean {
+  if (!data) return true;
+  switch (reportType) {
+    case 'pat-testing':
+      return (data.appliances?.length ?? 0) === 0;
+    case 'emergency-lighting':
+      return (data.luminaires?.length ?? 0) === 0;
+    case 'fire-alarm':
+    case 'fire-alarm-design':
+    case 'fire-alarm-commissioning':
+    case 'fire-alarm-inspection':
+    case 'fire-alarm-modification':
+      return (
+        (data.devices?.length ?? 0) === 0 &&
+        (data.zones?.length ?? 0) === 0 &&
+        (data.testSchedule?.length ?? 0) === 0
+      );
+    case 'ev-charging':
+      return !data.chargerMake && (data.testResults?.length ?? 0) === 0;
+    case 'solar-pv':
+      return (data.panels?.length ?? 0) === 0 && (data.inverters?.length ?? 0) === 0;
+    default:
+      return (
+        (data.circuits?.length ?? 0) === 0 &&
+        (data.scheduleOfTests?.length ?? 0) <= 1 &&
+        (data.distributionBoards?.length ?? 0) === 0
+      );
+  }
+}
+
 // === HOOK ===
 
 export const useReportSync = ({
@@ -121,6 +200,7 @@ export const useReportSync = ({
   customerId,
   onConflict,
   onReportCreated,
+  isHydrating = false,
 }: UseReportSyncOptions): UseReportSyncReturn => {
   const { toast } = useToast();
 
@@ -159,6 +239,16 @@ export const useReportSync = ({
   // CRITICAL: Ref to always have the latest formData for syncNowImmediate
   // This solves React closure issues where callbacks capture stale state
   const latestFormDataRef = useRef<any>(formData);
+
+  // Last data successfully read from or written to the cloud. Used by the blank-overwrite
+  // guard in syncToCloud — if this is populated and the outgoing payload is near-empty, we
+  // abort rather than wipe real data. Set on successful loadReport() and syncToCloud() writes.
+  const lastLoadedDataRef = useRef<any>(null);
+
+  // Count of blank-overwrite blocks. Surfaced via console logs for observability —
+  // non-zero values in prod indicate a caller forgot to wire isHydrating, or there's a
+  // state-reset pattern elsewhere we haven't found yet.
+  const blankOverwriteBlockedRef = useRef<number>(0);
 
   // Keep reportId ref in sync
   useEffect(() => {
@@ -433,6 +523,10 @@ export const useReportSync = ({
   // Trigger debounced sync on every formData change
   useEffect(() => {
     if (!enabled) return;
+    // Hydration guard: skip autosave while the form is still loading from the cloud.
+    // Without this, the initial blank React state can win the race against the async
+    // load and commit an empty template over populated remote data.
+    if (isHydrating) return;
 
     if (hasMinimumDataForCloud(reportType, formData) && isOnline && isAuthenticated && userId) {
       // Mark cloud as unsaved immediately when data changes
@@ -443,13 +537,15 @@ export const useReportSync = ({
     }
 
     return () => debouncedCloudSync.cancel();
-  }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, reportType]);
+  }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, reportType, isHydrating]);
 
   // === AUTO-SYNC TO CLOUD (every 30 seconds as backup) ===
   // Backup mechanism - catches anything missed by debounced sync
   // Uses isAutoSync=true to keep 'auto-draft' status until user manually saves
   useEffect(() => {
     if (!enabled || !isOnline || !isAuthenticated || !userId) return;
+    // Hydration guard: don't fire the 30s backup while still loading from cloud.
+    if (isHydrating) return;
 
     const interval = setInterval(async () => {
       // Fixed: Sync if cloud status is 'unsaved', 'queued', or 'error' (not just !== 'synced')
@@ -463,7 +559,7 @@ export const useReportSync = ({
     }, 30000); // Every 30 seconds as backup
 
     return () => clearInterval(interval);
-  }, [enabled, isOnline, isAuthenticated, userId, status.local, status.cloud]);
+  }, [enabled, isOnline, isAuthenticated, userId, status.local, status.cloud, isHydrating]);
 
   // === UPDATE QUEUE COUNT ===
   const updateQueueCount = useCallback(async () => {
@@ -618,6 +714,44 @@ export const useReportSync = ({
         return { success: false, reportId: null };
       }
 
+      // === BLANK-OVERWRITE GUARD (final client-side defense) ===
+      // If the last known remote state was substantially populated (e.g. 48 circuits)
+      // and the outgoing payload is near-empty (the autosave-race signature), abort.
+      // Layer 1 is the isHydrating gate; this is the catch-all in case a caller forgot
+      // to wire it, or some other reset path zeroes out the form state mid-session.
+      // We intentionally do NOT block forceOverwrite — that's an explicit user action.
+      if (
+        !forceOverwrite &&
+        lastLoadedDataRef.current &&
+        isSubstantiallyPopulated(reportType, lastLoadedDataRef.current) &&
+        isNearEmpty(reportType, currentFormData)
+      ) {
+        blankOverwriteBlockedRef.current += 1;
+        console.error(
+          '[ReportSync] BLOCKED blank-overwrite of populated report',
+          {
+            reportType,
+            reportId: currentReportIdRef.current,
+            lastLoadedCircuits: lastLoadedDataRef.current?.circuits?.length,
+            lastLoadedSoT: lastLoadedDataRef.current?.scheduleOfTests?.length,
+            lastLoadedBoards: lastLoadedDataRef.current?.distributionBoards?.length,
+            outgoingCircuits: currentFormData?.circuits?.length,
+            outgoingSoT: currentFormData?.scheduleOfTests?.length,
+            outgoingBoards: currentFormData?.distributionBoards?.length,
+            blockedCount: blankOverwriteBlockedRef.current,
+          }
+        );
+        if (showToast) {
+          toast({
+            title: 'Save blocked — empty form',
+            description:
+              'Your form appears empty but the saved report has data. Refresh the page to reload your work.',
+            variant: 'destructive',
+          });
+        }
+        return { success: false, reportId: currentReportIdRef.current };
+      }
+
       isSyncingRef.current = true;
       setStatus((prev) => ({ ...prev, cloud: 'syncing' }));
       localDataRef.current = currentFormData;
@@ -717,6 +851,10 @@ export const useReportSync = ({
 
         // Reset consecutive failure counter on success
         consecutiveFailuresRef.current = 0;
+
+        // Track what was last persisted so the blank-overwrite guard has a ground truth
+        // to compare future writes against. If a later autosave arrives empty, we can refuse.
+        lastLoadedDataRef.current = currentFormData;
 
         // Clear local draft after successful sync
         draftStorage.clearDraft(reportType, savedReportId);
@@ -872,6 +1010,10 @@ export const useReportSync = ({
         if (!reportResult) {
           return null;
         }
+
+        // Ground truth for the blank-overwrite guard. Any later write that arrives with
+        // empty arrays while this has populated arrays will be refused by syncToCloud.
+        lastLoadedDataRef.current = reportResult.data;
 
         return {
           data: reportResult.data,

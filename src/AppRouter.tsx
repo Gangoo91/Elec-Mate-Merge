@@ -93,6 +93,8 @@ const AdminWinback = lazy(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazy(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazy(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
 const AdminOutreach = lazy(() => import('@/pages/Admin/AdminOutreach'));
+const AdminBusinessOutreach = lazy(() => import('@/pages/Admin/AdminBusinessOutreach'));
+const AdminIETKnowledge = lazy(() => import('@/pages/Admin/AdminIETKnowledge'));
 const AdminFailedPayments = lazy(() => import('@/pages/Admin/AdminFailedPayments'));
 const TrainingPhotoUpload = lazy(() => import('@/pages/Admin/TrainingPhotoUpload'));
 const FounderClaim = lazyWithRetry(() => import('@/pages/founder/FounderClaim'));
@@ -1606,6 +1608,22 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminOutreach />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="business-outreach"
+              element={
+                <LazyRoute>
+                  <AdminBusinessOutreach />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="iet-knowledge"
+              element={
+                <LazyRoute>
+                  <AdminIETKnowledge />
                 </LazyRoute>
               }
             />

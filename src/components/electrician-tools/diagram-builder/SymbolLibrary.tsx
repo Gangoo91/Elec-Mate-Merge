@@ -105,7 +105,7 @@ export const SymbolLibrary = ({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[70vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col lg:left-0"
+        className="h-[70vh] p-0 rounded-t-2xl overflow-hidden bg-elec-card border-white/10 flex flex-col"
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-2 pb-1">

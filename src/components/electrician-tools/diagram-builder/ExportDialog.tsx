@@ -85,6 +85,7 @@ export const ExportDialog = ({
   const [orientation, setOrientation] = useState<'landscape' | 'portrait'>('landscape');
   const [includeLegend, setIncludeLegend] = useState(true);
   const [includeTitleBlock, setIncludeTitleBlock] = useState(true);
+  const [includeSignOff, setIncludeSignOff] = useState(false);
   const [generating, setGenerating] = useState(false);
 
   // Count used symbols from canvas objects
@@ -196,6 +197,7 @@ export const ExportDialog = ({
         orientation,
         includeLegend,
         includeTitleBlock,
+        includeSignOff,
         usedSymbols,
         cables: cableSchedule,
         scale: '1:50',
@@ -358,6 +360,21 @@ export const ExportDialog = ({
                   id="includeTitleBlock"
                   checked={includeTitleBlock}
                   onCheckedChange={setIncludeTitleBlock}
+                  className="touch-manipulation"
+                />
+              </div>
+
+              <div className="flex items-center justify-between py-2">
+                <Label htmlFor="includeSignOff" className="text-white text-sm cursor-pointer">
+                  Add Client Sign-Off Page
+                  <span className="ml-2 text-white/50 text-xs">
+                    (print + sign)
+                  </span>
+                </Label>
+                <Switch
+                  id="includeSignOff"
+                  checked={includeSignOff}
+                  onCheckedChange={setIncludeSignOff}
                   className="touch-manipulation"
                 />
               </div>

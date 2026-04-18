@@ -113,6 +113,7 @@ export default function TestingOnlyCertificate() {
     reportType: 'testing-only',
     formData: data,
     enabled: !isLoading,
+    isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/testing-only/${newId}`);

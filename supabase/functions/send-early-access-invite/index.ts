@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
-import { Resend } from 'npm:resend@2.0.0';
+import { Resend } from '../_shared/mailer.ts';
 import {
   generateV10HTML,
   generateV10PlainText,
@@ -2039,6 +2039,52 @@ Deno.serve(async (req) => {
           `EA offer test email (${eaTestVersion}) sent to ${testEmail} by admin ${user.id}`
         );
         result = { success: true, email: testEmail, resendId: eaTestData?.id };
+        break;
+      }
+
+      case 'send_ea_offer_manual': {
+        // Real (non-test) V10 send to a specific address — goes through suppression check,
+        // sets List-Unsubscribe headers, gets logged. No [TEST] prefix. Doesn't mark anyone
+        // in early_access_invites — intended for one-off sends outside the bulk campaign.
+        if (!manualEmail) throw new Error('manualEmail is required');
+
+        const manualRecipient = manualEmail.trim().toLowerCase();
+
+        if (await isSuppressed(supabaseAdmin, manualRecipient)) {
+          throw new Error('Recipient is in the suppression list — unsubscribed previously');
+        }
+
+        const firstName = recipientName?.split(' ')[0] || 'mate';
+        const manualUnsubUrl = await buildUnsubscribeUrl(manualRecipient);
+        const manualHtml = generateV10HTML('early_access', firstName, manualUnsubUrl);
+        const manualText = generateV10PlainText('early_access', firstName, manualUnsubUrl);
+        const manualSubject = "We've shipped.";
+
+        await rateLimiter.acquire(1);
+        const { data: v10ManualData, error: v10ManualErr } = await resend.emails.send({
+          from: FROM_V10,
+          replyTo: REPLY_TO,
+          to: [manualRecipient],
+          subject: manualSubject,
+          html: manualHtml,
+          text: manualText,
+          headers: buildUnsubscribeHeaders(manualUnsubUrl),
+          tags: [
+            { name: 'campaign', value: 'early_access_offer' },
+            { name: 'version', value: 'v10' },
+            { name: 'type', value: 'manual' },
+          ],
+        });
+
+        if (v10ManualErr) throw new Error(`Failed to send: ${v10ManualErr.message}`);
+
+        console.log(`EA V10 manual sent to ${manualRecipient} by admin ${user.id}`);
+        result = {
+          success: true,
+          email: manualRecipient,
+          version: 'v10',
+          resendId: v10ManualData?.id,
+        };
         break;
       }
 

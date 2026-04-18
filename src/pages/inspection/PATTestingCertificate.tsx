@@ -92,6 +92,7 @@ export default function PATTestingCertificate() {
     reportType: REPORT_TYPE,
     formData,
     enabled: !isLoading,
+    isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     onReportCreated: (newId) => {
       setSavedReportId(newId);
       window.history.replaceState(null, '', `/electrician/inspection-testing/pat-testing/${newId}`);

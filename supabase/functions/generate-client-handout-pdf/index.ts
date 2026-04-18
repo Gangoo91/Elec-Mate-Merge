@@ -12,7 +12,7 @@ const TEMPLATE_IDS: Record<string, string> = {
   'ev-charging-guide': '972C8B56-97A5-461A-B1E0-2D442908E9BD',
   'fire-safety-tenants': 'EF2CB499-D6EB-40ED-B3BB-A4D7C15532FE',
   'fire-alarm-guide': 'B02B2793-4E01-4052-B194-88A925410048',
-  'pat-testing-explained': '24609B75-BB4F-4C17-A509-A3D686DF5EA6',
+  'pat-testing-explained': '20E00A9C-2908-48AD-AC03-297E4FA487C8',
 };
 
 const corsHeaders = {

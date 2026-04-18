@@ -7,7 +7,7 @@
 
 import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { Resend } from 'npm:resend@2.0.0';
+import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -96,7 +96,7 @@ function buildCertificateEmailHtml(data: {
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; -webkit-font-smoothing: antialiased;">
 
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; min-height: 100vh;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc;">
     <tr>
       <td align="center" style="padding: 32px 16px;">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 540px;">

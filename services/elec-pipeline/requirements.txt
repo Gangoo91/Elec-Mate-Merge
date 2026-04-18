@@ -27,3 +27,6 @@ structlog==24.4.0
 
 # Stealth browser (Phase 2)
 crawl4ai==0.8.0
+
+# DNS + SMTP verification for outreach email pattern verifier
+dnspython==2.7.0

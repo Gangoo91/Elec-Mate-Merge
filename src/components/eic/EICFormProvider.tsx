@@ -275,6 +275,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
   const [showBoardScan, setShowBoardScan] = useState(false);
   const [hasLoadedDesign, setHasLoadedDesign] = useState(false);
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
+  // True while initial cloud hydration is in-flight. Gates the autosave in useCloudSync
+  // to prevent blank initial state overwriting real data. See 2026-04-17 incident.
+  const [isLoadingReport, setIsLoadingReport] = useState<boolean>(!!initialReportId);
 
   // Fetch design data if designId is provided (from Circuit Designer)
   const { data: designData, isLoading: isLoadingDesign } = useDesignedCircuit(designId || '');
@@ -384,6 +387,8 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     enabled: true,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
+    // Gate autosave until cloud load finishes — prevents blank-overwrite race.
+    isHydrating: isLoadingReport,
   });
 
   const loadFromCloudRef = useRef(loadFromCloud);
@@ -534,6 +539,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             title: 'Loaded from local storage',
             description: 'Sign in to sync with cloud.',
           });
+          setIsLoadingReport(false);
           return;
         }
 
@@ -542,6 +548,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           description: 'Please sign in to load reports.',
           variant: 'destructive',
         });
+        setIsLoadingReport(false);
         return;
       }
 
@@ -555,6 +562,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             title: 'Loaded from local storage',
             description: 'Changes will sync when online.',
           });
+          setIsLoadingReport(false);
           return;
         }
 
@@ -563,6 +571,7 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           description: 'You are offline.',
           variant: 'destructive',
         });
+        setIsLoadingReport(false);
         return;
       }
 
@@ -660,6 +669,9 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
             variant: 'destructive',
           });
         }
+      }).finally(() => {
+        // Hydration complete — release the autosave gate.
+        setIsLoadingReport(false);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

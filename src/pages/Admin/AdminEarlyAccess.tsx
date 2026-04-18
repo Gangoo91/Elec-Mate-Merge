@@ -138,7 +138,7 @@ export default function AdminEarlyAccess() {
   const sendManualMutation = useMutation({
     mutationFn: async (email: string) => {
       const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'send_ea_offer_test', testEmail: email, email_version: EMAIL_VERSION },
+        body: { action: 'send_ea_offer_manual', manualEmail: email, email_version: EMAIL_VERSION },
       });
       if (error) throw error;
       if (data?.error) throw new Error(data.error);
@@ -426,24 +426,89 @@ export default function AdminEarlyAccess() {
           </Card>
         )}
 
-        {/* Send buttons */}
+        {/* Primary action area — adapts to state */}
         {!sending && !resetting && remaining > 0 && (
-          <Button
-            onClick={sendCampaign}
-            className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
-          >
-            <Send className="h-4 w-4" />
-            Send V10 to {remaining} eligible signups
-          </Button>
+          <div className="grid grid-cols-[1fr_auto] gap-2">
+            <Button
+              onClick={sendCampaign}
+              className="h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
+            >
+              <Send className="h-4 w-4" />
+              Send V10 to {remaining}
+            </Button>
+            {sent > 0 && (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  if (
+                    confirm(
+                      `Reset all ${sent} previously sent users? They'll become eligible to receive V10 again.`
+                    )
+                  ) {
+                    resetMutation.mutate();
+                  }
+                }}
+                disabled={resetMutation.isPending}
+                className="h-12 touch-manipulation text-sm font-semibold border-white/20 hover:bg-white/5 gap-2 px-4"
+              >
+                {resetMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <RotateCcw className="h-4 w-4" />
+                )}
+                Reset
+              </Button>
+            )}
+          </div>
         )}
 
         {!sending && !resetting && remaining === 0 && total > 0 && (
-          <Card className="border-white/5 bg-white/[0.02]">
-            <CardContent className="pt-4 pb-4 text-center">
-              <p className="text-sm text-white/70">
-                Everyone in the waitlist has been sent. Use <em>Reset all</em> in Advanced to
-                re-send.
-              </p>
+          <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-500/5">
+            <CardContent className="pt-4 pb-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center shrink-0">
+                  <RotateCcw className="h-5 w-5 text-amber-400" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-white leading-tight">
+                    All {sent} have been sent
+                  </p>
+                  <p className="text-[11px] text-white/70 leading-tight mt-0.5">
+                    Reset everyone to re-send V10.
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    if (
+                      confirm(
+                        `Reset all ${sent} previously sent users? They'll all become eligible to receive V10 again.`
+                      )
+                    ) {
+                      resetMutation.mutate();
+                    }
+                  }}
+                  disabled={resetMutation.isPending}
+                  className="h-12 touch-manipulation text-sm font-semibold border-white/20 hover:bg-white/5 gap-2"
+                >
+                  {resetMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RotateCcw className="h-4 w-4" />
+                  )}
+                  Reset all
+                </Button>
+                <Button
+                  onClick={() => setConfirmSend(true)}
+                  disabled={sending || resetting}
+                  className="h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  Reset &amp; send
+                </Button>
+              </div>
             </CardContent>
           </Card>
         )}

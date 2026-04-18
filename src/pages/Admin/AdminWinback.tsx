@@ -1164,9 +1164,9 @@ function SegmentTile({
             <p className="text-[10px] text-white/60 truncate">{subtitle}</p>
           </div>
         </div>
-        <p className="text-2xl font-bold text-white leading-none">
+        <div className="text-2xl font-bold text-white leading-none">
           {loading ? <Skeleton className="h-7 w-12" /> : count}
-        </p>
+        </div>
       </button>
       <Button
         size="sm"

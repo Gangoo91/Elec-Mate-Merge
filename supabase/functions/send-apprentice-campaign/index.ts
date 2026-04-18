@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'jsr:@supabase/supabase-js@2';
-import { Resend } from 'npm:resend@2.0.0';
+import { Resend } from '../_shared/mailer.ts';
 
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 

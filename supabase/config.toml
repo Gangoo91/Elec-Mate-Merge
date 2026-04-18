@@ -306,3 +306,9 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Public unsubscribe endpoint — links in outreach emails must be clickable
+# by recipients who have no Supabase session, so this has to be JWT-free.
+[functions.outreach-unsubscribe]
+verify_jwt = false
+
+

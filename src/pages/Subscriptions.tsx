@@ -253,6 +253,13 @@ const Subscriptions = () => {
     }
     const success = await purchasePackage(pkg);
     if (success) {
+      // Force immediate Supabase reconciliation — don't wait for the async
+      // RevenueCat → webhook → profiles.subscribed chain (can lag several seconds)
+      try {
+        await supabase.functions.invoke('check-subscription');
+      } catch (syncErr) {
+        console.warn('[Subscriptions] post-purchase sync failed (webhook will catch up):', syncErr);
+      }
       toast({
         title: 'Subscription active',
         description: `Welcome to Elec-Mate ${planName}! All features are now unlocked.`,

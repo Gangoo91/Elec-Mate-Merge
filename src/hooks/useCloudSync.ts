@@ -15,6 +15,12 @@ interface CloudSyncOptions {
   enabled: boolean;
   customerId?: string;
   onReportCreated?: (reportId: string) => void; // Called when auto-sync creates a new report
+  /**
+   * When true, skip autosave while the form is loading from the cloud. Prevents the
+   * initial blank React state from overwriting real data before hydration completes.
+   * Pass the same boolean you use to gate your UI loading spinner.
+   */
+  isHydrating?: boolean;
 }
 
 interface SyncState {
@@ -36,6 +42,7 @@ export const useCloudSync = ({
   enabled,
   customerId,
   onReportCreated,
+  isHydrating,
 }: CloudSyncOptions) => {
   const {
     status,
@@ -58,6 +65,7 @@ export const useCloudSync = ({
     enabled,
     customerId,
     onReportCreated,
+    isHydrating,
   });
 
   // Map new status to old syncState format

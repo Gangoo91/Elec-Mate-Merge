@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Quote } from '@/types/quote';
 import { Button } from '@/components/ui/button';
 import {
@@ -33,18 +33,70 @@ export const QuoteSendDropdown = ({
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [isSharingWhatsApp, setIsSharingWhatsApp] = useState(false);
 
-  // Poll PDF Monkey status via edge function until downloadUrl is ready (max ~90s)
+  // AbortController for the PDF polling loop. On iOS, when the user swipes to WhatsApp
+  // the WKWebView pauses — setTimeout chains freeze mid-poll. If we don't cancel
+  // explicitly, state stays in limbo when the user returns. (ELE-772)
+  const pollAbortRef = useRef<AbortController | null>(null);
+
+  // Capacitor App 'resume' listener — belt-and-braces reset of loading state when the
+  // user returns from any external app (WhatsApp, Mail). Without this, an iOS WKWebView
+  // pause can leave `isSharingWhatsApp` stuck true forever = "Loading…" that never clears.
+  useEffect(() => {
+    let cleanup: (() => void) | null = null;
+    let mounted = true;
+
+    (async () => {
+      try {
+        const { Capacitor } = await import('@capacitor/core');
+        if (!Capacitor.isNativePlatform() || !mounted) return;
+        const { App } = await import('@capacitor/app');
+        if (!mounted) return;
+        const listener = await App.addListener('resume', () => {
+          // User came back from WhatsApp/Mail — clear any loading state that may have
+          // been orphaned while the WebView was paused.
+          setIsSharingWhatsApp(false);
+          setIsSendingEmail(false);
+          pollAbortRef.current?.abort();
+        });
+        if (!mounted) {
+          listener.remove();
+          return;
+        }
+        cleanup = () => listener.remove();
+      } catch {
+        // Not running on native — no-op
+      }
+    })();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+      pollAbortRef.current?.abort();
+    };
+  }, []);
+
+  // Poll PDF Monkey status via edge function until downloadUrl is ready (max 30s, every 1.5s).
+  // Honours an AbortSignal so we can cancel cleanly if the user navigates away.
   const pollPdfDownloadUrl = async (
     documentId: string,
-    accessToken: string
+    accessToken: string,
+    signal?: AbortSignal
   ): Promise<string | null> => {
-    for (let i = 0; i < 45; i++) {
+    const maxAttempts = 20; // 20 × 1500ms = 30s
+    for (let i = 0; i < maxAttempts; i++) {
+      if (signal?.aborted) return null;
       const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
         body: { documentId, mode: 'status' },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       if (data?.downloadUrl) return data.downloadUrl;
-      await new Promise((res) => setTimeout(res, 2000));
+      await new Promise<void>((resolve) => {
+        const t = setTimeout(resolve, 1500);
+        signal?.addEventListener('abort', () => {
+          clearTimeout(t);
+          resolve();
+        }, { once: true });
+      });
     }
     return null;
   };
@@ -58,7 +110,8 @@ export const QuoteSendDropdown = ({
    */
   const generateFreshPDF = async (
     quoteData: Quote,
-    companyProfileData: any
+    companyProfileData: any,
+    signal?: AbortSignal
   ): Promise<{ downloadUrl: string | null; documentId: string | null }> => {
     try {
       const {
@@ -92,7 +145,7 @@ export const QuoteSendDropdown = ({
 
       // If no download URL yet, poll for status (PDF is being generated asynchronously)
       if (!downloadUrl && documentId) {
-        downloadUrl = await pollPdfDownloadUrl(documentId, session.access_token);
+        downloadUrl = await pollPdfDownloadUrl(documentId, session.access_token, signal);
       }
 
       if (!downloadUrl) {
@@ -240,6 +293,11 @@ export const QuoteSendDropdown = ({
   };
 
   const handleShareWhatsApp = async () => {
+    // Fresh abort controller for this share attempt — replaces any previous one still in flight.
+    pollAbortRef.current?.abort();
+    const controller = new AbortController();
+    pollAbortRef.current = controller;
+
     try {
       setIsSharingWhatsApp(true);
 
@@ -302,7 +360,7 @@ export const QuoteSendDropdown = ({
 
       // If still no URL, regenerate PDF
       if (!pdfUrl) {
-        const result = await generateFreshPDF(freshQuote as any, companyData);
+        const result = await generateFreshPDF(freshQuote as any, companyData, controller.signal);
 
         if (!result.downloadUrl) {
           throw new Error('Failed to generate professional PDF');
@@ -378,8 +436,12 @@ ${companyName}`;
         whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
       }
 
-      // Step 7: Open WhatsApp (NOT the PDF directly)
-      await openExternalUrl(whatsappUrl);
+      // ELE-772 — Clear loading state BEFORE launching WhatsApp.
+      // The PDF URL is already resolved at this point, so there's no reason to stay
+      // in "Loading…" while the WebView pauses for WhatsApp. If we leave the state true
+      // until after openExternalUrl, iOS can pause the WKWebView before the finally block
+      // runs and the state update is lost forever — UI stuck on "Loading…".
+      setIsSharingWhatsApp(false);
 
       toast({
         title: 'Opening WhatsApp',
@@ -389,13 +451,15 @@ ${companyName}`;
       });
 
       onSuccess?.();
+
+      // Step 7: Open WhatsApp (NOT the PDF directly). No state changes after this point.
+      await openExternalUrl(whatsappUrl);
     } catch (error: any) {
       toast({
         title: 'Error',
         description: error.message || 'Failed to prepare quote for WhatsApp',
         variant: 'destructive',
       });
-    } finally {
       setIsSharingWhatsApp(false);
     }
   };

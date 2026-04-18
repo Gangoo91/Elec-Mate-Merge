@@ -86,6 +86,7 @@ export default function EVChargingCertificate() {
     reportType: REPORT_TYPE,
     formData,
     enabled: !isLoading,
+    isHydrating: isLoading, // Gate autosave while loading from cloud — prevents blank-overwrite race.
     customerId,
     onReportCreated: (newId) => {
       setSavedReportId(newId);

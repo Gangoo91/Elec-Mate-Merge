@@ -32,6 +32,11 @@ export interface FloorPlanPdfOptions {
   /** Optional — when present, a Cable Schedule page is appended. */
   cables?: CableScheduleEntry[];
   scale: string;
+  /**
+   * When true, a client sign-off page is appended at the end of the PDF.
+   * Intended for electricians to print + have the client sign before or after installation.
+   */
+  includeSignOff?: boolean;
 }
 
 /* ─── helpers ──────────────────────────────────────────── */
@@ -98,6 +103,7 @@ export async function generateFloorPlanPdf(options: FloorPlanPdfOptions): Promis
     usedSymbols,
     cables,
     scale,
+    includeSignOff,
   } = options;
 
   const { jsPDF } = await import('jspdf');
@@ -467,7 +473,141 @@ export async function generateFloorPlanPdf(options: FloorPlanPdfOptions): Promis
     });
   }
 
-  /* ── 6. Save / share ───────────────────────────────── */
+  /* ── 6. Client sign-off page ───────────────────────── */
+  if (includeSignOff) {
+    pdf.addPage(paperSize, orientation);
+
+    // Outer border (double)
+    pdf.setDrawColor(0, 0, 0);
+    pdf.setLineWidth(0.6);
+    pdf.rect(margin, margin, innerW, innerH);
+    pdf.setLineWidth(0.2);
+    pdf.rect(margin + 1.5, margin + 1.5, innerW - 3, innerH - 3);
+
+    // Header
+    pdf.setFontSize(18);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(0, 0, 0);
+    pdf.text('Installation Sign-Off', margin + 5, margin + 12);
+    pdf.setFontSize(9.5);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(80, 80, 80);
+    pdf.text(
+      `${projectName || 'Project'} \u00B7 Drawing ${drawingNumber || 'EL-001'} \u00B7 ${dateStr}`,
+      margin + 5,
+      margin + 18,
+    );
+
+    // Project summary block
+    const summaryTop = margin + 26;
+    const summaryRows = [
+      { label: 'Project', value: projectName || '—' },
+      { label: 'Client', value: clientName || '—' },
+      { label: 'Property', value: propertyAddress || '—' },
+      { label: 'Drawing No.', value: drawingNumber || 'EL-001' },
+      { label: 'Drawn By', value: drawnBy || '—' },
+      { label: 'Date', value: dateStr },
+    ];
+
+    const summaryLabelW = 32;
+    const summaryRowH = 6;
+    const summaryLeft = margin + 5;
+    const summaryRight = margin + innerW - 5;
+
+    pdf.setLineWidth(0.3);
+    pdf.rect(summaryLeft, summaryTop, summaryRight - summaryLeft, summaryRowH * summaryRows.length);
+
+    pdf.setFontSize(9);
+    summaryRows.forEach((row, i) => {
+      const ry = summaryTop + i * summaryRowH;
+      pdf.setLineWidth(0.15);
+      if (i > 0) pdf.line(summaryLeft, ry, summaryRight, ry);
+      pdf.line(summaryLeft + summaryLabelW, ry, summaryLeft + summaryLabelW, ry + summaryRowH);
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(80, 80, 80);
+      pdf.text(row.label, summaryLeft + 2, ry + summaryRowH * 0.68);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setTextColor(0, 0, 0);
+      const maxValW = summaryRight - summaryLeft - summaryLabelW - 4;
+      let val = row.value;
+      if (pdf.getTextWidth(val) > maxValW) {
+        while (val.length > 3 && pdf.getTextWidth(val + '…') > maxValW) val = val.slice(0, -1);
+        val += '…';
+      }
+      pdf.text(val, summaryLeft + summaryLabelW + 2, ry + summaryRowH * 0.68);
+    });
+
+    // Declaration text
+    const declY = summaryTop + summaryRowH * summaryRows.length + 10;
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(30, 30, 30);
+    const declaration =
+      'By signing below, I confirm that I have reviewed the electrical installation drawing shown on the ' +
+      'preceding page(s), that the layout and specified items reflect my requirements, and that any ' +
+      'variations agreed on site have been discussed and accepted.';
+    const wrappedDecl = pdf.splitTextToSize(declaration, innerW - 10);
+    pdf.text(wrappedDecl, margin + 5, declY);
+
+    // Signature blocks — two side by side
+    const sigTop = declY + wrappedDecl.length * 4.5 + 10;
+    const sigBoxH = 38;
+    const sigGap = 6;
+    const sigW = (innerW - 10 - sigGap) / 2;
+    const sigLeft = margin + 5;
+    const sigRight = sigLeft + sigW + sigGap;
+
+    const drawSignatureBlock = (x: number, label: string) => {
+      // Outer box
+      pdf.setLineWidth(0.3);
+      pdf.setDrawColor(0, 0, 0);
+      pdf.rect(x, sigTop, sigW, sigBoxH);
+
+      // Header band
+      pdf.setFillColor(245, 245, 245);
+      pdf.rect(x, sigTop, sigW, 7, 'F');
+      pdf.setLineWidth(0.2);
+      pdf.rect(x, sigTop, sigW, 7);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(9.5);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(label, x + sigW / 2, sigTop + 5, { align: 'center' });
+
+      // Name line
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8);
+      pdf.setTextColor(80, 80, 80);
+      pdf.text('Name', x + 2, sigTop + 12);
+      pdf.setDrawColor(120, 120, 120);
+      pdf.setLineWidth(0.15);
+      pdf.line(x + 18, sigTop + 12.5, x + sigW - 2, sigTop + 12.5);
+
+      // Signature line
+      pdf.text('Signature', x + 2, sigTop + 22);
+      pdf.line(x + 18, sigTop + 22.5, x + sigW - 2, sigTop + 22.5);
+
+      // Date line
+      pdf.text('Date', x + 2, sigTop + 32);
+      pdf.line(x + 18, sigTop + 32.5, x + sigW - 2, sigTop + 32.5);
+    };
+
+    drawSignatureBlock(sigLeft, 'ELECTRICIAN');
+    drawSignatureBlock(sigRight, 'CLIENT');
+
+    // Footer strip
+    pdf.setLineWidth(0.2);
+    pdf.setDrawColor(0, 0, 0);
+    pdf.line(margin + 1.5, footerY, margin + innerW - 1.5, footerY);
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(80, 80, 80);
+    pdf.text('Elec-Mate \u00B7 Installation Sign-Off', margin + 4, footerY + 4);
+    pdf.text('BS 7671:2018+A3:2024', margin + innerW - 4, footerY + 4, { align: 'right' });
+  }
+
+  /* ── 7. Save / share ───────────────────────────────── */
   const safeName = (projectName || 'floor-plan').replace(/\s+/g, '-').toLowerCase();
   await saveOrSharePdf(pdf, `${safeName}-${drawingNumber || 'EL-001'}.pdf`);
 }

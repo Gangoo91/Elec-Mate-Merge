@@ -48,6 +48,9 @@ const MinorWorksForm = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [currentReportId, setCurrentReportId] = useState<string | null>(initialReportId || null);
   const [authChecked, setAuthChecked] = useState(false);
+  // True while initial cloud hydration is in-flight. Gates cloud autosave to prevent
+  // the blank initial form state overwriting real data. See 2026-04-17 incident.
+  const [isLoadingReport, setIsLoadingReport] = useState<boolean>(!!initialReportId);
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -276,6 +279,8 @@ const MinorWorksForm = ({
       enabled: true,
       customerId: customerIdFromNav,
       onReportCreated: handleReportCreated,
+      // Gate autosave until cloud load finishes — prevents blank-overwrite race.
+      isHydrating: isLoadingReport,
     });
 
   // Auto-save hook
@@ -451,6 +456,7 @@ const MinorWorksForm = ({
             title: 'Loaded from local storage',
             description: 'Sign in to sync with cloud.',
           });
+          setIsLoadingReport(false);
           return;
         }
 
@@ -459,6 +465,7 @@ const MinorWorksForm = ({
           description: 'Please sign in to load reports.',
           variant: 'destructive',
         });
+        setIsLoadingReport(false);
         return;
       }
 
@@ -472,6 +479,7 @@ const MinorWorksForm = ({
             title: 'Loaded from local storage',
             description: 'Changes will sync when online.',
           });
+          setIsLoadingReport(false);
           return;
         }
 
@@ -480,6 +488,7 @@ const MinorWorksForm = ({
           description: 'You are offline.',
           variant: 'destructive',
         });
+        setIsLoadingReport(false);
         return;
       }
 
@@ -580,6 +589,9 @@ const MinorWorksForm = ({
             variant: 'destructive',
           });
         }
+      }).finally(() => {
+        // Hydration complete — release the autosave gate.
+        setIsLoadingReport(false);
       });
     }
   }, [initialReportId, authChecked, isAuthenticated, isOnline, loadFromCloud]);

@@ -8,7 +8,7 @@
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { Resend } from 'npm:resend@2.0.0';
+import { Resend } from '../_shared/mailer.ts';
 
 interface NotificationRequest {
   type: 'signup' | 'subscription' | 'tier_milestone';

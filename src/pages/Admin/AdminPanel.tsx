@@ -42,6 +42,7 @@ import {
   AlertTriangle,
   Send,
   Tag,
+  BookOpen,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -52,6 +53,7 @@ const primaryNavItems = [
   { name: 'Trials', path: '/admin/trials', icon: Timer },
   { name: 'Revenue', path: '/admin/revenue', icon: DollarSign },
   { name: 'Messages', path: '/admin/user-messages', icon: Inbox },
+  { name: 'IET Knowledge', path: '/admin/iet-knowledge', icon: BookOpen },
 ];
 
 // Campaigns - outreach & growth
@@ -59,7 +61,8 @@ const campaignNavItems = [
   { name: 'Incomplete Signup', path: '/admin/incomplete-signup', icon: UserPlus },
   { name: 'Win-Back', path: '/admin/winback', icon: Gift },
   { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns', icon: GraduationCap },
-  { name: 'Outreach', path: '/admin/outreach', icon: Send },
+  { name: 'College Outreach', path: '/admin/outreach', icon: GraduationCap },
+  { name: 'Business Outreach', path: '/admin/business-outreach', icon: Briefcase },
   { name: 'Founders', path: '/admin/founders', icon: Crown },
   { name: 'Early Access', path: '/admin/early-access', icon: Rocket },
 ];
@@ -123,24 +126,27 @@ export default function AdminPanel() {
     if (matchesGroup(adminToolItems)) setShowTools(true);
   }, [location.pathname]);
 
-  // Swipe between primary nav pages
+  // Swipe between primary nav pages. Returns -1 when the current path isn't a
+  // primary page — swipe is then a no-op so we don't accidentally yank users
+  // off secondary pages (winback, outreach, etc.) onto /admin/users.
   const currentPrimaryIndex = useMemo(() => {
-    const idx = primaryNavItems.findIndex(
+    return primaryNavItems.findIndex(
       (item) =>
         location.pathname === item.path ||
         (item.path !== '/admin' && location.pathname.startsWith(item.path + '/'))
     );
-    return idx >= 0 ? idx : 0;
   }, [location.pathname]);
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => {
+      if (currentPrimaryIndex < 0) return;
       const next = currentPrimaryIndex + 1;
       if (next < primaryNavItems.length) {
         navigate(primaryNavItems[next].path);
       }
     },
     onSwipedRight: () => {
+      if (currentPrimaryIndex < 0) return;
       const prev = currentPrimaryIndex - 1;
       if (prev >= 0) {
         navigate(primaryNavItems[prev].path);
